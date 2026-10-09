@@ -1,0 +1,19 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Exported builds
+/build/
+/exports/
+
+# Local editor assistant (installed separately)
+/addons/ziva_agent/
+
+# macOS junk (AppleDouble resource forks / metadata)
+__MACOSX/
+.DS_Store
+._*
+
+# Windows junk
+Thumbs.db
+desktop.ini
