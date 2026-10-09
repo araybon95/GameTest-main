@@ -15,6 +15,12 @@ const LOCKED = "#4B343D"
 func _ready() -> void:
 	$BackButton.pressed.connect(_on_back_pressed)
 	_build_entries()
+	var scroll := ScrollContainer.new()
+	scroll.position = Vector2(80, 156)
+	scroll.size = Vector2(1760, 700)
+	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	add_child(scroll)
+	$Entries.reparent(scroll)
 	modulate = Color(1, 1, 1, 0)
 	var tween := create_tween()
 	tween.tween_property(self, "modulate", Color.WHITE, 0.5)

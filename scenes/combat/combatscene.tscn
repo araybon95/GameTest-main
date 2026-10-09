@@ -118,7 +118,7 @@ offset_right = 432.0
 offset_bottom = 952.0
 mouse_filter = 2
 
-[node name="Heros" type="VBoxContainer" parent="." unique_id=527048530]
+[node name="Heros" type="HBoxContainer" parent="." unique_id=527048530]
 layout_mode = 0
 offset_left = 24.0
 offset_top = 370.0
@@ -201,7 +201,7 @@ offset_top = 940.0
 offset_right = 1885.0
 offset_bottom = 1020.0
 
-[node name="EmbersLabel" type="Label" parent="." unique_id=902119907]
+[node name="GoldLabel" type="Label" parent="." unique_id=902119907]
 layout_mode = 0
 offset_left = 40.0
 offset_top = 96.0
@@ -209,7 +209,7 @@ offset_right = 320.0
 offset_bottom = 132.0
 theme_override_colors/font_color = Color(0.56, 0.27, 0.27, 1)
 theme_override_font_sizes/font_size = 20
-text = "EMBERS  0"
+text = "GOLD  0"
 
 [node name="RoundLabel" type="Label" parent="." unique_id=1968360684]
 layout_mode = 0

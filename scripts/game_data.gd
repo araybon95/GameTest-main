@@ -1,4 +1,5 @@
 extends RefCounted
+const Items = preload("res://scripts/item_data.gd")
 ## Shared game data + state. Each scene loads it by path:
 ##     const GameState := preload("res://scripts/game_data.gd")
 ## Static members keep it shared across scenes without an autoload.
@@ -63,6 +64,21 @@ static var party: Array[String] = ["warden", "ranger", "occultist"]
 ## Lore and stats for every enemy. `undead` heroes take bonus damage from the
 ## Healer's holy attacks.
 const CREATURES: Dictionary = {
+	"ash_raider": {
+		"name": "Ash Raider", "tags": ["Human", "Bandit"], "undead": false,
+		"hp": 58, "attack": 8, "art": "res://assets/generated/enemy_ash_raider.png",
+		"lore": "A butcher of the ruined road, wrapped in stolen leather and rusted iron. Their toll is paid in blood.",
+	},
+	"gallows_scout": {
+		"name": "Gallows Scout", "tags": ["Human", "Bandit"], "undead": false,
+		"hp": 46, "attack": 10, "art": "res://assets/generated/enemy_gallows_scout.png",
+		"lore": "The gang's watchful hunter waits beneath the gallows, marking travelers for the cleaver.",
+	},
+	"ash_chieftain": {
+		"name": "Gallows Chieftain", "tags": ["Human", "Bandit", "Boss"], "undead": false,
+		"hp": 82, "attack": 10, "art": "res://assets/generated/enemy_ash_bandit_captain.png",
+		"lore": "A scarred tyrant who binds the road gangs through terror. His shield is patched with the possessions of those who refused to kneel.",
+	},
 	"hollow_villager": {
 		"name": "Hollow Villager", "tags": ["Mortal"], "undead": false,
 		"hp": 68, "attack": 7, "art": "res://assets/generated/enemy_hollow_villager.png",
@@ -83,8 +99,8 @@ const CREATURES: Dictionary = {
 ## Creature ids the party has faced. The Archive reveals entries as they fill in.
 static var discovered: Array[String] = []
 
-## Embers earned from expeditions; spent in the Forge to upgrade cards.
-static var embers: int = 0
+## Gold earned from expeditions; spent in the Forge to upgrade cards.
+static var gold: int = 0
 
 ## Card upgrade levels (card id -> level). Applied through card_stats().
 static var card_levels: Dictionary = {}
@@ -96,8 +112,8 @@ const UPGRADE_BONUS := 2
 const EXPEDITIONS: Array[Dictionary] = [
 	{
 		"id": "old_road", "name": "The Old Road", "region": "The Ruins", "difficulty": "Apprentice",
-		"blurb": "A hollowed peasant blocks the ruined approach. A gentle first test.",
-		"creature": "hollow_villager", "reward": 5, "locked": false,
+		"blurb": "Human outlaws haunt the ruined road. Hunt their chieftain beneath the black gallows.",
+		"creature": "ash_raider", "faction": "human", "reward": 5, "locked": false,
 	},
 	{
 		"id": "bone_warrens", "name": "The Bone Warrens", "region": "The Ossuary", "difficulty": "Apprentice",
@@ -159,9 +175,9 @@ static func upgrade_card(card_id: String) -> bool:
 	if not can_upgrade(card_id):
 		return false
 	var cost := upgrade_cost(card_id)
-	if embers < cost:
+	if gold < cost:
 		return false
-	embers -= cost
+	gold -= cost
 	card_levels[card_id] = card_level(card_id) + 1
 	return true
 
@@ -239,6 +255,7 @@ static func start_run(seed_value: int = -1) -> void:
 	run_seed = seed_value if seed_value >= 0 else randi()
 	var rng := RandomNumberGenerator.new()
 	rng.seed = run_seed
+	loot_rng.seed = run_seed + 104729
 	run_active = true
 	run_complete = false
 	floor_index = 0
@@ -262,8 +279,46 @@ static func start_run(seed_value: int = -1) -> void:
 			var branch: Vector2i = origin + [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT][rng.randi_range(0, 3)]
 			if branch.x >= 0 and branch.x <= 4 and branch.y >= 0 and branch.y <= 3 and not rooms.has(branch):
 				rooms[branch] = {"kind": "treasure" if rng.randf() < 0.5 else "camp", "cleared": false, "seen": false}
+		# Grow extra connected chambers so the floor reads as a dungeon rather
+		# than a single route. All branches remain reachable from the entrance.
+		for attempt in range(24):
+			if rooms.size() >= 15:
+				break
+			var origins: Array = rooms.keys()
+			var origin: Vector2i = origins[rng.randi_range(0, origins.size() - 1)]
+			var branch: Vector2i = origin + [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT][rng.randi_range(0, 3)]
+			if branch.x >= 0 and branch.x <= 4 and branch.y >= 0 and branch.y <= 3 and not rooms.has(branch):
+				var roll: float = rng.randf()
+				rooms[branch] = {"kind": "battle" if roll < 0.5 else ("treasure" if roll < 0.8 else "camp"), "cleared": false, "seen": false}
 		rooms[Vector2i(4, 3)]["kind"] = "boss" if depth == floor_count - 1 else "stairs"
+		if selected_expedition.get("faction", "") == "human":
+			for location in rooms:
+				rooms[location]["creature"] = "ash_chieftain" if rooms[location]["kind"] == "boss" else (["ash_raider", "gallows_scout"][rng.randi_range(0, 1)])
+		for location in rooms:
+			var room: Dictionary = rooms[location]
+			var primary: String = str(room.get("creature", selected_expedition.get("creature", "hollow_villager")))
+			if room["kind"] == "boss":
+				room["enemies"] = [primary]
+				room["support_creature"] = "gallows_scout" if selected_expedition.get("faction", "") == "human" else str(selected_expedition.get("creature", "hollow_villager"))
+			elif room["kind"] == "battle":
+				room["enemies"] = [primary]
+				for extra in range(rng.randi_range(0, 2)):
+					room["enemies"].append(["ash_raider", "gallows_scout"][rng.randi_range(0, 1)] if selected_expedition.get("faction", "") == "human" else primary)
+		# Guarantee a camp and exactly one orb room on every floor.
+		var camps: Array = []
+		var battles: Array = []
+		for location in rooms:
+			if rooms[location]["kind"] == "camp":
+				camps.append(location)
+			elif rooms[location]["kind"] == "battle":
+				battles.append(location)
+		if camps.is_empty() and battles.size() > 1:
+			var campsite: Vector2i = battles.pop_back()
+			rooms[campsite]["kind"] = "camp"
+		var orb_room: Vector2i = battles[rng.randi_range(0, battles.size() - 1)]
+		rooms[orb_room]["merchant_orb"] = true
 		floors.append(rooms)
+	ensure_run_heroes()
 	reveal_neighbors()
 
 static func current_room_kind() -> String:
@@ -312,3 +367,153 @@ static func end_run() -> void:
 	run_active = false
 	run_heroes.clear()
 	navigation_votes.clear()
+
+
+# Party inventory/equipment persist across expeditions during this game session.
+static var inventory: Dictionary = {}
+static var equipment: Dictionary = {}
+static var loot_rng: RandomNumberGenerator = RandomNumberGenerator.new()
+static var shop_return_scene: String = "res://scenes/hub/settlement.tscn"
+
+static func add_item(item_id: String, amount: int = 1) -> void:
+	if not Items.item(item_id).is_empty() and amount > 0:
+		inventory[item_id] = int(inventory.get(item_id, 0)) + amount
+
+static func consume_scroll(item_id: String) -> bool:
+	if not Items.SCROLLS.has(item_id) or int(inventory.get(item_id, 0)) <= 0:
+		return false
+	inventory[item_id] = int(inventory[item_id]) - 1
+	if inventory[item_id] <= 0:
+		inventory.erase(item_id)
+	return true
+
+static func purchase_scroll(item_id: String) -> bool:
+	if not Items.SCROLLS.has(item_id) or Items.item(item_id).get("rarity", "") == "legendary":
+		return false
+	var price: int = int(Items.SCROLLS[item_id]["price"])
+	if gold < price:
+		return false
+	gold -= price
+	add_item(item_id)
+	return true
+
+static func equipment_bonus(hero_id: String, stat: String) -> int:
+	var total: int = 0
+	for item_id in equipment.get(hero_id, {}).values():
+		total += int(Items.item(str(item_id)).get(stat, 0))
+	return total
+
+static func hero_max_hp(hero_id: String) -> int:
+	return int(hero(hero_id).get("max_hp", 40)) + equipment_bonus(hero_id, "max_hp")
+
+static func sync_equipped_health(hero_id: String) -> void:
+	if run_heroes.has(hero_id):
+		run_heroes[hero_id]["max_hp"] = hero_max_hp(hero_id)
+		run_heroes[hero_id]["hp"] = mini(int(run_heroes[hero_id]["hp"]), hero_max_hp(hero_id))
+
+static func equip_item(hero_id: String, item_id: String) -> bool:
+	var entry: Dictionary = Items.EQUIPMENT.get(item_id, {})
+	if entry.is_empty() or entry["hero"] != hero_id or not party.has(hero_id) or int(inventory.get(item_id, 0)) <= 0:
+		return false
+	if not equipment.has(hero_id):
+		equipment[hero_id] = {}
+	var slot: String = str(entry["slot"])
+	var previous: String = str(equipment[hero_id].get(slot, ""))
+	inventory[item_id] = int(inventory[item_id]) - 1
+	if inventory[item_id] <= 0:
+		inventory.erase(item_id)
+	if previous != "":
+		add_item(previous)
+	equipment[hero_id][slot] = item_id
+	sync_equipped_health(hero_id)
+	return true
+
+static func unequip_item(hero_id: String, slot: String) -> void:
+	if equipment.get(hero_id, {}).has(slot):
+		add_item(str(equipment[hero_id][slot]))
+		equipment[hero_id].erase(slot)
+		sync_equipped_health(hero_id)
+
+static func claim_room_loot() -> Array[String]:
+	var result: Array[String] = []
+	if not run_active:
+		return result
+	var room: Dictionary = floors[floor_index][room_position]
+	if room.get("loot_claimed", false):
+		return result
+	var kind: String = current_room_kind()
+	if kind not in ["battle", "boss", "treasure"]:
+		return result
+	room["loot_claimed"] = true
+	if kind in ["boss", "treasure"] or loot_rng.randf() < Items.GEAR_CHANCE:
+		var item_id: String = Items.roll_equipment(loot_rng, party, kind == "boss")
+		if item_id != "":
+			add_item(item_id)
+			result.append(item_id)
+	# Scrolls are an independent 15% bonus roll, including on bosses.
+	if loot_rng.randf() < Items.SCROLL_CHANCE:
+		var item_id: String = Items.roll_scroll(loot_rng)
+		add_item(item_id)
+		result.append(item_id)
+	return result
+
+
+static func ensure_run_heroes() -> void:
+	for hero_id in party:
+		if not run_heroes.has(hero_id):
+			run_heroes[hero_id] = {
+				"hp": hero_max_hp(hero_id), "max_hp": hero_max_hp(hero_id),
+				"stress": 0, "dead": false, "deaths_door": false,
+				"statuses": {}, "damage_mod": 0, "stress_per_turn": 0,
+				"resolved": false, "resolve_tag": "", "resolve_type": ""
+			}
+
+static func rest_at_camp() -> bool:
+	if not run_active or current_room_kind() != "camp":
+		return false
+	var room: Dictionary = floors[floor_index][room_position]
+	if room.get("camp_used", false):
+		return false
+	ensure_run_heroes()
+	for hero_id in party:
+		var state: Dictionary = run_heroes[hero_id]
+		if state.get("dead", false):
+			continue
+		state["max_hp"] = hero_max_hp(hero_id)
+		state["hp"] = state["max_hp"]
+		# Leave at most 10% of current stress, rounding to a whole point.
+		state["stress"] = int(floor(int(state.get("stress", 0)) * 0.1))
+		state["statuses"] = {}
+		state["deaths_door"] = false
+		state["damage_mod"] = maxi(0, int(state.get("damage_mod", 0)))
+		state["stress_per_turn"] = 0
+		if state.get("resolve_type", "") == "affliction":
+			state["resolved"] = false
+			state["resolve_tag"] = ""
+			state["resolve_type"] = ""
+	room["camp_used"] = true
+	room["cleared"] = true
+	return true
+
+static func merchant_orb_available() -> bool:
+	if not run_active:
+		return false
+	var room: Dictionary = floors[floor_index][room_position]
+	return bool(room.get("merchant_orb", false)) and bool(room["cleared"])
+
+static func item_price(item_id: String) -> int:
+	var entry: Dictionary = Items.item(item_id)
+	if entry.is_empty():
+		return 0
+	return int(entry.get("price", {"common": 8, "rare": 18, "epic": 30, "legendary": 40}.get(entry.get("rarity", "common"), 8)))
+
+static func purchase_item(item_id: String) -> bool:
+	var entry: Dictionary = Items.item(item_id)
+	if entry.is_empty() or entry.get("rarity", "") == "legendary" or (entry.has("hero") and not party.has(entry["hero"])):
+		return false
+	var price: int = item_price(item_id)
+	if gold < price:
+		return false
+	gold -= price
+	add_item(item_id)
+	return true

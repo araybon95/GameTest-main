@@ -1,5 +1,5 @@
 extends Control
-## The Forge — spend Embers earned on expeditions to upgrade the party's cards.
+## The Forge — spend Gold earned on expeditions to upgrade the party's cards.
 ## Upgrades persist in GameState.card_levels and apply in combat via card_stats().
 
 const GameState := preload("res://scripts/game_data.gd")
@@ -29,7 +29,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _build() -> void:
-	$EmbersLabel.text = "EMBERS  ·  %d" % GameState.embers
+	$GoldLabel.text = "GOLD  ·  %d" % GameState.gold
 	var columns: HBoxContainer = $Scroll/Columns
 	for child in columns.get_children():
 		child.queue_free()
@@ -88,7 +88,7 @@ func _make_card_row(card_id: String) -> Control:
 	if GameState.can_upgrade(card_id):
 		var cost: int = GameState.upgrade_cost(card_id)
 		button.text = "UPGRADE  %d" % cost
-		button.disabled = GameState.embers < cost
+		button.disabled = GameState.gold < cost
 		button.pressed.connect(_on_upgrade.bind(card_id))
 	else:
 		button.text = "MAXED"
@@ -100,9 +100,9 @@ func _make_card_row(card_id: String) -> Control:
 func _on_upgrade(card_id: String) -> void:
 	if GameState.upgrade_card(card_id):
 		_build()
-		_show_toast("%s tempered.  Embers: %d" % [str(GameState.CARDS[card_id]["name"]), GameState.embers])
+		_show_toast("%s tempered.  Gold: %d" % [str(GameState.CARDS[card_id]["name"]), GameState.gold])
 	else:
-		_show_toast("Not enough Embers for that upgrade.")
+		_show_toast("Not enough Gold for that upgrade.")
 
 
 func _on_back_pressed() -> void:

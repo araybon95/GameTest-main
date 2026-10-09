@@ -31,7 +31,7 @@ const BUILDINGS: Array[Dictionary] = [
 		"scene": "res://scenes/hub/bestiary.tscn", "locked": false,
 	},
 	{
-		"id": "forge", "name": "The Forge", "subtitle": "Spend Embers to temper your abilities",
+		"id": "forge", "name": "The Forge", "subtitle": "Spend Gold to temper your abilities",
 		"pos": [1660, 700], "size": [340, 340], "highlight": Color("#F58B43"), "glow_scale": 0.96,
 		"scene": "res://scenes/hub/forge.tscn", "locked": false,
 	},
@@ -67,6 +67,15 @@ func _ready() -> void:
 	_build_atmosphere()
 	_build_expeditions()
 	_show_map()
+	var merchant := Button.new()
+	merchant.text = "THE EMPORIUM"
+	merchant.position = Vector2(1470, 40)
+	merchant.size = Vector2(380, 70)
+	merchant.add_theme_font_size_override("font_size", 24)
+	merchant.pressed.connect(func():
+		GameState.shop_return_scene = "res://scenes/hub/settlement.tscn"
+		get_tree().change_scene_to_file("res://scenes/hub/item_shop.tscn"))
+	add_child(merchant)
 	modulate = Color(1, 1, 1, 0)
 	var tween := create_tween()
 	tween.tween_property(self, "modulate", Color.WHITE, 0.6)

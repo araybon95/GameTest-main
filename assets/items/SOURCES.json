@@ -1,0 +1,182 @@
+[
+  {
+    "item_id": "warden_sword",
+    "file": "warden_sword.svg",
+    "source": "https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/lorc/broadsword.svg",
+    "author": "lorc",
+    "icon": "broadsword",
+    "license": "CC BY 3.0",
+    "changes": "Removed square background; recolored silhouette; resized SVG canvas to 128 pixels."
+  },
+  {
+    "item_id": "warden_shield",
+    "file": "warden_shield.svg",
+    "source": "https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/willdabeast/round-shield.svg",
+    "author": "willdabeast",
+    "icon": "round-shield",
+    "license": "CC BY 3.0",
+    "changes": "Removed square background; recolored silhouette; resized SVG canvas to 128 pixels."
+  },
+  {
+    "item_id": "warden_legend",
+    "file": "warden_legend.svg",
+    "source": "https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/lorc/relic-blade.svg",
+    "author": "lorc",
+    "icon": "relic-blade",
+    "license": "CC BY 3.0",
+    "changes": "Removed square background; recolored silhouette; resized SVG canvas to 128 pixels."
+  },
+  {
+    "item_id": "ranger_bow",
+    "file": "ranger_bow.svg",
+    "source": "https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/delapouite/bow-arrow.svg",
+    "author": "delapouite",
+    "icon": "bow-arrow",
+    "license": "CC BY 3.0",
+    "changes": "Removed square background; recolored silhouette; resized SVG canvas to 128 pixels."
+  },
+  {
+    "item_id": "ranger_armor",
+    "file": "ranger_armor.svg",
+    "source": "https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/delapouite/leather-armor.svg",
+    "author": "delapouite",
+    "icon": "leather-armor",
+    "license": "CC BY 3.0",
+    "changes": "Removed square background; recolored silhouette; resized SVG canvas to 128 pixels."
+  },
+  {
+    "item_id": "ranger_legend",
+    "file": "ranger_legend.svg",
+    "source": "https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/delapouite/bow-string.svg",
+    "author": "delapouite",
+    "icon": "bow-string",
+    "license": "CC BY 3.0",
+    "changes": "Removed square background; recolored silhouette; resized SVG canvas to 128 pixels."
+  },
+  {
+    "item_id": "occultist_staff",
+    "file": "occultist_staff.svg",
+    "source": "https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/lorc/wizard-staff.svg",
+    "author": "lorc",
+    "icon": "wizard-staff",
+    "license": "CC BY 3.0",
+    "changes": "Removed square background; recolored silhouette; resized SVG canvas to 128 pixels."
+  },
+  {
+    "item_id": "occultist_focus",
+    "file": "occultist_focus.svg",
+    "source": "https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/delapouite/spell-book.svg",
+    "author": "delapouite",
+    "icon": "spell-book",
+    "license": "CC BY 3.0",
+    "changes": "Removed square background; recolored silhouette; resized SVG canvas to 128 pixels."
+  },
+  {
+    "item_id": "occultist_legend",
+    "file": "occultist_legend.svg",
+    "source": "https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/delapouite/skull-staff.svg",
+    "author": "delapouite",
+    "icon": "skull-staff",
+    "license": "CC BY 3.0",
+    "changes": "Removed square background; recolored silhouette; resized SVG canvas to 128 pixels."
+  },
+  {
+    "item_id": "healer_mace",
+    "file": "healer_mace.svg",
+    "source": "https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/delapouite/flanged-mace.svg",
+    "author": "delapouite",
+    "icon": "flanged-mace",
+    "license": "CC BY 3.0",
+    "changes": "Removed square background; recolored silhouette; resized SVG canvas to 128 pixels."
+  },
+  {
+    "item_id": "healer_symbol",
+    "file": "healer_symbol.svg",
+    "source": "https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/lorc/holy-symbol.svg",
+    "author": "lorc",
+    "icon": "holy-symbol",
+    "license": "CC BY 3.0",
+    "changes": "Removed square background; recolored silhouette; resized SVG canvas to 128 pixels."
+  },
+  {
+    "item_id": "healer_legend",
+    "file": "healer_legend.svg",
+    "source": "https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/lorc/holy-grail.svg",
+    "author": "lorc",
+    "icon": "holy-grail",
+    "license": "CC BY 3.0",
+    "changes": "Removed square background; recolored silhouette; resized SVG canvas to 128 pixels."
+  },
+  {
+    "item_id": "fire_bolt_scroll",
+    "file": "fire_bolt_scroll.svg",
+    "source": "https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/lorc/scroll-unfurled.svg",
+    "author": "lorc",
+    "icon": "scroll-unfurled",
+    "license": "CC BY 3.0",
+    "changes": "Removed square background; recolored silhouette; resized SVG canvas to 128 pixels."
+  },
+  {
+    "item_id": "lightning_bolt_scroll",
+    "file": "lightning_bolt_scroll.svg",
+    "source": "https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/delapouite/scroll-quill.svg",
+    "author": "delapouite",
+    "icon": "scroll-quill",
+    "license": "CC BY 3.0",
+    "changes": "Removed square background; recolored silhouette; resized SVG canvas to 128 pixels."
+  },
+  {
+    "item_id": "sunfire_scroll",
+    "file": "sunfire_scroll.svg",
+    "source": "https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/lorc/tied-scroll.svg",
+    "author": "lorc",
+    "icon": "tied-scroll",
+    "license": "CC BY 3.0",
+    "changes": "Removed square background; recolored silhouette; resized SVG canvas to 128 pixels."
+  },
+  {
+    "item_id": "warden_epic",
+    "file": "warden_epic.svg",
+    "source": "https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/lorc/broadsword.svg",
+    "author": "lorc",
+    "icon": "broadsword",
+    "license": "CC BY 3.0",
+    "changes": "Removed square background; recolored silhouette purple for Epic rarity; resized SVG canvas to 128 pixels."
+  },
+  {
+    "item_id": "ranger_epic",
+    "file": "ranger_epic.svg",
+    "source": "https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/delapouite/bow-arrow.svg",
+    "author": "delapouite",
+    "icon": "bow-arrow",
+    "license": "CC BY 3.0",
+    "changes": "Removed square background; recolored silhouette purple for Epic rarity; resized SVG canvas to 128 pixels."
+  },
+  {
+    "item_id": "occultist_epic",
+    "file": "occultist_epic.svg",
+    "source": "https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/lorc/wizard-staff.svg",
+    "author": "lorc",
+    "icon": "wizard-staff",
+    "license": "CC BY 3.0",
+    "changes": "Removed square background; recolored silhouette purple for Epic rarity; resized SVG canvas to 128 pixels."
+  },
+  {
+    "item_id": "healer_epic",
+    "file": "healer_epic.svg",
+    "source": "https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/delapouite/flanged-mace.svg",
+    "author": "delapouite",
+    "icon": "flanged-mace",
+    "license": "CC BY 3.0",
+    "changes": "Removed square background; recolored silhouette purple for Epic rarity; resized SVG canvas to 128 pixels."
+  },
+  {
+    "item_id": "storm_lance_scroll",
+    "file": "storm_lance_scroll.svg",
+    "source": "https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/delapouite/scroll-quill.svg",
+    "author": "delapouite",
+    "icon": "scroll-quill",
+    "license": "CC BY 3.0",
+    "changes": "Removed square background; recolored silhouette purple for Epic rarity; resized SVG canvas to 128 pixels."
+  }
+]
