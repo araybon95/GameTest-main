@@ -11,15 +11,24 @@ static var adult_confirmed: bool = false
 
 
 func _ready() -> void:
+	preload("res://scripts/settlement_music.gd").stop()
 	var music := AudioStreamPlayer.new()
 	music.name = "TitleMusic"
-	var theme_music := load("res://assets/audio/title_theme.mp3") as AudioStreamMP3
+	var theme_music := load("res://assets/audio/title_screen.mp3") as AudioStreamMP3
 	theme_music.loop = true
 	music.stream = theme_music
 	music.volume_db = -14.0
+	music.bus = "Music" if AudioServer.get_bus_index("Music") >= 0 else "Master"
 	add_child(music)
 	tree_exiting.connect(music.stop)
 	music.play()
+	var continue_button := Button.new()
+	continue_button.text = "CONTINUE SAVED JOURNEY"
+	continue_button.position = Vector2(700, 845)
+	continue_button.size = Vector2(520, 60)
+	continue_button.disabled = preload("res://scripts/save_files.gd").summary(0) == "Empty"
+	continue_button.pressed.connect(func(): get_node("/root/GameSettings").request_continue())
+	add_child(continue_button)
 	_style_buttons()
 	# Gentle fade-in from black when the screen loads.
 	modulate = Color(1, 1, 1, 0)

@@ -29,3 +29,11 @@ Modifications: background removed, silhouettes recolored and canvas sized for As
 - occultist_epic: wizard-staff by lorc — https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/lorc/wizard-staff.svg (recolored purple).
 - healer_epic: flanged-mace by delapouite — https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/delapouite/flanged-mace.svg (recolored purple).
 - storm_lance_scroll: scroll-quill by delapouite — https://raw.githubusercontent.com/game-icons/icons/82d948812bfe3f269ef8f731dcdb07b08160edc4/delapouite/scroll-quill.svg (recolored purple).
+
+Unique weapons reuse the credited base silhouettes: warden_frostblade → warden_sword; ranger_venombow → ranger_bow; occultist_plaguestaff → occultist_staff; healer_frostmace → healer_mace, with original colored highlights. Potion bottles, Venom Heart and Winter Shard are original Ashen SVG artwork.
+
+Crusader axe/epic/unique/legendary icons: original Ashen spiked axe SVG; crusader_armor adapts ranger_armor (credited above).
+
+Apothecary tonics (might_tonic, focus_tonic, ward_tonic): recolored variants of the original Ashen potion bottle SVG. Healing Scroll: scroll-unfurled by lorc, recolored green; same Game-icons.net CC BY 3.0 source credited for fire_bolt_scroll above.
+
+Field Bandage, Field Antidote and Calming Incense reuse original Ashen potion silhouettes. Thornbound Reliquary reuses the original Venom Heart; Septic Physician Seal reuses the existing Clotting Seal silhouette and its attribution above.

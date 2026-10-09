@@ -16,6 +16,7 @@ var _selected_slot: int = 0
 
 func _ready() -> void:
 	$BackButton.pressed.connect(_on_back_pressed)
+	GameState.load_progression()
 	_refresh()
 	modulate = Color(1, 1, 1, 0)
 	var tween := create_tween()
@@ -51,8 +52,11 @@ func _build_roster() -> void:
 		child.queue_free()
 	for hero_id in GameState.HEROES.keys():
 		var in_party: bool = GameState.party.has(str(hero_id))
-		var tag: String = "IN PARTY" if in_party else "BENCHED"
+		var locked: bool = hero_id == "crusader" and not GameState.crusader_unlocked
+		var tag: String = "LOCKED · OLD ROAD FLOOR 2" if locked else ("IN PARTY" if in_party else "BENCHED")
 		var card: Button = _hero_card(str(hero_id), tag, false)
+		card.disabled = locked
+		card.tooltip_text = str(GameState.hero(str(hero_id)).get("lore", "")) + ("\nFree him from the spiked coffin on Old Road floor 2." if locked else "")
 		card.pressed.connect(_on_hero_pressed.bind(str(hero_id)))
 		container.add_child(card)
 
@@ -63,6 +67,8 @@ func _on_slot_pressed(slot: int) -> void:
 
 
 func _on_hero_pressed(hero_id: String) -> void:
+	if hero_id == "crusader" and not GameState.crusader_unlocked:
+		return
 	var existing: int = GameState.party.find(hero_id)
 	var displaced: String = str(GameState.party[_selected_slot])
 	if displaced == hero_id:
@@ -83,7 +89,7 @@ func _on_back_pressed() -> void:
 func _hero_card(hero_id: String, tag_text: String, highlighted: bool) -> Button:
 	var card := Button.new()
 	card.text = ""
-	card.custom_minimum_size = Vector2(300.0, 300.0)
+	card.custom_minimum_size = Vector2(245.0, 300.0)
 	card.focus_mode = Control.FOCUS_NONE
 	for state in ["font_color", "font_hover_color", "font_pressed_color", "font_disabled_color", "font_focus_color"]:
 		card.add_theme_color_override(state, Color(IVORY))
@@ -124,7 +130,7 @@ func _hero_card(hero_id: String, tag_text: String, highlighted: bool) -> Button:
 		empty.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
 	var name_text: String = "—" if hero_id == "" else str(GameState.hero(hero_id).get("name", hero_id))
-	contents.add_child(_make_label(name_text, 24, Color(IVORY), true))
+	contents.add_child(_make_label(name_text, 21, Color(IVORY), true))
 	if hero_id != "":
 		contents.add_child(_make_label("Max HP %d" % int(GameState.hero(hero_id).get("max_hp", 0)), 17, Color(MUTED), true))
 	contents.add_child(_make_label(tag_text, 17, Color(GOLD), true))

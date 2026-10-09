@@ -88,11 +88,13 @@ func run_tests() -> void:
 	assert(not battle.hero_state["warden"]["statuses"].has("bleed"))
 	# Multi-hit move lands both hits on the predicted target.
 	battle.round_number = 2
-	battle.hero_state["ranger"]["block"] = 0
-	var before: int = int(battle.hero_state["ranger"]["hp"])
+	var predicted: String = battle._enemy_target()
+	assert(predicted == "warden", "Melee attacks respect front formation")
+	battle.hero_state[predicted]["block"] = 0
+	var before: int = int(battle.hero_state[predicted]["hp"])
 	var per_hit: int = int(round(battle._enemy_attack_power() * 0.6))
 	battle._enemy_action()
-	assert(battle.hero_state["ranger"]["hp"] == before - per_hit * 2)
+	assert(battle.hero_state[predicted]["hp"] == before - per_hit * 2)
 	# Poison/burn can trigger Death's Door and a subsequent tick can slay.
 	battle.hero_state["occultist"]["hp"] = 1
 	Rules.apply_status(battle.hero_state["occultist"]["statuses"], "poison")

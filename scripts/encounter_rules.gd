@@ -7,6 +7,14 @@ const STATUS: Dictionary = {
 	"chill": {"damage": 0, "turns": 2},
 }
 const MOVES: Dictionary = {
+	"moth_metamorph": [{"name": "Proboscis Wound", "scale": 1.0, "status": "bleed"}, {"name": "Septic Dust", "scale": 0.75, "status": "poison"}, {"name": "Ragged Claws", "scale": 0.5, "hits": 2}],
+	"moth_oleander": [{"name": "Knight's Incision", "scale": 1.0, "status": "bleed"}, {"name": "Cold Wingbeat", "scale": 0.8, "status": "chill"}, {"name": "Broken Chivalry", "scale": 0.55, "hits": 2}],
+	"moth_exuvia": [{"name": "Queen's Kiss", "scale": 0.85, "status": "poison"}, {"name": "Rapture of the Lamp", "effect": "lament", "stress": 4}, {"name": "Silken Flensing", "scale": 0.55, "hits": 2, "status": "bleed"}],
+ "keep_footman": [{"name": "Rusted Cleaver", "scale": 1.0, "status": "bleed"}, {"name": "Shield Rush", "scale": 0.8, "status": "chill"}, {"name": "Deadman's Flurry", "scale": 0.55, "hits": 2}],
+ "keep_crossbow": [{"name": "Gravebolt", "scale": 1.0, "status": "chill"}, {"name": "Septic Quarrel", "scale": 0.8, "status": "poison"}, {"name": "Double Reload", "scale": 0.55, "hits": 2}],
+ "keep_wolfguard": [{"name": "Wolf's Cleave", "scale": 1.0, "status": "bleed"}, {"name": "Rending Poleaxe", "scale": 0.6, "hits": 2}, {"name": "Winter's Hunt", "scale": 0.85, "status": "chill"}],
+ "keep_son": [{"name": "Broken Oath", "scale": 1.0, "status": "bleed"}, {"name": "Howl of the Last Son", "effect": "lament", "stress": 4}, {"name": "Moonlit Greatsword", "scale": 0.9, "status": "chill"}],
+ "undying_lord": [{"name": "Tyrant's Verdict", "scale": 1.0, "status": "bleed"}, {"name": "Grasp of the Court", "scale": 0.55, "hits": 2, "status": "chill"}, {"name": "Unending Dominion", "effect": "lament", "stress": 5}],
 	"anguish_penitent": [{"name": "Supplicant's Hook", "scale": 1.0, "status": "bleed"}, {"name": "Cauterizing Prayer", "scale": 0.8, "status": "burn"}, {"name": "Litany of Submission", "effect": "lament", "stress": 3}],
 	"anguish_vessel": [{"name": "Graft Lash", "scale": 0.55, "hits": 2}, {"name": "Septic Offering", "scale": 0.8, "status": "poison"}, {"name": "Numbing Touch", "scale": 0.8, "status": "chill"}],
 	"harrowed_giant": [{"name": "Chain Litany", "scale": 1.0, "status": "bleed"}, {"name": "Crushing Benediction", "scale": 1.2}, {"name": "Kneeling Hymn", "effect": "lament", "stress": 4}],
@@ -53,25 +61,28 @@ static func make_enemy(state: Dictionary, creature_id: String, depth: int, boss:
 	elif support:
 		hp = maxi(1, int(round(normal_hp * 0.3)))
 		attack = maxi(1, int(round(normal_attack * 0.3)))
-	return {"creature": creature_id, "name": ("Support " if support else ("Dread " if boss and not state.get("tags", []).has("Remade") else "")) + str(state.get("name", "Enemy")),
+	return {"creature": creature_id, "name": ("Support " if support else ("Dread " if boss and not state.get("tags", []).has("Remade") and not state.get("tags", []).has("Revenant") and not state.get("tags", []).has("Moth") else "")) + str(state.get("name", "Enemy")),
 		"max_hp": hp, "hp": hp, "attack": attack, "normal_hp": normal_hp, "normal_attack": normal_attack,
 		"support": support, "boss": boss, "art": str(state.get("art", "")), "undead": bool(state.get("undead", false)),
 		"block": 0, "mark": 0, "weak": 0, "statuses": {}, "moves": MOVES.get(creature_id, MOVES["hollow_villager"]).duplicate(true)}
 
-static func apply_status(statuses: Dictionary, status_id: String, potency: float = 1.0) -> void:
+static func apply_status(statuses: Dictionary, status_id: String, potency: float = 1.0, stacking: bool = false) -> void:
 	if not STATUS.has(status_id):
 		return
-	var previous_damage: int = int(statuses.get(status_id, {}).get("damage", 0))
-	# Reapplication refreshes duration; it never creates unlimited stacks.
-	statuses[status_id] = STATUS[status_id].duplicate(true)
-	if int(statuses[status_id]["damage"]) > 0:
-		statuses[status_id]["damage"] = maxi(previous_damage, maxi(1, int(round(int(statuses[status_id]["damage"]) * potency))))
+	var previous: Dictionary = statuses.get(status_id, {})
+	var stacks: int = mini(3, int(previous.get("stacks", 1)) + 1) if stacking and not previous.is_empty() else int(previous.get("stacks", 1))
+	var base_damage: int = maxi(int(previous.get("base_damage", 0)), maxi(1, int(round(int(STATUS[status_id]["damage"]) * potency))))
+	statuses[status_id] = {"turns": 2, "stacks": stacks, "base_damage": base_damage, "damage": base_damage * stacks if int(STATUS[status_id]["damage"]) > 0 else 0}
 
 static func damage_after_chill(amount: int, statuses: Dictionary) -> int:
-	return maxi(0, int(floor(amount * 0.75))) if statuses.has("chill") else maxi(0, amount)
+	if not statuses.has("chill"):
+		return maxi(0, amount)
+	var stacks: int = clampi(int(statuses["chill"].get("stacks", 1)), 1, 3)
+	return maxi(0, int(floor(amount * (0.75 - (stacks - 1) * 0.10))))
 
 static func status_text(statuses: Dictionary) -> String:
 	var parts: PackedStringArray = []
 	for status_id in statuses:
-		parts.append("%s %d" % [str(status_id).capitalize(), int(statuses[status_id]["turns"])])
+		var stacks: int = int(statuses[status_id].get("stacks", 1))
+		parts.append("%s%s · %dt" % [str(status_id).capitalize(), " ×%d" % stacks if stacks > 1 else "", int(statuses[status_id]["turns"])])
 	return " · ".join(parts)

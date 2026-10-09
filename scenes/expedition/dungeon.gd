@@ -1,14 +1,19 @@
 extends Control
 
 const GameState = preload("res://scripts/game_data.gd")
+const FloorEntrance = preload("res://scenes/expedition/floor_entrance.gd")
 const ItemButton = preload("res://scenes/ui/item_icon_button.gd")
 var inventory_filter: String = "All"
-var message: String = "Choose an adjacent room. Find the stairs and descend to the final boss."
+var message: String = "Choose a connected room. Cleared routes can be crossed in one click. Find the stairs and descend."
 
 func _ready() -> void:
 	if not GameState.run_active:
 		get_tree().change_scene_to_file("res://scenes/hub/settlement.tscn")
 		return
+	var floor_lore: Array = preload("res://scripts/world_lore.gd").FLOOR_NOTES.get(GameState.selected_expedition.get("id", ""), [])
+	if GameState.floor_index < floor_lore.size(): message = str(floor_lore[GameState.floor_index])
+	if GameState.selected_expedition.get("id", "") == "infested_apothecary":
+		message = "Four chambers: weakened acolytes → camp → Oleander → Exuvia. Clear all three fights to restore the apothecary."
 	refresh()
 
 func label_at(text: String, pos: Vector2, font_size: int = 24) -> void:
@@ -60,6 +65,9 @@ func portrait_at(hero_id: String, rect: Rect2) -> void:
 	add_child(picture)
 
 func refresh() -> void:
+	var runtime = get_node_or_null("/root/GameSettings")
+	if runtime != null: runtime.checkpoint_pending = true
+	if GameState.run_active and GameState.floors[GameState.floor_index][GameState.room_position].get("cleared", false): preload("res://scripts/save_files.gd").save(0)
 	for child in get_children():
 		remove_child(child)
 		child.queue_free()
@@ -67,7 +75,8 @@ func refresh() -> void:
 	panel_at(Rect2(12, 12, 1896, 775), Color("#0D0B0E"))
 	label_at("%s  ·  FLOOR %d / %d" % [GameState.selected_expedition.get("name", "Expedition"), GameState.floor_index + 1, GameState.floor_count], Vector2(40, 25), 30)
 	label_at(GameState.floor_title(), Vector2(1390, 32), 22)
-	label_at(message if not GameState.run_complete else "VICTORY — the guardian has fallen. Return to the Hamlet.", Vector2(40, 75), 20)
+	var victory_message: String = "VICTORY — the Apothecary is restored! Return to the Hamlet to purchase remedies." if GameState.selected_expedition.get("id", "") == "infested_apothecary" else "VICTORY — the guardian has fallen. Return to the Hamlet."
+	label_at(message if not GameState.run_complete else victory_message, Vector2(40, 75), 20)
 	var rooms: Dictionary = GameState.floors[GameState.floor_index]
 	var map = preload("res://scenes/expedition/dungeon_map.gd").new()
 	map.name = "DungeonMap"
@@ -97,11 +106,18 @@ func refresh() -> void:
 		hover.border_color = Color("#D3AF72")
 		hover.set_border_width_all(2)
 		button.add_theme_stylebox_override("hover", hover)
-		button.tooltip_text = str(room["kind"]).capitalize() + (" · Cleared" if room["cleared"] else " · Unexplored") + (" · Merchant orb" if room.get("merchant_orb", false) else "")
-		button.disabled = current or GameState.run_complete or abs(location.x - GameState.room_position.x) + abs(location.y - GameState.room_position.y) != 1
-	label_at("Crossed blades: battle    Ringed blades: boss    Chest: treasure    Flame: camp    Blue orb: merchant    Steps: descend", Vector2(40, 742), 18)
+		button.tooltip_text = str(room.get("name", str(room["kind"]).capitalize())) + (" · Cleared" if room["cleared"] else " · Unexplored") + (" · Merchant orb" if room.get("merchant_orb", false) else "")
+		if room["kind"] == "event":
+			button.tooltip_text = "? · " + str(room.get("event_layout", "room")).capitalize() + " event" + (" · Resolved" if room["cleared"] else " · Unexplored")
+		button.tooltip_text += "\n" + GameState.scouting_description(room)
+		button.disabled = current or GameState.run_complete or route_to(location).is_empty()
+	label_at("Blades: battle    Ringed blades: boss    Chest: treasure    Flame: camp    Blue orb: merchant    Steps: descend    ?: random event", Vector2(40, 742), 18)
 	panel_at(Rect2(12, 790, 1896, 278))
 	label_at("CLEARED %d%%" % int(100.0 * cleared / rooms.size()), Vector2(45, 810), 22)
+	var scout := button_at("SCOUT AREA · %d" % GameState.scout_uses, Vector2(295, 935), scout_area)
+	scout.size = Vector2(230, 100)
+	scout.tooltip_text = "Reveal encounters within two rooms (three with a restored Watchtower). Hover scouted rooms for their enemies or event risks. Optional; no gold cost."
+	scout.disabled = GameState.scout_uses <= 0 or not rooms[GameState.room_position]["cleared"] or GameState.run_complete
 	label_at("EXPLORED %d%%" % int(100.0 * revealed / rooms.size()), Vector2(1600, 810), 22)
 	label_at("GOLD  %d" % GameState.gold, Vector2(45, 865), 24)
 	var retreat_button := button_at("RETURN TO HAMLET" if GameState.run_complete else "RETREAT", Vector2(45, 935), retreat)
@@ -125,7 +141,7 @@ func refresh() -> void:
 		button.name = "Party_" + hero_id
 		button.size = Vector2(230, 200)
 		portrait_at(hero_id, Rect2(position + Vector2(10, 4), Vector2(210, 127)))
-		label_at(str(hero["name"]).to_upper(), position + Vector2(16, 133), 22)
+		label_at(str(hero["name"]).to_upper(), position + Vector2(16, 133), 17 if hero_id == "crusader" else 22)
 		label_at("%d HP  ·  %d Stress%s" % [int(state.get("hp", hero["max_hp"])), int(state.get("stress", 0)), " · Slain" if state.get("dead", false) else ""], position + Vector2(16, 169), 16)
 
 func inspect_hero(hero_id: String) -> void:
@@ -142,9 +158,10 @@ func inspect_hero(hero_id: String) -> void:
 	portrait_at(hero_id, Rect2(50, 55, 240, 250))
 	var hero: Dictionary = GameState.hero(hero_id)
 	var state: Dictionary = GameState.run_heroes.get(hero_id, {})
-	label_at(str(hero["name"]).to_upper(), Vector2(60, 325), 32)
+	label_at(str(hero["name"]).to_upper(), Vector2(60, 325), 24 if hero_id == "crusader" else 32)
 	label_at("Health  %d / %d\nStress  %d / 100\nDamage bonus  +%d\nBlock bonus  +%d\nHealing bonus  +%d\n%s" % [int(state.get("hp", GameState.hero_max_hp(hero_id))), GameState.hero_max_hp(hero_id), int(state.get("stress", 0)), GameState.equipment_bonus(hero_id, "damage"), GameState.equipment_bonus(hero_id, "block"), GameState.equipment_bonus(hero_id, "heal"), str(state.get("resolve_tag", ""))], Vector2(60, 385), 21)
 	label_at("EQUIPMENT", Vector2(390, 55), 28)
+	label_at("Trinket bonuses: +%d%% health · +%d%% skill damage · +%d%% accuracy\nBleed resist %d%% · Debuff resist %d%%" % [GameState.equipment_bonus(hero_id, "max_hp_percent"), GameState.equipment_bonus(hero_id, "damage_percent"), GameState.equipment_bonus(hero_id, "accuracy"), GameState.equipment_bonus(hero_id, "bleed_resist"), GameState.equipment_bonus(hero_id, "debuff_resist")], Vector2(390, 720), 17)
 	label_at("Select gear in inventory to equip. Click an equipped slot to remove.", Vector2(390, 105), 18)
 	for index in range(6):
 		var slot_id: String = GameState.Items.SLOTS[index]
@@ -158,13 +175,13 @@ func inspect_hero(hero_id: String) -> void:
 		add_child(slot)
 		label_at(slot_id.replace("_", " ").capitalize(), slot.position + Vector2(0, 94), 18)
 	label_at("PARTY INVENTORY", Vector2(1170, 55), 28)
-	label_at("Hover for effects · Click class gear to equip", Vector2(1170, 108), 19)
-	var categories: Array[String] = ["All", "Weapons", "Armor", "Scrolls", "Other"]
+	label_at("Hover for effects · Click gear to equip / potions to use", Vector2(1170, 108), 19)
+	var categories: Array[String] = ["All", "Weapons", "Armor", "Trinkets", "Consumables", "Other"]
 	for index in range(categories.size()):
 		var category: String = categories[index]
-		var filter_button := button_at(("• " if inventory_filter == category else "") + category, Vector2(1170 + index * 128, 150), filter_inventory.bind(hero_id, category))
-		filter_button.size = Vector2(120, 50)
-		filter_button.add_theme_font_size_override("font_size", 17)
+		var filter_button := button_at(("• " if inventory_filter == category else "") + ("Usable" if category == "Consumables" else category), Vector2(1170 + index * 108, 150), filter_inventory.bind(hero_id, category))
+		filter_button.size = Vector2(100, 50)
+		filter_button.add_theme_font_size_override("font_size", 15)
 	panel_at(Rect2(1170, 215, 650, 400), Color("#0D0B0E"))
 	var scroll := ScrollContainer.new()
 	scroll.position = Vector2(1180, 225)
@@ -178,7 +195,9 @@ func inspect_hero(hero_id: String) -> void:
 	scroll.add_child(inventory_grid)
 	for item_id in GameState.inventory:
 		var item: Dictionary = GameState.Items.item(item_id)
-		var category: String = "Scrolls" if item.get("kind", "") == "scroll" else ("Weapons" if item.get("slot", "") == "weapon" else ("Armor" if item.get("slot", "") in ["armor", "head"] else "Other"))
+		var category: String = "Consumables" if item.get("kind", "") in ["scroll", "potion"] else ("Weapons" if item.get("slot", "") == "weapon" else ("Armor" if item.get("slot", "") in ["armor", "head"] else "Other"))
+		if item.get("kind", "") == "trinket":
+			category = "Trinkets"
 		if inventory_filter != "All" and inventory_filter != category:
 			continue
 		var icon = ItemButton.new()
@@ -212,7 +231,11 @@ func filter_inventory(hero_id: String, category: String) -> void:
 
 func choose_inventory_item(hero_id: String, item_id: String) -> void:
 	var item: Dictionary = GameState.Items.item(item_id)
-	if item.get("hero", "") == hero_id:
+	if GameState.is_restorative(item_id):
+		if GameState.apply_potion(hero_id, item_id, GameState.run_heroes):
+			inspect_hero(hero_id)
+		return
+	if item.get("kind", "") != "scroll" and (not item.has("hero") or item["hero"] == hero_id):
 		equip_from_inventory(hero_id, item_id)
 	else:
 		var details := AcceptDialog.new()
@@ -244,12 +267,30 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		close_inspection()
 
+func route_to(destination: Vector2i) -> Array:
+	if GameState.navigation_voters.size() > 1:
+		return [destination] if abs(destination.x - GameState.room_position.x) + abs(destination.y - GameState.room_position.y) == 1 else []
+	return preload("res://scripts/dungeon_routes.gd").find(GameState.floors[GameState.floor_index], GameState.room_position, destination)
+
 func move_to(destination: Vector2i) -> void:
-	if not GameState.vote_move("local", destination):
-		return
+	if GameState.floors[GameState.floor_index][GameState.room_position].get("cleared", false): preload("res://scripts/save_files.gd").save(0)
+	var route: Array = route_to(destination)
+	if route.is_empty(): return
+	for step in route:
+		if not GameState.vote_move("local", step): return
 	var room: Dictionary = GameState.floors[GameState.floor_index][destination]
+	if room["cleared"]:
+		message = "Returned to %s. Choose a connected passage." % str(room.get("name", room["kind"]))
 	if not room["cleared"]:
+		var corridor: Dictionary = GameState.enter_corridor()
+		if corridor.get("kind", "") == "gold":
+			message = "Found %d Gold scattered along the hallway." % corridor["amount"]
+			refresh()
+			return
 		match str(room["kind"]):
+			"event":
+				get_tree().change_scene_to_file("res://scenes/expedition/event_room.tscn")
+				return
 			"battle", "boss":
 				get_tree().change_scene_to_file("res://scenes/combat/combatscene.tscn")
 				return
@@ -267,6 +308,13 @@ func move_to(destination: Vector2i) -> void:
 	refresh()
 
 func descend() -> void:
+	if not GameState.can_descend() or has_node("FloorEntrancePrompt"):
+		return
+	var prompt = FloorEntrance.new()
+	prompt.on_descend = enter_next_floor
+	add_child(prompt)
+
+func enter_next_floor() -> void:
 	if GameState.descend():
 		message = "The darkness deepens. Find the next passage."
 		refresh()
@@ -274,3 +322,8 @@ func descend() -> void:
 func retreat() -> void:
 	GameState.end_run()
 	get_tree().change_scene_to_file("res://scenes/hub/settlement.tscn")
+
+func scout_area() -> void:
+	if GameState.scout_area():
+		message = "Scouts reveal nearby encounters. Hover revealed rooms to inspect the danger."
+		refresh()

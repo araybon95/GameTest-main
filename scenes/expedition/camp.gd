@@ -10,7 +10,7 @@ func _ready() -> void:
 func refresh() -> void:
 	clear_screen()
 	panel(Rect2(0, 0, 1920, 1080), Color("#0F0B10"))
-	var backdrop := picture(str(State.selected_expedition.get("camp_background", "res://assets/generated/camp_ruins.png")), Rect2(0, 0, 1920, 815))
+	var backdrop := picture(State.floor_background("camp"), Rect2(0, 0, 1920, 815))
 	backdrop.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	panel(Rect2(520, 45, 880, 265), Color(0.07, 0.05, 0.07, 0.9))
 	var heading := label_at("RESPITE · " + str(State.selected_expedition.get("region", "The Ruins")).to_upper(), Vector2(555, 70), 810, 40)

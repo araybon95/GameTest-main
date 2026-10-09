@@ -9,9 +9,11 @@ func configure(id: String, amount: int = 1) -> void:
 	focus_mode = Control.FOCUS_ALL
 	var entry: Dictionary = Items.item(id)
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color("#100D11")
+	style.bg_color = Color("#080B12")
 	style.border_color = Color(str(Items.RARITY_COLORS.get(entry.get("rarity", ""), "#54454C")))
-	style.set_border_width_all(2)
+	style.set_border_width_all(3)
+	style.shadow_color = Color(style.border_color, 0.45)
+	style.shadow_size = 5
 	style.set_corner_radius_all(3)
 	add_theme_stylebox_override("normal", style)
 	add_theme_stylebox_override("disabled", style)
@@ -31,12 +33,13 @@ func configure(id: String, amount: int = 1) -> void:
 	picture.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(picture)
 	picture.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	picture.offset_left = 10
-	picture.offset_top = 10
-	picture.offset_right = -10
-	picture.offset_bottom = -10
+	picture.modulate = Color(1.3, 1.3, 1.3)
+	picture.offset_left = 6
+	picture.offset_top = 6
+	picture.offset_right = -6
+	picture.offset_bottom = -6
 	var quantity := Label.new()
-	quantity.text = str(amount) if amount > 1 or entry.get("kind", "") == "scroll" else ""
+	quantity.text = str(amount) if amount > 1 or entry.get("kind", "") in ["scroll", "potion"] else ""
 	quantity.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	quantity.add_theme_font_size_override("font_size", 18)
 	quantity.add_theme_color_override("font_color", Color("#F4E9DD"))

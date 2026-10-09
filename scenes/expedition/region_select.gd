@@ -127,8 +127,7 @@ func tier_status(id: String) -> String:
 func embark() -> void:
 	var id: String = REGIONS[region_index]["tiers"][tier_index]
 	if State.select_expedition(id):
-		State.start_run()
-		get_tree().change_scene_to_file("res://scenes/expedition/dungeon.tscn")
+		get_tree().change_scene_to_file("res://scenes/expedition/preparation.tscn")
 
 func return_to_hamlet() -> void:
 	get_tree().change_scene_to_file("res://scenes/hub/settlement.tscn")

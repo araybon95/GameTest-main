@@ -1,4 +1,11 @@
 extends Control
+var combat_audio: Node
+func _play_attack_sound(kind: String) -> void:
+	if combat_audio == null:
+		combat_audio = preload("res://scripts/combat_audio.gd").new()
+		add_child(combat_audio)
+	combat_audio.play_effect(kind)
+
 ## Ashen Expedition — shared-turn party combat with selectable abilities,
 ## independent enemy targets, timed effects, equipment and universal scrolls.
 ## Party composition comes from the Barracks; encounter rosters from the dungeon.
@@ -7,6 +14,9 @@ extends Control
 const GameState := preload("res://scripts/game_data.gd")
 const Rules = preload("res://scripts/encounter_rules.gd")
 const StatusVisual = preload("res://scenes/combat/status_visual.gd")
+const FloorEntrance = preload("res://scenes/expedition/floor_entrance.gd")
+var floor_prompt_shown: bool = false
+var formation_button: Button
 var enemies: Array[Dictionary] = []
 var enemy_views: Array[Button] = []
 var selected_enemy_index: int = 0
@@ -93,6 +103,14 @@ func _apply_expedition() -> void:
 	for creature_id in ids.slice(0, 1 if boss else 3):
 		enemies.append(Rules.make_enemy(GameState.creature(str(creature_id)), str(creature_id), depth, boss))
 		GameState.discover_creature(str(creature_id))
+	for enemy in enemies:
+		enemy["max_hp"] = maxi(1, int(round(int(enemy["max_hp"]) * float(room.get("enemy_health_scale", 1.0)))))
+		enemy["hp"] = enemy["max_hp"]
+		enemy["attack"] = maxi(1, int(round(int(enemy["attack"]) * float(room.get("enemy_damage_scale", 1.0)))))
+	if room.get("corridor_surprise", false):
+		enemies.resize(1)
+		enemies[0]["surprised"] = true
+		enemies[0]["accuracy"] = 70
 	if boss and room.has("support_creature"):
 		var support_id: String = str(room["support_creature"])
 		enemies.append(Rules.make_enemy(GameState.creature(support_id), support_id, depth, false, true))
@@ -100,6 +118,8 @@ func _apply_expedition() -> void:
 	if room.has("boss_phases"):
 		enemies[0]["phase_creatures"] = room["boss_phases"]
 		enemies[0]["phase_index"] = 0
+	if enemies[0]["creature"] == "moth_exuvia" and enemies.size() < 3:
+		enemies.append(_make_cocoon())
 	selected_enemy_index = 0
 	_load_enemy(0)
 
@@ -179,6 +199,7 @@ func _check_battle_over() -> void:
 		battle_over = true
 		_add_log("VICTORY — all enemies defeated.")
 		_award_reward()
+		_offer_floor_entrance()
 	elif _standing_heroes().is_empty():
 		battle_over = true
 		_add_log("DEFEAT — the party has fallen.")
@@ -218,14 +239,21 @@ func _start_battle() -> void:
 			"resolve_type": ""
 		}
 		if GameState.run_heroes.has(hero_id):
+			hero_state[hero_id]["buffs"] = GameState.run_heroes[hero_id].get("buffs", {}).duplicate(true)
+			hero_state[hero_id]["statuses"] = GameState.run_heroes[hero_id].get("statuses", {}).duplicate(true)
 			for key in ["hp", "stress", "dead", "deaths_door", "damage_mod", "stress_per_turn", "resolved", "resolve_tag", "resolve_type"]:
 				hero_state[hero_id][key] = GameState.run_heroes[hero_id][key]
+		hero_state[hero_id]["block"] += GameState.buff_bonus(hero_state[hero_id], "ward")
 
 	selected_hero = str(party[0]) if not party.is_empty() else ""
 	var survivors: Array = _standing_heroes()
 	if not survivors.is_empty():
 		selected_hero = str(survivors[0])
+	if not survivors.is_empty() and not survivors.any(func(id): return GameState.rank_of(str(id)) == "front"):
+		GameState.formation[survivors[0]] = "front"
 	_add_log("%s — %d enemies block the path." % [expedition_title, enemies.size()])
+	if enemies[0].get("surprised", false):
+		_add_log("Caught roaming! This lone enemy is surprised: 30% less damage and 70% attack accuracy for this encounter.")
 	_add_log("%d heroes. %d ability sets. One party turn." % [party.size(), party.size()])
 	_add_log("At 100 Stress a hero faces a resolve test — Virtue or Affliction.")
 	_refresh_all()
@@ -269,6 +297,8 @@ func _play_card(hero_id: String, card_index: int) -> void:
 	if int(state["ap"]) < int(card["cost"]):
 		return
 
+	if card.get("effect", "") == "pain_heal" and int(state["hp"]) <= int(card["self_damage"]):
+		return
 	state["ap"] = int(state["ap"]) - int(card["cost"])
 	if int(state["cooldowns"].get(card_id, 0)) > 0:
 		state["ap"] = int(state["ap"]) + int(card["cost"])
@@ -286,18 +316,36 @@ func _play_card(hero_id: String, card_index: int) -> void:
 func _attack_damage(hero_id: String, card: Dictionary) -> int:
 	var dmg: int = int(card.get("damage", 0)) + int(hero_state[hero_id]["damage_mod"])
 	dmg += GameState.equipment_bonus(hero_id, "damage")
+	if hero_id == "ranger" and GameState.rank_of(hero_id) == "rear":
+		dmg += 1
+	if hero_id == "warden" and enemy_mark_bonus > 0:
+		dmg += 2
+	if hero_id == "crusader" and enemies[selected_enemy_index]["statuses"].has("bleed"):
+		dmg += 2
 	if enemy_undead and card.has("undead_bonus"):
 		dmg += int(card["undead_bonus"])
+	dmg = int(floor(dmg * (1.0 + (GameState.equipment_bonus(hero_id, "damage_percent") + GameState.buff_bonus(hero_state[hero_id], "might")) / 100.0)))
 	return Rules.damage_after_chill(dmg, hero_state[hero_id]["statuses"])
 
 
 func _resolve_card(hero_id: String, card: Dictionary) -> void:
 	card = card.duplicate(true)
+	if hero_id in ["healer", "occultist"] and str(card["effect"]) in ["block", "heal", "team_heal", "team_block", "stress_heal", "weaken"]:
+		_play_attack_sound("spell")
 	if card.has("block"):
 		card["block"] = int(card["block"]) + GameState.equipment_bonus(hero_id, "block")
 	if card.has("heal"):
 		card["heal"] = int(card["heal"]) + GameState.equipment_bonus(hero_id, "heal")
 	match str(card["effect"]):
+		"pain_heal":
+			if int(hero_state[hero_id]["hp"]) > int(card["self_damage"]):
+				hero_state[hero_id]["hp"] -= int(card["self_damage"])
+				_flash(hero_portraits.get(hero_id), Color("#F25A72"))
+				_heal_hero(hero_id, maxi(1, int(floor(GameState.hero_max_hp(hero_id) * int(card["heal_percent"]) / 100.0))))
+				_add_log("%s's barbs draw 2 HP in payment for relief." % _name_of(hero_id))
+		"barbed_charge":
+			_attack_with_equipment(hero_id, card)
+			_gain_block(hero_id, int(card["block"]))
 		"attack":
 			_attack_with_equipment(hero_id, card)
 		"pierce":
@@ -315,6 +363,8 @@ func _resolve_card(hero_id: String, card: Dictionary) -> void:
 		"team_heal":
 			for ally in _standing_heroes():
 				_heal_hero(ally, int(card["heal"]))
+				if hero_id == "healer":
+					hero_state[ally]["statuses"].erase("bleed")
 		"stress_heal":
 			for ally in _standing_heroes():
 				_reduce_stress(ally, int(card["amount"]))
@@ -333,11 +383,23 @@ func _resolve_card(hero_id: String, card: Dictionary) -> void:
 
 
 func _attack_with_equipment(hero_id: String, card: Dictionary, ignore_block: bool = false) -> void:
+	_play_attack_sound("bow" if hero_id == "ranger" else "spell" if hero_id in ["occultist", "healer"] else "sword")
+	var accuracy: float = GameState.hero_accuracy(hero_id, hero_state[hero_id])
+	if accuracy < 100.0 and randf() * 100.0 >= accuracy:
+		_add_log("%s misses %s." % [_name_of(hero_id), enemy_name])
+		return
 	var target: int = selected_enemy_index
 	var phase: int = int(enemies[target].get("phase_index", 0))
 	var actual: int = _deal_enemy_damage(_attack_damage(hero_id, card), ignore_block)
+	GameState.add_deed(hero_id, "damage", actual)
 	if actual <= 0:
 		return
+	if hero_id == "occultist" and int(enemies[target]["hp"]) > 0 and int(enemies[target].get("phase_index", 0)) == phase:
+		Rules.apply_status(enemies[target]["statuses"], "poison")
+		_add_log("Occult covenant: the wound carries Poison.")
+	if card.get("status", "") == "bleed" and int(enemies[target].get("phase_index", 0)) == phase and int(enemies[target]["hp"]) > 0:
+		Rules.apply_status(enemies[target]["statuses"], "bleed")
+		_add_log("%s's barbed armor tears %s: Bleed." % [_name_of(hero_id), enemies[target]["name"]])
 	var drained: int = int(floor(actual * GameState.equipment_bonus(hero_id, "life_drain") / 100.0))
 	if drained > 0:
 		_heal_hero(hero_id, drained)
@@ -345,6 +407,12 @@ func _attack_with_equipment(hero_id: String, card: Dictionary, ignore_block: boo
 		Rules.apply_status(enemies[target]["statuses"], "poison")
 		_add_log("%s's weapon poisons %s." % [_name_of(hero_id), enemies[target]["name"]])
 
+	if int(enemies[target].get("phase_index", 0)) == phase and int(enemies[target]["hp"]) > 0:
+		for effect in ["poison", "chill"]:
+			var chance: int = mini(50, GameState.equipment_bonus(hero_id, "unique_" + effect))
+			if chance > 0 and randf() * 100 < chance:
+				Rules.apply_status(enemies[target]["statuses"], effect, 1.0, true)
+				_add_log("%s inflicts %s on %s." % [_name_of(hero_id), effect.capitalize(), enemies[target]["name"]])
 
 # -------------------- ENEMY --------------------
 
@@ -354,6 +422,8 @@ func _enemy_attack_power() -> int:
 	var base: int = int(round((int(enemy["normal_attack"]) + escalation) * 0.3)) if enemy["support"] else enemy_attack_base + escalation
 	if enemy_weak_rounds > 0:
 		base = maxi(0, base - 3)
+	if enemy.get("surprised", false):
+		base = int(floor(base * 0.7))
 	return Rules.damage_after_chill(base, enemy["statuses"])
 
 
@@ -361,15 +431,28 @@ func _enemy_target() -> String:
 	var standing: Array = _standing_heroes()
 	if standing.is_empty():
 		return ""
-	return str(standing[(round_number - 1 + selected_enemy_index) % standing.size()])
+	var move: Dictionary = _enemy_move(selected_enemy_index)
+	var ranged: bool = move.get("reach", false) or str(enemies[selected_enemy_index]["creature"]) in ["gallows_scout", "keep_crossbow", "moth_exuvia"]
+	var targets: Array = standing.filter(func(id): return GameState.rank_of(str(id)) == ("rear" if ranged else "front"))
+	if targets.is_empty():
+		targets = standing
+	return str(targets[(round_number - 1 + selected_enemy_index) % targets.size()])
 
 
 func _enemy_move(index: int) -> Dictionary:
 	var enemy: Dictionary = enemies[index]
+	if enemy.get("cocoon", false):
+		return {"name": "Hatching", "effect": "hatch"}
+	if enemy["creature"] in ["moth_oleander", "keep_son"]:
+		return [{"name": "Guarded Incision", "scale": 0.75}, {"name": "Heavy Cleave", "scale": 1.25, "status": "bleed"}, {"name": "Exposed Recovery", "scale": 0.5}][(round_number - 1) % 3]
 	if enemy["support"] and (round_number - 1) % 3 == 1:
 		return {"name": "Cover Ally", "effect": "ally_guard"}
 	var moves: Array = enemy["moves"]
-	return moves[(round_number - 1 + index) % moves.size()]
+	var move: Dictionary = moves[(round_number - 1 + index) % moves.size()].duplicate()
+	if enemy["creature"] == "keep_wolfguard" and (round_number - 1) % 3 == 2:
+		move["pull"] = true
+		move["reach"] = true
+	return move
 
 
 func _enemy_action() -> void:
@@ -384,12 +467,35 @@ func _enemy_action() -> void:
 		if enemy_hp <= 0:
 			_store_enemy()
 			continue
+		if enemies[index].get("cocoon", false):
+			enemies[index]["age"] += 1
+			if enemies[index]["age"] >= 2:
+				var hatchling: Dictionary = Rules.make_enemy(GameState.creature("moth_metamorph"), "moth_metamorph", 0)
+				hatchling["max_hp"] = 13
+				hatchling["hp"] = 13
+				hatchling["attack"] = 2
+				hatchling["support"] = true
+				enemies[index] = hatchling
+				enemy_views[index].get_node("EnemyArt").texture = _load_texture(hatchling["art"])
+				_add_log("The cocoon hatches into a weakened Metamorph!")
+				_load_enemy(index)
+			continue
+		if enemies[index]["creature"] == "undying_lord" and enemies.any(func(e): return e.get("support", false) and int(e["hp"]) > 0):
+			enemy_hp = mini(enemy_max_hp, enemy_hp + 8)
+			_add_log("Court tribute restores 8 HP. Kill the support to stop it.")
+		if enemies[index]["creature"] == "moth_exuvia" and round_number % 3 == 0:
+			for slot in range(1, enemies.size()):
+				if int(enemies[slot]["hp"]) <= 0:
+					enemies[slot] = _make_cocoon()
+					enemy_views[slot].get_node("EnemyArt").texture = _load_texture(enemies[slot]["art"])
+					_add_log("Exuvia weaves another cocoon: two enemy turns to hatch.")
+					break
 		var move: Dictionary = _enemy_move(index)
 		if move.get("effect", "") == "lament":
 			for hero_id in _standing_heroes():
 				_gain_stress(hero_id, int(move.get("stress", 4)))
 				if move.has("status"):
-					Rules.apply_status(hero_state[hero_id]["statuses"], str(move["status"]))
+					_apply_hero_status(hero_id, str(move["status"]))
 			_add_log("%s intones %s: the party gains %d Stress." % [enemy_name, move["name"], int(move.get("stress", 4))])
 		elif move.get("effect", "") == "remake":
 			enemy_hp = mini(enemy_max_hp, enemy_hp + int(move.get("heal", 12)))
@@ -404,15 +510,21 @@ func _enemy_action() -> void:
 			_add_log("%s covers %s: +%d Block." % [enemy_name, enemies[ally]["name"], amount])
 		else:
 			var damage: int = maxi(0, int(round(_enemy_attack_power() * float(move.get("scale", 1.0)))))
+			_play_attack_sound("bow" if enemies[index]["creature"] in ["gallows_scout", "keep_crossbow"] else "spell" if move.get("status", "") in ["burn", "poison", "chill"] else "sword")
 			for hit in range(int(move.get("hits", 1))):
 				var target: String = _enemy_target()
 				if target == "":
 					break
+				if enemies[index].get("surprised", false) and float(enemies[index].get("accuracy", 100)) < 100.0 and randf() * 100.0 >= float(enemies[index].get("accuracy", 100)):
+					_add_log("%s stumbles: %s misses %s." % [enemy_name, move["name"], _name_of(target)])
+					continue
 				var actual: int = _apply_damage(target, damage)
 				_add_log("%s uses %s on %s: %d damage." % [enemy_name, move["name"], _name_of(target), damage])
 				if actual > 0 and not hero_state[target]["dead"] and move.has("status"):
-					Rules.apply_status(hero_state[target]["statuses"], str(move["status"]), 0.3 if enemies[index]["support"] else 1.0)
-					_add_log("%s suffers %s (2 turns)." % [_name_of(target), str(move["status"]).capitalize()])
+					_apply_hero_status(target, str(move["status"]), 0.3 if enemies[index]["support"] else 1.0)
+				if actual > 0 and move.get("pull", false) and not hero_state[target]["dead"]:
+					GameState.formation[target] = "front"
+					_add_log("%s is dragged to the front!" % _name_of(target))
 				_gain_stress(target, 2)
 				var reflected: int = int(floor(actual * GameState.equipment_bonus(target, "reflection") / 100.0))
 				if reflected > 0:
@@ -436,6 +548,8 @@ func _enemy_intent_text() -> String:
 	if battle_over:
 		return "Encounter finished"
 	var move: Dictionary = _enemy_move(selected_enemy_index)
+	if enemies[selected_enemy_index].get("cocoon", false):
+		return "Hatches in %d enemy turns\nDestroy it to prevent a Metamorph" % (2 - int(enemies[selected_enemy_index]["age"]))
 	if move.get("effect", "") == "lament":
 		return "%s · Party +%d Stress%s" % [move["name"], int(move.get("stress", 4)), " · Chill" if move.has("status") else ""]
 	if move.get("effect", "") == "remake":
@@ -444,8 +558,14 @@ func _enemy_intent_text() -> String:
 		return "Cover ally · +%d Block" % enemy_attack_base
 	var target: String = _enemy_target()
 	var damage: int = int(round(_enemy_attack_power() * float(move.get("scale", 1.0))))
-	return "%s → %s\n%d × %d%s" % [move["name"], _name_of(target), damage, int(move.get("hits", 1)), " · " + str(move["status"]).capitalize() if move.has("status") else ""]
+	return "%s → %s\n%d × %d%s%s" % [move["name"], _name_of(target), damage, int(move.get("hits", 1)), " · " + str(move["status"]).capitalize() if move.has("status") else "", " · Pull" if move.get("pull", false) else ""]
 
+
+func _apply_hero_status(hero_id: String, status: String, potency: float = 1.0) -> void:
+	if GameState.try_hero_status(hero_id, hero_state[hero_id]["statuses"], status, potency):
+		_add_log("%s suffers %s (2 rounds)." % [_name_of(hero_id), status.capitalize()])
+	else:
+		_add_log("%s resists %s." % [_name_of(hero_id), status.capitalize()])
 
 func _advance_chill(statuses: Dictionary) -> void:
 	if statuses.has("chill"):
@@ -477,7 +597,7 @@ func _tick_hero_statuses(hero_id: String) -> void:
 		var damage: int = int(effect["damage"])
 		if status_id == "poison":
 			damage = maxi(0, int(ceil(damage * (1.0 - minf(100.0, GameState.equipment_bonus(hero_id, "poison_resist")) / 100.0))))
-		_apply_damage(hero_id, damage, true)
+		_apply_damage(hero_id, damage, true, status_id.capitalize())
 		_add_log("%s takes %d %s damage." % [_name_of(hero_id), damage, status_id])
 		effect["turns"] = int(effect["turns"]) - 1
 		if int(effect["turns"]) <= 0:
@@ -490,12 +610,16 @@ func _deal_enemy_damage(amount: int, ignore_block: bool = false) -> int:
 	var target_index: int = selected_enemy_index
 	var hp_before: int = enemy_hp
 	var total: int = amount + enemy_mark_bonus
+	if enemies[selected_enemy_index]["creature"] in ["moth_oleander", "keep_son"]:
+		total = int(round(total * (0.5 if round_number % 3 == 1 else 1.5 if round_number % 3 == 0 else 1.0)))
 	enemy_mark_bonus = 0
 	var absorbed: int = 0
 	if not ignore_block:
 		absorbed = mini(total, enemy_block)
 		enemy_block -= absorbed
 	var damage: int = total - absorbed
+	if total > 0 and absorbed == total:
+		_play_attack_sound("block")
 	enemy_hp = maxi(0, enemy_hp - damage)
 	_add_log("%s takes %d damage%s." % [enemy_name, damage, " (%d blocked)" % absorbed if absorbed > 0 else ""])
 	if damage > 0:
@@ -510,7 +634,7 @@ func _deal_enemy_damage(amount: int, ignore_block: bool = false) -> int:
 	return mini(hp_before, damage)
 
 
-func _apply_damage(hero_id: String, amount: int, bypass_block: bool = false) -> int:
+func _apply_damage(hero_id: String, amount: int, bypass_block: bool = false, cause: String = "") -> int:
 	var state: Dictionary = hero_state[hero_id]
 	if bool(state["dead"]):
 		return 0
@@ -518,6 +642,8 @@ func _apply_damage(hero_id: String, amount: int, bypass_block: bool = false) -> 
 	state["block"] = int(state["block"]) - absorbed
 	var damage: int = amount - absorbed
 	if damage <= 0:
+		if amount > 0 and absorbed == amount and not bypass_block:
+			_play_attack_sound("block")
 		_add_log("%s blocks the blow." % _name_of(hero_id))
 		_flash(hero_buttons[hero_id], Color("#C9C4B0"))
 		return 0
@@ -528,6 +654,7 @@ func _apply_damage(hero_id: String, amount: int, bypass_block: bool = false) -> 
 	if bool(state["deaths_door"]) or int(state["hp"]) <= 0:
 		state["dead"] = true
 		state["deaths_door"] = false
+		GameState.record_death(hero_id, cause if not cause.is_empty() else enemy_name)
 		_add_log("%s is slain at Death's Door!" % _name_of(hero_id))
 		return damage
 	var remaining: int = int(state["hp"]) - damage
@@ -547,6 +674,7 @@ func _heal_hero(hero_id: String, amount: int) -> void:
 		return
 	var before: int = int(state["hp"])
 	state["hp"] = mini(int(state["max_hp"]), before + amount)
+	GameState.add_deed(hero_id, "healing", int(state["hp"]) - before)
 	if int(state["hp"]) > 0:
 		state["deaths_door"] = false
 	_add_log("%s heals %d HP." % [_name_of(hero_id), int(state["hp"]) - before])
@@ -619,7 +747,12 @@ func _end_turn() -> void:
 		var state: Dictionary = hero_state[hero_id]
 		_tick_hero_statuses(hero_id)
 		state["block"] = 0
+		GameState.tick_buffs(state)
+		state["block"] = GameState.buff_bonus(state, "ward")
 		if _is_standing(hero_id):
+			_gain_stress(hero_id, GameState.equipment_bonus(hero_id, "curse_stress"))
+			if GameState.rank_of(hero_id) == "front":
+				state["block"] += 2
 			var regenerated: int = GameState.equipment_bonus(hero_id, "regeneration")
 			if regenerated > 0:
 				_heal_hero(hero_id, regenerated)
@@ -653,7 +786,13 @@ func _refresh_all() -> void:
 	selected_portrait.texture = _load_texture(str(GameState.hero(selected_hero).get("art", "")))
 	_sync_portrait(selected_portrait, hero)
 	selected_info.text = "%s\n\nHealth  %d / %d\nStress  %d / 100\nBlock  %d\nAction points  %d / 2\n%s" % [str(hero["name"]).to_upper(), int(hero["hp"]), int(hero["max_hp"]), int(hero["stress"]), int(hero["block"]), int(hero["ap"]), "DEATH'S DOOR" if hero["deaths_door"] else str(hero["resolve_tag"])]
-	selected_info.text += "\n" + Rules.status_text(hero["statuses"])
+	selected_info.text += "\n" + Rules.status_text(hero["statuses"]) + "\n" + GameState.buff_text(hero)
+	var role_hint: Label = get_node("SelectedHeroInfo").find_child("RoleHint", true, false) as Label
+	if role_hint != null:
+		role_hint.text = {"warden": "Marked targets: +2 damage.\nFront protects against melee.", "ranger": "Rear: +1 damage. Mark targets\nfor the Warden to exploit.", "occultist": "Damaging skills inflict Poison.\nCombine pressure with allies.", "crusader": "Bleeding targets: +2 damage.\nCharge inflicts Bleed.", "healer": "Party healing removes Bleed.\nKeep your companions fighting."}.get(selected_hero, "Heroes act in any order.")
+	if formation_button != null:
+		formation_button.text = "MOVE TO %s · 1 AP" % ("REAR" if GameState.rank_of(selected_hero) == "front" else "FRONT")
+		formation_button.disabled = battle_over or int(hero["ap"]) < 1 or not _is_standing(selected_hero)
 	for hero_id in party:
 		var state: Dictionary = hero_state[hero_id]
 		var tag: String = ""
@@ -677,13 +816,14 @@ func _refresh_all() -> void:
 		var status: String = "AP %d/2  ·  Blk %d  ·  Stress %d" % [
 			int(state["ap"]), int(state["block"]), int(state["stress"])
 		]
+		status = "%s · AP %d · B%d · S%d" % [GameState.rank_of(hero_id).to_upper(), int(state["ap"]), int(state["block"]), int(state["stress"])]
 		if bool(state["deaths_door"]):
 			status = "DEATH'S DOOR  ·  one more blow ends them"
 		elif bool(state["dead"]):
 			status = "SLAIN"
 		hero_stat_labels[hero_id].text = status
 		hero_stat_labels[hero_id].tooltip_text = Rules.status_text(state["statuses"])
-		(hero_buttons[hero_id].get_node("Effects") as Label).text = Rules.status_text(state["statuses"])
+		(hero_buttons[hero_id].get_node("Effects") as Label).text = Rules.status_text(state["statuses"]) + "\n" + GameState.buff_text(state)
 
 		var button: Button = hero_buttons[hero_id]
 		var health: ProgressBar = hero_health_bars[hero_id]
@@ -715,6 +855,8 @@ func _refresh_hand() -> void:
 		var view: Button = _create_card_view(card_id, card)
 		var cooldown: int = int(hero_state[selected_hero]["cooldowns"].get(card_id, 0))
 		view.disabled = battle_over or not _is_standing(selected_hero) or cooldown > 0 or int(hero_state[selected_hero]["ap"]) < int(card["cost"])
+		if card.get("effect", "") == "pain_heal" and int(hero_state[selected_hero]["hp"]) <= 2:
+			view.disabled = true
 		if cooldown > 0:
 			(view.get_node("Contents/Effect") as Label).text = "READY IN %d TURN(S)" % cooldown
 		view.pressed.connect(_play_card.bind(selected_hero, index))
@@ -749,6 +891,7 @@ func _award_reward() -> void:
 	if reward_given:
 		return
 	reward_given = true
+	for survivor in _standing_heroes(): GameState.add_deed(str(survivor), "battles")
 	var reward := 2
 	if not GameState.selected_expedition.is_empty():
 		reward = int(GameState.selected_expedition.get("reward", 5)) if not GameState.run_active or GameState.current_room_kind() == "boss" else 2
@@ -763,7 +906,7 @@ func _refresh_scrolls() -> void:
 	for child in scroll_container.get_children():
 		scroll_container.remove_child(child)
 		child.queue_free()
-	for item_id in GameState.Items.SCROLLS:
+	for item_id in GameState.Items.SCROLLS.keys() + GameState.Items.POTIONS.keys():
 		var count: int = int(GameState.inventory.get(item_id, 0))
 		if count <= 0:
 			continue
@@ -781,16 +924,26 @@ func _refresh_scrolls() -> void:
 		button.pressed.connect(_use_scroll.bind(str(item_id)))
 		scroll_container.add_child(button)
 	if scroll_container.get_child_count() == 0:
-		scroll_container.add_child(_make_label("No spell scrolls in party inventory", 18, Color(MUTED)))
+		scroll_container.add_child(_make_label("No consumables in party inventory", 18, Color(MUTED)))
 
 
 func _use_scroll(item_id: String) -> void:
-	if battle_over or not GameState.Items.SCROLLS.has(item_id) or not _is_standing(selected_hero) or int(hero_state[selected_hero]["ap"]) < 1:
+	if battle_over or GameState.Items.item(item_id).get("kind", "") not in ["scroll", "potion"] or not _is_standing(selected_hero) or int(hero_state[selected_hero]["ap"]) < 1:
+		return
+	if GameState.is_restorative(item_id):
+		if GameState.apply_potion(selected_hero, item_id, hero_state):
+			if GameState.Items.item(item_id).get("kind", "") == "scroll": _play_attack_sound("spell")
+			if GameState.Items.item(item_id).get("buff", "") == "ward":
+				hero_state[selected_hero]["block"] = maxi(int(hero_state[selected_hero]["block"]), GameState.buff_bonus(hero_state[selected_hero], "ward"))
+			hero_state[selected_hero]["ap"] -= 1
+			_add_log("%s uses %s." % [_name_of(selected_hero), GameState.Items.item(item_id)["name"]])
+			_refresh_all()
 		return
 	if not GameState.consume_scroll(item_id):
 		return
 	hero_state[selected_hero]["ap"] = int(hero_state[selected_hero]["ap"]) - 1
 	var item: Dictionary = GameState.Items.item(item_id)
+	_play_attack_sound("spell")
 	_add_log("%s consumes %s." % [_name_of(selected_hero), item["name"]])
 	var target_index: int = selected_enemy_index
 	var phase: int = int(enemies[target_index].get("phase_index", 0))
@@ -816,7 +969,9 @@ func _flash(target: Control, tint: Color) -> void:
 func _build_interface() -> void:
 	$Background.visible = false
 	if GameState.selected_expedition.has("combat_background"):
-		$BackgroundArt.texture = load(str(GameState.selected_expedition["combat_background"]))
+		$BackgroundArt.texture = load(GameState.floor_background("combat"))
+	if enemies[0].get("surprised", false) and not (GameState.selected_expedition.get("id", "") == "old_road" and GameState.floor_index > 0):
+		$BackgroundArt.texture = load("res://assets/generated/event_%s_corridor.png" % ("beast" if GameState.selected_expedition.get("faction", "") == "remade" else "bandit"))
 	round_label = $RoundLabel
 	hand_title = $HandTitle
 	hand_container = $CardHand/Cards
@@ -889,8 +1044,15 @@ func _layout_combat() -> void:
 	selected_info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	info_contents.add_child(selected_info)
 	var hint := _make_label("Select a hero below to inspect their abilities.\nHeroes act in any order during the party turn.", 18, Color(MUTED))
+	hint.name = "RoleHint"
 	_place(hint, Rect2(8, 320, 430, 65))
 	info_contents.add_child(hint)
+	formation_button = Button.new()
+	formation_button.name = "FormationButton"
+	_place(formation_button, Rect2(55, 405, 435, 35))
+	formation_button.add_theme_font_size_override("font_size", 18)
+	formation_button.pressed.connect(change_rank)
+	add_child(formation_button)
 	var log_panel := PanelContainer.new()
 	_place(log_panel, Rect2(1460, 440, 420, 480))
 	_style_card_backing(log_panel, Color("#21171D"), Color(GOLD))
@@ -905,7 +1067,7 @@ func _layout_combat() -> void:
 	var caption := _make_label("BATTLE LOG", 24, Color(IVORY))
 	_place(caption, Rect2(1460, 390, 400, 40))
 	add_child(caption)
-	var scroll_title := _make_label("PARTY SPELL SCROLLS", 20, Color(IVORY))
+	var scroll_title := _make_label("PARTY CONSUMABLES", 20, Color(IVORY))
 	_place(scroll_title, Rect2(580, 545, 790, 30))
 	add_child(scroll_title)
 	var scroll_strip := ScrollContainer.new()
@@ -972,20 +1134,26 @@ func _make_hero_card(hero_id: String) -> Button:
 	hero_portraits[hero_id] = portrait
 	StatusVisual.new().attach_to(portrait)
 	var name_label: Label = button.get_node("HeroName") as Label
-	_place(name_label, Rect2(8, 205, 234, 32))
-	name_label.add_theme_font_size_override("font_size", 20)
+	_place(name_label, Rect2(8, 202, 234, 27))
+	name_label.add_theme_font_size_override("font_size", 18)
+	name_label.clip_text = true
+	name_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	name_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	name_label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.9))
 	name_label.add_theme_constant_override("shadow_offset_x", 2)
 	name_label.add_theme_constant_override("shadow_offset_y", 2)
 	hero_name_labels[hero_id] = name_label
+	var class_label := _make_label(str(hero.get("class", hero["name"])), 14, Color("#D4B997"), true)
+	class_label.name = "HeroClass"
+	_place(class_label, Rect2(8, 230, 234, 22))
+	button.add_child(class_label)
 
 	var health: ProgressBar = button.get_node("HealthBar") as ProgressBar
-	_place(health, Rect2(18, 245, 214, 16))
+	_place(health, Rect2(18, 256, 214, 16))
 	_style_meter(health, Color("#AF343C"))
 	hero_health_bars[hero_id] = health
 	var stress: ProgressBar = button.get_node("StressBar") as ProgressBar
-	_place(stress, Rect2(18, 270, 214, 16))
+	_place(stress, Rect2(18, 279, 214, 13))
 	_style_meter(stress, Color("#79435C"))
 	hero_stress_bars[hero_id] = stress
 	var stat_label: Label = button.get_node("Status") as Label
@@ -1029,7 +1197,7 @@ func _create_card_view(card_id: String, card: Dictionary) -> Button:
 	effect_label.name = "Effect"
 	_place(effect_label, Rect2(5, 148, 210, 20))
 	contents.add_child(effect_label)
-	var description_label := _make_label("", 17, Color(IVORY))
+	var description_label := _make_label("", 15 if card_id.begins_with("pc_") else 17, Color(IVORY))
 	description_label.name = "Description"
 	description_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_place(description_label, Rect2(63, 60, 148, 86))
@@ -1042,6 +1210,8 @@ func _create_card_view(card_id: String, card: Dictionary) -> Button:
 		header += " ★%d" % level
 	(button.get_node("Contents/Header") as Label).text = header
 	var art_path: String = CARD_ART_DIR + card_id + ".png"
+	if card_id.begins_with("pc_"):
+		art_path = "res://assets/items/crusader_axe.svg" if card.get("effect", "") in ["attack", "barbed_charge"] else "res://assets/items/crusader_armor.svg"
 	picture.texture = _load_texture(art_path)
 	picture.visible = picture.texture != null
 	(button.get_node("Contents/Effect") as Label).text = "Cooldown: %d %s" % [GameState.ability_cooldown(card_id), "turn" if GameState.ability_cooldown(card_id) == 1 else "turns"] if GameState.ability_cooldown(card_id) > 0 else "No cooldown"
@@ -1080,6 +1250,7 @@ func _style_card_backing(control: Control, fill: Color, outline: Color) -> void:
 
 
 func _style_meter(meter: ProgressBar, tint: Color) -> void:
+	meter.add_theme_font_size_override("font_size", 8)
 	var background := StyleBoxFlat.new()
 	background.bg_color = Color("#100F12")
 	background.set_corner_radius_all(3)
@@ -1174,6 +1345,13 @@ func _refresh_enemies() -> void:
 		label.text = ("▶ " if index == original else "") + "%s\nHP %d / %d · Block %d" % [enemy_name, enemy_hp, enemy_max_hp, enemy_block]
 		var intent: Label = view.get_node("EnemyIntent")
 		intent.text = ("Stage %d / 3\n" % (int(entry.get("phase_index", 0)) + 1) if entry.has("phase_creatures") else "") + _enemy_intent_text() + "\n" + Rules.status_text(entry["statuses"])
+		var boss_hint: String = GameState.Mechanics.boss_hint(str(entry["creature"]), round_number)
+		if not boss_hint.is_empty():
+			intent.text = intent.text.strip_edges() + "\n" + boss_hint
+			intent.add_theme_font_size_override("font_size", 12)
+		if entry.get("surprised", false):
+			intent.text = intent.text.strip_edges() + "\nSurprised: −30% DMG · 70% hit"
+			intent.add_theme_font_size_override("font_size", 12)
 		if enemy_mark_bonus > 0:
 			intent.text += " · Mark +%d" % enemy_mark_bonus
 		if enemy_weak_rounds > 0:
@@ -1206,3 +1384,42 @@ func _sync_portrait(portrait: TextureRect, state: Dictionary) -> void:
 func _hurt_portrait(portrait: TextureRect) -> void:
 	if is_instance_valid(portrait) and portrait.has_node("StatusVisual"):
 		portrait.get_node("StatusVisual").hurt()
+
+func _offer_floor_entrance() -> void:
+	if floor_prompt_shown or not GameState.run_active or GameState.current_room_kind() != "boss":
+		return
+	var room: Dictionary = GameState.floors[GameState.floor_index][GameState.room_position]
+	if not room.get("exit_after_boss", false):
+		return
+	floor_prompt_shown = true
+	GameState.run_heroes = hero_state.duplicate(true)
+	GameState.finish_encounter()
+	call_deferred("_show_floor_entrance")
+
+func _show_floor_entrance() -> void:
+	if not GameState.can_descend():
+		return
+	var prompt = FloorEntrance.new()
+	prompt.on_descend = func():
+		if GameState.descend():
+			get_tree().change_scene_to_file("res://scenes/expedition/dungeon.tscn")
+	prompt.on_stay = func(): get_tree().change_scene_to_file("res://scenes/expedition/dungeon.tscn")
+	add_child(prompt)
+
+func change_rank() -> void:
+	if battle_over or not _is_standing(selected_hero) or int(hero_state[selected_hero]["ap"]) < 1:
+		return
+	var current: String = GameState.rank_of(selected_hero)
+	if current == "front" and not _standing_heroes().any(func(id): return id != selected_hero and GameState.rank_of(str(id)) == "front"):
+		_add_log("The party needs a living front-line protector.")
+		_refresh_all()
+		return
+	GameState.formation[selected_hero] = "rear" if current == "front" else "front"
+	hero_state[selected_hero]["ap"] -= 1
+	_refresh_all()
+
+func _make_cocoon() -> Dictionary:
+	var cocoon: Dictionary = Rules.make_enemy({"name": "Luminous Cocoon", "hp": 18, "attack": 0, "art": "res://assets/generated/event_beast_offering.png"}, "moth_cocoon", 0)
+	cocoon["cocoon"] = true
+	cocoon["age"] = 0
+	return cocoon

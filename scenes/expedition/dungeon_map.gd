@@ -3,8 +3,11 @@ extends Control
 const State = preload("res://scripts/game_data.gd")
 
 func room_rect(location: Vector2i) -> Rect2:
-	var variation: int = posmod(location.x * 17 + location.y * 31 + State.run_seed, 3)
-	var size := Vector2(150 + variation * 30, 94 + (2 - variation) * 16)
+	var size := Vector2(88, 88)
+	if State.selected_expedition.get("id", "") == "infested_apothecary":
+		return Rect2(Vector2(180 + location.x * 345, 305) - Vector2(65, 65), Vector2(130, 130))
+	if State.run_active and State.floors[State.floor_index][location].get("event_layout", "") == "corridor":
+		size = Vector2(90, 42)
 	return Rect2(Vector2(170 + location.x * 295, 95 + location.y * 150) - size * 0.5, size)
 
 func _draw() -> void:
@@ -17,29 +20,35 @@ func _draw() -> void:
 			if rooms.has(other) and rooms[other]["seen"]:
 				var start: Vector2 = room_rect(location).get_center()
 				var end: Vector2 = room_rect(other).get_center()
-				draw_line(start, end, Color("#151316"), 38)
-				draw_line(start, end, Color("#504743"), 27)
+				draw_line(start, end, Color("#151316"), 22)
 				var length: float = start.distance_to(end)
-				for step in range(0, int(length), 22):
+				for step in range(0, int(length), 18):
 					var point := start.lerp(end, float(step) / length)
-					var cross := Vector2(0, 12) if direction == Vector2i.RIGHT else Vector2(12, 0)
-					draw_line(point - cross, point + cross, Color("#312C2C"), 1)
+					draw_rect(Rect2(point - Vector2(8, 8), Vector2(16, 16)), Color("#4B4441"))
+					draw_rect(Rect2(point - Vector2(8, 8), Vector2(16, 16)), Color("#211C22"), false, 1)
 	for location in rooms:
 		var room: Dictionary = rooms[location]
 		if not room["seen"]:
 			continue
 		var rect: Rect2 = room_rect(location)
 		var current: bool = location == State.room_position
-		var fill := Color("#62564A") if current else (Color("#403936") if room["cleared"] else Color("#292529"))
+		var palettes: Dictionary = {"battle": "#653132", "boss": "#87333E", "treasure": "#746036", "camp": "#435F49", "event": "#59446A", "stairs": "#3B5770", "entry": "#434951"}
+		var fill := Color(str(palettes.get(room["kind"], "#292529")))
+		if room["cleared"]:
+			fill = fill.darkened(0.45)
 		draw_rect(rect, fill)
 		for x in range(int(rect.position.x), int(rect.end.x), 24):
 			for y in range(int(rect.position.y), int(rect.end.y), 22):
 				var tile := Rect2(Vector2(x, y), Vector2(mini(23, int(rect.end.x) - x), mini(21, int(rect.end.y) - y)))
 				draw_rect(tile, Color(0.1, 0.07, 0.09, 0.25), false, 1)
+		draw_rect(rect.grow(5), Color("#51464B"), false, 3)
 		draw_rect(rect, Color("#D3AF72") if current else Color("#171417"), false, 3)
 		var center: Vector2 = rect.get_center()
 		var tint := Color("#B7736B") if not room["cleared"] else Color("#8F8271")
 		match str(room["kind"]):
+			"event":
+				var font := ThemeDB.fallback_font
+				draw_string(font, center + Vector2(-10, 12), "?", HORIZONTAL_ALIGNMENT_LEFT, -1, 38, Color("#D9BC7F") if not room["cleared"] else tint)
 			"battle", "boss":
 				for sign_value in [-1, 1]:
 					var axis := Vector2(16 * sign_value, -18)
@@ -68,3 +77,7 @@ func _draw() -> void:
 		if current:
 			var marker := center + Vector2(0, -rect.size.y * 0.5 - 14)
 			draw_colored_polygon(PackedVector2Array([marker + Vector2(-10, -8), marker + Vector2(10, -8), marker + Vector2(0, 8)]), Color("#D9BC7F"))
+		var caption: String = str(room["kind"]).capitalize()
+		if room["kind"] == "event" and room.get("event_layout", "") == "corridor":
+			caption = "Hall event"
+		draw_string(ThemeDB.fallback_font, Vector2(center.x - 65, rect.end.y + 22), caption + (" ✓" if room["cleared"] else ""), HORIZONTAL_ALIGNMENT_CENTER, 130, 14, Color("#CABCB0"))

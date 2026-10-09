@@ -20,16 +20,18 @@ const ART_GLOW = "res://assets/generated/glow_warm.png"
 ## `expeditions: true` opens the expedition list; `locked: true` shows a sealed
 ## note. Listed back-to-front: the road is last so it sits in front.
 const BUILDINGS: Array[Dictionary] = [
+	{"id": "graveyard", "name": "The Graveyard", "subtitle": "Names and deeds of those who fell", "pos": [350, 580], "size": [195, 170], "highlight": Color("#B8C4B7"), "highlight_art": "res://assets/generated/graveyard.svg", "scene": "res://scenes/hub/graveyard.tscn", "locked": false},
+	{
+		"id": "apothecary", "name": "The Infested Apothecary", "subtitle": "Clear four rooms to restore the medical ward",
+		"pos": [635, 305], "size": [175, 205], "highlight": Color("#8CDDAD"), "glow_scale": 0.9,
+		"scene": "res://scenes/hub/apothecary.tscn", "locked": false,
+	},
 	{
 		"id": "barracks", "name": "The Barracks", "subtitle": "Compose your party of three",
 		"pos": [220, 260], "size": [330, 400], "highlight": Color("#A9B9C8"), "glow_scale": 0.92,
 		"scene": "res://scenes/hub/barracks.tscn", "locked": false,
 	},
-	{
-		"id": "bestiary", "name": "The Chapel Archive", "subtitle": "A bestiary of the creatures you have faced",
-		"pos": [830, 220], "size": [240, 380], "highlight": Color("#D89A61"), "glow_scale": 0.94,
-		"scene": "res://scenes/hub/bestiary.tscn", "locked": false,
-	},
+
 	{
 		"id": "forge", "name": "The Forge", "subtitle": "Spend Gold to temper your abilities",
 		"pos": [1660, 700], "size": [340, 340], "highlight": Color("#F58B43"), "glow_scale": 0.96,
@@ -42,11 +44,14 @@ const BUILDINGS: Array[Dictionary] = [
 		"scene": "", "locked": false, "expeditions": true,
 	},
 	{
-		"id": "chapel", "name": "The Chapel Archive", "subtitle": "A bestiary of the creatures you have faced",
+		"id": "chapel", "name": "The Chapel Archive", "subtitle": "Dungeon books, creature records and lore",
 		"pos": [855, 175], "size": [145, 340], "highlight": Color("#D89A61"), "glow_scale": 1.0,
 		"highlight_art": "res://assets/generated/building_bestiary.png", "highlight_alpha": 0.55,
 		"scene": "res://scenes/hub/bestiary.tscn", "locked": false,
 	},
+	{"id": "watchtower", "name": "The Watchtower", "subtitle": "Reclaim the scouts' tower", "pos": [1250, 400], "size": [165, 220], "highlight": Color("#AAC7DC"), "service": "watchtower", "locked": false},
+	{"id": "infirmary", "name": "The Infirmary", "subtitle": "Restore the abandoned sickhouse", "pos": [535, 610], "size": [165, 185], "highlight": Color("#8CDDAD"), "service": "infirmary", "locked": false},
+	{"id": "workshop", "name": "The Workshop", "subtitle": "Reclaim the craftsmen's quarter", "pos": [1335, 630], "size": [170, 190], "highlight": Color("#D6B66A"), "service": "workshop", "locked": false},
 ]
 
 var _map_view: Control
@@ -57,6 +62,8 @@ var _hover_tweens: Dictionary = {}
 
 
 func _ready() -> void:
+	GameState.load_progression()
+	preload("res://scripts/settlement_music.gd").play()
 	_map_view = $MapView
 	_expedition_view = $ExpeditionView
 	_toast = $Toast
@@ -92,7 +99,13 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _build_map() -> void:
 	for building in BUILDINGS:
-		var hotspot := _make_hotspot(building)
+		var details: Dictionary = building.duplicate()
+		if building.has("service") and GameState.service_unlocked(str(building["service"])):
+			details["subtitle"] = "Restored · " + {"watchtower": "Scout the dungeon", "infirmary": "Discounted remedies", "workshop": "Modify equipment"}[building["service"]]
+		if building["id"] == "apothecary" and GameState.apothecary_unlocked():
+			details["name"] = "The Apothecary"
+			details["subtitle"] = "Healing remedies, cleansing draughts and buff tonics"
+		var hotspot := _make_hotspot(details)
 		_map_view.add_child(hotspot)
 
 
@@ -187,6 +200,14 @@ func _make_hotspot(building: Dictionary) -> Button:
 	idle.size = Vector2(1.0, 1.0)
 	idle.modulate = Color(1.0, 1.0, 1.0, 0.0)
 	button.add_child(idle)
+	if building.get("id", "") == "graveyard":
+		var stones := TextureRect.new()
+		stones.texture = _load_texture("res://assets/generated/graveyard.svg")
+		stones.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		stones.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		stones.size = footprint
+		stones.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		button.add_child(stones)
 
 	# Name + purpose, revealed on hover (Darkest Dungeon style).
 	var banner := VBoxContainer.new()
@@ -199,7 +220,7 @@ func _make_hotspot(building: Dictionary) -> Button:
 	banner.modulate.a = 0.0
 	button.add_child(banner)
 
-	var name_label: Label = _make_label(str(building.get("name", "")), 38, Color(IVORY), true)
+	var name_label: Label = _make_label(str(building.get("name", "")), 27 if building.get("id", "") == "apothecary" else 38, Color(IVORY), true)
 	name_label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.95))
 	name_label.add_theme_constant_override("shadow_offset_x", 3)
 	name_label.add_theme_constant_override("shadow_offset_y", 3)
@@ -239,6 +260,10 @@ func _on_hotspot_hover(button: Button, entered: bool) -> void:
 
 
 func _on_building_pressed(building: Dictionary) -> void:
+	if building.has("service"):
+		GameState.pending_service = str(building["service"])
+		get_tree().change_scene_to_file("res://scenes/hub/restoration.tscn")
+		return
 	if bool(building.get("expeditions", false)):
 		_show_expeditions()
 		return

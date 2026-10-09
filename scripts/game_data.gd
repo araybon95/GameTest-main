@@ -1,5 +1,16 @@
 extends RefCounted
 const Items = preload("res://scripts/item_data.gd")
+const Events = preload("res://scripts/dungeon_events.gd")
+const Mechanics = preload("res://scripts/expedition_mechanics.gd")
+static var graves: Array = []
+static var run_deeds: Dictionary = {}
+static var run_id: String = ""
+static var hero_names: Dictionary = {}
+static var hero_colors: Dictionary = {}
+static var formation: Dictionary = {}
+static var modifications: Dictionary = {}
+static var pending_service: String = "watchtower"
+static var scout_uses: int = 2
 ## Shared game data + state. Each scene loads it by path:
 ##     const GameState := preload("res://scripts/game_data.gd")
 ## Static members keep it shared across scenes without an autoload.
@@ -12,6 +23,11 @@ const Items = preload("res://scripts/item_data.gd")
 ##          stress_attack, heal, team_heal, stress_heal.
 ## `undead_bonus` adds damage against Undead enemies.
 const CARDS: Dictionary = {
+ "pc_strike": {"name": "Barbed Strike", "cost": 1, "effect": "attack", "damage": 6},
+ "pc_guard": {"name": "Iron Penance", "cost": 1, "effect": "block", "block": 6},
+ "pc_pain": {"name": "Rapture of Pain", "cost": 1, "effect": "pain_heal", "self_damage": 2, "heal_percent": 15},
+ "pc_charge": {"name": "Thornbound Charge", "cost": 2, "effect": "barbed_charge", "damage": 8, "block": 6, "status": "bleed"},
+ "pc_verdict": {"name": "Crimson Verdict", "cost": 2, "effect": "attack", "damage": 12},
 	"wd_slash": {"name": "Slash", "cost": 1, "effect": "attack", "damage": 6, "description": "Deal 6 damage."},
 	"wd_guard": {"name": "Guard", "cost": 1, "effect": "block", "block": 6, "description": "Gain 6 Block."},
 	"wd_bash": {"name": "Shield Bash", "cost": 2, "effect": "attack_block", "damage": 8, "block": 4, "description": "Deal 8 damage. Gain 4 Block."},
@@ -39,6 +55,7 @@ const CARDS: Dictionary = {
 ## The roster the player draws a party of three from. Add a hero by appending an
 ## entry here (and dropping a portrait at `art`). `deck` lists card ids.
 const HEROES: Dictionary = {
+ "crusader": {"name": "Penitent Crusader", "max_hp": 50, "art": "res://assets/generated/hero_crusader.tres", "camp_art": "res://assets/generated/hero_crusader_camp.tres", "abilities": ["pc_strike", "pc_guard", "pc_pain", "pc_charge", "pc_verdict"], "lore": "During the Hell Crusades, a demon of pain cursed him with an unending hunger for sensation. Barbs beneath his armor pull at his flesh with every breath. He calls each wound a sacrament, and each moment of relief a debt."},
 	"warden": {
 		"name": "Warden", "max_hp": 55, "art": "res://assets/generated/hero_warden.png",
 		"camp_art": "res://assets/generated/hero_warden_camp.png",
@@ -68,6 +85,14 @@ static var party: Array[String] = ["warden", "ranger", "occultist"]
 ## Lore and stats for every enemy. `undead` heroes take bonus damage from the
 ## Healer's holy attacks.
 const CREATURES: Dictionary = {
+	"moth_metamorph": {"name": "Moth Acolyte Metamorph", "hp": 42, "attack": 6, "art": "res://assets/generated/enemy_moth_metamorph.png", "undead": false, "tags": ["Moth", "Cultist"], "lore": "A patient remade by the dispensary's luminous infestation. Beneath the rags, humanity has become a hunger with wings."},
+	"moth_oleander": {"name": "Moth Knight Oleander", "hp": 54, "attack": 6, "art": "res://assets/generated/enemy_moth_oleander.png", "undead": false, "tags": ["Moth", "Knight", "Boss"], "lore": "The queen's sworn guardian keeps vigil over the ruined surgical ward, his broken chivalry surviving in a body stripped of humanity."},
+	"moth_exuvia": {"name": "Moth Queen Exuvia", "hp": 75, "attack": 7, "art": "res://assets/generated/enemy_moth_exuvia.png", "undead": false, "tags": ["Moth", "Boss"], "lore": "A swollen sovereign of luminous dust and discarded flesh. The apothecary's patients became offerings to her endless metamorphosis."},
+ "keep_footman": {"name": "Revenant Footman", "hp": 54, "attack": 8, "undead": true, "tags": ["Revenant", "Keep"], "art": "res://assets/generated/enemy_keep_footman.tres", "lore": "The road gangs pay tribute to dead masters. Beneath their stolen banners, these ancient footmen march again, the wounds of the keep's fall still open."},
+ "keep_crossbow": {"name": "Grave Crossbowman", "hp": 48, "attack": 9, "undead": true, "tags": ["Revenant", "Keep"], "art": "res://assets/generated/enemy_keep_crossbow.tres", "lore": "A wrapped face gives no warning as the bolt leaves its string. Rusted steel carries the cold of the crypt through living flesh."},
+ "keep_wolfguard": {"name": "Wolfguard Reaver", "hp": 62, "attack": 9, "undead": true, "tags": ["Revenant", "Elite", "Keep"], "art": "res://assets/generated/enemy_keep_wolfguard.tres", "lore": "A noble guard beneath a ragged wolf mantle. Its poleaxe answers the lord's summons, and the gaps in its armor reveal what loyalty has cost."},
+ "keep_son": {"name": "The Last Honorable Son", "hp": 70, "attack": 8, "undead": true, "tags": ["Revenant", "Knight", "Boss"], "art": "res://assets/generated/enemy_keep_son.png", "lore": "The last scion of the ruined keep still bars the stair to his father's court. A beast's howl escapes where an honorable oath once lived."},
+ "undying_lord": {"name": "The Undying Lord", "hp": 90, "attack": 8, "undead": true, "tags": ["Revenant", "Monstrosity", "Boss"], "art": "res://assets/generated/enemy_undying_lord.png", "lore": "An ancestral tyrant wears his household's relics as a crown. Many hands clutch the instruments of his reign, and no wound has taught him to release them."},
 	"anguish_penitent": {"name": "Creation of Anguish: Penitent", "hp": 48, "attack": 7, "undead": false, "tags": ["Remade", "Cult"], "art": "res://assets/generated/enemy_anguish_penitent.png", "lore": "The faithful call each new wound a doorway. This supplicant begs to be remade again."},
 	"anguish_vessel": {"name": "Creation of Anguish: Vessel", "hp": 54, "attack": 8, "undead": false, "tags": ["Remade", "Cult"], "art": "res://assets/generated/enemy_anguish_vessel.png", "lore": "Several prayers inhabit one body. None can finish a sentence without another mouth answering."},
 	"harrowed_giant": {"name": "Harrowed Slave Giant", "hp": 76, "attack": 8, "undead": false, "tags": ["Remade", "Boss"], "art": "res://assets/generated/enemy_harrowed_giant.png", "lore": "A living reliquary kneels beneath the weight of the congregation. Its chains are sacred to those who forged them."},
@@ -122,6 +147,10 @@ const UPGRADE_BONUS := 2
 
 ## --- Expeditions --------------------------------------------------------------
 const EXPEDITIONS: Array[Dictionary] = [
+	{"id": "restore_watchtower", "name": "The Occupied Watchtower", "region": "The Hamlet", "difficulty": "Apprentice", "creature": "gallows_scout", "faction": "human", "reward": 8, "floor_count": 1, "internal": true, "restoration": "watchtower", "blurb": "Three rooms: scouts, camp, chieftain. Restore the watchtower."},
+	{"id": "restore_infirmary", "name": "The Abandoned Sickhouse", "region": "The Hamlet", "difficulty": "Initiate", "creature": "moth_metamorph", "faction": "moth", "reward": 8, "floor_count": 1, "internal": true, "restoration": "infirmary", "combat_background": "res://assets/generated/apothecary_interior.png", "camp_background": "res://assets/generated/apothecary_interior.png", "blurb": "Three rooms: infestation, camp, guardian. Restore the infirmary."},
+	{"id": "restore_workshop", "name": "The Seized Workshop", "region": "The Hamlet", "difficulty": "Apprentice", "creature": "ash_raider", "faction": "human", "reward": 8, "floor_count": 1, "internal": true, "restoration": "workshop", "blurb": "Three rooms: raiders, camp, chieftain. Restore the workshop."},
+	{"id": "infested_apothecary", "name": "The Infested Apothecary", "region": "The Hamlet", "difficulty": "Initiate · Apprentice–Adept", "faction": "moth", "creature": "moth_metamorph", "reward": 10, "locked": false, "floor_count": 1, "internal": true, "floor_names": ["The Infested Medical Ward"], "combat_background": "res://assets/generated/apothecary_interior.png", "camp_background": "res://assets/generated/apothecary_interior.png", "blurb": "Four chambers. Three fights. One refuge. Clear the infestation to restore the hamlet's apothecary."},
 	{"id": "path_beast", "name": "Path of the Beast", "region": "The Path", "difficulty": "Veteran", "faction": "remade", "creature": "anguish_penitent", "reward": 15, "locked": false, "floor_count": 3,
 	"combat_background": "res://assets/generated/beast_sanctuary.png", "camp_background": "res://assets/generated/beast_camp.png",
 	"blurb": "Descend a pilgrimage of despair. The faithful worship being remade; their blessings leave no body whole.",
@@ -133,7 +162,12 @@ const EXPEDITIONS: Array[Dictionary] = [
 
 	{
 		"id": "old_road", "name": "The Old Road", "floor_count": 3, "region": "The Abandoned Village", "combat_background": "res://assets/generated/bandit_combat.png", "camp_background": "res://assets/generated/bandit_camp.png", "difficulty": "Apprentice",
-		"blurb": "Human outlaws haunt the ruined road. Hunt their chieftain beneath the black gallows.",
+		"blurb": "Follow the bandits' tribute into a ruined keep. Break its last son's vigil, then end the Undying Lord's reign.",
+		"floor_names": ["The Bandit Road", "The Keep's Outer Ward", "The Undying Court"],
+		"floor_enemy_pools": [["ash_raider", "gallows_scout"], ["keep_footman", "keep_crossbow"], ["keep_wolfguard", "keep_footman", "keep_crossbow"]],
+		"floor_bosses": ["", "keep_son", "undying_lord"],
+		"floor_combat_backgrounds": ["res://assets/generated/bandit_combat.png", "res://assets/generated/keep_hall.png", "res://assets/generated/keep_hall.png"],
+		"floor_camp_backgrounds": ["res://assets/generated/bandit_camp.png", "res://assets/generated/keep_hall.png", "res://assets/generated/keep_hall.png"],
 		"creature": "ash_raider", "faction": "human", "reward": 5, "locked": false,
 	},
 	{
@@ -150,6 +184,7 @@ const EXPEDITIONS: Array[Dictionary] = [
 
 static var selected_expedition: Dictionary = {}
 static var completed_expeditions: Array[String] = []
+static var crusader_unlocked: bool = false
 static var progress_loaded: bool = false
 static var progress_path: String = "user://expedition_progress.cfg"
 
@@ -169,6 +204,11 @@ static func load_progression() -> void:
 	progress_loaded = true
 	var config := ConfigFile.new()
 	if config.load(progress_path) == OK:
+		modifications = config.get_value("progress", "modifications", {})
+		hero_names = config.get_value("progress", "hero_names", {})
+		hero_colors = config.get_value("progress", "hero_colors", {})
+		graves = config.get_value("progress", "graves", [])
+		crusader_unlocked = bool(config.get_value("progress", "crusader_unlocked", false))
 		for id in config.get_value("progress", "completed", []):
 			if not expedition_by_id(str(id)).is_empty() and not completed_expeditions.has(str(id)):
 				completed_expeditions.append(str(id))
@@ -177,7 +217,12 @@ static func save_progression() -> void:
 	if not progress_loaded:
 		return
 	var config := ConfigFile.new()
+	config.set_value("progress", "graves", graves)
+	config.set_value("progress", "hero_names", hero_names)
+	config.set_value("progress", "hero_colors", hero_colors)
+	config.set_value("progress", "crusader_unlocked", crusader_unlocked)
 	config.set_value("progress", "completed", completed_expeditions)
+	config.set_value("progress", "modifications", modifications)
 	config.save(progress_path)
 
 static func floor_title() -> String:
@@ -205,11 +250,18 @@ static func select_expedition(expedition_id: String) -> bool:
 
 
 static func hero(hero_id: String) -> Dictionary:
-	return HEROES.get(hero_id, {})
+	var result: Dictionary = HEROES.get(hero_id, {}).duplicate(true)
+	if not result.is_empty():
+		result["class"] = result["name"]
+		result["name"] = hero_names.get(hero_id, result["name"])
+	return result
 
 
 static func creature(creature_id: String) -> Dictionary:
-	return CREATURES.get(creature_id, {})
+	var result: Dictionary = CREATURES.get(creature_id, {}).duplicate(true)
+	var extra: String = preload("res://scripts/world_lore.gd").CREATURE_NOTES.get(creature_id, "")
+	if not result.is_empty() and not extra.is_empty(): result["lore"] = str(result.get("lore", "")) + "\n\n" + extra
+	return result
 
 
 static func discover_creature(creature_id: String) -> void:
@@ -269,6 +321,10 @@ static func card_description(card: Dictionary) -> String:
 			return "Deal %d damage. Ignore Block." % int(card.get("damage", 0))
 		"block":
 			return "Gain %d Block." % int(card.get("block", 0))
+		"pain_heal":
+			return "Pay 2 HP; heal 15% max HP. Needs >2 HP."
+		"barbed_charge":
+			return "%d damage + %d Block. Hit: Bleed 2/t for 2 turns." % [int(card["damage"]), int(card["block"])]
 		"attack_block":
 			return "Deal %d damage. Gain %d Block." % [int(card.get("damage", 0)), int(card.get("block", 0))]
 		"team_block":
@@ -300,7 +356,7 @@ static func hero_abilities(hero_id: String) -> Array:
 
 static func ability_cooldown(ability_id: String) -> int:
 	var ability: Dictionary = card_stats(ability_id)
-	if str(ability.get("effect", "")) in ["heal", "team_heal", "stress_heal", "team_block", "weaken", "drain"]:
+	if str(ability.get("effect", "")) in ["heal", "team_heal", "stress_heal", "team_block", "weaken", "drain", "pain_heal", "barbed_charge"]:
 		return 2
 	return 1 if int(ability.get("cost", 1)) > 1 else 0
 
@@ -316,6 +372,10 @@ static var navigation_votes: Dictionary = {}
 static var run_seed: int = 0
 
 static func start_run(seed_value: int = -1) -> void:
+	preload("res://scripts/settlement_music.gd").stop()
+	load_progression()
+	run_id = str(Time.get_unix_time_from_system()) + "-" + str(randi())
+	run_deeds.clear()
 	run_seed = seed_value if seed_value >= 0 else randi()
 	var rng := RandomNumberGenerator.new()
 	rng.seed = run_seed
@@ -328,6 +388,25 @@ static func start_run(seed_value: int = -1) -> void:
 	run_heroes.clear()
 	navigation_votes.clear()
 	floors.clear()
+	scout_uses = 3 if service_unlocked("watchtower") else 2
+	if selected_expedition.has("restoration"):
+		var service: Dictionary = Mechanics.SERVICES[selected_expedition["restoration"]]
+		floors.append({
+			Vector2i.ZERO: {"kind": "battle", "enemies": [service["enemy"], service["enemy"]], "creature": service["enemy"], "cleared": false, "seen": true},
+			Vector2i(1, 0): {"kind": "camp", "cleared": false, "seen": true},
+			Vector2i(2, 0): {"kind": "boss", "enemies": [service["boss"]], "creature": service["boss"], "cleared": false, "seen": true, "final_boss": true}
+		})
+		ensure_run_heroes()
+		return
+	if selected_expedition.get("id", "") == "infested_apothecary":
+		floors.append({
+			Vector2i(0, 0): {"kind": "battle", "creature": "moth_metamorph", "enemies": ["moth_metamorph", "moth_metamorph", "moth_metamorph"], "enemy_health_scale": 0.65, "enemy_damage_scale": 0.7, "cleared": false, "seen": true, "name": "The Infested Dispensary"},
+			Vector2i(1, 0): {"kind": "camp", "cleared": false, "seen": true, "name": "The Sealed Sickroom"},
+			Vector2i(2, 0): {"kind": "boss", "creature": "moth_oleander", "enemies": ["moth_oleander"], "final_boss": false, "cleared": false, "seen": true, "name": "Oleander's Ward"},
+			Vector2i(3, 0): {"kind": "boss", "creature": "moth_exuvia", "enemies": ["moth_exuvia"], "final_boss": true, "cleared": false, "seen": true, "name": "The Queen's Theatre"}
+		})
+		ensure_run_heroes()
+		return
 	for depth in range(floor_count):
 		var rooms: Dictionary = {Vector2i.ZERO: {"kind": "entry", "cleared": true, "seen": true}}
 		var cursor := Vector2i.ZERO
@@ -355,9 +434,17 @@ static func start_run(seed_value: int = -1) -> void:
 				var roll: float = rng.randf()
 				rooms[branch] = {"kind": "battle" if roll < 0.5 else ("treasure" if roll < 0.8 else "camp"), "cleared": false, "seen": false}
 		rooms[Vector2i(4, 3)]["kind"] = "boss" if depth == floor_count - 1 else "stairs"
+		var enemy_pool: Array = floor_enemy_pool(depth)
 		if selected_expedition.get("faction", "") == "human":
 			for location in rooms:
-				rooms[location]["creature"] = "ash_chieftain" if rooms[location]["kind"] == "boss" else (["ash_raider", "gallows_scout"][rng.randi_range(0, 1)])
+				rooms[location]["creature"] = "ash_chieftain" if rooms[location]["kind"] == "boss" else str(enemy_pool[rng.randi_range(0, enemy_pool.size() - 1)])
+			var guardians: Array = selected_expedition.get("floor_bosses", [])
+			if depth < guardians.size() and str(guardians[depth]) != "":
+				var guardian: Dictionary = rooms[Vector2i(4, 3)]
+				guardian["kind"] = "boss"
+				guardian["creature"] = str(guardians[depth])
+				guardian["final_boss"] = depth == floor_count - 1
+				guardian["exit_after_boss"] = depth < floor_count - 1
 		if selected_expedition.get("faction", "") == "remade":
 			for location in rooms:
 				rooms[location]["creature"] = ["anguish_penitent", "anguish_vessel"][rng.randi_range(0, 1)]
@@ -373,7 +460,7 @@ static func start_run(seed_value: int = -1) -> void:
 			var primary: String = str(room.get("creature", selected_expedition.get("creature", "hollow_villager")))
 			if room["kind"] == "boss":
 				room["enemies"] = [primary]
-				room["support_creature"] = "gallows_scout" if selected_expedition.get("faction", "") == "human" else str(selected_expedition.get("creature", "hollow_villager"))
+				room["support_creature"] = str(enemy_pool[enemy_pool.size() - 1]) if selected_expedition.get("faction", "") == "human" else str(selected_expedition.get("creature", "hollow_villager"))
 				if selected_expedition.get("faction", "") == "remade":
 					room["support_creature"] = "anguish_penitent"
 					if room.has("boss_phases"):
@@ -381,7 +468,7 @@ static func start_run(seed_value: int = -1) -> void:
 			elif room["kind"] == "battle":
 				room["enemies"] = [primary]
 				for extra in range(rng.randi_range(0, 2)):
-					room["enemies"].append(["ash_raider", "gallows_scout"][rng.randi_range(0, 1)] if selected_expedition.get("faction", "") == "human" else primary)
+					room["enemies"].append(str(enemy_pool[rng.randi_range(0, enemy_pool.size() - 1)]) if selected_expedition.get("faction", "") == "human" else primary)
 		# Guarantee a camp and exactly one orb room on every floor.
 		var camps: Array = []
 		var battles: Array = []
@@ -395,6 +482,33 @@ static func start_run(seed_value: int = -1) -> void:
 			rooms[campsite]["kind"] = "camp"
 		var orb_room: Vector2i = battles[rng.randi_range(0, battles.size() - 1)]
 		rooms[orb_room]["merchant_orb"] = true
+		# Add 3–5 room/corridor events without replacing camps, exits or orbs.
+		var event_candidates: Array = []
+		for location in rooms:
+			if rooms[location]["kind"] == "treasure":
+				event_candidates.append(location)
+		for location in battles:
+			if location != orb_room:
+				event_candidates.append(location)
+		var event_pool: Array = Events.pool(str(selected_expedition.get("faction", "")))
+		for event_index in range(mini(rng.randi_range(3, 5), event_candidates.size())):
+			var choice: int = rng.randi_range(0, event_candidates.size() - 1)
+			var location: Vector2i = event_candidates.pop_at(choice)
+			rooms[location]["kind"] = "event"
+			rooms[location]["event_id"] = event_pool[rng.randi_range(0, event_pool.size() - 1)]
+			rooms[location]["event_seed"] = rng.randi()
+			rooms[location]["event_layout"] = "corridor" if rng.randf() < 0.5 else "room"
+			if rooms[location]["event_layout"] == "corridor":
+				var corridor_roll: float = rng.randf()
+				rooms[location]["corridor_encounter"] = "gold" if corridor_roll < 0.40 else ("roamer" if corridor_roll < 0.65 else "object")
+				rooms[location]["small_gold"] = rng.randi_range(1, 4)
+		if depth == 1 and selected_expedition.get("id", "") == "old_road" and not crusader_unlocked:
+			for location in rooms:
+				if rooms[location]["kind"] == "event":
+					rooms[location]["event_id"] = "crusader_coffin"
+					rooms[location]["event_layout"] = "room"
+					rooms[location].erase("corridor_encounter")
+					break
 		floors.append(rooms)
 	ensure_run_heroes()
 	reveal_neighbors()
@@ -402,12 +516,39 @@ static func start_run(seed_value: int = -1) -> void:
 static func current_room_kind() -> String:
 	return str(floors[floor_index][room_position]["kind"]) if run_active else ""
 
+static func enter_corridor() -> Dictionary:
+	if not run_active:
+		return {}
+	var room: Dictionary = floors[floor_index][room_position]
+	if room.get("event_layout", "") != "corridor" or room.get("cleared", false):
+		return {}
+	var encounter: String = str(room.get("corridor_encounter", "object"))
+	if encounter == "gold" and not room.get("corridor_claimed", false):
+		room["corridor_claimed"] = true
+		room["event_resolved"] = true
+		room["cleared"] = true
+		var amount: int = int(room["small_gold"])
+		gold += amount
+		return {"kind": "gold", "amount": amount}
+	if encounter == "roamer":
+		room["kind"] = "battle"
+		room["enemies"] = [str(room.get("creature", selected_expedition.get("creature", "hollow_villager")))]
+		room["corridor_surprise"] = true
+		room.erase("support_creature")
+		return {"kind": "roamer"}
+	return {}
+
 static func reveal_neighbors() -> void:
 	var rooms: Dictionary = floors[floor_index]
 	rooms[room_position]["seen"] = true
 	for direction in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
 		if rooms.has(room_position + direction):
 			rooms[room_position + direction]["seen"] = true
+	if service_unlocked("watchtower"):
+		for location in rooms:
+			if abs(location.x - room_position.x) + abs(location.y - room_position.y) <= 2:
+				rooms[location]["seen"] = true
+				rooms[location]["scouted"] = true
 
 # Every participant must agree on the same adjacent destination. Networking
 # can feed player IDs into this authority without changing dungeon rules.
@@ -430,6 +571,10 @@ static func vote_move(voter_id: String, destination: Vector2i) -> bool:
 static func finish_encounter() -> void:
 	floors[floor_index][room_position]["cleared"] = true
 	if current_room_kind() == "boss" and floors[floor_index][room_position].get("final_boss", true):
+		if selected_expedition.get("id", "") == "infested_apothecary" or selected_expedition.has("restoration"):
+			for room in floors[0].values():
+				if room["kind"] in ["battle", "boss"] and not room["cleared"]:
+					return
 		run_complete = true
 		var id: String = str(selected_expedition.get("id", ""))
 		if id != "" and not completed_expeditions.has(id):
@@ -440,6 +585,7 @@ static func descend() -> bool:
 	if not can_descend():
 		return false
 	floor_index += 1
+	scout_uses = 3 if service_unlocked("watchtower") else 2
 	room_position = Vector2i.ZERO
 	navigation_votes.clear()
 	reveal_neighbors()
@@ -456,13 +602,20 @@ static var inventory: Dictionary = {}
 static var equipment: Dictionary = {}
 static var loot_rng: RandomNumberGenerator = RandomNumberGenerator.new()
 static var shop_return_scene: String = "res://scenes/hub/settlement.tscn"
+const APOTHECARY_CATALOG: Array[String] = ["healing_potion", "cleansing_potion", "solace_potion", "healing_scroll", "might_tonic", "focus_tonic", "ward_tonic"]
+
+static func purchase_apothecary_item(item_id: String) -> bool:
+	return apothecary_unlocked() and APOTHECARY_CATALOG.has(item_id) and purchase_item(item_id)
 
 static func add_item(item_id: String, amount: int = 1) -> void:
 	if not Items.item(item_id).is_empty() and amount > 0:
 		inventory[item_id] = int(inventory.get(item_id, 0)) + amount
 
 static func consume_scroll(item_id: String) -> bool:
-	if not Items.SCROLLS.has(item_id) or int(inventory.get(item_id, 0)) <= 0:
+	return consume_item(item_id) if Items.SCROLLS.has(item_id) else false
+
+static func consume_item(item_id: String) -> bool:
+	if Items.item(item_id).get("kind", "") not in ["scroll", "potion"] or int(inventory.get(item_id, 0)) <= 0:
 		return false
 	inventory[item_id] = int(inventory[item_id]) - 1
 	if inventory[item_id] <= 0:
@@ -483,10 +636,75 @@ static func equipment_bonus(hero_id: String, stat: String) -> int:
 	var total: int = 0
 	for item_id in equipment.get(hero_id, {}).values():
 		total += int(Items.item(str(item_id)).get(stat, 0))
+		if modifications.get(item_id, "") == "keen" and stat == "damage":
+			total += 1
+		if modifications.get(item_id, "") == "fortified" and stat == "block":
+			total += 2
 	return total
 
+static func hero_accuracy(hero_id: String, state: Dictionary = {}) -> float:
+	var penalty: int = 10 if state.get("statuses", {}).has("chill") else 0
+	if state.get("resolve_type", "") == "affliction":
+		penalty += 10
+	return clampf(100.0 - penalty + equipment_bonus(hero_id, "accuracy") + buff_bonus(state, "focus"), 0.0, 100.0)
+
+static func try_hero_status(hero_id: String, statuses: Dictionary, status: String, potency: float = 1.0, roll: float = -1.0) -> bool:
+	# Poison resistance already reduces poison tick damage; generic resistance
+	# prevents application of any debuff. Bleed resistance prevents Bleed.
+	var resistance: int = equipment_bonus(hero_id, "debuff_resist")
+	if status == "bleed":
+		resistance += equipment_bonus(hero_id, "bleed_resist")
+	if (randf() * 100.0 if roll < 0.0 else roll) < clampi(resistance, 0, 100):
+		return false
+	Events.Rules.apply_status(statuses, status, potency)
+	if statuses.has(status) and status in ["burn", "bleed", "poison"]:
+		statuses[status]["damage"] += equipment_bonus(hero_id, "curse_dot")
+	return Events.Rules.STATUS.has(status)
+
+static func rank_of(hero_id: String) -> String:
+	return str(formation.get(hero_id, Mechanics.default_rank(hero_id)))
+
+static func service_unlocked(service: String) -> bool:
+	return Mechanics.SERVICES.has(service) and completed_expeditions.has(Mechanics.SERVICES[service]["quest"])
+
+static func modify_equipment(item_id: String, mode: String) -> bool:
+	if not service_unlocked("workshop") or mode not in ["keen", "fortified"] or not Items.EQUIPMENT.has(item_id) or modifications.has(item_id) or gold < 12:
+		return false
+	var owned: bool = int(inventory.get(item_id, 0)) > 0
+	for loadout in equipment.values():
+		owned = owned or loadout.values().has(item_id)
+	if not owned:
+		return false
+	gold -= 12
+	modifications[item_id] = mode
+	save_progression()
+	return true
+
+static func scout_area() -> bool:
+	if not run_active or scout_uses <= 0 or not floors[floor_index][room_position]["cleared"]:
+		return false
+	scout_uses -= 1
+	for location in floors[floor_index]:
+		if abs(location.x - room_position.x) + abs(location.y - room_position.y) <= (3 if service_unlocked("watchtower") else 2):
+			floors[floor_index][location]["seen"] = true
+			floors[floor_index][location]["scouted"] = true
+	return true
+
+static func scouting_description(room: Dictionary) -> String:
+	if not room.get("scouted", false):
+		return ""
+	var text: String = "Scouted: "
+	if room["kind"] in ["battle", "boss"]:
+		for id in room.get("enemies", [room.get("creature", "hollow_villager")]):
+			text += str(creature(str(id)).get("name", id)) + " · "
+	elif room["kind"] == "event":
+		text += str(Events.definition(str(room.get("event_id", ""))).get("risk", "Unknown object"))
+	else:
+		text += str(room["kind"]).capitalize()
+	return text
+
 static func hero_max_hp(hero_id: String) -> int:
-	return int(hero(hero_id).get("max_hp", 40)) + equipment_bonus(hero_id, "max_hp")
+	return int(floor((int(hero(hero_id).get("max_hp", 40)) + equipment_bonus(hero_id, "max_hp")) * (1.0 + equipment_bonus(hero_id, "max_hp_percent") / 100.0)))
 
 static func sync_equipped_health(hero_id: String) -> void:
 	if run_heroes.has(hero_id):
@@ -495,7 +713,7 @@ static func sync_equipped_health(hero_id: String) -> void:
 
 static func equip_item(hero_id: String, item_id: String) -> bool:
 	var entry: Dictionary = Items.EQUIPMENT.get(item_id, {})
-	if entry.is_empty() or entry["hero"] != hero_id or not party.has(hero_id) or int(inventory.get(item_id, 0)) <= 0:
+	if entry.is_empty() or not entry.has("slot") or (entry.has("hero") and entry["hero"] != hero_id) or not party.has(hero_id) or int(inventory.get(item_id, 0)) <= 0:
 		return false
 	if not equipment.has(hero_id):
 		equipment[hero_id] = {}
@@ -537,6 +755,11 @@ static func claim_room_loot() -> Array[String]:
 		var item_id: String = Items.roll_scroll(loot_rng)
 		add_item(item_id)
 		result.append(item_id)
+	if loot_rng.randf() < 0.20:
+		var potion_ids: Array = Items.POTIONS.keys()
+		var potion_id: String = str(potion_ids[loot_rng.randi_range(0, potion_ids.size() - 1)])
+		add_item(potion_id)
+		result.append(potion_id)
 	return result
 
 
@@ -587,10 +810,12 @@ static func item_price(item_id: String) -> int:
 	var entry: Dictionary = Items.item(item_id)
 	if entry.is_empty():
 		return 0
-	return int(entry.get("price", {"common": 8, "rare": 18, "epic": 30, "legendary": 40}.get(entry.get("rarity", "common"), 8)))
+	return int(entry.get("price", {"common": 8, "rare": 18, "epic": 30, "unique": 38, "legendary": 40}.get(entry.get("rarity", "common"), 8)))
 
 static func purchase_item(item_id: String) -> bool:
 	var entry: Dictionary = Items.item(item_id)
+	if entry.get("apothecary", false) and not apothecary_unlocked():
+		return false
 	if entry.is_empty() or entry.get("rarity", "") == "legendary" or (entry.has("hero") and not party.has(entry["hero"])):
 		return false
 	var price: int = item_price(item_id)
@@ -599,3 +824,102 @@ static func purchase_item(item_id: String) -> bool:
 	gold -= price
 	add_item(item_id)
 	return true
+
+static func apply_potion(hero_id: String, item_id: String, heroes: Dictionary) -> bool:
+	if not is_restorative(item_id) or not heroes.has(hero_id) or heroes[hero_id].get("dead", false):
+		return false
+	if not consume_item(item_id):
+		return false
+	var hero: Dictionary = heroes[hero_id]
+	var potion: Dictionary = Items.item(item_id)
+	match str(potion["effect"]):
+		"heal":
+			hero["hp"] = mini(hero_max_hp(hero_id), int(hero["hp"]) + int(potion["amount"]))
+			hero["deaths_door"] = false
+		"cleanse":
+			hero["statuses"] = {}
+		"cleanse_one":
+			hero["statuses"].erase(potion["status"])
+		"solace":
+			hero["stress"] = maxi(0, int(hero["stress"]) - int(potion["amount"]))
+		"buff":
+			if not hero.has("buffs"):
+				hero["buffs"] = {}
+			# Refresh rather than stack duplicate tonics; expires after two party turns.
+			hero["buffs"][potion["buff"]] = {"turns": 2, "amount": int(potion["amount"])}
+	return true
+
+static func is_restorative(item_id: String) -> bool:
+	return Items.POTIONS.has(item_id) or Items.item(item_id).get("effect", "") == "heal"
+
+static func apothecary_unlocked() -> bool:
+	return completed_expeditions.has("infested_apothecary")
+
+static func buff_bonus(hero: Dictionary, buff: String) -> int:
+	return int(hero.get("buffs", {}).get(buff, {}).get("amount", 0))
+
+static func tick_buffs(hero: Dictionary) -> void:
+	var buffs: Dictionary = hero.get("buffs", {})
+	for buff in buffs.keys():
+		buffs[buff]["turns"] -= 1
+		if buffs[buff]["turns"] <= 0:
+			buffs.erase(buff)
+
+static func buff_text(hero: Dictionary) -> String:
+	var parts: PackedStringArray = []
+	for buff in hero.get("buffs", {}):
+		parts.append("%s +%d%s · %dt" % [str(buff).capitalize(), buff_bonus(hero, buff), "%" if buff != "ward" else " Block", int(hero["buffs"][buff]["turns"])])
+	return " · ".join(parts)
+
+static func floor_enemy_pool(depth: int) -> Array:
+	var pools: Array = selected_expedition.get("floor_enemy_pools", [])
+	if depth < pools.size():
+		return pools[depth]
+	return ["ash_raider", "gallows_scout"] if selected_expedition.get("faction", "") == "human" else [str(selected_expedition.get("creature", "hollow_villager"))]
+
+static func floor_background(scene_kind: String) -> String:
+	var backgrounds: Array = selected_expedition.get("floor_" + scene_kind + "_backgrounds", [])
+	if floor_index < backgrounds.size():
+		return str(backgrounds[floor_index])
+	return str(selected_expedition.get(scene_kind + "_background", "res://assets/generated/camp_ruins.png" if scene_kind == "camp" else "res://assets/generated/bandit_combat.png"))
+
+static func next_floor_entrance() -> Dictionary:
+	if floor_index >= floor_count - 1:
+		return {}
+	var next_depth: int = floor_index + 1
+	var names: Array = selected_expedition.get("floor_names", [])
+	var next_name: String = str(names[next_depth]) if next_depth < names.size() else "Floor %d" % (next_depth + 1)
+	var result: Dictionary = {"name": "The Descent", "description": "A passage opens beneath the defeated guardian. The party may press on, or explore this floor before leaving.", "floor": next_name, "art": floor_background("combat")}
+	var backgrounds: Array = selected_expedition.get("floor_combat_backgrounds", [])
+	if next_depth < backgrounds.size():
+		result["art"] = str(backgrounds[next_depth])
+	match str(selected_expedition.get("id", "")):
+		"old_road":
+			result["name"] = "The Broken Portcullis" if next_depth == 1 else "The Lord's Stair"
+			result["description"] = "Beyond the outlaws' road, a broken gate reveals cold stone halls beneath the wolf banners." if next_depth == 1 else "The Last Honorable Son's vigil is broken. Bloodied steps lead down to the Undying Lord's ancestral court."
+		"path_beast":
+			result["name"] = "The Sutured Gate" if next_depth == 1 else "The Throat of the Sanctuary"
+			result["description"] = "The giant falls silent. A gate bound in sacred stitches parts before the Choir of Remaking." if next_depth == 1 else "The Coterie's final form lies still. Beneath its altar, a breathing passage opens toward the Howling Head."
+	return result
+
+static func customize_hero(id: String, chosen_name: String, color: String) -> bool:
+	if not service_unlocked("workshop") or not HEROES.has(id) or color not in ["original", "red", "green", "blue", "gold"]:
+		return false
+	var clean: String = chosen_name.strip_edges().replace("\n", " ").replace("\r", " ").left(20)
+	if clean.is_empty(): hero_names.erase(id)
+	else: hero_names[id] = clean
+	hero_colors[id] = color
+	if run_heroes.has(id): run_heroes[id]["name"] = hero(id)["name"]
+	save_progression()
+	return true
+
+static func add_deed(id: String, kind: String, amount: int = 1) -> void:
+	if not run_deeds.has(id): run_deeds[id] = {"battles": 0, "damage": 0, "healing": 0}
+	run_deeds[id][kind] = int(run_deeds[id].get(kind, 0)) + maxi(0, amount)
+
+static func record_death(id: String, cause: String) -> void:
+	var memorial_id: String = run_id + ":" + id
+	for grave in graves:
+		if grave.get("id", "") == memorial_id: return
+	graves.append({"id": memorial_id, "hero": id, "name": hero(id)["name"], "class": HEROES[id]["name"], "dungeon": selected_expedition.get("name", "The wilderness"), "floor": floor_index + 1, "cause": cause, "date": Time.get_date_string_from_system(), "deeds": run_deeds.get(id, {"battles": 0, "damage": 0, "healing": 0}).duplicate(true)})
+	save_progression()

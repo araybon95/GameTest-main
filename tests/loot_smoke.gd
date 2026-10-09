@@ -30,14 +30,15 @@ func run_tests() -> void:
 	State.unequip_item("warden", "weapon")
 	assert(State.hero_max_hp("warden") == 55)
 	assert(State.select_expedition("old_road"))
-	var counts: Dictionary = {"common": 0, "rare": 0, "epic": 0, "legendary": 0}
+	var counts: Dictionary = {"common": 0, "rare": 0, "epic": 0, "unique": 0, "legendary": 0}
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 123
 	for trial in range(10000):
 		counts[Items.roll_rarity(rng)] += 1
-	assert(abs(int(counts["common"]) - 6000) < 250)
+	assert(abs(int(counts["common"]) - 5700) < 250)
 	assert(abs(int(counts["rare"]) - 2500) < 200)
 	assert(abs(int(counts["epic"]) - 1000) < 150)
+	assert(abs(int(counts["unique"]) - 300) < 100)
 	assert(abs(int(counts["legendary"]) - 500) < 100)
 	var scroll_drops: int = 0
 	for trial in range(2000):
@@ -48,8 +49,9 @@ func run_tests() -> void:
 		assert(not loot.is_empty())
 		var gear: Dictionary = Items.item(loot[0])
 		assert(gear["rarity"] == "legendary" and State.party.has(gear["hero"]))
-		if loot.size() > 1:
-			scroll_drops += 1
+		for reward in loot:
+			if Items.SCROLLS.has(reward):
+				scroll_drops += 1
 		assert(State.claim_room_loot().is_empty())
 	assert(abs(scroll_drops - 300) < 75)
 	State.inventory.clear()

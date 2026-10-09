@@ -1,6 +1,8 @@
 # Ashen Expedition
 
-A Godot 4.7.2 deckbuilding RPG project. The original project code is licensed under the MIT License; see [`LICENSE`](LICENSE). Third-party assets are not covered by that license and remain subject to their own terms. In particular, see `Sound FX Starter Pack Vol. 1/Royalty-Free License (Link).pdf` for the included audio pack's license. (Assets not currently in use but saved for future)
+Settings (F10), saved journeys, Workshop names/colors, dungeon books, combat audio and the settlement Graveyard are available. See [Settings and continuity](SETTINGS_AND_CONTINUITY.md) and [Gameplay systems](GAMEPLAY_SYSTEMS.md) for controls and rules.
+
+A Godot 4.7.2 party RPG with shared turns and multi-floor expeditions. The original project code is licensed under the MIT License; see [`LICENSE`](LICENSE). Third-party assets are not covered by that license and remain subject to their own terms. In particular, see `Sound FX Starter Pack Vol. 1/Royalty-Free License (Link).pdf` for the included audio pack's license. (Assets not currently in use but saved for future)
 
 ## Running the game
 

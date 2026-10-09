@@ -1,0 +1,1 @@
+Original synthesized Ashen combat sound effects. Individually replace sword.wav, bow.wav, spell.wav or block.wav to refine the sounds. Mono PCM, 44.1 kHz. Playback is capped at eight simultaneous voices and mixed below full volume.
