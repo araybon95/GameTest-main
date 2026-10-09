@@ -1,6 +1,6 @@
 # Ashen Expedition
 
-A Godot 4.7.2 deckbuilding RPG project. The original project code is licensed under the MIT License; see [`LICENSE`](LICENSE). Third-party assets are not covered by that license and remain subject to their own terms. In particular, see `Sound FX Starter Pack Vol. 1/Royalty-Free License (Link).pdf` for the included audio pack's license.
+A Godot 4.7.2 deckbuilding RPG project. The original project code is licensed under the MIT License; see [`LICENSE`](LICENSE). Third-party assets are not covered by that license and remain subject to their own terms. In particular, see `Sound FX Starter Pack Vol. 1/Royalty-Free License (Link).pdf` for the included audio pack's license. (Assets not currently in use but saved for future)
 
 ## Running the game
 
@@ -10,7 +10,7 @@ A Godot 4.7.2 deckbuilding RPG project. The original project code is licensed un
 
 The project targets Godot 4.7 and uses the GL Compatibility renderer. Godot 4.6.3 has also passed the project's headless combat checks, but 4.7.2 is the recommended version.
 
-## Ashen Expedition
+## Ashen Expedition (Temporary)
 
 A Slay-the-Spire-style deckbuilder with Darkest Dungeon flavour: a party of
 three heroes, each with their own deck, HP, Block and Stress, facing a creature
@@ -19,7 +19,7 @@ your party in the Barracks (recruit the Healer), and record foes in the Archive.
 
 ### Flow
 
-Title → Hamlet → (Barracks / Archive / Forge) → Expedition → (battle) → Hamlet.
+Title → Hamlet(Settlement, will change name) → (Barracks / Archive / Forge) → Expedition → (battle) → Hamlet.
 
 1. `scenes/ui/title_screen.tscn` is the **Main Scene** (Project Settings →
    Application → Run → Main Scene). **ENTER THE HAMLET** loads the settlement;
@@ -46,7 +46,7 @@ the team (*Blessing*), eases Stress (*Solace*), and deals bonus damage against
 **Undead** (*Smite*, *Turn Undead*). Swap heroes in the Barracks — changes take
 effect on the next expedition.
 
-### Embers and the Forge
+### Embers and the Forge (Temporary)
 
 Winning an expedition awards **Embers** (The Old Road 5, Bone Warrens 7, the
 sealed Weald 12 — see each expedition's `reward`). The Forge spends them to
@@ -62,7 +62,6 @@ appear in the Forge header and on the combat HUD.
 automatically:
 
 - **Hero** → `HEROES` (plus a portrait PNG at `art`).
-- **Card** → `CARDS`; reference its id from a hero's `deck`.
 - **Creature** → `CREATURES` (name, tags, undead, hp, attack, art, lore).
 - **Expedition** → `EXPEDITIONS` (name, region, difficulty, blurb, `creature`, locked).
 - **Building** → `BUILDINGS` in `scenes/hub/settlement.gd` (`name`, `subtitle`, `scene`,
@@ -102,7 +101,7 @@ draws one new card at the start of every subsequent party turn. Played cards go
 to the discard pile; an empty draw pile reshuffles the discard pile. Action
 points reset to two each round. The card hand scrolls horizontally when it grows.
 
-### Darkest Dungeon mechanics
+###mechanics subject to change
 
 - **Death's Door** — a hero reduced to 0 HP is not dead yet; they stand at
   Death's Door and the next blow fells them. Healing above 0 clears it.
@@ -118,7 +117,7 @@ points reset to two each round. The card hand scrolls horizontally when it grows
 
 ### Artwork
 
-All art lives in `assets/generated/` (transparent PNGs, Darkest Dungeon style):
+All art lives in `assets/generated/` (transparent PNGs, Dark style):
 
 - `bg_crypt.png`, `settlement_hamlet.png`, `title_key_art.png` — backgrounds
 - `hero_warden.png`, `hero_ranger.png`, `hero_occultist.png`, `hero_healer.png` — portraits
