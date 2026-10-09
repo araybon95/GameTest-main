@@ -97,6 +97,13 @@ func _use_creature(creature_id: String) -> void:
 	enemy_attack_base = int(creature.get("attack", DEFAULT_ENEMY_ATTACK))
 	enemy_art_path = str(creature.get("art", DEFAULT_ENEMY_ART))
 	enemy_undead = bool(creature.get("undead", false))
+	if GameState.run_active:
+		enemy_max_hp += GameState.floor_index * 10
+		enemy_attack_base += GameState.floor_index * 2
+		if GameState.current_room_kind() == "boss":
+			enemy_name = "Dread " + enemy_name
+			enemy_max_hp *= 2
+			enemy_attack_base += 3
 	GameState.discover_creature(creature_id)
 
 
@@ -113,8 +120,7 @@ func _start_battle() -> void:
 
 	for hero_id in party:
 		var hero: Dictionary = GameState.hero(hero_id)
-		var deck: Array = (hero.get("deck", []) as Array).duplicate()
-		deck.shuffle()
+		var abilities: Array = GameState.hero_abilities(str(hero_id))
 		var max_hp: int = int(hero.get("max_hp", 40))
 		hero_state[hero_id] = {
 			"name": str(hero.get("name", hero_id)),
@@ -123,9 +129,8 @@ func _start_battle() -> void:
 			"block": 0,
 			"ap": 2,
 			"stress": 0,
-			"draw": deck,
-			"hand": [],
-			"discard": [],
+			"abilities": abilities,
+			"cooldowns": {},
 			"dead": false,
 			"deaths_door": false,
 			"damage_mod": 0,
@@ -134,11 +139,16 @@ func _start_battle() -> void:
 			"resolve_tag": "",
 			"resolve_type": ""
 		}
-		_draw_cards(hero_id, 3)
+		if GameState.run_heroes.has(hero_id):
+			for key in ["hp", "stress", "dead", "deaths_door", "damage_mod", "stress_per_turn", "resolved", "resolve_tag", "resolve_type"]:
+				hero_state[hero_id][key] = GameState.run_heroes[hero_id][key]
 
 	selected_hero = str(party[0]) if not party.is_empty() else ""
+	var survivors: Array = _standing_heroes()
+	if not survivors.is_empty():
+		selected_hero = str(survivors[0])
 	_add_log("%s — a %s blocks the path." % [expedition_title, enemy_name])
-	_add_log("%d heroes. %d decks. One party turn." % [party.size(), party.size()])
+	_add_log("%d heroes. %d ability sets. One party turn." % [party.size(), party.size()])
 	_add_log("At 100 Stress a hero faces a resolve test — Virtue or Affliction.")
 	_refresh_all()
 
@@ -161,19 +171,6 @@ func _standing_heroes() -> Array:
 	return out
 
 
-func _draw_cards(hero_id: String, amount: int) -> void:
-	var state: Dictionary = hero_state[hero_id]
-	for i in range(amount):
-		if state["draw"].is_empty():
-			if state["discard"].is_empty():
-				break
-			state["draw"] = state["discard"].duplicate()
-			state["discard"].clear()
-			state["draw"].shuffle()
-			_add_log(_name_of(hero_id) + " reshuffles their discard pile.")
-		state["hand"].append(state["draw"].pop_back())
-
-
 func _select_hero(hero_id: String) -> void:
 	if battle_over or not _is_standing(hero_id):
 		return
@@ -187,16 +184,21 @@ func _play_card(hero_id: String, card_index: int) -> void:
 	var state: Dictionary = hero_state[hero_id]
 	if not _is_standing(hero_id):
 		return
-	if card_index < 0 or card_index >= state["hand"].size():
+	if card_index < 0 or card_index >= state["abilities"].size():
 		return
-	var card_id: String = str(state["hand"][card_index])
+	var card_id: String = str(state["abilities"][card_index])
 	var card: Dictionary = GameState.card_stats(card_id)
 	if int(state["ap"]) < int(card["cost"]):
 		return
 
 	state["ap"] = int(state["ap"]) - int(card["cost"])
-	state["discard"].append(state["hand"].pop_at(card_index))
-	_add_log("%s plays %s." % [_name_of(hero_id), card["name"]])
+	if int(state["cooldowns"].get(card_id, 0)) > 0:
+		state["ap"] = int(state["ap"]) + int(card["cost"])
+		return
+	var cooldown: int = GameState.ability_cooldown(card_id)
+	if cooldown > 0:
+		state["cooldowns"][card_id] = cooldown + 1
+	_add_log("%s uses %s." % [_name_of(hero_id), card["name"]])
 	_resolve_card(hero_id, card)
 
 	if enemy_hp <= 0:
@@ -210,7 +212,7 @@ func _attack_damage(hero_id: String, card: Dictionary) -> int:
 	var dmg: int = int(card.get("damage", 0)) + int(hero_state[hero_id]["damage_mod"])
 	if enemy_undead and card.has("undead_bonus"):
 		dmg += int(card["undead_bonus"])
-	return dmg
+	return maxi(0, dmg)
 
 
 func _resolve_card(hero_id: String, card: Dictionary) -> void:
@@ -424,7 +426,8 @@ func _end_turn() -> void:
 		if _is_standing(hero_id):
 			state["ap"] = 2
 			_gain_stress(hero_id, int(state["stress_per_turn"]))
-			_draw_cards(hero_id, 1)
+			for ability_id in state["cooldowns"]:
+				state["cooldowns"][ability_id] = maxi(0, int(state["cooldowns"][ability_id]) - 1)
 		else:
 			state["ap"] = 0
 
@@ -445,9 +448,7 @@ func _refresh_all() -> void:
 	if not hero_state.has(selected_hero):
 		return
 	var hero: Dictionary = hero_state[selected_hero]
-	hand_title.text = "%s  ·  %d/2 AP  ·  Draw %d  ·  Hand %d  ·  Discard %d" % [
-		str(hero["name"]), int(hero["ap"]), hero["draw"].size(), hero["hand"].size(), hero["discard"].size()
-	]
+	hand_title.text = "%s  ·  %d/2 AP  ·  ABILITIES  ·  Heroes act in any order" % [str(hero["name"]), int(hero["ap"])]
 	for hero_id in party:
 		var state: Dictionary = hero_state[hero_id]
 		var tag: String = ""
@@ -490,8 +491,8 @@ func _refresh_all() -> void:
 	$Enemy/HealthBar.max_value = enemy_max_hp
 	$Enemy/HealthBar.value = enemy_hp
 	enemy_intent_label.text = _enemy_intent_text()
-	end_turn_button.disabled = battle_over
-	end_turn_button.text = "END PARTY TURN" if not battle_over else "RETURN TO THE HAMLET"
+	end_turn_button.disabled = false
+	end_turn_button.text = "END PARTY TURN" if not battle_over else ("CONTINUE EXPEDITION" if enemy_hp <= 0 and GameState.run_active else "RETURN TO THE HAMLET")
 	_refresh_hand()
 	_refresh_log()
 
@@ -502,25 +503,27 @@ func _refresh_hand() -> void:
 		child.queue_free()
 	if not hero_state.has(selected_hero):
 		return
-	var hand: Array = hero_state[selected_hero]["hand"]
+	var hand: Array = hero_state[selected_hero]["abilities"]
 	for index in range(hand.size()):
 		var card_id: String = str(hand[index])
 		var card: Dictionary = GameState.card_stats(card_id)
 		var view: Button = _create_card_view(card_id, card)
-		view.disabled = battle_over or int(hero_state[selected_hero]["ap"]) < int(card["cost"])
+		var cooldown: int = int(hero_state[selected_hero]["cooldowns"].get(card_id, 0))
+		view.disabled = battle_over or not _is_standing(selected_hero) or cooldown > 0 or int(hero_state[selected_hero]["ap"]) < int(card["cost"])
+		if cooldown > 0:
+			(view.get_node("Contents/Effect") as Label).text = "READY IN %d TURN(S)" % cooldown
 		view.pressed.connect(_play_card.bind(selected_hero, index))
 		hand_container.add_child(view)
 		var card_width: float = 190.0
 		var card_step: float = 165.0
 		var card_total_width: float = card_width + float(maxi(0, hand.size() - 1)) * card_step
 		var centered_start: float = (hand_container.size.x - card_total_width) * 0.5
-		var fan_ratio: float = float(index) - float(hand.size() - 1) * 0.5
-		var card_position: Vector2 = Vector2(centered_start + index * card_step, 25.0 + absf(fan_ratio) * 13.0)
+		var card_position: Vector2 = Vector2(centered_start + index * card_step, 25.0)
 		view.position = card_position
 		view.size = Vector2(card_width, 270.0)
 		view.z_index = index
 	if hand.is_empty():
-		var empty_label: Label = _make_label("No cards in hand. End the party turn to draw again.", 23, Color(MUTED))
+		var empty_label: Label = _make_label("No abilities equipped.", 23, Color(MUTED))
 		empty_label.position = Vector2(360.0, 150.0)
 		hand_container.add_child(empty_label)
 
@@ -544,9 +547,9 @@ func _award_reward() -> void:
 	if reward_given:
 		return
 	reward_given = true
-	var reward := 5
+	var reward := 2
 	if not GameState.selected_expedition.is_empty():
-		reward = int(GameState.selected_expedition.get("reward", 5))
+		reward = int(GameState.selected_expedition.get("reward", 5)) if not GameState.run_active or GameState.current_room_kind() == "boss" else 2
 	GameState.embers += reward
 	_add_log("Spoils: +%d Embers (total %d)." % [reward, GameState.embers])
 
@@ -652,7 +655,7 @@ func _create_card_view(card_id: String, card: Dictionary) -> Button:
 	button.name = "Card_%s" % card_id
 	button.custom_minimum_size = Vector2(190.0, 270.0)
 	button.visible = true
-	button.tooltip_text = GameState.card_description(card)
+	button.tooltip_text = GameState.card_description(card) + " Cooldown: %d full party turn(s)." % GameState.ability_cooldown(card_id)
 	var level: int = GameState.card_level(card_id)
 	var header: String = "%s    ·    %d AP" % [str(card["name"]), int(card["cost"])]
 	if level > 0:
@@ -663,7 +666,7 @@ func _create_card_view(card_id: String, card: Dictionary) -> Button:
 	picture.texture = _load_texture(art_path)
 	picture.visible = picture.texture != null
 	(button.get_node("Contents/Effect") as Label).text = str(card["effect"]).to_upper()
-	(button.get_node("Contents/Description") as Label).text = GameState.card_description(card)
+	(button.get_node("Contents/Description") as Label).text = GameState.card_description(card) + ("\nCooldown: %d turns." % GameState.ability_cooldown(card_id) if GameState.ability_cooldown(card_id) > 0 else "\nNo cooldown.")
 	return button
 
 
@@ -738,6 +741,12 @@ func _on_hero_pressed(hero_id: String) -> void:
 
 func _on_end_turn_button_pressed() -> void:
 	if battle_over:
-		get_tree().change_scene_to_file(HUB_SCENE)
+		if GameState.run_active and enemy_hp <= 0:
+			GameState.run_heroes = hero_state.duplicate(true)
+			GameState.finish_encounter()
+			get_tree().change_scene_to_file("res://scenes/expedition/dungeon.tscn")
+		else:
+			GameState.end_run()
+			get_tree().change_scene_to_file(HUB_SCENE)
 	else:
 		_end_turn()

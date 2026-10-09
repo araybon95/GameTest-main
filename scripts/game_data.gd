@@ -40,19 +40,19 @@ const CARDS: Dictionary = {
 const HEROES: Dictionary = {
 	"warden": {
 		"name": "Warden", "max_hp": 55, "art": "res://assets/generated/hero_warden.png",
-		"deck": ["wd_slash", "wd_slash", "wd_slash", "wd_slash", "wd_guard", "wd_guard", "wd_guard", "wd_bash", "wd_rally", "wd_heavy"],
+		"abilities": ["wd_slash", "wd_guard", "wd_bash", "wd_rally", "wd_heavy"],
 	},
 	"ranger": {
 		"name": "Ranger", "max_hp": 38, "art": "res://assets/generated/hero_ranger.png",
-		"deck": ["rg_quick", "rg_quick", "rg_quick", "rg_quick", "rg_dodge", "rg_dodge", "rg_dodge", "rg_mark", "rg_pierce", "rg_volley"],
+		"abilities": ["rg_quick", "rg_dodge", "rg_mark", "rg_pierce", "rg_volley"],
 	},
 	"occultist": {
 		"name": "Occultist", "max_hp": 34, "art": "res://assets/generated/hero_occultist.png",
-		"deck": ["oc_hex", "oc_hex", "oc_hex", "oc_hex", "oc_veil", "oc_veil", "oc_veil", "oc_weak", "oc_drain", "oc_blast"],
+		"abilities": ["oc_hex", "oc_veil", "oc_weak", "oc_drain", "oc_blast"],
 	},
 	"healer": {
 		"name": "Healer", "max_hp": 42, "art": "res://assets/generated/hero_healer.png",
-		"deck": ["hl_smite", "hl_smite", "hl_smite", "hl_turn", "hl_mend", "hl_mend", "hl_blessing", "hl_ward", "hl_ward", "hl_solace"],
+		"abilities": ["hl_smite", "hl_turn", "hl_mend", "hl_blessing", "hl_ward", "hl_solace"],
 	},
 }
 
@@ -208,3 +208,107 @@ static func card_description(card: Dictionary) -> String:
 		"stress_attack":
 			return "Deal %d damage. Gain %d Stress." % [int(card.get("damage", 0)), int(card.get("stress", 0))]
 	return str(card.get("description", ""))
+
+
+# Abilities use the existing illustrated definitions and Forge upgrades.
+static func hero_abilities(hero_id: String) -> Array:
+	var result: Array = []
+	for ability_id in hero(hero_id).get("abilities", []):
+		if not result.has(ability_id):
+			result.append(ability_id)
+	return result
+
+static func ability_cooldown(ability_id: String) -> int:
+	var ability: Dictionary = card_stats(ability_id)
+	if str(ability.get("effect", "")) in ["heal", "team_heal", "stress_heal", "team_block", "weaken", "drain"]:
+		return 2
+	return 1 if int(ability.get("cost", 1)) > 1 else 0
+
+static var run_active: bool = false
+static var run_complete: bool = false
+static var floor_index: int = 0
+static var floor_count: int = 2
+static var floors: Array = []
+static var room_position: Vector2i = Vector2i.ZERO
+static var run_heroes: Dictionary = {}
+static var navigation_voters: Array[String] = ["local"]
+static var navigation_votes: Dictionary = {}
+static var run_seed: int = 0
+
+static func start_run(seed_value: int = -1) -> void:
+	run_seed = seed_value if seed_value >= 0 else randi()
+	var rng := RandomNumberGenerator.new()
+	rng.seed = run_seed
+	run_active = true
+	run_complete = false
+	floor_index = 0
+	floor_count = rng.randi_range(2, 3)
+	room_position = Vector2i.ZERO
+	run_heroes.clear()
+	navigation_votes.clear()
+	floors.clear()
+	for depth in range(floor_count):
+		var rooms: Dictionary = {Vector2i.ZERO: {"kind": "entry", "cleared": true, "seen": true}}
+		var cursor := Vector2i.ZERO
+		# A monotonic backbone guarantees a reachable exit; branches add exploration.
+		while cursor != Vector2i(4, 3):
+			if cursor.x < 4 and (cursor.y == 3 or rng.randf() < 0.55):
+				cursor += Vector2i.RIGHT
+			else:
+				cursor += Vector2i.DOWN
+			rooms[cursor] = {"kind": "battle", "cleared": false, "seen": false}
+		var backbone: Array = rooms.keys()
+		for origin in backbone:
+			var branch: Vector2i = origin + [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT][rng.randi_range(0, 3)]
+			if branch.x >= 0 and branch.x <= 4 and branch.y >= 0 and branch.y <= 3 and not rooms.has(branch):
+				rooms[branch] = {"kind": "treasure" if rng.randf() < 0.5 else "camp", "cleared": false, "seen": false}
+		rooms[Vector2i(4, 3)]["kind"] = "boss" if depth == floor_count - 1 else "stairs"
+		floors.append(rooms)
+	reveal_neighbors()
+
+static func current_room_kind() -> String:
+	return str(floors[floor_index][room_position]["kind"]) if run_active else ""
+
+static func reveal_neighbors() -> void:
+	var rooms: Dictionary = floors[floor_index]
+	rooms[room_position]["seen"] = true
+	for direction in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
+		if rooms.has(room_position + direction):
+			rooms[room_position + direction]["seen"] = true
+
+# Every participant must agree on the same adjacent destination. Networking
+# can feed player IDs into this authority without changing dungeon rules.
+static func vote_move(voter_id: String, destination: Vector2i) -> bool:
+	if not run_active or run_complete or not navigation_voters.has(voter_id):
+		return false
+	if not bool(floors[floor_index][room_position]["cleared"]):
+		return false
+	if abs(destination.x - room_position.x) + abs(destination.y - room_position.y) != 1 or not floors[floor_index].has(destination):
+		return false
+	navigation_votes[voter_id] = destination
+	for voter in navigation_voters:
+		if navigation_votes.get(voter, Vector2i(-1, -1)) != destination:
+			return false
+	room_position = destination
+	navigation_votes.clear()
+	reveal_neighbors()
+	return true
+
+static func finish_encounter() -> void:
+	floors[floor_index][room_position]["cleared"] = true
+	if current_room_kind() == "boss":
+		run_complete = true
+
+static func descend() -> bool:
+	if current_room_kind() != "stairs" or floor_index >= floor_count - 1:
+		return false
+	floor_index += 1
+	room_position = Vector2i.ZERO
+	navigation_votes.clear()
+	reveal_neighbors()
+	return true
+
+static func end_run() -> void:
+	run_active = false
+	run_heroes.clear()
+	navigation_votes.clear()

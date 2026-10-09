@@ -31,7 +31,7 @@ const BUILDINGS: Array[Dictionary] = [
 		"scene": "res://scenes/hub/bestiary.tscn", "locked": false,
 	},
 	{
-		"id": "forge", "name": "The Forge", "subtitle": "Spend Embers to temper your cards",
+		"id": "forge", "name": "The Forge", "subtitle": "Spend Embers to temper your abilities",
 		"pos": [1660, 700], "size": [340, 340], "highlight": Color("#F58B43"), "glow_scale": 0.96,
 		"scene": "res://scenes/hub/forge.tscn", "locked": false,
 	},
@@ -283,7 +283,8 @@ func _make_expedition_card(expedition: Dictionary) -> Button:
 
 func _on_expedition_chosen(expedition_id: String) -> void:
 	if GameState.select_expedition(expedition_id):
-		get_tree().change_scene_to_file(COMBAT_SCENE)
+		GameState.start_run()
+		get_tree().change_scene_to_file("res://scenes/expedition/dungeon.tscn")
 
 
 # -------------------- SHARED UI --------------------

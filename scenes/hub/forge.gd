@@ -49,7 +49,7 @@ func _make_hero_column(hero_id: String) -> Control:
 	column.add_child(_make_label(str(hero.get("name", hero_id)).to_upper(), 26, Color(GOLD), true))
 
 	var seen: Dictionary = {}
-	for card_id in (hero.get("deck", []) as Array):
+	for card_id in GameState.hero_abilities(hero_id):
 		if seen.has(card_id):
 			continue
 		seen[card_id] = true
