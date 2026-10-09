@@ -137,4 +137,3 @@ Theme: assets/new_theme.tres
 
 The nested duplicate project and generated .godot cache are excluded. Empty folders use .gitkeep so Git preserves them.
 
-The optional local Ziva editor assistant is excluded from this repository; install it separately if needed.
