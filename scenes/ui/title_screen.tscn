@@ -1,20 +1,22 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=3 uid="uid://dognut0ucmly3"]
 
-[ext_resource type="Script" path="res://scenes/ui/title_screen.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/generated/title_key_art.png" id="2_keyart"]
-[ext_resource type="Theme" path="res://assets/new_theme.tres" id="3_theme"]
+[ext_resource type="Script" uid="uid://c2gdptppy1yr8" path="res://scenes/ui/title_screen.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bvfni7jqn221u" path="res://assets/generated/title_key_art.png" id="2_keyart"]
+[ext_resource type="Theme" uid="uid://c3reqpa1n06fq" path="res://assets/new_theme.tres" id="3_theme"]
 
-[node name="TitleScreen" type="Control"]
+[node name="TitleScreen" type="Control" unique_id=1866433377]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -1.0
+offset_right = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_theme")
 script = ExtResource("1_script")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=1833547487]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,7 +28,7 @@ texture = ExtResource("2_keyart")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Overlay" type="ColorRect" parent="."]
+[node name="Overlay" type="ColorRect" parent="." unique_id=1994268278]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,7 +38,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.031, 0.024, 0.031, 0.5)
 
-[node name="Footer" type="Label" parent="."]
+[node name="Footer" type="Label" parent="." unique_id=693525895]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -46,56 +48,56 @@ offset_top = -44.0
 offset_bottom = -14.0
 grow_horizontal = 2
 grow_vertical = 0
-mouse_filter = 2
-theme_override_font_sizes/font_size = 18
 theme_override_colors/font_color = Color(0.71, 0.64, 0.64, 1)
-text = "A deckbuilding expedition · Slay the Spire × Darkest Dungeon"
+theme_override_font_sizes/font_size = 18
+text = "By coochiechief"
 horizontal_alignment = 1
 
-[node name="Menu" type="VBoxContainer" parent="."]
+[node name="Menu" type="VBoxContainer" parent="." unique_id=363413689]
 layout_mode = 1
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -340.0
-offset_right = 340.0
 offset_top = 96.0
+offset_right = 340.0
 offset_bottom = 96.0
 grow_horizontal = 2
 theme_override_constants/separation = 22
 alignment = 1
 
-[node name="Title" type="Label" parent="Menu"]
+[node name="Title" type="Label" parent="Menu" unique_id=494892024]
 layout_mode = 2
-theme_override_font_sizes/font_size = 84
 theme_override_colors/font_color = Color(0.918, 0.867, 0.816, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.85)
 theme_override_constants/shadow_offset_x = 3
 theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 84
 text = "ASHEN EXPEDITION"
 horizontal_alignment = 1
 
-[node name="Subtitle" type="Label" parent="Menu"]
+[node name="Subtitle" type="Label" parent="Menu" unique_id=486738860]
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
 theme_override_colors/font_color = Color(0.71, 0.64, 0.64, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 22
 text = "Three heroes. Three decks. One road into the dark."
 horizontal_alignment = 1
 
-[node name="Spacer" type="Control" parent="Menu"]
+[node name="Spacer" type="Control" parent="Menu" unique_id=1001676384]
 custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 
-[node name="StartButton" type="Button" parent="Menu"]
+[node name="StartButton" type="Button" parent="Menu" unique_id=463843235]
 custom_minimum_size = Vector2(380, 84)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 30
 text = "ENTER THE HAMLET"
 
-[node name="QuitButton" type="Button" parent="Menu"]
+[node name="QuitButton" type="Button" parent="Menu" unique_id=622548217]
 custom_minimum_size = Vector2(380, 64)
 layout_mode = 2
 size_flags_horizontal = 4

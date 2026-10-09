@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://dse0k8ts16k47"]
+
+[ext_resource type="Script" uid="uid://0gyuft14fsbq" path="res://scenes/combat/arena.gd" id="1_arena_script"]
+[ext_resource type="Texture2D" uid="uid://bhnms88r8ctju" path="res://assets/generated/crypt_battle_floor.png" id="2_floor"]
+
+[node name="Arena" type="Control" unique_id=1880748126]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_arena_script")
+
+[node name="Floor" type="TextureRect" parent="." unique_id=1900482239]
+z_index = -1
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.46
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -126.80002
+offset_right = 5.0
+offset_bottom = -114.80005
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_floor")
+expand_mode = 1
+stretch_mode = 2
+
+[node name="Dust" type="CPUParticles2D" parent="." unique_id=1375855951]
+position = Vector2(960, 460)
+amount = 32
+lifetime = 8.0
+preprocess = 8.0
+emission_shape = 3
+emission_rect_extents = Vector2(960, 360)
+gravity = Vector2(3, -5)
+initial_velocity_min = 2.0
+initial_velocity_max = 7.0
+scale_amount_min = 0.08
+scale_amount_max = 0.2
+color = Color(0.88, 0.8, 0.58, 0.32)

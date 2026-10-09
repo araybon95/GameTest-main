@@ -22,23 +22,30 @@ const ART_GLOW = "res://assets/generated/glow_warm.png"
 const BUILDINGS: Array[Dictionary] = [
 	{
 		"id": "barracks", "name": "The Barracks", "subtitle": "Compose your party of three",
-		"pos": [250, 305], "size": [340, 470],
+		"pos": [220, 260], "size": [330, 400], "highlight": Color("#A9B9C8"), "glow_scale": 0.92,
 		"scene": "res://scenes/hub/barracks.tscn", "locked": false,
 	},
 	{
-		"id": "bestiary", "name": "The Archive", "subtitle": "A bestiary of the creatures you have faced",
-		"pos": [762, 300], "size": [400, 520],
+		"id": "bestiary", "name": "The Chapel Archive", "subtitle": "A bestiary of the creatures you have faced",
+		"pos": [830, 220], "size": [240, 380], "highlight": Color("#D89A61"), "glow_scale": 0.94,
 		"scene": "res://scenes/hub/bestiary.tscn", "locked": false,
 	},
 	{
 		"id": "forge", "name": "The Forge", "subtitle": "Spend Embers to temper your cards",
-		"pos": [1358, 700], "size": [420, 470],
+		"pos": [1660, 700], "size": [340, 340], "highlight": Color("#F58B43"), "glow_scale": 0.96,
 		"scene": "res://scenes/hub/forge.tscn", "locked": false,
 	},
 	{
 		"id": "road", "name": "The Old Road", "subtitle": "Take the road on an expedition",
-		"pos": [795, 690], "size": [400, 430],
+		"pos": [960, 805], "size": [390, 350], "highlight": Color("#D6B66A"), "glow_scale": 1.0,
+		"highlight_art": "res://assets/generated/building_gate.png", "highlight_alpha": 0.24,
 		"scene": "", "locked": false, "expeditions": true,
+	},
+	{
+		"id": "chapel", "name": "The Chapel Archive", "subtitle": "A bestiary of the creatures you have faced",
+		"pos": [855, 175], "size": [145, 340], "highlight": Color("#D89A61"), "glow_scale": 1.0,
+		"highlight_art": "res://assets/generated/building_bestiary.png", "highlight_alpha": 0.55,
+		"scene": "res://scenes/hub/bestiary.tscn", "locked": false,
 	},
 ]
 
@@ -46,6 +53,7 @@ var _map_view: Control
 var _expedition_view: Control
 var _toast: Label
 var _toast_tween: Tween
+var _hover_tweens: Dictionary = {}
 
 
 func _ready() -> void:
@@ -78,7 +86,6 @@ func _build_map() -> void:
 	for building in BUILDINGS:
 		var hotspot := _make_hotspot(building)
 		_map_view.add_child(hotspot)
-		_start_pulse(hotspot)
 
 
 func _building_pos(id: String, fallback: Vector2) -> Vector2:
@@ -94,13 +101,15 @@ func _building_size(building: Dictionary) -> Vector2:
 	return Vector2(float(s[0]), float(s[1]))
 
 
-func _start_pulse(button: Button) -> void:
-	var idle: TextureRect = button.get_node_or_null("GlowIdle") as TextureRect
-	if idle == null:
-		return
-	var pulse := create_tween().set_loops()
-	pulse.tween_property(idle, "modulate:a", 0.13, 1.6).set_trans(Tween.TRANS_SINE)
-	pulse.tween_property(idle, "modulate:a", 0.05, 1.6).set_trans(Tween.TRANS_SINE)
+func _building_texture(building: Dictionary) -> Texture2D:
+	var explicit_path: String = str(building.get("highlight_art", ""))
+	if explicit_path != "":
+		return _load_texture(explicit_path)
+	var id: String = str(building.get("id", ""))
+	var art_path: String = "res://assets/generated/building_%s.png" % id
+	if ResourceLoader.exists(art_path):
+		return _load_texture(art_path)
+	return _load_texture(ART_GLOW)
 
 
 func _build_atmosphere() -> void:
@@ -121,21 +130,7 @@ func _build_atmosphere() -> void:
 	motes.scale_amount_max = 0.3
 	motes.color = Color(0.95, 0.9, 0.82, 0.22)
 	atmosphere.add_child(motes)
-	# A gentle flicker of firelight at the smithy.
-	var fire := TextureRect.new()
-	fire.texture = _load_texture(ART_GLOW)
-	fire.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	fire.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	fire.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	fire.size = Vector2(360.0, 360.0)
-	fire.position = _building_pos("forge", Vector2(1358.0, 700.0)) - Vector2(180.0, 180.0)
-	fire.modulate = Color(1.0, 0.66, 0.36, 0.28)
-	atmosphere.add_child(fire)
-	var flicker := create_tween().set_loops()
-	flicker.tween_property(fire, "modulate:a", 0.16, 0.3)
-	flicker.tween_property(fire, "modulate:a", 0.34, 0.45)
-	flicker.tween_property(fire, "modulate:a", 0.2, 0.22)
-	flicker.tween_property(fire, "modulate:a", 0.38, 0.55)
+	# The smithy's painted fire already supplies its own idle glow.
 
 
 func _make_hotspot(building: Dictionary) -> Button:
@@ -152,30 +147,37 @@ func _make_hotspot(building: Dictionary) -> Button:
 	button.focus_mode = Control.FOCUS_ALL
 	button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 
-	# A warm highlight that lights the building on hover.
+	# A building-shaped cutout is layered over the matching structure. The
+	# transparent PNG silhouette preserves the painted background everywhere else.
 	var highlight := TextureRect.new()
 	highlight.name = "GlowHover"
-	highlight.texture = _load_texture(ART_GLOW)
+	highlight.texture = _building_texture(building)
 	highlight.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	highlight.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	highlight.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var hsize := footprint * 1.05
+	var highlight_scale: float = float(building.get("glow_scale", 0.86))
+	var hsize := footprint * highlight_scale
+	highlight.z_index = 1
 	highlight.size = hsize
 	highlight.position = (footprint - hsize) * 0.5
-	highlight.modulate = Color(1.0, 0.74, 0.46, 0.0)
+	if str(building.get("id", "")) == "road":
+		highlight.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	var building_tint: Color = building.get("highlight", Color("#D89A61"))
+	var highlight_alpha: float = float(building.get("highlight_alpha", 0.28))
+	button.set_meta("highlight_alpha", highlight_alpha)
+	highlight.modulate = Color(building_tint.r, building_tint.g, building_tint.b, 0.0)
 	button.add_child(highlight)
 
-	# A faint ember that breathes while idle.
+	# A very subdued idle silhouette keeps hotspots discoverable without
+	# putting an unrelated circular glow across the neighboring buildings.
 	var idle := TextureRect.new()
 	idle.name = "GlowIdle"
 	idle.texture = _load_texture(ART_GLOW)
 	idle.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	idle.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	idle.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var isize := footprint * 1.1
-	idle.size = isize
-	idle.position = (footprint - isize) * 0.5
-	idle.modulate = Color(1.0, 0.72, 0.44, 0.08)
+	idle.size = Vector2(1.0, 1.0)
+	idle.modulate = Color(1.0, 1.0, 1.0, 0.0)
 	button.add_child(idle)
 
 	# Name + purpose, revealed on hover (Darkest Dungeon style).
@@ -213,10 +215,17 @@ func _make_hotspot(building: Dictionary) -> Button:
 func _on_hotspot_hover(button: Button, entered: bool) -> void:
 	var highlight: TextureRect = button.get_node_or_null("GlowHover") as TextureRect
 	var banner: Control = button.get_node_or_null("Banner") as Control
+	var key: int = button.get_instance_id()
+	if _hover_tweens.has(key):
+		var previous: Tween = _hover_tweens[key] as Tween
+		if previous.is_running():
+			previous.kill()
 	var tween := create_tween()
+	_hover_tweens[key] = tween
 	tween.set_parallel(true)
 	if highlight != null:
-		tween.tween_property(highlight, "modulate:a", 0.45 if entered else 0.0, 0.18)
+		var target_alpha: float = float(button.get_meta("highlight_alpha", 0.28)) if entered else 0.0
+		tween.tween_property(highlight, "modulate:a", target_alpha, 0.22)
 	if banner != null:
 		tween.tween_property(banner, "modulate:a", 1.0 if entered else 0.0, 0.16)
 

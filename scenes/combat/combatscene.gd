@@ -7,7 +7,6 @@ extends Control
 # Shared game data/state, preloaded by path (no global class registry needed).
 const GameState := preload("res://scripts/game_data.gd")
 
-const PANEL = "#211519"
 const GOLD = "#8F4546"
 const IVORY = "#EADDD0"
 const MUTED = "#B5A2A3"
@@ -15,16 +14,15 @@ const RED = "#DF7870"
 const VIRTUE_COLOR = "#8FB07A"
 const AFFLICTION_COLOR = "#C25A55"
 
-const ART_BACKGROUND = "res://assets/generated/bg_crypt.png"
 const CARD_ART_DIR = "res://assets/generated/"
-const DEFAULT_ENEMY_NAME = "Hollow Villager"
-const DEFAULT_ENEMY_MAX_HP = 68
-const DEFAULT_ENEMY_ATTACK = 7
-const DEFAULT_ENEMY_ART = "res://assets/generated/enemy_hollow_villager.png"
+const DEFAULT_ENEMY_NAME: String = "Hollow Villager"
+const DEFAULT_ENEMY_MAX_HP: int = 68
+const DEFAULT_ENEMY_ATTACK: int = 7
+const DEFAULT_ENEMY_ART: String = "res://assets/generated/enemy_hollow_villager.png"
 const HUB_SCENE = "res://scenes/hub/settlement.tscn"
-## When opened directly (F6) with no expedition chosen, return to the Hamlet
-## instead of starting a default battle. Set false to test a battle in isolation.
-const REQUIRE_EXPEDITION := true
+
+## Allow F6 preview of the combat layout with the default Old Road encounter.
+const REQUIRE_EXPEDITION := false
 
 const AFFLICTIONS: Array[String] = ["Paranoid", "Masochistic", "Abusive", "Irrational", "Hopeless", "Fearful"]
 const VIRTUES: Array[String] = ["Stalwart", "Courageous", "Focused", "Powerful", "Vigorous", "Vigilant"]
@@ -33,6 +31,7 @@ const VIRTUE_CHANCE = 0.25
 var party: Array = []
 var hero_state: Dictionary = {}
 var hero_buttons: Dictionary = {}
+var hero_portraits: Dictionary = {}
 var hero_name_labels: Dictionary = {}
 var hero_stat_labels: Dictionary = {}
 var hero_health_bars: Dictionary = {}
@@ -56,12 +55,12 @@ var battle_log: Array[String] = []
 
 var round_label: Label
 var hand_title: Label
-var hand_container: HBoxContainer
+var hand_container: Control
 var log_container: VBoxContainer
 var end_turn_button: Button
 var enemy_label: Label
 var enemy_intent_label: Label
-var enemy_art: Control
+var enemy_art: TextureRect
 var embers_label: Label
 
 
@@ -456,6 +455,8 @@ func _refresh_all() -> void:
 			tag = "  [" + str(state["resolve_tag"]).to_upper() + "]"
 		var name_label: Label = hero_name_labels[hero_id]
 		name_label.text = ("▶ " if hero_id == selected_hero else "") + str(state["name"]).to_upper() + tag
+		var portrait: TextureRect = hero_portraits[hero_id]
+		portrait.modulate = Color(0.5, 0.5, 0.54, 0.8) if bool(state["dead"]) else Color.WHITE
 		if bool(state["deaths_door"]):
 			name_label.add_theme_color_override("font_color", Color(RED))
 		elif state["resolve_type"] == "virtue":
@@ -509,8 +510,19 @@ func _refresh_hand() -> void:
 		view.disabled = battle_over or int(hero_state[selected_hero]["ap"]) < int(card["cost"])
 		view.pressed.connect(_play_card.bind(selected_hero, index))
 		hand_container.add_child(view)
+		var card_width: float = 190.0
+		var card_step: float = 165.0
+		var card_total_width: float = card_width + float(maxi(0, hand.size() - 1)) * card_step
+		var centered_start: float = (hand_container.size.x - card_total_width) * 0.5
+		var fan_ratio: float = float(index) - float(hand.size() - 1) * 0.5
+		var card_position: Vector2 = Vector2(centered_start + index * card_step, 25.0 + absf(fan_ratio) * 13.0)
+		view.position = card_position
+		view.size = Vector2(card_width, 270.0)
+		view.z_index = index
 	if hand.is_empty():
-		hand_container.add_child(_make_label("No cards in hand. End the party turn to draw again.", 23, Color(MUTED)))
+		var empty_label: Label = _make_label("No cards in hand. End the party turn to draw again.", 23, Color(MUTED))
+		empty_label.position = Vector2(360.0, 150.0)
+		hand_container.add_child(empty_label)
 
 
 func _refresh_log() -> void:
@@ -550,6 +562,7 @@ func _flash(target: Control, tint: Color) -> void:
 # -------------------- INTERFACE / ART --------------------
 
 func _build_interface() -> void:
+	$Background.visible = false
 	round_label = $RoundLabel
 	hand_title = $HandTitle
 	hand_container = $CardHand/Cards
@@ -557,141 +570,44 @@ func _build_interface() -> void:
 	end_turn_button = $EndTurnButton
 	enemy_label = $Enemy/EnemyInfo
 	enemy_intent_label = $Enemy/EnemyIntent
-	enemy_art = $Enemy
+	enemy_art = $Enemy/EnemyArt
 
 	party = GameState.party.duplicate()
-	_add_title()
-	_build_background()
-	_layout_regions()
-	_build_enemy()
+	$EncounterHeader/ExpeditionTitle.text = expedition_title.to_upper()
+	var enemy_art_node: TextureRect = $Enemy/EnemyArt
+	enemy_art_node.texture = _load_texture(enemy_art_path)
+	$Enemy/EnemyInfo.add_theme_font_size_override("font_size", 26)
+	$Enemy/EnemyInfo.add_theme_color_override("font_color", Color(IVORY))
+	$Enemy/EnemyIntent.add_theme_font_size_override("font_size", 22)
 	_build_hero_cards()
-
 	enemy_intent_label.add_theme_color_override("font_color", Color(RED))
 	end_turn_button.add_theme_font_size_override("font_size", 24)
 	round_label.add_theme_color_override("font_color", Color(GOLD))
 	hand_title.add_theme_color_override("font_color", Color(GOLD))
 	_style_meter($Enemy/HealthBar, Color("#AF343C"))
+	var party_frame: Control = $PartyBackdrop
+	_style_card_backing(party_frame, Color(0.035, 0.032, 0.04, 0.0), Color(0.56, 0.27, 0.27, 0.0))
+	_style_card_backing($EncounterHeader, Color(0.035, 0.032, 0.04, 0.0), Color(0.56, 0.27, 0.27, 0.0))
 
-	embers_label = _make_label("", 20, Color(GOLD))
-	embers_label.position = Vector2(7.0, 72.0)
-	embers_label.size = Vector2(340.0, 30.0)
-	add_child(embers_label)
-
-
-func _add_title() -> void:
-	var title: Label = _make_label("ASHEN  EXPEDITION", 34, Color(IVORY), true)
-	title.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.85))
-	title.add_theme_constant_override("shadow_offset_x", 2)
-	title.add_theme_constant_override("shadow_offset_y", 2)
-	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(title)
-	title.position = Vector2(size.x * 0.5 - 260.0, 10.0)
-	title.size = Vector2(520.0, 44.0)
-	var subtitle: Label = _make_label(expedition_title.to_upper(), 20, Color(GOLD), true)
-	subtitle.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(subtitle)
-	subtitle.position = Vector2(size.x * 0.5 - 260.0, 50.0)
-	subtitle.size = Vector2(520.0, 30.0)
+	embers_label = $EmbersLabel
 
 
-func _build_background() -> void:
-	var overlay: ColorRect = $Background
-	overlay.color = Color(0.04, 0.03, 0.038, 0.62)
-	var art := TextureRect.new()
-	art.name = "BackgroundArt"
-	art.texture = _load_texture(ART_BACKGROUND)
-	art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	art.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	art.z_index = -2
-	add_child(art)
-	art.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
 
-func _layout_regions() -> void:
-	var heroes: HBoxContainer = $Heros
-	heroes.anchor_left = 0.0
-	heroes.anchor_top = 0.0
-	heroes.anchor_right = 0.0
-	heroes.anchor_bottom = 0.0
-	heroes.offset_left = 452.0
-	heroes.offset_top = 742.0
-	heroes.offset_right = 1300.0
-	heroes.offset_bottom = 1050.0
-
-	var hand: ScrollContainer = $CardHand
-	hand.anchor_left = 0.0
-	hand.anchor_top = 0.0
-	hand.anchor_right = 0.0
-	hand.anchor_bottom = 0.0
-	hand.offset_left = 16.0
-	hand.offset_top = 330.0
-	hand.offset_right = 770.0
-	hand.offset_bottom = 700.0
-
-	hand_title.position = Vector2(18.0, 292.0)
-	hand_title.size = Vector2(320.0, 34.0)
-
-	var log_box: VBoxContainer = $BattleLog
-	log_box.offset_left = 1380.0
-	log_box.offset_right = 1904.0
-
-	end_turn_button.position = Vector2(1596.0, 968.0)
-	end_turn_button.size = Vector2(300.0, 72.0)
 
 
-func _build_enemy() -> void:
-	var enemy: Button = $Enemy
-	enemy.anchor_left = 0.0
-	enemy.anchor_top = 0.0
-	enemy.anchor_right = 0.0
-	enemy.anchor_bottom = 0.0
-	enemy.offset_left = 730.0
-	enemy.offset_top = 96.0
-	enemy.offset_right = 1190.0
-	enemy.offset_bottom = 470.0
 
-	var art := TextureRect.new()
-	art.texture = _load_texture(enemy_art_path)
-	art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	art.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	enemy.add_child(art)
-	enemy.move_child(art, 0)
-	art.position = Vector2(120.0, 84.0)
-	art.size = Vector2(220.0, 210.0)
 
-	enemy_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	enemy_label.position = Vector2(8.0, 2.0)
-	enemy_label.size = Vector2(444.0, 78.0)
-	enemy_label.add_theme_font_size_override("font_size", 26)
-	enemy_label.add_theme_color_override("font_color", Color(IVORY))
-	enemy_label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.9))
-	enemy_label.add_theme_constant_override("shadow_offset_x", 2)
-	enemy_label.add_theme_constant_override("shadow_offset_y", 2)
 
-	enemy_intent_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	enemy_intent_label.position = Vector2(8.0, 302.0)
-	enemy_intent_label.size = Vector2(444.0, 40.0)
-	enemy_intent_label.add_theme_font_size_override("font_size", 22)
-	enemy_intent_label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.9))
-	enemy_intent_label.add_theme_constant_override("shadow_offset_x", 2)
-	enemy_intent_label.add_theme_constant_override("shadow_offset_y", 2)
-
-	var health: ProgressBar = enemy.get_node("HealthBar")
-	health.anchor_top = 0.0
-	health.anchor_bottom = 0.0
-	health.anchor_right = 0.0
-	health.position = Vector2(20.0, 348.0)
-	health.size = Vector2(420.0, 20.0)
 
 
 func _build_hero_cards() -> void:
-	var container: HBoxContainer = $Heros
+	var container: VBoxContainer = $Heros
 	for child in container.get_children():
 		container.remove_child(child)
 		child.queue_free()
 	hero_buttons.clear()
+	hero_portraits.clear()
 	hero_name_labels.clear()
 	hero_stat_labels.clear()
 	hero_health_bars.clear()
@@ -702,107 +618,53 @@ func _build_hero_cards() -> void:
 
 func _make_hero_card(hero_id: String) -> Button:
 	var hero: Dictionary = GameState.hero(hero_id)
-	var button := _make_button("", Vector2(280.0, 300.0))
-	button.clip_text = false
+	var button: Button = $HeroTemplate.duplicate() as Button
+	button.custom_minimum_size = Vector2(380.0, 170.0)
+	button.size = Vector2(380.0, 170.0)
+	button.name = "Hero_%s" % hero_id
 	button.focus_mode = Control.FOCUS_NONE
 	button.pressed.connect(_on_hero_pressed.bind(hero_id))
 
-	var portrait := TextureRect.new()
+	button.visible = true
+	var portrait: TextureRect = button.get_node("Portrait") as TextureRect
 	portrait.texture = _load_texture(str(hero.get("art", "")))
-	portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	portrait.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	button.add_child(portrait)
-	portrait.position = Vector2(18.0, 10.0)
-	portrait.size = Vector2(244.0, 176.0)
-
-	var name_label: Label = _make_label("", 22, Color(IVORY), true)
+	hero_portraits[hero_id] = portrait
+	var name_label: Label = button.get_node("HeroName") as Label
 	name_label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.9))
 	name_label.add_theme_constant_override("shadow_offset_x", 2)
 	name_label.add_theme_constant_override("shadow_offset_y", 2)
-	button.add_child(name_label)
-	name_label.position = Vector2(8.0, 188.0)
-	name_label.size = Vector2(264.0, 30.0)
 	hero_name_labels[hero_id] = name_label
 
-	var health := ProgressBar.new()
-	health.max_value = 100
-	health.value = 100
-	health.show_percentage = false
-	health.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	button.add_child(health)
-	health.position = Vector2(20.0, 224.0)
-	health.size = Vector2(240.0, 16.0)
+	var health: ProgressBar = button.get_node("HealthBar") as ProgressBar
 	_style_meter(health, Color("#AF343C"))
 	hero_health_bars[hero_id] = health
-
-	var stress := ProgressBar.new()
-	stress.max_value = 100
-	stress.value = 0
-	stress.show_percentage = false
-	stress.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	button.add_child(stress)
-	stress.position = Vector2(20.0, 246.0)
-	stress.size = Vector2(240.0, 16.0)
+	var stress: ProgressBar = button.get_node("StressBar") as ProgressBar
 	_style_meter(stress, Color("#79435C"))
 	hero_stress_bars[hero_id] = stress
-
-	var stat_label: Label = _make_label("", 15, Color(MUTED), true)
-	button.add_child(stat_label)
-	stat_label.position = Vector2(6.0, 268.0)
-	stat_label.size = Vector2(268.0, 28.0)
+	var stat_label: Label = button.get_node("Status") as Label
 	hero_stat_labels[hero_id] = stat_label
-
 	hero_buttons[hero_id] = button
 	return button
 
 
 func _create_card_view(card_id: String, card: Dictionary) -> Button:
-	var button := _make_button("", Vector2(220.0, 296.0))
-	button.tooltip_text = str(card["description"])
-	var contents := VBoxContainer.new()
-	contents.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	contents.add_theme_constant_override("separation", 6)
-	button.add_child(contents)
-	contents.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	contents.offset_left = 12
-	contents.offset_top = 10
-	contents.offset_right = -12
-	contents.offset_bottom = -10
+	var button: Button = $CardTemplate.duplicate() as Button
+	button.name = "Card_%s" % card_id
+	button.custom_minimum_size = Vector2(190.0, 270.0)
+	button.visible = true
+	button.tooltip_text = GameState.card_description(card)
 	var level: int = GameState.card_level(card_id)
 	var header: String = "%s    ·    %d AP" % [str(card["name"]), int(card["cost"])]
 	if level > 0:
 		header += "    ★%d" % level
-	contents.add_child(_make_label(header, 18, Color(IVORY), true))
-	var picture := _art_slot(contents, CARD_ART_DIR + card_id + ".png", str(card["effect"]).to_upper(), Vector2(188.0, 150.0))
-	picture.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	contents.add_child(_make_label(str(card["effect"]).to_upper(), 15, Color(GOLD), true))
-	var description: Label = _make_label(GameState.card_description(card), 16, Color(IVORY), true)
-	description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	contents.add_child(description)
+	(button.get_node("Contents/Header") as Label).text = header
+	var picture: TextureRect = button.get_node("Contents/ArtFrame/CardArt") as TextureRect
+	var art_path: String = CARD_ART_DIR + card_id + ".png"
+	picture.texture = _load_texture(art_path)
+	picture.visible = picture.texture != null
+	(button.get_node("Contents/Effect") as Label).text = str(card["effect"]).to_upper()
+	(button.get_node("Contents/Description") as Label).text = GameState.card_description(card)
 	return button
-
-
-func _art_slot(parent: Control, texture_path: String, fallback: String, min_size: Vector2) -> Control:
-	var frame := _make_panel(Color("#25171D"))
-	frame.custom_minimum_size = min_size
-	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	parent.add_child(frame)
-	var texture: Texture2D = _load_texture(texture_path)
-	if texture != null:
-		var picture := TextureRect.new()
-		picture.texture = texture
-		picture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		picture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		picture.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		frame.add_child(picture)
-		picture.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	else:
-		var placeholder := _make_label(fallback, 31, Color(GOLD), true)
-		placeholder.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		frame.add_child(placeholder)
-		placeholder.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	return frame
 
 
 func _load_texture(path: String) -> Texture2D:
@@ -812,6 +674,28 @@ func _load_texture(path: String) -> Texture2D:
 
 
 # -------------------- STYLE HELPERS --------------------
+
+func _style_card_backing(control: Control, fill: Color, outline: Color) -> void:
+	var style_box: StyleBoxFlat = StyleBoxFlat.new()
+	style_box.bg_color = fill
+	style_box.border_color = outline
+	style_box.set_border_width_all(1)
+	style_box.set_corner_radius_all(10)
+	style_box.set_content_margin_all(12)
+	if control is PanelContainer:
+		(control as PanelContainer).add_theme_stylebox_override("panel", style_box)
+	elif control is Button:
+		var button: Button = control as Button
+		button.add_theme_stylebox_override("normal", style_box)
+		button.add_theme_stylebox_override("hover", style_box)
+		button.add_theme_stylebox_override("pressed", style_box)
+		var focus_style: StyleBoxFlat = style_box.duplicate() as StyleBoxFlat
+		focus_style.bg_color = Color(fill.r, fill.g, fill.b, minf(1.0, fill.a + 0.12))
+		button.add_theme_stylebox_override("focus", focus_style)
+		var disabled_style: StyleBoxFlat = style_box.duplicate() as StyleBoxFlat
+		disabled_style.bg_color = Color(fill.r * 0.65, fill.g * 0.65, fill.b * 0.65, fill.a)
+		button.add_theme_stylebox_override("disabled", disabled_style)
+
 
 func _style_meter(meter: ProgressBar, tint: Color) -> void:
 	var background := StyleBoxFlat.new()
@@ -826,12 +710,6 @@ func _style_meter(meter: ProgressBar, tint: Color) -> void:
 	meter.add_theme_stylebox_override("fill", fill)
 
 
-func _make_panel(bg_color: Color) -> PanelContainer:
-	var panel := PanelContainer.new()
-	panel.add_theme_stylebox_override("panel", _style(bg_color, Color(GOLD)))
-	return panel
-
-
 func _make_label(value: String, font_size: int, color: Color, centered: bool = false) -> Label:
 	var label := Label.new()
 	label.text = value
@@ -840,25 +718,6 @@ func _make_label(value: String, font_size: int, color: Color, centered: bool = f
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER if centered else HORIZONTAL_ALIGNMENT_LEFT
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return label
-
-
-func _make_button(value: String, min_size: Vector2) -> Button:
-	var button := Button.new()
-	button.text = value
-	button.custom_minimum_size = min_size
-	button.add_theme_font_size_override("font_size", 23)
-	for state in ["font_color", "font_hover_color", "font_pressed_color", "font_disabled_color", "font_focus_color"]:
-		button.add_theme_color_override(state, Color(IVORY))
-	var normal := _style(Color(PANEL), Color(GOLD))
-	var hover := _style(Color("#452029"), Color("#D68177"))
-	var pressed := _style(Color("#5D202D"), Color("#D68177"))
-	var disabled := _style(Color("#171216"), Color("#4B343D"))
-	button.add_theme_stylebox_override("normal", normal)
-	button.add_theme_stylebox_override("hover", hover)
-	button.add_theme_stylebox_override("pressed", pressed)
-	button.add_theme_stylebox_override("disabled", disabled)
-	button.add_theme_stylebox_override("focus", _style(Color.TRANSPARENT, Color("#E6A095")))
-	return button
 
 
 func _style(fill: Color, outline: Color) -> StyleBoxFlat:

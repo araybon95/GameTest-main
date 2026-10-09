@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://dle8mgox3uqti"]
+
+[ext_resource type="Theme" uid="uid://c3reqpa1n06fq" path="res://assets/new_theme.tres" id="1_theme"]
+[ext_resource type="Texture2D" uid="uid://vx870j1q7e71" path="res://assets/generated/wd_slash.png" id="2_art"]
+
+[node name="CombatCard" type="Button" unique_id=407269981]
+custom_minimum_size = Vector2(190, 270)
+theme = ExtResource("1_theme")
+
+[node name="Contents" type="VBoxContainer" parent="." unique_id=749163314]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 10.0
+offset_right = -12.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="Header" type="Label" parent="Contents" unique_id=1214612392]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "CARD · 1 AP"
+horizontal_alignment = 1
+
+[node name="ArtFrame" type="PanelContainer" parent="Contents" unique_id=295720332]
+custom_minimum_size = Vector2(166, 140)
+layout_mode = 2
+
+[node name="CardArt" type="TextureRect" parent="Contents/ArtFrame" unique_id=952689290]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("2_art")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Effect" type="Label" parent="Contents" unique_id=1758499547]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.63, 0.29, 1)
+theme_override_font_sizes/font_size = 15
+text = "ATTACK"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="Contents" unique_id=793798784]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Fuckemup "
+horizontal_alignment = 1
+autowrap_mode = 3

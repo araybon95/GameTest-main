@@ -73,12 +73,29 @@ automatically:
 Every scene loads it by path — `const GameState := preload("res://scripts/game_data.gd")` —
 and reads its static members. No autoload or global class registry is required.
 
+### Editing screens in Godot
+
+Open a screen's `.tscn` file (for example, `scenes/combat/combatscene.tscn`) and
+use the **2D** workspace and Scene dock to select, move, resize, and restyle its
+saved controls. The title, Hamlet, Barracks, Archive, and Forge have authored
+scene-tree layouts; combat's background, header, enemy frame, meters, hand,
+party region, battle log, and buttons are saved in the combat scene. Runtime
+scripts fill changing values and spawn repeated/data-driven widgets (Archive
+entries, Forge rows, expedition cards, and Hamlet hotspots). Combat's hero and
+card templates are editable directly inside `combatscene.tscn` as the hidden
+`HeroTemplate` and `CardTemplate` nodes. Select one in the Scene dock and edit
+its children; the game duplicates that template for the current heroes/cards.
+The Hamlet hotspot positions and sizes come from `BUILDINGS` in
+`scenes/hub/settlement.gd`.
+
 ### Combat UI
 
-The saved combat scene supplies the interactive nodes and their signal
-connections; `combatscene.gd` lays out the HUD and wires in the artwork. Each
-hero has a HealthBar and StressBar (red and purple); the enemy has a HealthBar
-and an intent line. Values update after every action.
+The saved combat scene supplies the interactive nodes, background art, title,
+combat regions, enemy art slot, meters, and signal connections. These fixed
+layouts are editable directly in Godot's 2D editor; `combatscene.gd` fills in
+expedition-specific text/art and creates data-driven hero and card widgets at
+runtime. Each hero has a HealthBar and StressBar (red and purple); the enemy has
+a HealthBar and an intent line. Values update after every action.
 
 Heroes start with three cards. Each standing hero keeps unplayed cards and
 draws one new card at the start of every subsequent party turn. Played cards go

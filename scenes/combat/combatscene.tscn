@@ -2,6 +2,10 @@
 
 [ext_resource type="Theme" uid="uid://c3reqpa1n06fq" path="res://assets/new_theme.tres" id="1_2sta6"]
 [ext_resource type="Script" uid="uid://0rm1qvfyrbw4" path="res://scenes/combat/combatscene.gd" id="1_gg2et"]
+[ext_resource type="Texture2D" uid="uid://j41782tspm3u" path="res://assets/generated/bg_crypt.png" id="2_bg"]
+[ext_resource type="PackedScene" path="res://scenes/combat/hero_card.tscn" id="3_hero_card"]
+[ext_resource type="PackedScene" uid="uid://dle8mgox3uqti" path="res://scenes/combat/combat_card.tscn" id="4_combat_card"]
+[ext_resource type="PackedScene" path="res://scenes/combat/arena.tscn" id="5_arena"]
 
 [node name="combatscene" type="Control" unique_id=1651242469]
 layout_mode = 3
@@ -16,18 +20,66 @@ grow_vertical = 2
 theme = ExtResource("1_2sta6")
 script = ExtResource("1_gg2et")
 
+[node name="Arena" parent="." unique_id=1328421012 instance=ExtResource("5_arena")]
+z_index = -1
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackgroundArt" type="TextureRect" parent="." unique_id=902119903]
+z_index = -2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="EncounterHeader" type="Control" parent="." unique_id=902119908]
+anchors_preset = 0
+offset_left = 700.0
+offset_right = 1220.0
+offset_bottom = 86.0
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="EncounterHeader" unique_id=902119904]
+layout_mode = 0
+offset_top = 4.0
+offset_right = 520.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(0.918, 0.867, 0.816, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.85)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 34
+text = "ASHEN  EXPEDITION"
+horizontal_alignment = 1
+
+[node name="ExpeditionTitle" type="Label" parent="EncounterHeader" unique_id=902119905]
+layout_mode = 0
+offset_top = 50.0
+offset_right = 520.0
+offset_bottom = 80.0
+theme_override_colors/font_color = Color(0.56, 0.27, 0.27, 1)
+theme_override_font_sizes/font_size = 20
+text = "THE OLD ROAD"
+horizontal_alignment = 1
+
 [node name="HandTitle" type="Label" parent="." unique_id=1992042605]
 layout_mode = 0
-offset_left = 18.0
-offset_top = 307.0
-offset_right = 239.0
-offset_bottom = 369.0
+offset_left = 675.0
+offset_top = 715.0
+offset_right = 1675.0
+offset_bottom = 749.0
 theme_override_font_sizes/font_size = 24
 text = "HAND"
 
-[node name="Background" type="ColorRect" parent="." unique_id=1382760075]
+[node name="Background" type="ColorRect" parent="." unique_id=1095022493]
+visible = false
 z_index = -1
-color = Color(0.051, 0.039, 0.047, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -39,93 +91,141 @@ offset_bottom = -9.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+color = Color(0.04, 0.03, 0.038, 0.62)
 
-[node name="Heros" type="HBoxContainer" parent="." unique_id=527048530]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.074
-anchor_top = 0.064
-anchor_right = 0.074
-anchor_bottom = 0.064
-offset_left = 461.28998
-offset_top = 688.264
-offset_right = 1309.29
-offset_bottom = 910.88
-theme_override_constants/separation = 14
+[node name="HeroTemplate" parent="." unique_id=1713149677 instance=ExtResource("3_hero_card")]
+visible = false
+layout_mode = 0
+offset_left = 8.0
+offset_top = 700.0
+offset_right = 288.0
+offset_bottom = 1000.0
+
+[node name="CardTemplate" parent="." unique_id=393219288 instance=ExtResource("4_combat_card")]
+visible = false
+layout_mode = 0
+offset_left = 8.0
+offset_top = 740.0
+offset_right = 198.0
+offset_bottom = 1010.0
+
+[node name="PartyBackdrop" type="PanelContainer" parent="." unique_id=902119909]
+visible = false
+layout_mode = 0
+offset_left = 12.0
+offset_top = 348.0
+offset_right = 432.0
+offset_bottom = 952.0
+mouse_filter = 2
+
+[node name="Heros" type="VBoxContainer" parent="." unique_id=527048530]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 370.0
+offset_right = 420.0
+offset_bottom = 945.0
+theme_override_constants/separation = 12
 
 [node name="Enemy" type="Button" parent="." unique_id=1328643909]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.518
-anchor_top = 0.013
-anchor_right = 0.518
-anchor_bottom = 0.013
-offset_left = -198.97003
-offset_top = 175.038
-offset_right = 253.02997
-offset_bottom = 391.038
+layout_mode = 0
+offset_left = 1460.0
+offset_top = 250.0
+offset_right = 1880.0
+offset_bottom = 690.0
+flat = true
+
+[node name="EnemyArt" type="TextureRect" parent="Enemy" unique_id=902119906]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 90.0
+offset_right = 340.0
+offset_bottom = 330.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
 
 [node name="EnemyInfo" type="Label" parent="Enemy" unique_id=1125480915]
 layout_mode = 0
-offset_left = 1.0
-offset_top = 1.0
-offset_right = 451.0
-offset_bottom = 61.0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 408.0
+offset_bottom = 84.0
 theme_override_font_sizes/font_size = 24
 text = "HOLLOW VILLAGER"
 
 [node name="EnemyIntent" type="Label" parent="Enemy" unique_id=1352629977]
 layout_mode = 0
-offset_top = 111.0
-offset_right = 450.0
-offset_bottom = 171.0
+offset_left = 12.0
+offset_top = 346.0
+offset_right = 408.0
+offset_bottom = 390.0
 theme_override_font_sizes/font_size = 24
 text = "INTENT"
 
 [node name="HealthBar" type="ProgressBar" parent="Enemy" unique_id=1242869533]
 layout_mode = 0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -18.0
+offset_left = 30.0
+offset_top = 402.0
+offset_right = 390.0
+offset_bottom = 422.0
 mouse_filter = 2
 max_value = 68.0
 value = 68.0
 show_percentage = false
 
-[node name="CardHand" type="ScrollContainer" parent="." unique_id=85743675]
-layout_mode = 0
-offset_left = 7.0
-offset_top = 366.0
-offset_right = 817.0
-offset_bottom = 689.0
-vertical_scroll_mode = 0
+[node name="CardHand" type="Control" parent="." unique_id=85743675]
+clip_contents = true
+anchors_preset = 0
+offset_left = 330.0
+offset_top = 752.0
+offset_right = 1590.0
+offset_bottom = 1080.0
 
-[node name="Cards" type="HBoxContainer" parent="CardHand" unique_id=1932970426]
-layout_mode = 2
-theme_override_constants/separation = 12
+[node name="Cards" type="Control" parent="CardHand" unique_id=1932970426]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -7.0
+offset_right = -2.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="EndTurnButton" type="Button" parent="." unique_id=791159285]
 layout_mode = 0
-offset_left = 1596.0
-offset_top = 904.0
-offset_right = 1772.0
-offset_bottom = 978.0
+offset_left = 1600.0
+offset_top = 940.0
+offset_right = 1885.0
+offset_bottom = 1020.0
+
+[node name="EmbersLabel" type="Label" parent="." unique_id=902119907]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 96.0
+offset_right = 320.0
+offset_bottom = 132.0
+theme_override_colors/font_color = Color(0.56, 0.27, 0.27, 1)
+theme_override_font_sizes/font_size = 20
+text = "EMBERS  0"
 
 [node name="RoundLabel" type="Label" parent="." unique_id=1968360684]
 layout_mode = 0
-offset_left = 7.0
-offset_top = 8.0
-offset_right = 257.0
-offset_bottom = 68.0
+offset_left = 40.0
+offset_top = 30.0
+offset_right = 280.0
+offset_bottom = 90.0
 theme_override_font_sizes/font_size = 24
 text = "ROUND 1"
 
 [node name="BattleLog" type="VBoxContainer" parent="." unique_id=1714169983]
+visible = false
 layout_mode = 0
-offset_left = 1356.0
-offset_top = 9.0
-offset_right = 1919.0
-offset_bottom = 648.0
+offset_left = 500.0
+offset_top = 880.0
+offset_right = 1400.0
+offset_bottom = 1030.0
 
 [connection signal="pressed" from="EndTurnButton" to="." method="_on_end_turn_button_pressed"]
