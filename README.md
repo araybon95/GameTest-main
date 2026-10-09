@@ -12,8 +12,7 @@ The project targets Godot 4.7 and uses the GL Compatibility renderer. Godot 4.6.
 
 ## Ashen Expedition (Temporary)
 
-A Slay-the-Spire-style deckbuilder with Darkest Dungeon flavour: a party of
-three heroes, each with their own deck, HP, Block and Stress, facing a creature
+a party of three heroes, each with their own HP, Block and Stress, facing a creature
 that telegraphs its intent. Built around a Hamlet hub: choose expeditions, change
 your party in the Barracks (recruit the Healer), and record foes in the Archive.
 
