@@ -6,6 +6,7 @@ extends Control
 # Shared game data/state, preloaded by path (no global class registry needed).
 const GameState := preload("res://scripts/game_data.gd")
 const Rules = preload("res://scripts/encounter_rules.gd")
+const StatusVisual = preload("res://scenes/combat/status_visual.gd")
 var enemies: Array[Dictionary] = []
 var enemy_views: Array[Button] = []
 var selected_enemy_index: int = 0
@@ -96,6 +97,9 @@ func _apply_expedition() -> void:
 		var support_id: String = str(room["support_creature"])
 		enemies.append(Rules.make_enemy(GameState.creature(support_id), support_id, depth, false, true))
 		GameState.discover_creature(support_id)
+	if room.has("boss_phases"):
+		enemies[0]["phase_creatures"] = room["boss_phases"]
+		enemies[0]["phase_index"] = 0
 	selected_enemy_index = 0
 	_load_enemy(0)
 
@@ -143,7 +147,34 @@ func _select_enemy(index: int) -> void:
 	_refresh_all()
 
 
+
+func _advance_boss_phase(index: int) -> bool:
+	var entry: Dictionary = enemies[index]
+	var phases: Array = entry.get("phase_creatures", [])
+	var next: int = int(entry.get("phase_index", 0)) + 1
+	if int(entry["hp"]) > 0 or next >= phases.size():
+		return false
+	var id: String = str(phases[next])
+	var replacement := Rules.make_enemy(GameState.creature(id), id, GameState.floor_index, true)
+	replacement["phase_creatures"] = phases
+	replacement["phase_index"] = next
+	enemies[index] = replacement
+	GameState.discover_creature(id)
+	if index < enemy_views.size():
+		enemy_views[index].get_node("EnemyArt").texture = _load_texture(str(replacement["art"]))
+	_load_enemy(index)
+	_add_log("THE COTERIE — Stage %d / %d: %s steps forward. The hymn continues." % [next + 1, phases.size(), replacement["name"]])
+	return true
+
+func _advance_dead_bosses() -> void:
+	_store_enemy()
+	var original: int = selected_enemy_index
+	for index in range(enemies.size()):
+		_advance_boss_phase(index)
+	_load_enemy(original)
+
 func _check_battle_over() -> void:
+	_advance_dead_bosses()
 	if _living_enemies().is_empty():
 		battle_over = true
 		_add_log("VICTORY — all enemies defeated.")
@@ -303,13 +334,14 @@ func _resolve_card(hero_id: String, card: Dictionary) -> void:
 
 func _attack_with_equipment(hero_id: String, card: Dictionary, ignore_block: bool = false) -> void:
 	var target: int = selected_enemy_index
+	var phase: int = int(enemies[target].get("phase_index", 0))
 	var actual: int = _deal_enemy_damage(_attack_damage(hero_id, card), ignore_block)
 	if actual <= 0:
 		return
 	var drained: int = int(floor(actual * GameState.equipment_bonus(hero_id, "life_drain") / 100.0))
 	if drained > 0:
 		_heal_hero(hero_id, drained)
-	if int(enemies[target]["hp"]) > 0 and randf() * 100 < GameState.equipment_bonus(hero_id, "poison_chance"):
+	if int(enemies[target].get("phase_index", 0)) == phase and int(enemies[target]["hp"]) > 0 and randf() * 100 < GameState.equipment_bonus(hero_id, "poison_chance"):
 		Rules.apply_status(enemies[target]["statuses"], "poison")
 		_add_log("%s's weapon poisons %s." % [_name_of(hero_id), enemies[target]["name"]])
 
@@ -353,7 +385,16 @@ func _enemy_action() -> void:
 			_store_enemy()
 			continue
 		var move: Dictionary = _enemy_move(index)
-		if move.get("effect", "") == "ally_guard":
+		if move.get("effect", "") == "lament":
+			for hero_id in _standing_heroes():
+				_gain_stress(hero_id, int(move.get("stress", 4)))
+				if move.has("status"):
+					Rules.apply_status(hero_state[hero_id]["statuses"], str(move["status"]))
+			_add_log("%s intones %s: the party gains %d Stress." % [enemy_name, move["name"], int(move.get("stress", 4))])
+		elif move.get("effect", "") == "remake":
+			enemy_hp = mini(enemy_max_hp, enemy_hp + int(move.get("heal", 12)))
+			_add_log("%s uses %s: restores %d HP." % [enemy_name, move["name"], int(move.get("heal", 12))])
+		elif move.get("effect", "") == "ally_guard":
 			var living: Array[int] = _living_enemies()
 			var ally: int = living[0]
 			var amount: int = maxi(1, enemy_attack_base)
@@ -376,6 +417,7 @@ func _enemy_action() -> void:
 				var reflected: int = int(floor(actual * GameState.equipment_bonus(target, "reflection") / 100.0))
 				if reflected > 0:
 					enemy_hp = maxi(0, enemy_hp - reflected)
+					_hurt_portrait(enemy_art)
 					_add_log("%s reflects %d damage to %s." % [_name_of(target), reflected, enemy_name])
 					if enemy_hp <= 0:
 						break
@@ -394,6 +436,10 @@ func _enemy_intent_text() -> String:
 	if battle_over:
 		return "Encounter finished"
 	var move: Dictionary = _enemy_move(selected_enemy_index)
+	if move.get("effect", "") == "lament":
+		return "%s · Party +%d Stress%s" % [move["name"], int(move.get("stress", 4)), " · Chill" if move.has("status") else ""]
+	if move.get("effect", "") == "remake":
+		return "%s · Heal %d HP" % [move["name"], int(move.get("heal", 12))]
 	if move.get("effect", "") == "ally_guard":
 		return "Cover ally · +%d Block" % enemy_attack_base
 	var target: String = _enemy_target()
@@ -415,6 +461,7 @@ func _tick_enemy_statuses(index: int) -> void:
 			continue
 		var effect: Dictionary = statuses[status_id]
 		enemy_hp = maxi(0, enemy_hp - int(effect["damage"]))
+		_hurt_portrait(enemy_art)
 		_add_log("%s takes %d %s damage." % [enemy_name, int(effect["damage"]), status_id])
 		effect["turns"] = int(effect["turns"]) - 1
 		if int(effect["turns"]) <= 0:
@@ -440,6 +487,7 @@ func _tick_hero_statuses(hero_id: String) -> void:
 # -------------------- DAMAGE / HEAL / STRESS --------------------
 
 func _deal_enemy_damage(amount: int, ignore_block: bool = false) -> int:
+	var target_index: int = selected_enemy_index
 	var hp_before: int = enemy_hp
 	var total: int = amount + enemy_mark_bonus
 	enemy_mark_bonus = 0
@@ -450,9 +498,11 @@ func _deal_enemy_damage(amount: int, ignore_block: bool = false) -> int:
 	var damage: int = total - absorbed
 	enemy_hp = maxi(0, enemy_hp - damage)
 	_add_log("%s takes %d damage%s." % [enemy_name, damage, " (%d blocked)" % absorbed if absorbed > 0 else ""])
+	if damage > 0:
+		_hurt_portrait(enemy_art)
 	_flash(enemy_art, Color("#E78A84"))
 	_store_enemy()
-	if enemy_hp <= 0:
+	if enemy_hp <= 0 and not _advance_boss_phase(target_index):
 		_add_log(enemy_name + " is slain.")
 		var living: Array[int] = _living_enemies()
 		if not living.is_empty():
@@ -471,6 +521,9 @@ func _apply_damage(hero_id: String, amount: int, bypass_block: bool = false) -> 
 		_add_log("%s blocks the blow." % _name_of(hero_id))
 		_flash(hero_buttons[hero_id], Color("#C9C4B0"))
 		return 0
+	_hurt_portrait(hero_portraits[hero_id])
+	if selected_hero == hero_id:
+		_hurt_portrait(selected_portrait)
 	_flash(hero_buttons[hero_id], Color("#E78A84"))
 	if bool(state["deaths_door"]) or int(state["hp"]) <= 0:
 		state["dead"] = true
@@ -598,6 +651,7 @@ func _refresh_all() -> void:
 	var hero: Dictionary = hero_state[selected_hero]
 	hand_title.text = "ABILITIES  ·  %d / 2 AP" % int(hero["ap"])
 	selected_portrait.texture = _load_texture(str(GameState.hero(selected_hero).get("art", "")))
+	_sync_portrait(selected_portrait, hero)
 	selected_info.text = "%s\n\nHealth  %d / %d\nStress  %d / 100\nBlock  %d\nAction points  %d / 2\n%s" % [str(hero["name"]).to_upper(), int(hero["hp"]), int(hero["max_hp"]), int(hero["stress"]), int(hero["block"]), int(hero["ap"]), "DEATH'S DOOR" if hero["deaths_door"] else str(hero["resolve_tag"])]
 	selected_info.text += "\n" + Rules.status_text(hero["statuses"])
 	for hero_id in party:
@@ -610,6 +664,7 @@ func _refresh_all() -> void:
 		name_label.tooltip_text = tag
 		var portrait: TextureRect = hero_portraits[hero_id]
 		portrait.modulate = Color(0.5, 0.5, 0.54, 0.8) if bool(state["dead"]) else Color.WHITE
+		_sync_portrait(portrait, state)
 		if bool(state["deaths_door"]):
 			name_label.add_theme_color_override("font_color", Color(RED))
 		elif state["resolve_type"] == "virtue":
@@ -665,9 +720,9 @@ func _refresh_hand() -> void:
 		view.pressed.connect(_play_card.bind(selected_hero, index))
 		hand_container.add_child(view)
 		var card_width: float = 220.0
-		var card_position: Vector2 = Vector2((index % 2) * 234.0, (index / 2) * 162.0)
+		var card_position: Vector2 = Vector2((index % 2) * 234.0, (index / 2) * 178.0)
 		view.position = card_position
-		view.size = Vector2(card_width, 150.0)
+		view.size = Vector2(card_width, 170.0)
 		view.z_index = index
 	if hand.is_empty():
 		var empty_label: Label = _make_label("No abilities equipped.", 23, Color(MUTED))
@@ -738,9 +793,10 @@ func _use_scroll(item_id: String) -> void:
 	var item: Dictionary = GameState.Items.item(item_id)
 	_add_log("%s consumes %s." % [_name_of(selected_hero), item["name"]])
 	var target_index: int = selected_enemy_index
+	var phase: int = int(enemies[target_index].get("phase_index", 0))
 	var previous_hp: int = int(enemies[target_index]["hp"])
 	_deal_enemy_damage(Rules.damage_after_chill(int(item["damage"]), hero_state[selected_hero]["statuses"]), item["effect"] == "pierce")
-	if item_id in ["fire_bolt_scroll", "sunfire_scroll"] and int(enemies[target_index]["hp"]) > 0 and int(enemies[target_index]["hp"]) < previous_hp:
+	if int(enemies[target_index].get("phase_index", 0)) == phase and item_id in ["fire_bolt_scroll", "sunfire_scroll"] and int(enemies[target_index]["hp"]) > 0 and int(enemies[target_index]["hp"]) < previous_hp:
 		Rules.apply_status(enemies[target_index]["statuses"], "burn")
 		_add_log("%s burns for 2 turns." % enemies[target_index]["name"])
 	_check_battle_over()
@@ -759,6 +815,8 @@ func _flash(target: Control, tint: Color) -> void:
 
 func _build_interface() -> void:
 	$Background.visible = false
+	if GameState.selected_expedition.has("combat_background"):
+		$BackgroundArt.texture = load(str(GameState.selected_expedition["combat_background"]))
 	round_label = $RoundLabel
 	hand_title = $HandTitle
 	hand_container = $CardHand/Cards
@@ -810,7 +868,7 @@ func _layout_combat() -> void:
 	enemy_intent_label.add_theme_font_size_override("font_size", 19)
 	_place($Enemy/HealthBar, Rect2(20, 370, 400, 18))
 	_place(hand_title, Rect2(40, 475, 460, 40))
-	_place($CardHand, Rect2(40, 530, 470, 500))
+	_place($CardHand, Rect2(40, 530, 470, 540))
 	hand_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_place(end_turn_button, Rect2(1470, 950, 400, 80))
 	var info_panel := PanelContainer.new()
@@ -825,6 +883,7 @@ func _layout_combat() -> void:
 	selected_portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	_place(selected_portrait, Rect2(0, 0, 180, 260))
 	info_contents.add_child(selected_portrait)
+	StatusVisual.new().attach_to(selected_portrait)
 	selected_info = _make_label("", 22, Color(IVORY))
 	_place(selected_info, Rect2(190, 10, 250, 340))
 	selected_info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -911,6 +970,7 @@ func _make_hero_card(hero_id: String) -> Button:
 	_place(portrait, Rect2(15, 12, 220, 190))
 	portrait.texture = _load_texture(str(hero.get("art", "")))
 	hero_portraits[hero_id] = portrait
+	StatusVisual.new().attach_to(portrait)
 	var name_label: Label = button.get_node("HeroName") as Label
 	_place(name_label, Rect2(8, 205, 234, 32))
 	name_label.add_theme_font_size_override("font_size", 20)
@@ -943,13 +1003,13 @@ func _make_hero_card(hero_id: String) -> Button:
 func _create_card_view(card_id: String, card: Dictionary) -> Button:
 	var button := Button.new()
 	button.name = "Card_%s" % card_id
-	button.custom_minimum_size = Vector2(220.0, 150.0)
+	button.custom_minimum_size = Vector2(220.0, 170.0)
 	_style_card_backing(button, Color("#21171D"), Color(GOLD))
 	var contents := Control.new()
 	contents.name = "Contents"
 	contents.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	button.add_child(contents)
-	var header_label := _make_label("", 18, Color(IVORY), true)
+	var header_label := _make_label("", 17, Color(IVORY), true)
 	header_label.name = "Header"
 	_place(header_label, Rect2(8, 8, 204, 42))
 	header_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -963,28 +1023,29 @@ func _create_card_view(card_id: String, card: Dictionary) -> Button:
 	picture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	picture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	picture.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_place(picture, Rect2(65, 50, 90, 66))
+	_place(picture, Rect2(10, 62, 45, 65))
 	art_frame.add_child(picture)
 	var effect_label := _make_label("", 14, Color(MUTED), true)
 	effect_label.name = "Effect"
-	_place(effect_label, Rect2(5, 120, 210, 25))
+	_place(effect_label, Rect2(5, 148, 210, 20))
 	contents.add_child(effect_label)
-	var description_label := Label.new()
+	var description_label := _make_label("", 17, Color(IVORY))
 	description_label.name = "Description"
-	description_label.visible = false
+	description_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_place(description_label, Rect2(63, 60, 148, 86))
 	contents.add_child(description_label)
 	button.visible = true
 	button.tooltip_text = GameState.card_description(card) + " Cooldown: %d full party turn(s)." % GameState.ability_cooldown(card_id)
 	var level: int = GameState.card_level(card_id)
-	var header: String = "%s    ·    %d AP" % [str(card["name"]), int(card["cost"])]
+	var header: String = "%s · %d AP" % [str(card["name"]), int(card["cost"])]
 	if level > 0:
-		header += "    ★%d" % level
+		header += " ★%d" % level
 	(button.get_node("Contents/Header") as Label).text = header
 	var art_path: String = CARD_ART_DIR + card_id + ".png"
 	picture.texture = _load_texture(art_path)
 	picture.visible = picture.texture != null
-	(button.get_node("Contents/Effect") as Label).text = str(card["effect"]).to_upper()
-	(button.get_node("Contents/Description") as Label).text = GameState.card_description(card) + ("\nCooldown: %d turns." % GameState.ability_cooldown(card_id) if GameState.ability_cooldown(card_id) > 0 else "\nNo cooldown.")
+	(button.get_node("Contents/Effect") as Label).text = "Cooldown: %d %s" % [GameState.ability_cooldown(card_id), "turn" if GameState.ability_cooldown(card_id) == 1 else "turns"] if GameState.ability_cooldown(card_id) > 0 else "No cooldown"
+	(button.get_node("Contents/Description") as Label).text = GameState.card_description(card)
 	return button
 
 
@@ -1094,6 +1155,7 @@ func _build_enemy_cards() -> void:
 		enemy_views.append(view)
 	# Connect after duplication so each button selects only its own target.
 	for index in range(enemy_views.size()):
+		StatusVisual.new().attach_to(enemy_views[index].get_node("EnemyArt"))
 		enemy_views[index].pressed.connect(_select_enemy.bind(index))
 	_load_enemy(selected_enemy_index)
 	var target_hint := _make_label("Select an enemy to target abilities and scrolls", 18, Color(IVORY), true)
@@ -1111,7 +1173,7 @@ func _refresh_enemies() -> void:
 		var label: Label = view.get_node("EnemyInfo")
 		label.text = ("▶ " if index == original else "") + "%s\nHP %d / %d · Block %d" % [enemy_name, enemy_hp, enemy_max_hp, enemy_block]
 		var intent: Label = view.get_node("EnemyIntent")
-		intent.text = _enemy_intent_text() + "\n" + Rules.status_text(entry["statuses"])
+		intent.text = ("Stage %d / 3\n" % (int(entry.get("phase_index", 0)) + 1) if entry.has("phase_creatures") else "") + _enemy_intent_text() + "\n" + Rules.status_text(entry["statuses"])
 		if enemy_mark_bonus > 0:
 			intent.text += " · Mark +%d" % enemy_mark_bonus
 		if enemy_weak_rounds > 0:
@@ -1119,6 +1181,7 @@ func _refresh_enemies() -> void:
 		var meter: ProgressBar = view.get_node("HealthBar")
 		meter.max_value = enemy_max_hp
 		meter.value = enemy_hp
+		_sync_portrait(view.get_node("EnemyArt"), entry)
 		view.disabled = battle_over or enemy_hp <= 0
 		view.modulate = Color(0.45, 0.45, 0.45) if enemy_hp <= 0 else Color.WHITE
 		_style_card_backing(view, Color("#291C23"), Color("#D3AF72") if index == original else Color(GOLD))
@@ -1134,3 +1197,12 @@ func _enter_merchant_orb() -> void:
 		return
 	GameState.shop_return_scene = "res://scenes/expedition/dungeon.tscn"
 	get_tree().change_scene_to_file("res://scenes/hub/item_shop.tscn")
+
+
+func _sync_portrait(portrait: TextureRect, state: Dictionary) -> void:
+	var visual = portrait.get_node("StatusVisual")
+	visual.sync(state.get("statuses", {}), int(state["hp"]), int(state["max_hp"]), bool(state.get("dead", int(state["hp"]) <= 0)), int(state.get("weak", 0)), state.get("resolve_type", "") == "affliction")
+
+func _hurt_portrait(portrait: TextureRect) -> void:
+	if is_instance_valid(portrait) and portrait.has_node("StatusVisual"):
+		portrait.get_node("StatusVisual").hurt()

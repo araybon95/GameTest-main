@@ -1,0 +1,9 @@
+# Four-location expedition map
+
+Mode: built-in image_gen, edit of the existing original region_map.png.
+
+Saved asset: assets/generated/expedition_map_four_regions.png. Original map retained.
+
+Final prompt:
+
+Use case: stylized-concept. Edit the supplied grimdark RPG map into a new FOUR-LOCATION expedition map, preserving its detailed painted gothic aesthetic, heavy ink shadows, charcoal, burgundy and bone palette, elevated isometric landscape perspective and landscape aspect ratio about 2:1. Remove the existing six-dungeon layout and compose exactly four widely separated landmarks with no UI or text. Left upper-mid at center 24% x, 34% y: a dilapidated abandoned village, multiple collapsed timber houses, a crooked ruined inn, broken fences, muddy road and dead trees, clearly one village cluster. Right upper-mid center 70% x, 34% y: THE PATH, a conspicuous winding pilgrimage roadway and broad stairway descending into a vast dark chasm of chaos and despair, bone arches and votive candles line the downward route, at the bottom a distant body-horror organic shrine with hints of pale stitched growth and a dim crimson glow, the pathway must be the focal landmark rather than a giant cathedral. Two future expedition locations: lower-left center 25% x, 70% y is a small fog-bound sealed ruined watchtower on an isolated rock; lower-right center 76% x, 70% y is a chained closed stone gate set in a desolate cliff. These two future landmarks must be muted, mysterious and separate from the two active destinations. Give all four landmarks readable silhouettes, leave clear ground immediately below each for overlay labels, no extra prominent buildings that look like selectable destinations. Quiet lower edge. No people, lettering, symbols, interface, logos, watermark. Original game art, no imitation of existing copyrighted game maps.

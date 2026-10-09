@@ -41,18 +41,22 @@ const CARDS: Dictionary = {
 const HEROES: Dictionary = {
 	"warden": {
 		"name": "Warden", "max_hp": 55, "art": "res://assets/generated/hero_warden.png",
+		"camp_art": "res://assets/generated/hero_warden_camp.png",
 		"abilities": ["wd_slash", "wd_guard", "wd_bash", "wd_rally", "wd_heavy"],
 	},
 	"ranger": {
 		"name": "Ranger", "max_hp": 38, "art": "res://assets/generated/hero_ranger.png",
+		"camp_art": "res://assets/generated/hero_ranger_camp.png",
 		"abilities": ["rg_quick", "rg_dodge", "rg_mark", "rg_pierce", "rg_volley"],
 	},
 	"occultist": {
 		"name": "Occultist", "max_hp": 34, "art": "res://assets/generated/hero_occultist.png",
+		"camp_art": "res://assets/generated/hero_occultist_camp.png",
 		"abilities": ["oc_hex", "oc_veil", "oc_weak", "oc_drain", "oc_blast"],
 	},
 	"healer": {
 		"name": "Healer", "max_hp": 42, "art": "res://assets/generated/hero_healer.png",
+		"camp_art": "res://assets/generated/hero_healer_camp.png",
 		"abilities": ["hl_smite", "hl_turn", "hl_mend", "hl_blessing", "hl_ward", "hl_solace"],
 	},
 }
@@ -64,6 +68,14 @@ static var party: Array[String] = ["warden", "ranger", "occultist"]
 ## Lore and stats for every enemy. `undead` heroes take bonus damage from the
 ## Healer's holy attacks.
 const CREATURES: Dictionary = {
+	"anguish_penitent": {"name": "Creation of Anguish: Penitent", "hp": 48, "attack": 7, "undead": false, "tags": ["Remade", "Cult"], "art": "res://assets/generated/enemy_anguish_penitent.png", "lore": "The faithful call each new wound a doorway. This supplicant begs to be remade again."},
+	"anguish_vessel": {"name": "Creation of Anguish: Vessel", "hp": 54, "attack": 8, "undead": false, "tags": ["Remade", "Cult"], "art": "res://assets/generated/enemy_anguish_vessel.png", "lore": "Several prayers inhabit one body. None can finish a sentence without another mouth answering."},
+	"harrowed_giant": {"name": "Harrowed Slave Giant", "hp": 76, "attack": 8, "undead": false, "tags": ["Remade", "Boss"], "art": "res://assets/generated/enemy_harrowed_giant.png", "lore": "A living reliquary kneels beneath the weight of the congregation. Its chains are sacred to those who forged them."},
+	"coterie_seamkeeper": {"name": "The Coterie: Seamkeeper", "hp": 28, "attack": 5, "undead": false, "tags": ["Remade", "Boss"], "art": "res://assets/generated/enemy_coterie_seamkeeper.png", "lore": "The first master stitches devotion into unwilling flesh."},
+	"coterie_cantor": {"name": "The Coterie: Bone Cantor", "hp": 34, "attack": 6, "undead": false, "tags": ["Remade", "Boss"], "art": "res://assets/generated/enemy_coterie_cantor.png", "lore": "The second master conducts a choir through the pipes of a remade chest."},
+	"coterie_matron": {"name": "The Coterie: Matron of Remaking", "hp": 40, "attack": 7, "undead": false, "tags": ["Remade", "Boss"], "art": "res://assets/generated/enemy_coterie_matron.png", "lore": "The last master blesses the congregation with another shape, and another grief."},
+	"howling_head": {"name": "The Howling Head", "hp": 84, "attack": 8, "undead": false, "tags": ["Remade", "Boss"], "art": "res://assets/generated/enemy_howling_head.png", "lore": "At the end of the pilgrimage, every prayer becomes a single unending howl."},
+
 	"ash_raider": {
 		"name": "Ash Raider", "tags": ["Human", "Bandit"], "undead": false,
 		"hp": 58, "attack": 8, "art": "res://assets/generated/enemy_ash_raider.png",
@@ -110,8 +122,17 @@ const UPGRADE_BONUS := 2
 
 ## --- Expeditions --------------------------------------------------------------
 const EXPEDITIONS: Array[Dictionary] = [
+	{"id": "path_beast", "name": "Path of the Beast", "region": "The Path", "difficulty": "Veteran", "faction": "remade", "creature": "anguish_penitent", "reward": 15, "locked": false, "floor_count": 3,
+	"combat_background": "res://assets/generated/beast_sanctuary.png", "camp_background": "res://assets/generated/beast_camp.png",
+	"blurb": "Descend a pilgrimage of despair. The faithful worship being remade; their blessings leave no body whole.",
+	"floor_bosses": ["harrowed_giant", "coterie_seamkeeper", "howling_head"], "floor_names": ["The Halls of Anguish", "The Choir of Remaking", "The Altar of the Beast"]},
+	{"id": "village_chapel", "name": "The Hollow Chapel", "region": "The Abandoned Village", "floor_count": 3, "released": false, "requires": "old_road", "blurb": "A sealed chapel beyond the bandit road. Coming in a future release."},
+	{"id": "village_keep", "name": "The Forsaken Keep", "region": "The Abandoned Village", "floor_count": 3, "released": false, "requires": "village_chapel", "blurb": "The abandoned lord's fortress. Coming in a future release."},
+	{"id": "path_lament", "name": "Path of Lament", "region": "The Path", "floor_count": 3, "released": false, "requires": "path_beast", "blurb": "A mourning procession beyond the sanctuary. Coming in a future release."},
+	{"id": "path_ascension", "name": "Path of Ascension", "region": "The Path", "floor_count": 3, "released": false, "requires": "path_lament", "blurb": "The final sealed pilgrimage. Coming in a future release."},
+
 	{
-		"id": "old_road", "name": "The Old Road", "region": "The Ruins", "difficulty": "Apprentice",
+		"id": "old_road", "name": "The Old Road", "floor_count": 3, "region": "The Abandoned Village", "combat_background": "res://assets/generated/bandit_combat.png", "camp_background": "res://assets/generated/bandit_camp.png", "difficulty": "Apprentice",
 		"blurb": "Human outlaws haunt the ruined road. Hunt their chieftain beneath the black gallows.",
 		"creature": "ash_raider", "faction": "human", "reward": 5, "locked": false,
 	},
@@ -128,11 +149,54 @@ const EXPEDITIONS: Array[Dictionary] = [
 ]
 
 static var selected_expedition: Dictionary = {}
+static var completed_expeditions: Array[String] = []
+static var progress_loaded: bool = false
+static var progress_path: String = "user://expedition_progress.cfg"
+
+static func expedition_by_id(id: String) -> Dictionary:
+	for expedition in EXPEDITIONS:
+		if expedition["id"] == id:
+			return expedition
+	return {}
+
+static func can_embark(id: String) -> bool:
+	var expedition := expedition_by_id(id)
+	return not expedition.is_empty() and expedition.get("released", true) and not expedition.get("locked", false) and (not expedition.has("requires") or completed_expeditions.has(str(expedition["requires"])))
+
+static func load_progression() -> void:
+	if progress_loaded:
+		return
+	progress_loaded = true
+	var config := ConfigFile.new()
+	if config.load(progress_path) == OK:
+		for id in config.get_value("progress", "completed", []):
+			if not expedition_by_id(str(id)).is_empty() and not completed_expeditions.has(str(id)):
+				completed_expeditions.append(str(id))
+
+static func save_progression() -> void:
+	if not progress_loaded:
+		return
+	var config := ConfigFile.new()
+	config.set_value("progress", "completed", completed_expeditions)
+	config.save(progress_path)
+
+static func floor_title() -> String:
+	var names: Array = selected_expedition.get("floor_names", [])
+	return str(names[floor_index]) if floor_index < names.size() else "Floor %d" % (floor_index + 1)
+
+static func can_descend() -> bool:
+	if not run_active or floor_index >= floor_count - 1:
+		return false
+	var room: Dictionary = floors[floor_index][room_position]
+	return room["kind"] == "stairs" or (room.get("exit_after_boss", false) and room["cleared"])
+
 
 
 # --- Helpers ------------------------------------------------------------------
 
 static func select_expedition(expedition_id: String) -> bool:
+	if not can_embark(expedition_id):
+		return false
 	for expedition in EXPEDITIONS:
 		if str(expedition.get("id", "")) == expedition_id:
 			selected_expedition = expedition
@@ -259,7 +323,7 @@ static func start_run(seed_value: int = -1) -> void:
 	run_active = true
 	run_complete = false
 	floor_index = 0
-	floor_count = rng.randi_range(2, 3)
+	floor_count = int(selected_expedition.get("floor_count", rng.randi_range(2, 3)))
 	room_position = Vector2i.ZERO
 	run_heroes.clear()
 	navigation_votes.clear()
@@ -294,12 +358,26 @@ static func start_run(seed_value: int = -1) -> void:
 		if selected_expedition.get("faction", "") == "human":
 			for location in rooms:
 				rooms[location]["creature"] = "ash_chieftain" if rooms[location]["kind"] == "boss" else (["ash_raider", "gallows_scout"][rng.randi_range(0, 1)])
+		if selected_expedition.get("faction", "") == "remade":
+			for location in rooms:
+				rooms[location]["creature"] = ["anguish_penitent", "anguish_vessel"][rng.randi_range(0, 1)]
+			var guardian: Dictionary = rooms[Vector2i(4, 3)]
+			guardian["kind"] = "boss"
+			guardian["creature"] = selected_expedition["floor_bosses"][depth]
+			guardian["final_boss"] = depth == floor_count - 1
+			guardian["exit_after_boss"] = depth < floor_count - 1
+			if depth == 1:
+				guardian["boss_phases"] = ["coterie_seamkeeper", "coterie_cantor", "coterie_matron"]
 		for location in rooms:
 			var room: Dictionary = rooms[location]
 			var primary: String = str(room.get("creature", selected_expedition.get("creature", "hollow_villager")))
 			if room["kind"] == "boss":
 				room["enemies"] = [primary]
 				room["support_creature"] = "gallows_scout" if selected_expedition.get("faction", "") == "human" else str(selected_expedition.get("creature", "hollow_villager"))
+				if selected_expedition.get("faction", "") == "remade":
+					room["support_creature"] = "anguish_penitent"
+					if room.has("boss_phases"):
+						room.erase("support_creature")
 			elif room["kind"] == "battle":
 				room["enemies"] = [primary]
 				for extra in range(rng.randi_range(0, 2)):
@@ -351,11 +429,15 @@ static func vote_move(voter_id: String, destination: Vector2i) -> bool:
 
 static func finish_encounter() -> void:
 	floors[floor_index][room_position]["cleared"] = true
-	if current_room_kind() == "boss":
+	if current_room_kind() == "boss" and floors[floor_index][room_position].get("final_boss", true):
 		run_complete = true
+		var id: String = str(selected_expedition.get("id", ""))
+		if id != "" and not completed_expeditions.has(id):
+			completed_expeditions.append(id)
+			save_progression()
 
 static func descend() -> bool:
-	if current_room_kind() != "stairs" or floor_index >= floor_count - 1:
+	if not can_descend():
 		return false
 	floor_index += 1
 	room_position = Vector2i.ZERO

@@ -7,6 +7,14 @@ const STATUS: Dictionary = {
 	"chill": {"damage": 0, "turns": 2},
 }
 const MOVES: Dictionary = {
+	"anguish_penitent": [{"name": "Supplicant's Hook", "scale": 1.0, "status": "bleed"}, {"name": "Cauterizing Prayer", "scale": 0.8, "status": "burn"}, {"name": "Litany of Submission", "effect": "lament", "stress": 3}],
+	"anguish_vessel": [{"name": "Graft Lash", "scale": 0.55, "hits": 2}, {"name": "Septic Offering", "scale": 0.8, "status": "poison"}, {"name": "Numbing Touch", "scale": 0.8, "status": "chill"}],
+	"harrowed_giant": [{"name": "Chain Litany", "scale": 1.0, "status": "bleed"}, {"name": "Crushing Benediction", "scale": 1.2}, {"name": "Kneeling Hymn", "effect": "lament", "stress": 4}],
+	"coterie_seamkeeper": [{"name": "Sacred Incision", "scale": 1.0, "status": "bleed"}, {"name": "Needle Psalm", "scale": 0.55, "hits": 2}, {"name": "Purifying Brand", "scale": 0.8, "status": "burn"}],
+	"coterie_cantor": [{"name": "Cold Chorus", "scale": 0.85, "status": "chill"}, {"name": "Hymn of Unmaking", "effect": "lament", "stress": 4}, {"name": "Rib Flurry", "scale": 0.55, "hits": 2}],
+	"coterie_matron": [{"name": "Septic Blessing", "scale": 0.85, "status": "poison"}, {"name": "Blessed Remaking", "effect": "remake", "heal": 12}, {"name": "Candle Communion", "scale": 0.9, "status": "burn"}],
+	"howling_head": [{"name": "Unending Prayer", "effect": "lament", "stress": 6, "status": "chill"}, {"name": "Choir of Teeth", "scale": 1.1, "status": "bleed"}, {"name": "Tendon Lash", "scale": 0.6, "hits": 2}],
+
 	"ash_raider": [
 		{"name": "Cleaver Slash", "scale": 1.0, "status": "bleed"},
 		{"name": "Twin Cuts", "scale": 0.6, "hits": 2},
@@ -45,7 +53,7 @@ static func make_enemy(state: Dictionary, creature_id: String, depth: int, boss:
 	elif support:
 		hp = maxi(1, int(round(normal_hp * 0.3)))
 		attack = maxi(1, int(round(normal_attack * 0.3)))
-	return {"creature": creature_id, "name": ("Support " if support else ("Dread " if boss else "")) + str(state.get("name", "Enemy")),
+	return {"creature": creature_id, "name": ("Support " if support else ("Dread " if boss and not state.get("tags", []).has("Remade") else "")) + str(state.get("name", "Enemy")),
 		"max_hp": hp, "hp": hp, "attack": attack, "normal_hp": normal_hp, "normal_attack": normal_attack,
 		"support": support, "boss": boss, "art": str(state.get("art", "")), "undead": bool(state.get("undead", false)),
 		"block": 0, "mark": 0, "weak": 0, "statuses": {}, "moves": MOVES.get(creature_id, MOVES["hollow_villager"]).duplicate(true)}

@@ -65,7 +65,6 @@ func _ready() -> void:
 	_build_party_line()
 	_build_map()
 	_build_atmosphere()
-	_build_expeditions()
 	_show_map()
 	var merchant := Button.new()
 	merchant.text = "THE EMPORIUM"
@@ -257,8 +256,7 @@ func _show_map() -> void:
 
 
 func _show_expeditions() -> void:
-	_map_view.visible = false
-	_expedition_view.visible = true
+	get_tree().change_scene_to_file("res://scenes/expedition/region_select.tscn")
 
 
 # -------------------- EXPEDITIONS --------------------

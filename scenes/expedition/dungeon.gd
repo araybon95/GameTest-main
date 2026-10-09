@@ -66,6 +66,7 @@ func refresh() -> void:
 	panel_at(Rect2(0, 0, 1920, 1080), Color("#09080A"))
 	panel_at(Rect2(12, 12, 1896, 775), Color("#0D0B0E"))
 	label_at("%s  ·  FLOOR %d / %d" % [GameState.selected_expedition.get("name", "Expedition"), GameState.floor_index + 1, GameState.floor_count], Vector2(40, 25), 30)
+	label_at(GameState.floor_title(), Vector2(1390, 32), 22)
 	label_at(message if not GameState.run_complete else "VICTORY — the guardian has fallen. Return to the Hamlet.", Vector2(40, 75), 20)
 	var rooms: Dictionary = GameState.floors[GameState.floor_index]
 	var map = preload("res://scenes/expedition/dungeon_map.gd").new()
@@ -105,7 +106,7 @@ func refresh() -> void:
 	label_at("GOLD  %d" % GameState.gold, Vector2(45, 865), 24)
 	var retreat_button := button_at("RETURN TO HAMLET" if GameState.run_complete else "RETREAT", Vector2(45, 935), retreat)
 	retreat_button.size = Vector2(270, 70)
-	if GameState.current_room_kind() == "stairs":
+	if GameState.can_descend():
 		var descend_button := button_at("DESCEND", Vector2(1590, 885), descend)
 		descend_button.size = Vector2(270, 70)
 	label_at("Select a hero to inspect", Vector2(1550, 990), 20)
