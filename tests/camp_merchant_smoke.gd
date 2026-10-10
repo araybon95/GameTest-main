@@ -64,8 +64,9 @@ func run_tests() -> void:
 	var original_position: Vector2i = State.room_position
 	var original_hp: int = hero["hp"]
 	var before: int = State.gold
+	assert(State.item_price("warden_shield") == 40)
 	assert(State.purchase_item("warden_shield"))
-	assert(State.gold == before - 18)
+	assert(State.gold == before - 40)
 	assert(State.purchase_item("fire_bolt_scroll"))
 	assert(not State.purchase_item("healer_mace"))
 	assert(State.purchase_item("warden_epic"))
@@ -80,22 +81,33 @@ func run_tests() -> void:
 	State.floors[0][orb_location]["cleared"] = false
 	var battle = load("res://scenes/combat/combatscene.tscn").instantiate()
 	root.add_child(battle)
-	assert(battle.has_node("MerchantOrb") and battle.merchant_orb.disabled)
+	assert(not battle.has_node("MerchantOrb"))
+	battle._enter_merchant_orb()
+	assert(not State.merchant_orb_available())
 	while not battle._living_enemies().is_empty():
 		battle._deal_enemy_damage(999)
 	battle._check_battle_over()
 	battle._refresh_all()
-	assert(not battle.merchant_orb.disabled)
+	assert(battle.end_turn_button.text == "INSPECT MERCHANT ORB")
 	current_scene = battle
 	battle._enter_merchant_orb()
+	await process_frame
+	await process_frame
+	assert(current_scene.scene_file_path == "res://scenes/expedition/merchant_orb_room.tscn")
+	assert(current_scene.has_node("MerchantOrbObject"))
+	current_scene.touch_orb()
 	await process_frame
 	await process_frame
 	var shop = current_scene
 	assert(shop.scene_file_path == "res://scenes/hub/item_shop.tscn")
 	assert(State.room_position == original_position and State.run_heroes["warden"]["hp"] == original_hp)
-	for filter_name in ["All", "Weapons", "Armor", "Relics", "Scrolls"]:
+	for filter_name in ["All", "Weapons", "Armor", "Trinkets", "Relics", "Consumables"]:
 		shop.set_category(filter_name)
 	shop.return_to_party()
+	await process_frame
+	await process_frame
+	assert(current_scene.scene_file_path == "res://scenes/expedition/merchant_orb_room.tscn")
+	current_scene.continue_exploring()
 	await process_frame
 	await process_frame
 	assert(current_scene.scene_file_path == "res://scenes/expedition/dungeon.tscn")

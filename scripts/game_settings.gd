@@ -83,6 +83,8 @@ func safe_to_save() -> bool:
 	if get_tree().current_scene == null: return false
 	var path: String = get_tree().current_scene.scene_file_path
 	if not State.run_active: return path != "res://scenes/ui/title_screen.tscn"
+	if path in ["res://scenes/expedition/merchant_orb_room.tscn", "res://scenes/hub/item_shop.tscn"]:
+		return State.merchant_orb_available()
 	return path == "res://scenes/expedition/dungeon.tscn" and not State.floors.is_empty() and State.floors[State.floor_index][State.room_position].get("cleared", false)
 
 func style_portraits(node: Node) -> void:

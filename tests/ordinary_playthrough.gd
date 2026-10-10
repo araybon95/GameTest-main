@@ -277,7 +277,11 @@ func equip_loot() -> void:
 
 func visit_shop() -> void:
 	if not State.merchant_orb_available(): return
-	current_scene.open_shop()
+	if current_scene.scene_file_path == "res://scenes/expedition/dungeon.tscn":
+		current_scene.open_shop()
+		await settle()
+	assert(current_scene.scene_file_path == "res://scenes/expedition/merchant_orb_room.tscn")
+	current_scene.touch_orb()
 	await settle()
 	var purchases: Array = []
 	for id in State.party:
@@ -288,6 +292,8 @@ func visit_shop() -> void:
 		current_scene.purchase("healing_potion");purchases.append("healing_potion")
 	report["shops"].append({"floor":State.floor_index+1,"purchases":purchases,"gold_remaining":State.gold})
 	current_scene.return_to_party()
+	await settle()
+	current_scene.continue_exploring()
 	await settle()
 	equip_loot()
 
@@ -306,6 +312,8 @@ func use_map_consumables() -> void:
 func resolve_current() -> void:
 	match current_scene.scene_file_path:
 		"res://scenes/combat/combatscene.tscn": await combat()
+		"res://scenes/expedition/merchant_orb_room.tscn":
+			assert(State.merchant_orb_available())
 		"res://scenes/expedition/camp.tscn":
 			var before: Dictionary = health()
 			var needs_rest: bool = false
@@ -344,7 +352,7 @@ func resolve_current() -> void:
 			view.return_to_dungeon()
 			await settle()
 	if not State.run_active or report["outcome"]!="running": return
-	if current_scene.scene_file_path=="res://scenes/expedition/dungeon.tscn":
+	if current_scene.scene_file_path in ["res://scenes/expedition/dungeon.tscn", "res://scenes/expedition/merchant_orb_room.tscn"]:
 		equip_loot()
 		await visit_shop()
 		use_map_consumables()

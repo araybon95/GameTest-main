@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="380" height="470" viewBox="0 0 380 470">
+<defs>
+<radialGradient id="light"><stop stop-color="#8addee" stop-opacity=".27"/><stop offset=".68" stop-color="#296074" stop-opacity=".13"/><stop offset="1" stop-color="#296074" stop-opacity="0"/></radialGradient>
+<radialGradient id="glass" cx="35%" cy="30%" r="70%"><stop stop-color="#e6fffa"/><stop offset=".18" stop-color="#93e1e3"/><stop offset=".46" stop-color="#3b99a3"/><stop offset=".77" stop-color="#164556"/><stop offset="1" stop-color="#0b1724"/></radialGradient>
+<linearGradient id="stone"><stop stop-color="#15171b"/><stop offset=".42" stop-color="#3d3b3c"/><stop offset=".6" stop-color="#2a292d"/><stop offset="1" stop-color="#090b11"/></linearGradient>
+<linearGradient id="iron"><stop stop-color="#262026"/><stop offset=".46" stop-color="#87735b"/><stop offset="1" stop-color="#241c21"/></linearGradient>
+</defs>
+<ellipse cx="190" cy="155" rx="158" ry="155" fill="url(#light)"/>
+<path d="M79 441l23-27 176-3 27 30-6 17H82z" fill="url(#stone)" stroke="#09090f" stroke-width="7"/>
+<path d="M112 415l25-42 9-83-10-42h109l-12 40 9 88 27 39z" fill="url(#stone)" stroke="#0c0c12" stroke-width="7"/>
+<path d="M148 270l17 25-7 99m43-119l-8 38 7 70m22-96l-7 59 19 43" fill="none" stroke="#716058" stroke-width="3" opacity=".45"/>
+<path d="M106 256l-12-17 16-28 10-17 23-9h95l28 12 16 41-8 20z" fill="url(#iron)" stroke="#0b0c12" stroke-width="6"/>
+<circle cx="190" cy="151" r="82" fill="url(#glass)" stroke="#10212e" stroke-width="8"/>
+<path d="M125 100q41-58 105-16m-122 57q-5 67 66 87" fill="none" stroke="#b0e2d9" stroke-width="3" opacity=".75"/>
+<path d="M146 113q23-36 66-18l-24 9-17 17z" fill="#c5f8e5" opacity=".6"/>
+<path d="M165 142l15-15 24 12-16 18 20 16-29 8 8-18z" fill="none" stroke="#92dbe0" stroke-width="3" opacity=".7"/>
+<path d="M106 241l-10-58 18 6 8 37 24 17m128-2l10-61-18 10-8 36-22 17" fill="url(#iron)" stroke="#0b0c12" stroke-width="6"/>
+<path d="M135 238l55 29 56-29" fill="none" stroke="#a08a68" stroke-width="5"/>
+<path d="M119 429l34-3m54 5l52-5M93 448h178" stroke="#6d5f52" stroke-width="3" opacity=".6"/>
+<path d="M174 366l15-19 13 19-13 15z" fill="#285765" stroke="#0c121b" stroke-width="3"/>
+<path d="M189 352v24" stroke="#8bb9ba" stroke-width="2"/>
+</svg>

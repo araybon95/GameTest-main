@@ -143,7 +143,11 @@ func check_shop() -> void:
 	assert(State.merchant_orb_available())
 	var position: Vector2i = State.room_position
 	var heroes: Dictionary = State.run_heroes.duplicate(true)
-	current_scene.open_shop()
+	if current_scene.scene_file_path == "res://scenes/expedition/dungeon.tscn":
+		current_scene.open_shop()
+		await settle()
+	assert(current_scene.scene_file_path == "res://scenes/expedition/merchant_orb_room.tscn")
+	current_scene.touch_orb()
 	await settle()
 	assert(current_scene.scene_file_path == "res://scenes/hub/item_shop.tscn")
 	assert(not State.purchase_item("warden_legend"))
@@ -155,6 +159,8 @@ func check_shop() -> void:
 		assert(State.gold == gold_before - State.item_price("trail_food"))
 		assert(State.inventory["trail_food"] == stock_before + 1)
 	current_scene.return_to_party()
+	await settle()
+	current_scene.continue_exploring()
 	await settle()
 	assert(State.room_position == position and State.run_heroes == heroes)
 	shops += 1
@@ -174,6 +180,8 @@ func resolve_current() -> void:
 			await show_scene("res://scenes/expedition/dungeon.tscn")
 		"res://scenes/expedition/dungeon.tscn":
 			assert(room()["cleared"] or room()["kind"] == "stairs")
+		"res://scenes/expedition/merchant_orb_room.tscn":
+			assert(State.merchant_orb_available())
 		_:
 			assert(false, "Unexpected encounter destination")
 	if State.run_active and State.merchant_orb_available():

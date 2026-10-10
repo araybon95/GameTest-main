@@ -1,5 +1,6 @@
 extends RefCounted
 const Items = preload("res://scripts/item_data.gd")
+const ITEM_RARITY_PRICES: Dictionary = {"common": 8, "rare": 40, "epic": 100, "unique": 150, "legendary": 200}
 const Events = preload("res://scripts/dungeon_events.gd")
 const Mechanics = preload("res://scripts/expedition_mechanics.gd")
 static var graves: Array = []
@@ -652,14 +653,7 @@ static func consume_item(item_id: String) -> bool:
 	return true
 
 static func purchase_scroll(item_id: String) -> bool:
-	if not Items.SCROLLS.has(item_id) or Items.item(item_id).get("rarity", "") == "legendary":
-		return false
-	var price: int = int(Items.SCROLLS[item_id]["price"])
-	if gold < price:
-		return false
-	gold -= price
-	add_item(item_id)
-	return true
+	return Items.SCROLLS.has(item_id) and purchase_item(item_id)
 
 # XP belongs to the hero, independently of equipment and forge upgrades.
 static func leveling(hero_id: String) -> Dictionary:
@@ -913,7 +907,34 @@ static func item_price(item_id: String) -> int:
 	var entry: Dictionary = Items.item(item_id)
 	if entry.is_empty():
 		return 0
-	return int(entry.get("price", {"common": 8, "rare": 18, "epic": 30, "unique": 38, "legendary": 40}.get(entry.get("rarity", "common"), 8)))
+	# Supplies keep their explicit prices; equipment uses its rarity's value.
+	return maxi(0, int(entry.get("price", ITEM_RARITY_PRICES.get(entry.get("rarity", ""), 0))))
+
+static func item_sell_price(item_id: String) -> int:
+	# Round down. Cheap provisions cannot be converted into a minimum-one-gold sale.
+	return int(floor(item_price(item_id) / 4.0))
+
+static func _save_economy() -> bool:
+	# Loading at transaction time avoids a GameData/SaveFiles preload cycle.
+	var saves: Script = load("res://scripts/save_files.gd")
+	return saves != null and saves.save(0)
+
+static func sell_item(item_id: String) -> bool:
+	var count: int = int(inventory.get(item_id, 0))
+	var value: int = item_sell_price(item_id)
+	if count <= 0 or value <= 0:
+		return false
+	# Only loose inventory is sold. Equipped copies have already left this count.
+	if count == 1:
+		inventory.erase(item_id)
+	else:
+		inventory[item_id] = count - 1
+	gold += value
+	if not _save_economy():
+		inventory[item_id] = count
+		gold -= value
+		return false
+	return true
 
 static func purchase_item(item_id: String) -> bool:
 	var entry: Dictionary = Items.item(item_id)
@@ -922,10 +943,17 @@ static func purchase_item(item_id: String) -> bool:
 	if entry.is_empty() or entry.get("rarity", "") == "legendary" or (entry.has("hero") and not party.has(entry["hero"])):
 		return false
 	var price: int = item_price(item_id)
-	if gold < price:
+	if price <= 0 or gold < price:
 		return false
+	var previous_inventory: Dictionary = inventory.duplicate(true)
+	var previous_journey: Dictionary = journey.duplicate(true)
 	gold -= price
 	add_item(item_id)
+	if not _save_economy():
+		gold += price
+		inventory = previous_inventory
+		journey = previous_journey
+		return false
 	return true
 
 static func apply_potion(hero_id: String, item_id: String, heroes: Dictionary) -> bool:

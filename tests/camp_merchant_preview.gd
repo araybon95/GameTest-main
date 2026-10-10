@@ -32,8 +32,8 @@ func capture() -> void:
 	var shop = load("res://scenes/hub/item_shop.tscn").instantiate()
 	root.add_child(shop)
 	await screenshot("res://../../emporium-preview.png")
-	shop.set_category("Scrolls")
-	await screenshot("res://../../emporium-scrolls-preview.png")
+	shop.set_category("Consumables")
+	await screenshot("res://../../emporium-consumables-preview.png")
 	shop.queue_free()
 	await process_frame
 	State.room_position = orb

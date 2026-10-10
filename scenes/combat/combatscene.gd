@@ -87,7 +87,6 @@ var enemy_label: Label
 var enemy_intent_label: Label
 var enemy_art: TextureRect
 var gold_label: Label
-var merchant_orb: Button
 var selected_info: Label
 var selected_portrait: TextureRect
 var scroll_container: HBoxContainer
@@ -937,9 +936,6 @@ func _end_turn() -> void:
 func _refresh_all() -> void:
 	round_label.text = "ROUND %d" % round_number
 	gold_label.text = "GOLD  %d" % GameState.gold
-	if is_instance_valid(merchant_orb):
-		merchant_orb.disabled = not battle_over or not _living_enemies().is_empty()
-		merchant_orb.text = "ENTER EMPORIUM" if not merchant_orb.disabled else "MERCHANT ORB · SEALED"
 	if not hero_state.has(selected_hero):
 		return
 	var hero: Dictionary = hero_state[selected_hero]
@@ -1000,11 +996,58 @@ func _refresh_all() -> void:
 	_arrange_party()
 	_refresh_enemies()
 	end_turn_button.disabled = false
-	end_turn_button.text = "END PARTY TURN" if not battle_over else ("CONTINUE EXPEDITION" if _living_enemies().is_empty() and GameState.run_active else "RETURN TO THE HAMLET")
+	var continue_text: String = "CONTINUE EXPEDITION"
+	if GameState.run_active and GameState.floors[GameState.floor_index][GameState.room_position].get("merchant_orb", false):
+		continue_text = "INSPECT MERCHANT ORB"
+	end_turn_button.text = "END PARTY TURN" if not battle_over else (continue_text if _living_enemies().is_empty() and GameState.run_active else "RETURN TO THE HAMLET")
 	_refresh_hand()
 	_refresh_boss_objective()
 	_refresh_scrolls()
 	_refresh_log()
+
+
+func _skill_availability(hero_id: String, card_id: String) -> Dictionary:
+	# Read-only UI eligibility mirrors the checks in _play_card. A disabled
+	# button remains disabled; inspecting it never changes combat resources.
+	if battle_over: return {"available":false,"code":"battle_over","badge":"BATTLE COMPLETE","reason":"UNAVAILABLE · The battle is over."}
+	if not hero_state.has(hero_id) or not _is_standing(hero_id): return {"available":false,"code":"dead","badge":"HERO SLAIN","reason":"UNAVAILABLE · This hero is slain."}
+	var state: Dictionary = hero_state[hero_id]
+	var card: Dictionary = GameState.card_stats(card_id)
+	var cooldown: int = int(state["cooldowns"].get(card_id,0))
+	if cooldown > 0: return {"available":false,"code":"cooldown","badge":"COOLDOWN · %d TURN(S)" % cooldown,"reason":"UNAVAILABLE · Cooldown: %d party turn(s) remaining." % cooldown}
+	if int(state["ap"]) < int(card["cost"]): return {"available":false,"code":"ap","badge":"NEED %d AP · HAVE %d" % [card["cost"],state["ap"]],"reason":"UNAVAILABLE · Costs %d AP; this hero has %d AP." % [card["cost"],state["ap"]]}
+	var rule: Dictionary = GameState.Depth.skill_rule(card_id)
+	var position: int = GameState.Depth.position_of(GameState,hero_id)
+	if not rule["use"].has(position): return {"available":false,"code":"hero_position","badge":"POSITION P%d · USE %s" % [position,_skill_ranks(rule["use"])],"reason":"UNAVAILABLE · Hero is at P%d. Use from %s." % [position,_skill_ranks(rule["use"])]}
+	var target: int = enemy_position(selected_enemy_index)
+	if not rule["target"].has(target): return {"available":false,"code":"target_range","badge":"TARGET P%d · REACH %s" % [target,_skill_ranks(rule["target"])],"reason":"UNAVAILABLE · Target is at P%d. Reach %s." % [target,_skill_ranks(rule["target"])]}
+	var health_cost: int = int(card.get("self_damage",2))
+	if card.get("effect","") == "pain_heal" and int(state["hp"]) <= health_cost: return {"available":false,"code":"health","badge":"NEED >%d HP · HAVE %d" % [health_cost,state["hp"]],"reason":"UNAVAILABLE · Needs more than %d HP; currently %d HP." % [health_cost,state["hp"]]}
+	return {"available":true,"code":"ready","badge":"AVAILABLE","reason":"AVAILABLE · This hero can use the skill."}
+
+
+func _skill_ranks(ranks: Array) -> String:
+	var parts := PackedStringArray()
+	for rank in ranks: parts.append("P%d" % rank)
+	return "/".join(parts)
+
+
+func _skill_preview(hero_id: String, card_id: String) -> Dictionary:
+	var card: Dictionary = GameState.card_stats(card_id)
+	if card.has("damage"):
+		card["damage"] = _direct_enemy_damage(_attack_damage(hero_id,card),hero_id)
+		card.erase("undead_bonus")
+	for stat in ["block","heal"]:
+		if card.has(stat): card[stat] = int(card[stat])+GameState.hero_bonus(hero_id,stat)
+	return card
+
+
+func _skill_description(card_id: String, card: Dictionary) -> String:
+	var description: String = GameState.card_description(card)
+	if card_id == "wd_bash": description += "\nPush back 1."
+	if card_id == "rg_dodge": description += "\nFall back 1."
+	if card_id == "pc_charge": description = "Damage %d\nBlock %d · Bleed 2t\nAdvance to P1." % [card.get("damage",0),card.get("block",0)]
+	return description
 
 
 func _refresh_hand() -> void:
@@ -1016,24 +1059,19 @@ func _refresh_hand() -> void:
 	var hand: Array = hero_state[selected_hero]["abilities"]
 	for index in range(hand.size()):
 		var card_id: String = str(hand[index])
-		var card: Dictionary = GameState.card_stats(card_id)
-		# Display the same equipment and training bonuses used when resolving skills.
-		var preview: Dictionary = card.duplicate(true)
-		if preview.has("damage"):
-			preview["damage"] = _direct_enemy_damage(_attack_damage(selected_hero, card),selected_hero)
-			preview.erase("undead_bonus")
-		for stat in ["block", "heal"]:
-			if preview.has(stat): preview[stat] = int(preview[stat]) + GameState.hero_bonus(selected_hero, stat)
+		var preview: Dictionary = _skill_preview(selected_hero,card_id)
 		var view: Button = _create_card_view(card_id, preview)
-		if preview.has("damage"): view.tooltip_text += "\nDamage includes current target traits and Mark, before Block."
-		view.tooltip_text += "\n" + GameState.Depth.rank_text(card_id)
-		(view.get_node("Contents/Effect") as Label).text = GameState.Depth.rank_text(card_id)
+		var eligibility: Dictionary = _skill_availability(selected_hero,card_id)
 		var cooldown: int = int(hero_state[selected_hero]["cooldowns"].get(card_id, 0))
-		view.disabled = battle_over or not _is_standing(selected_hero) or cooldown > 0 or int(hero_state[selected_hero]["ap"]) < int(card["cost"]) or not GameState.Depth.skill_allowed(GameState,selected_hero,card_id,enemy_position(selected_enemy_index))
-		if card.get("effect", "") == "pain_heal" and int(hero_state[selected_hero]["hp"]) <= 2:
-			view.disabled = true
-		if cooldown > 0:
-			(view.get_node("Contents/Effect") as Label).text = "READY IN %d TURN(S)" % cooldown
+		var rule: Dictionary = GameState.Depth.skill_rule(card_id)
+		var ranks: String = "Use %s · Reach %s · Now P%d → P%d" % [_skill_ranks(rule["use"]),_skill_ranks(rule["target"]),GameState.Depth.position_of(GameState,selected_hero),enemy_position(selected_enemy_index)]
+		var description: String = _skill_description(card_id,preview)
+		if selected_hero == "occultist" and preview.has("damage"): description += "\nOn damage: Poison 2t, unless resisted."
+		var details := {"availability":eligibility,"name":preview["name"],"hero_name":hero_state[selected_hero]["name"],"class_name":GameState.HEROES[selected_hero]["name"],"cost":preview["cost"],"current_ap":hero_state[selected_hero]["ap"],"cooldown":cooldown,"rank":ranks,"description":description,"icon":view.get_node("Contents/ArtFrame/CardArt").texture,"note":"Damage includes target traits and Mark; before Block." if preview.has("damage") else ""}
+		view.configure(details,self)
+		var badge: Label = view.get_node("Contents/Effect")
+		badge.text = str(eligibility["badge"])
+		if eligibility["available"]: badge.text += " · %s → %s" % [_skill_ranks(rule["use"]),_skill_ranks(rule["target"])]
 		view.pressed.connect(_play_card.bind(selected_hero, index))
 		hand_container.add_child(view)
 		var card_width: float = 280.0
@@ -1266,19 +1304,6 @@ func _layout_combat() -> void:
 	scroll_container.add_theme_constant_override("separation", 10)
 	_build_enemy_cards()
 	_build_boss_objective()
-	if GameState.run_active and GameState.floors[GameState.floor_index][GameState.room_position].get("merchant_orb", false):
-		merchant_orb = Button.new()
-		merchant_orb.name = "MerchantOrb"
-		merchant_orb.icon = load("res://assets/ui/merchant_orb.svg")
-		merchant_orb.expand_icon = true
-		merchant_orb.add_theme_constant_override("icon_max_width", 48)
-		merchant_orb.text = "MERCHANT ORB · SEALED"
-		merchant_orb.disabled = true
-		merchant_orb.add_theme_font_size_override("font_size", 21)
-		_style_card_backing(merchant_orb, Color("#13212B"), Color("#80C9E1"))
-		_place(merchant_orb, Rect2(1460, 260, 420, 85))
-		merchant_orb.pressed.connect(_enter_merchant_orb)
-		add_child(merchant_orb)
 
 
 
@@ -1364,7 +1389,7 @@ func _make_hero_card(hero_id: String) -> Button:
 
 
 func _create_card_view(card_id: String, card: Dictionary) -> Button:
-	var button := Button.new()
+	var button := preload("res://scenes/ui/skill_button.gd").new()
 	button.name = "Card_%s" % card_id
 	button.custom_minimum_size = Vector2(280.0, 148.0)
 	_style_card_backing(button, Color("#151213"), Color(GOLD))
@@ -1388,7 +1413,7 @@ func _create_card_view(card_id: String, card: Dictionary) -> Button:
 	picture.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_place(picture, Rect2(10, 42, 62, 72))
 	art_frame.add_child(picture)
-	var effect_label := _make_label("", 14, Color(MUTED), true)
+	var effect_label := _make_label("", 12, Color(MUTED), true)
 	effect_label.name = "Effect"
 	_place(effect_label, Rect2(5, 125, 270, 20))
 	contents.add_child(effect_label)
@@ -1398,7 +1423,6 @@ func _create_card_view(card_id: String, card: Dictionary) -> Button:
 	_place(description_label, Rect2(82, 40, 187, 85))
 	contents.add_child(description_label)
 	button.visible = true
-	button.tooltip_text = GameState.card_description(card) + " Cooldown: %d full party turn(s)." % GameState.ability_cooldown(card_id)
 	var level: int = GameState.card_level(card_id)
 	var header: String = "%s · %d AP" % [str(card["name"]), int(card["cost"])]
 	if level > 0:
@@ -1409,10 +1433,7 @@ func _create_card_view(card_id: String, card: Dictionary) -> Button:
 	picture.texture = _load_texture(art_path)
 	picture.visible = picture.texture != null
 	(button.get_node("Contents/Effect") as Label).text = "Cooldown: %d %s" % [GameState.ability_cooldown(card_id), "turn" if GameState.ability_cooldown(card_id) == 1 else "turns"] if GameState.ability_cooldown(card_id) > 0 else "No cooldown"
-	var description: String = GameState.card_description(card)
-	if card_id == "wd_bash": description += "\nPush back 1."
-	if card_id == "rg_dodge": description += "\nFall back 1."
-	if card_id == "pc_charge": description = "Damage %d\nBlock %d · Bleed 2t\nAdvance to P1." % [card.get("damage",0),card.get("block",0)]
+	var description: String = _skill_description(card_id,card)
 	(button.get_node("Contents/Description") as Label).text = description
 	return button
 
@@ -1510,6 +1531,8 @@ func _on_end_turn_button_pressed() -> void:
 			if GameState.run_complete:
 				GameState.end_run()
 				get_tree().change_scene_to_file("res://scenes/expedition/aftermath.tscn")
+			elif GameState.merchant_orb_available():
+				get_tree().change_scene_to_file("res://scenes/expedition/merchant_orb_room.tscn")
 			else:
 				get_tree().change_scene_to_file("res://scenes/expedition/dungeon.tscn")
 		else:
@@ -1610,12 +1633,13 @@ func _refresh_enemies() -> void:
 func _enter_merchant_orb() -> void:
 	if not battle_over or not _living_enemies().is_empty() or not GameState.run_active:
 		return
+	if not GameState.floors[GameState.floor_index][GameState.room_position].get("merchant_orb", false):
+		return
 	GameState.run_heroes = hero_state.duplicate(true)
 	GameState.finish_encounter()
 	if not GameState.merchant_orb_available():
 		return
-	GameState.shop_return_scene = "res://scenes/expedition/dungeon.tscn"
-	get_tree().change_scene_to_file("res://scenes/hub/item_shop.tscn")
+	get_tree().change_scene_to_file("res://scenes/expedition/merchant_orb_room.tscn")
 
 func _objective_index() -> int:
 	for index in range(enemies.size()):

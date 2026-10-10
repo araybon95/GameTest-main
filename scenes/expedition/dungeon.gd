@@ -129,7 +129,7 @@ func refresh() -> void:
 		descend_button.size = Vector2(270, 70)
 	label_at("Select a hero to inspect", Vector2(1550, 990), 20)
 	if GameState.merchant_orb_available():
-		var merchant := button_at("TOUCH MERCHANT ORB", Vector2(1530, 910), open_shop)
+		var merchant := button_at("INSPECT MERCHANT ORB", Vector2(1530, 910), open_shop)
 		merchant.size = Vector2(320, 65)
 	elif GameState.current_room_kind() == "camp":
 		var camp := button_at("VISIT CAMP", Vector2(1530, 910), open_camp)
@@ -259,8 +259,7 @@ func remove_equipment(hero_id: String, slot: String) -> void:
 func open_shop() -> void:
 	if not GameState.merchant_orb_available():
 		return
-	GameState.shop_return_scene = "res://scenes/expedition/dungeon.tscn"
-	get_tree().change_scene_to_file("res://scenes/hub/item_shop.tscn")
+	get_tree().change_scene_to_file("res://scenes/expedition/merchant_orb_room.tscn")
 
 func open_camp() -> void:
 	get_tree().change_scene_to_file("res://scenes/expedition/camp.tscn")
