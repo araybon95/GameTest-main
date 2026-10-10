@@ -1,0 +1,10 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/generated/enemy_coterie_seamkeeper_combat_sheet.png" id="1"]
+
+[resource]
+atlas = ExtResource("1")
+region = Rect2(116, 48, 547, 425)
+filter_clip = true
+metadata/pose_id = "coterie_seamkeeper"
+metadata/idle_pixel_height = 425

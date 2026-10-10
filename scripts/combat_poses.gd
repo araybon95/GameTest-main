@@ -17,11 +17,12 @@ const Regions = preload("res://scripts/combat_pose_regions.gd")
 static func pose(original: Texture2D, hurt: bool = false) -> Texture2D:
  if original == null: return null
  var key: String = original.resource_path.get_file()
- if not POSES.has(key): return original
- if InkRegions.COMBAT.has(POSES[key]): return state_pose(original,"hurt" if hurt else "attack")
+ var mapped_id: String = str(original.get_meta("pose_id",POSES.get(key,"")))
+ if mapped_id.is_empty(): return original
+ if InkRegions.COMBAT.has(mapped_id): return state_pose(original,"hurt" if hurt else "attack")
  var pose_key: String = key + ("/hurt" if hurt else "/attack")
  if cache.has(pose_key): return cache[pose_key]
- var id: String = POSES[key]
+ var id: String = mapped_id
  var path: String = "res://assets/generated/combat_pose_%s.png" % id
  if not ResourceLoader.exists(path): return original
  var sheet: Texture2D = load(path)
@@ -43,7 +44,9 @@ static func state_pose(original: Texture2D, state: String = "idle") -> Texture2D
  var id: String = str(original.get_meta("pose_id",POSES.get(key,"")))
  if not InkRegions.COMBAT.has(id):
   return original if state == "guard" else pose(original,state == "hurt")
- var index: int = {"attack":1,"cast":2,"guard":3,"hurt":4}.get(state,0) if InkRegions.COMBAT[id].size() == 6 else {"attack":1,"cast":1,"guard":0,"hurt":2}.get(state,0)
+ var frame_count: int = InkRegions.COMBAT[id].size()
+ var indices: Dictionary = {"attack":1,"cast":2,"guard":3,"hurt":4} if frame_count == 6 else {"attack":1,"cast":3,"roar":3,"reveal":3,"guard":0,"hurt":2} if frame_count == 4 else {"attack":1,"cast":1,"guard":0,"hurt":2,"roar":0,"reveal":0}
+ var index: int = int(indices.get(state,0))
  var cache_key: String = id+"/"+state
  if cache.has(cache_key): return cache[cache_key]
  var texture := AtlasTexture.new()

@@ -1,0 +1,1060 @@
+{
+  "tool": "image_gen.imagegen",
+  "notes": "Original grimdark redraws from existing generated creature identities and Warden ink reference. PNGs copied byte-for-byte; AtlasTexture regions measured from alpha, no raster processing.",
+  "assets": [
+    {
+      "id": "footman",
+      "original": "enemy_keep_troops.png",
+      "boss": false,
+      "prompt": "Use case: stylized-concept. Asset: game combat sprite atlas. Reference1 defines ONLY the LEFT revenant footman with cleaver and shield; do not include the other two figures; reference2 Warden defines visual ink treatment. Redraw reference1 identity as dark graphic hand-inked sprite poses, bold heavy black outer contours, broad angular FLAT shadows, sparse scratches instead of photoreal texture, muted ivory/burgundy/charcoal colors and only tiny cold blue highlights. Preserve distinctive anatomy, equipment, adult grimdark body horror and silhouette. All face LEFT toward heroes. Exactly THREE separated full-body poses in THREE columns ONE row: idle LEFT cell, aggressive attack middle, hurt recoil RIGHT cell. Every full figure including all extremities fits entirely inside own cell with12% EMPTY margins all sides, no overlapping poses or grid crossing. Same body scale and common foot baseline within each row; generous gutters. Huge bosses must remain visibly monstrous but fit each cell without cropping. Actual transparent alpha background, no floor, no shadows, no backdrop aura, no text, no labels, no numbers or borders. Do not copy Warden equipment onto creature.",
+      "source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-8685f7c1-15a1-43b2-920f-dcaecc814a1c.png",
+      "creature_id": "keep_footman",
+      "sheet": "res://assets/generated/enemy_keep_footman_combat_sheet.png",
+      "idle": "res://assets/generated/enemy_keep_footman_ink.tres",
+      "regions": [
+        [
+          12,
+          40,
+          688,
+          666
+        ],
+        [
+          786,
+          12,
+          657,
+          692
+        ],
+        [
+          1503,
+          90,
+          658,
+          615
+        ]
+      ],
+      "alpha_threshold": 48,
+      "margin_pixels": 3,
+      "source_sha256": "764670cb37dd83fa3499f2c989933e26e156b1a0a6a6fd5f76e07d874968cfbf",
+      "sheet_sha256": "764670cb37dd83fa3499f2c989933e26e156b1a0a6a6fd5f76e07d874968cfbf",
+      "cells": [
+        [
+          0,
+          0,
+          743,
+          724
+        ],
+        [
+          743,
+          0,
+          730,
+          724
+        ],
+        [
+          1473,
+          0,
+          699,
+          724
+        ]
+      ]
+    },
+    {
+      "id": "crossbow",
+      "original": "enemy_keep_troops.png",
+      "boss": false,
+      "prompt": "Use case: stylized-concept. Asset: game combat sprite atlas. Reference1 defines ONLY the MIDDLE wrapped crossbowman; do not include the other two figures; reference2 Warden defines visual ink treatment. Redraw reference1 identity as dark graphic hand-inked sprite poses, bold heavy black outer contours, broad angular FLAT shadows, sparse scratches instead of photoreal texture, muted ivory/burgundy/charcoal colors and only tiny cold blue highlights. Preserve distinctive anatomy, equipment, adult grimdark body horror and silhouette. All face LEFT toward heroes. Exactly THREE separated full-body poses in THREE columns ONE row: idle LEFT cell, aggressive attack middle, hurt recoil RIGHT cell. Every full figure including all extremities fits entirely inside own cell with12% EMPTY margins all sides, no overlapping poses or grid crossing. Same body scale and common foot baseline within each row; generous gutters. Huge bosses must remain visibly monstrous but fit each cell without cropping. Actual transparent alpha background, no floor, no shadows, no backdrop aura, no text, no labels, no numbers or borders. Do not copy Warden equipment onto creature.",
+      "source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-207d54d6-63b2-4acd-aace-c90ebef42fc0.png",
+      "creature_id": "keep_crossbow",
+      "sheet": "res://assets/generated/enemy_keep_crossbow_combat_sheet.png",
+      "idle": "res://assets/generated/enemy_keep_crossbow_ink.tres",
+      "regions": [
+        [
+          0,
+          8,
+          640,
+          707
+        ],
+        [
+          641,
+          2,
+          797,
+          713
+        ],
+        [
+          1462,
+          72,
+          683,
+          638
+        ]
+      ],
+      "alpha_threshold": 48,
+      "margin_pixels": 3,
+      "source_sha256": "0947723f003996feeeda169e29c1dfd6a0db68db70ea7a0e9380c7a8c92922c2",
+      "sheet_sha256": "0947723f003996feeeda169e29c1dfd6a0db68db70ea7a0e9380c7a8c92922c2",
+      "cells": [
+        [
+          0,
+          0,
+          640,
+          724
+        ],
+        [
+          640,
+          0,
+          810,
+          724
+        ],
+        [
+          1450,
+          0,
+          722,
+          724
+        ]
+      ]
+    },
+    {
+      "id": "wolfguard",
+      "original": "enemy_keep_troops.png",
+      "boss": false,
+      "prompt": "Use case: stylized-concept. Asset: game combat sprite atlas. Reference1 defines ONLY the RIGHT armored wolf-mantle poleaxe guard; do not include the other two figures; reference2 Warden defines visual ink treatment. Redraw reference1 identity as dark graphic hand-inked sprite poses, bold heavy black outer contours, broad angular FLAT shadows, sparse scratches instead of photoreal texture, muted ivory/burgundy/charcoal colors and only tiny cold blue highlights. Preserve distinctive anatomy, equipment, adult grimdark body horror and silhouette. All face LEFT toward heroes. Exactly THREE separated full-body poses in THREE columns ONE row: idle LEFT cell, aggressive attack middle, hurt recoil RIGHT cell. Every full figure including all extremities fits entirely inside own cell with12% EMPTY margins all sides, no overlapping poses or grid crossing. Same body scale and common foot baseline within each row; generous gutters. Huge bosses must remain visibly monstrous but fit each cell without cropping. Actual transparent alpha background, no floor, no shadows, no backdrop aura, no text, no labels, no numbers or borders. Do not copy Warden equipment onto creature.",
+      "source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-5f37fa4d-bd81-4c71-a5e7-28e1fd3c501d.png",
+      "creature_id": "keep_wolfguard",
+      "sheet": "res://assets/generated/enemy_keep_wolfguard_combat_sheet.png",
+      "idle": "res://assets/generated/enemy_keep_wolfguard_ink.tres",
+      "regions": [
+        [
+          16,
+          102,
+          678,
+          599
+        ],
+        [
+          702,
+          11,
+          716,
+          686
+        ],
+        [
+          1444,
+          126,
+          724,
+          573
+        ]
+      ],
+      "alpha_threshold": 48,
+      "margin_pixels": 3,
+      "source_sha256": "33d6ae3dd13d3463230f95f74f084c1c8d89477907c3d9f0508fefe27e3c086b",
+      "sheet_sha256": "33d6ae3dd13d3463230f95f74f084c1c8d89477907c3d9f0508fefe27e3c086b",
+      "cells": [
+        [
+          0,
+          0,
+          698,
+          724
+        ],
+        [
+          698,
+          0,
+          733,
+          724
+        ],
+        [
+          1431,
+          0,
+          741,
+          724
+        ]
+      ]
+    },
+    {
+      "id": "penitent",
+      "original": "enemy_anguish_penitent.png",
+      "boss": false,
+      "prompt": "Use case: stylized-concept. Asset: game combat sprite atlas. Reference1 defines blindfolded stitched supplicant with bone club and ritual cage collar; reference2 Warden defines visual ink treatment. Redraw reference1 identity as dark graphic hand-inked sprite poses, bold heavy black outer contours, broad angular FLAT shadows, sparse scratches instead of photoreal texture, muted ivory/burgundy/charcoal colors and only tiny candle ember highlights. Preserve distinctive anatomy, equipment, adult grimdark body horror and silhouette. All face LEFT toward heroes. Exactly THREE separated full-body poses in THREE columns ONE row: idle LEFT cell, aggressive attack middle, hurt recoil RIGHT cell. Every full figure including all extremities fits entirely inside own cell with12% EMPTY margins all sides, no overlapping poses or grid crossing. Same body scale and common foot baseline within each row; generous gutters. Huge bosses must remain visibly monstrous but fit each cell without cropping. Actual transparent alpha background, no floor, no shadows, no backdrop aura, no text, no labels, no numbers or borders. Do not copy Warden equipment onto creature.",
+      "source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-63ecf5a3-6273-4e58-8881-77a07812ea6b.png",
+      "creature_id": "anguish_penitent",
+      "sheet": "res://assets/generated/enemy_anguish_penitent_combat_sheet.png",
+      "idle": "res://assets/generated/enemy_anguish_penitent_ink.tres",
+      "regions": [
+        [
+          15,
+          8,
+          574,
+          705
+        ],
+        [
+          715,
+          3,
+          682,
+          708
+        ],
+        [
+          1470,
+          24,
+          687,
+          688
+        ]
+      ],
+      "alpha_threshold": 48,
+      "margin_pixels": 3,
+      "source_sha256": "fb6bd1220900e5d2bbd5c118ac9470460419aca55dda8ccb3df6406eceb9a115",
+      "sheet_sha256": "fb6bd1220900e5d2bbd5c118ac9470460419aca55dda8ccb3df6406eceb9a115",
+      "cells": [
+        [
+          0,
+          0,
+          652,
+          724
+        ],
+        [
+          652,
+          0,
+          781,
+          724
+        ],
+        [
+          1433,
+          0,
+          739,
+          724
+        ]
+      ]
+    },
+    {
+      "id": "lord",
+      "original": "enemy_undying_lord.png",
+      "boss": true,
+      "prompt": "Use case: stylized-concept. Asset: game combat sprite atlas. Reference1 defines many-armed crowned undead lord with relics and blades; reference2 Warden defines visual ink treatment. Redraw reference1 identity as dark graphic hand-inked sprite poses, bold heavy black outer contours, broad angular FLAT shadows, sparse scratches instead of photoreal texture, muted ivory/burgundy/charcoal colors and only tiny cold blue highlights. Preserve distinctive anatomy, equipment, adult grimdark body horror and silhouette. All face LEFT toward heroes. Exactly FOUR separated full-body poses in TWO columns and TWO rows: top-left idle, top-right aggressive attack lunge with weapon/anatomy extended LEFT, bottom-left hurt recoil, bottom-right threatening roar/ritual/casting reveal. Every full figure including all extremities fits entirely inside own cell with12% EMPTY margins all sides, no overlapping poses or grid crossing. Same body scale and common foot baseline within each row; generous gutters. Huge bosses must remain visibly monstrous but fit each cell without cropping. Actual transparent alpha background, no floor, no shadows, no backdrop aura, no text, no labels, no numbers or borders. Do not copy Warden equipment onto creature.",
+      "source": "C:/Users/ronal/.codex/generated_images/01a12136-caa5-7560-9826-b21b2b37350f/exec-44537dc3-152e-4214-8602-766a547b1251.png",
+      "original_source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-4a4ed8df-0b18-44dc-b276-6bb60f71d602.png",
+      "reposition_prompt": "Edit supplied sheet ONLY reposition and uniformly shrink each full figure in its cell; preserve original anatomy, weapons, costume, colors, linework, each pose, true transparent alpha. Exactly four poses in 2x2 idle,attack,hurt,roar. Entire figure and all extremities fit central70% of each cell width/height,15%emptytransparentmargin eachside, no overlap/cropping or background.",
+      "creature_id": "undying_lord",
+      "sheet": "res://assets/generated/enemy_undying_lord_combat_sheet.png",
+      "idle": "res://assets/generated/enemy_undying_lord_ink.tres",
+      "regions": [
+        [
+          98,
+          49,
+          555,
+          400
+        ],
+        [
+          773,
+          92,
+          646,
+          357
+        ],
+        [
+          104,
+          545,
+          574,
+          393
+        ],
+        [
+          887,
+          543,
+          538,
+          393
+        ]
+      ],
+      "cells": [
+        [
+          0,
+          0,
+          713,
+          496
+        ],
+        [
+          713,
+          0,
+          823,
+          496
+        ],
+        [
+          0,
+          496,
+          782,
+          528
+        ],
+        [
+          782,
+          496,
+          754,
+          528
+        ]
+      ],
+      "alpha_threshold": 48,
+      "margin_pixels": 3,
+      "source_sha256": "9fbc07a8e48d7587bec53bb99ba3155584478286b6882ac4b8b7a07c64a24dfd",
+      "sheet_sha256": "9fbc07a8e48d7587bec53bb99ba3155584478286b6882ac4b8b7a07c64a24dfd"
+    },
+    {
+      "id": "seamkeeper",
+      "original": "enemy_coterie_seamkeeper.png",
+      "boss": true,
+      "prompt": "Use case: stylized-concept. Asset: game combat sprite atlas. Reference1 defines hooded masked seamkeeper with surgical scissors and thread; reference2 Warden defines visual ink treatment. Redraw reference1 identity as dark graphic hand-inked sprite poses, bold heavy black outer contours, broad angular FLAT shadows, sparse scratches instead of photoreal texture, muted ivory/burgundy/charcoal colors and only tiny candle ember highlights. Preserve distinctive anatomy, equipment, adult grimdark body horror and silhouette. All face LEFT toward heroes. Exactly FOUR separated full-body poses in TWO columns and TWO rows: top-left idle, top-right aggressive attack lunge with weapon/anatomy extended LEFT, bottom-left hurt recoil, bottom-right threatening roar/ritual/casting reveal. Every full figure including all extremities fits entirely inside own cell with12% EMPTY margins all sides, no overlapping poses or grid crossing. Same body scale and common foot baseline within each row; generous gutters. Huge bosses must remain visibly monstrous but fit each cell without cropping. Actual transparent alpha background, no floor, no shadows, no backdrop aura, no text, no labels, no numbers or borders. Do not copy Warden equipment onto creature.",
+      "source": "C:/Users/ronal/.codex/generated_images/01a12136-caa5-7560-9826-b21b2b37350f/exec-5079f8f4-b96b-4320-a5dd-88b862ca7098.png",
+      "original_source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-7a1dce8c-8fa2-444e-adb1-c6bf7b350f76.png",
+      "reposition_prompt": "Edit supplied sheet ONLY reposition and uniformly shrink each full figure in its cell; preserve original anatomy, weapons, costume, colors, linework, each pose, true transparent alpha. Exactly four poses in 2x2 idle,attack,hurt,roar. Entire figure and all extremities fit central70% of each cell width/height,15%emptytransparentmargin eachside, no overlap/cropping or background.",
+      "creature_id": "coterie_seamkeeper",
+      "sheet": "res://assets/generated/enemy_coterie_seamkeeper_combat_sheet.png",
+      "idle": "res://assets/generated/enemy_coterie_seamkeeper_ink.tres",
+      "regions": [
+        [
+          116,
+          48,
+          547,
+          425
+        ],
+        [
+          772,
+          92,
+          674,
+          374
+        ],
+        [
+          133,
+          537,
+          534,
+          406
+        ],
+        [
+          834,
+          547,
+          605,
+          394
+        ]
+      ],
+      "cells": [
+        [
+          0,
+          0,
+          717,
+          505
+        ],
+        [
+          717,
+          0,
+          819,
+          505
+        ],
+        [
+          0,
+          505,
+          750,
+          519
+        ],
+        [
+          750,
+          505,
+          786,
+          519
+        ]
+      ],
+      "alpha_threshold": 48,
+      "margin_pixels": 3,
+      "source_sha256": "b2d73333db58ff8fe1cb337c614ec7828c0ff2e4b1248dafff17ca6562787fdb",
+      "sheet_sha256": "b2d73333db58ff8fe1cb337c614ec7828c0ff2e4b1248dafff17ca6562787fdb"
+    },
+    {
+      "id": "son",
+      "original": "enemy_keep_son.png",
+      "boss": true,
+      "prompt": "Use case: stylized-concept. Asset: game combat sprite atlas. Reference1 defines wolf-headed knight carrying the huge broken greatsword; reference2 Warden defines visual ink treatment. Redraw reference1 identity as dark graphic hand-inked sprite poses, bold heavy black outer contours, broad angular FLAT shadows, sparse scratches instead of photoreal texture, muted ivory/burgundy/charcoal colors and only tiny cold blue highlights. Preserve distinctive anatomy, equipment, adult grimdark body horror and silhouette. All face LEFT toward heroes. Exactly FOUR separated full-body poses in TWO columns and TWO rows: top-left idle, top-right aggressive attack lunge with weapon/anatomy extended LEFT, bottom-left hurt recoil, bottom-right threatening roar/ritual/casting reveal. Every full figure including all extremities fits entirely inside own cell with12% EMPTY margins all sides, no overlapping poses or grid crossing. Same body scale and common foot baseline within each row; generous gutters. Huge bosses must remain visibly monstrous but fit each cell without cropping. Actual transparent alpha background, no floor, no shadows, no backdrop aura, no text, no labels, no numbers or borders. Do not copy Warden equipment onto creature.",
+      "source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-deefc5eb-6deb-4572-a15a-2bf136437bd2.png",
+      "original_source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-d6b55cbd-6d8b-40eb-87d4-9962358e06bb.png",
+      "reposition_prompt": "Make one precise correction to the supplied transparent four-pose knight atlas: in the UPPER-RIGHT ATTACK POSE ONLY, turn the wolf head to face LEFT along the sword blade, with a clear natural neck connection to the shoulders. He looks toward the enemy he is cleaving. Keep all other pixels/poses, anatomy, two-hand sword grip, armor, weapons, figure size, cell placement and transparent alpha unchanged. No extra head, limbs, background or effects. Keep complete four separate sprites with no overlap.",
+      "anatomy_prompt": "Create a replacement combat sprite sheet for the wolf-headed knight in reference 1; reference 2 is ONLY the dark hand-inked drawing style. The previous attempt had anatomically confusing sword and limb connections: fix them carefully.\nEXACT ANATOMY in every pose: one humanoid ribcage connected to one pelvis; wolf head attached to a clear neck; exactly TWO shoulders, TWO arms with clear elbows, TWO hands with five digits each, and TWO legs with knees/ankles and the same clawed feet as reference. Plate armor follows those joints. No extra/merged limbs. Keep the same dark wolf mane, burgundy/navy tattered cloak and wounded armor in all poses. Hands must visibly grip the SAME sword hilt; no floating weapon, sword emerging from wrist, arm behind an impossible shoulder, reversed knee or disconnected hip. Preserve the sword's broken heavy blade and armored knight proportions.\nExactly FOUR complete full-body poses in a strict 2-by-2 grid:\nupper-left idle: both hands visibly grip hilt near waist, blade angled upward-left, balanced standing stance.\nupper-right attack: torso turns left, both hands together on hilt in a believable two-handed horizontal cleave; front knee slightly bent, rear leg braced; shoulders connected.\nlower-left recoil: left hand guards chest, RIGHT hand holds lowered sword near hip, knees slightly bent.\nlower-right reveal: standing upright, RIGHT hand holds sword pointing downward-left, LEFT fist held at chest while head howls upward.\nAll face left. Consistent anatomy, equipment and body scale. Bold heavy black contour, broad angular flat shadows, muted ivory armor, deep burgundy and charcoal, tiny icy blue eye detail; no photorealism.\nCRITICAL sprite atlas: ALL anatomy AND the full weapon/cape must remain in central60% width/height of its own cell, leaving20% EMPTY TRANSPARENT margins on every side. Reduce every figure as needed. Four completely separate rectangular cells; no overlap or cropping. True alpha transparency; no floor, shadow, background gradient, aura, labels, grid or borders.",
+      "anatomy_source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-edf8f8fc-3a9b-4cfa-84e5-ee6a24999d95.png",
+      "creature_id": "keep_son",
+      "sheet": "res://assets/generated/enemy_keep_son_combat_sheet.png",
+      "idle": "res://assets/generated/enemy_keep_son_ink.tres",
+      "regions": [
+        [
+          95,
+          34,
+          608,
+          515
+        ],
+        [
+          720,
+          99,
+          647,
+          459
+        ],
+        [
+          48,
+          615,
+          661,
+          460
+        ],
+        [
+          751,
+          574,
+          645,
+          509
+        ]
+      ],
+      "cells": [
+        [
+          0,
+          0,
+          711,
+          566
+        ],
+        [
+          711,
+          0,
+          712,
+          566
+        ],
+        [
+          0,
+          566,
+          730,
+          539
+        ],
+        [
+          730,
+          566,
+          693,
+          539
+        ]
+      ],
+      "alpha_threshold": 48,
+      "margin_pixels": 3,
+      "source_sha256": "cacff0ebf170a34526dfbca05f32a51bc8e26a162192977add4e243d8c092487",
+      "sheet_sha256": "cacff0ebf170a34526dfbca05f32a51bc8e26a162192977add4e243d8c092487"
+    },
+    {
+      "id": "vessel",
+      "original": "enemy_anguish_vessel.png",
+      "boss": false,
+      "prompt": "Use case: stylized-concept. Asset: game combat sprite atlas. Reference1 defines long-armed stitched vessel, two hanging mournful masks, candle crown; reference2 Warden defines visual ink treatment. Redraw reference1 identity as dark graphic hand-inked sprite poses, bold heavy black outer contours, broad angular FLAT shadows, sparse scratches instead of photoreal texture, muted ivory/burgundy/charcoal colors and only tiny candle ember highlights. Preserve distinctive anatomy, equipment, adult grimdark body horror and silhouette. All face LEFT toward heroes. Exactly THREE separated full-body poses in THREE columns ONE row: idle LEFT cell, aggressive attack middle, hurt recoil RIGHT cell. Every full figure including all extremities fits entirely inside own cell with12% EMPTY margins all sides, no overlapping poses or grid crossing. Same body scale and common foot baseline within each row; generous gutters. Huge bosses must remain visibly monstrous but fit each cell without cropping. Actual transparent alpha background, no floor, no shadows, no backdrop aura, no text, no labels, no numbers or borders. Do not copy Warden equipment onto creature.",
+      "source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-6add4ed5-60c5-4569-8303-ac8a66b0f0a1.png",
+      "original_source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-acc4d4f1-2046-4675-96c7-1a06328a7acb.png",
+      "reposition_prompt": "Reposition and uniformly SHRINK each existing full figure in this sprite sheet. Preserve its exact anatomy, coherent limb connections, weapons, face, clothing, drawing style, colors and each pose. Do not redesign it.\nExactly THREE figures in one horizontal row idle/attack/hurt.\nATLAS REQUIREMENT: all visible pixels of EACH figure including weapon tips, wings, cloth, limbs, blood drops must fit in CENTRAL60% width AND height of its own rectangular cell. Leave20%wide COMPLETELY TRANSPARENT margins on ALLFOURSIDES of eachcell. Shrink the whole figure rather than trimming any detail. Poses must share body scale. No overlaps, figures crossing grid boundaries, or missing/cropped extremities. Keep all faces left. Transparent RGBA; no gradient background, floor, shadows, aura, text or grid.",
+      "creature_id": "anguish_vessel",
+      "sheet": "res://assets/generated/enemy_anguish_vessel_combat_sheet.png",
+      "idle": "res://assets/generated/enemy_anguish_vessel_ink.tres",
+      "regions": [
+        [
+          183,
+          105,
+          412,
+          510
+        ],
+        [
+          742,
+          115,
+          664,
+          497
+        ],
+        [
+          1552,
+          121,
+          447,
+          494
+        ]
+      ],
+      "cells": [
+        [
+          0,
+          0,
+          668,
+          724
+        ],
+        [
+          668,
+          0,
+          811,
+          724
+        ],
+        [
+          1479,
+          0,
+          693,
+          724
+        ]
+      ],
+      "alpha_threshold": 48,
+      "margin_pixels": 3,
+      "source_sha256": "ecc5f417018a6bcdedbdd936dc085ea4d8f1e4249632bc35fc6b3d8fae6c542f",
+      "sheet_sha256": "ecc5f417018a6bcdedbdd936dc085ea4d8f1e4249632bc35fc6b3d8fae6c542f"
+    },
+    {
+      "id": "giant",
+      "original": "enemy_harrowed_giant.png",
+      "boss": true,
+      "prompt": "Use case: stylized-concept. Asset: game combat sprite atlas. Reference1 defines massive hunched chained slave giant carrying church reliquaries, retain grotesque bulk; reference2 Warden defines visual ink treatment. Redraw reference1 identity as dark graphic hand-inked sprite poses, bold heavy black outer contours, broad angular FLAT shadows, sparse scratches instead of photoreal texture, muted ivory/burgundy/charcoal colors and only tiny candle ember highlights. Preserve distinctive anatomy, equipment, adult grimdark body horror and silhouette. All face LEFT toward heroes. Exactly FOUR separated full-body poses in TWO columns and TWO rows: top-left idle, top-right aggressive attack lunge with weapon/anatomy extended LEFT, bottom-left hurt recoil, bottom-right threatening roar/ritual/casting reveal. Every full figure including all extremities fits entirely inside own cell with12% EMPTY margins all sides, no overlapping poses or grid crossing. Same body scale and common foot baseline within each row; generous gutters. Huge bosses must remain visibly monstrous but fit each cell without cropping. Actual transparent alpha background, no floor, no shadows, no backdrop aura, no text, no labels, no numbers or borders. Do not copy Warden equipment onto creature.",
+      "source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-799275ca-916f-45ed-8987-8e16342f4109.png",
+      "original_source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-66287850-7bc0-44d1-946f-7c7e6db5cf86.png",
+      "reposition_prompt": "Reposition and uniformly SHRINK each existing full figure in this sprite sheet. Preserve its exact anatomy, coherent limb connections, weapons, face, clothing, drawing style, colors and each pose. Do not redesign it.\nExactly FOUR figures in strict 2x2 row-major idle/attack/hurt/roar.\nATLAS REQUIREMENT: all visible pixels of EACH figure including weapon tips, wings, cloth, limbs, blood drops must fit in CENTRAL60% width AND height of its own rectangular cell. Leave20%wide COMPLETELY TRANSPARENT margins on ALLFOURSIDES of eachcell. Shrink the whole figure rather than trimming any detail. Poses must share body scale. No overlaps, figures crossing grid boundaries, or missing/cropped extremities. Keep all faces left. Transparent RGBA; no gradient background, floor, shadows, aura, text or grid.",
+      "creature_id": "harrowed_giant",
+      "sheet": "res://assets/generated/enemy_harrowed_giant_combat_sheet.png",
+      "idle": "res://assets/generated/enemy_harrowed_giant_ink.tres",
+      "regions": [
+        [
+          158,
+          40,
+          527,
+          423
+        ],
+        [
+          782,
+          73,
+          632,
+          391
+        ],
+        [
+          204,
+          521,
+          481,
+          415
+        ],
+        [
+          829,
+          528,
+          561,
+          411
+        ]
+      ],
+      "cells": [
+        [
+          0,
+          0,
+          733,
+          492
+        ],
+        [
+          733,
+          0,
+          803,
+          492
+        ],
+        [
+          0,
+          492,
+          757,
+          532
+        ],
+        [
+          757,
+          492,
+          779,
+          532
+        ]
+      ],
+      "alpha_threshold": 48,
+      "margin_pixels": 3,
+      "source_sha256": "5ffe83ed0747e91620279f7eb61a7d2b134b030ee8505d68945ba39cc62ce678",
+      "sheet_sha256": "5ffe83ed0747e91620279f7eb61a7d2b134b030ee8505d68945ba39cc62ce678"
+    },
+    {
+      "id": "cantor",
+      "original": "enemy_coterie_cantor.png",
+      "boss": true,
+      "prompt": "Use case: stylized-concept. Asset: game combat sprite atlas. Reference1 defines tall remade cantor, exposed organ pipes chest, veiled halo, raised skeletal arms; reference2 Warden defines visual ink treatment. Redraw reference1 identity as dark graphic hand-inked sprite poses, bold heavy black outer contours, broad angular FLAT shadows, sparse scratches instead of photoreal texture, muted ivory/burgundy/charcoal colors and only tiny candle ember highlights. Preserve distinctive anatomy, equipment, adult grimdark body horror and silhouette. All face LEFT toward heroes. Exactly FOUR separated full-body poses in TWO columns and TWO rows: top-left idle, top-right aggressive attack lunge with weapon/anatomy extended LEFT, bottom-left hurt recoil, bottom-right threatening roar/ritual/casting reveal. Every full figure including all extremities fits entirely inside own cell with12% EMPTY margins all sides, no overlapping poses or grid crossing. Same body scale and common foot baseline within each row; generous gutters. Huge bosses must remain visibly monstrous but fit each cell without cropping. Actual transparent alpha background, no floor, no shadows, no backdrop aura, no text, no labels, no numbers or borders. Do not copy Warden equipment onto creature.",
+      "source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-62ede11c-8055-48e3-9141-921675dcba3e.png",
+      "original_source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-5b9ab958-f69e-4741-9005-3612988f9801.png",
+      "reposition_prompt": "Reposition and uniformly SHRINK each existing full figure in this sprite sheet. Preserve its exact anatomy, coherent limb connections, weapons, face, clothing, drawing style, colors and each pose. Do not redesign it.\nExactly FOUR figures in strict 2x2 row-major idle/attack/hurt/roar.\nATLAS REQUIREMENT: all visible pixels of EACH figure including weapon tips, wings, cloth, limbs, blood drops must fit in CENTRAL60% width AND height of its own rectangular cell. Leave20%wide COMPLETELY TRANSPARENT margins on ALLFOURSIDES of eachcell. Shrink the whole figure rather than trimming any detail. Poses must share body scale. No overlaps, figures crossing grid boundaries, or missing/cropped extremities. Keep all faces left. Transparent RGBA; no gradient background, floor, shadows, aura, text or grid.",
+      "creature_id": "coterie_cantor",
+      "sheet": "res://assets/generated/enemy_coterie_cantor_combat_sheet.png",
+      "idle": "res://assets/generated/enemy_coterie_cantor_ink.tres",
+      "regions": [
+        [
+          237,
+          48,
+          375,
+          418
+        ],
+        [
+          773,
+          75,
+          655,
+          384
+        ],
+        [
+          223,
+          557,
+          451,
+          381
+        ],
+        [
+          831,
+          523,
+          604,
+          417
+        ]
+      ],
+      "cells": [
+        [
+          0,
+          0,
+          692,
+          494
+        ],
+        [
+          692,
+          0,
+          844,
+          494
+        ],
+        [
+          0,
+          494,
+          752,
+          530
+        ],
+        [
+          752,
+          494,
+          784,
+          530
+        ]
+      ],
+      "alpha_threshold": 48,
+      "margin_pixels": 3,
+      "source_sha256": "3604fbf1c6b7dc6198c3efa71d9c5d3f9aa530c3b8918278a6c2af379dd008d5",
+      "sheet_sha256": "3604fbf1c6b7dc6198c3efa71d9c5d3f9aa530c3b8918278a6c2af379dd008d5"
+    },
+    {
+      "id": "matron",
+      "original": "enemy_coterie_matron.png",
+      "boss": true,
+      "prompt": "Use case: stylized-concept. Asset: game combat sprite atlas. Reference1 defines masked ritual matron with multiple articulated spider limbs, censer and ornate halo; reference2 Warden defines visual ink treatment. Redraw reference1 identity as dark graphic hand-inked sprite poses, bold heavy black outer contours, broad angular FLAT shadows, sparse scratches instead of photoreal texture, muted ivory/burgundy/charcoal colors and only tiny candle ember highlights. Preserve distinctive anatomy, equipment, adult grimdark body horror and silhouette. All face LEFT toward heroes. Exactly FOUR separated full-body poses in TWO columns and TWO rows: top-left idle, top-right aggressive attack lunge with weapon/anatomy extended LEFT, bottom-left hurt recoil, bottom-right threatening roar/ritual/casting reveal. Every full figure including all extremities fits entirely inside own cell with12% EMPTY margins all sides, no overlapping poses or grid crossing. Same body scale and common foot baseline within each row; generous gutters. Huge bosses must remain visibly monstrous but fit each cell without cropping. Actual transparent alpha background, no floor, no shadows, no backdrop aura, no text, no labels, no numbers or borders. Do not copy Warden equipment onto creature.",
+      "source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-4e04fd3a-8867-4f23-a34a-0dd5e64e3e3b.png",
+      "original_source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-9a9aa215-301b-4cc9-8cba-58d6499b3adb.png",
+      "reposition_prompt": "Reposition and uniformly SHRINK each existing full figure in this sprite sheet. Preserve its exact anatomy, coherent limb connections, weapons, face, clothing, drawing style, colors and each pose. Do not redesign it.\nExactly FOUR figures in strict 2x2 row-major idle/attack/hurt/roar.\nATLAS REQUIREMENT: all visible pixels of EACH figure including weapon tips, wings, cloth, limbs, blood drops must fit in CENTRAL60% width AND height of its own rectangular cell. Leave20%wide COMPLETELY TRANSPARENT margins on ALLFOURSIDES of eachcell. Shrink the whole figure rather than trimming any detail. Poses must share body scale. No overlaps, figures crossing grid boundaries, or missing/cropped extremities. Keep all faces left. Transparent RGBA; no gradient background, floor, shadows, aura, text or grid.",
+      "creature_id": "coterie_matron",
+      "sheet": "res://assets/generated/enemy_coterie_matron_combat_sheet.png",
+      "idle": "res://assets/generated/enemy_coterie_matron_ink.tres",
+      "regions": [
+        [
+          154,
+          56,
+          508,
+          407
+        ],
+        [
+          808,
+          72,
+          636,
+          391
+        ],
+        [
+          135,
+          546,
+          603,
+          387
+        ],
+        [
+          815,
+          521,
+          627,
+          421
+        ]
+      ],
+      "cells": [
+        [
+          0,
+          0,
+          735,
+          492
+        ],
+        [
+          735,
+          0,
+          801,
+          492
+        ],
+        [
+          0,
+          492,
+          776,
+          532
+        ],
+        [
+          776,
+          492,
+          760,
+          532
+        ]
+      ],
+      "alpha_threshold": 48,
+      "margin_pixels": 3,
+      "source_sha256": "826e2f4c6fc50b5536e0c41ec32b1c90f8b244079e03498cbde31fcbfdcc525e",
+      "sheet_sha256": "826e2f4c6fc50b5536e0c41ec32b1c90f8b244079e03498cbde31fcbfdcc525e"
+    },
+    {
+      "id": "howling_head",
+      "original": "enemy_howling_head.png",
+      "boss": true,
+      "prompt": "Use case: stylized-concept. Asset: game combat sprite atlas. Reference1 defines enormous screaming flesh head amalgam, smaller screaming faces, many thin crawling limbs, bone halo; reference2 Warden defines visual ink treatment. Redraw reference1 identity as dark graphic hand-inked sprite poses, bold heavy black outer contours, broad angular FLAT shadows, sparse scratches instead of photoreal texture, muted ivory/burgundy/charcoal colors and only tiny candle ember highlights. Preserve distinctive anatomy, equipment, adult grimdark body horror and silhouette. All face LEFT toward heroes. Exactly FOUR separated full-body poses in TWO columns and TWO rows: top-left idle, top-right aggressive attack lunge with weapon/anatomy extended LEFT, bottom-left hurt recoil, bottom-right threatening roar/ritual/casting reveal. Every full figure including all extremities fits entirely inside own cell with12% EMPTY margins all sides, no overlapping poses or grid crossing. Same body scale and common foot baseline within each row; generous gutters. Huge bosses must remain visibly monstrous but fit each cell without cropping. Actual transparent alpha background, no floor, no shadows, no backdrop aura, no text, no labels, no numbers or borders. Do not copy Warden equipment onto creature.",
+      "source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-b2173681-ea59-40e9-9a56-930679af1554.png",
+      "original_source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-f690df74-47fc-4462-96ae-b97ca67d3c50.png",
+      "reposition_prompt": "Reposition and uniformly SHRINK each existing full figure in this sprite sheet. Preserve its exact anatomy, coherent limb connections, weapons, face, clothing, drawing style, colors and each pose. Do not redesign it.\nExactly FOUR figures in strict 2x2 row-major idle/attack/hurt/roar.\nATLAS REQUIREMENT: all visible pixels of EACH figure including weapon tips, wings, cloth, limbs, blood drops must fit in CENTRAL60% width AND height of its own rectangular cell. Leave20%wide COMPLETELY TRANSPARENT margins on ALLFOURSIDES of eachcell. Shrink the whole figure rather than trimming any detail. Poses must share body scale. No overlaps, figures crossing grid boundaries, or missing/cropped extremities. Keep all faces left. Transparent RGBA; no gradient background, floor, shadows, aura, text or grid.",
+      "creature_id": "howling_head",
+      "sheet": "res://assets/generated/enemy_howling_head_combat_sheet.png",
+      "idle": "res://assets/generated/enemy_howling_head_ink.tres",
+      "regions": [
+        [
+          128,
+          70,
+          556,
+          385
+        ],
+        [
+          800,
+          81,
+          636,
+          370
+        ],
+        [
+          131,
+          549,
+          554,
+          367
+        ],
+        [
+          827,
+          535,
+          608,
+          390
+        ]
+      ],
+      "cells": [
+        [
+          0,
+          0,
+          742,
+          495
+        ],
+        [
+          742,
+          0,
+          794,
+          495
+        ],
+        [
+          0,
+          495,
+          756,
+          529
+        ],
+        [
+          756,
+          495,
+          780,
+          529
+        ]
+      ],
+      "alpha_threshold": 48,
+      "margin_pixels": 3,
+      "source_sha256": "d718c97334f723a43b72dc61bf1fc3a5593b778afc39b7846e53f0f4050ce44b",
+      "sheet_sha256": "d718c97334f723a43b72dc61bf1fc3a5593b778afc39b7846e53f0f4050ce44b"
+    },
+    {
+      "id": "moth_metamorph",
+      "original": "enemy_moth_metamorph.png",
+      "boss": false,
+      "prompt": "Use case: stylized-concept. Asset: game combat sprite atlas. Reference1 defines moth humanoid metamorph, ragged wings, proboscis, gaunt hands and cult rags; reference2 Warden defines visual ink treatment. Redraw reference1 identity as dark graphic hand-inked sprite poses, bold heavy black outer contours, broad angular FLAT shadows, sparse scratches instead of photoreal texture, muted ivory/burgundy/charcoal colors and only tiny icy cyan highlights. Preserve distinctive anatomy, equipment, adult grimdark body horror and silhouette. All face LEFT toward heroes. Exactly THREE separated full-body poses in THREE columns ONE row: idle LEFT cell, aggressive attack middle, hurt recoil RIGHT cell. Every full figure including all extremities fits entirely inside own cell with12% EMPTY margins all sides, no overlapping poses or grid crossing. Same body scale and common foot baseline within each row; generous gutters. Huge bosses must remain visibly monstrous but fit each cell without cropping. Actual transparent alpha background, no floor, no shadows, no backdrop aura, no text, no labels, no numbers or borders. Do not copy Warden equipment onto creature.",
+      "source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-8406bf56-14cf-4c28-bb88-f429819d3dba.png",
+      "original_source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-ef239463-16a4-43c0-b7f7-f53463362afb.png",
+      "reposition_prompt": "Reposition and uniformly SHRINK each existing full figure in this sprite sheet. Preserve its exact anatomy, coherent limb connections, weapons, face, clothing, drawing style, colors and each pose. Do not redesign it.\nExactly THREE figures in one horizontal row idle/attack/hurt.\nATLAS REQUIREMENT: all visible pixels of EACH figure including weapon tips, wings, cloth, limbs, blood drops must fit in CENTRAL60% width AND height of its own rectangular cell. Leave20%wide COMPLETELY TRANSPARENT margins on ALLFOURSIDES of eachcell. Shrink the whole figure rather than trimming any detail. Poses must share body scale. No overlaps, figures crossing grid boundaries, or missing/cropped extremities. Keep all faces left. Transparent RGBA; no gradient background, floor, shadows, aura, text or grid.",
+      "creature_id": "moth_metamorph",
+      "sheet": "res://assets/generated/enemy_moth_metamorph_combat_sheet.png",
+      "idle": "res://assets/generated/enemy_moth_metamorph_ink.tres",
+      "regions": [
+        [
+          138,
+          119,
+          469,
+          536
+        ],
+        [
+          715,
+          121,
+          626,
+          535
+        ],
+        [
+          1408,
+          124,
+          502,
+          543
+        ]
+      ],
+      "cells": [
+        [
+          0,
+          0,
+          661,
+          756
+        ],
+        [
+          661,
+          0,
+          713,
+          756
+        ],
+        [
+          1374,
+          0,
+          705,
+          756
+        ]
+      ],
+      "alpha_threshold": 48,
+      "margin_pixels": 3,
+      "source_sha256": "8cf880182e6ddcffbd5790f4d394be024c816a1c272910ad8dbc287a76c0518c",
+      "sheet_sha256": "8cf880182e6ddcffbd5790f4d394be024c816a1c272910ad8dbc287a76c0518c"
+    },
+    {
+      "id": "moth_oleander",
+      "original": "enemy_moth_oleander.png",
+      "boss": true,
+      "prompt": "Use case: stylized-concept. Asset: game combat sprite atlas. Reference1 defines moth knight with sword, ruined wing mantle, insect face and long proboscis; reference2 Warden defines visual ink treatment. Redraw reference1 identity as dark graphic hand-inked sprite poses, bold heavy black outer contours, broad angular FLAT shadows, sparse scratches instead of photoreal texture, muted ivory/burgundy/charcoal colors and only tiny icy cyan highlights. Preserve distinctive anatomy, equipment, adult grimdark body horror and silhouette. All face LEFT toward heroes. Exactly FOUR separated full-body poses in TWO columns and TWO rows: top-left idle, top-right aggressive attack lunge with weapon/anatomy extended LEFT, bottom-left hurt recoil, bottom-right threatening roar/ritual/casting reveal. Every full figure including all extremities fits entirely inside own cell with12% EMPTY margins all sides, no overlapping poses or grid crossing. Same body scale and common foot baseline within each row; generous gutters. Huge bosses must remain visibly monstrous but fit each cell without cropping. Actual transparent alpha background, no floor, no shadows, no backdrop aura, no text, no labels, no numbers or borders. Do not copy Warden equipment onto creature.",
+      "source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-a891df62-6188-4c85-b0d1-763bed68fc31.png",
+      "original_source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-61d33f2b-05b7-4007-94c3-cec1c2ad1aad.png",
+      "reposition_prompt": "Reposition and uniformly SHRINK each existing full figure in this sprite sheet. Preserve its exact anatomy, coherent limb connections, weapons, face, clothing, drawing style, colors and each pose. Do not redesign it.\nExactly FOUR figures in strict 2x2 row-major idle/attack/hurt/roar.\nATLAS REQUIREMENT: all visible pixels of EACH figure including weapon tips, wings, cloth, limbs, blood drops must fit in CENTRAL60% width AND height of its own rectangular cell. Leave20%wide COMPLETELY TRANSPARENT margins on ALLFOURSIDES of eachcell. Shrink the whole figure rather than trimming any detail. Poses must share body scale. No overlaps, figures crossing grid boundaries, or missing/cropped extremities. Keep all faces left. Transparent RGBA; no gradient background, floor, shadows, aura, text or grid.",
+      "creature_id": "moth_oleander",
+      "sheet": "res://assets/generated/enemy_moth_oleander_combat_sheet.png",
+      "idle": "res://assets/generated/enemy_moth_oleander_ink.tres",
+      "regions": [
+        [
+          221,
+          81,
+          469,
+          386
+        ],
+        [
+          777,
+          89,
+          635,
+          363
+        ],
+        [
+          181,
+          573,
+          487,
+          361
+        ],
+        [
+          943,
+          559,
+          448,
+          387
+        ]
+      ],
+      "cells": [
+        [
+          0,
+          0,
+          733,
+          513
+        ],
+        [
+          733,
+          0,
+          803,
+          513
+        ],
+        [
+          0,
+          513,
+          805,
+          511
+        ],
+        [
+          805,
+          513,
+          731,
+          511
+        ]
+      ],
+      "alpha_threshold": 48,
+      "margin_pixels": 3,
+      "source_sha256": "e6fe387339a43c37265feaf6fea85d057b36f0fb1d23d0b413ecd8f1a66124e1",
+      "sheet_sha256": "e6fe387339a43c37265feaf6fea85d057b36f0fb1d23d0b413ecd8f1a66124e1"
+    },
+    {
+      "id": "moth_exuvia",
+      "original": "enemy_moth_exuvia.png",
+      "boss": true,
+      "prompt": "Use case: stylized-concept. Asset: game combat sprite atlas. Reference1 defines moth queen with huge ragged eye-spotted wings, crowned humanoid torso on segmented grotesque insect abdomen; reference2 Warden defines visual ink treatment. Redraw reference1 identity as dark graphic hand-inked sprite poses, bold heavy black outer contours, broad angular FLAT shadows, sparse scratches instead of photoreal texture, muted ivory/burgundy/charcoal colors and only tiny icy cyan highlights. Preserve distinctive anatomy, equipment, adult grimdark body horror and silhouette. All face LEFT toward heroes. Exactly FOUR separated full-body poses in TWO columns and TWO rows: top-left idle, top-right aggressive attack lunge with weapon/anatomy extended LEFT, bottom-left hurt recoil, bottom-right threatening roar/ritual/casting reveal. Every full figure including all extremities fits entirely inside own cell with12% EMPTY margins all sides, no overlapping poses or grid crossing. Same body scale and common foot baseline within each row; generous gutters. Huge bosses must remain visibly monstrous but fit each cell without cropping. Actual transparent alpha background, no floor, no shadows, no backdrop aura, no text, no labels, no numbers or borders. Do not copy Warden equipment onto creature.",
+      "source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-cb863c0f-ea90-454d-871e-06edebaabd71.png",
+      "original_source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-477dd819-482e-4ecf-b00e-f048ec1ee169.png",
+      "reposition_prompt": "Reposition and uniformly SHRINK each existing full figure in this sprite sheet. Preserve its exact anatomy, coherent limb connections, weapons, face, clothing, drawing style, colors and each pose. Do not redesign it.\nExactly FOUR figures in strict 2x2 row-major idle/attack/hurt/roar.\nATLAS REQUIREMENT: all visible pixels of EACH figure including weapon tips, wings, cloth, limbs, blood drops must fit in CENTRAL60% width AND height of its own rectangular cell. Leave20%wide COMPLETELY TRANSPARENT margins on ALLFOURSIDES of eachcell. Shrink the whole figure rather than trimming any detail. Poses must share body scale. No overlaps, figures crossing grid boundaries, or missing/cropped extremities. Keep all faces left. Transparent RGBA; no gradient background, floor, shadows, aura, text or grid.",
+      "creature_id": "moth_exuvia",
+      "sheet": "res://assets/generated/enemy_moth_exuvia_combat_sheet.png",
+      "idle": "res://assets/generated/enemy_moth_exuvia_ink.tres",
+      "regions": [
+        [
+          124,
+          108,
+          451,
+          445
+        ],
+        [
+          663,
+          121,
+          551,
+          431
+        ],
+        [
+          152,
+          659,
+          436,
+          412
+        ],
+        [
+          722,
+          648,
+          486,
+          420
+        ]
+      ],
+      "cells": [
+        [
+          0,
+          0,
+          619,
+          600
+        ],
+        [
+          619,
+          0,
+          704,
+          600
+        ],
+        [
+          0,
+          600,
+          655,
+          589
+        ],
+        [
+          655,
+          600,
+          668,
+          589
+        ]
+      ],
+      "alpha_threshold": 48,
+      "margin_pixels": 3,
+      "source_sha256": "728f7de6a3e0420ad914edd14fdf99ed65a9ed14ae436bc2fae9e7c81fcb3066",
+      "sheet_sha256": "728f7de6a3e0420ad914edd14fdf99ed65a9ed14ae436bc2fae9e7c81fcb3066"
+    },
+    {
+      "id": "villager",
+      "original": "enemy_hollow_villager.png",
+      "boss": false,
+      "prompt": "Use case: stylized-concept. Asset: game combat sprite atlas. Reference1 defines hollow undead villager with pitchfork; reference2 Warden defines visual ink treatment. Redraw reference1 identity as dark graphic hand-inked sprite poses, bold heavy black outer contours, broad angular FLAT shadows, sparse scratches instead of photoreal texture, muted ivory/burgundy/charcoal colors and only tiny cold blue highlights. Preserve distinctive anatomy, equipment, adult grimdark body horror and silhouette. All face LEFT toward heroes. Exactly THREE separated full-body poses in THREE columns ONE row: idle LEFT cell, aggressive attack middle, hurt recoil RIGHT cell. Every full figure including all extremities fits entirely inside own cell with12% EMPTY margins all sides, no overlapping poses or grid crossing. Same body scale and common foot baseline within each row; generous gutters. Huge bosses must remain visibly monstrous but fit each cell without cropping. Actual transparent alpha background, no floor, no shadows, no backdrop aura, no text, no labels, no numbers or borders. Do not copy Warden equipment onto creature.",
+      "source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-109c65ce-aa72-498e-ba70-e4cf7ebbe4cc.png",
+      "original_source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-8b29c1f3-885f-4470-83ef-a330dc2b1a94.png",
+      "reposition_prompt": "Reposition and uniformly SHRINK each existing full figure in this sprite sheet. Preserve its exact anatomy, coherent limb connections, weapons, face, clothing, drawing style, colors and each pose. Do not redesign it.\nExactly THREE figures in one horizontal row idle/attack/hurt.\nATLAS REQUIREMENT: all visible pixels of EACH figure including weapon tips, wings, cloth, limbs, blood drops must fit in CENTRAL60% width AND height of its own rectangular cell. Leave20%wide COMPLETELY TRANSPARENT margins on ALLFOURSIDES of eachcell. Shrink the whole figure rather than trimming any detail. Poses must share body scale. No overlaps, figures crossing grid boundaries, or missing/cropped extremities. Keep all faces left. Transparent RGBA; no gradient background, floor, shadows, aura, text or grid.",
+      "creature_id": "hollow_villager",
+      "sheet": "res://assets/generated/enemy_hollow_villager_combat_sheet.png",
+      "idle": "res://assets/generated/enemy_hollow_villager_ink.tres",
+      "regions": [
+        [
+          129,
+          109,
+          473,
+          534
+        ],
+        [
+          711,
+          161,
+          723,
+          470
+        ],
+        [
+          1562,
+          97,
+          480,
+          540
+        ]
+      ],
+      "cells": [
+        [
+          0,
+          0,
+          656,
+          724
+        ],
+        [
+          656,
+          0,
+          842,
+          724
+        ],
+        [
+          1498,
+          0,
+          674,
+          724
+        ]
+      ],
+      "alpha_threshold": 48,
+      "margin_pixels": 3,
+      "source_sha256": "6b0060c37a5c4194661c0d8665fd3e4052a8ad6212f294b6a21ad3f99cbdd326",
+      "sheet_sha256": "6b0060c37a5c4194661c0d8665fd3e4052a8ad6212f294b6a21ad3f99cbdd326"
+    },
+    {
+      "id": "skeleton",
+      "original": "enemy_bone_rabble.png",
+      "boss": false,
+      "prompt": "Use case: stylized-concept. Asset: game combat sprite atlas. Reference1 defines skeleton warrior with rusted sword and shield; reference2 Warden defines visual ink treatment. Redraw reference1 identity as dark graphic hand-inked sprite poses, bold heavy black outer contours, broad angular FLAT shadows, sparse scratches instead of photoreal texture, muted ivory/burgundy/charcoal colors and only tiny cold blue highlights. Preserve distinctive anatomy, equipment, adult grimdark body horror and silhouette. All face LEFT toward heroes. Exactly THREE separated full-body poses in THREE columns ONE row: idle LEFT cell, aggressive attack middle, hurt recoil RIGHT cell. Every full figure including all extremities fits entirely inside own cell with12% EMPTY margins all sides, no overlapping poses or grid crossing. Same body scale and common foot baseline within each row; generous gutters. Huge bosses must remain visibly monstrous but fit each cell without cropping. Actual transparent alpha background, no floor, no shadows, no backdrop aura, no text, no labels, no numbers or borders. Do not copy Warden equipment onto creature.",
+      "source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-3d2b0912-9916-465b-b21a-0ef2ba3c6694.png",
+      "original_source": "C:\\Users\\ronal\\.codex\\generated_images\\01a12136-caa5-7560-9826-b21b2b37350f\\exec-da0bf656-5a71-4a18-97ec-401f996f3e3b.png",
+      "reposition_prompt": "Reposition and uniformly SHRINK each existing full figure in this sprite sheet. Preserve its exact anatomy, coherent limb connections, weapons, face, clothing, drawing style, colors and each pose. Do not redesign it.\nExactly THREE figures in one horizontal row idle/attack/hurt.\nATLAS REQUIREMENT: all visible pixels of EACH figure including weapon tips, wings, cloth, limbs, blood drops must fit in CENTRAL60% width AND height of its own rectangular cell. Leave20%wide COMPLETELY TRANSPARENT margins on ALLFOURSIDES of eachcell. Shrink the whole figure rather than trimming any detail. Poses must share body scale. No overlaps, figures crossing grid boundaries, or missing/cropped extremities. Keep all faces left. Transparent RGBA; no gradient background, floor, shadows, aura, text or grid.",
+      "creature_id": "bone_rabble",
+      "sheet": "res://assets/generated/enemy_bone_rabble_combat_sheet.png",
+      "idle": "res://assets/generated/enemy_bone_rabble_ink.tres",
+      "regions": [
+        [
+          126,
+          119,
+          471,
+          481
+        ],
+        [
+          732,
+          111,
+          669,
+          486
+        ],
+        [
+          1560,
+          154,
+          431,
+          450
+        ]
+      ],
+      "cells": [
+        [
+          0,
+          0,
+          664,
+          724
+        ],
+        [
+          664,
+          0,
+          816,
+          724
+        ],
+        [
+          1480,
+          0,
+          692,
+          724
+        ]
+      ],
+      "alpha_threshold": 48,
+      "margin_pixels": 3,
+      "source_sha256": "f1f00a51ddfac3dd1a4c9afb999f1cc812f6c852e2c8722287b3c04ccd10f016",
+      "sheet_sha256": "f1f00a51ddfac3dd1a4c9afb999f1cc812f6c852e2c8722287b3c04ccd10f016"
+    }
+  ]
+}

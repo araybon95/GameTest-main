@@ -32,7 +32,11 @@ func run() -> void:
 	for enemy in battle.enemies:
 		assert(enemy["hp"] == 27 and enemy["attack"] == 4)
 		assert(enemy["moves"].size() == 3)
-		assert(enemy["art"].ends_with("enemy_moth_metamorph.png"))
+		assert(enemy["creature"] == "moth_metamorph" and enemy["art"] == State.creature("moth_metamorph")["art"])
+		var idle: AtlasTexture = load(str(enemy["art"]))
+		assert(idle != null and idle.get_meta("pose_id") == "moth_metamorph")
+		assert(idle.filter_clip and idle.region.has_area() and idle.atlas != null)
+		assert(idle.atlas.resource_path == preload("res://scripts/ink_sprite_regions.gd").SHEETS["moth_metamorph"])
 	State.add_item("healing_scroll", 2)
 	battle.hero_state["warden"]["hp"] = 5
 	var enemy_hp: int = battle.enemy_hp

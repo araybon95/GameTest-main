@@ -92,7 +92,9 @@ func run() -> void:
 	assert(State.equip_item("warden", "cursed_physician_seal"))
 	var statuses: Dictionary = {}
 	assert(State.try_hero_status("warden", statuses, "poison", 1.0, 100.0))
-	assert(statuses["poison"]["damage"] == 3)
+	assert(State.equipment_bonus("warden", "curse_dot") == 1)
+	assert(statuses["poison"]["base_damage"] == 2 and statuses["poison"]["damage"] == 2, "Application stores natural damage; the current equipment curse is charged at tick time")
+	assert(statuses["poison"]["stacks"] == 1 and statuses["poison"]["turns"] == 2)
 	State.add_item("bandage")
 	Rules.apply_status(State.run_heroes["warden"]["statuses"], "bleed")
 	Rules.apply_status(State.run_heroes["warden"]["statuses"], "poison")

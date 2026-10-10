@@ -85,10 +85,12 @@ func refresh() -> void:
    book_view.add_child(portrait)
   else: label("?",Rect2(710,405,150,170),120)
   label(str(creature["name"]) if known else "Unrecorded creature",Rect2(1195,215,595,90),32)
-  label("LORE",Rect2(1195,315,595,35),22)
+  var category := label("CLASS: " + str(creature.get("creature_class","Corrupted")) if known else "CLASS: UNRECORDED",Rect2(1195,305,595,32),20)
+  category.name = "CreatureClass"
+  label("LORE",Rect2(1195,347,595,35),22)
   var lore := RichTextLabel.new()
-  lore.position = Vector2(1195,365)
-  lore.size = Vector2(595,230)
+  lore.position = Vector2(1195,390)
+  lore.size = Vector2(595,210)
   lore.text = str(creature.get("lore","The archive awaits an account of this creature.")) if known else "These pages remain blank. Face this creature in the dungeon to record its story."
   lore.add_theme_color_override("default_color",Color("#332721"))
   lore.add_theme_color_override("font_shadow_color",Color.TRANSPARENT)

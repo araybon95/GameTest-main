@@ -68,10 +68,10 @@ func party_bar(return_action: Callable, return_text: String) -> void:
 	for index in range(State.party.size()):
 		var hero_id: String = State.party[index]
 		var pos := Vector2(500 + index * 270, 835)
-		panel(Rect2(pos, Vector2(245, 205)))
+		panel(Rect2(pos, Vector2(245, 215)))
 		picture(str(State.hero(hero_id)["art"]), Rect2(pos + Vector2(5, 5), Vector2(235, 115)))
 		var state: Dictionary = State.run_heroes.get(hero_id, {})
 		label_at(str(State.hero(hero_id)["name"]).to_upper(), pos + Vector2(15, 123), 220, 17 if hero_id == "crusader" else 22)
-		label_at("%d / %d HP\n%d Stress%s" % [int(state.get("hp", State.hero_max_hp(hero_id))), State.hero_max_hp(hero_id), int(state.get("stress", 0)), " · Slain" if state.get("dead", false) else ""], pos + Vector2(15, 158), 220, 17)
+		label_at("%d / %d HP\n%d Stress%s" % [int(state.get("hp", State.hero_max_hp(hero_id))), State.hero_max_hp(hero_id), int(state.get("stress", 0)), " · Slain" if state.get("dead", false) else ""], pos + Vector2(15, 154), 220, 17)
 	button_at(return_text, Rect2(1450, 930, 400, 85), return_action)
 	label_at("PARTY ITEMS  %d" % State.inventory.size(), Vector2(1450, 855), 400, 23)

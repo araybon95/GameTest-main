@@ -128,10 +128,11 @@ static func roll_rarity(rng: RandomNumberGenerator) -> String:
 
 static func roll_scroll(rng: RandomNumberGenerator) -> String:
 	var rarity: String = roll_rarity(rng)
+	var pool: Array[String] = []
 	for item_id in SCROLLS:
 		if SCROLLS[item_id]["rarity"] == rarity:
-			return str(item_id)
-	return "fire_bolt_scroll"
+			pool.append(str(item_id))
+	return "fire_bolt_scroll" if pool.is_empty() else pool[rng.randi_range(0, pool.size() - 1)]
 
 static func roll_equipment(rng: RandomNumberGenerator, active_party: Array, guaranteed_legendary: bool = false) -> String:
 	var rarity: String = "legendary" if guaranteed_legendary else roll_rarity(rng)

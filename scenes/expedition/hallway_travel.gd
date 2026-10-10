@@ -3,6 +3,8 @@ extends Control
 signal finished
 const State = preload("res://scripts/game_data.gd")
 const Regions = preload("res://scripts/ink_sprite_regions.gd")
+const Scenery = preload("res://scripts/dungeon_scenery.gd")
+const TravelAudio = preload("res://scripts/travel_audio.gd")
 var duration: float = 1.8
 var elapsed: float = 0.0
 var complete: bool = false
@@ -16,6 +18,15 @@ var arrival_label: Label
 var arrived: bool = false
 var arrival_duration: float = 0.6
 var travel_stage: Control
+var atmosphere: Control
+var scene_theme: String = "bandit"
+var footsteps: AudioStreamPlayer
+var footstep_clock: float = 0.0
+var footsteps_played: int = 0
+var transition_shade: ColorRect
+var encounter_end_x: float = 1440.0
+var encounter_start_x: float = 1750.0
+var encounter_shadow: Node2D
 
 func _ready() -> void:
  name = "HallwayTravel"
@@ -35,17 +46,29 @@ func _ready() -> void:
  add_child(stage)
  scenery = TextureRect.new()
  var path: String = State.floor_background("combat")
- var stages: Dictionary = {"bandit_combat.png":"bandit_battle_stage.png", "keep_hall.png":"keep_battle_stage.png", "beast_sanctuary.png":"beast_battle_stage.png", "apothecary_interior.png":"apothecary_battle_stage.png"}
- if stages.has(path.get_file()): path = "res://assets/generated/" + stages[path.get_file()]
+ path = Scenery.stage_path(path)
+ scene_theme = Scenery.theme_for(State.selected_expedition,State.floor_index)
  scenery.texture = load(path)
  scenery.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
  scenery.size = Vector2(2400,1000)
  scenery.position = Vector2(-100,-170)
  scenery.modulate = Color(0.72,0.72,0.77)
  stage.add_child(scenery)
+ atmosphere = Scenery.new()
+ atmosphere.name = "ThemedForeground"
+ atmosphere.scene_theme = scene_theme
+ atmosphere.ground_y = 610.0
+ atmosphere.size = stage.size
+ stage.add_child(atmosphere)
+ footsteps = AudioStreamPlayer.new()
+ footsteps.name = "Footsteps"
+ footsteps.stream = TravelAudio.footstep(scene_theme)
+ footsteps.volume_db = -21.0
+ footsteps.bus = "Effects" if AudioServer.get_bus_index("Effects") >= 0 else "Master"
+ add_child(footsteps)
  for id in State.HEROES:
   var path_walk: String = "res://assets/generated/hero_%s_walk.png" % id
-  if not ResourceLoader.exists(path_walk): continue
+  if not ResourceLoader.exists(path_walk) or not Regions.WALK.has(id): continue
   var sheet: Texture2D = load(path_walk)
   var frames: Array[Texture2D] = []
   for region in Regions.WALK[id]:
@@ -91,18 +114,35 @@ func _ready() -> void:
  text_at(State.selected_expedition.get("name","Expedition") + " · " + State.floor_title(),Vector2(70,30),32)
  arrival_label = text_at("Through the passage…",Vector2(70,835),28)
  build_destination()
+ transition_shade = ColorRect.new()
+ transition_shade.name = "PassageFade"
+ transition_shade.color = Color.BLACK
+ transition_shade.size = Vector2(1920,1080)
+ transition_shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+ transition_shade.modulate.a = 1.0
+ add_child(transition_shade)
  progress = ProgressBar.new()
  progress.position = Vector2(70,980)
  progress.size = Vector2(1450,10)
  progress.show_percentage = false
+ var rail := StyleBoxFlat.new()
+ rail.bg_color = Color("#1A171A")
+ rail.border_color = Color("#6C5A42")
+ rail.set_border_width_all(1)
+ progress.add_theme_stylebox_override("background",rail)
+ var fill := StyleBoxFlat.new()
+ fill.bg_color = Color("#A58B5C")
+ progress.add_theme_stylebox_override("fill",fill)
  add_child(progress)
  var skip := Button.new()
  skip.name = "SkipTravel"
  skip.text = "SKIP TRAVEL"
  skip.position = Vector2(1590,930)
  skip.size = Vector2(260,70)
+ skip.add_theme_font_size_override("font_size",22)
  skip.pressed.connect(skip_travel)
  add_child(skip)
+ Scenery.decorate(self)
 
 func text_at(value: String, where: Vector2, font_size: int) -> Label:
  var label := Label.new()
@@ -119,12 +159,26 @@ func _process(delta: float) -> void:
  elapsed += delta
  scenery.position.x = -100 - minf(elapsed/duration,1.0)*260
  var moving: bool = elapsed < duration
- if encounter != null: encounter.position.x = 1750.0 - minf(elapsed/duration,1.0)*310.0
+ atmosphere.scrolling = minf(elapsed,duration)*55.0
+ footstep_clock += delta
+ if moving and not walkers.is_empty() and footstep_clock >= 0.31:
+  footstep_clock = 0.0
+  footsteps.pitch_scale = 0.95 if footsteps_played%2 == 0 else 1.06
+  footsteps.play()
+  footsteps_played += 1
+ elif not moving:
+  footsteps.stop()
+ transition_shade.modulate.a = maxf(1.0-elapsed/0.22,0.0)
+ if arrived and arrival_duration < 5.0:
+  transition_shade.modulate.a = clampf((elapsed-duration-arrival_duration+0.16)/0.16,0.0,1.0)
+ if encounter != null:
+  encounter.position.x = lerpf(encounter_start_x,encounter_end_x,minf(elapsed/duration,1.0))
+  encounter_shadow.position.x = encounter.position.x+encounter.size.x*.5
  for index in range(walkers.size()):
   var picture: TextureRect = walkers[index]
   var id: String = picture.get_meta("walker")
   var stride: float = minf(elapsed,duration)*10.0 + index*1.7
-  var texture: Texture2D = walk_frames[id][int(elapsed*7.0 + index*.5)%4] if moving else load(str(State.hero(id)["art"]))
+  var texture: Texture2D = walk_frames[id][int(elapsed*7.0 + index*.5)%4] if moving and walk_frames.has(id) else load(str(State.hero(id)["art"]))
   var height: float = 330.0
   var width: float = height*texture.get_width()/float(maxi(1,texture.get_height()))
   var anchor: Vector2 = bases[index] + Vector2(float(picture.get_meta("base_width"))*0.5,330.0)
@@ -152,7 +206,7 @@ func build_destination() -> void:
  var cleared: bool = room.get("cleared",false)
  var corridor: bool = room.get("event_layout","") == "corridor"
  var title: String = "A passage opens into the next room."
- var art: String = "res://assets/ui/encounter_door.svg"
+ var art: String = Scenery.threshold_path(scene_theme)
  if not cleared:
   if kind in ["battle","boss"] or room.get("corridor_encounter","") == "roamer":
    var enemies: Array = room.get("enemies",[])
@@ -176,14 +230,29 @@ func build_destination() -> void:
    title = "A sheltered fire offers respite."
   elif kind == "stairs": title = "The descent waits beyond this door."
  arrival_label.set_meta("arrival_text",title)
+ var contact = preload("res://scenes/combat/ground_shadow.gd").new()
+ encounter_shadow = contact
+ contact.position = Vector2(1605,610)
+ travel_stage.add_child(contact)
  encounter = TextureRect.new()
  encounter.name = "DestinationProp"
- encounter.texture = load(art)
+ encounter.texture = Scenery.grounded_texture(art)
  encounter.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
- encounter.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+ encounter.stretch_mode = TextureRect.STRETCH_SCALE
  encounter.mouse_filter = Control.MOUSE_FILTER_IGNORE
- encounter.size = Vector2(330,350)
- encounter.position = Vector2(1750,260)
+ var is_threshold: bool = art == Scenery.threshold_path(scene_theme)
+ # Architecture needs a human-sized opening; treasure and creature arrivals use smaller footprints.
+ var max_width: float = 550.0 if is_threshold else (480.0 if kind == "boss" and not cleared else 330.0)
+ var max_height: float = 500.0 if is_threshold else (470.0 if kind == "boss" and not cleared else 350.0)
+ var height: float = minf(max_height,max_width*encounter.texture.get_height()/float(encounter.texture.get_width()))
+ encounter.size = Vector2(height*encounter.texture.get_width()/float(encounter.texture.get_height()),height)
+ if is_threshold:
+  encounter_end_x = 1280.0
+  encounter_start_x = 1750.0
+ elif kind == "boss" and not cleared:
+  encounter_end_x = 1390.0
+  encounter_start_x = 1750.0
+ encounter.position = Vector2(encounter_start_x,610-height)
  travel_stage.add_child(encounter)
 
 func _draw() -> void:
@@ -205,7 +274,11 @@ func draw_fog_patch(center: Vector2, radius: Vector2, color: Color) -> void:
 func finish() -> void:
  if complete: return
  complete = true
+ if footsteps != null: footsteps.stop()
  finished.emit()
  queue_free()
+
+func _exit_tree() -> void:
+ if footsteps != null: footsteps.stop()
 
 

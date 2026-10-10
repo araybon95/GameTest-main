@@ -95,6 +95,7 @@ func _ready() -> void:
 	presentation = preload("res://scenes/combat/combat_presentation.gd").new()
 	add_child(presentation)
 	_start_battle()
+	_reveal_boss_intro()
 
 
 func _apply_expedition() -> void:
@@ -189,6 +190,10 @@ func _advance_boss_phase(index: int) -> bool:
 	if index < enemy_views.size():
 		enemy_views[index].get_node("EnemyArt").texture = _load_texture(str(replacement["art"]))
 	_load_enemy(index)
+	if index < enemy_views.size():
+		_configure_enemy_stage(index)
+		_plant_combatant(enemy_views[index],enemy_art,_enemy_stage_height(index))
+		_reveal_boss(index)
 	_add_log("THE COTERIE — Stage %d / %d: %s steps forward. The hymn continues." % [next + 1, phases.size(), replacement["name"]])
 	return true
 
@@ -433,23 +438,23 @@ func _attack_with_equipment(hero_id: String, card: Dictionary, ignore_block: boo
 		return
 	if card.get("skill_id", "") == "wd_bash" and int(enemies[target]["hp"]) > 0: move_enemy(target, mini(_living_enemies().size(),enemy_position(target)+1))
 	if hero_id == "occultist" and int(enemies[target]["hp"]) > 0 and int(enemies[target].get("phase_index", 0)) == phase:
-		Rules.apply_status(enemies[target]["statuses"], "poison")
+		_apply_enemy_status(target,"poison")
 		_add_log("Occult covenant: the wound carries Poison.")
 	if card.get("status", "") == "bleed" and int(enemies[target].get("phase_index", 0)) == phase and int(enemies[target]["hp"]) > 0:
-		Rules.apply_status(enemies[target]["statuses"], "bleed")
+		_apply_enemy_status(target,"bleed")
 		_add_log("%s's barbed armor tears %s: Bleed." % [_name_of(hero_id), enemies[target]["name"]])
 	var drained: int = int(floor(actual * GameState.equipment_bonus(hero_id, "life_drain") / 100.0))
 	if drained > 0:
 		_heal_hero(hero_id, drained)
 	if int(enemies[target].get("phase_index", 0)) == phase and int(enemies[target]["hp"]) > 0 and randf() * 100 < GameState.equipment_bonus(hero_id, "poison_chance"):
-		Rules.apply_status(enemies[target]["statuses"], "poison")
+		_apply_enemy_status(target,"poison")
 		_add_log("%s's weapon poisons %s." % [_name_of(hero_id), enemies[target]["name"]])
 
 	if int(enemies[target].get("phase_index", 0)) == phase and int(enemies[target]["hp"]) > 0:
 		for effect in ["poison", "chill"]:
 			var chance: int = mini(50, GameState.equipment_bonus(hero_id, "unique_" + effect))
 			if chance > 0 and randf() * 100 < chance:
-				Rules.apply_status(enemies[target]["statuses"], effect, 1.0, true)
+				_apply_enemy_status(target,effect,1.0,true)
 				_add_log("%s inflicts %s on %s." % [_name_of(hero_id), effect.capitalize(), enemies[target]["name"]])
 
 # -------------------- ENEMY --------------------
@@ -527,7 +532,10 @@ func _enemy_action() -> void:
 				_load_enemy(index)
 			continue
 		if enemies[index]["creature"] == "undying_lord" and enemies.any(func(e): return e.get("support", false) and int(e["hp"]) > 0):
+			var before_tribute: int = enemy_hp
 			enemy_hp = mini(enemy_max_hp, enemy_hp + 8)
+			if presentation != null and enemy_hp > before_tribute:
+				presentation.feedback(enemy_art,"heal",enemy_hp-before_tribute)
 			_add_log("Court tribute restores 8 HP. Kill the support to stop it.")
 		if enemies[index]["creature"] == "moth_exuvia" and round_number % 3 == 0:
 			for slot in range(1, enemies.size()):
@@ -542,17 +550,31 @@ func _enemy_action() -> void:
 		elif move.get("effect", "") == "mark_hero":
 			var target: String = _enemy_target()
 			if not target.is_empty():
+				if presentation != null:
+					presentation.strike(enemy_art,hero_portraits[target],"spell",str(move["name"]),false)
+					presentation.feedback(hero_portraits[target],"status",0,"marked")
 				hero_state[target]["enemy_mark"] = 2
 				_speech(target,"They have chosen me!",Color("#F1AC86"))
 				_add_log("%s marks %s: allied strikes gain +2 damage for two turns." % [enemy_name,_name_of(target)])
 		elif move.get("effect", "") == "lament":
+			var standing: Array = _standing_heroes()
+			if presentation != null and not standing.is_empty():
+				presentation.strike(enemy_art,hero_portraits[standing[0]],"spell",str(move["name"]),false)
+				_play_attack_sound("spell")
 			for hero_id in _standing_heroes():
 				_gain_stress(hero_id, int(move.get("stress", 4)))
+				if presentation != null:
+					presentation.popup(hero_portraits[hero_id],"STRESS +%d" % int(move.get("stress",4)),Color("#D5ACDF"))
 				if move.has("status"):
 					_apply_hero_status(hero_id, str(move["status"]))
 			_add_log("%s intones %s: the party gains %d Stress." % [enemy_name, move["name"], int(move.get("stress", 4))])
 		elif move.get("effect", "") == "remake":
+			var before_remake: int = enemy_hp
 			enemy_hp = mini(enemy_max_hp, enemy_hp + int(move.get("heal", 12)))
+			if presentation != null:
+				presentation.strike(enemy_art,enemy_art,"heal",str(move["name"]),false)
+				presentation.feedback(enemy_art,"heal",enemy_hp-before_remake)
+			_play_attack_sound("spell")
 			_add_log("%s uses %s: restores %d HP." % [enemy_name, move["name"], int(move.get("heal", 12))])
 		elif move.get("effect", "") == "ally_guard":
 			var living: Array[int] = _living_enemies()
@@ -562,6 +584,10 @@ func _enemy_action() -> void:
 			enemies[ally]["block"] = int(enemies[ally]["block"]) + amount
 			if ally == index:
 				enemy_block = int(enemies[ally]["block"])
+			if presentation != null:
+				var ally_art: TextureRect = enemy_views[ally].get_node("EnemyArt")
+				presentation.strike(enemy_art,ally_art,"block",str(move["name"]),false)
+				presentation.popup(ally_art,"+%d BLOCK" % amount,Color("#BEDFFF"))
 			_add_log("%s covers %s: +%d Block." % [enemy_name, enemies[ally]["name"], amount])
 		else:
 			var damage: int = maxi(0, int(round(_enemy_attack_power() * float(move.get("scale", 1.0)))))
@@ -570,11 +596,12 @@ func _enemy_action() -> void:
 				var target: String = _enemy_target()
 				if target == "":
 					break
-				if enemies[index].get("surprised", false) and float(enemies[index].get("accuracy", 100)) < 100.0 and randf() * 100.0 >= float(enemies[index].get("accuracy", 100)):
-					_add_log("%s stumbles: %s misses %s." % [enemy_name, move["name"], _name_of(target)])
-					continue
 				if presentation != null:
 					presentation.strike(enemy_views[index].get_node("EnemyArt"), hero_portraits[target], "spell" if move.get("status", "") in ["burn", "poison", "chill"] else "bow" if enemies[index]["creature"] in ["gallows_scout", "keep_crossbow"] else "sword", str(move["name"]), false)
+				if enemies[index].get("surprised", false) and float(enemies[index].get("accuracy", 100)) < 100.0 and randf() * 100.0 >= float(enemies[index].get("accuracy", 100)):
+					if presentation != null: presentation.feedback(hero_portraits[target],"miss")
+					_add_log("%s stumbles: %s misses %s." % [enemy_name, move["name"], _name_of(target)])
+					continue
 				var actual: int = _apply_damage(target, damage + (2 if int(hero_state[target].get("enemy_mark",0)) > 0 else 0))
 				_add_log("%s uses %s on %s: %d damage." % [enemy_name, move["name"], _name_of(target), damage])
 				if actual > 0 and not hero_state[target]["dead"] and move.has("status"):
@@ -622,9 +649,16 @@ func _enemy_intent_text() -> String:
 
 func _apply_hero_status(hero_id: String, status: String, potency: float = 1.0) -> void:
 	if GameState.try_hero_status(hero_id, hero_state[hero_id]["statuses"], status, potency, -1.0, 15 if hero_state[hero_id].get("camp_ward",false) else 0):
+		if presentation != null: presentation.feedback(hero_portraits[hero_id],"status",0,status)
 		_add_log("%s suffers %s (2 rounds)." % [_name_of(hero_id), status.capitalize()])
 	else:
+		if presentation != null: presentation.feedback(hero_portraits[hero_id],"resist",0,status)
 		_add_log("%s resists %s." % [_name_of(hero_id), status.capitalize()])
+
+func _apply_enemy_status(index: int, status: String, potency: float = 1.0, stacking: bool = false) -> void:
+	Rules.apply_status(enemies[index]["statuses"],status,potency,stacking)
+	if presentation != null:
+		presentation.feedback(enemy_views[index].get_node("EnemyArt"),"status",0,status)
 
 func _advance_chill(statuses: Dictionary) -> void:
 	if statuses.has("chill"):
@@ -640,6 +674,7 @@ func _tick_enemy_statuses(index: int) -> void:
 			continue
 		var effect: Dictionary = statuses[status_id]
 		enemy_hp = maxi(0, enemy_hp - int(effect["damage"]))
+		if presentation != null: presentation.feedback(enemy_art,"status_tick",int(effect["damage"]),status_id)
 		_hurt_portrait(enemy_art)
 		_add_log("%s takes %d %s damage." % [enemy_name, int(effect["damage"]), status_id])
 		effect["turns"] = int(effect["turns"]) - 1
@@ -653,7 +688,10 @@ func _tick_hero_statuses(hero_id: String) -> void:
 		if status_id == "chill" or not _is_standing(hero_id):
 			continue
 		var effect: Dictionary = statuses[status_id]
-		var damage: int = int(effect["damage"])
+		# Recompute from base damage so changing equipment also changes its curse.
+		# This strips application-time curse bonuses from existing saved effects.
+		var damage: int = int(effect["base_damage"]) * int(effect.get("stacks",1)) if effect.has("base_damage") else int(effect["damage"])
+		damage += GameState.equipment_bonus(hero_id,"curse_dot")
 		if status_id == "poison":
 			damage = maxi(0, int(ceil(damage * (1.0 - minf(100.0, GameState.equipment_bonus(hero_id, "poison_resist")) / 100.0))))
 		_apply_damage(hero_id, damage, true, status_id.capitalize())
@@ -712,7 +750,8 @@ func _apply_damage(hero_id: String, amount: int, bypass_block: bool = false, cau
 		_add_log("%s blocks the blow." % _name_of(hero_id))
 		_flash(hero_buttons[hero_id], Color("#C9C4B0"))
 		return 0
-	if presentation != null: presentation.popup(hero_buttons[hero_id],str(damage),Color("#F8A088"))
+	if presentation != null:
+		presentation.feedback(hero_buttons[hero_id],"status_tick" if cause.to_lower() in ["burn","bleed","poison"] else "damage",damage,cause.to_lower())
 	_hurt_portrait(hero_portraits[hero_id])
 	if selected_hero == hero_id:
 		_hurt_portrait(selected_portrait)
@@ -744,7 +783,7 @@ func _heal_hero(hero_id: String, amount: int) -> void:
 	state["hp"] = mini(int(state["max_hp"]), before + amount)
 	GameState.add_deed(hero_id, "healing", int(state["hp"]) - before)
 	if presentation != null and int(state["hp"]) > before:
-		presentation.popup(hero_buttons[hero_id], "+%d" % (int(state["hp"])-before),Color("#B5E3A3"))
+		presentation.feedback(hero_buttons[hero_id],"heal",int(state["hp"])-before)
 	if int(state["hp"]) > 0:
 		state["deaths_door"] = false
 	_add_log("%s heals %d HP." % [_name_of(hero_id), int(state["hp"]) - before])
@@ -1040,7 +1079,7 @@ func _use_scroll(item_id: String) -> void:
 	var previous_hp: int = int(enemies[target_index]["hp"])
 	_deal_enemy_damage(Rules.damage_after_chill(int(item["damage"]), hero_state[selected_hero]["statuses"]), item["effect"] == "pierce")
 	if int(enemies[target_index].get("phase_index", 0)) == phase and item_id in ["fire_bolt_scroll", "sunfire_scroll"] and int(enemies[target_index]["hp"]) > 0 and int(enemies[target_index]["hp"]) < previous_hp:
-		Rules.apply_status(enemies[target_index]["statuses"], "burn")
+		_apply_enemy_status(target_index,"burn")
 		_add_log("%s burns for 2 turns." % enemies[target_index]["name"])
 	_check_battle_over()
 	_refresh_all()
@@ -1465,8 +1504,13 @@ func _build_enemy_cards() -> void:
 	for index in range(enemy_views.size()):
 		StatusVisual.new().attach_to(enemy_views[index].get_node("EnemyArt"))
 		enemy_views[index].pressed.connect(_select_enemy.bind(index))
+	for index in range(enemy_views.size()):
+		_configure_enemy_stage(index)
+		_position_enemy_stage(index)
 	_load_enemy(selected_enemy_index)
 	var target_hint := _make_label("Select an enemy to target abilities and scrolls", 18, Color(IVORY), true)
+	target_hint.name = "TargetHint"
+	target_hint.visible = not enemies.any(func(entry): return entry.get("boss",false))
 	_place(target_hint, Rect2(1060, 110, 820, 30))
 	add_child(target_hint)
 
@@ -1479,11 +1523,12 @@ func _refresh_enemies() -> void:
 		var view: Button = enemy_views[index]
 		var entry: Dictionary = enemies[index]
 		var label: Label = view.get_node("EnemyInfo")
-		label.text = ("▶ " if index == original else "") + "P%d · %s\nHP %d / %d · Block %d" % [enemy_position(index),enemy_name, enemy_hp, enemy_max_hp, enemy_block]
+		var classification: String = str(entry.get("creature_class",GameState.creature(str(entry["creature"])).get("creature_class","Corrupted")))
+		classification += " · Cocoon" if entry.get("cocoon",false) else " · Boss" if entry["boss"] else " · " + GameState.Depth.role(str(entry["creature"]),bool(entry["support"]))
+		var display_name: String = enemy_name.replace("Creation of Anguish: ","Anguish ").replace("The Coterie: ","").trim_prefix("Support ")
+		label.text = ("▶ " if index == original else "") + "P%d · %s\n%s\nHP %d / %d · Block %d" % [enemy_position(index),display_name,classification,enemy_hp,enemy_max_hp,enemy_block]
 		var intent: Label = view.get_node("EnemyIntent")
 		intent.text = ("Stage %d / 3\n" % (int(entry.get("phase_index", 0)) + 1) if entry.has("phase_creatures") else "") + _enemy_intent_text() + "\n" + Rules.status_text(entry["statuses"])
-		if not entry["boss"]:
-			label.text = label.text.replace("\nHP", "\n" + GameState.Depth.role(str(entry["creature"]),bool(entry["support"])) + "\nHP")
 		view.get_node("StatusStrip").sync(entry["statuses"],int(entry.get("weak",0)))
 		intent.text = intent.text.strip_edges()
 		var boss_hint: String = GameState.Mechanics.boss_hint(str(entry["creature"]), round_number)
@@ -1501,11 +1546,12 @@ func _refresh_enemies() -> void:
 		meter.max_value = enemy_max_hp
 		meter.value = enemy_hp
 		_sync_portrait(view.get_node("EnemyArt"), entry)
+		_configure_enemy_stage(index)
 		if view.has_node("GroundShadow"):
-			_plant_combatant(view,view.get_node("EnemyArt"),280.0)
+			_plant_combatant(view,view.get_node("EnemyArt"),_enemy_stage_height(index))
 		view.disabled = battle_over or enemy_hp <= 0
 		view.visible = enemy_hp > 0
-		if enemy_hp > 0: view.position.x = 1490 - (_living_enemies().size() * 265 - 15) * 0.5 + (enemy_position(index)-1) * 265
+		if enemy_hp > 0: _position_enemy_stage(index)
 		view.modulate = Color(0.45, 0.45, 0.45) if enemy_hp <= 0 else Color.WHITE
 		_style_card_backing(view, Color("#1C1614"), Color("#D3AF72") if index == original else Color(GOLD))
 	_load_enemy(original)
@@ -1640,6 +1686,7 @@ func stress_behavior(id: String, roll: float = -1.0) -> void:
 func _make_cocoon() -> Dictionary:
 	var cocoon: Dictionary = Rules.make_enemy({"name": "Luminous Cocoon", "hp": 18, "attack": 0, "art": "res://assets/generated/event_beast_offering.png"}, "moth_cocoon", 0)
 	cocoon["cocoon"] = true
+	cocoon["creature_class"] = "Insect"
 	cocoon["age"] = 0
 	return cocoon
 
@@ -1692,23 +1739,27 @@ func _ground_battlefield() -> void:
 	for hero_id in party:
 		_plant_combatant(hero_buttons[hero_id],hero_portraits[hero_id],280.0)
 	for index in range(enemy_views.size()):
-		_plant_combatant(enemy_views[index],enemy_views[index].get_node("EnemyArt"),280.0)
+		_plant_combatant(enemy_views[index],enemy_views[index].get_node("EnemyArt"),_enemy_stage_height(index))
 
 func _plant_combatant(view: Button, portrait: TextureRect, height: float) -> void:
 	if portrait.texture == null: return
 	var texture_size: Vector2 = portrait.texture.get_size()
 	var ratio: float = texture_size.x / maxf(1.0,texture_size.y)
-	var width: float = minf(280.0,height * ratio)
+	var width: float = minf(490.0 if portrait.get_meta("boss",false) else 230.0 if portrait.get_meta("support",false) else 280.0,height * ratio)
 	var draw_height: float = width / ratio
 	var foot: float = GROUND_Y - (view.global_position.y - global_position.y)
 	# Exact aspect-sized rectangles remove centered letterbox padding below feet.
 	_place(portrait,Rect2((view.size.x-width)*0.5,foot-draw_height,width,draw_height))
+	# Phase replacements must keep the existing breathing transform grounded
+	# immediately, before StatusVisual processes the newly sized portrait.
+	portrait.pivot_offset = Vector2(width*0.5,draw_height)
 	portrait.stretch_mode = TextureRect.STRETCH_SCALE
 	var shadow: Node2D = view.get_node_or_null("GroundShadow")
 	if shadow == null:
 		shadow = preload("res://scenes/combat/ground_shadow.gd").new()
 		shadow.name = "GroundShadow"
 		view.add_child(shadow)
+	shadow.scale = Vector2(1.65,1.15) if portrait.get_meta("boss",false) else Vector2(0.8,0.85) if portrait.get_meta("support",false) else Vector2.ONE
 	shadow.position = Vector2(view.size.x*0.5,foot-2)
 	shadow.z_index = -1
 	var tint := Color("#FFF2E4")
@@ -1717,3 +1768,63 @@ func _plant_combatant(view: Button, portrait: TextureRect, height: float) -> voi
 	elif theme_path.contains("keep"): tint = Color("#F0F3FF")
 	if portrait.material is ShaderMaterial and portrait.get_node_or_null("StatusVisual") != null:
 		portrait.material.set_shader_parameter("ambient",Vector3(tint.r,tint.g,tint.b))
+
+func _enemy_stage_height(index: int) -> float:
+	var entry: Dictionary = enemies[index]
+	if entry.get("boss",false): return 350.0
+	if entry.get("support",false) or entry.get("cocoon",false): return 215.0
+	return 280.0
+
+func _reveal_boss_intro() -> void:
+	if not enemies.any(func(entry): return entry.get("boss",false)): return
+	# Let the anchored battlefield finish placing portraits before the reveal.
+	var tree: SceneTree = get_tree()
+	for frame in range(2):
+		await tree.process_frame
+		if not is_inside_tree() or battle_over: return
+	for index in range(enemies.size()):
+		if enemies[index].get("boss",false) and int(enemies[index]["hp"]) > 0:
+			_reveal_boss(index)
+			return
+
+func _reveal_boss(index: int) -> void:
+	if presentation == null or index >= enemy_views.size(): return
+	var entry: Dictionary = enemies[index]
+	var id: String = str(entry["creature"])
+	var lore: String = str(GameState.creature(id).get("lore",""))
+	var phases: Array = entry.get("phase_creatures",[])
+	presentation.reveal_boss(enemy_views[index].get_node("EnemyArt"),str(entry["name"]),lore,_encounter_theme(id),int(entry.get("phase_index",0))+1,maxi(1,phases.size()))
+
+func _configure_enemy_stage(index: int) -> void:
+	var entry: Dictionary = enemies[index]
+	var view: Button = enemy_views[index]
+	var boss: bool = entry.get("boss",false)
+	var support: bool = entry.get("support",false) or entry.get("cocoon",false)
+	var width: float = 500.0 if boss else 235.0 if support else 250.0
+	view.size = Vector2(width,440)
+	var portrait: TextureRect = view.get_node("EnemyArt")
+	portrait.set_meta("boss",boss)
+	portrait.set_meta("support",support)
+	portrait.set_meta("creature",str(entry["creature"]))
+	portrait.set_meta("encounter_theme",_encounter_theme(str(entry["creature"])))
+	_place(view.get_node("EnemyInfo"),Rect2(10,282,width-20,68))
+	_place(view.get_node("EnemyIntent"),Rect2(10,350,width-20,58))
+	_place(view.get_node("HealthBar"),Rect2(12,408,width-24,14))
+	_place(view.get_node("StatusStrip"),Rect2(12,430,width-24,26))
+	view.get_node("EnemyInfo").add_theme_font_size_override("font_size",14)
+
+func _position_enemy_stage(index: int) -> void:
+	var living: Array[int] = _living_enemies()
+	living.sort_custom(func(a,b): return enemy_position(a)<enemy_position(b))
+	var total: float = maxf(0,(living.size()-1)*30.0)
+	for id in living: total += enemy_views[id].size.x
+	var cursor: float = 1490.0-total*0.5
+	for id in living:
+		if id == index: enemy_views[id].position.x = cursor
+		cursor += enemy_views[id].size.x+30.0
+
+func _encounter_theme(creature_id: String) -> String:
+	if creature_id.begins_with("moth_"): return "moth"
+	if creature_id.begins_with("keep_") or creature_id == "undying_lord": return "keep"
+	if creature_id in ["harrowed_giant","howling_head"] or creature_id.begins_with("anguish_") or creature_id.begins_with("coterie_"): return "remade"
+	return "bandit"

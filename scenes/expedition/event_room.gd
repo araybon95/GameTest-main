@@ -1,4 +1,5 @@
 extends "res://scenes/ui/party_screen.gd"
+const Scenery = preload("res://scripts/dungeon_scenery.gd")
 
 var selected_hero: String = ""
 
@@ -12,6 +13,7 @@ func _ready() -> void:
 			selected_hero = id
 			break
 	refresh()
+	add_child(preload("res://scenes/expedition/scene_arrival.gd").new())
 
 func refresh() -> void:
 	clear_screen()
@@ -23,8 +25,18 @@ func refresh() -> void:
 	var background: String = State.floor_background("combat")
 	if corridor and not (State.selected_expedition.get("id", "") == "old_road" and State.floor_index > 0):
 		background = "res://assets/generated/event_%s_corridor.png" % ("beast" if State.selected_expedition.get("faction", "") == "remade" else "bandit")
+	else:
+		background = Scenery.stage_path(background)
 	var backdrop := picture(background, Rect2(0, 0, 1920, 815))
 	backdrop.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	var floor_theme: String = Scenery.theme_for(State.selected_expedition,State.floor_index)
+	var ambience = Scenery.new()
+	ambience.name = "EventAtmosphere"
+	ambience.size = Vector2(1920,815)
+	ambience.ground_y = 690.0
+	ambience.scene_theme = floor_theme
+	ambience.show_foreground = false
+	add_child(ambience)
 	panel(Rect2(35, 35, 620, 735), Color(0.06, 0.04, 0.06, 0.94))
 	label_at("? · CORRIDOR EVENT" if corridor else "? · ROOM EVENT", Vector2(65, 60), 560, 24)
 	label_at(str(event["name"]), Vector2(65, 115), 560, 35).size = Vector2(560, 90)
@@ -50,20 +62,56 @@ func refresh() -> void:
 			label_at(str(option["risk"]), Vector2(65, 728), 560, 17)
 		var supply_id: String = State.Depth.EVENT_SUPPLIES.get(id, "")
 		if supply_id != "":
-			var supply := button_at("USE %s ×%d" % [State.Items.item(supply_id)["name"],State.inventory.get(supply_id,0)], Rect2(760,740,930,50), investigate_with_supply)
+			var supply := button_at("USE %s ×%d" % [State.Items.item(supply_id)["name"],State.inventory.get(supply_id,0)], Rect2(1090,740,730,50), investigate_with_supply)
 			supply.disabled = int(State.inventory.get(supply_id,0)) <= 0 or selected_hero.is_empty() or (id == "crusader_coffin" and int(State.run_heroes.get(selected_hero,{}).get("hp",0)) <= 1)
 			supply.tooltip_text = "Bandages reduce the coffin opening damage to 1 HP." if id == "crusader_coffin" else "Consume this supply for a guaranteed reward without a harmful effect."
-	var object_button := button_at("", Rect2(760, 150, 930, 560), investigate)
+	if not selected_hero.is_empty():
+		var hero_shadow = preload("res://scenes/combat/ground_shadow.gd").new()
+		hero_shadow.position = Vector2(875,690)
+		add_child(hero_shadow)
+		var investigator := picture(str(State.hero(selected_hero)["art"]),Rect2(740,320,270,370))
+		investigator.name = "Investigator"
+		investigator.texture = Scenery.grounded_texture(str(State.hero(selected_hero)["art"]))
+		investigator.stretch_mode = TextureRect.STRETCH_SCALE
+		investigator.size = Vector2(370*investigator.texture.get_width()/float(investigator.texture.get_height()),370)
+		investigator.position = Vector2(875-investigator.size.x*.5,320)
+		investigator.modulate = Scenery.tint(floor_theme)
+		Scenery.apply_hero_palette(investigator,selected_hero,str(State.hero_colors.get(selected_hero,"original")))
+		label_at(str(State.hero(selected_hero)["name"]),Vector2(720,705),310,23).horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		label_at(str(State.HEROES[selected_hero]["name"]),Vector2(720,738),310,17).horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var prop_shadow = preload("res://scenes/combat/ground_shadow.gd").new()
+	prop_shadow.position = Vector2(1450,690)
+	add_child(prop_shadow)
+	var object_button := button_at("", Rect2(1110, 180, 710, 540), investigate)
 	object_button.name = "EventObject"
 	object_button.disabled = resolved or selected_hero == "" or (id == "crusader_coffin" and int(State.run_heroes[selected_hero]["hp"]) <= 3)
 	object_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	object_button.tooltip_text = "Investigate as " + str(State.hero(selected_hero).get("name", "a hero"))
-	for state in ["normal", "disabled", "pressed"]:
+	# The silhouette is the hover target; a rectangular button fill would hide the room.
+	for state in ["normal", "disabled", "pressed", "hover", "focus"]:
 		object_button.add_theme_stylebox_override(state, StyleBoxEmpty.new())
-	var prop := picture("res://assets/generated/event_%s.png" % id, Rect2(885, 180, 680, 480))
+	var prop := picture("res://assets/generated/event_%s.png" % id, Rect2(1240, 250, 420, 440))
+	prop.name = "EventProp"
+	prop.texture = Scenery.grounded_texture("res://assets/generated/event_%s.png" % id,4)
+	# Supply crates and chests sit below shoulder height; shrines and the coffin can stand tall.
+	var max_prop_height: float = 270.0 if id in ["bandit_strongbox","bandit_supplies"] else 430.0
+	var max_prop_width: float = 380.0 if id in ["bandit_strongbox","bandit_supplies"] else 520.0
+	var prop_height: float = minf(max_prop_height,max_prop_width*prop.texture.get_height()/float(prop.texture.get_width()))
+	prop.size = Vector2(prop_height*prop.texture.get_width()/float(prop.texture.get_height()),prop_height)
+	prop.position = Vector2(1450-prop.size.x*.5,690-prop_height)
+	prop.stretch_mode = TextureRect.STRETCH_SCALE
+	var highlight := ShaderMaterial.new()
+	highlight.shader = preload("res://assets/shaders/curio_highlight.gdshader")
+	highlight.set_shader_parameter("glow_color",Color("#DE718B") if floor_theme == "beast" else Color("#BDD28F") if floor_theme == "medical" else Color("#E9C071"))
+	highlight.set_shader_parameter("strength",0.0 if resolved else 0.25)
+	prop.material = highlight
+	object_button.mouse_entered.connect(func(): highlight.set_shader_parameter("strength",0.0 if resolved else 0.9))
+	object_button.mouse_exited.connect(func(): highlight.set_shader_parameter("strength",0.0 if resolved else 0.25))
+	object_button.focus_entered.connect(func(): highlight.set_shader_parameter("strength",0.0 if resolved else 0.9))
+	object_button.focus_exited.connect(func(): highlight.set_shader_parameter("strength",0.0 if resolved else 0.25))
 	prop.modulate.a = 0.6 if resolved else 1.0
-	label_at("Event resolved" if resolved else "Click the object to investigate", Vector2(930, 715), 650, 27)
+	label_at("Event resolved" if resolved else "Click the object to investigate", Vector2(1090, 705), 730, 24).horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	party_bar(return_to_dungeon if resolved else leave_untouched, "RETURN TO DUNGEON" if resolved else "LEAVE UNTOUCHED")
+	Scenery.decorate(self)
 
 func select_hero(id: String) -> void:
 	selected_hero = id

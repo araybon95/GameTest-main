@@ -1,0 +1,10 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/generated/enemy_moth_oleander_combat_sheet.png" id="1"]
+
+[resource]
+atlas = ExtResource("1")
+region = Rect2(221, 81, 469, 386)
+filter_clip = true
+metadata/pose_id = "moth_oleander"
+metadata/idle_pixel_height = 386
