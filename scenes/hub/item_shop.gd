@@ -16,7 +16,10 @@ func refresh() -> void:
 	picture("res://assets/generated/apothecary_reclaimed.png" if apothecary_mode else "res://assets/generated/building_forge.png", Rect2(70, 190, 320, 305))
 	label_at("THE APOTHECARY" if apothecary_mode else "THE EMPORIUM", Vector2(65, 75), 350, 32 if apothecary_mode else 38)
 	label_at("The ward is reclaimed" if apothecary_mode else "Beyond the blue orb", Vector2(65, 140), 350, 24)
-	label_at("Remedies for a ruined world.\n\nHealing potions and scrolls.\nCleansing draughts.\nMight · Focus · Warding\n\nTonics last 2 party turns.\nThey refresh without stacking." if apothecary_mode else "Gear for your party's classes. Universal scrolls and potions.\n\nCommon · Rare · Epic · Unique\nLegendary items are loot-only.\n\nReturn through the orb to continue your expedition.", Vector2(65, 515), 325, 21 if apothecary_mode else 22)
+	var vendor_lore := label_at("Remedies for a ruined world.\n\nHealing potions and scrolls.\nCleansing draughts.\nMight · Focus · Warding\n\nTonics last 2 party turns.\nThey refresh without stacking." if apothecary_mode else "Gear for your party's classes. Universal scrolls and potions.\n\nCommon · Rare · Epic · Unique\nLegendary items are loot-only.\n\nReturn through the orb to continue your expedition.", Vector2(65, 515), 325, 21 if apothecary_mode else 22)
+	vendor_lore.name = "VendorLore"
+	vendor_lore.size = Vector2(325,260)
+	vendor_lore.clip_text = true
 	panel(Rect2(460, 30, 1430, 755), Color(0.09, 0.06, 0.08, 0.94))
 	label_at("REMEDIES AND TONICS" if apothecary_mode else "MERCHANT WARES", Vector2(500, 65), 1000, 34)
 	label_at("GOLD  %d" % State.gold, Vector2(1600, 75), 250, 25)

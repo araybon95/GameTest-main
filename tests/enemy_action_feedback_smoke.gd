@@ -83,11 +83,11 @@ func test_lament() -> bool:
 	assert(cinema.active["kind"] == "spell" and cinema.active["title"] == "Unending Prayer" and not cinema.active["hero"])
 	assert(cinema.active["source_node"] == battle.enemy_art and cinema.active["target_node"] == battle.hero_portraits["warden"])
 	for id in ["warden", "occultist"]:
-		assert(battle.hero_state[id]["stress"] == 6 and battle.hero_state[id]["statuses"]["chill"]["turns"] == 2)
+		assert(battle.hero_state[id]["stress"] == 8 and battle.hero_state[id]["statuses"]["chill"]["turns"] == 2)
 		assert(battle.hero_state[id]["hp"] == hp[id])
 	assert(battle.hero_state["ranger"]["stress"] == 0 and battle.hero_state["ranger"]["statuses"].is_empty())
 	var values: Array[String] = feedback_values(battle)
-	assert(value_count(values, "STRESS +6") == 2 and value_count(values, "CHILL") == 2, "Lament presents both effects for living heroes only")
+	assert(value_count(values, "STRESS +8") == 2 and value_count(values, "CHILL") == 2, "The intact choir idol amplifies Lament for living heroes only")
 	assert(cinema.feedback_count.get("damage", 0) == 0)
 	assert(impact(battle))
 	assert(cinema.fighters[1].texture == Poses.state_pose(cinema.active["target"], "hurt"))

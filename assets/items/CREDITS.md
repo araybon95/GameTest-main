@@ -39,3 +39,5 @@ Apothecary tonics (might_tonic, focus_tonic, ward_tonic): recolored variants of 
 Field Bandage, Field Antidote and Calming Incense reuse original Ashen potion silhouettes. Thornbound Reliquary reuses the original Venom Heart; Septic Physician Seal reuses the existing Clotting Seal silhouette and its attribution above.
 
 2026 ink pass: original geometry retained; added black contours, stepped material shading and small colored edge gleams. Rarity frames are rendered separately by the UI.
+
+Creature matchup trinkets reuse existing Ashen trinket design families as individual SVGs: Outlaw's Tally → Hunter's Compass; Gravewatch Medal → Bastion Medal; Severed Litany → Veiled Sigil; Chitin Hunter's Lens → Falcon Sight; Roadward Seal → Clotting Seal; Graveward Locket → Vitality Locket; Penitent's Stitch → Venom Heart; Chrysalis Rosary → Merciful Beads. Small original helmet, skull, stitches and moth glyphs distinguish Human, Corrupted, The Remade and Insect effects. No sampled art or raster processing was added. Each item can be replaced independently via its own SVG or the existing same-name PNG override.

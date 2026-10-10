@@ -173,7 +173,7 @@ func _process(delta: float) -> void:
  var clock: float = age/(active_duration/duration)
  if clock >= 0.28: _flush_feedback(active)
  var source_position: Vector2 = apply_pose(0,"source",clock >= 0.11 and clock < 0.60)
- var harmful: bool = active["attack_kind"] not in ["heal","block"] and active.get("reaction", "hurt") not in ["miss","block"] and active["source_node"] != active["target_node"]
+ var harmful: bool = active["attack_kind"] not in ["heal","block","object"] and active.get("reaction", "hurt") not in ["miss","block"] and active["source_node"] != active["target_node"]
  var defending: bool = active["attack_kind"] == "block" or active.get("reaction","") == "block"
  var target_position: Vector2 = apply_pose(1,"target",(harmful or defending) and clock >= 0.28 and clock < 0.64,harmful,"guard" if defending else "")
  # A brief held contact pose makes each impact readable before recoil.

@@ -1,5 +1,7 @@
 extends Control
 const State = preload("res://scripts/game_data.gd")
+const Matchups = preload("res://scripts/creature_matchups.gd")
+const Objectives = preload("res://scripts/boss_objectives.gd")
 const CONTENTS = {
  "old_road": ["ash_raider", "gallows_scout", "ash_chieftain", "keep_footman", "keep_crossbow", "keep_son", "keep_wolfguard", "undying_lord"],
  "path_beast": ["anguish_penitent", "anguish_vessel", "harrowed_giant", "coterie_seamkeeper", "coterie_cantor", "coterie_matron", "howling_head"],
@@ -77,7 +79,7 @@ func refresh() -> void:
   if known:
    var portrait := TextureRect.new()
    portrait.position = Vector2(515,315)
-   portrait.size = Vector2(550,455)
+   portrait.size = Vector2(550,350)
    portrait.texture = load(str(creature["art"]))
    portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
    portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
@@ -87,10 +89,12 @@ func refresh() -> void:
   label(str(creature["name"]) if known else "Unrecorded creature",Rect2(1195,215,595,90),32)
   var category := label("CLASS: " + str(creature.get("creature_class","Corrupted")) if known else "CLASS: UNRECORDED",Rect2(1195,305,595,32),20)
   category.name = "CreatureClass"
-  label("LORE",Rect2(1195,347,595,35),22)
+  var resistance := label(Matchups.resistance_text(creature) if known else "Innate traits not yet recorded.",Rect2(1195,348,595,32),19)
+  resistance.name = "CreatureResistance"
+  label("LORE",Rect2(1195,389,595,35),22)
   var lore := RichTextLabel.new()
-  lore.position = Vector2(1195,390)
-  lore.size = Vector2(595,210)
+  lore.position = Vector2(1195,430)
+  lore.size = Vector2(595,170)
   lore.text = str(creature.get("lore","The archive awaits an account of this creature.")) if known else "These pages remain blank. Face this creature in the dungeon to record its story."
   lore.add_theme_color_override("default_color",Color("#332721"))
   lore.add_theme_color_override("font_shadow_color",Color.TRANSPARENT)
@@ -102,8 +106,23 @@ func refresh() -> void:
    notes = "%s\nBase health %d  |  Base attack %d\nValues vary with floor and encounter." % [", ".join(creature.get("tags",[])),int(creature["hp"]),int(creature["attack"])]
    var hint: String = State.Mechanics.boss_hint(id,1)
    if not hint.is_empty(): notes += "\n" + hint
-  label(notes,Rect2(1195,670,595,165),20)
-  label("PLATE %02d" % (page+1),Rect2(690,805,280,35),20)
+   if volume_id == "path_beast":
+    var objective: Dictionary = Objectives.create(id)
+    if not objective.is_empty(): notes += "\n" + Objectives.hint(objective) + "\nSelected hero spends 1 AP."
+  var field_notes := RichTextLabel.new()
+  field_notes.name = "CreatureNotes"
+  field_notes.position = Vector2(1195,670)
+  field_notes.size = Vector2(595,165)
+  field_notes.text = notes
+  field_notes.add_theme_color_override("default_color",Color("#332721"))
+  field_notes.add_theme_color_override("font_shadow_color",Color.TRANSPARENT)
+  field_notes.add_theme_font_size_override("normal_font_size",20)
+  book_view.add_child(field_notes)
+  if known:
+   label("TACTICS",Rect2(490,685,610,32),22)
+   var tactics := label(Matchups.tactics(creature),Rect2(490,725,610,125),19)
+   tactics.name = "CreatureTactics"
+  label("PLATE %02d" % (page+1),Rect2(945,267,155,32),16)
  button_at("CONTENTS",Rect2(490,855,240,45),turn_page.bind(-1))
  var previous := button_at("PREVIOUS",Rect2(1195,855,250,45),turn_page.bind(page-1))
  previous.disabled = page < 0

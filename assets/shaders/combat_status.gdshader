@@ -20,17 +20,22 @@ void fragment() {
  color *= mix(1.0, bands / max(ink_luma,0.025), 0.2);
  color = clamp((color - 0.5) * 1.06 + 0.52,0.0,1.0);
 	// Effects stay inside the original sprite's alpha silhouette.
-	float charred = burn * (0.13 + grain * 0.12);
+	float charred = burn * (0.10 + step(0.64, grain) * 0.18);
 	color *= 1.0 - charred;
-	color = mix(color, vec3(1.0, 0.32, 0.05), burn * (0.18 + pulse * 0.16) * (0.4 + UV.y * 0.6));
+	// Ash dominates; only isolated coals catch the light, rather than an orange wash.
+	float coal = step(0.982, grain) * smoothstep(0.25, 0.8, UV.y);
+	color = mix(color, vec3(0.69, 0.25, 0.09), burn * coal * (0.32 + pulse * 0.22));
 	float cut_a = (1.0 - smoothstep(0.004, 0.014, abs(UV.y - 0.44 + (UV.x - 0.5) * 0.22))) * smoothstep(0.28, 0.36, UV.x) * (1.0 - smoothstep(0.59, 0.68, UV.x));
 	float cut_b = (1.0 - smoothstep(0.006, 0.018, abs(UV.y - 0.61 - (UV.x - 0.5) * 0.13))) * smoothstep(0.4, 0.47, UV.x) * (1.0 - smoothstep(0.65, 0.74, UV.x));
 	float scratch = max(cut_a, cut_b) * (0.65 + grain * 0.35);
-	color = mix(color, vec3(0.55, 0.015, 0.035), scratch * max(bleed * 0.88, wounded * 0.65));
-	color = mix(color, vec3(0.22, 0.7, 0.13), poison * (0.17 + pulse * 0.08));
-	float frost = step(0.92, grain) * (0.45 + pulse * 0.2);
-	color = mix(color, vec3(0.6, 0.89, 1.0), chill * (0.2 + frost * 0.25));
-	color = mix(color, vec3(1.0, 0.12, 0.08), impact * 0.6);
+	color = mix(color, vec3(0.32, 0.035, 0.055), scratch * max(bleed * 0.90, wounded * 0.65));
+	float blotch = smoothstep(0.25, 0.77, sin(UV.x * 32.0 + sin(UV.y * 21.0) * 2.0) * 0.5 + 0.5);
+	color = mix(color, vec3(0.25, 0.31, 0.16), poison * (0.10 + blotch * 0.12 + pulse * 0.025));
+	float frost = step(0.967, grain) * (0.5 + pulse * 0.15);
+	color = mix(color, vec3(0.47, 0.61, 0.65), chill * (0.13 + frost * 0.28));
+	// Brief bruised recoil remains distinct from a bright spell or a healing flash.
+	color *= 1.0 - impact * 0.08;
+	color = mix(color, vec3(0.53, 0.32, 0.27), impact * (0.14 + scratch * 0.30));
 	float gray = dot(color, vec3(0.299, 0.587, 0.114));
 	color = mix(color, vec3(gray * 0.55), slain);
 	COLOR = vec4(color, base.a);

@@ -1,5 +1,6 @@
 extends RefCounted
 ## Original Ashen equipment and consumables; licensed icons credited in assets/items/CREDITS.md.
+const Matchups = preload("res://scripts/creature_matchups.gd")
 
 const SCROLL_CHANCE: float = 0.15
 const GEAR_CHANCE: float = 0.40
@@ -24,6 +25,14 @@ const POTIONS: Dictionary = {
  "solace_potion": {"name": "Solace Potion", "rarity": "common", "kind": "potion", "effect": "solace", "amount": 15, "price": 8, "description": "Reduce the selected living hero's Stress by 15. Single use; 1 AP in combat."},
 }
 const EQUIPMENT: Dictionary = {
+	"outlaw_tally": {"name":"Outlaw's Tally", "rarity":"rare", "kind":"trinket", "slot":"trinket", "damage_vs_human":10},
+	"warden_gravewatch": {"name":"Gravewatch Medal", "rarity":"epic", "kind":"trinket", "slot":"trinket", "hero":"warden", "damage_vs_corrupted":15},
+	"occultist_severed_litany": {"name":"Severed Litany", "rarity":"epic", "kind":"trinket", "slot":"trinket", "hero":"occultist", "damage_vs_remade":15},
+	"ranger_chitin_lens": {"name":"Chitin Hunter's Lens", "rarity":"epic", "kind":"trinket", "slot":"trinket", "hero":"ranger", "damage_vs_insect":15},
+	"roadward_seal": {"name":"Roadward Seal", "rarity":"rare", "kind":"trinket", "slot":"charm", "ward_vs_human":10},
+	"graveward_locket": {"name":"Graveward Locket", "rarity":"rare", "kind":"trinket", "slot":"charm", "ward_vs_corrupted":10},
+	"crusader_penitent_stitch": {"name":"Penitent's Stitch", "rarity":"epic", "kind":"trinket", "slot":"charm", "hero":"crusader", "ward_vs_remade":15},
+	"healer_chrysalis_rosary": {"name":"Chrysalis Rosary", "rarity":"epic", "kind":"trinket", "slot":"charm", "hero":"healer", "ward_vs_insect":15},
 	"cursed_thorn_relic": {"name": "Thornbound Reliquary", "rarity": "unique", "kind": "trinket", "slot": "charm", "damage_percent": 25, "curse_stress": 2},
 	"cursed_physician_seal": {"name": "Septic Physician's Seal", "rarity": "unique", "kind": "trinket", "slot": "charm", "heal": 4, "curse_dot": 1},
  "crusader_axe": {"name": "Penitent's Axe", "rarity": "common", "hero": "crusader", "slot": "weapon", "damage": 1},
@@ -93,6 +102,12 @@ static func description(item_id: String) -> String:
 			text += " · +%d%% %s" % [int(entry[stat]), names.get(stat, stat.replace("_", " "))]
 	if entry.has("regeneration"):
 		text += " · Restore %d HP each party turn" % int(entry["regeneration"])
+	for category in Matchups.CLASS_KEYS:
+		var key: String = str(Matchups.CLASS_KEYS[category])
+		if entry.has("damage_vs_" + key):
+			text += " · +%d%% direct damage against %s (combined hunt cap %d%%; excludes damage-over-time)" % [int(entry["damage_vs_" + key]),category,Matchups.OFFENSE_CAP]
+		if entry.has("ward_vs_" + key):
+			text += " · %d%% less direct damage from %s (combined ward cap %d%%; excludes damage-over-time)" % [int(entry["ward_vs_" + key]),category,Matchups.WARD_CAP]
 	if entry.has("curse_stress"):
 		text += " · CURSED: +2 Stress each party turn while equipped"
 	if entry.has("curse_dot"):

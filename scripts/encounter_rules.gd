@@ -63,7 +63,7 @@ static func make_enemy(state: Dictionary, creature_id: String, depth: int, boss:
 		attack = maxi(1, int(round(normal_attack * 0.3)))
 	return {"creature": creature_id, "name": ("Support " if support else ("Dread " if boss and not state.get("tags", []).has("Remade") and not state.get("tags", []).has("Revenant") and not state.get("tags", []).has("Moth") else "")) + str(state.get("name", "Enemy")),
 		"max_hp": hp, "hp": hp, "attack": attack, "normal_hp": normal_hp, "normal_attack": normal_attack,
-		"support": support, "boss": boss, "art": str(state.get("art", "")), "undead": bool(state.get("undead", false)),
+		"support": support, "boss": boss, "art": str(state.get("art", "")), "undead": bool(state.get("undead", false)), "creature_class": str(state.get("creature_class", "Corrupted")),
 		"block": 0, "mark": 0, "weak": 0, "statuses": {}, "moves": MOVES.get(creature_id, MOVES["hollow_villager"]).duplicate(true)}
 
 static func apply_status(statuses: Dictionary, status_id: String, potency: float = 1.0, stacking: bool = false) -> void:

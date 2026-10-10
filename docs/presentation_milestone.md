@@ -31,4 +31,6 @@ All 35 existing smoke scripts passed as a suite. The additional enemy-action int
 
 The complete automated run and numeric audit are explained in [run_progression_audit.md](run_progression_audit.md). Human playtesting remains the appropriate check for difficulty, pacing and the feel of a sustained expedition.
 
+The subsequent balance and tactics pass is recorded in [ordinary_playthrough_balance.md](ordinary_playthrough_balance.md) and [boss_matchups_and_grimdark.md](boss_matchups_and_grimdark.md). It adds ordinary-action balance measurements, battlefield boss objectives, creature-specific equipment and darker effects, bringing the smoke suite to 40 passing checks.
+
 Generated creature prompts, corrective prompts, source hashes and frame regions are recorded in [creature_art_provenance.json](creature_art_provenance.json). Door artwork provenance is in [thresholds_PROVENANCE.md](../assets/generated/thresholds_PROVENANCE.md).
