@@ -37,3 +37,5 @@ Crusader axe/epic/unique/legendary icons: original Ashen spiked axe SVG; crusade
 Apothecary tonics (might_tonic, focus_tonic, ward_tonic): recolored variants of the original Ashen potion bottle SVG. Healing Scroll: scroll-unfurled by lorc, recolored green; same Game-icons.net CC BY 3.0 source credited for fire_bolt_scroll above.
 
 Field Bandage, Field Antidote and Calming Incense reuse original Ashen potion silhouettes. Thornbound Reliquary reuses the original Venom Heart; Septic Physician Seal reuses the existing Clotting Seal silhouette and its attribution above.
+
+2026 ink pass: original geometry retained; added black contours, stepped material shading and small colored edge gleams. Rarity frames are rendered separately by the UI.

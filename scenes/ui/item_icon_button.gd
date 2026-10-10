@@ -33,7 +33,7 @@ func configure(id: String, amount: int = 1) -> void:
 	picture.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(picture)
 	picture.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	picture.modulate = Color(1.3, 1.3, 1.3)
+	picture.modulate = Color(1.08, 1.08, 1.08)
 	picture.offset_left = 6
 	picture.offset_top = 6
 	picture.offset_right = -6

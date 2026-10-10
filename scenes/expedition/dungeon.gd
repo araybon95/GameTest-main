@@ -4,6 +4,7 @@ const GameState = preload("res://scripts/game_data.gd")
 const FloorEntrance = preload("res://scenes/expedition/floor_entrance.gd")
 const ItemButton = preload("res://scenes/ui/item_icon_button.gd")
 var inventory_filter: String = "All"
+var traveling: bool = false
 var message: String = "Choose a connected room. Cleared routes can be crossed in one click. Find the stairs and descend."
 
 func _ready() -> void:
@@ -274,11 +275,17 @@ func route_to(destination: Vector2i) -> Array:
 	return preload("res://scripts/dungeon_routes.gd").find(GameState.floors[GameState.floor_index], GameState.room_position, destination)
 
 func move_to(destination: Vector2i) -> void:
+	if traveling: return
 	if GameState.floors[GameState.floor_index][GameState.room_position].get("cleared", false): preload("res://scripts/save_files.gd").save(0)
 	var route: Array = route_to(destination)
 	if route.is_empty(): return
 	for step in route:
 		if not GameState.vote_move("local", step): return
+	traveling = true
+	var passage = preload("res://scenes/expedition/hallway_travel.gd").new()
+	add_child(passage)
+	await passage.finished
+	traveling = false
 	var room: Dictionary = GameState.floors[GameState.floor_index][destination]
 	if room.has("travel_text"): message = str(room["travel_text"])
 	if room["cleared"] and not room.has("travel_text"):
