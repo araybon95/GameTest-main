@@ -8,6 +8,8 @@ Merchant rooms now lead to a clickable orb event after victory, then the Emporiu
 
 The Graveyard and merchant orb now match the painted grimdark scenery, with worn stone and iron, readable memorial records and a cyan silhouette highlight on the orb. See [Graveyard and orb visuals](docs/graveyard_orb_visuals.md) for the replaceable artwork and production prompts.
 
+Hallways now have side-on walking through four themed panoramas, layered scenery, manual pause/resume, a party status footer and route map. Encounters approach through the passage and wait for interaction. See [Dynamic hallways](docs/dynamic_hallways.md) for controls and artwork prompts.
+
 A Godot 4.7.2 party RPG with shared turns and multi-floor expeditions. The original project code is licensed under the MIT License; see [`LICENSE`](LICENSE). Third-party assets are not covered by that license and remain subject to their own terms. In particular, see `Sound FX Starter Pack Vol. 1/Royalty-Free License (Link).pdf` for the included audio pack's license. (Assets not currently in use but saved for future)
 
 ## Running the game

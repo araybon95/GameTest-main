@@ -278,10 +278,14 @@ func move_to(destination: Vector2i) -> void:
 	if GameState.floors[GameState.floor_index][GameState.room_position].get("cleared", false): preload("res://scripts/save_files.gd").save(0)
 	var route: Array = route_to(destination)
 	if route.is_empty(): return
+	var origin: Vector2i = GameState.room_position
 	for step in route:
 		if not GameState.vote_move("local", step): return
 	traveling = true
 	var passage = preload("res://scenes/expedition/hallway_travel.gd").new()
+	passage.route_origin = origin
+	passage.route_steps = route.duplicate()
+	passage.duration = 5.6 + minf(maxi(route.size() - 1, 0), 5) * 0.7
 	add_child(passage)
 	await passage.finished
 	traveling = false

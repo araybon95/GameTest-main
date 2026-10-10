@@ -61,7 +61,7 @@ func run() -> void:
 		var fallback_id: String = travel.walkers[0].get_meta("walker")
 		travel.walk_frames.erase(fallback_id)
 		travel._process(0.01)
-		assert(travel.walkers[0].texture.resource_path == State.hero(fallback_id)["art"])
+		assert(travel.walkers[0].texture == travel.standing_frames[fallback_id],"Missing walking atlas uses grounded standing art")
 		travel.skip_travel()
 		travel._process(0.01)
 		assert(travel.arrived and not travel.footsteps.playing,"Footsteps stop at the encounter")

@@ -1,0 +1,101 @@
+{
+  "created": "2026-10-10",
+  "generator": "Built-in imagegen",
+  "mode": "Generate; four opaque panoramas and two transparent original prop sprites; one built-in tool call per asset",
+  "purpose": "Original wide side-on corridor scenery for continuous horizontal hallway travel.",
+  "viewed_style_references": [
+    "assets/generated/bandit_battle_stage.png",
+    "assets/generated/keep_battle_stage.png",
+    "assets/generated/beast_battle_stage.png",
+    "assets/generated/apothecary_battle_stage.png"
+  ],
+  "tool_reference_images": [],
+  "third_party_assets_used": false,
+  "notes": "Existing game stage images were inspected to match palette and ink treatment; no third-party Workshop textures were copied or bundled. Selected generated outputs copied intact into the project and originals preserved.",
+  "assets": [
+    {
+      "theme": "bandit",
+      "file": "assets/generated/hallway_bandit_panorama.png",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "mode": "RGB",
+      "bytes": 2933336,
+      "transparent_background": false,
+      "prompt": "Use case: stylized-concept.\nAsset type: opaque, very wide horizontal-scrolling background panorama for a hand-inked grimdark side-scrolling dungeon RPG.\nComposition: landscape aspect ratio about 2.5:1, preferably 2560 by 1024. Camera looks directly sideways at the long rear wall, perpendicular to it, like a theatre stage side elevation. Architecture is spread in a sequence of different bays across the entire wide image. The player will walk LEFT TO RIGHT parallel to this wall. Absolutely no central passage receding into the distance and no single perspective vanishing point. Wall-to-floor seam is a straight horizontal line about 78 percent down the image; the bottom 22 percent is a clear, continuous, nearly flat walkway across the entire width. Keep floor clutter confined to the edges of the rear wall. Do not put pillars or large props in front of the walking strip. Slight atmospheric depth inside wall alcoves is fine.\nStyle/medium: original dark fantasy illustration, assertive thick uneven black ink outlines and graphic chipped shadow shapes, rough brush shading on stone and wood, restrained hand-painted muted colors, heavy dark shadows with a few fine luminous details. Gothic medieval gloom, readable architecture. Deliberately illustrated and rugged, never photographic or a 3D render. Keep the upper and outer margins dark, but visible wall texture throughout. Different shapes and motifs across the panorama to make motion immersive.\nLighting: subdued moody illumination, clear local pools of colored light against charcoal surfaces. Detailed but sufficiently dark for foreground hero silhouettes to remain legible.\nConstraints: background environment ONLY. No people, heroes, humanoid figures, creatures, faces, UI, logos, writing, lettering, text, watermarks. No composited game screenshot. Full bleed opaque image, no border, no transparent pixels. This is an original environment, not a recreation of any particular copyrighted game image.\nScene/backdrop: a roofed passage along a half-ruined village occupied by ruthless bandits, worn stone foundations and split timber walls, repeating damaged arches and doorways, slashed muted oxblood cloth banners with no symbols or writing, rusty chains, stacked looted crates, a gallows beam silhouette recessed behind a fence at one bay, spiked barricades set along the REAR wall. Broken roof rafters show a little stormy slate sky above. Sparse amber torches, damp cobblestones, small puddle glints, gray-brown wood and olive dust. Each bay feels different, the center walkway remains unobstructed from edge to edge."
+    },
+    {
+      "theme": "keep",
+      "file": "assets/generated/hallway_keep_panorama.png",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "mode": "RGB",
+      "bytes": 2736471,
+      "transparent_background": false,
+      "prompt": "Use case: stylized-concept.\nAsset type: opaque, very wide horizontal-scrolling background panorama for a hand-inked grimdark side-scrolling dungeon RPG.\nComposition: landscape aspect ratio about 2.5:1, preferably 2560 by 1024. Camera looks directly sideways at the long rear wall, perpendicular to it, like a theatre stage side elevation. Architecture is spread in a sequence of different bays across the entire wide image. The player will walk LEFT TO RIGHT parallel to this wall. Absolutely no central passage receding into the distance and no single perspective vanishing point. Wall-to-floor seam is a straight horizontal line about 78 percent down the image; the bottom 22 percent is a clear, continuous, nearly flat walkway across the entire width. Keep floor clutter confined to the edges of the rear wall. Do not put pillars or large props in front of the walking strip. Slight atmospheric depth inside wall alcoves is fine.\nStyle/medium: original dark fantasy illustration, assertive thick uneven black ink outlines and graphic chipped shadow shapes, rough brush shading on stone and wood, restrained hand-painted muted colors, heavy dark shadows with a few fine luminous details. Gothic medieval gloom, readable architecture. Deliberately illustrated and rugged, never photographic or a 3D render. Keep the upper and outer margins dark, but visible wall texture throughout. Different shapes and motifs across the panorama to make motion immersive.\nLighting: subdued moody illumination, clear local pools of colored light against charcoal surfaces. Detailed but sufficiently dark for foreground hero silhouettes to remain legible.\nConstraints: background environment ONLY. No people, heroes, humanoid figures, creatures, faces, UI, logos, writing, lettering, text, watermarks. No composited game screenshot. Full bleed opaque image, no border, no transparent pixels. This is an original environment, not a recreation of any particular copyrighted game image.\nScene/backdrop: an ancient stone keep's prison approach, cold slate masonry with repeated pointed arches and chipped buttresses. Several iron barred doors and chained oak doors recessed in the rear wall. Ripped faded navy banners with no emblem, empty wall shackles, tarnished hanging chains, damp stains, small rubble confined to wall bases. Narrow high arched windows shine dim cold-blue dusk; sparse warm ochre candle sconces interrupt the blue shadows. Dark gray stone flagstones form the clear continuous walking strip. These stronger bandits have occupied a fallen noble stronghold; ruined authority and austere menace."
+    },
+    {
+      "theme": "beast",
+      "file": "assets/generated/hallway_beast_panorama.png",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "mode": "RGB",
+      "bytes": 2915403,
+      "transparent_background": false,
+      "prompt": "Use case: stylized-concept.\nAsset type: opaque, very wide horizontal-scrolling background panorama for a hand-inked grimdark side-scrolling dungeon RPG.\nComposition: landscape aspect ratio about 2.5:1, preferably 2560 by 1024. Camera looks directly sideways at the long rear wall, perpendicular to it, like a theatre stage side elevation. Architecture is spread in a sequence of different bays across the entire wide image. The player will walk LEFT TO RIGHT parallel to this wall. Absolutely no central passage receding into the distance and no single perspective vanishing point. Wall-to-floor seam is a straight horizontal line about 78 percent down the image; the bottom 22 percent is a clear, continuous, nearly flat walkway across the entire width. Keep floor clutter confined to the edges of the rear wall. Do not put pillars or large props in front of the walking strip. Slight atmospheric depth inside wall alcoves is fine.\nStyle/medium: original dark fantasy illustration, assertive thick uneven black ink outlines and graphic chipped shadow shapes, rough brush shading on stone and wood, restrained hand-painted muted colors, heavy dark shadows with a few fine luminous details. Gothic medieval gloom, readable architecture. Deliberately illustrated and rugged, never photographic or a 3D render. Keep the upper and outer margins dark, but visible wall texture throughout. Different shapes and motifs across the panorama to make motion immersive.\nLighting: subdued moody illumination, clear local pools of colored light against charcoal surfaces. Detailed but sufficiently dark for foreground hero silhouettes to remain legible.\nConstraints: background environment ONLY. No people, heroes, humanoid figures, creatures, faces, UI, logos, writing, lettering, text, watermarks. No composited game screenshot. Full bleed opaque image, no border, no transparent pixels. This is an original environment, not a recreation of any particular copyrighted game image.\nScene/backdrop: a depraved cathedral corridor used by the Remade, whose worship centers on bodily transformation. Several broken pointed arch niches along the rear wall, stone rib vaults fused with sinewy nonsexual organic tendrils and scarred fleshlike textures. Bone reliquaries, racks of indistinct ritual implements, torn deep-crimson drapes, thornlike spurs and small candles in narrow bays. Show body-horror through organically warped architectural surfaces and bone structures, with no people, humanoid figures, creatures, faces or sexual anatomy. Muted ivory bone, dried-blood burgundy, dirty ash stone, sparse ember red and amber candle light. A level old flagstone walkway remains open across the entire image. Devotional dread and despair, not a bright gore spectacle."
+    },
+    {
+      "theme": "medical",
+      "file": "assets/generated/hallway_medical_panorama.png",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "mode": "RGB",
+      "bytes": 2973302,
+      "transparent_background": false,
+      "prompt": "Use case: stylized-concept.\nAsset type: opaque, very wide horizontal-scrolling background panorama for a hand-inked grimdark side-scrolling dungeon RPG.\nComposition: landscape aspect ratio about 2.5:1, preferably 2560 by 1024. Camera looks directly sideways at the long rear wall, perpendicular to it, like a theatre stage side elevation. Architecture is spread in a sequence of different bays across the entire wide image. The player will walk LEFT TO RIGHT parallel to this wall. Absolutely no central passage receding into the distance and no single perspective vanishing point. Wall-to-floor seam is a straight horizontal line about 78 percent down the image; the bottom 22 percent is a clear, continuous, nearly flat walkway across the entire width. Keep floor clutter confined to the edges of the rear wall. Do not put pillars or large props in front of the walking strip. Slight atmospheric depth inside wall alcoves is fine.\nStyle/medium: original dark fantasy illustration, assertive thick uneven black ink outlines and graphic chipped shadow shapes, rough brush shading on stone and wood, restrained hand-painted muted colors, heavy dark shadows with a few fine luminous details. Gothic medieval gloom, readable architecture. Deliberately illustrated and rugged, never photographic or a 3D render. Keep the upper and outer margins dark, but visible wall texture throughout. Different shapes and motifs across the panorama to make motion immersive.\nLighting: subdued moody illumination, clear local pools of colored light against charcoal surfaces. Detailed but sufficiently dark for foreground hero silhouettes to remain legible.\nConstraints: background environment ONLY. No people, heroes, humanoid figures, creatures, faces, UI, logos, writing, lettering, text, watermarks. No composited game screenshot. Full bleed opaque image, no border, no transparent pixels. This is an original environment, not a recreation of any particular copyrighted game image.\nScene/backdrop: an abandoned medieval apothecary corridor infested by moths, walls of old stone with uneven timber shelves, apothecary jars containing vague cloudy tinctures, dangling dried herbs, rusty balances, weathered cabinet doors, dim lancet windows, fine silken infestation webbing and several suspended closed moth cocoons along the upper rear wall. No large insects and no creatures in the image. Alternating shelf alcoves and narrow doorways. Surfaces stained bone-white and gray-green with subtle old crimson stains on cloth, tiny sickly jade/cyan highlights from a few jars and muted ochre candles. Rough dark flagstone walking strip continuously unobstructed along the full width. Medical medieval ruin, uncanny infestation and quiet decay."
+    },
+    {
+      "theme": "gold_cache",
+      "file": "assets/generated/hallway_gold_cache.png",
+      "dimensions": [
+        1682,
+        935
+      ],
+      "mode": "RGBA",
+      "bytes": 1140647,
+      "transparent_background": true,
+      "prompt": "Use case: stylized-concept.\nAsset type: transparent game-world prop sprite for a grimdark hand-inked side-scrolling dungeon RPG.\nSubject: a small spill of aged bronze and gold coins beside a slumped, torn dark leather coin pouch with a broken cord. A believable tiny discovered gold cache lying on a dungeon floor.\nStyle: original hand-painted medieval dark fantasy prop, assertive thick uneven black ink outlines, rough chipped graphic shadows, dry brush leather folds, muted gray-brown leather and dull bronze gold. One to three tiny bright gold highlights make the treasure legible at small size. Not a clean glowing inventory icon.\nComposition: entire self-contained object visible, slight side-on three-quarter view, low wide silhouette about 1.8:1. Intended on-screen footprint roughly 180 pixels wide and 100 tall. Include about 25 percent transparent breathing room around the object's edges, with the object's base on a single flat horizontal line. Only tiny localized dark grounding marks under the pouch and coins, no broad floor, no stone slab or square backdrop.\nLighting: subdued warm edge highlights and heavy black internal shadow, matte and worn.\nConstraints: real alpha transparency, isolated cutout. No environment, characters, text, writing, symbols, logos, watermark, frame, border or UI. No neon aura, huge coin pile, floating coins, photorealism or 3D render.",
+      "runtime_atlas_region": [
+        85,
+        177,
+        1514,
+        594
+      ]
+    },
+    {
+      "theme": "campfire",
+      "file": "assets/generated/hallway_campfire.png",
+      "dimensions": [
+        1484,
+        1060
+      ],
+      "mode": "RGBA",
+      "bytes": 1093889,
+      "transparent_background": true,
+      "prompt": "Use case: stylized-concept.\nAsset type: transparent game-world prop sprite for a grimdark hand-inked side-scrolling dungeon RPG.\nSubject: a small sheltered campfire burning on several short dark split logs inside a low chipped stone circle. Modest red-amber flames, a few tiny orange embers, blackened firewood, soot-stained cracked gray stones. A quiet refuge in a hostile dungeon.\nStyle: original hand-painted medieval dark fantasy prop, heavy irregular black ink outlines, graphic chipped shadows, rough brush shading on charred wood and worn stone. Flames have crisp readable black/red/amber shapes with a small bright golden core. Detailed enough for close view, clear silhouette at small size.\nComposition: entire self-contained object visible, side-on three-quarter angle, low wide base and compact flame plume, overall width-to-height about 1.4:1. Intended on-screen footprint roughly 230 pixels wide and 160 tall. Include about 25 percent transparent breathing room around all object edges. Stone ring rests on a level baseline. No broad ground plane or backdrop.\nLighting: restrained warm light, only subtle localized falloff inside the stone circle, no large luminous halo that obscures the outline.\nConstraints: real alpha transparency, isolated cutout. No characters, tents, scenery, text, logos, watermark, frame, border or UI. No square floor tile, enormous bonfire, modern objects, photorealism or 3D render.",
+      "runtime_atlas_region": [
+        189,
+        128,
+        1129,
+        782
+      ]
+    }
+  ]
+}
