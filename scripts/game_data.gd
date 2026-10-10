@@ -6,6 +6,15 @@ static var graves: Array = []
 static var run_deeds: Dictionary = {}
 static var run_id: String = ""
 static var hero_names: Dictionary = {}
+static var hero_progress: Dictionary = {}
+const HERO_LEVEL_CAP: int = 10
+const TRAINING_STATS: Dictionary = {
+ "max_hp": {"name": "Vitality", "amount": 3, "description": "+3 maximum HP"},
+ "damage_percent": {"name": "Might", "amount": 4, "description": "+4% skill damage"},
+ "block": {"name": "Guard", "amount": 1, "description": "+1 block from block skills"},
+ "heal": {"name": "Restoration", "amount": 1, "description": "+1 healing from healing skills"},
+ "debuff_resist": {"name": "Resolve", "amount": 3, "description": "+3% resistance to debuff application"}
+}
 static var hero_colors: Dictionary = {}
 static var formation: Dictionary = {}
 static var modifications: Dictionary = {}
@@ -205,6 +214,7 @@ static func load_progression() -> void:
 	var config := ConfigFile.new()
 	if config.load(progress_path) == OK:
 		modifications = config.get_value("progress", "modifications", {})
+		hero_progress = config.get_value("progress", "hero_progress", {})
 		hero_names = config.get_value("progress", "hero_names", {})
 		hero_colors = config.get_value("progress", "hero_colors", {})
 		graves = config.get_value("progress", "graves", [])
@@ -217,6 +227,7 @@ static func save_progression() -> void:
 	if not progress_loaded:
 		return
 	var config := ConfigFile.new()
+	config.set_value("progress", "hero_progress", hero_progress)
 	config.set_value("progress", "graves", graves)
 	config.set_value("progress", "hero_names", hero_names)
 	config.set_value("progress", "hero_colors", hero_colors)
@@ -632,6 +643,75 @@ static func purchase_scroll(item_id: String) -> bool:
 	add_item(item_id)
 	return true
 
+# XP belongs to the hero, independently of equipment and forge upgrades.
+static func leveling(hero_id: String) -> Dictionary:
+	var raw: Dictionary = hero_progress.get(hero_id, {})
+	return {"level": clampi(int(raw.get("level", 1)), 1, HERO_LEVEL_CAP), "xp": maxi(0, int(raw.get("xp", 0))), "points": maxi(0, int(raw.get("points", 0))), "stats": raw.get("stats", {}).duplicate(true)}
+
+static func xp_required(level: int) -> int:
+	return 40 + (level - 1) * 25
+
+static func gain_hero_xp(hero_id: String, amount: int) -> int:
+	if not HEROES.has(hero_id) or amount <= 0 or (hero_id == "crusader" and not crusader_unlocked):
+		return 0
+	var progress: Dictionary = leveling(hero_id)
+	var previous: int = int(progress["level"])
+	progress["xp"] += amount
+	while int(progress["level"]) < HERO_LEVEL_CAP and int(progress["xp"]) >= xp_required(int(progress["level"])):
+		progress["xp"] -= xp_required(int(progress["level"]))
+		progress["level"] += 1
+		progress["points"] += 2
+	if int(progress["level"]) == HERO_LEVEL_CAP:
+		progress["xp"] = 0
+	hero_progress[hero_id] = progress
+	if run_heroes.has(hero_id):
+		# Growth increases capacity, without restoring lost health.
+		run_heroes[hero_id]["max_hp"] = hero_max_hp(hero_id)
+	save_progression()
+	return int(progress["level"]) - previous
+
+static func training_bonus(hero_id: String, stat: String) -> int:
+	var progress: Dictionary = leveling(hero_id)
+	var bonus: int = (int(progress["level"]) - 1) * 2 if stat == "max_hp" else 0
+	if TRAINING_STATS.has(stat):
+		bonus += clampi(int(progress["stats"].get(stat, 0)), 0, 6) * int(TRAINING_STATS[stat]["amount"])
+	return bonus
+
+static func hero_bonus(hero_id: String, stat: String) -> int:
+	return equipment_bonus(hero_id, stat) + training_bonus(hero_id, stat)
+
+static func train_hero(hero_id: String, stat: String) -> bool:
+	# Train in the settlement, never change combat stats during a run.
+	if run_active or not HEROES.has(hero_id) or not TRAINING_STATS.has(stat) or (hero_id == "crusader" and not crusader_unlocked):
+		return false
+	var progress: Dictionary = leveling(hero_id)
+	if int(progress["points"]) <= 0 or int(progress["stats"].get(stat, 0)) >= 6:
+		return false
+	progress["points"] -= 1
+	progress["stats"][stat] = int(progress["stats"].get(stat, 0)) + 1
+	hero_progress[hero_id] = progress
+	save_progression()
+	return true
+
+static func award_victory_xp() -> Dictionary:
+	var rewards: Dictionary = {}
+	if not run_active or floors.is_empty():
+		return rewards
+	var room: Dictionary = floors[floor_index][room_position]
+	if room.get("xp_awarded", false) or room.get("cleared", false) or room.get("kind", "") not in ["battle", "boss"]:
+		return rewards
+	room["xp_awarded"] = true
+	var amount: int = (35 if room["kind"] == "boss" else 12) + floor_index * 4
+	if room.get("corridor_surprise", false):
+		amount = 6 + floor_index * 2
+	for hero_id in party:
+		var state: Dictionary = run_heroes.get(hero_id, {})
+		if state.is_empty() or state.get("dead", false) or int(state.get("hp", 0)) <= 0:
+			continue
+		var gained: int = gain_hero_xp(str(hero_id), amount)
+		rewards[hero_id] = {"xp": amount, "levels": gained}
+	return rewards
+
 static func equipment_bonus(hero_id: String, stat: String) -> int:
 	var total: int = 0
 	for item_id in equipment.get(hero_id, {}).values():
@@ -651,7 +731,7 @@ static func hero_accuracy(hero_id: String, state: Dictionary = {}) -> float:
 static func try_hero_status(hero_id: String, statuses: Dictionary, status: String, potency: float = 1.0, roll: float = -1.0) -> bool:
 	# Poison resistance already reduces poison tick damage; generic resistance
 	# prevents application of any debuff. Bleed resistance prevents Bleed.
-	var resistance: int = equipment_bonus(hero_id, "debuff_resist")
+	var resistance: int = hero_bonus(hero_id, "debuff_resist")
 	if status == "bleed":
 		resistance += equipment_bonus(hero_id, "bleed_resist")
 	if (randf() * 100.0 if roll < 0.0 else roll) < clampi(resistance, 0, 100):
@@ -704,7 +784,7 @@ static func scouting_description(room: Dictionary) -> String:
 	return text
 
 static func hero_max_hp(hero_id: String) -> int:
-	return int(floor((int(hero(hero_id).get("max_hp", 40)) + equipment_bonus(hero_id, "max_hp")) * (1.0 + equipment_bonus(hero_id, "max_hp_percent") / 100.0)))
+	return int(floor((int(hero(hero_id).get("max_hp", 40)) + hero_bonus(hero_id, "max_hp")) * (1.0 + equipment_bonus(hero_id, "max_hp_percent") / 100.0)))
 
 static func sync_equipped_health(hero_id: String) -> void:
 	if run_heroes.has(hero_id):

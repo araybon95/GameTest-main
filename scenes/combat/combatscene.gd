@@ -203,6 +203,13 @@ func _check_battle_over() -> void:
 		battle_over = true
 		_add_log("VICTORY — all enemies defeated.")
 		_award_reward()
+		if GameState.run_active:
+			GameState.run_heroes = hero_state.duplicate(true)
+			var xp_rewards: Dictionary = GameState.award_victory_xp()
+			for id in xp_rewards:
+				hero_state[id]["max_hp"] = GameState.hero_max_hp(str(id))
+				_add_log("%s gains %d XP%s." % [GameState.hero(str(id))["name"], xp_rewards[id]["xp"], " — LEVEL %d! Train in the Barracks" % GameState.leveling(str(id))["level"] if xp_rewards[id]["levels"] > 0 else ""])
+
 		_offer_floor_entrance()
 	elif _standing_heroes().is_empty():
 		battle_over = true
@@ -319,7 +326,7 @@ func _play_card(hero_id: String, card_index: int) -> void:
 
 func _attack_damage(hero_id: String, card: Dictionary) -> int:
 	var dmg: int = int(card.get("damage", 0)) + int(hero_state[hero_id]["damage_mod"])
-	dmg += GameState.equipment_bonus(hero_id, "damage")
+	dmg += GameState.hero_bonus(hero_id, "damage")
 	if hero_id == "ranger" and GameState.rank_of(hero_id) == "rear":
 		dmg += 1
 	if hero_id == "warden" and enemy_mark_bonus > 0:
@@ -328,7 +335,7 @@ func _attack_damage(hero_id: String, card: Dictionary) -> int:
 		dmg += 2
 	if enemy_undead and card.has("undead_bonus"):
 		dmg += int(card["undead_bonus"])
-	dmg = int(floor(dmg * (1.0 + (GameState.equipment_bonus(hero_id, "damage_percent") + GameState.buff_bonus(hero_state[hero_id], "might")) / 100.0)))
+	dmg = int(floor(dmg * (1.0 + (GameState.hero_bonus(hero_id, "damage_percent") + GameState.buff_bonus(hero_state[hero_id], "might")) / 100.0)))
 	return Rules.damage_after_chill(dmg, hero_state[hero_id]["statuses"])
 
 
@@ -337,9 +344,9 @@ func _resolve_card(hero_id: String, card: Dictionary) -> void:
 	if hero_id in ["healer", "occultist"] and str(card["effect"]) in ["block", "heal", "team_heal", "team_block", "stress_heal", "weaken"]:
 		_play_attack_sound("spell")
 	if card.has("block"):
-		card["block"] = int(card["block"]) + GameState.equipment_bonus(hero_id, "block")
+		card["block"] = int(card["block"]) + GameState.hero_bonus(hero_id, "block")
 	if card.has("heal"):
-		card["heal"] = int(card["heal"]) + GameState.equipment_bonus(hero_id, "heal")
+		card["heal"] = int(card["heal"]) + GameState.hero_bonus(hero_id, "heal")
 	if presentation != null and card.get("effect", "") in ["heal", "team_heal", "pain_heal", "block", "team_block"]:
 		presentation.strike(hero_portraits[hero_id],hero_portraits[hero_id],"heal" if card.get("effect", "") in ["heal", "team_heal", "pain_heal"] else "block",str(card.get("name", "Ward")))
 	match str(card["effect"]):
@@ -873,7 +880,14 @@ func _refresh_hand() -> void:
 	for index in range(hand.size()):
 		var card_id: String = str(hand[index])
 		var card: Dictionary = GameState.card_stats(card_id)
-		var view: Button = _create_card_view(card_id, card)
+		# Display the same equipment and training bonuses used when resolving skills.
+		var preview: Dictionary = card.duplicate(true)
+		if preview.has("damage"):
+			preview["damage"] = _attack_damage(selected_hero, card)
+			preview.erase("undead_bonus")
+		for stat in ["block", "heal"]:
+			if preview.has(stat): preview[stat] = int(preview[stat]) + GameState.hero_bonus(selected_hero, stat)
+		var view: Button = _create_card_view(card_id, preview)
 		var cooldown: int = int(hero_state[selected_hero]["cooldowns"].get(card_id, 0))
 		view.disabled = battle_over or not _is_standing(selected_hero) or cooldown > 0 or int(hero_state[selected_hero]["ap"]) < int(card["cost"])
 		if card.get("effect", "") == "pain_heal" and int(hero_state[selected_hero]["hp"]) <= 2:
@@ -1166,7 +1180,7 @@ func _make_hero_card(hero_id: String) -> Button:
 	name_label.add_theme_constant_override("shadow_offset_x", 2)
 	name_label.add_theme_constant_override("shadow_offset_y", 2)
 	hero_name_labels[hero_id] = name_label
-	var class_label := _make_label(str(hero.get("class", hero["name"])), 14, Color("#D4B997"), true)
+	var class_label := _make_label("%s · Lv %d" % [hero.get("class", hero["name"]), GameState.leveling(hero_id)["level"]], 14, Color("#D4B997"), true)
 	class_label.name = "HeroClass"
 	_place(class_label, Rect2(8, 313, 234, 22))
 	button.add_child(class_label)

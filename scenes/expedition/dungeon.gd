@@ -142,7 +142,7 @@ func refresh() -> void:
 		button.size = Vector2(230, 200)
 		portrait_at(hero_id, Rect2(position + Vector2(10, 4), Vector2(210, 127)))
 		label_at(str(hero["name"]).to_upper(), position + Vector2(16, 133), 17 if hero_id == "crusader" else 22)
-		label_at("%d HP  ·  %d Stress%s" % [int(state.get("hp", hero["max_hp"])), int(state.get("stress", 0)), " · Slain" if state.get("dead", false) else ""], position + Vector2(16, 169), 16)
+		label_at("Lv %d · %d HP · %d Stress%s" % [GameState.leveling(hero_id)["level"],int(state.get("hp", hero["max_hp"])), int(state.get("stress", 0)), " · Slain" if state.get("dead", false) else ""], position + Vector2(16, 169), 16)
 
 func inspect_hero(hero_id: String) -> void:
 	if has_node("HeroInspection"):
@@ -159,7 +159,7 @@ func inspect_hero(hero_id: String) -> void:
 	var hero: Dictionary = GameState.hero(hero_id)
 	var state: Dictionary = GameState.run_heroes.get(hero_id, {})
 	label_at(str(hero["name"]).to_upper(), Vector2(60, 325), 24 if hero_id == "crusader" else 32)
-	label_at("Health  %d / %d\nStress  %d / 100\nDamage bonus  +%d\nBlock bonus  +%d\nHealing bonus  +%d\n%s" % [int(state.get("hp", GameState.hero_max_hp(hero_id))), GameState.hero_max_hp(hero_id), int(state.get("stress", 0)), GameState.equipment_bonus(hero_id, "damage"), GameState.equipment_bonus(hero_id, "block"), GameState.equipment_bonus(hero_id, "heal"), str(state.get("resolve_tag", ""))], Vector2(60, 385), 21)
+	label_at("Level %d · XP %d / %d\nHealth  %d / %d\nStress  %d / 100\nDamage bonus  +%d\nBlock bonus  +%d\nHealing bonus  +%d\n%s" % [GameState.leveling(hero_id)["level"], GameState.leveling(hero_id)["xp"], GameState.xp_required(GameState.leveling(hero_id)["level"]), int(state.get("hp", GameState.hero_max_hp(hero_id))), GameState.hero_max_hp(hero_id), int(state.get("stress", 0)), GameState.hero_bonus(hero_id, "damage"), GameState.hero_bonus(hero_id, "block"), GameState.hero_bonus(hero_id, "heal"), str(state.get("resolve_tag", ""))], Vector2(60, 385), 21)
 	label_at("EQUIPMENT", Vector2(390, 55), 28)
 	label_at("Trinket bonuses: +%d%% health · +%d%% skill damage · +%d%% accuracy\nBleed resist %d%% · Debuff resist %d%%" % [GameState.equipment_bonus(hero_id, "max_hp_percent"), GameState.equipment_bonus(hero_id, "damage_percent"), GameState.equipment_bonus(hero_id, "accuracy"), GameState.equipment_bonus(hero_id, "bleed_resist"), GameState.equipment_bonus(hero_id, "debuff_resist")], Vector2(390, 720), 17)
 	label_at("Select gear in inventory to equip. Click an equipped slot to remove.", Vector2(390, 105), 18)

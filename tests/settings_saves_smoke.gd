@@ -38,7 +38,7 @@ func run() -> void:
  assert(Routes.find(rooms,Vector2i.ZERO,Vector2i(3,0)).is_empty())
  change_scene_to_file("res://scenes/combat/combatscene.tscn")
  await settle()
- assert(current_scene.hero_buttons["warden"].get_node("HeroClass").text == "Warden")
+ assert(current_scene.hero_buttons["warden"].get_node("HeroClass").text == "Warden · Lv 1")
  assert(current_scene.hero_name_labels["warden"].text.contains("ALDEN"))
  var settings = root.get_node("GameSettings")
  settings.settings_path = "user://settings_test.cfg"

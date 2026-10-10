@@ -12,6 +12,8 @@ const GOLD = "#8F4546"
 const MUTED = "#B5A2A3"
 
 var _selected_slot: int = 0
+var training_panel: Control
+var training_hero: String = ""
 
 
 func _ready() -> void:
@@ -25,7 +27,10 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		_on_back_pressed()
+		if is_instance_valid(training_panel):
+			training_panel.queue_free()
+		else:
+			_on_back_pressed()
 
 
 func _refresh() -> void:
@@ -58,7 +63,15 @@ func _build_roster() -> void:
 		card.disabled = locked
 		card.tooltip_text = str(GameState.hero(str(hero_id)).get("lore", "")) + ("\nFree him from the spiked coffin on Old Road floor 2." if locked else "")
 		card.pressed.connect(_on_hero_pressed.bind(str(hero_id)))
-		container.add_child(card)
+		var column := VBoxContainer.new()
+		container.add_child(column)
+		column.add_child(card)
+		var train := Button.new()
+		train.text = "TRAIN · %d POINTS" % GameState.leveling(str(hero_id))["points"]
+		train.custom_minimum_size = Vector2(245, 48)
+		train.disabled = locked
+		train.pressed.connect(_show_training.bind(str(hero_id)))
+		column.add_child(train)
 
 
 func _on_slot_pressed(slot: int) -> void:
@@ -132,7 +145,7 @@ func _hero_card(hero_id: String, tag_text: String, highlighted: bool) -> Button:
 	var name_text: String = "—" if hero_id == "" else str(GameState.hero(hero_id).get("name", hero_id))
 	contents.add_child(_make_label(name_text, 21, Color(IVORY), true))
 	if hero_id != "":
-		contents.add_child(_make_label("Max HP %d" % int(GameState.hero(hero_id).get("max_hp", 0)), 17, Color(MUTED), true))
+		contents.add_child(_make_label("Level %d · HP %d" % [GameState.leveling(hero_id)["level"], GameState.hero_max_hp(hero_id)], 17, Color(MUTED), true))
 	contents.add_child(_make_label(tag_text, 17, Color(GOLD), true))
 	return card
 
@@ -161,3 +174,47 @@ func _load_texture(path: String) -> Texture2D:
 	if ResourceLoader.exists(path):
 		return load(path) as Texture2D
 	return null
+func _show_training(hero_id: String) -> void:
+	if is_instance_valid(training_panel):
+		remove_child(training_panel)
+		training_panel.queue_free()
+	training_hero = hero_id
+	var shade := ColorRect.new()
+	shade.color = Color(0, 0, 0, 0.85)
+	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(shade)
+	training_panel = shade
+	var panel := PanelContainer.new()
+	shade.add_child(panel)
+	panel.position = Vector2(470, 190)
+	panel.size = Vector2(980, 650)
+	panel.add_theme_stylebox_override("panel", _style(Color("#1B1218"), Color("#E6A095")))
+	var list := VBoxContainer.new()
+	list.add_theme_constant_override("separation", 16)
+	panel.add_child(list)
+	var progress: Dictionary = GameState.leveling(hero_id)
+	list.add_child(_make_label("%s · %s · LEVEL %d" % [GameState.hero(hero_id)["name"], GameState.hero(hero_id)["class"], progress["level"]], 28, Color(IVORY), true))
+	var xp_text: String = "MAXIMUM LEVEL" if progress["level"] == GameState.HERO_LEVEL_CAP else "%d / %d XP to next level" % [progress["xp"], GameState.xp_required(progress["level"])]
+	list.add_child(_make_label("%s · %d unspent points" % [xp_text, progress["points"]], 22, Color("#F4CE84"), true))
+	list.add_child(_make_label("Maximum HP: %d · Each level grants +2 HP and 2 training points" % GameState.hero_max_hp(hero_id), 20, Color(IVORY), true))
+	list.add_child(_make_label("Each upgrade costs 1 point. Maximum 6 upgrades per stat.", 19, Color(MUTED), true))
+	for stat in GameState.TRAINING_STATS:
+		var definition: Dictionary = GameState.TRAINING_STATS[stat]
+		var ranks: int = int(progress["stats"].get(stat, 0))
+		var button := Button.new()
+		button.custom_minimum_size = Vector2(0, 56)
+		button.add_theme_font_size_override("font_size", 21)
+		button.text = "%s  [%d/6]   %s   —   +" % [definition["name"], ranks, definition["description"]]
+		button.disabled = progress["points"] <= 0 or ranks >= 6 or GameState.run_active
+		button.pressed.connect(_spend_training.bind(hero_id, str(stat)))
+		list.add_child(button)
+	var close := Button.new()
+	close.text = "RETURN TO ROSTER"
+	close.custom_minimum_size.y = 48
+	close.pressed.connect(func(): training_panel.queue_free())
+	list.add_child(close)
+
+func _spend_training(hero_id: String, stat: String) -> void:
+	if GameState.train_hero(hero_id, stat):
+		_refresh()
+		_show_training(hero_id)
