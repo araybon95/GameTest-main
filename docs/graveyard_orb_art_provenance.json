@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-10",
+  "generator": "Built-in imagegen",
+  "intent": "Match the game's existing ink-painted grimdark scenery and event props.",
+  "viewed_style_references": [
+    "assets/generated/bandit_battle_stage.png",
+    "assets/generated/building_barracks.png",
+    "assets/generated/event_bandit_strongbox.png"
+  ],
+  "assets": [
+    {
+      "path": "assets/generated/merchant_orb_ink.png",
+      "transparent_background": true,
+      "prompt": "Use case: stylized-concept. Asset type: finished transparent sprite for a grimdark 2D dungeon RPG, matching hand-painted comic ink scenery with heavy jagged black outlines and muted color blocks. Subject: a merchant's portal orb seated in a weathered medieval stone and blackened wrought-iron pedestal, complete object from top to base in a front three-quarter view. The orb is dark cold blue cracked smoky glass containing a small luminous cyan spiral, with a few tiny nearly neon cyan edge details. The pedestal has rough chipped stone, corroded iron claw supports, angular gothic arches, scratched bronze trim, visible hand-inked hatching and painted wear. Keep the main silhouette dark and readable, thick expressive black contours, hard-edged shadow shapes, restrained cold cyan illumination on adjacent iron and stone, no smooth vector gradients, no glossy modern sci-fi object, no photographic rendering, no clean plastic surfaces. Portrait composition with entire pedestal and foot visible, centered with modest transparent margin. Genuinely transparent alpha background; no backdrop, checkerboard, ground rectangle, UI, readable text, characters, logos or watermark. This will be a clickable room prop about 380x450 screen pixels beside 330px heroes, so bold silhouette and coherent stone/iron construction matter."
+    },
+    {
+      "path": "assets/generated/graveyard_ink_background.png",
+      "transparent_background": false,
+      "prompt": "Use case: stylized-concept. Asset type: full-screen background painting for a grimdark 2D medieval RPG graveyard memorial screen. Widescreen 16:9 composition intended for 1920x1080. Hand-painted dark graphic-novel ink style, very bold jagged black outlines, crosshatched worn stone, broken angular shadow shapes, desaturated charcoal, umber, muted slate violet and bone ivory, a few small amber candle highlights, matching an ink-painted ruined village dungeon scene. A neglected village cemetery at dusk with a crooked wrought-iron gate, clustered chipped headstones, old grave slabs, dead brambles and leaning bare trees. The principal grave markers and gate occupy the LEFT 43 percent, fully visible and well-grounded with depth; a distant ruined chapel and dark hill shapes behind. The RIGHT 57 percent is low-detail dark mist, earth and subdued distant stone silhouettes, intentionally quiet for readable memorial ledger UI that will be drawn by the game. Foreground gravestones should be visually detailed and legible in silhouette, pale edges over heavy ink shadows. Melancholy, dignified, grim and medieval, no cartoon faces, no modern elements, no smooth vector gradients, no photographic rendering. No people, creatures, readable writing, letters, title, UI panels, logos or watermark. Leave tombstone faces as distressed stone without readable epitaphs."
+    },
+    {
+      "path": "assets/generated/graveyard_ink_marker.png",
+      "transparent_background": true,
+      "prompt": "Use case: stylized-concept. Asset type: transparent painted settlement map sprite for a grimdark 2D medieval RPG, about 195x170 on screen. A complete compact graveyard cluster in front three-quarter perspective: one tall cracked arched headstone with a simple worn sword-carving, two lower leaning stone markers and a grave slab, sparse dried brambles, a short crooked segment of black iron fence behind, rooted on a small irregular patch of earth. Weathered grey-brown stone and parchment-bone chipped edges, charcoal black iron, rusty umber soil. Bold hand-painted graphic novel ink, thick irregular black contours, hard angular shadows and crosshatched cracks, restrained small warm highlights. Clear cemetery silhouette at small scale, visually compatible with hand-inked gothic ruined village buildings. Landscape-ish near 195:170 aspect with full object and base inside modest transparent margins. Genuinely transparent alpha background, no background scenery or square ground plane, no checkerboard. No people, creatures, readable text, UI, logos or watermark. Avoid smooth flat vector shapes, shiny plastic or photographic rendering."
+    }
+  ]
+}

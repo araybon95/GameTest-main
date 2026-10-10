@@ -20,7 +20,7 @@ const ART_GLOW = "res://assets/generated/glow_warm.png"
 ## `expeditions: true` opens the expedition list; `locked: true` shows a sealed
 ## note. Listed back-to-front: the road is last so it sits in front.
 const BUILDINGS: Array[Dictionary] = [
-	{"id": "graveyard", "name": "The Graveyard", "subtitle": "Names and deeds of those who fell", "pos": [350, 580], "size": [195, 170], "highlight": Color("#B8C4B7"), "highlight_art": "res://assets/generated/graveyard.svg", "scene": "res://scenes/hub/graveyard.tscn", "locked": false},
+	{"id": "graveyard", "name": "The Graveyard", "subtitle": "Names and deeds of those who fell", "pos": [350, 580], "size": [195, 170], "highlight": Color("#B8C4B7"), "glow_scale": 1.0, "highlight_art": "res://assets/generated/graveyard_ink_marker.png", "scene": "res://scenes/hub/graveyard.tscn", "locked": false},
 	{
 		"id": "apothecary", "name": "The Infested Apothecary", "subtitle": "Clear four rooms to restore the medical ward",
 		"pos": [635, 305], "size": [175, 205], "highlight": Color("#8CDDAD"), "glow_scale": 0.9,
@@ -239,11 +239,18 @@ func _make_hotspot(building: Dictionary) -> Button:
 	button.add_child(idle)
 	if building.get("id", "") == "graveyard":
 		var stones := TextureRect.new()
-		stones.texture = _load_texture("res://assets/generated/graveyard.svg")
+		stones.name = "CemeteryMarker"
+		stones.texture = _building_texture(building)
 		stones.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		stones.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		stones.size = footprint
 		stones.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		# Bring the standalone painted cluster into the town's subdued dusk light.
+		stones.modulate = Color(0.73,0.70,0.67)
+		var cemetery_ink := ShaderMaterial.new()
+		cemetery_ink.shader = preload("res://scripts/ink_art.gdshader")
+		stones.material = cemetery_ink
+		highlight.material = cemetery_ink
 		button.add_child(stones)
 
 	# Name + purpose, revealed on hover (Darkest Dungeon style).

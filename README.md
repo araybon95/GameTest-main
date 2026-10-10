@@ -6,6 +6,8 @@ Preparation and floor entrances now show party readiness and recovery advice. Li
 
 Merchant rooms now lead to a clickable orb event after victory, then the Emporium and back to the same room. The Emporium has buy/sell tabs, filters and sorting; spare inventory copies sell for 25% of their value. Rare, epic and unique equipment costs 40, 100 and 150 gold. Combat skills have brighter hover frames and inspection cards showing effects, AP, ranks and availability reasons. See [Equipment economy, merchant orbs and skill inspection](docs/economy_and_skills.md).
 
+The Graveyard and merchant orb now match the painted grimdark scenery, with worn stone and iron, readable memorial records and a cyan silhouette highlight on the orb. See [Graveyard and orb visuals](docs/graveyard_orb_visuals.md) for the replaceable artwork and production prompts.
+
 A Godot 4.7.2 party RPG with shared turns and multi-floor expeditions. The original project code is licensed under the MIT License; see [`LICENSE`](LICENSE). Third-party assets are not covered by that license and remain subject to their own terms. In particular, see `Sound FX Starter Pack Vol. 1/Royalty-Free License (Link).pdf` for the included audio pack's license. (Assets not currently in use but saved for future)
 
 ## Running the game
