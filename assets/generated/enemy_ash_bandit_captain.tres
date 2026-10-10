@@ -1,0 +1,9 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/generated/enemy_ash_bandit_captain_combat_sheet.png" id="1"]
+
+[resource]
+atlas = ExtResource("1")
+region = Rect2(10, 80, 757, 636)
+filter_clip = true
+metadata/pose_id = "captain"

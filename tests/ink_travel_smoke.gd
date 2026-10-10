@@ -13,7 +13,7 @@ func run() -> void:
  await process_frame
  assert(passage.walkers.size() == 3 and passage.walk_frames.size() == 5)
  for id in State.HEROES:
-  assert(passage.walk_frames[id].size() == 2)
+  assert(passage.walk_frames[id].size() == 4)
   for frame in passage.walk_frames[id]: assert(frame.get_width() > 0 and frame.get_height() > 0)
  var start: float = passage.scenery.position.x
  await create_timer(0.25).timeout

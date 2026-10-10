@@ -860,7 +860,7 @@ func _refresh_all() -> void:
 	hand_title.text = "ABILITIES  ·  %d / 2 AP" % int(hero["ap"])
 	selected_portrait.texture = _load_texture(str(GameState.hero(selected_hero).get("art", "")))
 	_sync_portrait(selected_portrait, hero)
-	selected_info.text = "%s\n\nHealth  %d / %d\nStress  %d / 100\nBlock  %d\nAction points  %d / 2\n%s" % [str(hero["name"]).to_upper(), int(hero["hp"]), int(hero["max_hp"]), int(hero["stress"]), int(hero["block"]), int(hero["ap"]), "DEATH'S DOOR" if hero["deaths_door"] else str(hero["resolve_tag"])]
+	selected_info.text = "%s\nHealth  %d / %d\nStress  %d / 100\nBlock  %d\nAction points  %d / 2\n%s" % [str(hero["name"]).to_upper(), int(hero["hp"]), int(hero["max_hp"]), int(hero["stress"]), int(hero["block"]), int(hero["ap"]), "DEATH'S DOOR" if hero["deaths_door"] else str(hero["resolve_tag"])]
 	selected_info.text += "\n" + Rules.status_text(hero["statuses"]) + "\n" + GameState.buff_text(hero)
 	var role_hint: Label = get_node("SelectedHeroInfo").find_child("RoleHint", true, false) as Label
 	if role_hint != null:
@@ -901,6 +901,7 @@ func _refresh_all() -> void:
 		hero_stat_labels[hero_id].tooltip_text = Rules.status_text(state["statuses"])
 		(hero_buttons[hero_id].get_node("Effects") as Label).text = Rules.status_text(state["statuses"]) + "\n" + GameState.buff_text(state) + (" · MARKED" if int(state.get("enemy_mark",0)) > 0 else "")
 
+		hero_buttons[hero_id].get_node("StatusStrip").sync(state["statuses"],0,int(state.get("enemy_mark",0)))
 		var button: Button = hero_buttons[hero_id]
 		var health: ProgressBar = hero_health_bars[hero_id]
 		health.max_value = int(state["max_hp"])
@@ -947,10 +948,10 @@ func _refresh_hand() -> void:
 			(view.get_node("Contents/Effect") as Label).text = "READY IN %d TURN(S)" % cooldown
 		view.pressed.connect(_play_card.bind(selected_hero, index))
 		hand_container.add_child(view)
-		var card_width: float = 220.0
-		var card_position: Vector2 = Vector2((index % 3) * 234.0, (index / 3) * 178.0)
+		var card_width: float = 280.0
+		var card_position: Vector2 = Vector2((index % 3) * 292.0, (index / 3) * 158.0)
 		view.position = card_position
-		view.size = Vector2(card_width, 170.0)
+		view.size = Vector2(card_width, 148.0)
 		view.z_index = index
 	if hand.is_empty():
 		var empty_label: Label = _make_label("No abilities equipped.", 23, Color(MUTED))
@@ -1113,13 +1114,13 @@ func _layout_combat() -> void:
 	_place(enemy_intent_label, Rect2(20, 325, 400, 40))
 	enemy_intent_label.add_theme_font_size_override("font_size", 19)
 	_place($Enemy/HealthBar, Rect2(20, 370, 400, 18))
-	_place(hand_title, Rect2(550, 665, 800, 35))
-	_place($CardHand, Rect2(550, 710, 800, 355))
+	_place(hand_title, Rect2(520, 685, 900, 35))
+	_place($CardHand, Rect2(520, 730, 900, 312))
 	hand_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_place(end_turn_button, Rect2(1470, 950, 400, 80))
 	var info_panel := PanelContainer.new()
 	info_panel.name = "SelectedHeroInfo"
-	_place(info_panel, Rect2(40, 645, 470, 410))
+	_place(info_panel, Rect2(40, 685, 450, 300))
 	_style_card_backing(info_panel, Color("#151213"), Color(GOLD))
 	add_child(info_panel)
 	var info_contents := Control.new()
@@ -1127,32 +1128,32 @@ func _layout_combat() -> void:
 	selected_portrait = TextureRect.new()
 	selected_portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	selected_portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	_place(selected_portrait, Rect2(0, 0, 180, 260))
+	_place(selected_portrait, Rect2(0, 0, 135, 205))
 	info_contents.add_child(selected_portrait)
 	StatusVisual.new().attach_to(selected_portrait)
-	selected_info = _make_label("", 22, Color(IVORY))
-	_place(selected_info, Rect2(190, 10, 250, 340))
+	selected_info = _make_label("", 19, Color(IVORY))
+	_place(selected_info, Rect2(145, 4, 280, 235))
 	selected_info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	info_contents.add_child(selected_info)
 	var hint := _make_label("Select a hero below to inspect their abilities.\nHeroes act in any order during the party turn.", 18, Color(MUTED))
 	hint.name = "RoleHint"
-	_place(hint, Rect2(8, 305, 430, 60))
+	_place(hint, Rect2(8, 235, 425, 50))
 	info_contents.add_child(hint)
 	formation_button = Button.new()
 	formation_button.name = "FormationButton"
-	_place(formation_button, Rect2(55, 1015, 212, 35))
+	_place(formation_button, Rect2(40, 1004, 214, 42))
 	formation_button.add_theme_font_size_override("font_size", 18)
 	formation_button.pressed.connect(move_position.bind(-1))
 	add_child(formation_button)
 	withdraw_button = Button.new()
 	withdraw_button.name = "WithdrawButton"
-	_place(withdraw_button,Rect2(278,1015,212,35))
+	_place(withdraw_button,Rect2(266,1004,224,42))
 	withdraw_button.text = "← FALL BACK · 1 AP"
 	withdraw_button.add_theme_font_size_override("font_size",18)
 	withdraw_button.pressed.connect(move_position.bind(1))
 	add_child(withdraw_button)
 	var log_panel := PanelContainer.new()
-	_place(log_panel, Rect2(1460, 655, 420, 265))
+	_place(log_panel, Rect2(1460, 685, 420, 245))
 	_style_card_backing(log_panel, Color("#151213"), Color(GOLD))
 	add_child(log_panel)
 	var scroll := ScrollContainer.new()
@@ -1163,13 +1164,13 @@ func _layout_combat() -> void:
 	log_container.custom_minimum_size = Vector2(375, 0)
 	log_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var caption := _make_label("BATTLE LOG", 24, Color(IVORY))
-	_place(caption, Rect2(1460, 605, 400, 40))
+	_place(caption, Rect2(1460, 635, 400, 40))
 	add_child(caption)
 	var scroll_title := _make_label("PARTY CONSUMABLES", 20, Color(IVORY))
-	_place(scroll_title, Rect2(820, 575, 550, 30))
+	_place(scroll_title, Rect2(520, 600, 900, 30))
 	add_child(scroll_title)
 	var scroll_strip := ScrollContainer.new()
-	_place(scroll_strip, Rect2(820, 610, 550, 50))
+	_place(scroll_strip, Rect2(520, 640, 900, 40))
 	scroll_strip.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	add_child(scroll_strip)
 	scroll_container = HBoxContainer.new()
@@ -1265,13 +1266,18 @@ func _make_hero_card(hero_id: String) -> Button:
 	effects.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_place(effects, Rect2(8, 406, 234, 28))
 	button.add_child(effects)
+	var badges = preload("res://scenes/combat/status_strip.gd").new()
+	badges.name = "StatusStrip"
+	_place(badges,Rect2(12,405,226,26))
+	button.add_child(badges)
+	effects.visible = false
 	return button
 
 
 func _create_card_view(card_id: String, card: Dictionary) -> Button:
 	var button := Button.new()
 	button.name = "Card_%s" % card_id
-	button.custom_minimum_size = Vector2(220.0, 170.0)
+	button.custom_minimum_size = Vector2(280.0, 148.0)
 	_style_card_backing(button, Color("#151213"), Color(GOLD))
 	var contents := Control.new()
 	contents.name = "Contents"
@@ -1279,7 +1285,7 @@ func _create_card_view(card_id: String, card: Dictionary) -> Button:
 	button.add_child(contents)
 	var header_label := _make_label("", 17, Color(IVORY), true)
 	header_label.name = "Header"
-	_place(header_label, Rect2(8, 8, 204, 42))
+	_place(header_label, Rect2(7, 6, 266, 30))
 	header_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	contents.add_child(header_label)
 	var art_frame := Control.new()
@@ -1291,16 +1297,16 @@ func _create_card_view(card_id: String, card: Dictionary) -> Button:
 	picture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	picture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	picture.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_place(picture, Rect2(10, 62, 45, 65))
+	_place(picture, Rect2(10, 42, 62, 72))
 	art_frame.add_child(picture)
 	var effect_label := _make_label("", 14, Color(MUTED), true)
 	effect_label.name = "Effect"
-	_place(effect_label, Rect2(5, 148, 210, 20))
+	_place(effect_label, Rect2(5, 125, 270, 20))
 	contents.add_child(effect_label)
 	var description_label := _make_label("", 15 if card_id.begins_with("pc_") else 17, Color(IVORY))
 	description_label.name = "Description"
 	description_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_place(description_label, Rect2(63, 60, 148, 86))
+	_place(description_label, Rect2(82, 40, 187, 85))
 	contents.add_child(description_label)
 	button.visible = true
 	button.tooltip_text = GameState.card_description(card) + " Cooldown: %d full party turn(s)." % GameState.ability_cooldown(card_id)
@@ -1309,9 +1315,8 @@ func _create_card_view(card_id: String, card: Dictionary) -> Button:
 	if level > 0:
 		header += " ★%d" % level
 	(button.get_node("Contents/Header") as Label).text = header
-	var art_path: String = CARD_ART_DIR + card_id + ".png"
-	if card_id.begins_with("pc_"):
-		art_path = "res://assets/items/crusader_axe.svg" if card.get("effect", "") in ["attack", "barbed_charge"] else "res://assets/items/crusader_armor.svg"
+	var art_path: String = "res://assets/ui/skills/%s.svg" % card_id
+	if not ResourceLoader.exists(art_path): art_path = CARD_ART_DIR + card_id + ".png"
 	picture.texture = _load_texture(art_path)
 	picture.visible = picture.texture != null
 	(button.get_node("Contents/Effect") as Label).text = "Cooldown: %d %s" % [GameState.ability_cooldown(card_id), "turn" if GameState.ability_cooldown(card_id) == 1 else "turns"] if GameState.ability_cooldown(card_id) > 0 else "No cooldown"
@@ -1346,6 +1351,11 @@ func _style_card_backing(control: Control, fill: Color, outline: Color) -> void:
 		style_box.set_border_width_all(0)
 		style_box.border_width_bottom = 0
 		style_box.shadow_size = 0
+	if fill.a > 0.0 and not (control is Button and (control.name.begins_with("Hero_") or control.name.begins_with("Enemy"))):
+		style_box.border_color = Color("#454952")
+		style_box.border_width_top = 2
+		if not control.has_node("IronFittings"):
+			control.add_child(preload("res://scenes/combat/iron_frame.gd").new())
 	if control is PanelContainer:
 		(control as PanelContainer).add_theme_stylebox_override("panel", style_box)
 	elif control is Button:
@@ -1444,6 +1454,12 @@ func _build_enemy_cards() -> void:
 		(view.get_node("EnemyIntent") as Label).add_theme_font_size_override("font_size", 12)
 		(view.get_node("EnemyIntent") as Label).autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		_place(view.get_node("HealthBar"), Rect2(12, 408, 226, 14))
+		var badges = view.get_node_or_null("StatusStrip")
+		if badges == null:
+			badges = preload("res://scenes/combat/status_strip.gd").new()
+			badges.name = "StatusStrip"
+			view.add_child(badges)
+		_place(badges,Rect2(12,430,226,26))
 		enemy_views.append(view)
 	# Connect after duplication so each button selects only its own target.
 	for index in range(enemy_views.size()):
@@ -1468,6 +1484,7 @@ func _refresh_enemies() -> void:
 		intent.text = ("Stage %d / 3\n" % (int(entry.get("phase_index", 0)) + 1) if entry.has("phase_creatures") else "") + _enemy_intent_text() + "\n" + Rules.status_text(entry["statuses"])
 		if not entry["boss"]:
 			label.text = label.text.replace("\nHP", "\n" + GameState.Depth.role(str(entry["creature"]),bool(entry["support"])) + "\nHP")
+		view.get_node("StatusStrip").sync(entry["statuses"],int(entry.get("weak",0)))
 		intent.text = intent.text.strip_edges()
 		var boss_hint: String = GameState.Mechanics.boss_hint(str(entry["creature"]), round_number)
 		if not boss_hint.is_empty():

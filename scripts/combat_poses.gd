@@ -1,6 +1,8 @@
 extends RefCounted
 ## Each independently replaceable image contains an attack and a hurt pose.
 const POSES = {
+ "hero_ranger.tres":"ranger", "hero_occultist.tres":"occultist", "hero_healer.tres":"healer",
+ "enemy_gallows_scout.tres":"scout", "enemy_ash_bandit_captain.tres":"captain",
  "hero_warden.png":"warden", "hero_ranger.png":"ranger", "hero_occultist.png":"occultist",
  "hero_healer.png":"healer", "hero_crusader.tres":"crusader",
  "enemy_ash_raider.png":"raider", "enemy_gallows_scout.png":"scout", "enemy_ash_bandit_captain.png":"captain",
@@ -9,12 +11,14 @@ const POSES = {
  "enemy_anguish_vessel.png":"vessel", "enemy_harrowed_giant.png":"giant", "enemy_coterie_seamkeeper.png":"seamkeeper",
  "enemy_hollow_villager.png":"villager", "enemy_bone_rabble.png":"skeleton"
 }
+const InkRegions = preload("res://scripts/ink_sprite_regions.gd")
 static var cache: Dictionary = {}
 const Regions = preload("res://scripts/combat_pose_regions.gd")
 static func pose(original: Texture2D, hurt: bool = false) -> Texture2D:
  if original == null: return null
  var key: String = original.resource_path.get_file()
  if not POSES.has(key): return original
+ if InkRegions.COMBAT.has(POSES[key]): return state_pose(original,"hurt" if hurt else "attack")
  var pose_key: String = key + ("/hurt" if hurt else "/attack")
  if cache.has(pose_key): return cache[pose_key]
  var id: String = POSES[key]
@@ -30,4 +34,23 @@ static func pose(original: Texture2D, hurt: bool = false) -> Texture2D:
  texture.region = Rect2(region.position + bounds.position,bounds.size)
  texture.filter_clip = true
  cache[pose_key] = texture
+ return texture
+
+static func state_pose(original: Texture2D, state: String = "idle") -> Texture2D:
+ if original == null: return null
+ if state == "idle": return original
+ var key: String = original.resource_path.get_file()
+ var id: String = str(original.get_meta("pose_id",POSES.get(key,"")))
+ if not InkRegions.COMBAT.has(id):
+  return original if state == "guard" else pose(original,state == "hurt")
+ var index: int = {"attack":1,"cast":2,"guard":3,"hurt":4}.get(state,0) if InkRegions.COMBAT[id].size() == 6 else {"attack":1,"cast":1,"guard":0,"hurt":2}.get(state,0)
+ var cache_key: String = id+"/"+state
+ if cache.has(cache_key): return cache[cache_key]
+ var texture := AtlasTexture.new()
+ texture.atlas = load(InkRegions.SHEETS[id])
+ texture.region = InkRegions.COMBAT[id][index]
+ texture.filter_clip = true
+ texture.set_meta("pose_id",id)
+ texture.set_meta("idle_pixel_height",InkRegions.COMBAT[id][0].size.y)
+ cache[cache_key] = texture
  return texture

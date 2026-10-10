@@ -73,13 +73,17 @@ func next() -> void:
  canvas.name = "StrikeCanvas"
 func apply_pose(index: int, role: String, changed: bool, hurt: bool = false) -> Vector2:
  var original: Texture2D = active[role]
- var texture: Texture2D = Poses.pose(original,hurt) if changed else original
+ var state: String = "hurt" if hurt else "guard" if active["attack_kind"] == "block" else "cast" if active["attack_kind"] in ["spell","heal"] else "attack"
+ var texture: Texture2D = Poses.state_pose(original,state) if changed else original
  var fighter: TextureRect = fighters[index]
  fighter.texture = texture
  fighter.flip_h = changed and not hurt and texture.resource_path.get_file() in ["hero_warden.png","hero_crusader.tres"]
  var base_size: Vector2 = active[role + "_size"]
- var height: float = base_size.y * (0.92 if changed and hurt else 1.0)
- var width: float = minf(400.0,height * texture.get_width()/float(maxi(1,texture.get_height())))
+ var height: float = base_size.y * (texture.get_height()/float(texture.get_meta("idle_pixel_height",texture.get_height())) if changed and texture.has_meta("idle_pixel_height") else 0.92 if changed and hurt else 1.0)
+ var width: float = height * texture.get_width()/float(maxi(1,texture.get_height()))
+ if width > 480.0:
+  height *= 480.0/width
+  width = 480.0
  fighter.size = Vector2(width,height)
  fighter.pivot_offset = Vector2(width*0.5,height)
  # Every pose keeps its feet on the same ground plane.
@@ -92,7 +96,7 @@ func _process(delta: float) -> void:
   return
  var hero: bool = active["hero"]
  var direction: float = 1.0 if hero else -1.0
- var source_position: Vector2 = apply_pose(0,"source",age >= 0.11 and age < 0.60,active["attack_kind"] == "block")
+ var source_position: Vector2 = apply_pose(0,"source",age >= 0.11 and age < 0.60)
  var harmful: bool = active["attack_kind"] not in ["heal","block"] and active.get("reaction", "hurt") not in ["miss","block"] and active["source_node"] != active["target_node"]
  var target_position: Vector2 = apply_pose(1,"target",harmful and age >= 0.28 and age < 0.64,true)
  # A brief held contact pose makes each impact readable before recoil.

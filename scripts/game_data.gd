@@ -75,17 +75,17 @@ const HEROES: Dictionary = {
 		"abilities": ["wd_slash", "wd_guard", "wd_bash", "wd_rally", "wd_heavy"],
 	},
 	"ranger": {
-		"name": "Ranger", "max_hp": 38, "art": "res://assets/generated/hero_ranger.png",
+		"name": "Ranger", "max_hp": 38, "art": "res://assets/generated/hero_ranger.tres",
 		"camp_art": "res://assets/generated/hero_ranger_camp.png",
 		"abilities": ["rg_quick", "rg_dodge", "rg_mark", "rg_pierce", "rg_volley"],
 	},
 	"occultist": {
-		"name": "Occultist", "max_hp": 34, "art": "res://assets/generated/hero_occultist.png",
+		"name": "Occultist", "max_hp": 34, "art": "res://assets/generated/hero_occultist.tres",
 		"camp_art": "res://assets/generated/hero_occultist_camp.png",
 		"abilities": ["oc_hex", "oc_veil", "oc_weak", "oc_drain", "oc_blast"],
 	},
 	"healer": {
-		"name": "Healer", "max_hp": 42, "art": "res://assets/generated/hero_healer.png",
+		"name": "Healer", "max_hp": 42, "art": "res://assets/generated/hero_healer.tres",
 		"camp_art": "res://assets/generated/hero_healer_camp.png",
 		"abilities": ["hl_smite", "hl_turn", "hl_mend", "hl_blessing", "hl_ward", "hl_solace"],
 	},
@@ -121,12 +121,12 @@ const CREATURES: Dictionary = {
 	},
 	"gallows_scout": {
 		"name": "Gallows Scout", "tags": ["Human", "Bandit"], "undead": false,
-		"hp": 46, "attack": 10, "art": "res://assets/generated/enemy_gallows_scout.png",
+		"hp": 46, "attack": 10, "art": "res://assets/generated/enemy_gallows_scout.tres",
 		"lore": "The gang's watchful hunter waits beneath the gallows, marking travelers for the cleaver.",
 	},
 	"ash_chieftain": {
 		"name": "Gallows Chieftain", "tags": ["Human", "Bandit", "Boss"], "undead": false,
-		"hp": 82, "attack": 10, "art": "res://assets/generated/enemy_ash_bandit_captain.png",
+		"hp": 82, "attack": 10, "art": "res://assets/generated/enemy_ash_bandit_captain.tres",
 		"lore": "A scarred tyrant who binds the road gangs through terror. His shield is patched with the possessions of those who refused to kneel.",
 	},
 	"hollow_villager": {
