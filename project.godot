@@ -17,6 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+GothicPresentation="*res://scripts/gothic_presentation.gd"
+
 GameSettings="*res://scripts/game_settings.gd"
 
 [display]

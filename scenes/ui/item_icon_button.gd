@@ -55,7 +55,7 @@ func configure(id: String, amount: int = 1) -> void:
 func _make_custom_tooltip(for_text: String) -> Object:
 	var panel := PanelContainer.new()
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color("#161017")
+	style.bg_color = Color("#0C0A0E")
 	style.border_color = Color(str(Items.RARITY_COLORS.get(Items.item(item_id).get("rarity", ""), "#8F4546")))
 	style.set_border_width_all(2)
 	style.set_content_margin_all(16)
@@ -65,6 +65,9 @@ func _make_custom_tooltip(for_text: String) -> Object:
 	label.custom_minimum_size = Vector2(380, 0)
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label.add_theme_font_size_override("font_size", 20)
-	label.add_theme_color_override("font_color", Color("#EADDD0"))
+	label.add_theme_color_override("font_color", Color("#FFFFFF"))
+	label.add_theme_color_override("font_shadow_color", Color("#000000"))
+	label.add_theme_constant_override("shadow_offset_x", 1)
+	label.add_theme_constant_override("shadow_offset_y", 1)
 	panel.add_child(label)
 	return panel

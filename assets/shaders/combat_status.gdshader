@@ -13,6 +13,11 @@ void fragment() {
 	float pulse = 0.5 + 0.5 * sin(TIME * 4.0);
 	float grain = fract(sin(dot(floor(UV * 95.0), vec2(12.9898, 78.233))) * 43758.5453);
 	vec3 color = base.rgb;
+ // Keep bright faces readable while reducing smooth gradients to inked washes.
+ float ink_luma = dot(color, vec3(0.299,0.587,0.114));
+ float bands = floor(ink_luma * 10.0 + 0.5) / 10.0;
+ color *= mix(1.0, bands / max(ink_luma,0.025), 0.2);
+ color = clamp((color - 0.5) * 1.06 + 0.52,0.0,1.0);
 	// Effects stay inside the original sprite's alpha silhouette.
 	float charred = burn * (0.13 + grain * 0.12);
 	color *= 1.0 - charred;

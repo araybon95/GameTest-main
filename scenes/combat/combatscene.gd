@@ -1,4 +1,5 @@
 extends Control
+var presentation: Control
 var combat_audio: Node
 func _play_attack_sound(kind: String) -> void:
 	if combat_audio == null:
@@ -22,9 +23,9 @@ var enemy_views: Array[Button] = []
 var selected_enemy_index: int = 0
 var acting_enemy_index: int = 0
 
-const GOLD = "#8F4546"
-const IVORY = "#EADDD0"
-const MUTED = "#B5A2A3"
+const GOLD = "#A88B5D"
+const IVORY = "#F0E2C4"
+const MUTED = "#B9AA91"
 const RED = "#DF7870"
 const VIRTUE_COLOR = "#8FB07A"
 const AFFLICTION_COLOR = "#C25A55"
@@ -89,6 +90,8 @@ func _ready() -> void:
 		return
 	_apply_expedition()
 	_build_interface()
+	presentation = preload("res://scenes/combat/combat_presentation.gd").new()
+	add_child(presentation)
 	_start_battle()
 
 
@@ -336,6 +339,8 @@ func _resolve_card(hero_id: String, card: Dictionary) -> void:
 		card["block"] = int(card["block"]) + GameState.equipment_bonus(hero_id, "block")
 	if card.has("heal"):
 		card["heal"] = int(card["heal"]) + GameState.equipment_bonus(hero_id, "heal")
+	if presentation != null and card.get("effect", "") in ["heal", "team_heal", "pain_heal", "block", "team_block"]:
+		presentation.strike(hero_portraits[hero_id],hero_portraits[hero_id],"heal" if card.get("effect", "") in ["heal", "team_heal", "pain_heal"] else "block",str(card.get("name", "Ward")))
 	match str(card["effect"]):
 		"pain_heal":
 			if int(hero_state[hero_id]["hp"]) > int(card["self_damage"]):
@@ -383,10 +388,14 @@ func _resolve_card(hero_id: String, card: Dictionary) -> void:
 
 
 func _attack_with_equipment(hero_id: String, card: Dictionary, ignore_block: bool = false) -> void:
-	_play_attack_sound("bow" if hero_id == "ranger" else "spell" if hero_id in ["occultist", "healer"] else "sword")
+	var attack_kind: String = "bow" if hero_id == "ranger" else "spell" if hero_id in ["occultist", "healer"] else "sword"
+	_play_attack_sound(attack_kind)
+	if presentation != null:
+		presentation.strike(hero_portraits[hero_id], enemy_views[selected_enemy_index].get_node("EnemyArt"), attack_kind, str(card.get("name", "Strike")))
 	var accuracy: float = GameState.hero_accuracy(hero_id, hero_state[hero_id])
 	if accuracy < 100.0 and randf() * 100.0 >= accuracy:
 		_add_log("%s misses %s." % [_name_of(hero_id), enemy_name])
+		if presentation != null: presentation.popup(enemy_art,"MISS",Color("#DCCFB9"))
 		return
 	var target: int = selected_enemy_index
 	var phase: int = int(enemies[target].get("phase_index", 0))
@@ -518,6 +527,8 @@ func _enemy_action() -> void:
 				if enemies[index].get("surprised", false) and float(enemies[index].get("accuracy", 100)) < 100.0 and randf() * 100.0 >= float(enemies[index].get("accuracy", 100)):
 					_add_log("%s stumbles: %s misses %s." % [enemy_name, move["name"], _name_of(target)])
 					continue
+				if presentation != null:
+					presentation.strike(enemy_views[index].get_node("EnemyArt"), hero_portraits[target], "spell" if move.get("status", "") in ["burn", "poison", "chill"] else "bow" if enemies[index]["creature"] in ["gallows_scout", "keep_crossbow"] else "sword", str(move["name"]), false)
 				var actual: int = _apply_damage(target, damage)
 				_add_log("%s uses %s on %s: %d damage." % [enemy_name, move["name"], _name_of(target), damage])
 				if actual > 0 and not hero_state[target]["dead"] and move.has("status"):
@@ -620,6 +631,9 @@ func _deal_enemy_damage(amount: int, ignore_block: bool = false) -> int:
 	var damage: int = total - absorbed
 	if total > 0 and absorbed == total:
 		_play_attack_sound("block")
+	if presentation != null:
+		presentation.popup(enemy_views[target_index], str(damage) if damage > 0 else "BLOCK", Color("#F8A088") if damage > 0 else Color("#BCD8F1"))
+		if damage == 0 and total > 0: presentation.block_impact()
 	enemy_hp = maxi(0, enemy_hp - damage)
 	_add_log("%s takes %d damage%s." % [enemy_name, damage, " (%d blocked)" % absorbed if absorbed > 0 else ""])
 	if damage > 0:
@@ -644,9 +658,13 @@ func _apply_damage(hero_id: String, amount: int, bypass_block: bool = false, cau
 	if damage <= 0:
 		if amount > 0 and absorbed == amount and not bypass_block:
 			_play_attack_sound("block")
+		if presentation != null and amount > 0:
+			presentation.popup(hero_buttons[hero_id],"BLOCK",Color("#BCD8F1"))
+			presentation.block_impact()
 		_add_log("%s blocks the blow." % _name_of(hero_id))
 		_flash(hero_buttons[hero_id], Color("#C9C4B0"))
 		return 0
+	if presentation != null: presentation.popup(hero_buttons[hero_id],str(damage),Color("#F8A088"))
 	_hurt_portrait(hero_portraits[hero_id])
 	if selected_hero == hero_id:
 		_hurt_portrait(selected_portrait)
@@ -675,6 +693,8 @@ func _heal_hero(hero_id: String, amount: int) -> void:
 	var before: int = int(state["hp"])
 	state["hp"] = mini(int(state["max_hp"]), before + amount)
 	GameState.add_deed(hero_id, "healing", int(state["hp"]) - before)
+	if presentation != null and int(state["hp"]) > before:
+		presentation.popup(hero_buttons[hero_id], "+%d" % (int(state["hp"])-before),Color("#B5E3A3"))
 	if int(state["hp"]) > 0:
 		state["deaths_door"] = false
 	_add_log("%s heals %d HP." % [_name_of(hero_id), int(state["hp"]) - before])
@@ -832,7 +852,7 @@ func _refresh_all() -> void:
 		hero_stress_bars[hero_id].value = int(state["stress"])
 		button.disabled = battle_over or not _is_standing(hero_id)
 		button.modulate = Color(0.55, 0.55, 0.6) if bool(state["dead"]) else Color.WHITE
-		_style_card_backing(button, Color("#291C23"), Color("#D3AF72") if hero_id == selected_hero else Color(GOLD))
+		_style_card_backing(button, Color("#1C1614"), Color("#D3AF72") if hero_id == selected_hero else Color(GOLD))
 
 	_refresh_enemies()
 	end_turn_button.disabled = false
@@ -862,7 +882,7 @@ func _refresh_hand() -> void:
 		view.pressed.connect(_play_card.bind(selected_hero, index))
 		hand_container.add_child(view)
 		var card_width: float = 220.0
-		var card_position: Vector2 = Vector2((index % 2) * 234.0, (index / 2) * 178.0)
+		var card_position: Vector2 = Vector2((index % 3) * 234.0, (index / 3) * 178.0)
 		view.position = card_position
 		view.size = Vector2(card_width, 170.0)
 		view.z_index = index
@@ -918,7 +938,7 @@ func _refresh_scrolls() -> void:
 		button.add_theme_constant_override("icon_max_width", 32)
 		button.custom_minimum_size = Vector2(235, 68)
 		button.add_theme_font_size_override("font_size", 18)
-		_style_card_backing(button, Color("#21171D"), Color(str(GameState.Items.RARITY_COLORS[item["rarity"]])))
+		_style_card_backing(button, Color("#151213"), Color(str(GameState.Items.RARITY_COLORS[item["rarity"]])))
 		button.tooltip_text = GameState.Items.description(item_id)
 		button.disabled = battle_over or not _is_standing(selected_hero) or int(hero_state[selected_hero]["ap"]) < 1
 		button.pressed.connect(_use_scroll.bind(str(item_id)))
@@ -946,6 +966,7 @@ func _use_scroll(item_id: String) -> void:
 	_play_attack_sound("spell")
 	_add_log("%s consumes %s." % [_name_of(selected_hero), item["name"]])
 	var target_index: int = selected_enemy_index
+	if presentation != null: presentation.strike(hero_portraits[selected_hero], enemy_views[target_index].get_node("EnemyArt"), "spell", str(item["name"]))
 	var phase: int = int(enemies[target_index].get("phase_index", 0))
 	var previous_hp: int = int(enemies[target_index]["hp"])
 	_deal_enemy_damage(Rules.damage_after_chill(int(item["damage"]), hero_state[selected_hero]["statuses"]), item["effect"] == "pierce")
@@ -1013,23 +1034,23 @@ func _layout_combat() -> void:
 	_place($EncounterHeader, Rect2(660, 24, 600, 86))
 	_place(round_label, Rect2(1460, 40, 400, 45))
 	_place(gold_label, Rect2(1460, 90, 400, 35))
-	_place($Heros, Rect2(580, 650, 790, 340))
+	_place($Heros, Rect2(40, 150, 1020, 440))
 	_place($Enemy, Rect2(740, 150, 440, 400))
 	($Enemy as Button).flat = false
-	_style_card_backing($Enemy, Color("#291C23"), Color(GOLD))
+	_style_card_backing($Enemy, Color("#1C1614"), Color(GOLD))
 	_place(enemy_art, Rect2(60, 85, 320, 235))
 	_place(enemy_label, Rect2(20, 12, 400, 70))
 	_place(enemy_intent_label, Rect2(20, 325, 400, 40))
 	enemy_intent_label.add_theme_font_size_override("font_size", 19)
 	_place($Enemy/HealthBar, Rect2(20, 370, 400, 18))
-	_place(hand_title, Rect2(40, 475, 460, 40))
-	_place($CardHand, Rect2(40, 530, 470, 540))
+	_place(hand_title, Rect2(550, 665, 800, 35))
+	_place($CardHand, Rect2(550, 710, 800, 355))
 	hand_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_place(end_turn_button, Rect2(1470, 950, 400, 80))
 	var info_panel := PanelContainer.new()
 	info_panel.name = "SelectedHeroInfo"
-	_place(info_panel, Rect2(40, 40, 470, 410))
-	_style_card_backing(info_panel, Color("#21171D"), Color(GOLD))
+	_place(info_panel, Rect2(40, 645, 470, 410))
+	_style_card_backing(info_panel, Color("#151213"), Color(GOLD))
 	add_child(info_panel)
 	var info_contents := Control.new()
 	info_panel.add_child(info_contents)
@@ -1045,17 +1066,17 @@ func _layout_combat() -> void:
 	info_contents.add_child(selected_info)
 	var hint := _make_label("Select a hero below to inspect their abilities.\nHeroes act in any order during the party turn.", 18, Color(MUTED))
 	hint.name = "RoleHint"
-	_place(hint, Rect2(8, 320, 430, 65))
+	_place(hint, Rect2(8, 305, 430, 60))
 	info_contents.add_child(hint)
 	formation_button = Button.new()
 	formation_button.name = "FormationButton"
-	_place(formation_button, Rect2(55, 405, 435, 35))
+	_place(formation_button, Rect2(55, 1015, 435, 35))
 	formation_button.add_theme_font_size_override("font_size", 18)
 	formation_button.pressed.connect(change_rank)
 	add_child(formation_button)
 	var log_panel := PanelContainer.new()
-	_place(log_panel, Rect2(1460, 440, 420, 480))
-	_style_card_backing(log_panel, Color("#21171D"), Color(GOLD))
+	_place(log_panel, Rect2(1460, 655, 420, 265))
+	_style_card_backing(log_panel, Color("#151213"), Color(GOLD))
 	add_child(log_panel)
 	var scroll := ScrollContainer.new()
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -1065,13 +1086,13 @@ func _layout_combat() -> void:
 	log_container.custom_minimum_size = Vector2(375, 0)
 	log_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var caption := _make_label("BATTLE LOG", 24, Color(IVORY))
-	_place(caption, Rect2(1460, 390, 400, 40))
+	_place(caption, Rect2(1460, 605, 400, 40))
 	add_child(caption)
 	var scroll_title := _make_label("PARTY CONSUMABLES", 20, Color(IVORY))
-	_place(scroll_title, Rect2(580, 545, 790, 30))
+	_place(scroll_title, Rect2(820, 575, 550, 30))
 	add_child(scroll_title)
 	var scroll_strip := ScrollContainer.new()
-	_place(scroll_strip, Rect2(580, 580, 790, 68))
+	_place(scroll_strip, Rect2(820, 610, 550, 50))
 	scroll_strip.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	add_child(scroll_strip)
 	scroll_container = HBoxContainer.new()
@@ -1120,8 +1141,8 @@ func _build_hero_cards() -> void:
 func _make_hero_card(hero_id: String) -> Button:
 	var hero: Dictionary = GameState.hero(hero_id)
 	var button: Button = $HeroTemplate.duplicate() as Button
-	button.custom_minimum_size = Vector2(250.0, 350.0)
-	button.size = Vector2(250.0, 350.0)
+	button.custom_minimum_size = Vector2(250.0, 420.0)
+	button.size = Vector2(250.0, 420.0)
 	button.flat = false
 	button.name = "Hero_%s" % hero_id
 	button.focus_mode = Control.FOCUS_NONE
@@ -1129,12 +1150,12 @@ func _make_hero_card(hero_id: String) -> Button:
 
 	button.visible = true
 	var portrait: TextureRect = button.get_node("Portrait") as TextureRect
-	_place(portrait, Rect2(15, 12, 220, 190))
+	_place(portrait, Rect2(10, 5, 230, 270))
 	portrait.texture = _load_texture(str(hero.get("art", "")))
 	hero_portraits[hero_id] = portrait
 	StatusVisual.new().attach_to(portrait)
 	var name_label: Label = button.get_node("HeroName") as Label
-	_place(name_label, Rect2(8, 202, 234, 27))
+	_place(name_label, Rect2(8, 280, 234, 27))
 	name_label.add_theme_font_size_override("font_size", 18)
 	name_label.clip_text = true
 	name_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
@@ -1145,25 +1166,27 @@ func _make_hero_card(hero_id: String) -> Button:
 	hero_name_labels[hero_id] = name_label
 	var class_label := _make_label(str(hero.get("class", hero["name"])), 14, Color("#D4B997"), true)
 	class_label.name = "HeroClass"
-	_place(class_label, Rect2(8, 230, 234, 22))
+	_place(class_label, Rect2(8, 308, 234, 22))
 	button.add_child(class_label)
 
 	var health: ProgressBar = button.get_node("HealthBar") as ProgressBar
-	_place(health, Rect2(18, 256, 214, 16))
+	_place(health, Rect2(18, 336, 214, 16))
 	_style_meter(health, Color("#AF343C"))
+	health.scale.y = 0.65
 	hero_health_bars[hero_id] = health
 	var stress: ProgressBar = button.get_node("StressBar") as ProgressBar
-	_place(stress, Rect2(18, 279, 214, 13))
+	_place(stress, Rect2(18, 359, 214, 13))
 	_style_meter(stress, Color("#79435C"))
+	stress.scale.y = 0.55
 	hero_stress_bars[hero_id] = stress
 	var stat_label: Label = button.get_node("Status") as Label
-	_place(stat_label, Rect2(8, 295, 234, 28))
+	_place(stat_label, Rect2(8, 378, 234, 28))
 	hero_stat_labels[hero_id] = stat_label
 	hero_buttons[hero_id] = button
 	var effects := _make_label("", 14, Color(RED), true)
 	effects.name = "Effects"
 	effects.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_place(effects, Rect2(8, 323, 234, 28))
+	_place(effects, Rect2(8, 406, 234, 28))
 	button.add_child(effects)
 	return button
 
@@ -1172,7 +1195,7 @@ func _create_card_view(card_id: String, card: Dictionary) -> Button:
 	var button := Button.new()
 	button.name = "Card_%s" % card_id
 	button.custom_minimum_size = Vector2(220.0, 170.0)
-	_style_card_backing(button, Color("#21171D"), Color(GOLD))
+	_style_card_backing(button, Color("#151213"), Color(GOLD))
 	var contents := Control.new()
 	contents.name = "Contents"
 	contents.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -1232,8 +1255,16 @@ func _style_card_backing(control: Control, fill: Color, outline: Color) -> void:
 	style_box.bg_color = fill
 	style_box.border_color = outline
 	style_box.set_border_width_all(1)
-	style_box.set_corner_radius_all(10)
+	style_box.set_corner_radius_all(0)
+	style_box.shadow_color = Color(0,0,0,0.9)
+	style_box.shadow_size = 5
+	style_box.shadow_offset = Vector2(3,4)
 	style_box.set_content_margin_all(12)
+	if control is Button and (control.name.begins_with("Hero_") or control.name.begins_with("Enemy")):
+		style_box.bg_color = Color(0.025,0.02,0.02,0.32)
+		style_box.set_border_width_all(0)
+		style_box.border_width_bottom = 3
+		style_box.shadow_size = 0
 	if control is PanelContainer:
 		(control as PanelContainer).add_theme_stylebox_override("panel", style_box)
 	elif control is Button:
@@ -1253,11 +1284,13 @@ func _style_meter(meter: ProgressBar, tint: Color) -> void:
 	meter.add_theme_font_size_override("font_size", 8)
 	var background := StyleBoxFlat.new()
 	background.bg_color = Color("#100F12")
+	background.set_content_margin_all(0)
 	background.set_corner_radius_all(3)
 	background.border_color = Color(GOLD)
 	background.set_border_width_all(1)
 	var fill := StyleBoxFlat.new()
 	fill.bg_color = tint
+	fill.set_content_margin_all(0)
 	fill.set_corner_radius_all(3)
 	meter.add_theme_stylebox_override("background", background)
 	meter.add_theme_stylebox_override("fill", fill)
@@ -1278,7 +1311,7 @@ func _style(fill: Color, outline: Color) -> StyleBoxFlat:
 	box.bg_color = fill
 	box.border_color = outline
 	box.set_border_width_all(2)
-	box.set_corner_radius_all(8)
+	box.set_corner_radius_all(0)
 	box.set_content_margin_all(14)
 	return box
 
@@ -1310,19 +1343,19 @@ func _build_enemy_cards() -> void:
 			view.name = "Enemy_%d" % index
 			add_child(view)
 		var total_width: float = enemies.size() * 265 - 15
-		_place(view, Rect2(975 - total_width * 0.5 + index * 265, 155, 250, 370))
+		_place(view, Rect2(1490 - total_width * 0.5 + index * 265, 150, 250, 420))
 		for child in view.get_children():
 			if child is Control:
 				child.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_place(view.get_node("EnemyInfo"), Rect2(10, 10, 230, 65))
 		(view.get_node("EnemyInfo") as Label).add_theme_font_size_override("font_size", 18)
 		(view.get_node("EnemyInfo") as Label).autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		_place(view.get_node("EnemyArt"), Rect2(20, 80, 210, 165))
+		_place(view.get_node("EnemyArt"), Rect2(10, 75, 230, 240))
 		(view.get_node("EnemyArt") as TextureRect).texture = _load_texture(str(enemies[index]["art"]))
-		_place(view.get_node("EnemyIntent"), Rect2(10, 250, 230, 88))
+		_place(view.get_node("EnemyIntent"), Rect2(10, 320, 230, 82))
 		(view.get_node("EnemyIntent") as Label).add_theme_font_size_override("font_size", 15)
 		(view.get_node("EnemyIntent") as Label).autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		_place(view.get_node("HealthBar"), Rect2(12, 345, 226, 14))
+		_place(view.get_node("HealthBar"), Rect2(12, 408, 226, 14))
 		enemy_views.append(view)
 	# Connect after duplication so each button selects only its own target.
 	for index in range(enemy_views.size()):
@@ -1330,7 +1363,7 @@ func _build_enemy_cards() -> void:
 		enemy_views[index].pressed.connect(_select_enemy.bind(index))
 	_load_enemy(selected_enemy_index)
 	var target_hint := _make_label("Select an enemy to target abilities and scrolls", 18, Color(IVORY), true)
-	_place(target_hint, Rect2(580, 115, 790, 30))
+	_place(target_hint, Rect2(1060, 110, 820, 30))
 	add_child(target_hint)
 
 
@@ -1362,7 +1395,7 @@ func _refresh_enemies() -> void:
 		_sync_portrait(view.get_node("EnemyArt"), entry)
 		view.disabled = battle_over or enemy_hp <= 0
 		view.modulate = Color(0.45, 0.45, 0.45) if enemy_hp <= 0 else Color.WHITE
-		_style_card_backing(view, Color("#291C23"), Color("#D3AF72") if index == original else Color(GOLD))
+		_style_card_backing(view, Color("#1C1614"), Color("#D3AF72") if index == original else Color(GOLD))
 	_load_enemy(original)
 
 

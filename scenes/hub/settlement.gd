@@ -54,6 +54,13 @@ const BUILDINGS: Array[Dictionary] = [
 	{"id": "workshop", "name": "The Workshop", "subtitle": "Reclaim the craftsmen's quarter", "pos": [1335, 630], "size": [170, 190], "highlight": Color("#D6B66A"), "service": "workshop", "locked": false},
 ]
 
+# Traced contours in the painted settlement's 1920x1080 coordinate space.
+const BUILDING_OUTLINES = {
+ "barracks": [Vector2(0,195),Vector2(106,141),Vector2(139,102),Vector2(174,107),Vector2(181,73),Vector2(221,79),Vector2(241,26),Vector2(249,0),Vector2(352,0),Vector2(353,59),Vector2(381,89),Vector2(417,116),Vector2(447,203),Vector2(483,256),Vector2(455,273),Vector2(460,400),Vector2(482,468),Vector2(447,505),Vector2(407,516),Vector2(396,543),Vector2(343,566),Vector2(286,568),Vector2(226,568),Vector2(171,552),Vector2(149,510),Vector2(92,482),Vector2(60,396),Vector2(28,383),Vector2(0,390)],
+ "chapel": [Vector2(649,439),Vector2(683,352),Vector2(720,319),Vector2(758,252),Vector2(783,207),Vector2(779,145),Vector2(795,88),Vector2(809,36),Vector2(822,94),Vector2(843,151),Vector2(843,199),Vector2(868,248),Vector2(887,224),Vector2(893,149),Vector2(911,75),Vector2(923,45),Vector2(934,69),Vector2(938,0),Vector2(1030,0),Vector2(1050,60),Vector2(1074,134),Vector2(1065,158),Vector2(1089,210),Vector2(1085,468),Vector2(1081,493),Vector2(1040,480),Vector2(998,476),Vector2(956,482),Vector2(906,473),Vector2(847,496),Vector2(795,513),Vector2(752,540),Vector2(718,522),Vector2(683,498),Vector2(664,478)],
+ "workshop": [Vector2(1208,637),Vector2(1232,590),Vector2(1257,540),Vector2(1282,518),Vector2(1298,472),Vector2(1312,527),Vector2(1342,545),Vector2(1377,552),Vector2(1407,588),Vector2(1434,639),Vector2(1405,645),Vector2(1404,724),Vector2(1360,741),Vector2(1307,731),Vector2(1280,749),Vector2(1239,727),Vector2(1241,652)]
+}
+
 var _map_view: Control
 var _expedition_view: Control
 var _toast: Label
@@ -159,7 +166,14 @@ func _make_hotspot(building: Dictionary) -> Button:
 	var footprint := _building_size(building)
 	var centre := _building_pos(str(building.get("id", "")), Vector2(960.0, 540.0))
 
-	var button := Button.new()
+	var button := preload("res://scenes/ui/building_hotspot.gd").new()
+	var outline: PackedVector2Array = PackedVector2Array(BUILDING_OUTLINES.get(str(building.get("id", "")), []))
+	if not outline.is_empty():
+		var bounds := Rect2(outline[0], Vector2.ZERO)
+		for point in outline: bounds = bounds.expand(point)
+		footprint = bounds.size
+		centre = bounds.get_center()
+		for point in outline: button.silhouette.append(point - bounds.position)
 	button.name = str(building.get("id", "building"))
 	button.text = ""
 	button.flat = true
@@ -188,6 +202,29 @@ func _make_hotspot(building: Dictionary) -> Button:
 	button.set_meta("highlight_alpha", highlight_alpha)
 	highlight.modulate = Color(building_tint.r, building_tint.g, building_tint.b, 0.0)
 	button.add_child(highlight)
+	var id: String = str(building.get("id", ""))
+	if BUILDING_OUTLINES.has(id):
+		highlight.texture = null
+		highlight.position = -button.position
+		highlight.size = Vector2(1920,1080)
+		button.set_meta("highlight_alpha", 1.0)
+		# Open roof and wall paths leave the painted ground free of a baseline.
+		var glow_path: Array = BUILDING_OUTLINES[id]
+		match id:
+			"barracks": glow_path = glow_path.slice(25) + glow_path.slice(0, 20)
+			"chapel": glow_path = glow_path.slice(0, 26)
+			"workshop": glow_path = glow_path.slice(15) + glow_path.slice(0, 12)
+		for index in range(4):
+			var contour := Line2D.new()
+			contour.points = PackedVector2Array(glow_path)
+			contour.closed = false
+			contour.width = [22.0, 13.0, 6.0, 2.5][index]
+			contour.default_color = Color(1,1,1,[0.055,0.12,0.3,0.95][index])
+			contour.antialiased = true
+			contour.joint_mode = Line2D.LINE_JOINT_ROUND
+			contour.begin_cap_mode = Line2D.LINE_CAP_ROUND
+			contour.end_cap_mode = Line2D.LINE_CAP_ROUND
+			highlight.add_child(contour)
 
 	# A very subdued idle silhouette keeps hotspots discoverable without
 	# putting an unrelated circular glow across the neighboring buildings.
