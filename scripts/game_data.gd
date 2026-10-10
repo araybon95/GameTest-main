@@ -724,7 +724,8 @@ static func award_victory_xp() -> Dictionary:
 		amount = 6 + floor_index * 2
 	for hero_id in party:
 		var state: Dictionary = run_heroes.get(hero_id, {})
-		if state.is_empty() or state.get("dead", false) or int(state.get("hp", 0)) <= 0:
+		# Death's Door is still survival: XP does not depend on remaining HP.
+		if state.is_empty() or state.get("dead", false):
 			continue
 		var gained: int = gain_hero_xp(str(hero_id), amount)
 		rewards[hero_id] = {"xp": amount, "levels": gained}

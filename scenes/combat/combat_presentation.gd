@@ -7,6 +7,8 @@ var age: float = 0.0
 var fighters: Array[TextureRect] = []
 var heading: Label
 var duration: float = 0.76
+signal action_sound(kind: String)
+const Profiles = preload("res://scripts/attack_profiles.gd")
 const Poses = preload("res://scripts/combat_poses.gd")
 const Effects = preload("res://scenes/combat/strike_effects.gd")
 var boss_reveals: Array[Dictionary] = []
@@ -43,11 +45,12 @@ func _ready() -> void:
  cinematic_stage.z_index = -1
  add_child(cinematic_stage)
  visible = false
-func strike(source: TextureRect, target: TextureRect, kind: String, title: String, from_hero: bool = true) -> void:
+func strike(source: TextureRect, target: TextureRect, kind: String, title: String, from_hero: bool = true, options: Dictionary = {}) -> void:
  if not is_instance_valid(source) or not is_instance_valid(target) or source.texture == null or target.texture == null: return
  if pending.size() >= 8: return
  var source_boss: bool = source.get_meta("boss",false)
- pending.append({"source":source.texture,"target":target.texture,"source_node":source,"target_node":target,"source_material":source.material.duplicate() if source.material != null else null,"target_material":target.material.duplicate() if target.material != null else null,"kind":kind,"attack_kind":kind,"title":title,"hero":from_hero,"source_boss":source_boss,"target_boss":target.get_meta("boss",false),"creature":source.get_meta("creature",""),"duration":1.04 if source_boss else duration})
+ var timing: Dictionary = Profiles.resolve(kind,title,options,source_boss,duration)
+ pending.append({"source":source.texture,"target":target.texture,"source_node":source,"target_node":target,"source_material":source.material.duplicate() if source.material != null else null,"target_material":target.material.duplicate() if target.material != null else null,"kind":kind,"attack_kind":kind,"title":title,"hero":from_hero,"source_boss":source_boss,"target_boss":target.get_meta("boss",false),"creature":source.get_meta("creature",""),"duration":timing["duration"],"profile":timing["id"],"timing":timing,"skill_id":str(options.get("skill_id",""))})
  if active.is_empty() and boss_reveal == null: next()
 func restore_participants() -> void:
  if active.is_empty(): return
@@ -55,10 +58,14 @@ func restore_participants() -> void:
   var original: TextureRect = active.get(role + "_node")
   if is_instance_valid(original): original.visible = active.get(role + "_visible",true)
 func _exit_tree() -> void:
+ # Scene teardown must never schedule or emit audio on the departed controller.
+ active.erase("sounds")
+ for entry in pending: entry.erase("sounds")
  restore_participants()
  _restore_backdrop()
  if is_instance_valid(boss_reveal): boss_reveal.finish()
 func next() -> void:
+ _flush_sounds(active,true)
  _flush_feedback(active)
  restore_participants()
  _restore_backdrop()
@@ -81,6 +88,9 @@ func next() -> void:
   return
  active = pending.pop_front()
  if not is_instance_valid(active["source_node"]) or not is_instance_valid(active["target_node"]):
+  # An entry whose participant disappeared never reached the stage. Discard
+  # its cues rather than playing an invisible attack while advancing the queue.
+  active.erase("sounds")
   active = {}
   next()
   return
@@ -143,6 +153,39 @@ func reveal_boss(portrait: TextureRect, name: String, lore: String, theme: Strin
 func _reveal_finished() -> void:
  boss_reveal = null
  call_deferred("next")
+
+func animation_sample() -> Dictionary:
+ if active.is_empty(): return {}
+ return Profiles.sample(active["timing"],age)
+
+func event_clock() -> float:
+ return float(animation_sample().get("clock",0.0))
+
+func impact_time() -> float:
+ return float(active.get("timing",{}).get("impact",0.28))
+
+func release_time() -> float:
+ return float(active.get("timing",{}).get("release",0.13))
+
+func queue_sound(kind: String) -> bool:
+ if not is_inside_tree(): return false
+ var entry: Dictionary = pending[-1] if not pending.is_empty() else active
+ if entry.is_empty(): return false
+ var sounds: Array = entry.get("sounds",[])
+ for cue in sounds:
+  if cue["kind"] == kind: return true
+ var timing: Dictionary = entry["timing"]
+ sounds.append({"kind":kind,"at":float(timing["impact"] if kind == "block" else timing["release"]),"emitted":false})
+ entry["sounds"] = sounds
+ if entry == active: _flush_sounds(entry)
+ return true
+
+func _flush_sounds(entry: Dictionary, force: bool = false) -> void:
+ if entry.is_empty() or not is_inside_tree(): return
+ for cue in entry.get("sounds",[]):
+  if cue["emitted"] or (not force and age < float(cue["at"])): continue
+  cue["emitted"] = true
+  action_sound.emit(str(cue["kind"]))
 func apply_pose(index: int, role: String, changed: bool, hurt: bool = false, state_override: String = "") -> Vector2:
  var original: Texture2D = active[role]
  var state: String = state_override if not state_override.is_empty() else "hurt" if hurt else "guard" if active["attack_kind"] == "block" else "cast" if active["attack_kind"] in ["spell","heal"] else "attack"
@@ -170,10 +213,16 @@ func _process(delta: float) -> void:
   return
  var hero: bool = active["hero"]
  var direction: float = 1.0 if hero else -1.0
- var clock: float = age/(active_duration/duration)
+ var frame: Dictionary = animation_sample()
+ var clock: float = frame["clock"]
+ _flush_sounds(active)
  if clock >= 0.28: _flush_feedback(active)
- var source_position: Vector2 = apply_pose(0,"source",clock >= 0.11 and clock < 0.60)
- var harmful: bool = active["attack_kind"] not in ["heal","block","object"] and active.get("reaction", "hurt") not in ["miss","block"] and active["source_node"] != active["target_node"]
+ var profile: String = active.get("profile","legacy")
+ var legacy: bool = profile == "legacy"
+ var preparing: bool = frame["phase"] == "windup"
+ var changed: bool = clock >= 0.11 and clock < 0.60 if legacy else age >= 0.06 and float(frame["recovery"]) < 0.7 and (not preparing or profile in ["bow","spell","heal","guard","charge"])
+ var source_position: Vector2 = apply_pose(0,"source",changed,false,"guard" if profile == "charge" and preparing else "")
+ var harmful: bool = Effects.harmful_contact(active)
  var defending: bool = active["attack_kind"] == "block" or active.get("reaction","") == "block"
  var target_position: Vector2 = apply_pose(1,"target",(harmful or defending) and clock >= 0.28 and clock < 0.64,harmful,"guard" if defending else "")
  # A brief held contact pose makes each impact readable before recoil.
@@ -184,20 +233,30 @@ func _process(delta: float) -> void:
  var anticipation: float = sin(clampf(clock/0.11,0.0,1.0)*PI) if clock < 0.11 else 0.0
  var boss: bool = active.get("source_boss",false)
  var weight: float = 1.35 if boss else 1.0
- var zoom: float = sin(clampf(clock/duration,0,1)*PI)*0.032*clampf(motion_strength,0,1)
- var shake: float = sin(clock*135)*exp(-maxf(0,clock-0.28)*28)*(4.0 if boss else 1.6)*clampf(motion_strength,0,1) if clock >= 0.28 and clock < 0.45 and harmful else 0.0
- fighters[0].position = source_position + Vector2(direction * (lunge * (95.0 if str(active["title"]).to_lower().contains("charge") else 65.0 if active["attack_kind"] == "sword" else 12.0)*weight - anticipation*(23 if boss else 12)),0.0)
+ var motion: float = clampf(motion_strength,0,1)
+ var zoom: float = sin(clampf(clock/duration,0,1)*PI)*0.032*motion
+ var shake: float = sin(clock*135)*exp(-maxf(0,clock-0.28)*28)*(4.0 if boss else 1.6)*motion if clock >= 0.28 and clock < 0.45 and harmful else 0.0
+ var source_shift: float = lunge * (95.0 if str(active["title"]).to_lower().contains("charge") else 65.0 if active["attack_kind"] == "sword" else 12.0)*weight - anticipation*(23 if boss else 12)
  var tilt: float = 0.12 if kind == "sword" else -0.045
  if boss:
   tilt = {"harrowed_giant":0.065,"undying_lord":0.17,"keep_son":0.15,"moth_oleander":0.14,"howling_head":0.10}.get(str(active.get("creature","")),tilt)
- fighters[0].rotation = direction*lunge*tilt
+ var source_rotation: float = lunge*tilt
+ if not legacy:
+  var movement: Dictionary = Profiles.motion(active["timing"],age)
+  source_shift = float(movement["source_x"])*weight
+  source_rotation = float(movement["rotation"])
+  impact = float(movement["reaction"])
+ fighters[0].position = source_position + Vector2(direction*source_shift*motion,0)
+ fighters[0].rotation = direction*source_rotation*motion
  var dodge: bool = active.get("reaction", "hurt") == "miss"
- fighters[1].position = target_position + Vector2(direction * impact * (40.0 if dodge else 18.0*weight if harmful else 0.0),0)
- fighters[1].rotation = direction * impact * 0.08
+ var recoil: float = 18.0 if legacy else float(active["timing"]["recoil"])
+ fighters[1].position = target_position + Vector2(direction * impact * (40.0 if dodge else recoil*weight if harmful else 0.0)*motion,0)
+ fighters[1].rotation = direction * impact * (0.08 if harmful else 0.025 if dodge else 0.0)*motion
  fighters[1].self_modulate = Color(1,1.0-impact*0.36,1.0-impact*0.36) if harmful and kind != "block" else Color.WHITE
  for fighter in fighters:
   fighter.scale = Vector2.ONE*(1.0+zoom)
   fighter.position.x += (focus.x-(fighter.position.x+fighter.size.x*0.5))*zoom+shake
+  fighter.position.x = clampf(fighter.position.x,24.0,1920.0-fighter.size.x-24.0)
  if cinematic_backdrop != null:
   cinematic_backdrop.scale = backdrop_scale*(1.0+zoom*0.7)
   cinematic_backdrop.position = backdrop_position+Vector2(shake*0.45,0)
@@ -227,7 +286,7 @@ func popup(target: Control, value: String, tint: Color, defer_to_impact: bool = 
    var waiting: Array = entry.get("feedback",[])
    waiting.append({"target":target,"value":value,"tint":tint})
    entry["feedback"] = waiting
-   if entry == active and age/float(active.get("duration",duration))*duration >= 0.28: _flush_feedback(active)
+   if entry == active and age >= impact_time(): _flush_feedback(active)
    return
  _spawn_popup(target,value,tint)
 

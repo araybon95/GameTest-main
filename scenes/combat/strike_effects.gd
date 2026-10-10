@@ -27,12 +27,15 @@ static func sample(presentation: Control) -> Dictionary:
  if presentation.active.is_empty() or presentation.fighters.size() < 2: return {}
  var active: Dictionary = presentation.active
  var factor: float = float(active.get("duration",presentation.duration))/presentation.duration
- var clock: float = presentation.age/maxf(0.01,factor)
+ var clock: float = presentation.event_clock() if presentation.has_method("event_clock") else presentation.age/maxf(0.01,factor)
  var start: Vector2 = presentation.fighters[0].position+presentation.fighters[0].size*Vector2(0.58 if active["hero"] else 0.42,0.4)
  var target: Vector2 = presentation.fighters[1].position+presentation.fighters[1].size*Vector2(0.5,0.43)
  var reaction: String = str(active.get("reaction","hurt"))
  var aim: Vector2 = target+Vector2(0,-95) if reaction == "miss" else target
  var progress: float = clampf((clock-0.13)/0.16,0.0,1.0)
+ if active.get("profile","legacy") != "legacy":
+  # Profile release and contact are also the projectile's exact endpoints.
+  progress = float(presentation.animation_sample().get("flight",progress))
  var impact: float = sin(clampf((clock-0.28)/0.27,0.0,1.0)*PI)
  return {"clock":clock,"start":start,"target":target,"aim":aim,"progress":progress,"impact":impact,"reaction":reaction,"harmful":harmful_contact(active),"element":element(str(active["title"]),str(active["attack_kind"]))}
 
@@ -50,6 +53,9 @@ static func draw(presentation: Control, canvas: Node2D) -> void:
  var kind: String = active["attack_kind"]
  var blocked: bool = data["reaction"] == "block" or active["kind"] == "block" or kind == "block"
  var harmful: bool = data["harmful"]
+ if active.get("profile","legacy") in ["spell","heal"] and presentation.age < presentation.release_time():
+  var buildup: float = float(presentation.animation_sample().get("windup",0.0))
+  spell_buildup(canvas,start,str(data["element"]),buildup)
  # Blocked projectiles stop in front of the shield; misses pass overhead.
  var flight_aim: Vector2 = aim-((aim-start).normalized()*30 if blocked else Vector2.ZERO)
  if kind in ["bow","arrow"]:
@@ -80,6 +86,17 @@ static func draw(presentation: Control, canvas: Node2D) -> void:
 
 static func seed_value(index: int, salt: float = 0.0) -> float:
  return fposmod(sin(index*12.9898+salt*78.233)*43758.5453,1.0)
+
+static func spell_buildup(canvas: Node2D, point: Vector2, element_id: String, charge: float) -> void:
+ var tint: Color = ELEMENTS[element_id]
+ for i in range(5):
+  var axis := Vector2.from_angle(i*TAU/5.0+0.3)
+  var outer: Vector2 = point+axis*(30-charge*13)
+  var inner: Vector2 = point+axis*7
+  var filament := PackedVector2Array([outer,outer.lerp(inner,0.5)+Vector2(-axis.y,axis.x)*5,inner])
+  canvas.draw_polyline(filament,with_alpha(INK,charge*0.8),4,true)
+  canvas.draw_polyline(filament,with_alpha(tint,charge*0.55),1.3,true)
+ canvas.draw_colored_polygon(ragged_outline(point,Vector2(5+charge*4,6+charge*4),71),with_alpha(tint,charge*0.7))
 
 static func with_alpha(color: Color, opacity: float) -> Color:
  var result: Color = color

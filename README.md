@@ -2,6 +2,8 @@
 
 Settings (F10), saved journeys, Workshop names/colors, dungeon books, combat audio and the settlement Graveyard are available. See [Settings and continuity](SETTINGS_AND_CONTINUITY.md) and [Gameplay systems](GAMEPLAY_SYSTEMS.md) for controls and rules.
 
+Preparation and floor entrances now show party readiness and recovery advice. Living heroes at Death's Door earn victory XP, and heavy strikes, charges, bows and spells have distinct timing with synchronized sounds. See [Readiness and attack timing](docs/readiness_and_attack_timing.md).
+
 A Godot 4.7.2 party RPG with shared turns and multi-floor expeditions. The original project code is licensed under the MIT License; see [`LICENSE`](LICENSE). Third-party assets are not covered by that license and remain subject to their own terms. In particular, see `Sound FX Starter Pack Vol. 1/Royalty-Free License (Link).pdf` for the included audio pack's license. (Assets not currently in use but saved for future)
 
 ## Running the game

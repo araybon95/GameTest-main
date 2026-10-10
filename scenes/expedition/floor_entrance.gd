@@ -1,6 +1,7 @@
 extends "res://scenes/ui/party_screen.gd"
 ## Reusable themed threshold shown after a floor guardian or when using stairs.
 const Scenery = preload("res://scripts/dungeon_scenery.gd")
+const Readiness = preload("res://scripts/expedition_readiness.gd")
 var on_descend: Callable
 var on_stay: Callable
 var answered: bool = false
@@ -16,41 +17,70 @@ func _ready() -> void:
 	shade.mouse_filter = Control.MOUSE_FILTER_STOP
 	add_child(shade)
 	var entry: Dictionary = State.next_floor_entrance()
-	panel(Rect2(395, 130, 1130, 815), Color("#161017"))
+	panel(Rect2(230, 65, 1460, 970), Color("#161017"))
 	var next_theme: String = Scenery.theme_for(State.selected_expedition,State.floor_index+1)
-	var backdrop := picture(Scenery.stage_path(str(entry.get("art", State.floor_background("combat")))), Rect2(415, 150, 1090, 420))
+	var backdrop := picture(Scenery.stage_path(str(entry.get("art", State.floor_background("combat")))), Rect2(250, 85, 1420, 300))
 	backdrop.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	backdrop.modulate = Color(0.75,0.75,0.8)
-	var threshold := picture(Scenery.threshold_path(next_theme),Rect2(825,175,270,375))
+	var threshold := picture(Scenery.threshold_path(next_theme),Rect2(1370,110,230,255))
 	threshold.name = "ThemedThreshold"
-	label_at("FLOOR %d  →  FLOOR %d" % [State.floor_index+1,State.floor_index+2],Vector2(470,185),420,22)
-	label_at(str(entry.get("floor","The Descent")),Vector2(470,240),345,30)
-	panel(Rect2(415, 570, 1090, 355), Color("#161017"))
-	label_at("THE WAY OPENS", Vector2(450, 590), 1020, 22)
-	label_at(str(entry.get("name", "The Descent")), Vector2(450, 630), 1020, 34)
-	label_at(str(entry.get("description", "The passage below waits for the party.")), Vector2(450, 685), 1020, 21).size = Vector2(1020,64)
-	var hint: String = preparation_hint()
-	if not hint.is_empty():
-		var advice := label_at(hint,Vector2(450,757),1020,18)
-		advice.name = "PreparationHint"
-		advice.add_theme_color_override("font_color",Color("#D8B981"))
-	label_at("Continue to floor %d of %d · %s" % [State.floor_index + 2, State.floor_count, str(entry.get("floor", ""))], Vector2(450, 809), 1020, 17)
-	var proceed := button_at("DESCEND", Rect2(470, 840, 445, 60), accept_entrance)
+	label_at("THE WAY OPENS · FLOOR %d  →  FLOOR %d" % [State.floor_index+1,State.floor_index+2],Vector2(300,115),970,22)
+	label_at(str(entry.get("floor","The Descent")),Vector2(300,161),970,32).size = Vector2(970,45)
+	label_at(str(entry.get("name", "The Descent")), Vector2(300, 220), 970, 29).size = Vector2(970,40)
+	label_at(str(entry.get("description", "The passage below waits for the party.")), Vector2(300, 274), 970, 21).size = Vector2(970,80)
+	panel(Rect2(250, 385, 1420, 630), Color("#161017"))
+	label_at("THE PARTY BEFORE THE DESCENT", Vector2(290, 407), 1340, 24)
+	var party: Array[Dictionary] = Readiness.party_snapshot(State,true)
+	for index in range(party.size()):
+		var hero: Dictionary = party[index]
+		var x: float = 290+index*455
+		panel(Rect2(x,455,430,150),Color("#21161C"))
+		picture(str(State.hero(hero["id"])["art"]),Rect2(x+10,463,80,130),0.25 if hero["dead"] else 1.0)
+		var chosen := label_at(str(hero["name"]).to_upper(),Vector2(x+105,466),310,20)
+		chosen.name = "DescentName_%s" % hero["id"]
+		chosen.size = Vector2(310,28)
+		chosen.clip_text = true
+		var growth := label_at("%s · Lv %d" % [hero["class"],hero["level"]],Vector2(x+105,495),310,17)
+		growth.name = "DescentClass_%s" % hero["id"]
+		growth.size = Vector2(310,27)
+		var vitality := label_at("HP %d / %d · Stress %d" % [hero["hp"],hero["max_hp"],hero["stress"]],Vector2(x+105,525),310,19)
+		vitality.name = "DescentVitality_%s" % hero["id"]
+		vitality.add_theme_color_override("font_color",Color("#E69187") if hero["deaths_door"] or hero["hp"] < hero["max_hp"]*0.5 else Color("#EADDD0"))
+		var effects: String = "Slain · cannot be revived" if hero["dead"] else "DEATH'S DOOR" if hero["deaths_door"] else "No active debuffs"
+		if not hero["dead"] and not hero["statuses"].is_empty(): effects = ("DEATH'S DOOR · " if hero["deaths_door"] else "") + ", ".join(hero["statuses"])
+		var status := label_at(effects,Vector2(x+105,557),310,17)
+		status.name = "DescentStatus_%s" % hero["id"]
+		status.size = Vector2(310,42)
+		status.clip_text = true
+		status.add_theme_color_override("font_color",Color("#D8B981") if hero["deaths_door"] or not hero["statuses"].is_empty() else Color("#CDBCAE"))
+	label_at("BEYOND THE THRESHOLD",Vector2(290,625),1340,20)
+	var threat := label_at(Readiness.next_threat(State),Vector2(290,655),1340,20)
+	threat.name = "NextFloorThreat"
+	threat.size = Vector2(1340,72)
+	threat.clip_text = true
+	var advice := RichTextLabel.new()
+	advice.name = "PreparationHint"
+	advice.position = Vector2(290,735)
+	advice.size = Vector2(1340,164)
+	advice.text = Readiness.descent_advice(State)
+	advice.add_theme_font_size_override("normal_font_size",19)
+	advice.add_theme_color_override("default_color",Color("#D8B981"))
+	add_child(advice)
+	label_at("Continue to floor %d of %d · You may stay and explore before leaving." % [State.floor_index + 2, State.floor_count], Vector2(290, 912), 1340, 17)
+	var proceed := button_at("DESCEND", Rect2(290, 944, 625, 55), accept_entrance)
 	proceed.name = "DescendButton"
 	proceed.disabled = not State.can_descend()
-	var stay := button_at("STAY ON THIS FLOOR", Rect2(1005, 840, 445, 60), stay_here)
+	var stay := button_at("STAY ON THIS FLOOR", Rect2(1015, 944, 605, 55), stay_here)
 	stay.name = "StayButton"
 	stay.grab_focus()
 	Scenery.decorate(self)
 	add_child(preload("res://scenes/expedition/scene_arrival.gd").new())
 
 func preparation_hint() -> String:
-	if State.selected_expedition.get("id","") != "old_road": return ""
-	if State.floor_index == 0:
-		return "The keep's guards hit harder. Explore for a camp and recover before descending. Spend level points at the barracks between runs."
-	if State.floor_index == 1:
-		return "The Undying Lord receives healing while its support survives. Defeat that attendant first to end the healing."
-	return ""
+	var hint: String = Readiness.next_threat(State)
+	if State.selected_expedition.get("id","") == "old_road" and State.floor_index == 0:
+		hint += " Explore for a camp and recover. Spend level points at the barracks between runs."
+	return hint
 func accept_entrance() -> void:
 	if answered or not State.can_descend():
 		return

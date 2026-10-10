@@ -3,6 +3,11 @@ const GROUND_Y: float = 430.0
 var presentation: Control
 var combat_audio: Node
 func _play_attack_sound(kind: String) -> void:
+	if kind in ["sword","bow","spell","block"] and presentation != null and presentation.has_method("queue_sound") and presentation.queue_sound(kind):
+		return
+	_emit_attack_sound(kind)
+
+func _emit_attack_sound(kind: String) -> void:
 	if combat_audio == null:
 		combat_audio = preload("res://scripts/combat_audio.gd").new()
 		add_child(combat_audio)
@@ -100,6 +105,8 @@ func _ready() -> void:
 	_build_interface()
 	presentation = preload("res://scenes/combat/combat_presentation.gd").new()
 	add_child(presentation)
+	if presentation.has_signal("action_sound"):
+		presentation.action_sound.connect(_emit_attack_sound)
 	_start_battle()
 	_reveal_boss_intro()
 
@@ -373,14 +380,17 @@ func _attack_damage(hero_id: String, card: Dictionary) -> int:
 
 func _resolve_card(hero_id: String, card: Dictionary) -> void:
 	card = card.duplicate(true)
-	if hero_id in ["healer", "occultist"] and str(card["effect"]) in ["block", "heal", "team_heal", "team_block", "stress_heal", "weaken"]:
-		_play_attack_sound("spell")
 	if card.has("block"):
 		card["block"] = int(card["block"]) + GameState.hero_bonus(hero_id, "block")
 	if card.has("heal"):
 		card["heal"] = int(card["heal"]) + GameState.hero_bonus(hero_id, "heal")
 	if presentation != null and card.get("effect", "") in ["heal", "team_heal", "pain_heal", "block", "team_block"]:
-		presentation.strike(hero_portraits[hero_id],hero_portraits[hero_id],"heal" if card.get("effect", "") in ["heal", "team_heal", "pain_heal"] else "block",str(card.get("name", "Ward")))
+		presentation.strike(hero_portraits[hero_id],hero_portraits[hero_id],"heal" if card.get("effect", "") in ["heal", "team_heal", "pain_heal"] else "block",str(card.get("name", "Ward")),true,{"skill_id":str(card.get("skill_id","")),"effect":str(card.get("effect",""))})
+	if hero_id in ["healer", "occultist"] and str(card["effect"]) in ["block", "heal", "team_heal", "team_block"]:
+		_play_attack_sound("spell")
+	elif hero_id in ["healer", "occultist"] and str(card["effect"]) in ["stress_heal","weaken"]:
+		# These support skills do not create a strike, so their cue plays now.
+		_emit_attack_sound("spell")
 	match str(card["effect"]):
 		"pain_heal":
 			if int(hero_state[hero_id]["hp"]) > int(card["self_damage"]):
@@ -390,6 +400,8 @@ func _resolve_card(hero_id: String, card: Dictionary) -> void:
 				_add_log("%s's barbs draw 2 HP in payment for relief." % _name_of(hero_id))
 		"barbed_charge":
 			GameState.Depth.move_hero(GameState,hero_id,1)
+			# Settle the exchanged formation before the cinematic snapshots it.
+			_arrange_party(true)
 			_attack_with_equipment(hero_id, card)
 			_gain_block(hero_id, int(card["block"]))
 		"attack":
@@ -431,9 +443,9 @@ func _resolve_card(hero_id: String, card: Dictionary) -> void:
 
 func _attack_with_equipment(hero_id: String, card: Dictionary, ignore_block: bool = false) -> void:
 	var attack_kind: String = "bow" if hero_id == "ranger" else "spell" if hero_id in ["occultist", "healer"] else "sword"
-	_play_attack_sound(attack_kind)
 	if presentation != null:
-		presentation.strike(hero_portraits[hero_id], enemy_views[selected_enemy_index].get_node("EnemyArt"), attack_kind, str(card.get("name", "Strike")))
+		presentation.strike(hero_portraits[hero_id], enemy_views[selected_enemy_index].get_node("EnemyArt"), attack_kind, str(card.get("name", "Strike")),true,{"skill_id":str(card.get("skill_id","")),"effect":str(card.get("effect",""))})
+	_play_attack_sound(attack_kind)
 	var accuracy: float = GameState.hero_accuracy(hero_id, hero_state[hero_id])
 	if accuracy < 100.0 and randf() * 100.0 >= accuracy:
 		_add_log("%s misses %s." % [_name_of(hero_id), enemy_name])
@@ -606,13 +618,14 @@ func _enemy_action() -> void:
 			_add_log("%s covers %s: +%d Block." % [enemy_name, enemies[ally]["name"], amount])
 		else:
 			var damage: int = maxi(0, int(round(_enemy_attack_power() * float(move.get("scale", 1.0)))))
-			_play_attack_sound("bow" if enemies[index]["creature"] in ["gallows_scout", "keep_crossbow"] else "spell" if move.get("status", "") in ["burn", "poison", "chill"] else "sword")
+			var attack_kind: String = "bow" if enemies[index]["creature"] in ["gallows_scout", "keep_crossbow"] else "spell" if move.get("status", "") in ["burn", "poison", "chill"] else "sword"
 			for hit in range(int(move.get("hits", 1))):
 				var target: String = _enemy_target()
 				if target == "":
 					break
 				if presentation != null:
-					presentation.strike(enemy_views[index].get_node("EnemyArt"), hero_portraits[target], "spell" if move.get("status", "") in ["burn", "poison", "chill"] else "bow" if enemies[index]["creature"] in ["gallows_scout", "keep_crossbow"] else "sword", str(move["name"]), false)
+					presentation.strike(enemy_views[index].get_node("EnemyArt"), hero_portraits[target], attack_kind, str(move["name"]), false,{"effect":"attack"})
+				_play_attack_sound(attack_kind)
 				if enemies[index].get("surprised", false) and float(enemies[index].get("accuracy", 100)) < 100.0 and randf() * 100.0 >= float(enemies[index].get("accuracy", 100)):
 					if presentation != null: presentation.feedback(hero_portraits[target],"miss")
 					_add_log("%s stumbles: %s misses %s." % [enemy_name, move["name"], _name_of(target)])
@@ -1096,7 +1109,7 @@ func _use_scroll(item_id: String) -> void:
 		return
 	if GameState.is_restorative(item_id):
 		if GameState.apply_potion(selected_hero, item_id, hero_state):
-			if GameState.Items.item(item_id).get("kind", "") == "scroll": _play_attack_sound("spell")
+			if GameState.Items.item(item_id).get("kind", "") == "scroll": _emit_attack_sound("spell")
 			if GameState.Items.item(item_id).get("buff", "") == "ward":
 				hero_state[selected_hero]["block"] = maxi(int(hero_state[selected_hero]["block"]), GameState.buff_bonus(hero_state[selected_hero], "ward"))
 			hero_state[selected_hero]["ap"] -= 1
@@ -1107,10 +1120,10 @@ func _use_scroll(item_id: String) -> void:
 		return
 	hero_state[selected_hero]["ap"] = int(hero_state[selected_hero]["ap"]) - 1
 	var item: Dictionary = GameState.Items.item(item_id)
-	_play_attack_sound("spell")
 	_add_log("%s consumes %s." % [_name_of(selected_hero), item["name"]])
 	var target_index: int = selected_enemy_index
-	if presentation != null: presentation.strike(hero_portraits[selected_hero], enemy_views[target_index].get_node("EnemyArt"), "spell", str(item["name"]))
+	if presentation != null: presentation.strike(hero_portraits[selected_hero], enemy_views[target_index].get_node("EnemyArt"), "spell", str(item["name"]),true,{"profile":"spell"})
+	_play_attack_sound("spell")
 	var phase: int = int(enemies[target_index].get("phase_index", 0))
 	var previous_hp: int = int(enemies[target_index]["hp"])
 	_deal_enemy_damage(Rules.damage_after_chill(int(item["damage"]), hero_state[selected_hero]["statuses"]), item["effect"] == "pierce", selected_hero)
@@ -1721,11 +1734,13 @@ func move_enemy(index: int, destination: int) -> void:
 	for rank in range(living.size()): enemies[living[rank]]["rank_order"] = rank
 	_add_log("%s moves to enemy position %d." % [enemies[index]["name"],destination])
 
-func _arrange_party() -> void:
+func _arrange_party(immediate: bool = false) -> void:
 	var order: Array = party.duplicate()
 	order.sort_custom(func(a,b): return GameState.Depth.position_of(GameState,str(a)) > GameState.Depth.position_of(GameState,str(b)))
 	var container: HBoxContainer = $Heros
 	for index in range(order.size()): container.move_child(hero_buttons[order[index]],index)
+	if immediate:
+		container.notification(Container.NOTIFICATION_SORT_CHILDREN)
 
 func _speech(id: String, text: String, color: Color) -> void:
 	if not hero_portraits.has(id): return

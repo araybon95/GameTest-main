@@ -33,4 +33,6 @@ The complete automated run and numeric audit are explained in [run_progression_a
 
 The subsequent balance and tactics pass is recorded in [ordinary_playthrough_balance.md](ordinary_playthrough_balance.md) and [boss_matchups_and_grimdark.md](boss_matchups_and_grimdark.md). It adds ordinary-action balance measurements, battlefield boss objectives, creature-specific equipment and darker effects, bringing the smoke suite to 40 passing checks.
 
+The next pass adds party preparation and descent guidance, victory XP for Death's Door survivors, and skill-specific timing with sound cues at release/contact. Details and verification are recorded in [readiness_and_attack_timing.md](readiness_and_attack_timing.md).
+
 Generated creature prompts, corrective prompts, source hashes and frame regions are recorded in [creature_art_provenance.json](creature_art_provenance.json). Door artwork provenance is in [thresholds_PROVENANCE.md](../assets/generated/thresholds_PROVENANCE.md).

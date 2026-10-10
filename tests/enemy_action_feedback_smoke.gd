@@ -48,7 +48,7 @@ func value_count(values: Array[String], wanted: String) -> int:
 
 func impact(battle: Control) -> bool:
 	var cinema: Control = battle.presentation
-	cinema.age = float(cinema.active.get("duration", cinema.duration)) * 0.4
+	cinema.age = cinema.impact_time() + 0.03
 	cinema._process(0.0)
 	assert(not cinema.active.has("feedback"), "Feedback appears once at impact")
 	return true
