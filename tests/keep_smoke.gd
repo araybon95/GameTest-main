@@ -54,7 +54,7 @@ func run() -> void:
 		assert(battle.enemies[1]["max_hp"] == int(round(battle.enemies[1]["normal_hp"] * 0.3)))
 		assert(battle.enemies[1]["attack"] == int(round(battle.enemies[1]["normal_attack"] * 0.3)))
 		assert(battle.enemies[0]["undead"] and battle.enemies[0]["moves"].size() == 3)
-		assert(battle.get_node("BackgroundArt").texture.resource_path == State.floor_background("combat"))
+		assert(battle.get_node("BattlefieldBackdrop/BackgroundArt").texture.resource_path == "res://assets/generated/keep_battle_stage.png")
 		battle.queue_free()
 		await process_frame
 	var stronger: Dictionary = Rules.make_enemy(State.creature("keep_footman"), "keep_footman", 1)

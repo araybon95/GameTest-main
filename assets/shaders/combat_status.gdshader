@@ -1,4 +1,5 @@
 shader_type canvas_item;
+uniform vec3 ambient = vec3(1.0);
 uniform float burn = 0.0;
 uniform float bleed = 0.0;
 uniform float poison = 0.0;
@@ -12,7 +13,7 @@ void fragment() {
 	vec4 base = COLOR;
 	float pulse = 0.5 + 0.5 * sin(TIME * 4.0);
 	float grain = fract(sin(dot(floor(UV * 95.0), vec2(12.9898, 78.233))) * 43758.5453);
-	vec3 color = base.rgb;
+	vec3 color = base.rgb * ambient;
  // Keep bright faces readable while reducing smooth gradients to inked washes.
  float ink_luma = dot(color, vec3(0.299,0.587,0.114));
  float bands = floor(ink_luma * 10.0 + 0.5) / 10.0;

@@ -1,4 +1,5 @@
 extends Control
+const GROUND_Y: float = 430.0
 var presentation: Control
 var combat_audio: Node
 func _play_attack_sound(kind: String) -> void:
@@ -1021,6 +1022,7 @@ func _build_interface() -> void:
 
 	gold_label = $GoldLabel
 	_layout_combat()
+	_ground_battlefield()
 
 
 func _place(control: Control, rect: Rect2) -> void:
@@ -1155,7 +1157,7 @@ func _make_hero_card(hero_id: String) -> Button:
 	hero_portraits[hero_id] = portrait
 	StatusVisual.new().attach_to(portrait)
 	var name_label: Label = button.get_node("HeroName") as Label
-	_place(name_label, Rect2(8, 280, 234, 27))
+	_place(name_label, Rect2(8, 285, 234, 27))
 	name_label.add_theme_font_size_override("font_size", 18)
 	name_label.clip_text = true
 	name_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
@@ -1166,7 +1168,7 @@ func _make_hero_card(hero_id: String) -> Button:
 	hero_name_labels[hero_id] = name_label
 	var class_label := _make_label(str(hero.get("class", hero["name"])), 14, Color("#D4B997"), true)
 	class_label.name = "HeroClass"
-	_place(class_label, Rect2(8, 308, 234, 22))
+	_place(class_label, Rect2(8, 313, 234, 22))
 	button.add_child(class_label)
 
 	var health: ProgressBar = button.get_node("HealthBar") as ProgressBar
@@ -1261,9 +1263,9 @@ func _style_card_backing(control: Control, fill: Color, outline: Color) -> void:
 	style_box.shadow_offset = Vector2(3,4)
 	style_box.set_content_margin_all(12)
 	if control is Button and (control.name.begins_with("Hero_") or control.name.begins_with("Enemy")):
-		style_box.bg_color = Color(0.025,0.02,0.02,0.32)
+		style_box.bg_color = Color(0,0,0,0)
 		style_box.set_border_width_all(0)
-		style_box.border_width_bottom = 3
+		style_box.border_width_bottom = 0
 		style_box.shadow_size = 0
 	if control is PanelContainer:
 		(control as PanelContainer).add_theme_stylebox_override("panel", style_box)
@@ -1347,12 +1349,12 @@ func _build_enemy_cards() -> void:
 		for child in view.get_children():
 			if child is Control:
 				child.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		_place(view.get_node("EnemyInfo"), Rect2(10, 10, 230, 65))
+		_place(view.get_node("EnemyInfo"), Rect2(10, 285, 230, 65))
 		(view.get_node("EnemyInfo") as Label).add_theme_font_size_override("font_size", 18)
 		(view.get_node("EnemyInfo") as Label).autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		_place(view.get_node("EnemyArt"), Rect2(10, 75, 230, 240))
 		(view.get_node("EnemyArt") as TextureRect).texture = _load_texture(str(enemies[index]["art"]))
-		_place(view.get_node("EnemyIntent"), Rect2(10, 320, 230, 82))
+		_place(view.get_node("EnemyIntent"), Rect2(10, 350, 230, 58))
 		(view.get_node("EnemyIntent") as Label).add_theme_font_size_override("font_size", 15)
 		(view.get_node("EnemyIntent") as Label).autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		_place(view.get_node("HealthBar"), Rect2(12, 408, 226, 14))
@@ -1393,6 +1395,8 @@ func _refresh_enemies() -> void:
 		meter.max_value = enemy_max_hp
 		meter.value = enemy_hp
 		_sync_portrait(view.get_node("EnemyArt"), entry)
+		if view.has_node("GroundShadow"):
+			_plant_combatant(view,view.get_node("EnemyArt"),280.0)
 		view.disabled = battle_over or enemy_hp <= 0
 		view.modulate = Color(0.45, 0.45, 0.45) if enemy_hp <= 0 else Color.WHITE
 		_style_card_backing(view, Color("#1C1614"), Color("#D3AF72") if index == original else Color(GOLD))
@@ -1456,3 +1460,78 @@ func _make_cocoon() -> Dictionary:
 	cocoon["cocoon"] = true
 	cocoon["age"] = 0
 	return cocoon
+
+func _ground_battlefield() -> void:
+	# Keep scenery behind a dedicated stage; the interface has its own backing.
+	var backdrop: TextureRect = $BackgroundArt
+	var stage := Control.new()
+	stage.name = "BattlefieldBackdrop"
+	stage.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	stage.clip_contents = true
+	stage.z_index = -2
+	_place(stage,Rect2(0,0,1920,600))
+	add_child(stage)
+	backdrop.reparent(stage)
+	backdrop.z_index = 0
+	var variants: Dictionary = {
+		"bandit_combat.png":"bandit_battle_stage.png",
+		"keep_hall.png":"keep_battle_stage.png",
+		"beast_sanctuary.png":"beast_battle_stage.png",
+		"apothecary_interior.png":"apothecary_battle_stage.png"
+	}
+	var file: String = backdrop.texture.resource_path.get_file() if backdrop.texture != null else ""
+	if variants.has(file):
+		var replacement: String = "res://assets/generated/" + variants[file]
+		if ResourceLoader.exists(replacement): backdrop.texture = load(replacement)
+	# The side-view wall meets the floor around 65% of these images.
+	_place(backdrop,Rect2(0,-330,1920,1080))
+	backdrop.stretch_mode = TextureRect.STRETCH_SCALE
+	var curtain := ColorRect.new()
+	curtain.name = "StageFooterShade"
+	curtain.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	curtain.z_index = -1
+	_place(curtain,Rect2(0,430,1920,170))
+	var fade_shader := Shader.new()
+	fade_shader.code = "shader_type canvas_item; void fragment(){COLOR=vec4(0.035,0.025,0.03,smoothstep(0.0,1.0,UV.y)*0.94);}"
+	var fade_material := ShaderMaterial.new()
+	fade_material.shader = fade_shader
+	curtain.material = fade_material
+	add_child(curtain)
+	var hud := ColorRect.new()
+	hud.name = "CombatHUDBacking"
+	hud.color = Color("#100E10")
+	hud.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	hud.z_index = -1
+	_place(hud,Rect2(0,600,1920,480))
+	add_child(hud)
+	# Containers finish placing cloned hero buttons on the next layout frame.
+	await get_tree().process_frame
+	if not is_inside_tree(): return
+	for hero_id in party:
+		_plant_combatant(hero_buttons[hero_id],hero_portraits[hero_id],280.0)
+	for index in range(enemy_views.size()):
+		_plant_combatant(enemy_views[index],enemy_views[index].get_node("EnemyArt"),280.0)
+
+func _plant_combatant(view: Button, portrait: TextureRect, height: float) -> void:
+	if portrait.texture == null: return
+	var texture_size: Vector2 = portrait.texture.get_size()
+	var ratio: float = texture_size.x / maxf(1.0,texture_size.y)
+	var width: float = minf(280.0,height * ratio)
+	var draw_height: float = width / ratio
+	var foot: float = GROUND_Y - (view.global_position.y - global_position.y)
+	# Exact aspect-sized rectangles remove centered letterbox padding below feet.
+	_place(portrait,Rect2((view.size.x-width)*0.5,foot-draw_height,width,draw_height))
+	portrait.stretch_mode = TextureRect.STRETCH_SCALE
+	var shadow: Node2D = view.get_node_or_null("GroundShadow")
+	if shadow == null:
+		shadow = preload("res://scenes/combat/ground_shadow.gd").new()
+		shadow.name = "GroundShadow"
+		view.add_child(shadow)
+	shadow.position = Vector2(view.size.x*0.5,foot-2)
+	shadow.z_index = -1
+	var tint := Color("#FFF2E4")
+	var theme_path: String = GameState.floor_background("combat")
+	if theme_path.contains("apothecary"): tint = Color("#EBF9FF")
+	elif theme_path.contains("keep"): tint = Color("#F0F3FF")
+	if portrait.material is ShaderMaterial and portrait.get_node_or_null("StatusVisual") != null:
+		portrait.material.set_shader_parameter("ambient",Vector3(tint.r,tint.g,tint.b))
