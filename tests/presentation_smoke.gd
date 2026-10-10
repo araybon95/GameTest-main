@@ -31,7 +31,7 @@ func run() -> void:
  assert(battle.hero_portraits["ranger"].visible)
  await create_timer(0.34).timeout
  assert(battle.presentation.fighters[0].texture != source.texture,"Attack uses a dedicated pose")
- assert(battle.presentation.fighters[1].texture != target.texture,"Target uses a hurt pose")
+ assert(battle.presentation.fighters[1].texture == target.texture,"Fully blocked attacks keep the defender braced instead of injured")
  assert(absf(battle.presentation.fighters[0].get_global_rect().end.y - 430.0) < 30.0)
  battle._attack_with_equipment("ranger",{"damage":1,"name":"Arrow"})
  battle._attack_with_equipment("occultist",{"damage":1,"name":"Spell"})

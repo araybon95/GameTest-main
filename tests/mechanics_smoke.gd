@@ -15,6 +15,7 @@ func run() -> void:
 	State.progress_path = "user://mechanics_test.cfg"
 	State.completed_expeditions.clear()
 	State.formation.clear()
+	State.hero_positions.clear()
 	State.modifications.clear()
 	State.equipment.clear()
 	State.inventory.clear()
@@ -31,17 +32,18 @@ func run() -> void:
 	assert(State.rank_of("ranger") == "front" and battle.hero_state["ranger"]["ap"] == 1)
 	battle._select_hero("warden")
 	battle.change_rank()
-	assert(State.rank_of("warden") == "rear")
+	assert(State.Depth.position_of(State,"warden") == 1, "Nearest-slot movement exchanges allies")
 	battle._select_hero("ranger")
 	battle.change_rank()
-	assert(State.rank_of("ranger") == "front", "Last protector cannot move to rear")
+	assert(State.Depth.position_of(State,"ranger") == 1 and State.rank_of("warden") == "rear", "An ally replaces the protector when moving")
 	battle.queue_free()
 	await process_frame
 	State.formation.clear()
+	State.hero_positions.clear()
 	battle = await battle_for("keep_wolfguard")
 	battle.round_number = 3
 	battle._enemy_action()
-	assert(State.rank_of("ranger") == "front", "Reach attack pulls a rear hero")
+	assert(State.Depth.position_of(State,"occultist") == 1, "Reach attack pulls the furthest hero")
 	battle.queue_free()
 	await process_frame
 	battle = await battle_for("moth_oleander", true)

@@ -120,6 +120,7 @@ func refresh() -> void:
 	scout.disabled = GameState.scout_uses <= 0 or not rooms[GameState.room_position]["cleared"] or GameState.run_complete
 	label_at("EXPLORED %d%%" % int(100.0 * revealed / rooms.size()), Vector2(1600, 810), 22)
 	label_at("GOLD  %d" % GameState.gold, Vector2(45, 865), 24)
+	label_at("RATIONS %d + %d · Food is used every 6 new spaces" % [int(GameState.journey.get("rations",0)),int(GameState.inventory.get("trail_food",0))],Vector2(45,1035),17)
 	var retreat_button := button_at("RETURN TO HAMLET" if GameState.run_complete else "RETREAT", Vector2(45, 935), retreat)
 	retreat_button.size = Vector2(270, 70)
 	if GameState.can_descend():
@@ -195,7 +196,7 @@ func inspect_hero(hero_id: String) -> void:
 	scroll.add_child(inventory_grid)
 	for item_id in GameState.inventory:
 		var item: Dictionary = GameState.Items.item(item_id)
-		var category: String = "Consumables" if item.get("kind", "") in ["scroll", "potion"] else ("Weapons" if item.get("slot", "") == "weapon" else ("Armor" if item.get("slot", "") in ["armor", "head"] else "Other"))
+		var category: String = "Consumables" if item.get("kind", "") in ["scroll", "potion", "provision"] else ("Weapons" if item.get("slot", "") == "weapon" else ("Armor" if item.get("slot", "") in ["armor", "head"] else "Other"))
 		if item.get("kind", "") == "trinket":
 			category = "Trinkets"
 		if inventory_filter != "All" and inventory_filter != category:
@@ -235,7 +236,7 @@ func choose_inventory_item(hero_id: String, item_id: String) -> void:
 		if GameState.apply_potion(hero_id, item_id, GameState.run_heroes):
 			inspect_hero(hero_id)
 		return
-	if item.get("kind", "") != "scroll" and (not item.has("hero") or item["hero"] == hero_id):
+	if item.get("kind", "") not in ["scroll", "provision"] and (not item.has("hero") or item["hero"] == hero_id):
 		equip_from_inventory(hero_id, item_id)
 	else:
 		var details := AcceptDialog.new()
@@ -279,7 +280,8 @@ func move_to(destination: Vector2i) -> void:
 	for step in route:
 		if not GameState.vote_move("local", step): return
 	var room: Dictionary = GameState.floors[GameState.floor_index][destination]
-	if room["cleared"]:
+	if room.has("travel_text"): message = str(room["travel_text"])
+	if room["cleared"] and not room.has("travel_text"):
 		message = "Returned to %s. Choose a connected passage." % str(room.get("name", room["kind"]))
 	if not room["cleared"]:
 		var corridor: Dictionary = GameState.enter_corridor()
@@ -321,7 +323,7 @@ func enter_next_floor() -> void:
 
 func retreat() -> void:
 	GameState.end_run()
-	get_tree().change_scene_to_file("res://scenes/hub/settlement.tscn")
+	get_tree().change_scene_to_file("res://scenes/expedition/aftermath.tscn")
 
 func scout_area() -> void:
 	if GameState.scout_area():

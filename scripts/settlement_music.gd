@@ -12,6 +12,7 @@ static func play() -> void:
 		if tree == null: return
 		music = AudioStreamPlayer.new()
 		music.name = "SettlementMusic"
+		music.tree_exiting.connect(music.stop)
 		var stream := load("res://assets/audio/settlement_music.mp3") as AudioStreamMP3
 		stream.loop = true
 		music.stream = stream

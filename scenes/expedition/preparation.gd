@@ -10,7 +10,7 @@ func refresh() -> void:
 	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	panel(Rect2(40, 35, 1840, 750), Color(0.07, 0.05, 0.07, 0.94))
 	label_at("PREPARE · " + str(expedition.get("name", "Expedition")).to_upper(), Vector2(75, 60), 1780, 35)
-	label_at("Formation: front draws melee attacks and gains 2 Block each new party turn. Ranged enemies can reach the rear.", Vector2(75, 115), 1780, 23)
+	label_at("Positions 1–3: 1 is nearest the enemy. Skills show their usable positions and reach. Movement swaps allies.", Vector2(75, 115), 1780, 23)
 	var warning: String = "Bandits cause Bleed and Poison. Deeper keep guards can pull rear heroes forward."
 	if expedition.get("faction", "") == "remade":
 		warning = "The remade use Burn, Bleed, Poison and stressful hymns. The Coterie has three consecutive forms."
@@ -20,18 +20,18 @@ func refresh() -> void:
 	for index in range(State.party.size()):
 		var id: String = State.party[index]
 		var x: float = 125 + index * 570
-		panel(Rect2(x, 245, 530, 295))
+		panel(Rect2(x, 245, 530, 245))
 		picture(str(State.hero(id)["art"]), Rect2(x + 20, 260, 180, 235))
 		label_at(str(State.hero(id)["name"]).to_upper(), Vector2(x + 210, 270), 300, 25)
 		label_at(role_description(id), Vector2(x + 210, 320), 280, 20).size = Vector2(280, 125)
-		var toggle := button_at(State.rank_of(id).to_upper() + " · CHANGE", Rect2(x + 210, 470, 285, 50), toggle_rank.bind(id))
+		var toggle := button_at("POSITION %d · MOVE" % State.Depth.position_of(State, id), Rect2(x + 210, 425, 285, 50), toggle_rank.bind(id))
 		toggle.add_theme_font_size_override("font_size", 20)
-	label_at("OPTIONAL SUPPLIES · GOLD %d · Stock carries into the expedition" % State.gold, Vector2(75, 575), 1760, 24)
-	var supplies: Array = ["bandage", "antidote", "calming_incense", "healing_potion"]
+	label_at("OPTIONAL SUPPLIES · GOLD %d · Three basic rations provided; extras carry over" % State.gold, Vector2(75, 505), 1760, 24)
+	var supplies: Array = ["bandage", "antidote", "calming_incense", "healing_potion", "trail_food", "lock_tools", "cleansing_herbs"]
 	for index in range(supplies.size()):
 		var id: String = supplies[index]
 		var item: Dictionary = State.Items.item(id)
-		var buy := button_at("%s · %d GOLD\nOwned %d" % [item["name"], State.item_price(id), int(State.inventory.get(id, 0))], Rect2(75 + index * 440, 625, 420, 85), buy_supply.bind(id))
+		var buy := button_at("%s · %d GOLD\nOwned %d" % [item["name"], State.item_price(id), int(State.inventory.get(id, 0))], Rect2(75 + (index % 4) * 440, 545 + (index / 4) * 85, 420, 75), buy_supply.bind(id))
 		buy.add_theme_font_size_override("font_size", 21)
 		buy.disabled = State.gold < State.item_price(id)
 		buy.tooltip_text = State.Items.description(id)
@@ -42,9 +42,7 @@ func role_description(id: String) -> String:
 	return {"warden": "Exploits marked targets: +2 damage. Protect the front.", "ranger": "+1 skill damage from the rear. Mark targets for the Warden.", "occultist": "Damaging skills inflict Poison. Stack pressure with the party.", "crusader": "+2 damage against bleeding foes. Charge to create Bleed.", "healer": "Party healing also removes Bleed. Keep allies fighting."}.get(id, "Shared party turns allow heroes to act in any order.")
 
 func toggle_rank(id: String) -> void:
-	State.formation[id] = "rear" if State.rank_of(id) == "front" else "front"
-	if not State.party.any(func(hero): return State.rank_of(str(hero)) == "front"):
-		State.formation[id] = "front"
+	State.Depth.move_hero(State, id, (State.Depth.position_of(State,id) % State.party.size()) + 1)
 	refresh()
 
 func buy_supply(id: String) -> void:

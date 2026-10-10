@@ -39,7 +39,7 @@ func configure(id: String, amount: int = 1) -> void:
 	picture.offset_right = -6
 	picture.offset_bottom = -6
 	var quantity := Label.new()
-	quantity.text = str(amount) if amount > 1 or entry.get("kind", "") in ["scroll", "potion"] else ""
+	quantity.text = str(amount) if amount > 1 or entry.get("kind", "") in ["scroll", "potion", "provision"] else ""
 	quantity.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	quantity.add_theme_font_size_override("font_size", 18)
 	quantity.add_theme_color_override("font_color", Color("#F4E9DD"))

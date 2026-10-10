@@ -17,6 +17,10 @@ const TRAINING_STATS: Dictionary = {
 }
 static var hero_colors: Dictionary = {}
 static var formation: Dictionary = {}
+static var hero_positions: Dictionary = {}
+static var journey: Dictionary = {}
+static var last_report: Dictionary = {}
+const Depth = preload("res://scripts/dungeon_depth.gd")
 static var modifications: Dictionary = {}
 static var pending_service: String = "watchtower"
 static var scout_uses: int = 2
@@ -214,6 +218,7 @@ static func load_progression() -> void:
 	var config := ConfigFile.new()
 	if config.load(progress_path) == OK:
 		modifications = config.get_value("progress", "modifications", {})
+		last_report = config.get_value("progress", "last_report", {})
 		hero_progress = config.get_value("progress", "hero_progress", {})
 		hero_names = config.get_value("progress", "hero_names", {})
 		hero_colors = config.get_value("progress", "hero_colors", {})
@@ -227,6 +232,7 @@ static func save_progression() -> void:
 	if not progress_loaded:
 		return
 	var config := ConfigFile.new()
+	config.set_value("progress", "last_report", last_report)
 	config.set_value("progress", "hero_progress", hero_progress)
 	config.set_value("progress", "graves", graves)
 	config.set_value("progress", "hero_names", hero_names)
@@ -387,6 +393,8 @@ static func start_run(seed_value: int = -1) -> void:
 	load_progression()
 	run_id = str(Time.get_unix_time_from_system()) + "-" + str(randi())
 	run_deeds.clear()
+	Depth.normalize_positions(load("res://scripts/game_data.gd"))
+	journey = Depth.begin_journey(load("res://scripts/game_data.gd"))
 	run_seed = seed_value if seed_value >= 0 else randi()
 	var rng := RandomNumberGenerator.new()
 	rng.seed = run_seed
@@ -577,6 +585,7 @@ static func vote_move(voter_id: String, destination: Vector2i) -> bool:
 	room_position = destination
 	navigation_votes.clear()
 	reveal_neighbors()
+	Depth.explore(load("res://scripts/game_data.gd"), floors[floor_index][room_position])
 	return true
 
 static func finish_encounter() -> void:
@@ -603,6 +612,9 @@ static func descend() -> bool:
 	return true
 
 static func end_run() -> void:
+	if run_active:
+		last_report = Depth.aftermath(load("res://scripts/game_data.gd"))
+		save_progression()
 	run_active = false
 	run_heroes.clear()
 	navigation_votes.clear()
@@ -621,12 +633,16 @@ static func purchase_apothecary_item(item_id: String) -> bool:
 static func add_item(item_id: String, amount: int = 1) -> void:
 	if not Items.item(item_id).is_empty() and amount > 0:
 		inventory[item_id] = int(inventory.get(item_id, 0)) + amount
+		if run_active:
+			var found: Dictionary = journey.get("loot", {})
+			found[item_id] = int(found.get(item_id, 0)) + amount
+			journey["loot"] = found
 
 static func consume_scroll(item_id: String) -> bool:
 	return consume_item(item_id) if Items.SCROLLS.has(item_id) else false
 
 static func consume_item(item_id: String) -> bool:
-	if Items.item(item_id).get("kind", "") not in ["scroll", "potion"] or int(inventory.get(item_id, 0)) <= 0:
+	if Items.item(item_id).get("kind", "") not in ["scroll", "potion", "provision"] or int(inventory.get(item_id, 0)) <= 0:
 		return false
 	inventory[item_id] = int(inventory[item_id]) - 1
 	if inventory[item_id] <= 0:
@@ -710,6 +726,9 @@ static func award_victory_xp() -> Dictionary:
 			continue
 		var gained: int = gain_hero_xp(str(hero_id), amount)
 		rewards[hero_id] = {"xp": amount, "levels": gained}
+		var earned: Dictionary = journey.get("xp", {})
+		earned[hero_id] = int(earned.get(hero_id, 0)) + amount
+		journey["xp"] = earned
 	return rewards
 
 static func equipment_bonus(hero_id: String, stat: String) -> int:
@@ -728,10 +747,10 @@ static func hero_accuracy(hero_id: String, state: Dictionary = {}) -> float:
 		penalty += 10
 	return clampf(100.0 - penalty + equipment_bonus(hero_id, "accuracy") + buff_bonus(state, "focus"), 0.0, 100.0)
 
-static func try_hero_status(hero_id: String, statuses: Dictionary, status: String, potency: float = 1.0, roll: float = -1.0) -> bool:
+static func try_hero_status(hero_id: String, statuses: Dictionary, status: String, potency: float = 1.0, roll: float = -1.0, extra_resistance: int = 0) -> bool:
 	# Poison resistance already reduces poison tick damage; generic resistance
 	# prevents application of any debuff. Bleed resistance prevents Bleed.
-	var resistance: int = hero_bonus(hero_id, "debuff_resist")
+	var resistance: int = hero_bonus(hero_id, "debuff_resist") + extra_resistance
 	if status == "bleed":
 		resistance += equipment_bonus(hero_id, "bleed_resist")
 	if (randf() * 100.0 if roll < 0.0 else roll) < clampi(resistance, 0, 100):
@@ -742,6 +761,7 @@ static func try_hero_status(hero_id: String, statuses: Dictionary, status: Strin
 	return Events.Rules.STATUS.has(status)
 
 static func rank_of(hero_id: String) -> String:
+	if hero_positions.has(hero_id): return "front" if int(hero_positions[hero_id]) == 1 else "rear"
 	return str(formation.get(hero_id, Mechanics.default_rank(hero_id)))
 
 static func service_unlocked(service: String) -> bool:

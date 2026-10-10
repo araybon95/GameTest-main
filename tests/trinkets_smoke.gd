@@ -30,7 +30,7 @@ func run() -> void:
 	root.add_child(combat)
 	await process_frame
 	assert(combat._attack_damage("ranger", {"damage": 20}) == 24)
-	State.formation["ranger"] = "front"
+	State.Depth.move_hero(State,"ranger",1)
 	assert(combat._attack_damage("ranger", {"damage": 20}) == 23)
 	combat.queue_free()
 	await process_frame

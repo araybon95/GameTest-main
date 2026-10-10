@@ -93,7 +93,7 @@ func _process(delta: float) -> void:
  var hero: bool = active["hero"]
  var direction: float = 1.0 if hero else -1.0
  var source_position: Vector2 = apply_pose(0,"source",age >= 0.11 and age < 0.60,active["attack_kind"] == "block")
- var harmful: bool = active["attack_kind"] not in ["heal","block"] and active.get("reaction", "hurt") != "miss" and active["source_node"] != active["target_node"]
+ var harmful: bool = active["attack_kind"] not in ["heal","block"] and active.get("reaction", "hurt") not in ["miss","block"] and active["source_node"] != active["target_node"]
  var target_position: Vector2 = apply_pose(1,"target",harmful and age >= 0.28 and age < 0.64,true)
  # A brief held contact pose makes each impact readable before recoil.
  var motion_age: float = age if age < 0.28 else 0.28 if age < 0.38 else age - 0.10
@@ -101,7 +101,7 @@ func _process(delta: float) -> void:
  var impact: float = sin(clampf((motion_age - 0.28) / 0.26,0.0,1.0) * PI)
  var kind: String = active["kind"]
  var anticipation: float = sin(clampf(age/0.11,0.0,1.0)*PI) if age < 0.11 else 0.0
- fighters[0].position = source_position + Vector2(direction * (lunge * (65.0 if active["attack_kind"] == "sword" else 12.0) - anticipation*12.0),0.0)
+ fighters[0].position = source_position + Vector2(direction * (lunge * (95.0 if str(active["title"]).to_lower().contains("charge") else 65.0 if active["attack_kind"] == "sword" else 12.0) - anticipation*12.0),0.0)
  fighters[0].rotation = direction * lunge * (0.12 if kind == "sword" else -0.045)
  var dodge: bool = active.get("reaction", "hurt") == "miss"
  fighters[1].position = target_position + Vector2(direction * impact * (40.0 if dodge else 18.0 if harmful else 0.0),0)
@@ -157,9 +157,9 @@ func popup(target: Control, value: String, tint: Color) -> void:
   var model: Control = target.get_node_or_null("Portrait")
   if model == null: model = target.get_node_or_null("EnemyArt")
   if model != null: target = model
- if value == "MISS":
-  if not pending.is_empty() and pending[-1].get("target_node") == target: pending[-1]["reaction"] = "miss"
-  elif active.get("target_node") == target: active["reaction"] = "miss"
+ if value in ["MISS","BLOCK","BLOCKED"]:
+  if not pending.is_empty() and pending[-1].get("target_node") == target: pending[-1]["reaction"] = "miss" if value == "MISS" else "block"
+  elif active.get("target_node") == target: active["reaction"] = "miss" if value == "MISS" else "block"
  var label := Label.new()
  label.text = value
  label.position = target.get_global_rect().get_center() - get_global_rect().position - Vector2(80,45)

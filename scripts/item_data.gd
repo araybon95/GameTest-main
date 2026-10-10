@@ -67,10 +67,15 @@ const EQUIPMENT: Dictionary = {
 	"healer_symbol": {"name": "Consecrated Symbol", "rarity": "rare", "hero": "healer", "slot": "off_hand", "heal": 3},
 	"healer_legend": {"name": "Dawn's Mercy", "rarity": "legendary", "hero": "healer", "slot": "weapon", "damage": 2, "heal": 4, "regeneration": 2},
 }
+const PROVISIONS: Dictionary = {
+ "trail_food": {"name": "Trail Rations", "kind": "provision", "rarity": "common", "price": 2, "description": "One party ration. Automatically used after six newly visited map spaces; restores 3 HP to survivors. Three basic rations accompany every departure."},
+ "lock_tools": {"name": "Locksmith Tools", "kind": "provision", "rarity": "common", "price": 4, "description": "Use at a strongbox for a guaranteed reward without a trap. Consumed once."},
+ "cleansing_herbs": {"name": "Cleansing Herbs", "kind": "provision", "rarity": "common", "price": 3, "description": "Purify tainted supplies or a votive reliquary for a safe guaranteed reward. Consumed once."}
+}
 const SLOTS: Array[String] = ["weapon", "off_hand", "head", "armor", "trinket", "charm"]
 
 static func item(item_id: String) -> Dictionary:
-	return SCROLLS.get(item_id, POTIONS.get(item_id, EQUIPMENT.get(item_id, {})))
+	return SCROLLS.get(item_id, POTIONS.get(item_id, PROVISIONS.get(item_id, EQUIPMENT.get(item_id, {}))))
 
 static func description(item_id: String) -> String:
 	var entry: Dictionary = item(item_id)

@@ -43,7 +43,7 @@ func verify() -> void:
 	warden._process(0.5)
 	assert(not warden.statuses.has("burn") and warden.effect_material.get_shader_parameter("burn") == 0.0)
 	assert(warden.effect_material.get_shader_parameter("wounded") == 0.0)
-	assert(warden.portrait.rotation == 0.0 and warden.portrait.scale == Vector2.ONE)
+	assert(warden.portrait.rotation == 0.0 and absf(warden.portrait.scale.y - 1.0) < 0.007 and warden.portrait.scale.x == 1.0)
 	assert(foe1.statuses.has("poison"))
 	for hero_id in State.HEROES:
 		assert(ResourceLoader.exists(State.HEROES[hero_id]["camp_art"]))

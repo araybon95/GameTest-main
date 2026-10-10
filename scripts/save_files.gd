@@ -11,7 +11,7 @@ static func save(slot: int) -> bool:
 	if slot < 0 or slot > 3: return false
 	DirAccess.make_dir_recursive_absolute(directory)
 	var data: Dictionary = {
-		"hero_progress": State.hero_progress, "party": State.party, "gold": State.gold, "inventory": State.inventory,
+		"hero_positions": State.hero_positions, "journey": State.journey, "last_report": State.last_report, "hero_progress": State.hero_progress, "party": State.party, "gold": State.gold, "inventory": State.inventory,
 		"equipment": State.equipment, "card_levels": State.card_levels, "discovered": State.discovered,
 		"completed": State.completed_expeditions, "crusader": State.crusader_unlocked,
 		"modifications": State.modifications, "names": State.hero_names, "colors": State.hero_colors,
@@ -44,6 +44,11 @@ static func load_slot(slot: int) -> bool:
 	if State.expedition_by_id(str(data["expedition"])).is_empty(): return false
 	if data["active"] and (not data["floors"] is Array or int(data["floor"]) < 0 or int(data["floor"]) >= data["floors"].size() or not data["floors"][int(data["floor"])].has(data["position"])): return false
 	if not data.get("hero_progress", {}) is Dictionary: return false
+	for key in ["hero_positions", "journey", "last_report"]:
+		if not data.get(key, {}) is Dictionary: return false
+	State.hero_positions = data.get("hero_positions", {})
+	State.journey = data.get("journey", {})
+	State.last_report = data.get("last_report", {})
 	State.hero_progress = data.get("hero_progress", {})
 	State.party.assign(data["party"])
 	State.gold = data["gold"]
@@ -72,6 +77,8 @@ static func load_slot(slot: int) -> bool:
 	State.run_seed = data["seed"]
 	State.loot_rng.state = data["rng"]
 	State.scout_uses = data["scouts"]
+	State.Depth.normalize_positions(State)
+	if State.run_active and State.journey.is_empty(): State.journey = State.Depth.begin_journey(State)
 	State.navigation_votes.clear()
 	State.progress_loaded = true
 	State.save_progression()

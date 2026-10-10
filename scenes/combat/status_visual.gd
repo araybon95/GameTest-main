@@ -48,8 +48,9 @@ func _process(delta: float) -> void:
 	effect_material.set_shader_parameter("impact", impact)
 	portrait.pivot_offset = Vector2(portrait.size.x * 0.5, portrait.size.y)
 	var injured: bool = health_ratio <= 0.35 and not dead
-	portrait.rotation = deg_to_rad(-3.0 if injured else 0.0) + sin(elapsed * 65.0) * impact * 0.075
-	portrait.scale = Vector2(0.97, 0.94) if injured else Vector2.ONE
+	portrait.rotation = deg_to_rad(-16.0 if dead else -3.0 if injured else 0.0) + sin(elapsed * 65.0) * impact * 0.075
+	var breath: float = sin(elapsed * 2.2) * 0.006 if not dead else 0.0
+	portrait.scale = Vector2(0.88,0.76) if dead else Vector2(0.97,0.94 + breath) if injured else Vector2(1.0,1.0 + breath)
 	if not statuses.is_empty() or injured or impact > 0.0:
 		queue_redraw()
 

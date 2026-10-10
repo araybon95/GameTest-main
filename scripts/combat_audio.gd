@@ -1,10 +1,12 @@
 extends Node
-## Replace the four WAVs independently without changing combat code.
+## Replace the WAVs independently without changing combat code.
 const SOUNDS = {
 	"sword": preload("res://assets/audio/combat/sword.wav"),
 	"bow": preload("res://assets/audio/combat/bow.wav"),
 	"spell": preload("res://assets/audio/combat/spell.wav"),
-	"block": preload("res://assets/audio/combat/block.wav")
+	"block": preload("res://assets/audio/combat/block.wav"),
+	"stress": preload("res://assets/audio/combat/stress.wav"),
+	"virtue": preload("res://assets/audio/combat/virtue.wav")
 }
 var last_sound: String = ""
 var voices: Array[AudioStreamPlayer] = []

@@ -55,6 +55,7 @@ func run() -> void:
 	battle._play_card("crusader", 2)
 	assert(battle.hero_state["crusader"]["hp"] == 2 and battle.hero_state["crusader"]["ap"] == 2)
 	battle.hero_state["crusader"]["hp"] = 30
+	State.Depth.move_hero(State,"crusader",2)
 	battle.enemies[0]["block"] = 0
 	battle._play_card("crusader", 3)
 	assert(battle.hero_state["crusader"]["block"] == 56 and battle.hero_state["crusader"]["ap"] == 0)

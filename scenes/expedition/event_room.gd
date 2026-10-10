@@ -40,7 +40,7 @@ func refresh() -> void:
 			var hero_id: String = State.party[index]
 			var choose := button_at(("▶ " if hero_id == selected_hero else "") + str(State.hero(hero_id)["name"]), Rect2(65 + index * 183, 600, 175, 55), select_hero.bind(hero_id))
 			choose.add_theme_font_size_override("font_size", 20)
-			choose.disabled = State.run_heroes[hero_id].get("dead", false) or int(State.run_heroes[hero_id]["hp"]) <= (3 if id == "crusader_coffin" else 0)
+			choose.disabled = State.run_heroes[hero_id].get("dead", false) or int(State.run_heroes[hero_id]["hp"]) <= 0
 			choose.tooltip_text = "Any harmful outcome affects this hero only."
 		var option: Dictionary = State.Mechanics.event_option(id, selected_hero)
 		if not option.is_empty():
@@ -48,6 +48,11 @@ func refresh() -> void:
 			special.add_theme_font_size_override("font_size", 20)
 			special.disabled = int(State.run_heroes[selected_hero]["hp"]) <= int(option["cost"])
 			label_at(str(option["risk"]), Vector2(65, 728), 560, 17)
+		var supply_id: String = State.Depth.EVENT_SUPPLIES.get(id, "")
+		if supply_id != "":
+			var supply := button_at("USE %s ×%d" % [State.Items.item(supply_id)["name"],State.inventory.get(supply_id,0)], Rect2(760,740,930,50), investigate_with_supply)
+			supply.disabled = int(State.inventory.get(supply_id,0)) <= 0 or selected_hero.is_empty() or (id == "crusader_coffin" and int(State.run_heroes.get(selected_hero,{}).get("hp",0)) <= 1)
+			supply.tooltip_text = "Bandages reduce the coffin opening damage to 1 HP." if id == "crusader_coffin" else "Consume this supply for a guaranteed reward without a harmful effect."
 	var object_button := button_at("", Rect2(760, 150, 930, 560), investigate)
 	object_button.name = "EventObject"
 	object_button.disabled = resolved or selected_hero == "" or (id == "crusader_coffin" and int(State.run_heroes[selected_hero]["hp"]) <= 3)
@@ -82,3 +87,6 @@ func return_to_dungeon() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		leave_untouched()
+
+func investigate_with_supply() -> void:
+	if not State.Events.resolve(State,selected_hero,false,"supply").is_empty(): refresh()

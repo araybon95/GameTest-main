@@ -33,7 +33,7 @@ func refresh() -> void:
 	rows.add_theme_constant_override("separation", 12)
 	rows.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(rows)
-	var catalog: Array = State.Items.EQUIPMENT.keys() + State.Items.SCROLLS.keys() + State.Items.POTIONS.keys()
+	var catalog: Array = State.Items.EQUIPMENT.keys() + State.Items.SCROLLS.keys() + State.Items.POTIONS.keys() + State.Items.PROVISIONS.keys()
 	if apothecary_mode:
 		catalog = State.APOTHECARY_CATALOG.duplicate()
 	catalog.sort_custom(func(a, b): return ["common", "rare", "epic", "unique", "legendary"].find(State.Items.item(a)["rarity"]) < ["common", "rare", "epic", "unique", "legendary"].find(State.Items.item(b)["rarity"]))
@@ -45,7 +45,7 @@ func refresh() -> void:
 			continue
 		if item.has("hero") and not State.party.has(item["hero"]):
 			continue
-		var item_category: String = "Consumables" if item.get("kind", "") in ["scroll", "potion"] else ("Weapons" if item.get("slot", "") == "weapon" else ("Armor" if item.get("slot", "") in ["armor", "head"] else "Relics"))
+		var item_category: String = "Consumables" if item.get("kind", "") in ["scroll", "potion", "provision"] else ("Weapons" if item.get("slot", "") == "weapon" else ("Armor" if item.get("slot", "") in ["armor", "head"] else "Relics"))
 		if item.get("kind", "") == "trinket":
 			item_category = "Trinkets"
 		if category != "All" and category != item_category:

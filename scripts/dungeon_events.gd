@@ -26,6 +26,10 @@ static func resolve(state, hero_id: String, leave: bool = false, action: String 
 		return {}
 	state.ensure_run_heroes()
 	var option: Dictionary = state.Mechanics.event_option(str(room.get("event_id", "")), hero_id) if action == "class" else {}
+	var supply: String = state.Depth.EVENT_SUPPLIES.get(str(room.get("event_id", "")), "") if action == "supply" else ""
+	if action == "supply":
+		if supply.is_empty() or int(state.inventory.get(supply,0)) <= 0: return {}
+		option = {"name": "Prepared investigation", "cost": 0, "curse_chance": 0.0}
 	if action == "class" and (option.is_empty() or int(state.run_heroes.get(hero_id, {}).get("hp", 0)) <= int(option.get("cost", 0))):
 		return {}
 	if not leave and (not state.party.has(hero_id) or state.run_heroes[hero_id].get("dead", false) or int(state.run_heroes[hero_id]["hp"]) <= 0):
@@ -35,12 +39,13 @@ static func resolve(state, hero_id: String, leave: bool = false, action: String 
 			return {}
 		var rescue_rng := RandomNumberGenerator.new()
 		rescue_rng.seed = int(room["event_seed"])
-		var cost: int = rescue_rng.randi_range(2, 3)
+		var cost: int = 1 if action == "supply" else rescue_rng.randi_range(2, 3)
 		if int(state.run_heroes[hero_id]["hp"]) <= cost:
 			return {}
 		state.load_progression()
 		if state.crusader_unlocked:
 			return {}
+		if action == "supply": state.consume_item(supply)
 		state.run_heroes[hero_id]["hp"] -= cost
 		state.crusader_unlocked = true
 		state.save_progression()
@@ -49,6 +54,7 @@ static func resolve(state, hero_id: String, leave: bool = false, action: String 
 		room["cleared"] = true
 		room["event_result"] = rescued
 		return rescued
+	if action == "supply" and not leave: state.consume_item(supply)
 	# Use a room-specific seed so reopening or retreating cannot reroll this event.
 	var rng := RandomNumberGenerator.new()
 	rng.seed = int(room["event_seed"])
