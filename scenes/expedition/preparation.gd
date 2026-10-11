@@ -30,7 +30,8 @@ func refresh() -> void:
 		var hero: Dictionary = summaries[index]
 		var id: String = hero["id"]
 		var x: float = 125 + index * 570
-		panel(Rect2(x, 254, 530, 278))
+		var hero_panel := panel(Rect2(x, 254, 530, 278))
+		preload("res://scripts/visual_overlays.gd").frame(hero_panel,id)
 		var portrait := picture(str(State.hero(id)["art"]), Rect2(x + 15, 269, 145, 208))
 		portrait.tooltip_text = role_description(id)
 		var chosen := label_at(str(hero["name"]).to_upper(), Vector2(x + 178, 269), 332, 23)
@@ -56,6 +57,7 @@ func refresh() -> void:
 		add_child(gear)
 		var toggle := button_at("POSITION %d · MOVE" % State.Depth.position_of(State, id), Rect2(x + 178, 485, 332, 38), toggle_rank.bind(id))
 		toggle.name = "Position_%s" % id
+		preload("res://scripts/visual_overlays.gd").frame(toggle,id)
 		toggle.tooltip_text = role_description(id)
 		toggle.add_theme_font_size_override("font_size", 18)
 	label_at("OPTIONAL SUPPLIES · GOLD %d · Three basic rations provided; extras carry over" % State.gold, Vector2(75, 549), 1760, 22)

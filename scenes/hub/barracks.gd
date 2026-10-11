@@ -72,6 +72,7 @@ func _build_roster() -> void:
 		train.disabled = locked
 		train.pressed.connect(_show_training.bind(str(hero_id)))
 		column.add_child(train)
+		preload("res://scripts/visual_overlays.gd").frame(train,str(hero_id))
 
 
 func _on_slot_pressed(slot: int) -> void:
@@ -147,6 +148,8 @@ func _hero_card(hero_id: String, tag_text: String, highlighted: bool) -> Button:
 	if hero_id != "":
 		contents.add_child(_make_label("Level %d · HP %d" % [GameState.leveling(hero_id)["level"], GameState.hero_max_hp(hero_id)], 17, Color(MUTED), true))
 	contents.add_child(_make_label(tag_text, 17, Color(GOLD), true))
+	card.set_meta("hero_id",hero_id)
+	preload("res://scripts/visual_overlays.gd").frame(card,hero_id)
 	return card
 
 
@@ -165,7 +168,7 @@ func _style(fill: Color, outline: Color) -> StyleBoxFlat:
 	box.bg_color = fill
 	box.border_color = outline
 	box.set_border_width_all(2)
-	box.set_corner_radius_all(12)
+	box.set_corner_radius_all(0)
 	box.set_content_margin_all(12)
 	return box
 

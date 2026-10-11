@@ -84,6 +84,7 @@ func refresh() -> void:
 		var switch := button(("▶ " if id == hero_id else "") + str(State.hero(id)["name"]), Rect2(135 + index * 325, 962, 313, 34), select_hero.bind(id))
 		switch.add_theme_font_size_override("font_size", 17)
 		switch.set_meta("hero_id", id)
+		preload("res://scripts/visual_overlays.gd").frame(switch, id)
 
 func build_equipment() -> void:
 	band("EQUIPMENT", Rect2(135, 211, 190, 35), 20)
@@ -292,7 +293,7 @@ func panel(rect: Rect2, fill: Color, border: Color) -> void:
 	result.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	result.add_theme_stylebox_override("panel", frame(fill, border))
 	add_child(result)
-	if rect.size.y > 80: preload("res://scripts/visual_overlays.gd").frame(result)
+	if rect.size.y > 80: preload("res://scripts/visual_overlays.gd").frame(result, hero_id)
 
 func frame(fill: Color, border: Color) -> StyleBoxFlat:
 	var box := StyleBoxFlat.new()
@@ -326,4 +327,5 @@ func button(value: String, rect: Rect2, action: Callable) -> Button:
 	result.add_theme_color_override("font_disabled_color", Color("#D6C59E"))
 	result.pressed.connect(action)
 	add_child(result)
+	preload("res://scripts/visual_overlays.gd").frame(result, hero_id)
 	return result

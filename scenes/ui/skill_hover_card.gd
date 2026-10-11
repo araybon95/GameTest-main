@@ -30,6 +30,7 @@ func configure(data: Dictionary) -> void:
 	frame.shadow_size = 12
 	frame.shadow_offset = Vector2(0,5)
 	add_theme_stylebox_override("panel",frame)
+	preload("res://scripts/visual_overlays.gd").frame(self,str(data.get("hero_id","")))
 	label(str(data["name"]),Rect2(20,15,432,38),24,Color("#FFF0CE"))
 	label("%s · %s" % [data["hero_name"],data["class_name"]],Rect2(20,53,432,28),15,Color("#CBBCA5"))
 	var icon := TextureRect.new()

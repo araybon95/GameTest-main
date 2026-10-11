@@ -1153,7 +1153,7 @@ func _refresh_hand() -> void:
 		var ranks: String = "Use %s · Reach %s · Now P%d → P%d" % [_skill_ranks(rule["use"]),_skill_ranks(rule["target"]),GameState.Depth.position_of(GameState,selected_hero),enemy_position(selected_enemy_index)]
 		var description: String = _skill_description(card_id,preview)
 		if selected_hero == "occultist" and preview.has("damage"): description += "\nOn damage: Poison 2t, unless resisted."
-		var details := {"availability":eligibility,"name":preview["name"],"hero_name":hero_state[selected_hero]["name"],"class_name":GameState.HEROES[selected_hero]["name"],"cost":preview["cost"],"current_ap":hero_state[selected_hero]["ap"],"cooldown":cooldown,"rank":ranks,"description":description,"icon":view.get_node("Contents/ArtFrame/CardArt").texture,"note":"Damage includes target traits and Mark; before Block." if preview.has("damage") else ""}
+		var details := {"hero_id":selected_hero,"availability":eligibility,"name":preview["name"],"hero_name":hero_state[selected_hero]["name"],"class_name":GameState.HEROES[selected_hero]["name"],"cost":preview["cost"],"current_ap":hero_state[selected_hero]["ap"],"cooldown":cooldown,"rank":ranks,"description":description,"icon":view.get_node("Contents/ArtFrame/CardArt").texture,"note":"Damage includes target traits and Mark; before Block." if preview.has("damage") else ""}
 		view.configure(details,self)
 		var badge: Label = view.get_node("Contents/Effect")
 		badge.text = str(eligibility["badge"])

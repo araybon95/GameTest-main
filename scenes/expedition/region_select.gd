@@ -21,12 +21,18 @@ func choose_region(region: int) -> void:
 
 func refresh() -> void:
 	clear_screen()
-	panel(Rect2(0, 0, 1920, 1080), Color("#0F0B10"))
+	var backdrop := picture("res://assets/generated/expedition_map_four_regions.png",Rect2(0,0,1920,1080),0.28)
+	backdrop.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	panel(Rect2(0, 0, 1920, 1080), Color(0.035,0.025,0.035,0.65))
 	panel(Rect2(30, 30, 490, 765))
-	label_at("EXPEDITIONS", Vector2(560, 30), 1200, 36)
+	var heading := label_at("EXPEDITIONS", Vector2(595, 32), 1230, 36)
+	heading.size.y = 52
+	preload("res://scripts/visual_overlays.gd").banner(heading)
+	panel(Rect2(542,92,1356,466),Color("#0E0B0D"))
 	var map_rect := Rect2(550, 100, 1340, 450)
 	var art := picture("res://assets/generated/expedition_map_four_regions.png", map_rect)
 	art.stretch_mode = TextureRect.STRETCH_SCALE
+	preload("res://scripts/visual_overlays.gd").stage_edges(self,map_rect)
 	for r in range(REGIONS.size()):
 		var region: Dictionary = REGIONS[r]
 		# Select the village cluster or the descending pilgrimage pathway.
@@ -34,6 +40,7 @@ func refresh() -> void:
 		var footprint := Vector2(310, 180)
 		var region_rect := Rect2(center - footprint * 0.5, footprint)
 		var hotspot := button_at("", region_rect, choose_region.bind(r))
+		hotspot.get_node("IronFittings").hide()
 		hotspot.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		hotspot.name = "Expedition_" + ("village" if r == 0 else "path")
 		hotspot.tooltip_text = "Choose " + str(region["name"]) + " to reveal its dungeons"
@@ -58,6 +65,7 @@ func refresh() -> void:
 	for index in range(2):
 		var center: Vector2 = map_rect.position + Vector2(0.25 if index == 0 else 0.76, 0.70) * map_rect.size
 		var sealed := button_at("", Rect2(center - Vector2(100, 55), Vector2(200, 110)), show_future.bind(index))
+		sealed.get_node("IronFittings").hide()
 		sealed.name = "FutureExpedition_%d" % index
 		sealed.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		sealed.tooltip_text = "Sealed location · Future expedition"
@@ -75,11 +83,12 @@ func refresh() -> void:
 		var dungeon := State.expedition_by_id(id)
 		var option := button_at("", Rect2(595 + t * 420, 615, 400, 135), choose.bind(region_index, t))
 		option.name = "Dungeon_" + id
+		preload("res://scripts/visual_overlays.gd").frame(option,"warden" if region_index == 0 else "occultist")
 		option.tooltip_text = str(dungeon["name"]) + " · Three floors in one run · " + tier_status(id)
-		var name_label := label_at("Tier %d · %s" % [t + 1, dungeon["name"]], option.position + Vector2(15, 12), 370, 22)
+		var name_label := label_at("%s · %s" % [["I","II","III"][t], dungeon["name"]], option.position + Vector2(22, 16), 356, 22)
 		name_label.size.y = 62
 		name_label.clip_text = true
-		label_at("3 floors · One continuous run\n" + tier_status(id), option.position + Vector2(15, 76), 370, 18)
+		label_at("3 floors · One continuous run\n" + tier_status(id), option.position + Vector2(22, 79), 356, 18)
 		if t == tier_index:
 			var selected := StyleBoxFlat.new()
 			selected.bg_color = Color("#392329")
@@ -95,13 +104,15 @@ func refresh() -> void:
 	var blurb := label_at(str(chosen["blurb"]), Vector2(55, 260), 435, 23)
 	blurb.size = Vector2(435, 110)
 	blurb.clip_text = true
-	var details: String = "3 floors · Bandit raiders and scouts\nFinal guardian: Gallows Chieftain\nBosses award legendary party gear."
+	var details: String = "3 floors · Bandit raiders and scouts\nFloor 1 — Gallows Chieftain\nFloor 2 — Last Honorable Son\nFloor 3 — The Undying Lord\nBosses award legendary party gear."
 	if selected_id == "path_beast":
 		details = "3 floors · Creations of Anguish\nFloor 1 — Harrowed Slave Giant\nFloor 2 — The Coterie: three consecutive forms\nFloor 3 — The Howling Head\nEach guardian awards legendary party gear."
 	elif not chosen.get("released", true):
 		details = "Future expedition. Defeat the previous tier to unlock eligibility; this dungeon remains unavailable until released."
 	label_at(details, Vector2(55, 375), 435, 20)
-	label_at("ONE DUNGEON · THREE FLOORS", Vector2(55, 580), 435, 23)
+	var journey := label_at("ONE DUNGEON · THREE FLOORS", Vector2(65, 580), 420, 21)
+	journey.size.y = 40
+	preload("res://scripts/visual_overlays.gd").banner(journey)
 	label_at("Descend through every floor in one run. Dungeon tiers unlock the next dungeon in this expedition.", Vector2(55, 625), 435, 20).size = Vector2(435, 80)
 	var embark_button := button_at("EMBARK" if State.can_embark(selected_id) else "UNRELEASED", Rect2(55, 720, 440, 55), embark)
 	embark_button.name = "EmbarkButton"

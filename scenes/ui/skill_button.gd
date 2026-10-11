@@ -27,6 +27,7 @@ func configure(details: Dictionary, host: Control) -> void:
 	inspect_focus.focus_entered.connect(_focus_entered)
 	inspect_focus.focus_exited.connect(_focus_exited)
 	_apply_style()
+	preload("res://scripts/visual_overlays.gd").frame(self,str(data.get("hero_id","")))
 
 func _ready() -> void:
 	mouse_entered.connect(func(): pointer_inside = true; _sync_inspection())

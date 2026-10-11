@@ -37,7 +37,7 @@ func panel(rect: Rect2, fill: Color = Color("#171116")) -> Panel:
 	style.bg_color = fill
 	style.border_color = Color("#755246")
 	style.set_border_width_all(2)
-	style.set_corner_radius_all(6)
+	style.set_corner_radius_all(0)
 	result.add_theme_stylebox_override("panel", style)
 	add_child(result)
 	preload("res://scripts/visual_overlays.gd").frame(result)
@@ -66,10 +66,11 @@ func button_at(value: String, rect: Rect2, action: Callable) -> Button:
 		style.bg_color = Color("#392329") if state == "hover" else Color("#20151B")
 		style.border_color = Color("#AA7B53")
 		style.set_border_width_all(2)
-		style.set_corner_radius_all(6)
+		style.set_corner_radius_all(0)
 		button.add_theme_stylebox_override(state, style)
 	button.pressed.connect(action)
 	add_child(button)
+	preload("res://scripts/visual_overlays.gd").frame(button)
 	return button
 
 func party_bar(return_action: Callable, return_text: String) -> void:
@@ -79,7 +80,8 @@ func party_bar(return_action: Callable, return_text: String) -> void:
 	for index in range(State.party.size()):
 		var hero_id: String = State.party[index]
 		var pos := Vector2(500 + index * 270, 835)
-		panel(Rect2(pos, Vector2(245, 215)))
+		var hero_panel := panel(Rect2(pos, Vector2(245, 215)))
+		preload("res://scripts/visual_overlays.gd").frame(hero_panel,hero_id)
 		picture(str(State.hero(hero_id)["art"]), Rect2(pos + Vector2(5, 5), Vector2(235, 115)))
 		var state: Dictionary = State.run_heroes.get(hero_id, {})
 		label_at(str(State.hero(hero_id)["name"]).to_upper(), pos + Vector2(15, 123), 220, 17 if hero_id == "crusader" else 22)

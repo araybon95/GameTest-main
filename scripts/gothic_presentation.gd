@@ -44,6 +44,11 @@ func decorate(node: Node) -> void:
      var angular: StyleBoxFlat = existing.duplicate()
      angular.set_corner_radius_all(0)
      node.add_theme_stylebox_override(state,angular)
+ if node is Panel or node is PanelContainer:
+  if node.size.x >= 180 and node.size.y >= 80:
+   preload("res://scripts/visual_overlays.gd").frame(node,str(node.get_meta("hero_id",node.get_node("IronFittings").hero_id if node.has_node("IronFittings") else "")))
+ if node is Button and not node.text.is_empty() and node.size.x >= 120:
+  preload("res://scripts/visual_overlays.gd").frame(node,str(node.get_meta("hero_id",node.get_node("IronFittings").hero_id if node.has_node("IronFittings") else "")))
  if node is Label:
   node.add_theme_color_override("font_shadow_color",Color.BLACK)
   node.add_theme_constant_override("shadow_offset_x",1)

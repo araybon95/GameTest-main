@@ -1,5 +1,5 @@
 extends RefCounted
-## Presentation only. Installed PNGs remain optional and are never copied.
+## Presentation only. Repository artwork has an optional installation fallback.
 const Art = preload("res://scripts/local_dungeon_art.gd")
 const Frame = preload("res://scenes/combat/iron_frame.gd")
 
@@ -38,8 +38,21 @@ class Banner extends Control:
 				draw_line(Vector2(18,y),Vector2(size.x-18,y),Color("#756450"),2)
 				draw_line(Vector2(30,y+3),Vector2(size.x-30,y+3),Color("#292626"),1)
 
-static func frame(panel: Control) -> void:
-	if not panel.has_node("IronFittings"): panel.add_child(Frame.new())
+static func frame(panel: Control, hero_id: String = "") -> void:
+	if not panel.has_node("IronFittings"):
+		var new_frame = Frame.new()
+		new_frame.name = "IronFittings"
+		panel.add_child(new_frame)
+	var fittings = panel.get_node("IronFittings")
+	fittings.hero_id = hero_id
+	fittings.z_index = 2
+	fittings.queue_redraw()
+	if panel is BaseButton and not panel.has_meta("ornament_signals"):
+		panel.set_meta("ornament_signals",true)
+		panel.mouse_entered.connect(fittings.queue_redraw)
+		panel.mouse_exited.connect(fittings.queue_redraw)
+		panel.focus_entered.connect(fittings.queue_redraw)
+		panel.focus_exited.connect(fittings.queue_redraw)
 
 static func selection(portrait: TextureRect, selected: bool, hostile: bool = false) -> void:
 	var marker: Control = portrait.get_node_or_null("SelectionUnderline")
