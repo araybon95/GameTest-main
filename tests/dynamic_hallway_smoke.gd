@@ -3,6 +3,7 @@ extends SceneTree
 const State = preload("res://scripts/game_data.gd")
 const Travel = preload("res://scenes/expedition/hallway_travel.gd")
 const Scenery = preload("res://scripts/dungeon_scenery.gd")
+const LocalArt = preload("res://scripts/local_dungeon_art.gd")
 const THEMES = [["old_road", 0, "bandit", "ash_raider"], ["old_road", 1, "keep", "keep_footman"], ["path_beast", 0, "beast", "anguish_penitent"], ["infested_apothecary", 0, "medical", "moth_metamorph"]]
 
 func _initialize() -> void: call_deferred("run")
@@ -31,6 +32,8 @@ func passage(steps: Array = [Vector2i(1, 0)]) -> Control:
 	root.add_child(travel)
 	await process_frame
 	travel.set_process(false)
+	assert(not travel.auto_walk, "A hallway opens in manual movement mode")
+	travel.set_walking(true)
 	return travel
 
 func key(code: Key, pressed: bool = true) -> void:
@@ -55,6 +58,7 @@ func advance(travel, delta: float) -> void:
 	travel.atmosphere._process(0.0)
 
 func run() -> void:
+	LocalArt.configure(LocalArt.DEFAULT_ROOT, false)
 	root.size = Vector2i(1920, 1080)
 	root.content_scale_size = Vector2i(1920, 1080)
 	root.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS

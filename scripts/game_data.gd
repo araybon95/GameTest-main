@@ -430,7 +430,7 @@ static func start_run(seed_value: int = -1) -> void:
 		ensure_run_heroes()
 		return
 	for depth in range(floor_count):
-		var rooms: Dictionary = {Vector2i.ZERO: {"kind": "entry", "cleared": true, "seen": true}}
+		var rooms: Dictionary = {Vector2i.ZERO: {"kind": "entry", "cleared": true, "seen": true, "travel_counted": true}}
 		var cursor := Vector2i.ZERO
 		# A monotonic backbone guarantees a reachable exit; branches add exploration.
 		while cursor != Vector2i(4, 3):
@@ -574,22 +574,38 @@ static func reveal_neighbors() -> void:
 
 # Every participant must agree on the same adjacent destination. Networking
 # can feed player IDs into this authority without changing dungeon rules.
-static func vote_move(voter_id: String, destination: Vector2i) -> bool:
+static func authorize_move(voter_id: String, destination: Vector2i) -> bool:
+	# Agreement opens a passage; the party has not yet crossed its threshold.
 	if not run_active or run_complete or not navigation_voters.has(voter_id):
 		return false
 	if not bool(floors[floor_index][room_position]["cleared"]):
 		return false
-	if abs(destination.x - room_position.x) + abs(destination.y - room_position.y) != 1 or not floors[floor_index].has(destination):
+	if abs(destination.x - room_position.x) + abs(destination.y - room_position.y) != 1 or not floors[floor_index].has(destination) or not floors[floor_index][destination].get("seen", false):
 		return false
 	navigation_votes[voter_id] = destination
 	for voter in navigation_voters:
 		if navigation_votes.get(voter, Vector2i(-1, -1)) != destination:
 			return false
-	room_position = destination
 	navigation_votes.clear()
-	reveal_neighbors()
-	Depth.explore(load("res://scripts/game_data.gd"), floors[floor_index][room_position])
 	return true
+
+static func commit_move(destination: Vector2i) -> bool:
+	if not run_active or run_complete or floors.is_empty(): return false
+	var rooms: Dictionary = floors[floor_index]
+	if not rooms.has(room_position) or not rooms[room_position].get("cleared", false): return false
+	if abs(destination.x - room_position.x) + abs(destination.y - room_position.y) != 1 or not rooms.has(destination) or not rooms[destination].get("seen", false): return false
+	room_position = destination
+	reveal_neighbors()
+	if rooms[destination].get("cleared", false):
+		# Cleared rooms in older saves are already visited even without this flag.
+		rooms[destination]["travel_counted"] = true
+	else:
+		Depth.explore(load("res://scripts/game_data.gd"), rooms[destination])
+	return true
+
+static func vote_move(voter_id: String, destination: Vector2i) -> bool:
+	# Existing callers may resolve an adjacent move immediately.
+	return authorize_move(voter_id, destination) and commit_move(destination)
 
 static func finish_encounter() -> void:
 	floors[floor_index][room_position]["cleared"] = true

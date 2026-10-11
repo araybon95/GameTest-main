@@ -26,8 +26,9 @@ func capture() -> void:
 	root.get_texture().get_image().save_png("res://../../hero-equipment-preview.png")
 	dungeon.inspect_hero("ranger")
 	await process_frame
-	assert(dungeon.has_node("HeroInspection"))
+	assert(is_instance_valid(root.get_node("GameControls").hero_sheet))
+	assert(root.get_node("GameControls").hero_sheet.hero_id == "ranger")
 	dungeon.close_inspection()
 	await process_frame
-	assert(not dungeon.has_node("HeroInspection"))
+	assert(not is_instance_valid(root.get_node("GameControls").hero_sheet))
 	quit()

@@ -36,6 +36,7 @@ func run() -> void:
 		root.add_child(travel)
 		await process_frame
 		travel.set_process(false)
+		travel.set_walking(true)
 		assert(is_equal_approx(travel.progress.size.y, 4.0))
 		assert(travel.progress.get_global_rect().end.y <= travel.passage_map.get_parent().get_global_rect().position.y)
 		travel._process(5.5)

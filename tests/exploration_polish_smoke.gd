@@ -3,6 +3,7 @@ const State = preload("res://scripts/game_data.gd")
 const Travel = preload("res://scenes/expedition/hallway_travel.gd")
 const Scenery = preload("res://scripts/dungeon_scenery.gd")
 const TravelAudio = preload("res://scripts/travel_audio.gd")
+const LocalArt = preload("res://scripts/local_dungeon_art.gd")
 
 func _initialize() -> void: call_deferred("run")
 
@@ -14,6 +15,7 @@ func select_run(id: String, floor: int = 0) -> void:
 	State.room_position = Vector2i.ZERO
 
 func run() -> void:
+	LocalArt.configure(LocalArt.DEFAULT_ROOT, false)
 	State.progress_loaded = true
 	State.progress_path = "user://exploration_polish_test.cfg"
 	for context in [["old_road",0,"bandit"],["old_road",1,"keep"],["path_beast",0,"beast"],["infested_apothecary",0,"medical"]]:
@@ -53,6 +55,8 @@ func run() -> void:
 		travel.arrival_duration = 20.0
 		root.add_child(travel)
 		await process_frame
+		assert(not travel.auto_walk, "Manual hallway movement is the default")
+		travel.set_walking(true)
 		travel._process(0.31)
 		assert(travel.scene_theme == context[2] and travel.footsteps_played > 0)
 		assert(travel.encounter.texture.atlas.resource_path == Scenery.threshold_path(context[2]))

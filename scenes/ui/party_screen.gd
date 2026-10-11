@@ -16,6 +16,16 @@ func picture(path: String, rect: Rect2, alpha: float = 1.0) -> TextureRect:
 	image.size = rect.size
 	image.modulate.a = alpha
 	image.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	for id in State.HEROES:
+		if path.contains("hero_" + str(id)):
+			image.set_meta("hero_id", str(id))
+			image.mouse_filter = Control.MOUSE_FILTER_STOP
+			image.gui_input.connect(func(event):
+				if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+					var controls := get_node_or_null("/root/GameControls")
+					if controls != null: controls.open_hero_sheet(str(image.get_meta("hero_id")))
+			)
+			break
 	add_child(image)
 	return image
 

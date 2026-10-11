@@ -2,6 +2,8 @@ extends HBoxContainer
 ## Visible effect symbols with remaining turns; tooltip explains each effect.
 const COLORS = {"burn":"#FF8D3C","bleed":"#ED546A","poison":"#A7E451","chill":"#91E8FF","weaken":"#BF9BDD","mark":"#FFD174"}
 const SYMBOLS = {"burn":"F","bleed":"B","poison":"P","chill":"C","weaken":"↓","mark":"◎"}
+const LocalArt = preload("res://scripts/local_dungeon_art.gd")
+const LOCAL_ICONS = {"burn":"tray_dot_burn.png","bleed":"tray_bleed.png","poison":"tray_poison.png"}
 func _ready() -> void:
  mouse_filter = Control.MOUSE_FILTER_PASS
  add_theme_constant_override("separation",5)
@@ -20,7 +22,8 @@ func sync(statuses: Dictionary, weak: int = 0, marked: int = 0) -> void:
   var turns: int = int(entries[id].get("turns",0))
   if id in ["burn","bleed","poison","chill"]:
    var icon := TextureRect.new()
-   icon.texture = load("res://assets/ui/status_%s.svg" % id)
+   var local_icon: Texture2D = LocalArt.texture("../overlays/%s" % LOCAL_ICONS[id]) if LOCAL_ICONS.has(id) else null
+   icon.texture = local_icon if local_icon != null else load("res://assets/ui/status_%s.svg" % id)
    icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
    icon.custom_minimum_size = Vector2(22,22)
    icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED

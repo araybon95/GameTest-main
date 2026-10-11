@@ -39,6 +39,7 @@ func run() -> void:
 		travel.arrival_duration = 20.0
 		root.add_child(travel)
 		await process_frame
+		travel.set_walking(true)
 		travel.skip_travel()
 		await shot("C:/GAME/Ashen/exploration-%s-threshold.png" % context[2])
 		travel.finish()

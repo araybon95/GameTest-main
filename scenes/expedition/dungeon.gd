@@ -5,7 +5,7 @@ const FloorEntrance = preload("res://scenes/expedition/floor_entrance.gd")
 const ItemButton = preload("res://scenes/ui/item_icon_button.gd")
 var inventory_filter: String = "All"
 var traveling: bool = false
-var message: String = "Choose a connected room. Cleared routes can be crossed in one click. Find the stairs and descend."
+var message: String = "Choose a connected destination, then hold D to walk or A to retrace the hallway. W / Enter enters the destination. I opens controls."
 
 func _ready() -> void:
 	if not GameState.run_active:
@@ -141,12 +141,17 @@ func refresh() -> void:
 		var position := Vector2(570 + index * 260, 850)
 		var button := button_at("", position, inspect_hero.bind(hero_id))
 		button.name = "Party_" + hero_id
+		button.set_meta("hero_id", hero_id)
 		button.size = Vector2(230, 200)
 		portrait_at(hero_id, Rect2(position + Vector2(10, 4), Vector2(210, 127)))
 		label_at(str(hero["name"]).to_upper(), position + Vector2(16, 133), 17 if hero_id == "crusader" else 22)
 		label_at("Lv %d · %d HP · %d Stress%s" % [GameState.leveling(hero_id)["level"],int(state.get("hp", hero["max_hp"])), int(state.get("stress", 0)), " · Slain" if state.get("dead", false) else ""], position + Vector2(16, 169), 16)
 
 func inspect_hero(hero_id: String) -> void:
+	var controls := get_node_or_null("/root/GameControls")
+	if controls != null:
+		controls.open_hero_sheet(hero_id)
+		return
 	if has_node("HeroInspection"):
 		get_node("HeroInspection").queue_free()
 		remove_child(get_node("HeroInspection"))
@@ -224,6 +229,8 @@ func inspect_hero(hero_id: String) -> void:
 			child.reparent(overlay)
 
 func close_inspection() -> void:
+	var controls := get_node_or_null("/root/GameControls")
+	if controls != null: controls.close_hero_sheet()
 	if has_node("HeroInspection"):
 		get_node("HeroInspection").queue_free()
 
@@ -279,8 +286,12 @@ func move_to(destination: Vector2i) -> void:
 	var route: Array = route_to(destination)
 	if route.is_empty(): return
 	var origin: Vector2i = GameState.room_position
-	for step in route:
-		if not GameState.vote_move("local", step): return
+	var departure_floor: int = GameState.floor_index
+	var departure_run: String = GameState.run_id
+	if not valid_route(route, origin): return
+	if not GameState.authorize_move("local", route[0]):
+		message = "The party must agree on the same passage before setting out."
+		return
 	traveling = true
 	var passage = preload("res://scenes/expedition/hallway_travel.gd").new()
 	passage.route_origin = origin
@@ -288,7 +299,22 @@ func move_to(destination: Vector2i) -> void:
 	passage.duration = 5.6 + minf(maxi(route.size() - 1, 0), 5) * 0.7
 	add_child(passage)
 	await passage.finished
+	var reached: bool = passage.reached_destination
 	traveling = false
+	# A load, retreat, or floor transition invalidates an old doorway interaction.
+	if not GameState.run_active or GameState.run_id != departure_run or GameState.floor_index != departure_floor or GameState.room_position != origin: return
+	if not reached:
+		message = "Returned to the starting doorway. Choose a passage on the map."
+		refresh()
+		return
+	if not valid_route(route, origin):
+		message = "That passage is no longer available. Choose another route."
+		refresh()
+		return
+	for step in route:
+		if not GameState.commit_move(step):
+			refresh()
+			return
 	var room: Dictionary = GameState.floors[GameState.floor_index][destination]
 	if room.has("travel_text"): message = str(room["travel_text"])
 	if room["cleared"] and not room.has("travel_text"):
@@ -318,6 +344,18 @@ func move_to(destination: Vector2i) -> void:
 				message = "Stairs lead deeper. Explore further or descend."
 		room["cleared"] = true
 	refresh()
+
+func valid_route(route: Array, origin: Vector2i) -> bool:
+	if route.is_empty() or not GameState.run_active or GameState.run_complete: return false
+	var rooms: Dictionary = GameState.floors[GameState.floor_index]
+	if not rooms.has(origin) or not rooms[origin].get("cleared", false): return false
+	var previous: Vector2i = origin
+	for index in range(route.size()):
+		var step: Vector2i = route[index]
+		if not rooms.has(step) or not rooms[step].get("seen", false) or abs(step.x - previous.x) + abs(step.y - previous.y) != 1: return false
+		if index < route.size() - 1 and not rooms[step].get("cleared", false): return false
+		previous = step
+	return true
 
 func descend() -> void:
 	if not GameState.can_descend() or has_node("FloorEntrancePrompt"):

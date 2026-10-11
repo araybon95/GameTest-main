@@ -1,7 +1,9 @@
 extends SceneTree
 const State = preload("res://scripts/game_data.gd")
+const LocalArt = preload("res://scripts/local_dungeon_art.gd")
 func _initialize() -> void: call_deferred("run")
 func run() -> void:
+ LocalArt.configure(LocalArt.DEFAULT_ROOT, false)
  State.progress_loaded = true
  State.select_expedition("old_road")
  State.start_run(20)
@@ -11,6 +13,8 @@ func run() -> void:
  passage.duration = 10
  root.add_child(passage)
  await process_frame
+ assert(not passage.auto_walk, "Manual movement is the default")
+ passage.set_walking(true)
  assert(passage.walkers.size() == 3 and passage.walk_frames.size() == 5)
  for id in State.HEROES:
   assert(passage.walk_frames[id].size() == 4)

@@ -8,7 +8,9 @@ Merchant rooms now lead to a clickable orb event after victory, then the Emporiu
 
 The Graveyard and merchant orb now match the painted grimdark scenery, with worn stone and iron, readable memorial records and a cyan silhouette highlight on the orb. See [Graveyard and orb visuals](docs/graveyard_orb_visuals.md) for the replaceable artwork and production prompts.
 
-Hallways now have side-on walking through four themed panoramas, layered scenery, manual pause/resume, a party status footer and route map. Encounters approach through the passage and wait for interaction. See [Dynamic hallways](docs/dynamic_hallways.md) for controls and artwork prompts.
+Press **I** for the contextual controls guide. Choose a map destination, then hold **D / Right** to walk toward it or **A / Left** to retrace the hallway. **W / Enter** enters a reached room or encounter. Right-click a hero or press **C** for their character sheet, **Q / E** cycles heroes, and **Tab** switches to inventory during exploration. Combat uses **1–5** to select a skill and **Enter** to use it. See [Dynamic hallways](docs/dynamic_hallways.md) and [Controls and character sheets](docs/controls_and_character_sheets.md).
+
+Layered corridor scenery can read artwork from a local Darkest Dungeon installation, including different scenery for all three Path of the Beast floors. **F10 → Use local dungeon artwork** switches this option for the next passage. The source download includes the project's original backgrounds as fallback; installed game images are read locally and are not included in the download. Configuration and folder mappings are described in [Dynamic hallways](docs/dynamic_hallways.md#optional-local-artwork).
 
 A Godot 4.7.2 party RPG with shared turns and multi-floor expeditions. The original project code is licensed under the MIT License; see [`LICENSE`](LICENSE). Third-party assets are not covered by that license and remain subject to their own terms. In particular, see `Sound FX Starter Pack Vol. 1/Royalty-Free License (Link).pdf` for the included audio pack's license. (Assets not currently in use but saved for future)
 

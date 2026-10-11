@@ -21,6 +21,8 @@ GothicPresentation="*res://scripts/gothic_presentation.gd"
 
 GameSettings="*res://scripts/game_settings.gd"
 
+GameControls="*res://scripts/game_controls.gd"
+
 [display]
 
 window/size/viewport_width=1920

@@ -2,6 +2,7 @@ extends Node
 const State = preload("res://scripts/game_data.gd")
 const Saves = preload("res://scripts/save_files.gd")
 const Music = preload("res://scripts/settlement_music.gd")
+const LocalArt = preload("res://scripts/local_dungeon_art.gd")
 var values: Dictionary = {"master": 0.8, "music": 0.8, "effects": 0.8, "brightness": 1.0}
 var settings_path: String = "user://settings.cfg"
 var layer: CanvasLayer
@@ -82,6 +83,7 @@ func _process(delta: float) -> void:
 func safe_to_save() -> bool:
 	if get_tree().current_scene == null: return false
 	var path: String = get_tree().current_scene.scene_file_path
+	if path == "res://scenes/expedition/dungeon.tscn" and get_tree().current_scene.traveling: return false
 	if not State.run_active: return path != "res://scenes/ui/title_screen.tscn"
 	if path in ["res://scenes/expedition/merchant_orb_room.tscn", "res://scenes/hub/item_shop.tscn"]:
 		return State.merchant_orb_available()
@@ -120,6 +122,10 @@ func text(value: String, position: Vector2, width: float, font_size: int = 24) -
 
 func open_settings() -> void:
 	if overlay != null: return
+	var controls := get_node_or_null("/root/GameControls")
+	if controls != null:
+		controls.close_guide()
+		controls.close_hero_sheet()
 	overlay = Control.new()
 	overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	layer.add_child(overlay)
@@ -142,6 +148,18 @@ func open_settings() -> void:
 		var amount := text("%d%%" % roundi(slider.value * 100), Vector2(1460, y), 180)
 		slider.value_changed.connect(func(value): set_value(key, value); amount.text = "%d%%" % roundi(value * 100))
 		overlay.add_child(slider)
+	var local_art := CheckBox.new()
+	local_art.name = "LocalDungeonArtwork"
+	local_art.text = "Use local dungeon artwork"
+	local_art.position = Vector2(180, 507)
+	local_art.size = Vector2(800, 43)
+	local_art.add_theme_font_size_override("font_size", 23)
+	local_art.button_pressed = LocalArt.get_enabled()
+	local_art.tooltip_text = "Use scenery from your local installation. Project artwork appears whenever a matching scene is unavailable. Applies to the next hallway."
+	local_art.toggled.connect(set_local_dungeon_art)
+	local_art.focus_mode = Control.FOCUS_ALL
+	overlay.add_child(local_art)
+	text("Applies to the next hallway.", Vector2(1080, 518), 650, 18)
 	text("Save between encounters. Loading replaces the current journey. Slots can be overwritten; the automatic checkpoint uses a separate file.", Vector2(180, 555), 1560, 21)
 	for slot in range(4):
 		var y: float = 625 + slot * 75
@@ -151,8 +169,19 @@ func open_settings() -> void:
 			save_button.disabled = not safe_to_save()
 		var load_button := action_button("LOAD", Vector2(1510, y), request_load.bind(slot))
 		load_button.disabled = Saves.summary(slot) == "Empty"
-	notice = text("F10 or Escape to close. Settings apply immediately.", Vector2(180, 975), 1200, 20)
+	notice = text("F10 or Escape to close. Sound and brightness apply immediately.", Vector2(180, 975), 1200, 20)
 	action_button("CLOSE", Vector2(1510, 965), close_settings)
+
+func set_local_dungeon_art(is_enabled: bool) -> void:
+	var source_root: String = LocalArt.get_root()
+	LocalArt.configure(source_root, is_enabled)
+	var configuration := ConfigFile.new()
+	configuration.load(LocalArt.CONFIG_PATH)
+	configuration.set_value("art", "root", source_root)
+	configuration.set_value("art", "enabled", is_enabled)
+	var saved: bool = configuration.save(LocalArt.CONFIG_PATH) == OK
+	if is_instance_valid(notice):
+		notice.text = "Dungeon artwork choice saved; applies to the next hallway." if saved else "Artwork applies to the next hallway; this choice could not be saved."
 
 func action_button(title: String, position: Vector2, action: Callable) -> Button:
 	var button := Button.new()

@@ -1,17 +1,25 @@
 extends Control
-## A walk through an accepted route. Gameplay resolves once in dungeon.move_to.
+## Movement along an agreed passage. Entering its destination commits in dungeon.move_to.
 signal finished
 const State = preload("res://scripts/game_data.gd")
 const Regions = preload("res://scripts/ink_sprite_regions.gd")
 const Scenery = preload("res://scripts/dungeon_scenery.gd")
 const TravelAudio = preload("res://scripts/travel_audio.gd")
+const LocalArt = preload("res://scripts/local_dungeon_art.gd")
+const LocalLayers = preload("res://scripts/local_hallway_layers.gd")
 const GROUND_Y: float = 645.0
 const HERO_HEIGHT: float = 360.0
 var duration: float = 5.6
 var elapsed: float = 0.0
 var complete: bool = false
-var auto_walk: bool = true
+var auto_walk: bool = false
 var manual_walking: bool = false
+var manual_direction: int = 0
+var left_held: bool = false
+var right_held: bool = false
+var pointer_direction: int = 0
+var facing_left: bool = false
+var reached_destination: bool = false
 var pointer_walking: bool = false
 var moving: bool = false
 var animation_clock: float = 0.0
@@ -45,6 +53,11 @@ var interact_button: Button
 var destination_button: Button
 var passage_map: Control
 var encounter_glow: ShaderMaterial
+var source_door: TextureRect
+var source_button: Button
+var return_button: Button
+var hero_summaries: Dictionary = {}
+var gold_counter: Label
 
 class PassageProgress extends Control:
  var value: float = 0.0
@@ -118,7 +131,12 @@ func _ready() -> void:
  travel_stage.gui_input.connect(stage_input)
  add_child(travel_stage)
  scene_theme = Scenery.theme_for(State.selected_expedition,State.floor_index)
- atmosphere = load("res://scripts/hallway_scenery.gd").new()
+ var local_profile: Variant = LocalArt.load_profile_files(scene_theme,State.floor_index)
+ if local_profile is Dictionary:
+  atmosphere = LocalLayers.new()
+  atmosphere.profile = local_profile
+ else:
+  atmosphere = load("res://scripts/hallway_scenery.gd").new()
  atmosphere.name = "PassageScenery"
  atmosphere.scene_theme = scene_theme
  atmosphere.ground_y = GROUND_Y
@@ -132,10 +150,12 @@ func _ready() -> void:
  footsteps.bus = "Effects" if AudioServer.get_bus_index("Effects") >= 0 else "Master"
  add_child(footsteps)
  build_walkers()
+ build_source()
  build_destination()
  if atmosphere.near_layer != null:
   atmosphere.remove_child(atmosphere.near_layer)
   travel_stage.add_child(atmosphere.near_layer)
+  atmosphere.near_layer.modulate.a = 0.55
  build_hud()
  transition_shade = ColorRect.new()
  transition_shade.name = "PassageFade"
@@ -186,18 +206,17 @@ func build_walkers() -> void:
 
 func build_hud() -> void:
  text_at("%s · %s" % [State.selected_expedition.get("name","Expedition"),State.floor_title()],Vector2(55,22),34,1540)
- arrival_label = text_at("Through the passage…",Vector2(55,813),27,1340)
+ arrival_label = text_at("Hold D / → to set out. Hold A / ← to return to the starting doorway.",Vector2(55,813),27,1340)
  arrival_label.name = "EncounterInspection"
  arrival_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
  arrival_label.size.y = 64
  arrival_label.set_meta("arrival_text",destination_description())
- interact_button = action_button("SKIP WALK",Rect2(1530,803,335,66),skip_travel,"SkipTravel")
- walk_button = action_button("PAUSE WALKING",Rect2(1550,893,315,56),toggle_walking,"WalkToggle")
- text_at("Hold D / → or hold the scene to walk. Space pauses.",Vector2(55,1040),18,1000)
- var hint := text_at("Enter / E to interact",Vector2(1550,969),20,315)
- hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
- var gold_label := text_at("GOLD  %d" % State.gold,Vector2(1580,1020),22,260)
- gold_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+ interact_button = action_button("ENTER · W / ENTER",Rect2(1530,803,335,66),interact_destination,"SkipTravel")
+ walk_button = action_button("WALK ON",Rect2(1550,893,315,56),toggle_walking,"WalkToggle")
+ return_button = action_button("RETURN TO DOORWAY",Rect2(1550,958,315,56),return_to_origin,"ReturnToOrigin")
+ text_at("A / ← back · D / → forward · Hold either side of the scene to walk · Tab inventory · I controls",Vector2(55,1040),18,1475)
+ gold_counter = text_at("GOLD  %d" % State.gold,Vector2(1580,1020),22,260)
+ gold_counter.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
  for index in range(walkers.size()): build_hero_summary(str(walkers[index].get_meta("walker")),index)
  var map_panel := panel_at(Rect2(1130,886,385,176))
  text_at("THE PASSAGE",Vector2(1147,891),18,345)
@@ -219,6 +238,7 @@ func build_hud() -> void:
 func build_hero_summary(id: String, index: int) -> void:
  var left: float = 55.0+index*350.0
  var panel := panel_at(Rect2(left,895,335,123))
+ panel.set_meta("hero_id", id)
  var portrait := TextureRect.new()
  portrait.texture = standing_frames[id]
  portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -235,14 +255,26 @@ func build_hero_summary(id: String, index: int) -> void:
  var stats: Dictionary = State.run_heroes.get(id,{})
  var max_hp: int = int(stats.get("max_hp",hero.get("max_hp",1)))
  var hp: int = int(stats.get("hp",max_hp))
- text_at("HP %d / %d" % [hp,max_hp],Vector2(left+96,966),17,125)
- text_at("STRESS %d" % int(stats.get("stress",0)),Vector2(left+218,967),16,112).add_theme_color_override("font_color",Color("#C1B7AC"))
+ var health := text_at("HP %d / %d" % [hp,max_hp],Vector2(left+96,966),17,125)
+ var stress := text_at("STRESS %d" % int(stats.get("stress",0)),Vector2(left+218,967),16,112)
+ stress.add_theme_color_override("font_color",Color("#C1B7AC"))
  var bar := ColorRect.new()
  bar.color = Color("#952C36")
  bar.position = Vector2(96,101)
  bar.size = Vector2(224.0*clampf(float(hp)/maxi(1,max_hp),0,1),5)
  bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
  panel.add_child(bar)
+ hero_summaries[id] = {"health":health,"stress":stress,"bar":bar}
+ var inspect := Button.new()
+ inspect.name = "Party_" + id
+ inspect.set_meta("hero_id", id)
+ inspect.size = panel.size
+ inspect.tooltip_text = "Inspect hero · Right-click / C"
+ for state in ["normal","hover","pressed","focus"]: inspect.add_theme_stylebox_override(state,StyleBoxEmpty.new())
+ inspect.pressed.connect(func():
+  var controls := get_node_or_null("/root/GameControls")
+  if controls != null: controls.open_hero_sheet(id))
+ panel.add_child(inspect)
 
 func panel_at(rect: Rect2) -> Panel:
  var panel := Panel.new()
@@ -290,6 +322,8 @@ func action_button(value: String, rect: Rect2, action: Callable, node_name: Stri
  return button
 
 func settings_open() -> bool:
+ var controls := get_node_or_null("/root/GameControls")
+ if controls != null and controls.input_blocked(): return true
  var settings := get_node_or_null("/root/GameSettings")
  return settings != null and settings.overlay != null
 
@@ -298,6 +332,9 @@ func set_walking(value: bool) -> void:
  auto_walk = value
  if not value:
   manual_walking = false
+  manual_direction = 0
+  left_held = false
+  right_held = false
   pointer_walking = false
   moving = false
   if footsteps != null: footsteps.stop()
@@ -307,10 +344,11 @@ func toggle_walking() -> void:
  set_walking(not auto_walk)
 
 func stage_input(event: InputEvent) -> void:
- if settings_open() or arrived or complete: return
+ if settings_open() or complete: return
  if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
   auto_walk = false
   pointer_walking = event.pressed
+  pointer_direction = -1 if event.position.x < travel_stage.size.x * 0.5 else 1
   update_controls()
   travel_stage.accept_event()
 
@@ -318,32 +356,61 @@ func _input(event: InputEvent) -> void:
  # A release outside the stage or after opening Settings must still stop a hold.
  if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
   pointer_walking = false
- if event is InputEventKey and not event.pressed and event.keycode in [KEY_D,KEY_RIGHT]:
+ if event is InputEventKey and event.pressed and not event.echo and not complete and not settings_open():
+  if event.ctrl_pressed or event.alt_pressed or event.meta_pressed:
+   if event.keycode in [KEY_A,KEY_LEFT,KEY_D,KEY_RIGHT,KEY_W,KEY_ENTER,KEY_KP_ENTER,KEY_E,KEY_SPACE]: get_viewport().set_input_as_handled()
+   return
+  # Handle these before GUI buttons so their focus cannot replace a doorway action.
+  if event.keycode in [KEY_W,KEY_ENTER,KEY_KP_ENTER,KEY_E]:
+   get_viewport().set_input_as_handled()
+   if arrived: interact_destination()
+   return
+  if event.keycode == KEY_SPACE:
+   get_viewport().set_input_as_handled()
+   toggle_walking()
+   return
+ if event is InputEventKey and event.keycode in [KEY_A,KEY_LEFT,KEY_D,KEY_RIGHT]:
+  if not event.pressed:
+   if event.keycode in [KEY_A,KEY_LEFT]: left_held = false
+   else: right_held = false
+   manual_direction = int(right_held) - int(left_held)
+   manual_walking = manual_direction != 0
+  elif not event.echo and not event.ctrl_pressed and not event.alt_pressed and not event.meta_pressed and not complete and not settings_open():
+   auto_walk = false
+   if event.keycode in [KEY_A,KEY_LEFT]: left_held = true
+   else: right_held = true
+   manual_direction = int(right_held) - int(left_held)
+   manual_walking = manual_direction != 0
+   get_viewport().set_input_as_handled()
+   if manual_direction < 0 and elapsed <= 0.0:
+    return_to_origin()
+    return
+   update_controls()
+func _notification(what: int) -> void:
+ if what == NOTIFICATION_WM_WINDOW_FOCUS_OUT:
+  left_held = false
+  right_held = false
+  manual_direction = 0
   manual_walking = false
+  pointer_walking = false
+  auto_walk = false
 
 func _shortcut_input(event: InputEvent) -> void:
- # Arrow walking remains available after using the corridor's own buttons.
- # Settings and other focused UI still receive their normal navigation keys.
- if complete or arrived or settings_open(): return
- var focus: Control = get_viewport().gui_get_focus_owner()
- if focus not in [walk_button,interact_button,destination_button]: return
- if event is InputEventKey and event.pressed and not event.echo and event.keycode in [KEY_D,KEY_RIGHT]:
-  auto_walk = false
-  manual_walking = true
-  update_controls()
+ # Enter on a focused corridor button must still mean entering the reached room.
+ if complete or settings_open(): return
+ if event is InputEventKey and event.pressed and not event.echo and not event.ctrl_pressed and not event.alt_pressed and not event.meta_pressed and event.keycode in [KEY_W,KEY_ENTER,KEY_KP_ENTER,KEY_E] and arrived:
   get_viewport().set_input_as_handled()
+  interact_destination()
 
 func _unhandled_input(event: InputEvent) -> void:
  if complete or settings_open(): return
- if event is InputEventKey and event.pressed and not event.echo:
-  if arrived and event.keycode in [KEY_ENTER,KEY_KP_ENTER,KEY_E]:
-   finish()
+ if event is InputEventKey and event.pressed and not event.echo and not event.ctrl_pressed and not event.alt_pressed and not event.meta_pressed:
+  if arrived and event.keycode in [KEY_W,KEY_ENTER,KEY_KP_ENTER,KEY_E]:
+   get_viewport().set_input_as_handled()
+   interact_destination()
+   return
   elif event.keycode == KEY_SPACE:
    toggle_walking()
-  elif not arrived and event.keycode in [KEY_D,KEY_RIGHT]:
-   auto_walk = false
-   manual_walking = true
-   update_controls()
   else: return
   get_viewport().set_input_as_handled()
 
@@ -351,17 +418,30 @@ func update_controls() -> void:
  if walk_button == null: return
  walk_button.disabled = arrived
  walk_button.text = "AT THE ENCOUNTER" if arrived else ("PAUSE WALKING" if auto_walk else "WALK ON")
- interact_button.text = "INTERACT · ENTER" if arrived else "SKIP WALK"
+ interact_button.disabled = not arrived
+ interact_button.text = "INTERACT · W / ENTER" if arrived else "WALK TO THE ENTRANCE"
+ return_button.disabled = elapsed > 0.001
+ source_button.visible = elapsed <= 0.001
 
 func _process(delta: float) -> void:
  if complete: return
+ update_summaries()
  ambient_clock += delta
  var blocked: bool = settings_open()
- moving = not blocked and not arrived and elapsed < duration and (auto_walk or manual_walking or pointer_walking)
+ if blocked:
+  left_held = false
+  right_held = false
+  manual_direction = 0
+  manual_walking = false
+  pointer_walking = false
+ var direction: int = manual_direction if manual_walking else pointer_direction if pointer_walking else 1 if auto_walk else 0
+ moving = not blocked and direction != 0 and ((direction > 0 and elapsed < duration) or (direction < 0 and elapsed > 0.0))
  if moving:
-  elapsed = minf(elapsed+delta,duration)
+  elapsed = clampf(elapsed+delta*direction,0.0,duration)
+  facing_left = direction < 0
   animation_clock += delta
   footstep_clock += delta
+  if arrived and elapsed < duration: leave_destination()
  else:
   footstep_clock = 0.0
   footsteps.stop()
@@ -377,16 +457,32 @@ func _process(delta: float) -> void:
   footsteps_played += 1
  transition_shade.modulate.a = maxf(1.0-ambient_clock/0.25,0.0)
  update_walkers()
+ source_door.position.x = -10.0 - distance_travelled * 0.9
  if encounter != null:
   var approach: float = smoothstep(0.45,1.0,fraction)
   encounter.position.x = lerpf(encounter_start_x,encounter_end_x,approach)
   encounter_shadow.position.x = encounter.position.x+encounter.size.x*0.5
   destination_button.position = encounter.position-Vector2(12,12)
  if not arrived and elapsed >= duration: arrive()
+ if moving and direction < 0 and elapsed <= 0.0:
+  return_to_origin()
+  return
+ update_controls()
  progress.value = fraction*100.0
  progress.queue_redraw()
  passage_map.fraction = fraction
  passage_map.queue_redraw()
+
+func update_summaries() -> void:
+ if gold_counter != null: gold_counter.text = "GOLD  %d" % State.gold
+ for id in hero_summaries:
+  var stats: Dictionary = State.run_heroes.get(id,{})
+  var maximum: int = State.hero_max_hp(id)
+  var hp: int = int(stats.get("hp",maximum))
+  var summary: Dictionary = hero_summaries[id]
+  summary["health"].text = "HP %d / %d" % [hp,maximum]
+  summary["stress"].text = "STRESS %d" % int(stats.get("stress",0))
+  summary["bar"].size.x = 224.0*clampf(float(hp)/maxi(1,maximum),0,1)
 
 func update_walkers() -> void:
  for index in range(walkers.size()):
@@ -396,6 +492,7 @@ func update_walkers() -> void:
   var texture: Texture2D = walk_frames[id][int(phase)%4] if not arrived and walk_frames.has(id) else standing_frames[id]
   var width: float = HERO_HEIGHT*texture.get_width()/float(maxi(1,texture.get_height()))
   picture.texture = texture
+  picture.flip_h = facing_left
   picture.size = Vector2(width,HERO_HEIGHT)
   picture.pivot_offset = Vector2(width*0.5,HERO_HEIGHT)
   picture.position = bases[index]-Vector2(width*0.5,HERO_HEIGHT)
@@ -406,6 +503,9 @@ func arrive() -> void:
  moving = false
  auto_walk = false
  manual_walking = false
+ manual_direction = 0
+ left_held = false
+ right_held = false
  pointer_walking = false
  footsteps.stop()
  arrival_label.text = str(arrival_label.get_meta("arrival_text"))
@@ -417,6 +517,19 @@ func arrive() -> void:
  update_walkers()
  update_controls()
 
+func leave_destination() -> void:
+ arrived = false
+ destination_button.visible = false
+ destination_button.disabled = true
+ encounter_glow.set_shader_parameter("strength",0.0)
+ atmosphere.near_layer.modulate.a = 0.55
+ arrival_label.text = "Retracing the passage. Hold D to turn back toward the destination."
+
+func destination_room() -> Dictionary:
+ if not State.run_active or State.floors.is_empty(): return {}
+ var destination: Vector2i = route_steps.back() if not route_steps.is_empty() else State.room_position
+ return State.floors[State.floor_index].get(destination,{})
+
 func skip_travel() -> void:
  if settings_open() or complete: return
  if arrived: finish()
@@ -426,7 +539,7 @@ func skip_travel() -> void:
 
 func destination_description() -> String:
  if not State.run_active: return "A doorway opens ahead."
- var room: Dictionary = State.floors[State.floor_index][State.room_position]
+ var room: Dictionary = destination_room()
  var kind: String = str(room.get("kind","entry"))
  if room.get("cleared",false): return "The familiar passage is quiet. Continue through the doorway."
  if room.get("corridor_encounter","") == "roamer": return "A lone creature roams ahead, unaware of the party. Confront it."
@@ -444,7 +557,7 @@ func destination_description() -> String:
  return "A doorway opens into the next chamber. Step through."
 
 func build_destination() -> void:
- var room: Dictionary = State.floors[State.floor_index][State.room_position] if State.run_active else {}
+ var room: Dictionary = destination_room()
  var kind: String = str(room.get("kind","entry"))
  var cleared: bool = room.get("cleared",false)
  var art: String = Scenery.threshold_path(scene_theme)
@@ -505,7 +618,7 @@ func build_destination() -> void:
  destination_button.size = encounter.size+Vector2(24,24)
  destination_button.visible = false
  destination_button.disabled = true
- destination_button.tooltip_text = "Interact · Enter / E"
+ destination_button.tooltip_text = "Interact · W / Enter / E"
  for state in ["normal","hover","pressed","focus","disabled"]: destination_button.add_theme_stylebox_override(state,StyleBoxEmpty.new())
  destination_button.pressed.connect(interact_destination)
  destination_button.mouse_entered.connect(func(): encounter_glow.set_shader_parameter("strength",0.85))
@@ -517,9 +630,35 @@ func build_destination() -> void:
 func interact_destination() -> void:
  if arrived and not settings_open(): finish()
 
-func finish() -> void:
+func build_source() -> void:
+ source_door = TextureRect.new()
+ source_door.name = "StartingDoorway"
+ source_door.texture = Scenery.grounded_texture(Scenery.threshold_path(scene_theme))
+ source_door.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+ source_door.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+ source_door.position = Vector2(-10,GROUND_Y-440)
+ source_door.size = Vector2(245,440)
+ source_door.modulate = Color(0.72,0.68,0.64)
+ source_door.mouse_filter = Control.MOUSE_FILTER_IGNORE
+ travel_stage.add_child(source_door)
+ source_door.move_to_front()
+ source_button = Button.new()
+ source_button.name = "StartingDoorwayInteract"
+ source_button.position = source_door.position
+ source_button.size = source_door.size
+ source_button.tooltip_text = "Return to the starting room · A / Left"
+ for state in ["normal","hover","pressed","focus"]: source_button.add_theme_stylebox_override(state,StyleBoxEmpty.new())
+ source_button.pressed.connect(return_to_origin)
+ travel_stage.add_child(source_button)
+
+func return_to_origin() -> void:
+ if complete or settings_open() or elapsed > 0.001: return
+ finish(false)
+
+func finish(reached: bool = true) -> void:
  if complete: return
  complete = true
+ reached_destination = reached
  if footsteps != null: footsteps.stop()
  finished.emit()
  queue_free()

@@ -62,6 +62,7 @@ var hero_stat_labels: Dictionary = {}
 var hero_health_bars: Dictionary = {}
 var hero_stress_bars: Dictionary = {}
 var selected_hero: String = ""
+var selected_skill_id: String = ""
 
 var expedition_title: String = "The Old Road"
 var enemy_name: String = DEFAULT_ENEMY_NAME
@@ -241,6 +242,7 @@ func _check_battle_over() -> void:
 func _start_battle() -> void:
 	battle_over = false
 	reward_given = false
+	selected_skill_id = ""
 	round_number = 1
 	enemy_hp = enemy_max_hp
 	enemy_block = 0
@@ -325,8 +327,82 @@ func _standing_heroes() -> Array:
 func _select_hero(hero_id: String) -> void:
 	if battle_over or not _is_standing(hero_id):
 		return
+	if selected_hero != hero_id:
+		selected_skill_id = ""
 	selected_hero = hero_id
 	_refresh_all()
+
+
+func _combat_shortcuts_blocked() -> bool:
+	var controls: Node = get_node_or_null("/root/GameControls")
+	if controls != null and controls.has_method("input_blocked") and controls.input_blocked():
+		return true
+	var settings: Node = get_node_or_null("/root/GameSettings")
+	if settings != null and is_instance_valid(settings.get("overlay")):
+		return true
+	var focus_owner: Control = get_viewport().gui_get_focus_owner()
+	if focus_owner is LineEdit or focus_owner is TextEdit:
+		return true
+	# The cinematic already intercepts pointer actions. Keyboard selection uses
+	# the same lock so a held key cannot act through an attack or boss reveal.
+	return is_instance_valid(presentation) and presentation.visible
+
+
+func _input(event: InputEvent) -> void:
+	if not event is InputEventKey or not event.pressed or event.echo:
+		return
+	if event.ctrl_pressed or event.alt_pressed or event.meta_pressed or _combat_shortcuts_blocked():
+		return
+	var key: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
+	var index: int = [KEY_1, KEY_2, KEY_3, KEY_4, KEY_5].find(key)
+	if index < 0: index = [KEY_KP_1, KEY_KP_2, KEY_KP_3, KEY_KP_4, KEY_KP_5].find(key)
+	if index >= 0:
+		quick_select_skill(index)
+		get_viewport().set_input_as_handled()
+	elif key in [KEY_ENTER, KEY_KP_ENTER] and not selected_skill_id.is_empty():
+		confirm_selected_skill()
+		get_viewport().set_input_as_handled()
+
+
+func quick_select_skill(index: int) -> bool:
+	if _combat_shortcuts_blocked() or not hero_state.has(selected_hero):
+		return false
+	var abilities: Array = hero_state[selected_hero]["abilities"]
+	if index < 0 or index >= abilities.size():
+		return false
+	selected_skill_id = str(abilities[index])
+	_focus_selected_skill()
+	return bool(_skill_availability(selected_hero, selected_skill_id)["available"])
+
+
+func _focus_selected_skill() -> void:
+	if selected_skill_id.is_empty(): return
+	var view: Button = hand_container.get_node_or_null("Card_%s" % selected_skill_id)
+	if view == null:
+		selected_skill_id = ""
+		return
+	if view.disabled: view.inspect_focus.grab_focus()
+	else: view.grab_focus()
+	view.show_preview()
+	if view.preview != null and not view.disabled:
+		view.preview.get_node("PreviewNote").text = "ENTER · Use on %s. Click an enemy to retarget." % enemy_name
+
+
+func confirm_selected_skill() -> bool:
+	if _combat_shortcuts_blocked() or selected_skill_id.is_empty() or not hero_state.has(selected_hero):
+		return false
+	if not _skill_availability(selected_hero, selected_skill_id)["available"]:
+		_focus_selected_skill()
+		return false
+	var index: int = hero_state[selected_hero]["abilities"].find(selected_skill_id)
+	if index < 0: return false
+	_play_card(selected_hero, index)
+	return true
+
+
+func _on_skill_pressed(hero_id: String, index: int) -> void:
+	if not _combat_shortcuts_blocked():
+		_play_card(hero_id, index)
 
 
 func _play_card(hero_id: String, card_index: int) -> void:
@@ -355,6 +431,7 @@ func _play_card(hero_id: String, card_index: int) -> void:
 	var cooldown: int = GameState.ability_cooldown(card_id)
 	if cooldown > 0:
 		state["cooldowns"][card_id] = cooldown + 1
+	selected_skill_id = ""
 	_add_log("%s uses %s." % [_name_of(hero_id), card["name"]])
 	_resolve_card(hero_id, card)
 
@@ -939,7 +1016,8 @@ func _refresh_all() -> void:
 	if not hero_state.has(selected_hero):
 		return
 	var hero: Dictionary = hero_state[selected_hero]
-	hand_title.text = "ABILITIES  ·  %d / 2 AP" % int(hero["ap"])
+	hand_title.text = "ABILITIES · %d / 2 AP · 1–5 SELECT · ENTER USE" % int(hero["ap"])
+	selected_portrait.set_meta("hero_id", selected_hero)
 	selected_portrait.texture = _load_texture(str(GameState.hero(selected_hero).get("art", "")))
 	_sync_portrait(selected_portrait, hero)
 	selected_info.text = "%s\nHealth  %d / %d\nStress  %d / 100\nBlock  %d\nAction points  %d / 2\n%s" % [str(hero["name"]).to_upper(), int(hero["hp"]), int(hero["max_hp"]), int(hero["stress"]), int(hero["block"]), int(hero["ap"]), "DEATH'S DOOR" if hero["deaths_door"] else str(hero["resolve_tag"])]
@@ -1072,13 +1150,15 @@ func _refresh_hand() -> void:
 		var badge: Label = view.get_node("Contents/Effect")
 		badge.text = str(eligibility["badge"])
 		if eligibility["available"]: badge.text += " · %s → %s" % [_skill_ranks(rule["use"]),_skill_ranks(rule["target"])]
-		view.pressed.connect(_play_card.bind(selected_hero, index))
+		view.pressed.connect(_on_skill_pressed.bind(selected_hero, index))
+		view.get_node("Contents/Header").text = "[%d] %s" % [index + 1, view.get_node("Contents/Header").text]
 		hand_container.add_child(view)
 		var card_width: float = 280.0
 		var card_position: Vector2 = Vector2((index % 3) * 292.0, (index / 3) * 158.0)
 		view.position = card_position
 		view.size = Vector2(card_width, 148.0)
 		view.z_index = index
+	_focus_selected_skill()
 	if hand.is_empty():
 		var empty_label: Label = _make_label("No abilities equipped.", 23, Color(MUTED))
 		empty_label.position = Vector2(360.0, 150.0)
@@ -1337,11 +1417,13 @@ func _make_hero_card(hero_id: String) -> Button:
 	button.size = Vector2(250.0, 420.0)
 	button.flat = false
 	button.name = "Hero_%s" % hero_id
+	button.set_meta("hero_id", hero_id)
 	button.focus_mode = Control.FOCUS_NONE
 	button.pressed.connect(_on_hero_pressed.bind(hero_id))
 
 	button.visible = true
 	var portrait: TextureRect = button.get_node("Portrait") as TextureRect
+	portrait.set_meta("hero_id", hero_id)
 	_place(portrait, Rect2(10, 5, 230, 270))
 	portrait.texture = _load_texture(str(hero.get("art", "")))
 	hero_portraits[hero_id] = portrait
