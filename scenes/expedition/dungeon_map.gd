@@ -2,6 +2,10 @@ extends Control
 
 const State = preload("res://scripts/game_data.gd")
 var compact: bool = false
+var map_backing: Texture2D
+
+func _ready() -> void:
+	if compact: map_backing = preload("res://scripts/local_dungeon_art.gd").texture("../panels/panel_map.png")
 
 func room_rect(location: Vector2i) -> Rect2:
 	var rect: Rect2 = full_room_rect(location)
@@ -16,6 +20,8 @@ func full_room_rect(location: Vector2i) -> Rect2:
 	return Rect2(Vector2(170 + location.x * 295, 95 + location.y * 150) - size * 0.5, size)
 
 func _draw() -> void:
+	if map_backing != null:
+		draw_texture_rect_region(map_backing,Rect2(Vector2.ZERO,size),Rect2(20,20,630,320),Color(1,1,1,0.35))
 	var rooms: Dictionary = State.floors[State.floor_index]
 	for location in rooms:
 		if not rooms[location].get("seen",false):

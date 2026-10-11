@@ -54,6 +54,7 @@ func panel_at(rect: Rect2, fill: Color = Color("#21171D")) -> Panel:
 	style.set_border_width_all(2)
 	panel.add_theme_stylebox_override("panel", style)
 	add_child(panel)
+	preload("res://scripts/visual_overlays.gd").frame(panel)
 	return panel
 
 func portrait_at(hero_id: String, rect: Rect2) -> void:

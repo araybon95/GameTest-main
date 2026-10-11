@@ -37,6 +37,7 @@ func _ready() -> void:
  heading.mouse_filter = Control.MOUSE_FILTER_IGNORE
  heading.z_index = 3
  add_child(heading)
+ preload("res://scripts/visual_overlays.gd").banner(heading)
  cinematic_stage = Control.new()
  cinematic_stage.position = Vector2.ZERO
  cinematic_stage.size = Vector2(1920,600)

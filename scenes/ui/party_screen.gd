@@ -40,6 +40,7 @@ func panel(rect: Rect2, fill: Color = Color("#171116")) -> Panel:
 	style.set_corner_radius_all(6)
 	result.add_theme_stylebox_override("panel", style)
 	add_child(result)
+	preload("res://scripts/visual_overlays.gd").frame(result)
 	return result
 
 func label_at(value: String, pos: Vector2, width: float, font_size: int = 24) -> Label:

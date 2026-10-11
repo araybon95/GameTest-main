@@ -1041,6 +1041,7 @@ func _refresh_all() -> void:
 		name_label.text = ("▶ " if hero_id == selected_hero else "") + str(state["name"]).to_upper()
 		name_label.tooltip_text = tag
 		var portrait: TextureRect = hero_portraits[hero_id]
+		preload("res://scripts/visual_overlays.gd").selection(portrait,hero_id == selected_hero and not bool(state["dead"]))
 		portrait.modulate = Color(0.5, 0.5, 0.54, 0.8) if bool(state["dead"]) else Color.WHITE
 		_sync_portrait(portrait, state)
 		if bool(state["deaths_door"]):
@@ -1751,6 +1752,7 @@ func _refresh_enemies() -> void:
 		meter.max_value = enemy_max_hp
 		meter.value = enemy_hp
 		_sync_portrait(view.get_node("EnemyArt"), entry)
+		preload("res://scripts/visual_overlays.gd").selection(view.get_node("EnemyArt"),index == original and enemy_hp > 0,true)
 		_configure_enemy_stage(index)
 		if view.has_node("GroundShadow"):
 			_plant_combatant(view,view.get_node("EnemyArt"),_enemy_stage_height(index))
@@ -1997,6 +1999,7 @@ func _ground_battlefield() -> void:
 	stage.add_child(layers)
 	layers.name = "BattlefieldLayers"
 	backdrop.hide()
+	preload("res://scripts/visual_overlays.gd").stage_edges(self,Rect2(0,0,1920,600))
 	var curtain := ColorRect.new()
 	curtain.name = "StageFooterShade"
 	curtain.mouse_filter = Control.MOUSE_FILTER_IGNORE

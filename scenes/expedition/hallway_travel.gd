@@ -646,6 +646,7 @@ func build_destination() -> void:
  encounter_glow.set_shader_parameter("strength",0.0)
  encounter.material = encounter_glow
  travel_stage.add_child(encounter)
+ preload("res://scripts/visual_overlays.gd").stage_edges(travel_stage,Rect2(Vector2.ZERO,travel_stage.size))
  destination_button = Button.new()
  destination_button.name = "DestinationInteract"
  destination_button.position = encounter.position-Vector2(12,12)

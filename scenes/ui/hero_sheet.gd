@@ -108,11 +108,11 @@ func build_portrait(hero: Dictionary, state: Dictionary) -> void:
 	var stage := TextureRect.new()
 	stage.name = "HeroBackdrop"
 	stage.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	stage.texture = load(State.floor_background("camp") if State.run_active else "res://assets/generated/camp_ruins.png")
+	stage.texture = load(hero_backdrop_path(hero_id))
 	stage.position = Vector2(352, 213)
 	stage.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	stage.size = Vector2(386, 616)
-	stage.modulate = Color(0.34, 0.30, 0.29)
+	stage.modulate = Color(0.48, 0.44, 0.43)
 	stage.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(stage)
 	var portrait := TextureRect.new()
@@ -130,6 +130,16 @@ func build_portrait(hero: Dictionary, state: Dictionary) -> void:
 	var conditions := label_at(condition, Vector2(370, 798), 350, 17, Color("#E89683"))
 	conditions.clip_text = true
 	conditions.size.y = 29
+
+static func hero_backdrop_path(id: String) -> String:
+	var backdrops: Dictionary = {
+		"warden":"keep_hall.png",
+		"ranger":"hallway_bandit_panorama.png",
+		"occultist":"beast_sanctuary.png",
+		"healer":"apothecary_reclaimed.png",
+		"crusader":"bg_crypt.png"
+	}
+	return "res://assets/generated/" + str(backdrops.get(id,"keep_hall.png"))
 
 func build_character(hero: Dictionary, state: Dictionary) -> void:
 	band("LORE", Rect2(780, 211, 325, 35))
@@ -282,6 +292,7 @@ func panel(rect: Rect2, fill: Color, border: Color) -> void:
 	result.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	result.add_theme_stylebox_override("panel", frame(fill, border))
 	add_child(result)
+	if rect.size.y > 80: preload("res://scripts/visual_overlays.gd").frame(result)
 
 func frame(fill: Color, border: Color) -> StyleBoxFlat:
 	var box := StyleBoxFlat.new()
