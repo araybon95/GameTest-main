@@ -12,9 +12,12 @@ var impact_remaining: float = 0.0
 var elapsed: float = 0.0
 var show_badges: bool = true
 var badge_styles: Dictionary = {}
+var living_texture: Texture2D
+var living_rect: Rect2
 
 func attach_to(target: TextureRect) -> void:
 	portrait = target
+	living_texture = portrait.texture
 	name = "StatusVisual"
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	effect_material = ShaderMaterial.new()
@@ -30,6 +33,25 @@ func sync(active_statuses: Dictionary, hp: int, max_hp: int, is_dead: bool = fal
 	if afflicted:
 		statuses["affliction"] = {"turns": 0}
 	health_ratio = clampf(float(hp) / maxi(1, max_hp), 0.0, 1.0)
+	# The inspection portrait is reused when selecting another hero. Keep incoming
+	# art instead of restoring a previously inspected fallen hero over it.
+	if dead and portrait.texture != preload("res://scripts/combat_poses.gd").state_pose(living_texture,"death"):
+		portrait.position = living_rect.position
+		portrait.size = living_rect.size
+		dead = false
+	if not dead:
+		living_texture = portrait.texture
+		living_rect = Rect2(portrait.position,portrait.size)
+	if is_dead and not dead:
+		portrait.texture = preload("res://scripts/combat_poses.gd").state_pose(living_texture,"death")
+		var height: float = living_rect.size.y*portrait.texture.get_height()/maxf(1,float(living_texture.get_meta("idle_pixel_height",living_texture.get_height())))
+		var width: float = height*portrait.texture.get_width()/maxf(1,portrait.texture.get_height())
+		portrait.size = Vector2(width,height)
+		portrait.position = living_rect.position+Vector2((living_rect.size.x-width)*0.5,living_rect.size.y-height)
+	elif dead and not is_dead:
+		portrait.texture = living_texture
+		portrait.position = living_rect.position
+		portrait.size = living_rect.size
 	dead = is_dead
 	for effect in ["burn", "bleed", "poison", "chill"]:
 		effect_material.set_shader_parameter(effect, 1.0 if statuses.has(effect) and not dead else 0.0)

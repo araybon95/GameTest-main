@@ -22,6 +22,7 @@ var focus: Vector2 = Vector2(960,280)
 var feedback_count: Dictionary = {}
 var popup_sequence: int = 0
 var motion_strength: float = 1.0
+var status_bursts: Control
 func _ready() -> void:
  mouse_filter = Control.MOUSE_FILTER_STOP
  set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -45,12 +46,16 @@ func _ready() -> void:
  cinematic_stage.mouse_filter = Control.MOUSE_FILTER_IGNORE
  cinematic_stage.z_index = -1
  add_child(cinematic_stage)
+ status_bursts = preload("res://scenes/combat/status_bursts.gd").new()
+ get_parent().add_child.call_deferred(status_bursts)
  visible = false
 func strike(source: TextureRect, target: TextureRect, kind: String, title: String, from_hero: bool = true, options: Dictionary = {}) -> void:
  if not is_instance_valid(source) or not is_instance_valid(target) or source.texture == null or target.texture == null: return
  if pending.size() >= 8: return
  var source_boss: bool = source.get_meta("boss",false)
- var timing: Dictionary = Profiles.resolve(kind,title,options,source_boss,duration)
+ var resolved_options: Dictionary = options.duplicate()
+ if not options.is_empty(): resolved_options["creature"] = source.get_meta("creature","")
+ var timing: Dictionary = Profiles.resolve(kind,title,resolved_options,source_boss,duration)
  pending.append({"source":source.texture,"target":target.texture,"source_node":source,"target_node":target,"source_material":source.material.duplicate() if source.material != null else null,"target_material":target.material.duplicate() if target.material != null else null,"kind":kind,"attack_kind":kind,"title":title,"hero":from_hero,"source_boss":source_boss,"target_boss":target.get_meta("boss",false),"creature":source.get_meta("creature",""),"duration":timing["duration"],"profile":timing["id"],"timing":timing,"skill_id":str(options.get("skill_id",""))})
  if active.is_empty() and boss_reveal == null: next()
 func restore_participants() -> void:
@@ -65,6 +70,7 @@ func _exit_tree() -> void:
  restore_participants()
  _restore_backdrop()
  if is_instance_valid(boss_reveal): boss_reveal.finish()
+ if is_instance_valid(status_bursts): status_bursts.queue_free()
 func next() -> void:
  _flush_sounds(active,true)
  _flush_feedback(active)
@@ -74,6 +80,12 @@ func next() -> void:
  for fighter in fighters: fighter.queue_free()
  fighters.clear()
  if not boss_reveals.is_empty():
+  # The old form's damage text and lingering status ink must not cover the next form.
+  for child in get_parent().get_children():
+   if child is Label and child.name.begins_with("CombatFeedback"): child.queue_free()
+  if is_instance_valid(status_bursts):
+   status_bursts.bursts.clear()
+   status_bursts.queue_redraw()
   active = {}
   visible = true
   heading.visible = false
@@ -82,6 +94,7 @@ func next() -> void:
   boss_reveal.entry = boss_reveals.pop_front()
   add_child(boss_reveal)
   boss_reveal.finished.connect(_reveal_finished)
+  boss_reveal.reveal_sound.connect(func(kind: String): action_sound.emit(kind))
   return
  if pending.is_empty():
   active = {}
@@ -176,14 +189,16 @@ func queue_sound(kind: String) -> bool:
  for cue in sounds:
   if cue["kind"] == kind: return true
  var timing: Dictionary = entry["timing"]
- sounds.append({"kind":kind,"at":float(timing["impact"] if kind == "block" else timing["release"]),"emitted":false})
+ sounds.append({"kind":kind,"at":float(timing["impact"] if kind in ["block","impact"] else float(timing["impact"])+float(timing["hold"]) if kind == "death" else timing["release"]),"emitted":false})
  entry["sounds"] = sounds
  if entry == active: _flush_sounds(entry)
  return true
 
 func _flush_sounds(entry: Dictionary, force: bool = false) -> void:
  if entry.is_empty() or not is_inside_tree(): return
- for cue in entry.get("sounds",[]):
+ var ordered: Array = entry.get("sounds",[])
+ ordered.sort_custom(func(first,second): return float(first["at"]) < float(second["at"]))
+ for cue in ordered:
   if cue["emitted"] or (not force and age < float(cue["at"])): continue
   cue["emitted"] = true
   action_sound.emit(str(cue["kind"]))
@@ -205,6 +220,16 @@ func apply_pose(index: int, role: String, changed: bool, hurt: bool = false, sta
  fighter.pivot_offset = Vector2(width*0.5,height)
  # Every pose keeps its feet on the same ground plane.
  return active[role + "_position"] + Vector2((base_size.x-width)*0.5,base_size.y-height)
+
+func defeat(target: TextureRect) -> void:
+ var entry: Dictionary = pending[-1] if not pending.is_empty() and pending[-1].get("target_node") == target else active if active.get("target_node") == target else {}
+ if entry.is_empty(): return
+ entry["defeated"] = true
+ # This cue belongs to the hit that defeated this actor, including a departing boss phase.
+ var sounds: Array = entry.get("sounds",[])
+ if not sounds.any(func(cue): return cue["kind"] == "death"):
+  sounds.append({"kind":"death","at":float(entry["timing"]["impact"])+float(entry["timing"]["hold"]),"emitted":false})
+ entry["sounds"] = sounds
 func _process(delta: float) -> void:
  if active.is_empty(): return
  age += delta
@@ -222,10 +247,14 @@ func _process(delta: float) -> void:
  var legacy: bool = profile == "legacy"
  var preparing: bool = frame["phase"] == "windup"
  var changed: bool = clock >= 0.11 and clock < 0.60 if legacy else age >= 0.06 and float(frame["recovery"]) < 0.7 and (not preparing or profile in ["bow","spell","heal","guard","charge"])
- var source_position: Vector2 = apply_pose(0,"source",changed,false,"guard" if profile == "charge" and preparing else "")
+ if not legacy and preparing and age >= 0.06: changed = true
+ var source_state: String = "guard" if profile == "charge" and preparing else "windup" if profile == "heavy" and preparing else ""
+ if active.get("skill_id","") == "wd_bash": source_state = "guard"
+ var source_position: Vector2 = apply_pose(0,"source",changed,false,source_state)
  var harmful: bool = Effects.harmful_contact(active)
  var defending: bool = active["attack_kind"] == "block" or active.get("reaction","") == "block"
- var target_position: Vector2 = apply_pose(1,"target",(harmful or defending) and clock >= 0.28 and clock < 0.64,harmful,"guard" if defending else "")
+ var falling: bool = active.get("defeated",false) and frame["phase"] in ["recover","complete"]
+ var target_position: Vector2 = apply_pose(1,"target",falling or (harmful or defending) and clock >= 0.28 and clock < 0.64,harmful,"death" if falling else "guard" if defending else "")
  # A brief held contact pose makes each impact readable before recoil.
  var motion_age: float = clock if clock < 0.28 else 0.28 if clock < 0.38 else clock - 0.10
  var lunge: float = sin(clampf((motion_age - 0.1) / 0.32,0.0,1.0) * PI)
@@ -248,12 +277,25 @@ func _process(delta: float) -> void:
   source_rotation = float(movement["rotation"])
   impact = float(movement["reaction"])
  fighters[0].position = source_position + Vector2(direction*source_shift*motion,0)
+ if profile == "charge" and hero and motion > 0 and get_parent().has_method("_arrange_party"):
+  # A changed weapon silhouette must not cross the ally displaced by the charge.
+  for ally in get_parent().hero_portraits.values():
+   if ally == active["source_node"] or not ally.visible: continue
+   var ally_rect: Rect2 = ally.get_global_rect()
+   if ally_rect.get_center().x < float(active["source_position"].x)+float(active["source_size"].x)*0.5:
+    fighters[0].position.x = maxf(fighters[0].position.x,ally_rect.end.x-global_position.x+12)
  fighters[0].rotation = direction*source_rotation*motion
  var dodge: bool = active.get("reaction", "hurt") == "miss"
  var recoil: float = 18.0 if legacy else float(active["timing"]["recoil"])
- fighters[1].position = target_position + Vector2(direction * impact * (40.0 if dodge else recoil*weight if harmful else 0.0)*motion,0)
- fighters[1].rotation = direction * impact * (0.08 if harmful else 0.025 if dodge else 0.0)*motion
+ fighters[1].position = target_position + Vector2(direction * impact * (40.0 if dodge else recoil*weight if harmful else 5.0 if defending else 0.0)*motion,0)
+ fighters[1].rotation = direction * impact * (0.08 if harmful else 0.025 if dodge or defending else 0.0)*motion
  fighters[1].self_modulate = Color(1,1.0-impact*0.36,1.0-impact*0.36) if harmful and kind != "block" else Color.WHITE
+ if fighters[1].material is ShaderMaterial:
+  fighters[1].material.set_shader_parameter("impact",impact if harmful else 0.0)
+  fighters[1].material.set_shader_parameter("slain",float(frame["recovery"]) if falling else 0.0)
+ if falling:
+  fighters[1].rotation += direction*0.10*float(frame["recovery"])*motion
+  fighters[1].self_modulate.a = 1.0-float(frame["recovery"])*0.55
  for fighter in fighters:
   fighter.scale = Vector2.ONE*(1.0+zoom)
   fighter.position.x += (focus.x-(fighter.position.x+fighter.size.x*0.5))*zoom+shake
@@ -272,7 +314,7 @@ func _draw() -> void:
  # Effects draw above portraits through a separate child canvas.
 func _draw_effects(canvas: Node2D) -> void:
  Effects.draw(self,canvas)
-func popup(target: Control, value: String, tint: Color, defer_to_impact: bool = true) -> void:
+func popup(target: Control, value: String, tint: Color, defer_to_impact: bool = true, status_effect: String = "") -> void:
  if not is_instance_valid(target): return
  if target is Button:
   var model: Control = target.get_node_or_null("Portrait")
@@ -285,17 +327,27 @@ func popup(target: Control, value: String, tint: Color, defer_to_impact: bool = 
   var entry: Dictionary = pending[-1] if not pending.is_empty() and pending[-1].get("target_node") == target else active if active.get("target_node") == target else {}
   if not entry.is_empty():
    var waiting: Array = entry.get("feedback",[])
-   waiting.append({"target":target,"value":value,"tint":tint})
+   waiting.append({"target":target,"value":value,"tint":tint,"effect":status_effect})
    entry["feedback"] = waiting
    if entry == active and age >= impact_time(): _flush_feedback(active)
    return
  _spawn_popup(target,value,tint)
+ _status_pulse(target,status_effect)
 
 func _flush_feedback(entry: Dictionary) -> void:
  var waiting: Array = entry.get("feedback",[])
  entry.erase("feedback")
  for item in waiting:
-  if is_instance_valid(item["target"]): _spawn_popup(item["target"],item["value"],item["tint"])
+  if is_instance_valid(item["target"]):
+   _spawn_popup(item["target"],item["value"],item["tint"])
+   _status_pulse(item["target"],str(item.get("effect","")))
+
+func _status_pulse(target: Control, effect: String) -> void:
+ if effect.is_empty() or not is_instance_valid(status_bursts): return
+ var model: Control = fighters[1] if active.get("target_node") == target and fighters.size() > 1 else target
+ status_bursts.pulse(model,effect)
+ if model is TextureRect and model.material is ShaderMaterial and effect in ["burn","bleed","poison","chill"]:
+  model.material.set_shader_parameter(effect,1.0)
 
 func _spawn_popup(target: Control, value: String, tint: Color) -> void:
  var label := Label.new()
@@ -340,7 +392,7 @@ func feedback(target: Control, kind: String, amount: int = 0, effect: String = "
   "status_tick": value = "%s −%d" % [effect.to_upper(),amount]
  if kind in ["status","status_tick"]:
   color = {"burn":Color("#FFA66B"),"bleed":Color("#FF879B"),"poison":Color("#C0E991"),"chill":Color("#BAECFF")}.get(effect,color)
- popup(target,value,color,kind != "status_tick")
+ popup(target,value,color,kind != "status_tick",effect if kind in ["status","status_tick"] else "")
 
 func block_impact() -> void:
  if not pending.is_empty(): pending[-1]["kind"] = "block"

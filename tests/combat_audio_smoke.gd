@@ -47,7 +47,7 @@ func run() -> void:
   assert(cues == [attack[3]] and battle.combat_audio.last_sound == attack[3])
   advance(cinema, cinema.release_time() + 0.002)
   finish(cinema)
-  assert(cues == [attack[3]] and battle.enemy_hp == hp, "Playing or skipping presentation cannot duplicate sound or damage")
+  assert(cues == [attack[3],"impact"] and battle.enemy_hp == hp, "Playing or skipping presentation cannot duplicate release/contact sounds or damage")
 
  cues.clear()
  battle.enemy_block = 100

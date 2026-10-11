@@ -25,6 +25,10 @@ static func resolve(kind: String, title: String, options: Dictionary, boss: bool
   var caption: String = title.to_lower()
   chosen = "heal" if kind == "heal" else "guard" if kind == "block" else "object" if kind == "object" else "bow" if kind in ["bow","arrow"] else "spell" if kind == "spell" else "charge" if effect == "barbed_charge" or caption.contains("charge") else "heavy" if caption.contains("heavy") or caption.contains("verdict") or caption.contains("crushing") else "light"
  var result: Dictionary = PROFILES[chosen].duplicate()
+ # Giants and armored floor guardians commit to a heavier swing, not a light jab.
+ if boss and chosen == "light" and str(options.get("creature","")) in ["harrowed_giant","keep_son","undying_lord","moth_oleander"]:
+  chosen = "heavy"
+  result = PROFILES[chosen].duplicate()
  result["id"] = chosen
  if boss:
   for key in ["duration","release","impact","hold"]: result[key] = float(result[key])*1.12

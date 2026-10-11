@@ -54,8 +54,9 @@ static func draw(presentation: Control, canvas: Node2D) -> void:
  var kind: String = active["attack_kind"]
  var blocked: bool = data["reaction"] == "block" or active["kind"] == "block" or kind == "block"
  var harmful: bool = data["harmful"]
+ var heavy: bool = active.get("source_boss",false) or active.get("profile","") in ["heavy","charge"]
  if harmful:
-  ImpactAnimation.draw(canvas,point,clock,direction,kind,kind == "spell" and data["element"] == "fire",active.get("source_boss",false))
+  ImpactAnimation.draw(canvas,point,clock,direction,kind,kind == "spell" and data["element"] == "fire",heavy)
  if active.get("profile","legacy") in ["spell","heal"] and presentation.age < presentation.release_time():
   var buildup: float = float(presentation.animation_sample().get("windup",0.0))
   spell_buildup(canvas,start,str(data["element"]),buildup)
@@ -74,13 +75,13 @@ static func draw(presentation: Control, canvas: Node2D) -> void:
    chain(canvas,start,flight_aim,progress,clock,strength)
    if harmful: slash(canvas,point,strength,direction,true)
   elif harmful:
-   slash(canvas,point,strength,direction,active.get("source_boss",false))
+   slash(canvas,point,strength,direction,heavy)
   elif data["reaction"] == "miss":
    swing(canvas,aim,strength,direction)
  if blocked and strength > 0.0:
   shield(canvas,point,strength)
  elif harmful and strength > 0.0:
-  sparks(canvas,point,strength,BONE,1.3 if active.get("source_boss",false) else 1.0)
+  sparks(canvas,point,strength,BONE,1.3 if heavy else 1.0)
   if kind in ["sword","bow","arrow"]: blood_flecks(canvas,point,strength,direction)
   if active.get("creature","") == "howling_head":
    for i in range(7):

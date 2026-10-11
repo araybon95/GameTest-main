@@ -1,6 +1,7 @@
 extends Control
 ## A presentation-only reveal. The controller owns phases, rewards and damage.
 signal finished
+signal reveal_sound(kind: String)
 var entry: Dictionary = {}
 var age: float = 0.0
 var duration: float = 1.85
@@ -12,6 +13,7 @@ var original: TextureRect
 var was_visible: bool = true
 var complete: bool = false
 var tint: Color = Color("#CC554B")
+var sounded: bool = false
 
 func _ready() -> void:
  set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -23,6 +25,7 @@ func _ready() -> void:
   call_deferred("finish")
   return
  was_visible = original.visible
+ if int(entry.get("phase",1)) > 1: duration = 2.25
  original.visible = false
  tint = {"remade":Color("#D96867"),"keep":Color("#B0CCD9"),"moth":Color("#B3D497")}.get(str(entry.get("theme","bandit")),Color("#CC554B"))
  model = TextureRect.new()
@@ -72,6 +75,9 @@ func label(value: String, pos: Vector2, width: float, font_size: int, color: Col
 func _process(delta: float) -> void:
  if complete: return
  age += delta
+ if age >= 0.28 and not sounded:
+  sounded = true
+  reveal_sound.emit("phase" if int(entry.get("phase",1)) > 1 else "boss")
  if age >= duration:
   finish()
   return
@@ -93,6 +99,22 @@ func _draw() -> void:
  draw_line(Vector2(420,478),Vector2(1500,478),line_color,2)
  draw_line(Vector2(570,693),Vector2(1350,693),line_color,1)
  draw_circle(Vector2(960,478),4,Color("#EED8B1"))
+ if model != null:
+  # A restrained, theme-colored wake frames the actual boss without obscuring its body.
+  var foot: Vector2 = model.position+Vector2(model.size.x*0.5,model.size.y)
+  var width: float = minf(220,model.size.x*0.5+24)
+  var wake: Color = tint.darkened(0.55)
+  wake.a = fade*0.65
+  for index in range(5):
+   var offset: float = (index-2)*width*0.4
+   var rise: float = (18+index%2*16)*sin(clampf(age/duration,0,1)*PI)
+   var point := foot+Vector2(offset,-5)
+   draw_polyline(PackedVector2Array([point+Vector2(-6,0),point+Vector2(0,-rise),point+Vector2(6,-4)]),wake,3,true)
+  if int(entry.get("phase",1)) > 1:
+   var fracture: Color = tint
+   fracture.a = fade*0.65
+   for index in range(int(entry.get("total",1))):
+    draw_line(Vector2(916+index*44,702),Vector2(936+index*44,707),fracture if index < int(entry.get("phase",1)) else wake,3,true)
 
 func finish() -> void:
  if complete: return

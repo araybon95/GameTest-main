@@ -9,6 +9,8 @@ const WALK = {
 }
 
 const COMBAT = {
+ "warden":[Rect2(78,115,333,331),Rect2(571,136,425,308),Rect2(1155,90,298,357),Rect2(49,606,404,318),Rect2(606,601,343,324),Rect2(1098,662,356,252)],
+ "raider":[Rect2(9,62,480,451),Rect2(502,108,592,407),Rect2(1108,13,420,503),Rect2(96,537,416,455),Rect2(508,552,531,448),Rect2(1071,699,437,300)],
  "ranger":[Rect2(61,65,401,419),Rect2(535,48,482,436),Rect2(1046,47,464,438),Rect2(51,570,439,385),Rect2(534,563,464,393),Rect2(1062,534,376,424)],
  "occultist":[Rect2(46,52,364,442),Rect2(496,87,626,401),Rect2(1149,78,356,412),Rect2(91,518,326,455),Rect2(560,524,440,451),Rect2(1100,537,353,438)],
  "healer":[Rect2(68,48,351,461),Rect2(500,99,597,409),Rect2(1091,17,402,491),Rect2(64,555,370,418),Rect2(531,547,497,426),Rect2(1143,546,294,427)],
@@ -33,6 +35,8 @@ const COMBAT = {
  "bone_rabble":[Rect2(126,119,471,481),Rect2(732,111,669,486),Rect2(1560,154,431,450)],
 }
 const SHEETS = {
+ "warden":"res://assets/generated/hero_warden_combat_v2.png",
+ "raider":"res://assets/generated/enemy_ash_raider_combat_v2.png",
  "ranger": "res://assets/generated/hero_ranger_combat_sheet.png",
  "occultist": "res://assets/generated/hero_occultist_combat_sheet.png",
  "healer": "res://assets/generated/hero_healer_combat_sheet.png",

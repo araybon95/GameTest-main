@@ -43,9 +43,9 @@ static func state_pose(original: Texture2D, state: String = "idle") -> Texture2D
  var key: String = original.resource_path.get_file()
  var id: String = str(original.get_meta("pose_id",POSES.get(key,"")))
  if not InkRegions.COMBAT.has(id):
-  return original if state == "guard" else pose(original,state == "hurt")
+  return original if state in ["guard","windup"] else pose(original,state in ["hurt","death"])
  var frame_count: int = InkRegions.COMBAT[id].size()
- var indices: Dictionary = {"attack":1,"cast":2,"guard":3,"hurt":4} if frame_count == 6 else {"attack":1,"cast":3,"roar":3,"reveal":3,"guard":0,"hurt":2} if frame_count == 4 else {"attack":1,"cast":1,"guard":0,"hurt":2,"roar":0,"reveal":0}
+ var indices: Dictionary = {"attack":1,"cast":2,"windup":2,"guard":3,"hurt":4,"death":5} if frame_count == 6 else {"attack":1,"cast":3,"windup":3,"roar":3,"reveal":3,"guard":0,"hurt":2,"death":2} if frame_count == 4 else {"attack":1,"cast":1,"windup":0,"guard":0,"hurt":2,"death":2,"roar":0,"reveal":0}
  var index: int = int(indices.get(state,0))
  var cache_key: String = id+"/"+state
  if cache.has(cache_key): return cache[cache_key]

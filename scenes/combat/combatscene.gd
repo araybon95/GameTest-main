@@ -3,7 +3,7 @@ const GROUND_Y: float = 430.0
 var presentation: Control
 var combat_audio: Node
 func _play_attack_sound(kind: String) -> void:
-	if kind in ["sword","bow","spell","block"] and presentation != null and presentation.has_method("queue_sound") and presentation.queue_sound(kind):
+	if kind in ["sword","bow","spell","block","impact","death"] and presentation != null and presentation.has_method("queue_sound") and presentation.queue_sound(kind):
 		return
 	_emit_attack_sound(kind)
 
@@ -845,8 +845,10 @@ func _deal_enemy_damage(amount: int, ignore_block: bool = false, attacker: Strin
 		presentation.popup(enemy_views[target_index], str(damage) if damage > 0 else "BLOCK", Color("#F8A088") if damage > 0 else Color("#BCD8F1"))
 		if damage == 0 and total > 0: presentation.block_impact()
 	enemy_hp = maxi(0, enemy_hp - damage)
+	if enemy_hp <= 0 and presentation != null: presentation.defeat(enemy_views[target_index].get_node("EnemyArt"))
 	_add_log("%s takes %d damage%s." % [enemy_name, damage, " (%d blocked)" % absorbed if absorbed > 0 else ""])
 	if damage > 0:
+		_play_attack_sound("impact")
 		_hurt_portrait(enemy_art)
 	_flash(enemy_art, Color("#E78A84"))
 	_store_enemy()
@@ -878,12 +880,14 @@ func _apply_damage(hero_id: String, amount: int, bypass_block: bool = false, cau
 		return 0
 	if presentation != null:
 		presentation.feedback(hero_buttons[hero_id],"status_tick" if cause.to_lower() in ["burn","bleed","poison"] else "damage",damage,cause.to_lower())
+	if cause.to_lower() not in ["burn","bleed","poison"]: _play_attack_sound("impact")
 	_hurt_portrait(hero_portraits[hero_id])
 	if selected_hero == hero_id:
 		_hurt_portrait(selected_portrait)
 	_flash(hero_buttons[hero_id], Color("#E78A84"))
 	if bool(state["deaths_door"]) or int(state["hp"]) <= 0:
 		state["dead"] = true
+		if presentation != null: presentation.defeat(hero_portraits[hero_id])
 		state["deaths_door"] = false
 		_speech(hero_id,"SLAIN",Color("#E08478"))
 		GameState.record_death(hero_id, cause if not cause.is_empty() else enemy_name)
@@ -1572,6 +1576,8 @@ func _create_card_view(card_id: String, card: Dictionary) -> Button:
 
 
 func _load_texture(path: String) -> Texture2D:
+	# Dedicated combat atlases keep idle and action gear consistent on the stage.
+	path = {"res://assets/generated/hero_warden.png":"res://assets/generated/hero_warden_combat_idle.tres", "res://assets/generated/enemy_ash_raider.png":"res://assets/generated/enemy_ash_raider_combat_idle.tres"}.get(path,path)
 	if ResourceLoader.exists(path):
 		return load(path) as Texture2D
 	return null

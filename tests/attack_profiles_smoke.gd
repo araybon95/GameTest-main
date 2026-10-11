@@ -99,7 +99,7 @@ func crusader_charge() -> void:
 		var ally_rect: Rect2 = painted_rect(battle.hero_portraits["warden"])
 		assert(not painted_overlap(cinema.fighters[0],battle.hero_portraits["warden"]),"Charge at %.2fs: source %s overlaps displaced ally %s" % [time,source_rect,ally_rect])
 	finish(cinema)
-	assert(heard == ["sword"] and battle.hero_state == after_heroes and battle.enemies == after_enemies,"Playing every charge phase applies AP, Block, Bleed and damage exactly once")
+	assert(heard == ["sword","impact"] and battle.hero_state == after_heroes and battle.enemies == after_enemies,"Playing every charge phase applies AP, Block, Bleed and damage exactly once")
 	battle.queue_free()
 	for index in range(4): await process_frame
 	charge_checks_completed = true

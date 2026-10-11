@@ -1,5 +1,5 @@
 extends RefCounted
-## Recreated impact motion; optional painted splatter is read from the local installation.
+## Animated ink impact motion with independently replaceable painted splatter.
 const Art = preload("res://scripts/local_dungeon_art.gd")
 static var splatter: AtlasTexture
 

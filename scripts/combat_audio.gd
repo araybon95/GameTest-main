@@ -5,6 +5,10 @@ const SOUNDS = {
 	"bow": preload("res://assets/audio/combat/bow.wav"),
 	"spell": preload("res://assets/audio/combat/spell.wav"),
 	"block": preload("res://assets/audio/combat/block.wav"),
+	"impact": preload("res://assets/audio/combat/impact.wav"),
+	"death": preload("res://assets/audio/combat/death.wav"),
+	"boss": preload("res://assets/audio/combat/boss.wav"),
+	"phase": preload("res://assets/audio/combat/phase.wav"),
 	"stress": preload("res://assets/audio/combat/stress.wav"),
 	"virtue": preload("res://assets/audio/combat/virtue.wav")
 }
