@@ -139,6 +139,10 @@ func next() -> void:
  canvas.z_index = 2
  add_child(canvas)
  canvas.name = "StrikeCanvas"
+ if not has_node("AttackTell"):
+  var tell := preload("res://scenes/combat/attack_tell.gd").new()
+  tell.presentation = self
+  add_child(tell)
 
 func _prepare_backdrop() -> void:
  var original: TextureRect = get_parent().get_node_or_null("BattlefieldBackdrop/BackgroundArt")
@@ -248,8 +252,9 @@ func _process(delta: float) -> void:
  var preparing: bool = frame["phase"] == "windup"
  var changed: bool = clock >= 0.11 and clock < 0.60 if legacy else age >= 0.06 and float(frame["recovery"]) < 0.7 and (not preparing or profile in ["bow","spell","heal","guard","charge"])
  if not legacy and preparing and age >= 0.06: changed = true
- var source_state: String = "guard" if profile == "charge" and preparing else "windup" if profile == "heavy" and preparing else ""
+ var source_state: String = "guard" if profile in ["charge","guard"] and preparing else "windup" if preparing and not legacy else "cast" if profile in ["spell","heal"] else ""
  if active.get("skill_id","") == "wd_bash": source_state = "guard"
+ if active.get("skill_id","") == "pc_pain": source_state = "hurt"
  var source_position: Vector2 = apply_pose(0,"source",changed,false,source_state)
  var harmful: bool = Effects.harmful_contact(active)
  var defending: bool = active["attack_kind"] == "block" or active.get("reaction","") == "block"

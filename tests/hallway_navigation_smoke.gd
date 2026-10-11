@@ -61,6 +61,7 @@ func arrive_and_enter(passage) -> void:
 	assert(passage.arrived and not passage.complete)
 	await key(KEY_ENTER)
 	await key(KEY_ENTER, false)
+	if is_instance_valid(passage) and not passage.is_queued_for_deletion(): await passage.finished
 	await settle()
 	assert(not is_instance_valid(passage), "The reached doorway accepts Enter once")
 	passages_completed += 1

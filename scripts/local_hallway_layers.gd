@@ -28,7 +28,7 @@ func _ready() -> void:
 	add_child(far_layer)
 	var rear: Array[Texture2D] = [profile["background"]]
 	var middle: Array[Texture2D] = [profile["mid"]]
-	var back_band: Dictionary = build_band(far_layer, "Background", rear, 0.20, canvas_origin + float(profile.get("background_offset", 0.0)) * native_scale)
+	var back_band: Dictionary = build_band(far_layer, "Background", rear, 0.15, canvas_origin + float(profile.get("background_offset", 0.0)) * native_scale)
 	background = back_band["tiles"][0]
 	build_band(far_layer, "Midground", middle, 0.40, canvas_origin + float(profile.get("mid_offset", 0.0)) * native_scale)
 	build_band(far_layer, "Wall", profile["walls"], 0.65, canvas_origin)
@@ -43,11 +43,11 @@ func _ready() -> void:
 	var top: Texture2D = profile.get("foreground_top")
 	if top != null:
 		var tops: Array[Texture2D] = [top]
-		build_band(near_layer, "ForegroundTop", tops, 1.10, 0.0)
+		build_band(near_layer, "ForegroundTop", tops, 1.25, 0.0)
 	var bottom: Texture2D = profile.get("foreground_bottom")
 	if bottom != null:
 		var bottoms: Array[Texture2D] = [bottom]
-		build_band(near_layer, "ForegroundBottom", bottoms, 1.10, size.y - bottom.get_height() * native_scale)
+		build_band(near_layer, "ForegroundBottom", bottoms, 1.25, size.y - bottom.get_height() * native_scale)
 	_process(0.0)
 
 func build_band(parent: Control, layer_name: String, textures: Array, ratio: float, y: float) -> Dictionary:

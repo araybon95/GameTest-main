@@ -45,7 +45,7 @@ func run() -> void:
  strip.sync(statuses,2,1)
  assert(strip.get_child_count() == 4)
  assert(strip.get_child(0).tooltip_text.contains("3 stacks") and strip.get_child(0).tooltip_text.contains("9 damage"))
- assert(strip.get_child(0).get_child(1).text == "2t")
+ assert(strip.get_child(0).get_child(0).get_child(1).text == "2t")
  strip.sync({})
  assert(strip.get_child_count() == 0 and statuses.size() == 2)
  strip.queue_free()

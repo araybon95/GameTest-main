@@ -79,7 +79,7 @@ func _process(_delta: float) -> void:
 
 func paint_far(canvas: Control) -> void:
 	var ambient: float = 0.0 if reduced_motion else clock
-	var slow_distance: float = maxf(0.0, distance) * (0.45 if reduced_motion else 0.17)
+	var slow_distance: float = maxf(0.0, distance) * (0.45 if reduced_motion else 0.14)
 	var fog: Color = {"bandit": Color(0.54, 0.43, 0.36, 0.045), "keep": Color(0.42, 0.47, 0.56, 0.045), "beast": Color(0.57, 0.24, 0.29, 0.045), "medical": Color(0.34, 0.47, 0.36, 0.04)}.get(scene_theme, Color(0.44, 0.42, 0.48, 0.04))
 	for index in range(6):
 		var x: float = fposmod(index * 470.0 - slow_distance - ambient * 8.0, 2820.0) - 340.0
@@ -117,7 +117,7 @@ func paint_lantern(canvas: Control, position: Vector2, ambient: float, index: in
 	canvas.draw_line(position + Vector2(-16, 23), position + Vector2(17, 24), Color("#292025"), 4.0, true)
 
 func paint_near(canvas: Control) -> void:
-	var scroll: float = maxf(0.0, distance) * (0.45 if reduced_motion else 1.1)
+	var scroll: float = maxf(0.0, distance) * (0.45 if reduced_motion else 1.25)
 	var ink := Color("#100C10")
 	var edge := Color("#261B22")
 	if scene_theme == "keep":

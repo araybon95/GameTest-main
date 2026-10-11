@@ -45,6 +45,8 @@ var atmosphere: Control
 var scene_theme: String = "bandit"
 var footsteps: AudioStreamPlayer
 var footstep_clock: float = 0.0
+var stride_distance: float = 0.0
+const STRIDE: float = 84.0
 var footsteps_played: int = 0
 var transition_shade: ColorRect
 var encounter_end_x: float = 1430.0
@@ -471,25 +473,32 @@ func _process(delta: float) -> void:
  if moving:
   elapsed = clampf(elapsed+delta*direction,0.0,duration)
   facing_left = direction < 0
-  animation_clock += delta
   footstep_clock += delta
   if arrived and elapsed < duration: leave_destination()
  else:
   footstep_clock = 0.0
   footsteps.stop()
+ var previous_distance: float = distance_travelled
  var fraction: float = clampf(elapsed/maxf(duration,0.001),0,1)
  distance_travelled = fraction*(1500.0+minf(maxi(route_steps.size()-1,0),5)*220.0)
+ if moving:
+  stride_distance += absf(distance_travelled-previous_distance)
+  animation_clock += absf(distance_travelled-previous_distance)/(STRIDE*3.5)
+ else:
+  stride_distance = 0.0
  atmosphere.distance = distance_travelled
  atmosphere.clock = ambient_clock
  atmosphere._process(0.0)
- if moving and not walkers.is_empty() and footstep_clock >= 0.31:
-  footstep_clock = fmod(footstep_clock,0.31)
+ if moving and delta > 0.0 and not walkers.is_empty() and stride_distance >= STRIDE:
+  stride_distance = fmod(stride_distance,STRIDE)
+  footstep_clock = 0.0
   footsteps.pitch_scale = 0.95 if footsteps_played%2 == 0 else 1.06
   footsteps.play()
   footsteps_played += 1
  transition_shade.modulate.a = maxf(1.0-ambient_clock/0.25,0.0)
  update_walkers()
  source_door.position.x = -10.0 - distance_travelled * 0.9
+ source_button.position = source_door.position
  if encounter != null:
   var approach: float = smoothstep(0.45,1.0,fraction)
   encounter.position.x = lerpf(encounter_start_x,encounter_end_x,approach)
@@ -666,7 +675,19 @@ func interact_destination() -> void:
  if room_mode:
   if not settings_open(): room_interaction.emit()
   return
- if arrived and not settings_open(): finish()
+ if arrived and not settings_open() and not complete:
+  var runtime := get_node_or_null("/root/GameSettings")
+  if runtime == null or runtime.ambient_motion:
+   complete = true
+   reached_destination = true
+   footsteps.stop()
+   destination_button.disabled = true
+   var crossing := create_tween()
+   crossing.tween_property(transition_shade,"modulate:a",1.0,0.18)
+   await crossing.finished
+   finished.emit()
+   queue_free()
+  else: finish()
 
 func build_source() -> void:
  source_door = TextureRect.new()

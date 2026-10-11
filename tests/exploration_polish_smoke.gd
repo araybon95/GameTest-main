@@ -57,7 +57,7 @@ func run() -> void:
 		await process_frame
 		assert(not travel.auto_walk, "Manual hallway movement is the default")
 		travel.set_walking(true)
-		travel._process(0.31)
+		travel._process(1.2)
 		assert(travel.scene_theme == context[2] and travel.footsteps_played > 0)
 		assert(travel.encounter.texture.atlas.resource_path == Scenery.threshold_path(context[2]))
 		assert(travel.encounter.size.y > travel.walkers[0].size.y,"Threshold architecture has a human-sized opening")

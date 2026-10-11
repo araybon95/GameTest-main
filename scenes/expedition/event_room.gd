@@ -77,6 +77,15 @@ func refresh() -> void:
 		investigator.position = Vector2(875-investigator.size.x*.5,320)
 		investigator.modulate = Scenery.tint(floor_theme)
 		Scenery.apply_hero_palette(investigator,selected_hero,str(State.hero_colors.get(selected_hero,"original")))
+		var mark := label_at("INVESTIGATOR",Vector2(720,282),310,19)
+		mark.name = "InvestigatorMarker"
+		mark.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		mark.add_theme_color_override("font_color",Color("#F1D29A"))
+		var strip := preload("res://scenes/combat/status_strip.gd").new()
+		strip.name = "InvestigatorEffects"
+		strip.position = Vector2(755,775)
+		add_child(strip)
+		strip.sync(State.run_heroes[selected_hero].get("statuses",{}))
 		label_at(str(State.hero(selected_hero)["name"]),Vector2(720,705),310,23).horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		label_at(str(State.HEROES[selected_hero]["name"]),Vector2(720,738),310,17).horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	var prop_shadow = preload("res://scenes/combat/ground_shadow.gd").new()
@@ -84,6 +93,7 @@ func refresh() -> void:
 	add_child(prop_shadow)
 	var object_button := button_at("", Rect2(1110, 180, 710, 540), investigate)
 	object_button.name = "EventObject"
+	if object_button.has_node("IronFittings"): object_button.get_node("IronFittings").free()
 	object_button.disabled = resolved or selected_hero == "" or (id == "crusader_coffin" and int(State.run_heroes[selected_hero]["hp"]) <= 3)
 	object_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	# The silhouette is the hover target; a rectangular button fill would hide the room.
@@ -112,6 +122,40 @@ func refresh() -> void:
 	label_at("Event resolved" if resolved else "Click the object to investigate", Vector2(1090, 705), 730, 24).horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	party_bar(return_to_dungeon if resolved else leave_untouched, "RETURN TO DUNGEON" if resolved else "LEAVE UNTOUCHED")
 	Scenery.decorate(self)
+	if resolved and not room.get("event_result",{}).get("left",false): show_result(room["event_result"])
+
+func show_result(result: Dictionary) -> void:
+	var reveal := panel(Rect2(1080,55,740,185),Color("#191216"))
+	reveal.name = "EventOutcome"
+	if reveal.has_node("IronFittings"): reveal.get_node("IronFittings").painted_frame = null
+	var title := label_at("THE OBJECT YIELDS",Vector2(1105,70),690,22)
+	title.add_theme_color_override("font_color",Color("#F1D29A"))
+	var summary: Array[String] = []
+	if int(result.get("gold",0)) > 0: summary.append("+%d GOLD" % int(result["gold"]))
+	var item_id: String = str(result.get("item",""))
+	if not item_id.is_empty():
+		var reward: Dictionary = State.Items.item(item_id)
+		var icon := picture(State.Items.icon_path(item_id),Rect2(1105,115,65,65))
+		if icon != null: icon.name = "EventRewardIcon"
+		summary.append(str(reward.get("name",item_id)))
+	var effect: String = str(result.get("status",""))
+	if not effect.is_empty():
+		summary.append("%s · %s · 2 rounds" % [State.hero(str(result["hero"]))["name"],effect.capitalize()])
+		var burst := preload("res://scenes/combat/status_bursts.gd").new()
+		burst.name = "EventDebuffBurst"
+		add_child(burst)
+		burst.pulse(get_node("Investigator"),effect)
+	if int(result.get("damage",0)) > 0: summary.append("%s · −%d HP · Crusader rescued" % [State.hero(str(result["hero"]))["name"],int(result["damage"])])
+	if summary.is_empty(): summary.append("The danger passes. No reward recovered.")
+	var value := label_at("\n".join(summary),Vector2(1185,112),600,22)
+	value.name = "EventOutcomeDetails"
+	value.size = Vector2(600,115)
+	value.add_theme_color_override("font_color",Color("#DFA8A4") if not effect.is_empty() else Color("#EADABE"))
+	var runtime := get_node_or_null("/root/GameSettings")
+	if runtime == null or runtime.ambient_motion:
+		for control in [reveal,title,value]:
+			control.modulate.a = 0.0
+			create_tween().tween_property(control,"modulate:a",1.0,0.22)
 
 func select_hero(id: String) -> void:
 	selected_hero = id

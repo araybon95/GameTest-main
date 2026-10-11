@@ -9,6 +9,7 @@ const WALK = {
 }
 
 const COMBAT = {
+ "crusader":[Rect2(36,30,433,472),Rect2(522,101,513,400),Rect2(1095,22,407,479),Rect2(49,553,487,409),Rect2(610,548,385,421),Rect2(1051,636,444,333)],
  "warden":[Rect2(78,115,333,331),Rect2(571,136,425,308),Rect2(1155,90,298,357),Rect2(49,606,404,318),Rect2(606,601,343,324),Rect2(1098,662,356,252)],
  "raider":[Rect2(9,62,480,451),Rect2(502,108,592,407),Rect2(1108,13,420,503),Rect2(96,537,416,455),Rect2(508,552,531,448),Rect2(1071,699,437,300)],
  "ranger":[Rect2(61,65,401,419),Rect2(535,48,482,436),Rect2(1046,47,464,438),Rect2(51,570,439,385),Rect2(534,563,464,393),Rect2(1062,534,376,424)],
@@ -35,6 +36,7 @@ const COMBAT = {
  "bone_rabble":[Rect2(126,119,471,481),Rect2(732,111,669,486),Rect2(1560,154,431,450)],
 }
 const SHEETS = {
+ "crusader":"res://assets/generated/hero_crusader_combat_v2.png",
  "warden":"res://assets/generated/hero_warden_combat_v2.png",
  "raider":"res://assets/generated/enemy_ash_raider_combat_v2.png",
  "ranger": "res://assets/generated/hero_ranger_combat_sheet.png",

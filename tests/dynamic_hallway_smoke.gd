@@ -85,7 +85,7 @@ func run() -> void:
 			assert(travel.scenery.position.x < start and travel.distance_travelled > 0.0)
 			assert(travel.footsteps_played > 0, "Footsteps accompany walking")
 			var first_frame: Texture2D = travel.walkers[0].texture
-			advance(travel, 0.2)
+			advance(travel, 0.4)
 			assert(travel.walkers[0].texture != first_frame, "Walking advances the hero animation frames")
 			for walker in travel.walkers:
 				if walker.get_meta("walker") == "warden": assert(walker.material is ShaderMaterial, "Workshop palette survives walking")
@@ -119,6 +119,7 @@ func run() -> void:
 				assert(travel.encounter.size.y > travel.walkers[0].size.y)
 			travel.travel_stage.get_node("DestinationInteract").pressed.emit()
 			travel.finish()
+			if completions.is_empty(): await travel.finished
 			assert(completions.size() == 1, "Destination and legacy finish resolve only once")
 			await process_frame
 	# Maximum camera travel must keep the panorama covering the complete stage.
@@ -230,6 +231,7 @@ func run() -> void:
 	settings.close_settings()
 	await process_frame
 	await key(KEY_ENTER)
+	if is_instance_valid(travel) and not travel.is_queued_for_deletion(): await travel.finished
 	await process_frame
 	assert(not is_instance_valid(travel), "Enter explicitly enters the reached encounter")
 	fixture(THEMES[0], "gold")
@@ -241,6 +243,8 @@ func run() -> void:
 	var destination_center: Vector2 = travel.travel_stage.get_node("DestinationInteract").get_global_rect().get_center()
 	await mouse_press(destination_center, true)
 	await mouse_press(destination_center, false)
+	if click_completions.is_empty(): await travel.finished
+	await process_frame
 	assert(not is_instance_valid(travel) and click_completions.size() == 1, "Clicking the reached world prop enters once")
 	assert(gameplay_snapshot() == click_before, "A native destination click leaves loot resolution to the dungeon")
 	fixture(THEMES[0], "battle")

@@ -379,6 +379,7 @@ func quick_select_skill(index: int) -> bool:
 
 
 func _focus_selected_skill() -> void:
+	_update_target_hint()
 	if selected_skill_id.is_empty(): return
 	var view: Button = hand_container.get_node_or_null("Card_%s" % selected_skill_id)
 	if view == null:
@@ -1346,12 +1347,12 @@ func _layout_combat() -> void:
 	info_contents.add_child(selected_portrait)
 	StatusVisual.new().attach_to(selected_portrait)
 	selected_info = _make_label("", 19, Color(IVORY))
-	_place(selected_info, Rect2(145, 4, 280, 235))
+	_place(selected_info, Rect2(145, 4, 280, 215))
 	selected_info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	info_contents.add_child(selected_info)
-	var hint := _make_label("Select a hero below to inspect their abilities.\nHeroes act in any order during the party turn.", 18, Color(MUTED))
+	var hint := _make_label("Select a hero below to inspect their abilities.\nHeroes act in any order during the party turn.", 17, Color(MUTED))
 	hint.name = "RoleHint"
-	_place(hint, Rect2(8, 235, 425, 50))
+	_place(hint, Rect2(8, 222, 425, 56))
 	info_contents.add_child(hint)
 	formation_button = Button.new()
 	formation_button.name = "FormationButton"
@@ -1577,6 +1578,7 @@ func _create_card_view(card_id: String, card: Dictionary) -> Button:
 
 func _load_texture(path: String) -> Texture2D:
 	# Dedicated combat atlases keep idle and action gear consistent on the stage.
+	if path == "res://assets/generated/hero_crusader.tres": path = "res://assets/generated/hero_crusader_combat_idle.tres"
 	path = {"res://assets/generated/hero_warden.png":"res://assets/generated/hero_warden_combat_idle.tres", "res://assets/generated/enemy_ash_raider.png":"res://assets/generated/enemy_ash_raider_combat_idle.tres"}.get(path,path)
 	if ResourceLoader.exists(path):
 		return load(path) as Texture2D
@@ -1768,6 +1770,17 @@ func _refresh_enemies() -> void:
 		view.modulate = Color(0.45, 0.45, 0.45) if enemy_hp <= 0 else Color.WHITE
 		_style_card_backing(view, Color("#1C1614"), Color("#D3AF72") if index == original else Color(GOLD))
 	_load_enemy(original)
+	_update_target_hint()
+
+func _update_target_hint() -> void:
+	var hint: Label = get_node_or_null("TargetHint")
+	if hint == null or enemies.is_empty(): return
+	hint.text = "TARGET · %s · P%d" % [enemy_name,enemy_position(selected_enemy_index)]
+	hint.add_theme_color_override("font_color",Color("#E9C58D"))
+	if not selected_skill_id.is_empty() and hero_state.has(selected_hero):
+		var eligibility: Dictionary = _skill_availability(selected_hero,selected_skill_id)
+		hint.text += " · "+str(eligibility["badge"])
+		hint.add_theme_color_override("font_color",Color("#D3E0AF") if eligibility["available"] else Color("#E4A19C"))
 
 
 func _enter_merchant_orb() -> void:
@@ -2057,6 +2070,7 @@ func _plant_combatant(view: Button, portrait: TextureRect, height: float) -> voi
 	var theme_path: String = GameState.floor_background("combat")
 	if theme_path.contains("apothecary"): tint = Color("#EBF9FF")
 	elif theme_path.contains("keep"): tint = Color("#F0F3FF")
+	if str(portrait.get_meta("hero_id","")) == "crusader": tint = tint.darkened(0.13)
 	if portrait.material is ShaderMaterial and portrait.get_node_or_null("StatusVisual") != null:
 		portrait.material.set_shader_parameter("ambient",Vector3(tint.r,tint.g,tint.b))
 

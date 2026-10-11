@@ -43,6 +43,7 @@ func run() -> void:
 	assert(travel.hero_summaries["warden"]["health"].position.y >= 840 and travel.hero_summaries["warden"]["health"].position.y < 963)
 	travel.skip_travel()
 	travel.interact_destination()
+	await create_timer(0.22).timeout
 	await settle()
 	assert(current_scene.has_method("_play_card"))
 	assert(current_scene.GROUND_Y == Travel.GROUND_Y)

@@ -16,6 +16,7 @@ func enter_room(destination: Vector2i) -> void:
 	# Drive the normal arrival/interaction route without waiting on player input.
 	passage.skip_travel()
 	passage.interact_destination()
+	await create_timer(0.22).timeout
 	await settle()
 	assert(State.room_position == destination)
 func win_fight(final: bool = false) -> void:
