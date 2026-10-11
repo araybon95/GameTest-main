@@ -4,6 +4,7 @@ const ELEMENTS = {"fire":Color("#C5703A"),"frost":Color("#A9C9D2"),"poison":Colo
 const INK = Color("#100C10")
 const BONE = Color("#CFC3A8")
 const BLOOD = Color("#751E2D")
+const ImpactAnimation = preload("res://scenes/combat/impact_animation.gd")
 
 static func element(title: String, kind: String = "spell") -> String:
  if kind == "heal": return "heal"
@@ -53,6 +54,8 @@ static func draw(presentation: Control, canvas: Node2D) -> void:
  var kind: String = active["attack_kind"]
  var blocked: bool = data["reaction"] == "block" or active["kind"] == "block" or kind == "block"
  var harmful: bool = data["harmful"]
+ if harmful:
+  ImpactAnimation.draw(canvas,point,clock,direction,kind,kind == "spell" and data["element"] == "fire",active.get("source_boss",false))
  if active.get("profile","legacy") in ["spell","heal"] and presentation.age < presentation.release_time():
   var buildup: float = float(presentation.animation_sample().get("windup",0.0))
   spell_buildup(canvas,start,str(data["element"]),buildup)
