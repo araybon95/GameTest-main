@@ -7,8 +7,19 @@ func _ready() -> void:
  name = "IronFittings"
  mouse_filter = Control.MOUSE_FILTER_IGNORE
  set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+ if get_parent() is Container:
+  # Container layout must not inset this overlay onto the readable contents.
+  set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+  set_as_top_level(true)
+  global_position = get_parent().global_position
+  size = get_parent().size
  resized.connect(queue_redraw)
+ set_process(get_parent() is Container)
  painted_frame = Art.texture("../panels/panel_inventory.png")
+func _process(_delta: float) -> void:
+ if get_parent() is Container:
+  global_position = get_parent().global_position
+  size = get_parent().size
 func _draw() -> void:
  if painted_frame != null: draw_painted_frame()
  var dark := Color("#080A0D")

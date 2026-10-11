@@ -17,7 +17,11 @@ var _toast_tween: Tween
 func _ready() -> void:
 	$BackButton.pressed.connect(_on_back_pressed)
 	_toast = $Toast
+	preload("res://scripts/static_screen_art.gd").install(self,"forge")
+	$Scroll.position.x = 470
+	$Scroll.size.x = 1410
 	_build()
+	preload("res://scripts/static_screen_art.gd").transition(self)
 	modulate = Color(1, 1, 1, 0)
 	var tween := create_tween()
 	tween.tween_property(self, "modulate", Color.WHITE, 0.5)
@@ -40,13 +44,15 @@ func _build() -> void:
 func _make_hero_column(hero_id: String) -> Control:
 	var hero: Dictionary = GameState.hero(hero_id)
 	var panel := PanelContainer.new()
-	panel.custom_minimum_size = Vector2(548.0, 0.0)
-	panel.add_theme_stylebox_override("panel", _style(Color("#160F13"), Color(GOLD), 2))
+	panel.custom_minimum_size = Vector2(450.0, 0.0)
+	panel.set_meta("hero_id",hero_id)
+	preload("res://scripts/static_screen_art.gd").surface(panel,"scorched")
+	preload("res://scripts/visual_overlays.gd").frame(panel,hero_id)
 
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override("separation", 10)
 	panel.add_child(column)
-	column.add_child(_make_label(str(hero.get("name", hero_id)).to_upper(), 26, Color(GOLD), true))
+	column.add_child(_make_label(str(hero.get("name", hero_id)).to_upper(), 26, Color("#D7BC92"), true))
 
 	var seen: Dictionary = {}
 	for card_id in GameState.hero_abilities(hero_id):
@@ -63,7 +69,7 @@ func _make_card_row(card_id: String) -> Control:
 
 	var panel := PanelContainer.new()
 	panel.custom_minimum_size = Vector2(0.0, 86.0)
-	panel.add_theme_stylebox_override("panel", _style(Color("#1B1218"), Color("#4B343D"), 2))
+	preload("res://scripts/static_screen_art.gd").surface(panel,"scorched")
 
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 12)
@@ -82,7 +88,7 @@ func _make_card_row(card_id: String) -> Control:
 	info.add_child(description)
 
 	var button := Button.new()
-	button.custom_minimum_size = Vector2(176.0, 58.0)
+	button.custom_minimum_size = Vector2(142.0, 60.0)
 	button.add_theme_font_size_override("font_size", 17)
 	_style_button(button)
 	if GameState.can_upgrade(card_id):
@@ -94,6 +100,7 @@ func _make_card_row(card_id: String) -> Control:
 		button.text = "MAXED"
 		button.disabled = true
 	row.add_child(button)
+	preload("res://scripts/visual_overlays.gd").frame(button)
 	return panel
 
 

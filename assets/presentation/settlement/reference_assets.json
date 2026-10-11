@@ -1,0 +1,11 @@
+{
+  "chapel_attendant.png": "buildings/abbey/abbey.character.png",
+  "barracks_attendant.png": "buildings/guild/guild.character.png",
+  "forge_attendant.png": "buildings/blacksmith/blacksmith.character.png",
+  "workshop_attendant.png": "buildings/camping_trainer/camping_trainer.character.png",
+  "apothecary_attendant.png": "buildings/sanitarium/sanitarium.character.png",
+  "merchant_attendant.png": "buildings/nomad_wagon/nomad_wagon.character.png",
+  "village_seal.png": "quest_select/quest_select_explore_1.png",
+  "path_seal.png": "quest_select/quest_select_kill_boss_1.png",
+  "sealed_seal.png": "quest_select/locked_dungeon.png"
+}

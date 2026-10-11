@@ -10,16 +10,17 @@ func _ready() -> void:
  refresh()
 func refresh() -> void:
  clear_screen()
- picture("res://assets/generated/hamlet_vista_apothecary.png",Rect2(0,0,1920,1080),0.4)
- panel(Rect2(45,40,1830,740))
+ preload("res://scripts/static_screen_art.gd").install(self,"workshop")
+ preload("res://scripts/static_screen_art.gd").transition(self)
+ panel(Rect2(430,180,1440,600))
  label_at("THE WORKSHOP - HERO APPEARANCE",Vector2(85,70),1720,38)
  label_at("A personal name and a simple cloth/accent color. Armor, silhouettes and class remain the same.",Vector2(85,135),1720,23)
  var roster: Array = ["warden","ranger","occultist","healer"]
  if State.crusader_unlocked: roster.append("crusader")
  for index in range(roster.size()):
   var id: String = roster[index]
-  button_at(str(State.HEROES[id]["name"]),Rect2(85+index*345,200,325,55),select_hero.bind(id))
- preview = picture(str(State.hero(chosen)["art"]),Rect2(160,300,450,405))
+  button_at(str(State.HEROES[id]["name"]),Rect2(450+index*282,205,265,55),select_hero.bind(id))
+ preview = picture(str(State.hero(chosen)["art"]),Rect2(460,310,230,390))
  label_at(str(State.HEROES[chosen]["name"]),Vector2(700,300),900,30)
  label_at("HERO NAME (20 characters; blank restores the class name)",Vector2(700,355),1000,22)
  name_edit = LineEdit.new()

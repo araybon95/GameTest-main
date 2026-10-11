@@ -4,6 +4,7 @@ const Saves = preload("res://scripts/save_files.gd")
 const Music = preload("res://scripts/settlement_music.gd")
 const LocalArt = preload("res://scripts/local_dungeon_art.gd")
 var values: Dictionary = {"master": 0.8, "music": 0.8, "effects": 0.8, "brightness": 1.0}
+var ambient_motion: bool = true
 var settings_path: String = "user://settings.cfg"
 var layer: CanvasLayer
 var overlay: Control
@@ -46,6 +47,7 @@ func _ready() -> void:
 	material.shader = shader
 	brightness.material = material
 	light_layer.add_child(brightness)
+	ambient_motion = bool(cfg.get_value("settings","ambient_motion",true))
 	apply_values()
 
 func apply_values() -> void:
@@ -61,6 +63,7 @@ func set_value(key: String, value: float) -> void:
 	apply_values()
 	var cfg := ConfigFile.new()
 	for setting in values: cfg.set_value("settings", setting, values[setting])
+	cfg.set_value("settings","ambient_motion",ambient_motion)
 	cfg.save(settings_path)
 
 func _process(delta: float) -> void:
@@ -159,7 +162,15 @@ func open_settings() -> void:
 	local_art.toggled.connect(set_local_dungeon_art)
 	local_art.focus_mode = Control.FOCUS_ALL
 	overlay.add_child(local_art)
-	text("Applies to the next hallway.", Vector2(1080, 518), 650, 18)
+	var motion := CheckBox.new()
+	motion.name = "AmbientMotion"
+	motion.text = "Animate interiors & transitions"
+	motion.position = Vector2(1080,507)
+	motion.size = Vector2(650,43)
+	motion.add_theme_font_size_override("font_size",22)
+	motion.button_pressed = ambient_motion
+	motion.toggled.connect(func(enabled): ambient_motion = enabled; set_value("brightness",values["brightness"]))
+	overlay.add_child(motion)
 	text("Save between encounters. Loading replaces the current journey. Slots can be overwritten; the automatic checkpoint uses a separate file.", Vector2(180, 555), 1560, 21)
 	for slot in range(4):
 		var y: float = 625 + slot * 75

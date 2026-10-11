@@ -17,12 +17,10 @@ func refresh() -> void:
 		trade_mode = "Buy"
 		category = "All"
 	clear_screen()
-	panel(Rect2(0, 0, 1920, 1080), Color("#0D0A0E"))
-	var background := picture("res://assets/generated/apothecary_reclaimed.png" if apothecary_mode else "res://assets/generated/settlement_hamlet.png", Rect2(0, 0, 1920, 815), 0.4 if apothecary_mode else 0.25)
-	background.name = "ShopBackground"
-	background.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	set_meta("interior_captions",false)
+	preload("res://scripts/static_screen_art.gd").install(self,"apothecary" if apothecary_mode else "merchant",true,Rect2(70,185,320,300))
+	preload("res://scripts/static_screen_art.gd").transition(self)
 	panel(Rect2(30, 30, 400, 755), Color(0.09, 0.06, 0.08, 0.94))
-	picture("res://assets/generated/apothecary_reclaimed.png" if apothecary_mode else "res://assets/generated/building_forge.png", Rect2(70, 190, 320, 305))
 	label_at("THE APOTHECARY" if apothecary_mode else "THE EMPORIUM", Vector2(65, 75), 350, 32 if apothecary_mode else 38)
 	label_at("The ward is reclaimed" if apothecary_mode else "Beyond the blue orb", Vector2(65, 140), 350, 24)
 	var vendor_text: String = "Remedies for a ruined world.\n\nHealing potions and scrolls.\nCleansing draughts.\nMight · Focus · Warding\n\nTonics last 2 party turns.\nThey refresh without stacking." if apothecary_mode else "Gear for your party's classes. Universal scrolls and potions.\n\nCommon · Rare · Epic · Unique\nLegendary items are loot-only.\n\nReturn through the orb to continue your expedition."

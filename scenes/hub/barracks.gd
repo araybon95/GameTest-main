@@ -19,7 +19,13 @@ var training_hero: String = ""
 func _ready() -> void:
 	$BackButton.pressed.connect(_on_back_pressed)
 	GameState.load_progression()
+	preload("res://scripts/static_screen_art.gd").install(self,"barracks")
+	for container in [$PartySlots,$Roster]:
+		container.anchor_left = 0; container.anchor_right = 0
+		container.offset_left = 470; container.offset_right = 1880
+	$Roster.add_theme_constant_override("separation",16)
 	_refresh()
+	preload("res://scripts/static_screen_art.gd").transition(self)
 	modulate = Color(1, 1, 1, 0)
 	var tween := create_tween()
 	tween.tween_property(self, "modulate", Color.WHITE, 0.5)
@@ -68,7 +74,7 @@ func _build_roster() -> void:
 		column.add_child(card)
 		var train := Button.new()
 		train.text = "TRAIN · %d POINTS" % GameState.leveling(str(hero_id))["points"]
-		train.custom_minimum_size = Vector2(245, 48)
+		train.custom_minimum_size = Vector2(265, 48)
 		train.disabled = locked
 		train.pressed.connect(_show_training.bind(str(hero_id)))
 		column.add_child(train)
@@ -103,7 +109,7 @@ func _on_back_pressed() -> void:
 func _hero_card(hero_id: String, tag_text: String, highlighted: bool) -> Button:
 	var card := Button.new()
 	card.text = ""
-	card.custom_minimum_size = Vector2(245.0, 300.0)
+	card.custom_minimum_size = Vector2(265.0, 300.0)
 	card.focus_mode = Control.FOCUS_NONE
 	for state in ["font_color", "font_hover_color", "font_pressed_color", "font_disabled_color", "font_focus_color"]:
 		card.add_theme_color_override(state, Color(IVORY))
@@ -147,7 +153,7 @@ func _hero_card(hero_id: String, tag_text: String, highlighted: bool) -> Button:
 	contents.add_child(_make_label(name_text, 21, Color(IVORY), true))
 	if hero_id != "":
 		contents.add_child(_make_label("Level %d · HP %d" % [GameState.leveling(hero_id)["level"], GameState.hero_max_hp(hero_id)], 17, Color(MUTED), true))
-	contents.add_child(_make_label(tag_text, 17, Color(GOLD), true))
+	contents.add_child(_make_label(tag_text, 17, Color("#C5AA84"), true))
 	card.set_meta("hero_id",hero_id)
 	preload("res://scripts/visual_overlays.gd").frame(card,hero_id)
 	return card

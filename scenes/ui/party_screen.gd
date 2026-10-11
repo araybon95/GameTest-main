@@ -2,6 +2,9 @@ extends Control
 const State = preload("res://scripts/game_data.gd")
 
 func clear_screen() -> void:
+	if has_meta("entrance_tween"):
+		var entrance: Tween = get_meta("entrance_tween")
+		if entrance != null and entrance.is_valid(): entrance.kill()
 	for child in get_children():
 		remove_child(child)
 		child.queue_free()
@@ -41,6 +44,8 @@ func panel(rect: Rect2, fill: Color = Color("#171116")) -> Panel:
 	result.add_theme_stylebox_override("panel", style)
 	add_child(result)
 	preload("res://scripts/visual_overlays.gd").frame(result)
+	if has_meta("surface_material"):
+		preload("res://scripts/static_screen_art.gd").surface(result,str(get_meta("surface_material")))
 	return result
 
 func label_at(value: String, pos: Vector2, width: float, font_size: int = 24) -> Label:
@@ -50,9 +55,17 @@ func label_at(value: String, pos: Vector2, width: float, font_size: int = 24) ->
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label.add_theme_color_override("font_color", Color("#EADDD0"))
 	label.add_theme_font_size_override("font_size", font_size)
+	label.add_theme_color_override("font_shadow_color",Color.BLACK)
+	label.add_theme_constant_override("shadow_offset_y",2)
+	if font_size >= 28:
+		var heading := SystemFont.new()
+		heading.font_names = PackedStringArray(["Georgia","serif"])
+		heading.font_weight = 700
+		label.add_theme_font_override("font",heading)
 	label.size = Vector2(width, 0)
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(label)
+	label.size.x = width
 	return label
 
 func button_at(value: String, rect: Rect2, action: Callable) -> Button:
@@ -64,10 +77,19 @@ func button_at(value: String, rect: Rect2, action: Callable) -> Button:
 	for state in ["normal", "hover", "pressed", "disabled"]:
 		var style := StyleBoxFlat.new()
 		style.bg_color = Color("#392329") if state == "hover" else Color("#20151B")
-		style.border_color = Color("#AA7B53")
+		style.border_color = Color("#AA7B53") if state != "disabled" else Color("#514B47")
+		if has_meta("interior_kind") and state != "disabled":
+			var room: Dictionary = preload("res://scripts/static_screen_art.gd").SETTINGS.get(str(get_meta("interior_kind")),{})
+			style.border_color = Color(str(room.get("tint","#AA7B53"))).darkened(0.28)
+			if state == "hover": style.bg_color = style.border_color.darkened(0.72)
+		if state == "pressed": style.bg_color = Color("#51362C")
+		if state == "disabled": style.bg_color = Color("#171617")
+		style.set_content_margin_all(12)
 		style.set_border_width_all(2)
 		style.set_corner_radius_all(0)
 		button.add_theme_stylebox_override(state, style)
+	button.add_theme_color_override("font_disabled_color",Color("#9B9185"))
+	button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	button.pressed.connect(action)
 	add_child(button)
 	preload("res://scripts/visual_overlays.gd").frame(button)

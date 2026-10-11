@@ -10,6 +10,7 @@ var tier_index: int = 0
 func _ready() -> void:
 	State.load_progression()
 	refresh()
+	preload("res://scripts/static_screen_art.gd").transition(self)
 
 func choose(region: int, tier: int) -> void:
 	region_index = region
@@ -21,6 +22,7 @@ func choose_region(region: int) -> void:
 
 func refresh() -> void:
 	clear_screen()
+	set_meta("surface_material","devotional" if region_index == 1 else "parchment")
 	var backdrop := picture("res://assets/generated/expedition_map_four_regions.png",Rect2(0,0,1920,1080),0.28)
 	backdrop.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	panel(Rect2(0, 0, 1920, 1080), Color(0.035,0.025,0.035,0.65))
@@ -43,6 +45,13 @@ func refresh() -> void:
 		hotspot.get_node("IronFittings").hide()
 		hotspot.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		hotspot.name = "Expedition_" + ("village" if r == 0 else "path")
+		var marker := preload("res://scenes/ui/expedition_decoration.gd").new()
+		marker.name = "LocationHalo"
+		marker.size = footprint
+		marker.region = r
+		marker.selected = r == region_index
+		marker.completed = State.completed_expeditions.has(str(region["tiers"][0]))
+		hotspot.add_child(marker)
 		hotspot.tooltip_text = "Choose " + str(region["name"]) + " to reveal its dungeons"
 		for state in ["normal", "pressed"]:
 			hotspot.add_theme_stylebox_override(state, StyleBoxEmpty.new())
@@ -84,11 +93,21 @@ func refresh() -> void:
 		var option := button_at("", Rect2(595 + t * 420, 615, 400, 135), choose.bind(region_index, t))
 		option.name = "Dungeon_" + id
 		preload("res://scripts/visual_overlays.gd").frame(option,"warden" if region_index == 0 else "occultist")
+		var seal := preload("res://scenes/ui/expedition_decoration.gd").new()
+		seal.name = "DungeonSeal"
+		seal.mode = "seal"
+		seal.region = region_index
+		seal.selected = t == tier_index
+		seal.sealed = not dungeon.get("released",true)
+		seal.completed = State.completed_expeditions.has(id)
+		seal.position = Vector2(14,23)
+		seal.size = Vector2(90,90)
+		option.add_child(seal)
 		option.tooltip_text = str(dungeon["name"]) + " · Three floors in one run · " + tier_status(id)
-		var name_label := label_at("%s · %s" % [["I","II","III"][t], dungeon["name"]], option.position + Vector2(22, 16), 356, 22)
+		var name_label := label_at("%s · %s" % [["I","II","III"][t], dungeon["name"]], option.position + Vector2(112, 16), 270, 22)
 		name_label.size.y = 62
 		name_label.clip_text = true
-		label_at("3 floors · One continuous run\n" + tier_status(id), option.position + Vector2(22, 79), 356, 18)
+		label_at("3 floors · One continuous run\n" + tier_status(id), option.position + Vector2(112, 82), 270, 17)
 		if t == tier_index:
 			var selected := StyleBoxFlat.new()
 			selected.bg_color = Color("#392329")
@@ -99,22 +118,16 @@ func refresh() -> void:
 	var selected_id: String = selected_region["tiers"][tier_index]
 	var chosen := State.expedition_by_id(selected_id)
 	label_at(str(selected_region["name"]).to_upper(), Vector2(55, 55), 440, 30)
-	label_at(str(chosen["name"]), Vector2(55, 120), 435, 33)
-	label_at("TIER %s · %s" % [["I", "II", "III"][tier_index], tier_status(selected_id)], Vector2(55, 210), 435, 20)
-	var blurb := label_at(str(chosen["blurb"]), Vector2(55, 260), 435, 23)
-	blurb.size = Vector2(435, 110)
-	blurb.clip_text = true
-	var details: String = "3 floors · Bandit raiders and scouts\nFloor 1 — Gallows Chieftain\nFloor 2 — Last Honorable Son\nFloor 3 — The Undying Lord\nBosses award legendary party gear."
-	if selected_id == "path_beast":
-		details = "3 floors · Creations of Anguish\nFloor 1 — Harrowed Slave Giant\nFloor 2 — The Coterie: three consecutive forms\nFloor 3 — The Howling Head\nEach guardian awards legendary party gear."
-	elif not chosen.get("released", true):
-		details = "Future expedition. Defeat the previous tier to unlock eligibility; this dungeon remains unavailable until released."
-	label_at(details, Vector2(55, 375), 435, 20)
-	var journey := label_at("ONE DUNGEON · THREE FLOORS", Vector2(65, 580), 420, 21)
-	journey.size.y = 40
-	preload("res://scripts/visual_overlays.gd").banner(journey)
-	label_at("Descend through every floor in one run. Dungeon tiers unlock the next dungeon in this expedition.", Vector2(55, 625), 435, 20).size = Vector2(435, 80)
-	var embark_button := button_at("EMBARK" if State.can_embark(selected_id) else "UNRELEASED", Rect2(55, 720, 440, 55), embark)
+	var dossier := preload("res://scenes/ui/dungeon_dossier.gd").new()
+	dossier.name = "DungeonDossier"
+	dossier.position = Vector2(40,95)
+	dossier.size = Vector2(465,635)
+	dossier.expedition = chosen
+	dossier.region = region_index
+	dossier.tier = tier_index
+	dossier.status = tier_status(selected_id)
+	add_child(dossier)
+	var embark_button := button_at("EMBARK" if State.can_embark(selected_id) else "UNRELEASED", Rect2(55, 733, 440, 50), embark)
 	embark_button.name = "EmbarkButton"
 	embark_button.disabled = not State.can_embark(selected_id)
 	party_bar(return_to_hamlet, "RETURN TO HAMLET")

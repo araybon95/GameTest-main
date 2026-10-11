@@ -50,9 +50,10 @@ func decorate(node: Node) -> void:
  if node is Button and not node.text.is_empty() and node.size.x >= 120:
   preload("res://scripts/visual_overlays.gd").frame(node,str(node.get_meta("hero_id",node.get_node("IronFittings").hero_id if node.has_node("IronFittings") else "")))
  if node is Label:
-  node.add_theme_color_override("font_shadow_color",Color.BLACK)
-  node.add_theme_constant_override("shadow_offset_x",1)
-  node.add_theme_constant_override("shadow_offset_y",2)
+  if not node.has_theme_color_override("font_shadow_color"):
+   node.add_theme_color_override("font_shadow_color",Color.BLACK)
+   node.add_theme_constant_override("shadow_offset_x",1)
+   node.add_theme_constant_override("shadow_offset_y",2)
   if node.get_theme_font_size("font_size") >= 28:
    node.add_theme_font_override("font",heading_font)
  if node is TextureRect and node.texture != null and node.material == null:

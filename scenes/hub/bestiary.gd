@@ -17,9 +17,16 @@ func _ready() -> void:
  $Entries.hide()
  $CountLabel.hide()
  $BackButton.pressed.connect(_on_back_pressed)
+ preload("res://scripts/static_screen_art.gd").install(self,"chapel",true,Rect2(65,155,305,395))
+ preload("res://scripts/static_screen_art.gd").transition(self)
  book_view = Control.new()
  add_child(book_view)
  refresh()
+ var runtime := get_node_or_null("/root/GameSettings")
+ if runtime == null or runtime.ambient_motion:
+  book_view.position.x = 12
+  var reveal := create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+  reveal.tween_property(book_view,"position:x",0.0,0.34)
 func entries() -> Array:
  return CONTENTS.get(volume_id, [])
 func open_volume(id: String) -> void:
@@ -33,11 +40,11 @@ func refresh() -> void:
  for child in book_view.get_children():
   book_view.remove_child(child)
   child.queue_free()
- panel(Rect2(45,145,345,810), Color("#241A1C"), Color("#8B6542"))
- label("THE SHELF", Rect2(70,165,295,35),26,Color("#DECBB0"))
+ panel(Rect2(45,675,345,280), Color("#241A1C"), Color("#8B6542"))
+ label("THE SHELF", Rect2(70,688,295,35),26,Color("#DECBB0"))
  var shelf := ScrollContainer.new()
- shelf.position = Vector2(65,220)
- shelf.size = Vector2(305,710)
+ shelf.position = Vector2(65,735)
+ shelf.size = Vector2(305,200)
  book_view.add_child(shelf)
  var list := VBoxContainer.new()
  list.size_flags_horizontal = Control.SIZE_EXPAND_FILL

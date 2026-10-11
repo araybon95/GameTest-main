@@ -106,7 +106,7 @@ func run() -> void:
 	root.add_child(shop)
 	await process_frame
 	assert(shop.apothecary_mode)
-	assert(shop.get_node("ShopBackground").texture.resource_path.ends_with("apothecary_reclaimed.png"))
+	assert(shop.get_node("StaticInterior/InteriorBackground").texture.resource_path.ends_with("apothecary_reclaimed.png"))
 	shop.queue_free()
 	await process_frame
 	print("PASS: 100 four-room seeds, 3 weakened acolytes, camp, ordered victories, persistent unlock, shop restrictions, healing scroll/AP, refreshing buffs and expiry")
