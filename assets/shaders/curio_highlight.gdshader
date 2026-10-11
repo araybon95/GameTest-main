@@ -12,6 +12,7 @@ void fragment() {
 		}
 	}
 	vec4 source = pixel * modulation;
-	float outline = max(edge-pixel.a,0.0)*strength;
+	float pulse = 0.82 + 0.18 * sin(TIME * 3.2);
+	float outline = max(edge-pixel.a,0.0)*strength*pulse;
 	COLOR = vec4(mix(source.rgb,glow_color.rgb,outline), max(source.a,outline));
 }

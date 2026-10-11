@@ -1,14 +1,16 @@
 extends Control
 ## Movement along an agreed passage. Entering its destination commits in dungeon.move_to.
 signal finished
+signal room_interaction
+var room_mode: bool = false
 const State = preload("res://scripts/game_data.gd")
 const Regions = preload("res://scripts/ink_sprite_regions.gd")
 const Scenery = preload("res://scripts/dungeon_scenery.gd")
 const TravelAudio = preload("res://scripts/travel_audio.gd")
 const LocalArt = preload("res://scripts/local_dungeon_art.gd")
 const LocalLayers = preload("res://scripts/local_hallway_layers.gd")
-const GROUND_Y: float = 645.0
-const HERO_HEIGHT: float = 360.0
+const GROUND_Y: float = 430.0
+const HERO_HEIGHT: float = 280.0
 var duration: float = 5.6
 var elapsed: float = 0.0
 var complete: bool = false
@@ -117,15 +119,15 @@ func _ready() -> void:
  name = "HallwayTravel"
  set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
  mouse_filter = Control.MOUSE_FILTER_STOP
- z_index = 100
+ z_index = 0 if room_mode else 100
  var backdrop := ColorRect.new()
  backdrop.color = Color("#08070A")
  backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
  add_child(backdrop)
  travel_stage = Control.new()
  travel_stage.name = "TravelStage"
- travel_stage.position = Vector2(0,85)
- travel_stage.size = Vector2(1920,710)
+ travel_stage.position = Vector2.ZERO
+ travel_stage.size = Vector2(1920,600)
  travel_stage.clip_contents = true
  travel_stage.mouse_filter = Control.MOUSE_FILTER_STOP
  travel_stage.gui_input.connect(stage_input)
@@ -156,7 +158,15 @@ func _ready() -> void:
   atmosphere.remove_child(atmosphere.near_layer)
   travel_stage.add_child(atmosphere.near_layer)
   atmosphere.near_layer.modulate.a = 0.55
- build_hud()
+ if room_mode:
+  source_button.hide()
+  arrived = true
+  destination_button.visible = true
+  destination_button.disabled = false
+  encounter.position.x = encounter_end_x
+  destination_button.position = encounter.position-Vector2(12,12)
+  encounter_glow.set_shader_parameter("strength",0.32)
+ else: build_hud()
  transition_shade = ColorRect.new()
  transition_shade.name = "PassageFade"
  transition_shade.color = Color.BLACK
@@ -164,7 +174,7 @@ func _ready() -> void:
  transition_shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
  add_child(transition_shade)
  Scenery.decorate(self)
- update_controls()
+ if not room_mode: update_controls()
 
 func build_walkers() -> void:
  for id in State.HEROES:
@@ -206,20 +216,19 @@ func build_walkers() -> void:
 
 func build_hud() -> void:
  text_at("%s · %s" % [State.selected_expedition.get("name","Expedition"),State.floor_title()],Vector2(55,22),34,1540)
- arrival_label = text_at("Hold D / → to set out. Hold A / ← to return to the starting doorway.",Vector2(55,813),27,1340)
+ arrival_label = text_at("Hold D / → to set out. Hold A / ← to return to the starting doorway.",Vector2(55,615),22,1040)
  arrival_label.name = "EncounterInspection"
  arrival_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
  arrival_label.size.y = 64
  arrival_label.set_meta("arrival_text",destination_description())
- interact_button = action_button("ENTER · W / ENTER",Rect2(1530,803,335,66),interact_destination,"SkipTravel")
- walk_button = action_button("WALK ON",Rect2(1550,893,315,56),toggle_walking,"WalkToggle")
- return_button = action_button("RETURN TO DOORWAY",Rect2(1550,958,315,56),return_to_origin,"ReturnToOrigin")
+ interact_button = action_button("ENTER · W / ENTER",Rect2(1510,990,355,50),interact_destination,"SkipTravel")
+ walk_button = action_button("WALK ON",Rect2(1130,990,180,50),toggle_walking,"WalkToggle")
+ return_button = action_button("RETURN",Rect2(1320,990,180,50),return_to_origin,"ReturnToOrigin")
  text_at("A / ← back · D / → forward · Hold either side of the scene to walk · Tab inventory · I controls",Vector2(55,1040),18,1475)
- gold_counter = text_at("GOLD  %d" % State.gold,Vector2(1580,1020),22,260)
- gold_counter.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+ gold_counter = text_at("GOLD  %d" % State.gold,Vector2(55,990),22,260)
  for index in range(walkers.size()): build_hero_summary(str(walkers[index].get_meta("walker")),index)
- var map_panel := panel_at(Rect2(1130,886,385,176))
- text_at("THE PASSAGE",Vector2(1147,891),18,345)
+ var map_panel := panel_at(Rect2(1130,610,735,370))
+ text_at("DUNGEON MAP · THE PASSAGE",Vector2(1147,620),22,690)
  passage_map = PassageMap.new()
  passage_map.name = "PassageMap"
  passage_map.rooms = State.floors[State.floor_index] if State.run_active else {}
@@ -227,17 +236,25 @@ func build_hud() -> void:
  passage_map.route = route_steps.duplicate()
  if passage_map.route.is_empty(): passage_map.route = [State.room_position]
  passage_map.position = Vector2(10,32)
- passage_map.size = Vector2(365,133)
+ passage_map.size = Vector2(715,318)
  map_panel.add_child(passage_map)
  progress = PassageProgress.new()
  progress.name = "PassageProgress"
- progress.position = Vector2(55,876)
+ progress.position = Vector2(55,599)
  progress.size = Vector2(1810,4)
  add_child(progress)
+ var id: String = str(State.party[0])
+ text_at("%s · %s" % [State.hero(id)["name"],State.hero(id)["class"]],Vector2(55,682),28,1000)
+ var skills: Array = State.hero_abilities(id)
+ for index in range(skills.size()):
+  var ability: Dictionary = State.card_stats(str(skills[index]))
+  var button := action_button(str(ability["name"]),Rect2(55+index*204,738,196,66),func(): get_node("/root/GameControls").open_hero_sheet(id),"TravelSkill_%d" % index)
+  button.add_theme_font_size_override("font_size",17)
+  button.tooltip_text = State.card_description(ability)+"\nInspect hero. Skills become available in battle."
 
 func build_hero_summary(id: String, index: int) -> void:
  var left: float = 55.0+index*350.0
- var panel := panel_at(Rect2(left,895,335,123))
+ var panel := panel_at(Rect2(left,840,335,123))
  panel.set_meta("hero_id", id)
  var portrait := TextureRect.new()
  portrait.texture = standing_frames[id]
@@ -249,14 +266,14 @@ func build_hero_summary(id: String, index: int) -> void:
  Scenery.apply_hero_palette(portrait,id,State.hero_colors.get(id,"original"))
  panel.add_child(portrait)
  var hero: Dictionary = State.hero(id)
- var hero_name := text_at(str(hero["name"]),Vector2(left+95,903),24,226)
+ var hero_name := text_at(str(hero["name"]),Vector2(left+95,848),24,226)
  hero_name.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
- text_at(str(State.HEROES[id]["name"]),Vector2(left+96,936),18,226).add_theme_color_override("font_color",Color("#B7AB99"))
+ text_at(str(State.HEROES[id]["name"]),Vector2(left+96,881),18,226).add_theme_color_override("font_color",Color("#B7AB99"))
  var stats: Dictionary = State.run_heroes.get(id,{})
  var max_hp: int = int(stats.get("max_hp",hero.get("max_hp",1)))
  var hp: int = int(stats.get("hp",max_hp))
- var health := text_at("HP %d / %d" % [hp,max_hp],Vector2(left+96,966),17,125)
- var stress := text_at("STRESS %d" % int(stats.get("stress",0)),Vector2(left+218,967),16,112)
+ var health := text_at("HP %d / %d" % [hp,max_hp],Vector2(left+96,911),17,125)
+ var stress := text_at("STRESS %d" % int(stats.get("stress",0)),Vector2(left+218,912),16,112)
  stress.add_theme_color_override("font_color",Color("#C1B7AC"))
  var bar := ColorRect.new()
  bar.color = Color("#952C36")
@@ -344,6 +361,7 @@ func toggle_walking() -> void:
  set_walking(not auto_walk)
 
 func stage_input(event: InputEvent) -> void:
+ if room_mode: return
  if settings_open() or complete: return
  if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
   auto_walk = false
@@ -353,6 +371,11 @@ func stage_input(event: InputEvent) -> void:
   travel_stage.accept_event()
 
 func _input(event: InputEvent) -> void:
+ if room_mode:
+  if event is InputEventKey and event.pressed and not event.echo and not event.ctrl_pressed and not event.alt_pressed and not event.meta_pressed and event.keycode in [KEY_W,KEY_ENTER,KEY_KP_ENTER] and not settings_open():
+   get_viewport().set_input_as_handled()
+   room_interaction.emit()
+  return
  # A release outside the stage or after opening Settings must still stop a hold.
  if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
   pointer_walking = false
@@ -396,6 +419,7 @@ func _notification(what: int) -> void:
   auto_walk = false
 
 func _shortcut_input(event: InputEvent) -> void:
+ if room_mode: return
  # Enter on a focused corridor button must still mean entering the reached room.
  if complete or settings_open(): return
  if event is InputEventKey and event.pressed and not event.echo and not event.ctrl_pressed and not event.alt_pressed and not event.meta_pressed and event.keycode in [KEY_W,KEY_ENTER,KEY_KP_ENTER,KEY_E] and arrived:
@@ -403,6 +427,7 @@ func _shortcut_input(event: InputEvent) -> void:
   interact_destination()
 
 func _unhandled_input(event: InputEvent) -> void:
+ if room_mode: return
  if complete or settings_open(): return
  if event is InputEventKey and event.pressed and not event.echo and not event.ctrl_pressed and not event.alt_pressed and not event.meta_pressed:
   if arrived and event.keycode in [KEY_W,KEY_ENTER,KEY_KP_ENTER,KEY_E]:
@@ -424,6 +449,13 @@ func update_controls() -> void:
  source_button.visible = elapsed <= 0.001
 
 func _process(delta: float) -> void:
+ if room_mode:
+  ambient_clock += delta
+  atmosphere.clock = ambient_clock
+  atmosphere._process(0.0)
+  transition_shade.modulate.a = maxf(1.0-ambient_clock/0.25,0.0)
+  update_walkers()
+  return
  if complete: return
  update_summaries()
  ambient_clock += delta
@@ -560,6 +592,7 @@ func build_destination() -> void:
  var room: Dictionary = destination_room()
  var kind: String = str(room.get("kind","entry"))
  var cleared: bool = room.get("cleared",false)
+ if room_mode and kind == "camp": cleared = false
  var art: String = Scenery.threshold_path(scene_theme)
  if not cleared:
   if kind in ["battle","boss"] or room.get("corridor_encounter","") == "roamer":
@@ -575,6 +608,7 @@ func build_destination() -> void:
   elif kind == "camp":
    art = "res://assets/generated/hallway_campfire.png" if ResourceLoader.exists("res://assets/generated/hallway_campfire.png") else "res://assets/ui/encounter_camp.svg"
   elif kind == "treasure": art = "res://assets/generated/event_bandit_strongbox.png"
+ if room_mode and State.merchant_orb_available(): art = "res://assets/generated/merchant_orb_ink.png"
  encounter_shadow = preload("res://scenes/combat/ground_shadow.gd").new()
  encounter_shadow.position = Vector2(encounter_start_x,GROUND_Y)
  travel_stage.add_child(encounter_shadow)
@@ -594,8 +628,8 @@ func build_destination() -> void:
  encounter.stretch_mode = TextureRect.STRETCH_SCALE
  encounter.mouse_filter = Control.MOUSE_FILTER_IGNORE
  var threshold: bool = art == Scenery.threshold_path(scene_theme)
- var width_limit: float = 550.0 if threshold else (480.0 if kind == "boss" else 330.0)
- var height_limit: float = 540.0 if threshold else (490.0 if kind == "boss" else 350.0)
+ var width_limit: float = 400.0 if threshold else (480.0 if kind == "boss" else 330.0)
+ var height_limit: float = 390.0 if threshold else (390.0 if kind == "boss" else 350.0)
  if room.get("corridor_encounter","") == "gold":
   width_limit = 200.0
   height_limit = 110.0
@@ -628,6 +662,9 @@ func build_destination() -> void:
  travel_stage.add_child(destination_button)
 
 func interact_destination() -> void:
+ if room_mode:
+  if not settings_open(): room_interaction.emit()
+  return
  if arrived and not settings_open(): finish()
 
 func build_source() -> void:
@@ -635,9 +672,10 @@ func build_source() -> void:
  source_door.name = "StartingDoorway"
  source_door.texture = Scenery.grounded_texture(Scenery.threshold_path(scene_theme))
  source_door.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
- source_door.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
- source_door.position = Vector2(-10,GROUND_Y-440)
- source_door.size = Vector2(245,440)
+ source_door.stretch_mode = TextureRect.STRETCH_SCALE
+ var height: float = minf(390.0,245.0 * source_door.texture.get_height() / float(source_door.texture.get_width()))
+ source_door.position = Vector2(-10,GROUND_Y-height)
+ source_door.size = Vector2(245,height)
  source_door.modulate = Color(0.72,0.68,0.64)
  source_door.mouse_filter = Control.MOUSE_FILTER_IGNORE
  travel_stage.add_child(source_door)

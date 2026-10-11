@@ -4,6 +4,7 @@ const GameState = preload("res://scripts/game_data.gd")
 const FloorEntrance = preload("res://scenes/expedition/floor_entrance.gd")
 const ItemButton = preload("res://scenes/ui/item_icon_button.gd")
 var inventory_filter: String = "All"
+var selected_hero: String = "warden"
 var traveling: bool = false
 var message: String = "Choose a connected destination, then hold D to walk or A to retrace the hallway. W / Enter enters the destination. I opens controls."
 
@@ -72,80 +73,30 @@ func refresh() -> void:
 	for child in get_children():
 		remove_child(child)
 		child.queue_free()
-	panel_at(Rect2(0, 0, 1920, 1080), Color("#09080A"))
-	panel_at(Rect2(12, 12, 1896, 775), Color("#0D0B0E"))
-	label_at("%s  ·  FLOOR %d / %d" % [GameState.selected_expedition.get("name", "Expedition"), GameState.floor_index + 1, GameState.floor_count], Vector2(40, 25), 30)
-	label_at(GameState.floor_title(), Vector2(1390, 32), 22)
-	var victory_message: String = "VICTORY — the Apothecary is restored! Return to the Hamlet to purchase remedies." if GameState.selected_expedition.get("id", "") == "infested_apothecary" else "VICTORY — the guardian has fallen. Return to the Hamlet."
-	label_at(message if not GameState.run_complete else victory_message, Vector2(40, 75), 20)
-	var rooms: Dictionary = GameState.floors[GameState.floor_index]
-	var map = preload("res://scenes/expedition/dungeon_map.gd").new()
-	map.name = "DungeonMap"
-	map.position = Vector2(230, 115)
-	map.size = Vector2(1500, 620)
-	map.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(map)
-	var revealed: int = 0
-	var cleared: int = 0
-	for location in rooms:
-		var room: Dictionary = rooms[location]
-		if room["cleared"]:
-			cleared += 1
-		if not room["seen"]:
-			continue
-		revealed += 1
-		var current: bool = location == GameState.room_position
-		var rect: Rect2 = map.room_rect(location)
-		var button := button_at("", map.position + rect.position, move_to.bind(location))
-		button.name = "Room_%d_%d" % [location.x, location.y]
-		button.size = rect.size
-		button.flat = true
-		for state in ["normal", "disabled", "pressed"]:
-			button.add_theme_stylebox_override(state, StyleBoxEmpty.new())
-		var hover := StyleBoxFlat.new()
-		hover.bg_color = Color(0.85, 0.7, 0.45, 0.12)
-		hover.border_color = Color("#D3AF72")
-		hover.set_border_width_all(2)
-		button.add_theme_stylebox_override("hover", hover)
-		button.tooltip_text = str(room.get("name", str(room["kind"]).capitalize())) + (" · Cleared" if room["cleared"] else " · Unexplored") + (" · Merchant orb" if room.get("merchant_orb", false) else "")
-		if room["kind"] == "event":
-			button.tooltip_text = "? · " + str(room.get("event_layout", "room")).capitalize() + " event" + (" · Resolved" if room["cleared"] else " · Unexplored")
-		button.tooltip_text += "\n" + GameState.scouting_description(room)
-		button.disabled = current or GameState.run_complete or route_to(location).is_empty()
-	label_at("Blades: battle    Ringed blades: boss    Chest: treasure    Flame: camp    Blue orb: merchant    Steps: descend    ?: random event", Vector2(40, 742), 18)
-	panel_at(Rect2(12, 790, 1896, 278))
-	label_at("CLEARED %d%%" % int(100.0 * cleared / rooms.size()), Vector2(45, 810), 22)
-	var scout := button_at("SCOUT AREA · %d" % GameState.scout_uses, Vector2(295, 935), scout_area)
-	scout.size = Vector2(230, 100)
-	scout.tooltip_text = "Reveal encounters within two rooms (three with a restored Watchtower). Hover scouted rooms for their enemies or event risks. Optional; no gold cost."
-	scout.disabled = GameState.scout_uses <= 0 or not rooms[GameState.room_position]["cleared"] or GameState.run_complete
-	label_at("EXPLORED %d%%" % int(100.0 * revealed / rooms.size()), Vector2(1600, 810), 22)
-	label_at("GOLD  %d" % GameState.gold, Vector2(45, 865), 24)
-	label_at("RATIONS %d + %d · Food is used every 6 new spaces" % [int(GameState.journey.get("rations",0)),int(GameState.inventory.get("trail_food",0))],Vector2(45,1035),17)
-	var retreat_button := button_at("RETURN TO HAMLET" if GameState.run_complete else "RETREAT", Vector2(45, 935), retreat)
-	retreat_button.size = Vector2(270, 70)
-	if GameState.can_descend():
-		var descend_button := button_at("DESCEND", Vector2(1590, 885), descend)
-		descend_button.size = Vector2(270, 70)
-	label_at("Select a hero to inspect", Vector2(1550, 990), 20)
-	if GameState.merchant_orb_available():
-		var merchant := button_at("INSPECT MERCHANT ORB", Vector2(1530, 910), open_shop)
-		merchant.size = Vector2(320, 65)
-	elif GameState.current_room_kind() == "camp":
-		var camp := button_at("VISIT CAMP", Vector2(1530, 910), open_camp)
-		camp.size = Vector2(320, 65)
-	for index in range(GameState.party.size()):
-		var hero_id: String = GameState.party[index]
-		var state: Dictionary = GameState.run_heroes.get(hero_id, {})
-		var hero: Dictionary = GameState.hero(hero_id)
-		var position := Vector2(570 + index * 260, 850)
-		var button := button_at("", position, inspect_hero.bind(hero_id))
-		button.name = "Party_" + hero_id
-		button.set_meta("hero_id", hero_id)
-		button.size = Vector2(230, 200)
-		portrait_at(hero_id, Rect2(position + Vector2(10, 4), Vector2(210, 127)))
-		label_at(str(hero["name"]).to_upper(), position + Vector2(16, 133), 17 if hero_id == "crusader" else 22)
-		label_at("Lv %d · %d HP · %d Stress%s" % [GameState.leveling(hero_id)["level"],int(state.get("hp", hero["max_hp"])), int(state.get("stress", 0)), " · Slain" if state.get("dead", false) else ""], position + Vector2(16, 169), 16)
+	preload("res://scenes/expedition/dungeon_view.gd").build(self)
+	preload("res://scripts/dungeon_scenery.gd").decorate(self)
+
+func select_view_hero(id: String) -> void:
+	selected_hero = id
+	refresh()
+
+func open_inventory() -> void:
+	get_node("/root/GameControls").open_hero_sheet(selected_hero,true)
+
+func room_action_available() -> bool:
+	return GameState.can_descend() or GameState.merchant_orb_available() or GameState.current_room_kind() == "camp"
+
+func room_action_label() -> String:
+	if GameState.can_descend(): return "DESCEND · ENTER"
+	if GameState.merchant_orb_available(): return "MERCHANT ORB · ENTER"
+	if GameState.current_room_kind() == "camp": return "CAMP · ENTER"
+	return "CHOOSE A ROUTE"
+
+func interact_room() -> void:
+	if traveling: return
+	if GameState.can_descend(): descend()
+	elif GameState.merchant_orb_available(): open_shop()
+	elif GameState.current_room_kind() == "camp": open_camp()
 
 func inspect_hero(hero_id: String) -> void:
 	var controls := get_node_or_null("/root/GameControls")

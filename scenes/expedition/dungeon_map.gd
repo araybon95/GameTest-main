@@ -1,8 +1,13 @@
 extends Control
 
 const State = preload("res://scripts/game_data.gd")
+var compact: bool = false
 
 func room_rect(location: Vector2i) -> Rect2:
+	var rect: Rect2 = full_room_rect(location)
+	return Rect2(rect.position*0.45,rect.size*0.45) if compact else rect
+
+func full_room_rect(location: Vector2i) -> Rect2:
 	var size := Vector2(88, 88)
 	if State.selected_expedition.get("id", "") == "infested_apothecary":
 		return Rect2(Vector2(180 + location.x * 345, 305) - Vector2(65, 65), Vector2(130, 130))
@@ -13,11 +18,11 @@ func room_rect(location: Vector2i) -> Rect2:
 func _draw() -> void:
 	var rooms: Dictionary = State.floors[State.floor_index]
 	for location in rooms:
-		if not rooms[location]["seen"]:
+		if not rooms[location].get("seen",false):
 			continue
 		for direction in [Vector2i.RIGHT, Vector2i.DOWN]:
 			var other: Vector2i = location + direction
-			if rooms.has(other) and rooms[other]["seen"]:
+			if rooms.has(other) and rooms[other].get("seen",false):
 				var start: Vector2 = room_rect(location).get_center()
 				var end: Vector2 = room_rect(other).get_center()
 				draw_line(start, end, Color("#151316"), 22)
@@ -28,7 +33,7 @@ func _draw() -> void:
 					draw_rect(Rect2(point - Vector2(8, 8), Vector2(16, 16)), Color("#211C22"), false, 1)
 	for location in rooms:
 		var room: Dictionary = rooms[location]
-		if not room["seen"]:
+		if not room.get("seen",false):
 			continue
 		var rect: Rect2 = room_rect(location)
 		var current: bool = location == State.room_position
@@ -80,4 +85,4 @@ func _draw() -> void:
 		var caption: String = str(room["kind"]).capitalize()
 		if room["kind"] == "event" and room.get("event_layout", "") == "corridor":
 			caption = "Hall event"
-		draw_string(ThemeDB.fallback_font, Vector2(center.x - 65, rect.end.y + 22), caption + (" ✓" if room["cleared"] else ""), HORIZONTAL_ALIGNMENT_CENTER, 130, 14, Color("#CABCB0"))
+		if not compact: draw_string(ThemeDB.fallback_font, Vector2(center.x - 65, rect.end.y + 22), caption + (" ✓" if room["cleared"] else ""), HORIZONTAL_ALIGNMENT_CENTER, 130, 14, Color("#CABCB0"))

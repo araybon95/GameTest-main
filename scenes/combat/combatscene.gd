@@ -27,6 +27,9 @@ const FloorEntrance = preload("res://scenes/expedition/floor_entrance.gd")
 var floor_prompt_shown: bool = false
 var formation_button: Button
 var withdraw_button: Button
+var journey_map: Panel
+var journey_log: PanelContainer
+var journey_tabs: Dictionary = {}
 var enemies: Array[Dictionary] = []
 var enemy_views: Array[Button] = []
 var selected_enemy_index: int = 0
@@ -1359,6 +1362,8 @@ func _layout_combat() -> void:
 	withdraw_button.pressed.connect(move_position.bind(1))
 	add_child(withdraw_button)
 	var log_panel := PanelContainer.new()
+	log_panel.name = "BattleLogPanel"
+	journey_log = log_panel
 	_place(log_panel, Rect2(1460, 685, 420, 245))
 	_style_card_backing(log_panel, Color("#151213"), Color(GOLD))
 	add_child(log_panel)
@@ -1369,9 +1374,7 @@ func _layout_combat() -> void:
 	log_container.visible = true
 	log_container.custom_minimum_size = Vector2(375, 0)
 	log_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	var caption := _make_label("BATTLE LOG", 24, Color(IVORY))
-	_place(caption, Rect2(1460, 635, 400, 40))
-	add_child(caption)
+	_build_journey_panel()
 	var scroll_title := _make_label("PARTY CONSUMABLES", 20, Color(IVORY))
 	_place(scroll_title, Rect2(520, 600, 900, 30))
 	add_child(scroll_title)
@@ -1384,6 +1387,53 @@ func _layout_combat() -> void:
 	scroll_container.add_theme_constant_override("separation", 10)
 	_build_enemy_cards()
 	_build_boss_objective()
+
+
+func _build_journey_panel() -> void:
+	journey_map = Panel.new()
+	journey_map.name = "CombatDungeonPanel"
+	_place(journey_map, Rect2(1460,685,420,245))
+	_style_card_backing(journey_map, Color("#151213"), Color(GOLD))
+	add_child(journey_map)
+	if GameState.run_active:
+		var map = preload("res://scenes/expedition/dungeon_map.gd").new()
+		map.name = "JourneyMap"
+		map.compact = true
+		map.position = Vector2(8,40)
+		map.size = Vector2(720,280)
+		map.scale = Vector2(0.55,0.55)
+		map.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		journey_map.add_child(map)
+		var floor_label := _make_label("FLOOR %d / %d" % [GameState.floor_index+1,GameState.floor_count],18,Color(GOLD))
+		floor_label.position = Vector2(15,10)
+		journey_map.add_child(floor_label)
+	for index in range(3):
+		var tab := Button.new()
+		var key: String = ["MAP","LOG","ITEMS"][index]
+		tab.name = "JourneyTab"+key
+		tab.text = key
+		_place(tab,Rect2(1460+index*140,635,130,40))
+		tab.add_theme_font_size_override("font_size",20)
+		if key == "ITEMS":
+			tab.pressed.connect(func(): get_node("/root/GameControls").open_hero_sheet(selected_hero,true))
+		else:
+			tab.pressed.connect(show_journey_panel.bind(key == "MAP"))
+			journey_tabs[key] = tab
+		add_child(tab)
+	show_journey_panel(GameState.run_active)
+
+
+func show_journey_panel(show_map: bool) -> void:
+	journey_map.visible = show_map
+	journey_log.visible = not show_map
+	for key in journey_tabs:
+		var active: bool = (key == "MAP") == show_map
+		journey_tabs[key].add_theme_color_override("font_color",Color("#FFE0A0") if active else Color(MUTED))
+		journey_tabs[key].modulate = Color.WHITE if active else Color(0.7,0.7,0.7)
+
+
+func toggle_journey_panel() -> void:
+	show_journey_panel(not journey_map.visible)
 
 
 
@@ -1932,6 +1982,21 @@ func _ground_battlefield() -> void:
 	# The side-view wall meets the floor around 65% of these images.
 	_place(backdrop,Rect2(0,-330,1920,1080))
 	backdrop.stretch_mode = TextureRect.STRETCH_SCALE
+	# Use the same optional layered setting as the room and its approach.
+	var scenery_theme: String = preload("res://scripts/dungeon_scenery.gd").theme_for(GameState.selected_expedition,GameState.floor_index)
+	var local_profile: Variant = preload("res://scripts/local_dungeon_art.gd").load_profile_files(scenery_theme,GameState.floor_index)
+	var layers: Control
+	if local_profile is Dictionary:
+		layers = preload("res://scripts/local_hallway_layers.gd").new()
+		layers.profile = local_profile
+	else:
+		layers = preload("res://scripts/hallway_scenery.gd").new()
+		layers.scene_theme = scenery_theme
+	layers.ground_y = GROUND_Y
+	layers.size = stage.size
+	stage.add_child(layers)
+	layers.name = "BattlefieldLayers"
+	backdrop.hide()
 	var curtain := ColorRect.new()
 	curtain.name = "StageFooterShade"
 	curtain.mouse_filter = Control.MOUSE_FILTER_IGNORE

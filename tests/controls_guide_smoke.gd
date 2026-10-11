@@ -98,8 +98,8 @@ func run() -> void:
 	await settle()
 	var hp_visible: bool = false
 	for label in current_scene.find_children("*", "Label", true, false):
-		if label.text.contains("32 HP"): hp_visible = true
-	assert(hp_visible, "Closing the sheet refreshes party health on the map")
+		if label.text.contains("HP 32 / "): hp_visible = true
+	assert(hp_visible and current_scene.get_node("Party_warden").text.contains("HP 32"), "Closing the sheet refreshes selected hero and party health in the room HUD")
 	var editing := LineEdit.new()
 	current_scene.add_child(editing)
 	editing.grab_focus()

@@ -73,6 +73,7 @@ func guide_sections() -> Array:
 			sections.append(["DUNGEON PROGRESSION", [["MAP CLICK", "Choose a connected room or explored route"], ["A / ←", "Walk backward; leave at the starting door"], ["D / →", "Walk forward toward the destination"], ["W / E / ENTER", "Enter the room or encounter when reached"], ["SPACE", "Toggle automatic walking"], ["TAB", "Alternate the map / hallway and party inventory"]]])
 		"COMBAT":
 			sections.append(["SHARED PARTY TURN", [["1–5", "Select and preview a skill for the active hero"], ["ENEMY CLICK", "Choose an enemy target"], ["ENTER", "Use the selected skill if available"], ["HERO CLICK", "Change the active hero"], ["LOOT", "Victory rewards are collected automatically"]]])
+			sections.append(["JOURNEY HUD", [["TAB", "Alternate the dungeon map and battle log"], ["ITEMS", "Inspect party inventory; use consumables in the combat strip"]]])
 		"SETTLEMENT":
 			sections.append(["SETTLEMENT", [["BUILDING CLICK", "Enter a building or choose an expedition"], ["HERO CLICK", "Choose a party slot / roster hero in the Barracks"], ["ESC", "Return from a building to the settlement"]]])
 		_:
@@ -276,6 +277,11 @@ func _input(event: InputEvent) -> void:
 	elif event.keycode == KEY_TAB and State.run_active and context_name() != "COMBAT":
 		open_hero_sheet("", true)
 		get_viewport().set_input_as_handled()
+	elif event.keycode == KEY_TAB and context_name() == "COMBAT":
+		var scene := get_tree().current_scene
+		if scene.has_method("toggle_journey_panel"):
+			scene.toggle_journey_panel()
+			get_viewport().set_input_as_handled()
 
 func frame(fill: Color, border: Color, width: int = 2) -> StyleBoxFlat:
 	var box := StyleBoxFlat.new()
