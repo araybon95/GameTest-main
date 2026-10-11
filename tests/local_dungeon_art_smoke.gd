@@ -98,10 +98,10 @@ func run() -> void:
 	Art.configure(Art.DEFAULT_ROOT, false)
 	assert(not Art.get_enabled() and Art.load_profile_files("bandit") == null)
 	assert(Art.texture("weald/weald.corridor_bg.png") == null, "Disabled local art preserves the original-art fallback")
-	Art.configure(ProjectSettings.globalize_path("user://missing-installation/dungeons"), true)
+	Art.configure(ProjectSettings.globalize_path("user://missing-installation/dungeons"), true, false)
 	assert(Art.load_profile_files("bandit") == null and Art.texture("weald/weald.corridor_bg.png") == null)
 	assert(Art.texture_size("weald/weald.corridor_bg.png") == Vector2i.ZERO)
-	Art.configure("relative/missing-installation", true)
+	Art.configure("relative/missing-installation", true, false)
 	assert(Art.load_profile_files("beast") == null, "A relative installation root cannot load external art")
 	assert(Art.texture("weald/weald.dungeon.json") == null, "The loader accepts PNG artwork only")
 	assert(Art.texture_cache.is_empty(), "Unavailable and disabled profiles create no cached textures")
@@ -158,7 +158,7 @@ func run() -> void:
 	await process_frame
 	await process_frame
 	assert(not is_instance_valid(foreground), "Detached foreground layers retire with their owner")
-	Art.configure(Art.DEFAULT_ROOT, true)
+	Art.configure(Art.DEFAULT_ROOT, true, false)
 	for theme in ["bandit", "keep", "medical"]: check_native_profile(theme, 0)
 	for floor in range(3): check_native_profile("beast", floor)
 	assert(snapshot() == before, "Scenery configuration, loading and scrolling preserve gameplay and loot RNG")

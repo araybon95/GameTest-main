@@ -150,12 +150,12 @@ func open_settings() -> void:
 		overlay.add_child(slider)
 	var local_art := CheckBox.new()
 	local_art.name = "LocalDungeonArtwork"
-	local_art.text = "Use local dungeon artwork"
+	local_art.text = "Use layered dungeon artwork and painted UI"
 	local_art.position = Vector2(180, 507)
 	local_art.size = Vector2(800, 43)
 	local_art.add_theme_font_size_override("font_size", 23)
 	local_art.button_pressed = LocalArt.get_enabled()
-	local_art.tooltip_text = "Use scenery from your local installation. Project artwork appears whenever a matching scene is unavailable. Applies to the next hallway."
+	local_art.tooltip_text = "Use editable images in assets/presentation first, with installed art as a fallback. Disable for the original drawn presentation. Applies when a scene is rebuilt."
 	local_art.toggled.connect(set_local_dungeon_art)
 	local_art.focus_mode = Control.FOCUS_ALL
 	overlay.add_child(local_art)

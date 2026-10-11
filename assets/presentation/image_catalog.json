@@ -1,0 +1,747 @@
+{
+  "images": [
+    {
+      "file": "res://assets/presentation/ui/panel_frame.png",
+      "replaces": "../panels/panel_inventory.png",
+      "size": [
+        720,
+        360
+      ],
+      "sha256": "f41029cfb2818878731dbd590259966c9716e6607bd5686157bb0284c79ee393",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/ui/map_backing.png",
+      "replaces": "../panels/panel_map.png",
+      "size": [
+        720,
+        360
+      ],
+      "sha256": "19a9096459832fef596938d2ad3d02907f1af1e07bab0d74b891c2f04113032e",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/ui/attack_banner.png",
+      "replaces": "../overlays/movename_frame.png",
+      "size": [
+        629,
+        99
+      ],
+      "sha256": "618636fd19366782dc08e5385444061b2fb83851e90d637b2815d50bc28840ac",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/ui/status_burn.png",
+      "replaces": "../overlays/tray_dot_burn.png",
+      "size": [
+        24,
+        24
+      ],
+      "sha256": "50fa7565ffd3422d75e333d9d8e8f08b439dfa6f6f623d9ddecd80f9b3083305",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/ui/status_bleed.png",
+      "replaces": "../overlays/tray_bleed.png",
+      "size": [
+        24,
+        24
+      ],
+      "sha256": "899b576c50ea46cf697040765ef6758e070ce3b85447b5d5eacc38837660c400",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/ui/status_poison.png",
+      "replaces": "../overlays/tray_poison.png",
+      "size": [
+        24,
+        24
+      ],
+      "sha256": "9882155008e1727f3f831ff594e455d9cf43bc99fe62fa4444666bf24dc97531",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/fx/blood_splatter_atlas.png",
+      "replaces": "../fx/blood_splatter/blood_splatter.sprite.png",
+      "size": [
+        313,
+        286
+      ],
+      "sha256": "d525bb89a9cf75ae8d98e86af1d97e636c0e376378d22f1ef6dbc55be5982859",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/village/background.png",
+      "replaces": "weald/weald.corridor_bg.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "81da0223cada203d80b18e30db0b8afb2d2de4f3ee09b8a3adec5712c2f77482",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/village/midground.png",
+      "replaces": "weald/weald.corridor_mid.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "6a54d243d95562f81557b815975515e0f44afe0f2b9c961b14836474b934fd6b",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/village/foreground_top.png",
+      "replaces": "weald/weald.foreground_top.01.png",
+      "size": [
+        720,
+        293
+      ],
+      "sha256": "7df72ca03980de7fe67051fd6057c5f1606c574681df9b7addb05cfd322f922f",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/village/foreground_bottom.png",
+      "replaces": "weald/weald.foreground_bottom.01.png",
+      "size": [
+        720,
+        197
+      ],
+      "sha256": "a3de97b998df82906903621c06b5ef0bbb7d485d50e21e76679d39bcf6196018",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/village/doorway.png",
+      "replaces": "weald/weald.corridor_door.basic.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "f45d1503a1fbfd5e7ef872b776508b90f55e815e7916c049d0135a75a421591a",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/village/wall_01.png",
+      "replaces": "weald/weald.corridor_wall.01.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "542c7b857990bdc55aeb7b4bf77717e85ac853b6427ffd31f17168f2199abbfd",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/village/wall_02.png",
+      "replaces": "weald/weald.corridor_wall.02.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "0222935b479714297ae19e77ad0c8d06038b2fa598dfc17a8bd80d78bfadfb8a",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/village/wall_03.png",
+      "replaces": "weald/weald.corridor_wall.03.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "e19a8ea0b4b3049d67b2d99713415467361800aab80da03de57f5e024dbe8c31",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/village/wall_04.png",
+      "replaces": "weald/weald.corridor_wall.04.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "0493706cf32168a340ac3cea12a8f4f52dd34903fe8c30b77d94a9ea796c8b00",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/village/wall_05.png",
+      "replaces": "weald/weald.corridor_wall.05.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "170e4e7e2c223a7218500329cf04c238737091eb07720b430a649ff01bf703c8",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/village/wall_06.png",
+      "replaces": "weald/weald.corridor_wall.06.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "2fa8e022bbd0a1bdc7a8305d7724ebf8913bc459f169e8cf8e353f36fe774e6a",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/village/wall_07.png",
+      "replaces": "weald/weald.corridor_wall.07.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "e7f70ffe293d8820d70f4f2fbcb76ee93a480060caf779c1872fd5fbf1571317",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/village/wall_08.png",
+      "replaces": "weald/weald.corridor_wall.08.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "ddf7120694df08cce7df413538070ee296bc9209eb3c41c32bf20b46b5d60bf3",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/village/wall_09.png",
+      "replaces": "weald/weald.corridor_wall.09.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "c3235df66f2532e69b898876adab615f321370578ca13f6be9f0a5cb6a4e4eb5",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/village/wall_10.png",
+      "replaces": "weald/weald.corridor_wall.10.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "6edb5516fedd1d3c08750878b4adc8d95f6c818d0adea3a2f288e1d5cdd4465e",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/keep/background.png",
+      "replaces": "crypts/crypts.corridor_bg.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "f06fe5bb232ea951de922c2a903ce680281663a06f822a3aba71de4829994c01",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/keep/midground.png",
+      "replaces": "crypts/crypts.corridor_mid.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "d955d3050d0cc88dcb951c72f94fa3721bf92bcdd4026d402ec644be64514618",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/keep/foreground_top.png",
+      "replaces": "crypts/crypts.foreground_top.01.png",
+      "size": [
+        720,
+        330
+      ],
+      "sha256": "2cc95aab0ffba901a5f14a8d8c790145c2419f0e88050053ce22e83600b561c9",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/keep/foreground_bottom.png",
+      "replaces": "crypts/crypts.foreground_bottom.01.png",
+      "size": [
+        720,
+        101
+      ],
+      "sha256": "e123d86745b7c1d29528383c413adeb5e29d4fa40388ed6094c84cca16b3537d",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/keep/doorway.png",
+      "replaces": "crypts/crypts.corridor_door.basic.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "1691bd359690ccaa9bc14fe4bcaa205f868edaaca7a4540365289b807763e701",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/keep/wall_01.png",
+      "replaces": "crypts/crypts.corridor_wall.01.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "fe8fe13ae468793519f7006618c7086f0336bf15356170fd79ad9d7630d5766b",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/keep/wall_02.png",
+      "replaces": "crypts/crypts.corridor_wall.02.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "c55da89af02347236f850e5cca56e9fcfb1bb3b392783439f2ef731f5945e654",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/keep/wall_03.png",
+      "replaces": "crypts/crypts.corridor_wall.03.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "3c05bf629442092d469248e1a18013db9b7d4592617c8aae39bebb487743ca96",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/keep/wall_04.png",
+      "replaces": "crypts/crypts.corridor_wall.04.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "bb5b9707daa2e90a23c334746dd3d23c132d5fb0cc61b42588e1ceb84136e3ca",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/keep/wall_05.png",
+      "replaces": "crypts/crypts.corridor_wall.05.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "cf75aec69bf1e3e77400db3f0ee8db66a04fe2872fd1937603eafc7d551dab42",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/keep/wall_06.png",
+      "replaces": "crypts/crypts.corridor_wall.06.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "9b93bfb6d2d3da6b796a9757784ab752de291fe7af016ef07dafcb55f4df92db",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/apothecary/background.png",
+      "replaces": "warrens/warrens.corridor_bg.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "a08f0b3fe20e75efae9ec5d3003fce5df082287ac3f5e3b632e2e78bf5d7723e",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/apothecary/midground.png",
+      "replaces": "warrens/warrens.corridor_mid.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "65a0476f67ce5d3b6d3bf268a9eb76daf060acbe92d0efef9815703cd0be9e0a",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/apothecary/foreground_top.png",
+      "replaces": "warrens/warrens.foreground_top.01.png",
+      "size": [
+        720,
+        332
+      ],
+      "sha256": "9be41b3982c8193e7e63583e7ad6f3bc4a8b7e93b4541de7e2dd0ad7979d542b",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/apothecary/foreground_bottom.png",
+      "replaces": "warrens/warrens.foreground_bottom.01.png",
+      "size": [
+        720,
+        180
+      ],
+      "sha256": "104842312a6bd21a45ef84e6238590c2ba0f7e276358ef4e5616e268976f4077",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/apothecary/doorway.png",
+      "replaces": "warrens/warrens.corridor_door.basic.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "6c141574a389870ae992f04198ddcd5d49599c4c1202e85d6444f177d6b40978",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/apothecary/wall_01.png",
+      "replaces": "warrens/warrens.corridor_wall.01.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "e46fc092f32b9f5a4420019e495becce9100b09673db1b62179351a30ef1487b",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/apothecary/wall_02.png",
+      "replaces": "warrens/warrens.corridor_wall.02.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "827c63e09f41394df0dd84a3176b55b5cd2c0fa6b0dd2fa249d279f01c6f77c1",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/apothecary/wall_03.png",
+      "replaces": "warrens/warrens.corridor_wall.03.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "0a03ac1cf7659ca2872e26aa1fca84cf9dd1aae4a0ad58ffc9edef292fd82d3f",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/apothecary/wall_05.png",
+      "replaces": "warrens/warrens.corridor_wall.05.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "79f4158f5b0393ae5786c479c9b4dd6afc0263094cd8455027c9a360d5e306ca",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/apothecary/wall_06.png",
+      "replaces": "warrens/warrens.corridor_wall.06.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "02ea5f174d696e4b17add164bc1559887b103877e1680e5c3c299ade96ca10f8",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/apothecary/wall_07.png",
+      "replaces": "warrens/warrens.corridor_wall.07.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "550f1bfafa03f913eb40543de363c4525631eb36673a3540e4b102261552dade",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_1/background.png",
+      "replaces": "darkestdungeon/quest_1/darkestdungeon.corridor_bg.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "0481d5bbbdceca85dcb13a0f6a12b31e2145227d029916b90ae3900b4d3766e4",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_1/midground.png",
+      "replaces": "darkestdungeon/quest_1/darkestdungeon.corridor_mid.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "138fc375fe5af54449543ac1513fb0e97ba8c6660b4f6acf60fbb9c91a694a64",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_1/foreground_top.png",
+      "replaces": "darkestdungeon/quest_1/darkestdungeon.foreground_top.01.png",
+      "size": [
+        720,
+        298
+      ],
+      "sha256": "2697494ddab7a2d2d30025f1d07bf007e688281098efab2dc6d7d56cb0adb2bc",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_1/foreground_bottom.png",
+      "replaces": "darkestdungeon/quest_1/darkestdungeon.foreground_bottom.01.png",
+      "size": [
+        720,
+        200
+      ],
+      "sha256": "cd40b899a25ae6ec9fc3dbe69f96c30787db6e1e7cc2ad14d13578072ef751b6",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_1/doorway.png",
+      "replaces": "darkestdungeon/quest_1/darkestdungeon.corridor_door.basic.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "ae2c961947988319e29b029c09a12b8dbc14b522284c4ca63f5cfb1d238051db",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_1/wall_01.png",
+      "replaces": "darkestdungeon/quest_1/darkestdungeon.corridor_wall.01.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "eb1d575727a2da834602dfe8d67689516f216c4d31ae5d8dce8dd40e335bef8c",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_1/wall_02.png",
+      "replaces": "darkestdungeon/quest_1/darkestdungeon.corridor_wall.02.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "1e4cc52abd190aa4e352c585cfe1894cd355e94a28dc015b5683b7e05feeb432",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_1/wall_03.png",
+      "replaces": "darkestdungeon/quest_1/darkestdungeon.corridor_wall.03.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "71e7e7440a970543592820b604cf3becf47ef51904ec3ffcdb0ed79d45debe04",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_1/wall_04.png",
+      "replaces": "darkestdungeon/quest_1/darkestdungeon.corridor_wall.04.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "681b7809c0fb5aa897a4a0b75f0e40a323632983a1171a3b099ba5615763ba62",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_1/wall_05.png",
+      "replaces": "darkestdungeon/quest_1/darkestdungeon.corridor_wall.05.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "b97120aa95c493d2886d68f3f8df6b060c8f7f0613ce967538335e1c6dba9b52",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_2/background.png",
+      "replaces": "darkestdungeon/quest_2/darkestdungeon.corridor_bg.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "bdf486a87b07c5e6c72aa9e417309d2c4d1cfd5d4402c891a80ad6fa4fd8f681",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_2/midground.png",
+      "replaces": "darkestdungeon/quest_2/darkestdungeon.corridor_mid.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "ef5246848db67af54e3420c59fe1f8110cd108d113a01ab4c35c90d0e447395a",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_2/foreground_top.png",
+      "replaces": "darkestdungeon/quest_2/darkestdungeon.foreground_top.01.png",
+      "size": [
+        720,
+        298
+      ],
+      "sha256": "2697494ddab7a2d2d30025f1d07bf007e688281098efab2dc6d7d56cb0adb2bc",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_2/foreground_bottom.png",
+      "replaces": "darkestdungeon/quest_2/darkestdungeon.foreground_bottom.01.png",
+      "size": [
+        720,
+        200
+      ],
+      "sha256": "cd40b899a25ae6ec9fc3dbe69f96c30787db6e1e7cc2ad14d13578072ef751b6",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_2/doorway.png",
+      "replaces": "darkestdungeon/quest_2/darkestdungeon.corridor_door.basic.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "b60987fc3445909a090746913ccf2ec8eebdd91fae460900b815aaed2b923537",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_2/wall_01.png",
+      "replaces": "darkestdungeon/quest_2/darkestdungeon.corridor_wall.01.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "cdf6db9cba9657453dc14a510be128cc847e5d4a2da9f46a6410f4eefa7d42db",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_2/wall_02.png",
+      "replaces": "darkestdungeon/quest_2/darkestdungeon.corridor_wall.02.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "536570159466001e099a394bc4955139ef601d62772778e44904240c31afdc9b",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_2/wall_03.png",
+      "replaces": "darkestdungeon/quest_2/darkestdungeon.corridor_wall.03.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "438eed9f0a01df87f7680c357b35fb34f6c41ab99c70fa46a28561596831d5e6",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_2/wall_04.png",
+      "replaces": "darkestdungeon/quest_2/darkestdungeon.corridor_wall.04.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "3bc48da10ac6748c77c792bd5baf067b90a9f554f1b8f97c172acaec0da1df74",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_2/wall_05.png",
+      "replaces": "darkestdungeon/quest_2/darkestdungeon.corridor_wall.05.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "eaf3df1e3046893ccde599f8ff3beffa32de46175cb3c9b91c64a4d786375072",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_3/background.png",
+      "replaces": "darkestdungeon/quest_3/darkestdungeon.corridor_bg.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "fc6db8611a357d35478e7c596ea864035717ff12c4771a615cf413d541688ef8",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_3/midground.png",
+      "replaces": "darkestdungeon/quest_3/darkestdungeon.corridor_mid.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "b35d8b2050dc7c7f3007e489f4187c8d7cf6e3e6d4e094b5aeb534b0fd650136",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_3/foreground_top.png",
+      "replaces": "darkestdungeon/quest_3/darkestdungeon.foreground_top.01.png",
+      "size": [
+        720,
+        226
+      ],
+      "sha256": "84605d4eda07b2e663ae7928e720744ab22899515d8d2bc420bd4c759e74d986",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_3/foreground_bottom.png",
+      "replaces": "darkestdungeon/quest_3/darkestdungeon.foreground_bottom.01.png",
+      "size": [
+        720,
+        215
+      ],
+      "sha256": "3b9a0942749cd1636a8b41c60b3f34849dc402dec220e672d8d302334b696b92",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_3/doorway.png",
+      "replaces": "darkestdungeon/quest_3/darkestdungeon.corridor_door.basic.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "04f815f0c9cbf7c3f673fd41d5acd19da67827267aed805324f13de4fd585a61",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_3/wall_01.png",
+      "replaces": "darkestdungeon/quest_3/darkestdungeon.corridor_wall.01.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "9f2ca564cff9243f0fc4e42c5fc059e4e60f04359849f554102407228e936bf8",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_3/wall_02.png",
+      "replaces": "darkestdungeon/quest_3/darkestdungeon.corridor_wall.02.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "446eede6872c5214cf19bc41b5cb6cac9e1cff0d663635d81866897119fc5579",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_3/wall_03.png",
+      "replaces": "darkestdungeon/quest_3/darkestdungeon.corridor_wall.03.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "390ed320475189f65f6852adf4ac2ed56c6cd0707361e43b892ed4f02b41bcdf",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_3/wall_04.png",
+      "replaces": "darkestdungeon/quest_3/darkestdungeon.corridor_wall.04.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "0aa1cb968c7e0e141be15fff84c033a53bfd14f4b835c164cb9927627c881f93",
+      "source": "User-supplied local Darkest Dungeon installation"
+    },
+    {
+      "file": "res://assets/presentation/dungeons/remade_floor_3/wall_05.png",
+      "replaces": "darkestdungeon/quest_3/darkestdungeon.corridor_wall.05.png",
+      "size": [
+        720,
+        720
+      ],
+      "sha256": "8f81c24370d400cd60e317b15cddbf177af3c6b3fefe717ca6c6ac18cec70a85",
+      "source": "User-supplied local Darkest Dungeon installation"
+    }
+  ],
+  "optional_files_not_present": [
+    "warrens/warrens.corridor_wall.04.png"
+  ]
+}

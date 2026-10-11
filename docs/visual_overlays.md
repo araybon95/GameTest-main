@@ -1,6 +1,6 @@
 # Visual overlays and character settings
 
-The optional local artwork loader now also reads `panels/panel_inventory.png`, `panels/panel_map.png` and `overlays/movename_frame.png` from the player's installation. These PNGs are read at runtime and are not copied into the repository or game archive. The existing F10 local-art switch applies to them.
+The artwork loader reads the editable images in `assets/presentation` first, including the panel frame, map backing and attack banner. These PNGs are included in the repository and source archive. Installed artwork remains an optional fallback. The F10 artwork switch applies to both sources. See [the replacement guide](../assets/presentation/README.md) for individual image paths and atlas regions.
 
 Panel borders use only the outer 18-pixel frame segments, excluding the inventory's internal slots and right-hand tabs. This keeps every existing UI layout and text area intact. Compact maps use a faint cropped map grid behind their encounter symbols. Skill cinematics have a painted crimson announcement band. Active heroes and enemy targets have restrained gold and red underlines that disappear with their source portrait during an attack spotlight. Scene shading is confined to the outer edges of the upper 600-pixel stage; lower HUD text remains unaffected. Every decorative control ignores mouse input.
 

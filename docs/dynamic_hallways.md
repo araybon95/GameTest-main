@@ -18,7 +18,7 @@ Focused verification is in `tests/continuous_dungeon_smoke.gd`, `tests/hallway_n
 
 ## Optional local artwork
 
-`scripts/local_dungeon_art.gd` reads PNGs from `C:/Program Files (x86)/Steam/steamapps/common/DarkestDungeon/dungeons` by default. Settings (**F10**) has **Use local dungeon artwork**, applied to the next passage. Preferences are stored separately in `user://local_art.cfg`; `[art] root` can point to a different installation's `dungeons` folder and `enabled` controls loading. A missing or incomplete profile falls back to the project's original art. Installed images are read in place and are not included in this repository or its source ZIP.
+`scripts/local_dungeon_art.gd` reads the editable PNGs in `assets/presentation/dungeons` first. All six layered profiles are included in the repository and source ZIP. Settings (**F10**) has **Use layered dungeon artwork and painted UI**, applied when a scene is rebuilt. Preferences are stored separately in `user://local_art.cfg`; `[art] root` can point to an optional installation's `dungeons` folder for missing images and `enabled` controls loading. A missing or incomplete profile falls back to the original drawn presentation. See [the image replacement guide](../assets/presentation/README.md).
 
 | Ashen scenery | Local corridor folder |
 | --- | --- |
