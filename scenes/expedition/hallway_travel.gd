@@ -9,6 +9,8 @@ const Scenery = preload("res://scripts/dungeon_scenery.gd")
 const TravelAudio = preload("res://scripts/travel_audio.gd")
 const LocalArt = preload("res://scripts/local_dungeon_art.gd")
 const LocalLayers = preload("res://scripts/local_hallway_layers.gd")
+const ActorMotion = preload("res://scripts/hallway_actor_motion.gd")
+const QUIET_WALK_POSE: int = 1
 const GROUND_Y: float = 430.0
 const HERO_HEIGHT: float = 280.0
 var duration: float = 5.6
@@ -25,6 +27,8 @@ var reached_destination: bool = false
 var pointer_walking: bool = false
 var moving: bool = false
 var animation_clock: float = 0.0
+var actor_clock: float = 0.0
+var actor_walking: float = 0.0
 var ambient_clock: float = 0.0
 var distance_travelled: float = 0.0
 var route_origin := Vector2i.ZERO
@@ -219,7 +223,7 @@ func build_walkers() -> void:
   var picture := TextureRect.new()
   standing_frames[id] = Scenery.grounded_texture(str(State.hero(id)["art"]))
   wardrobe_looks[id] = str(State.hero(id).get("equipment_look","original"))
-  picture.texture = walk_frames[id][0] if walk_frames.has(id) else standing_frames[id]
+  picture.texture = walk_frames[id][QUIET_WALK_POSE] if walk_frames.has(id) else standing_frames[id]
   picture.name = "Walker_%s" % id
   picture.set_meta("walker",id)
   picture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -237,6 +241,7 @@ func build_walkers() -> void:
   shadows.append(shadow)
   bases.append(Vector2(center_x,GROUND_Y))
   Scenery.apply_hero_palette(picture,id,State.hero_colors.get(id,"original"))
+  ActorMotion.attach(picture,id)
 
 func build_hud() -> void:
  build_exploration_frame()
@@ -507,6 +512,7 @@ func _process(delta: float) -> void:
   atmosphere.clock = ambient_clock
   atmosphere._process(0.0)
   transition_shade.modulate.a = maxf(1.0-ambient_clock/0.25,0.0)
+  advance_actor_motion(delta,settings_open())
   update_walkers()
   return
  if complete: return
@@ -548,6 +554,7 @@ func _process(delta: float) -> void:
   footsteps.play()
   footsteps_played += 1
  transition_shade.modulate.a = maxf(1.0-ambient_clock/0.25,0.0)
+ advance_actor_motion(delta,blocked)
  update_walkers()
  source_door.position.x = -10.0 - distance_travelled * 0.9
  source_button.position = source_door.position
@@ -577,13 +584,26 @@ func update_summaries() -> void:
   summary["stress"].text = "STRESS %d" % int(stats.get("stress",0))
   summary["bar"].size.x = 224.0*clampf(float(hp)/maxi(1,maximum),0,1)
 
+func advance_actor_motion(delta: float, blocked: bool) -> void:
+ var runtime := get_node_or_null("/root/GameSettings")
+ var enabled: bool = runtime == null or runtime.ambient_motion
+ if not enabled:
+  actor_walking = 0.0
+ elif not blocked:
+  actor_clock += maxf(delta,0.0)
+  var target: float = 1.0 if moving and not arrived and not room_mode else 0.0
+  actor_walking = lerpf(actor_walking,target,1.0-exp(-8.0*maxf(delta,0.0)))
+
 func update_walkers() -> void:
+ var runtime := get_node_or_null("/root/GameSettings")
+ var enabled: bool = runtime == null or runtime.ambient_motion
  for index in range(walkers.size()):
   var picture: TextureRect = walkers[index]
   var id: String = picture.get_meta("walker")
   if str(State.hero(id).get("equipment_look","original")) != str(wardrobe_looks.get(id,"original")): refresh_equipment_frames(id)
-  var phase: float = animation_clock*7.0+index*0.45
-  var texture: Texture2D = walk_frames[id][int(phase)%4] if not arrived and walk_frames.has(id) else standing_frames[id]
+  # Keep one measured, planted-foot stance through walking, pause and arrival.
+  # Generated frame-to-frame changes in silhouette no longer cause visible popping.
+  var texture: Texture2D = walk_frames[id][QUIET_WALK_POSE] if walk_frames.has(id) else standing_frames[id]
   var width: float = HERO_HEIGHT*texture.get_width()/float(maxi(1,texture.get_height()))
   picture.texture = texture
   picture.flip_h = facing_left
@@ -591,6 +611,7 @@ func update_walkers() -> void:
   picture.pivot_offset = Vector2(width*0.5,HERO_HEIGHT)
   picture.position = bases[index]-Vector2(width*0.5,HERO_HEIGHT)
   picture.rotation = 0.0
+  ActorMotion.update(picture,actor_clock,animation_clock*3.5*PI,actor_walking,enabled)
 
 func refresh_equipment_frames(id: String) -> void:
  var outfit: String = str(State.hero(id).get("equipment_look","original"))

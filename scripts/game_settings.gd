@@ -186,7 +186,8 @@ func open_settings() -> void:
 	overlay.add_child(local_art)
 	var motion := CheckBox.new()
 	motion.name = "AmbientMotion"
-	motion.text = "Animate interiors & transitions"
+	motion.text = "Animate scenes & hero movement"
+	motion.tooltip_text = "Breathing, idle movement and scene transitions. Disable for a quieter presentation; hallway travel stays available."
 	motion.position = Vector2(1080,465)
 	motion.size = Vector2(650,43)
 	motion.add_theme_font_size_override("font_size",22)

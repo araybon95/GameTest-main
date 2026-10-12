@@ -1,5 +1,7 @@
 # Ashen Expedition
 
+Hallway heroes now use restrained breathing and weight shifts with smooth starts/stops, replacing the rough four-frame pose cycling. **F10 → Animate scenes & hero movement** controls this presentation. See [the before/after animation preview](docs/quiet_hallway_motion.md).
+
 All 87 items now have painted grimdark sprites, and camp actions have illustrated cards with visible effects and preparation states. The game loads its artwork from [the live art library](assets/art_library/README.md), which includes a searchable catalog and instructions for replacing individual sprites with hand-drawn PNGs. See [Item and camp artwork](docs/item_camp_art.md) for previews and verification.
 
 Boss battles now show live tactics cues, and **F10 → Combat playback** offers 1×, 1.5× and 2× animation speed. Saved journeys preview the party, explain save restrictions and reject invalid data before loading. See [Boss clarity, pacing, campaign economy and saved journeys](docs/boss_pacing_campaign_save_review.md) for the broader Healer/Crusader campaign results.

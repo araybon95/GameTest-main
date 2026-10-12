@@ -44,6 +44,8 @@ func sync() -> void:
 	var parent: TextureRect = get_parent()
 	texture = parent.texture
 	stretch_mode = parent.stretch_mode
+	flip_h = parent.flip_h
+	flip_v = parent.flip_v
 	var state: Script = load("res://scripts/game_data.gd")
 	var chosen: String = preview_item
 	if chosen.is_empty():

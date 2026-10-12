@@ -4,8 +4,13 @@ uniform int source_family = 0;
 uniform bool recolor = true;
 uniform vec3 ambient = vec3(1.0);
 uniform float firelight = 0.0;
+// Opt-in hallway deformation; existing portraits/combat/camp remain unaffected.
+#include "res://assets/shaders/actor_motion.gdshaderinc"
 varying vec4 modulation;
-void vertex() { modulation = COLOR; }
+void vertex() {
+	modulation = COLOR;
+	VERTEX = animate_actor_vertex(VERTEX);
+}
 void fragment() {
 	vec4 original = texture(TEXTURE, UV);
 	float largest = max(original.r, max(original.g, original.b));
