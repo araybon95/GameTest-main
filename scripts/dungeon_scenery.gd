@@ -40,6 +40,7 @@ static func grounded_texture(path: String, padding: int = 0) -> Texture2D:
 	return atlas
 
 static func apply_hero_palette(picture: TextureRect, id: String, chosen_color: String) -> void:
+	preload("res://scripts/equipment_accents.gd").attach(picture,id)
 	if chosen_color == "original": return
 	var material := ShaderMaterial.new()
 	material.shader = preload("res://scripts/hero_palette.gdshader")

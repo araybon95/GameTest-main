@@ -104,6 +104,9 @@ static func item(item_id: String) -> Dictionary:
 		entry = entry.duplicate(true)
 		if not str(histories[item_id].get("name", "")).is_empty(): entry["name"] = histories[item_id].name
 		if histories[item_id].has("hero"): entry["hero"] = histories[item_id].hero
+		var mode: String = str(histories[item_id].get("transformation",""))
+		var bonuses: Dictionary = {"restored":{"max_hp":4},"consecrated":{"debuff_resist":10},"corrupted":{"damage_percent":8,"curse_stress":1}}.get(mode,{})
+		for stat in bonuses: entry[stat] = int(entry.get(stat,0)) + int(bonuses[stat])
 	return entry
 
 static func description(item_id: String) -> String:
@@ -129,7 +132,7 @@ static func description(item_id: String) -> String:
 		if entry.has("ward_vs_" + key):
 			text += " · %d%% less direct damage from %s (combined ward cap %d%%; excludes damage-over-time)" % [int(entry["ward_vs_" + key]),category,Matchups.WARD_CAP]
 	if entry.has("curse_stress"):
-		text += " · CURSED: +2 Stress each party turn while equipped"
+		text += " · CURSED: +%d Stress each party turn while equipped" % int(entry.curse_stress)
 	if entry.has("curse_dot"):
 		text += " · CURSED: harmful Burn/Bleed/Poison deal +1 damage per tick"
 	for effect in ["poison", "chill"]:
@@ -155,6 +158,8 @@ static func tooltip(item_id: String) -> String:
 	if favourites.get(item_id,false): text += "\n★ Favourite · protected from sale"
 	if histories.has(item_id):
 		var record: Dictionary = histories[item_id]
+		if record.has("transformation"): text += "\nWorkshop: " + str(record.transformation).capitalize()
+		if record.has("milestone"): text += "\nCosmetic milestone: " + str(record.milestone)
 		if record.has("origin"): text += "\nTaken from " + str(record.origin)
 		text += "\n\n" + str(EQUIPMENT[base_id(item_id)]["name"])
 		for owner in record.get("owners", []): text += "\nHeirloom of " + str(owner)

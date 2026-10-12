@@ -1046,6 +1046,7 @@ func _refresh_all() -> void:
 	var hero: Dictionary = hero_state[selected_hero]
 	hand_title.text = "ABILITIES · %d / 2 AP · 1–5 SELECT · ENTER USE" % int(hero["ap"])
 	selected_portrait.set_meta("hero_id", selected_hero)
+	if selected_portrait.has_node("EquipmentAccents"): selected_portrait.get_node("EquipmentAccents").hero_id = selected_hero
 	selected_portrait.texture = _load_texture(str(GameState.hero(selected_hero).get("portrait_art",GameState.hero(selected_hero).get("art", ""))))
 	_sync_portrait(selected_portrait, hero)
 	selected_info.text = "%s\nHealth  %d / %d\nStress  %d / 100\nBlock  %d\nAction points  %d / 2\n%s" % [str(hero["name"]).to_upper(), int(hero["hp"]), int(hero["max_hp"]), int(hero["stress"]), int(hero["block"]), int(hero["ap"]), "DEATH'S DOOR" if hero["deaths_door"] else str(hero["resolve_tag"])]
@@ -1374,6 +1375,7 @@ func _layout_combat() -> void:
 	_place(selected_portrait, Rect2(0, 0, 135, 205))
 	info_contents.add_child(selected_portrait)
 	StatusVisual.new().attach_to(selected_portrait)
+	preload("res://scripts/equipment_accents.gd").attach(selected_portrait,selected_hero)
 	selected_info = _make_label("", 19, Color(IVORY))
 	_place(selected_info, Rect2(145, 4, 280, 215))
 	selected_info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -1512,6 +1514,7 @@ func _make_hero_card(hero_id: String) -> Button:
 	portrait.texture = _load_texture(str(hero.get("art", "")))
 	hero_portraits[hero_id] = portrait
 	StatusVisual.new().attach_to(portrait)
+	preload("res://scripts/equipment_accents.gd").attach(portrait,hero_id)
 	var name_label: Label = button.get_node("HeroName") as Label
 	_place(name_label, Rect2(8, 285, 234, 27))
 	name_label.add_theme_font_size_override("font_size", 18)

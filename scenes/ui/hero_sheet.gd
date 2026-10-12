@@ -325,6 +325,8 @@ func choose_item(item_id: String) -> void:
 	elif item.has("slot"):
 		if State.equip_item(hero_id, item_id):
 			status_text = str(item["name"]) + " equipped."
+			var reaction: String = State.ItemStories.equipped_line(State,hero_id,item_id)
+			if not reaction.is_empty(): status_text += " " + reaction
 			inventory_changed.emit()
 		else: status_text = "This item belongs to another class."
 	else:

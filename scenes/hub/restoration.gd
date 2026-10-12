@@ -29,6 +29,7 @@ func refresh() -> void:
 		button_at("CLEANSING POTION · 8 GOLD", Rect2(1160, 455, 630, 90), buy_care.bind("cleansing_potion", 1, 8))
 	else:
 		button_at("NAME & COLORS", Rect2(1440, 145, 370, 55), customize)
+		button_at("EQUIPMENT LEGACIES",Rect2(975,145,440,55),equipment_legacies)
 		label_at("Choose one modification per owned equipment design: Keen +1 damage or Fortified +2 Block. Costs 12 gold.", Vector2(475, 300), 1320, 22)
 		var scroll := ScrollContainer.new()
 		scroll.position = Vector2(475, 365)
@@ -86,3 +87,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func customize() -> void:
 	if State.service_unlocked("workshop"):
 		get_tree().change_scene_to_file("res://scenes/hub/customization.tscn")
+
+func equipment_legacies() -> void:
+	if State.service_unlocked("workshop"):
+		get_tree().change_scene_to_file("res://scenes/hub/keepsakes.tscn")

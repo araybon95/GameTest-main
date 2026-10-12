@@ -63,6 +63,20 @@ func configure(id: String, amount: int = 1) -> void:
 	star.add_theme_constant_override("outline_size",4)
 	star.position = Vector2(5,2)
 	add_child(star)
+	var record: Dictionary = Items.histories.get(id,{})
+	if record.has("transformation") or record.has("milestone"):
+		var sigil := Label.new()
+		sigil.name = "LegacySigil"
+		sigil.text = "✦" if record.has("transformation") else "◇"
+		sigil.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		sigil.add_theme_color_override("font_color",{"restored":Color("#B5E3EF"),"consecrated":Color("#FFE099"),"corrupted":Color("#E85B80")}.get(record.get("transformation",""),Color("#E8C680")))
+		sigil.add_theme_font_size_override("font_size",21)
+		sigil.add_theme_color_override("font_outline_color",Color.BLACK)
+		sigil.add_theme_constant_override("outline_size",3)
+		add_child(sigil)
+		sigil.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+		sigil.offset_left = -26
+		sigil.offset_right = -5
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
