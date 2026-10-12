@@ -92,6 +92,15 @@ func _ready() -> void:
 		GameState.shop_return_scene = "res://scenes/hub/settlement.tscn"
 		get_tree().change_scene_to_file("res://scenes/hub/item_shop.tscn"))
 	add_child(merchant)
+	var guild := Button.new()
+	guild.name = "GuildHallEntrance"
+	guild.text = "THE ADVENTURERS' GUILD"
+	guild.position = Vector2(60,40)
+	guild.size = Vector2(355,70)
+	guild.add_theme_font_size_override("font_size",24)
+	guild.tooltip_text = "Gather by the hearth, customize your hall, and inspect the expedition board."
+	guild.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/hub/guild_hall.tscn"))
+	add_child(guild)
 	modulate = Color(1, 1, 1, 0)
 	var tween := create_tween()
 	tween.tween_property(self, "modulate", Color.WHITE, 0.6)

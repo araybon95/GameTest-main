@@ -1,6 +1,6 @@
 # Customizable guild hall and co-op lobbies
 
-Design proposal; multiplayer and the guild hall are not implemented yet.
+The local guild-hall foundation is implemented; multiplayer is not connected yet. See [the first playable hall](guild_hall.md) for screenshots, customization, save behavior, and the reserved expedition board. Hall entry and appearance persistence cover the initial visual milestones; session identities, connected seats, readiness, and actual shared votes remain future work.
 
 The guild hall would become the place where players create or join a session, choose heroes, prepare together, and launch an expedition. Keep the existing solo settlement and saves working throughout development.
 

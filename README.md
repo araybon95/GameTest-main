@@ -1,5 +1,7 @@
 # Ashen Expedition
 
+The Hamlet now has an **Adventurers' Guild**: a lively painted hall with saved guild name, banner/emblem, lighting, and furnishing choices. Its expedition board lets you inspect and pin routes, reserving the space for future online party voting. This first hall pass is local; Steam/online lobbies are not connected yet. See [Guild hall](docs/guild_hall.md) for screenshots and controls.
+
 Hallway heroes use the original four-frame walking animation by default. **F10 → Experimental walking** optionally enables restrained breathing and weight shifts with smooth starts/stops. See [the before/after animation preview](docs/quiet_hallway_motion.md).
 
 All 87 items now have painted grimdark sprites, and camp actions have illustrated cards with visible effects and preparation states. The game loads its artwork from [the live art library](assets/art_library/README.md), which includes a searchable catalog and instructions for replacing individual sprites with hand-drawn PNGs. See [Item and camp artwork](docs/item_camp_art.md) for previews and verification.

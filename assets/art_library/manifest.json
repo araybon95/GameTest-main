@@ -6142,6 +6142,39 @@
       ]
     },
     {
+      "file": "presentation/guild_hall/banner.png",
+      "resource": "res://assets/art_library/presentation/guild_hall/banner.png",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "references": [
+        "scenes/hub/guild_hall.gd"
+      ]
+    },
+    {
+      "file": "presentation/guild_hall/decor.png",
+      "resource": "res://assets/art_library/presentation/guild_hall/decor.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "scenes/hub/guild_hall.gd"
+      ]
+    },
+    {
+      "file": "presentation/guild_hall/interior.png",
+      "resource": "res://assets/art_library/presentation/guild_hall/interior.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": [
+        "scenes/hub/guild_hall.gd"
+      ]
+    },
+    {
       "file": "presentation/rooms/bandit_camp.png",
       "resource": "res://assets/art_library/presentation/rooms/bandit_camp.png",
       "dimensions": [
@@ -6238,7 +6271,9 @@
         1672,
         941
       ],
-      "references": []
+      "references": [
+        "scenes/hub/guild_hall.gd"
+      ]
     },
     {
       "file": "presentation/settlement/chapel_attendant.png",
