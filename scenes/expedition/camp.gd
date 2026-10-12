@@ -12,7 +12,8 @@ func _ready() -> void:
 func refresh() -> void:
 	clear_screen()
 	panel(Rect2(0, 0, 1920, 1080), Color("#0F0B10"))
-	var backdrop := picture(State.floor_background("camp"), Rect2(0, 0, 1920, 815))
+	var backdrop := picture(preload("res://scripts/room_scene_art.gd").path_for(Scenery.theme_for(State.selected_expedition,State.floor_index),"camp"), Rect2(0, 0, 1920, 815))
+	backdrop.name = "CampBackground"
 	backdrop.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	var floor_theme: String = Scenery.theme_for(State.selected_expedition,State.floor_index)
 	var ambience = Scenery.new()
@@ -20,7 +21,7 @@ func refresh() -> void:
 	ambience.size = Vector2(1920,815)
 	ambience.ground_y = 690.0
 	ambience.scene_theme = floor_theme
-	ambience.fire_position = {"bandit":Vector2(990,650),"beast":Vector2(990,650),"keep":Vector2(790,455),"medical":Vector2(220,390)}.get(floor_theme,Vector2(990,650))
+	ambience.fire_position = Vector2(998,650)
 	ambience.show_foreground = false
 	ambience.fire_spent = State.floors[State.floor_index][State.room_position].get("camp_used",false)
 	add_child(ambience)
@@ -60,6 +61,10 @@ func refresh() -> void:
 		camper.position = Vector2(x+140-camper.size.x*.5,410)
 		camper.modulate *= Scenery.tint(floor_theme)
 		Scenery.apply_hero_palette(camper,hero_id,str(State.hero_colors.get(hero_id,"original")))
+		var idle := preload("res://scenes/expedition/camp_actor.gd").new()
+		idle.alive = not state.get("dead",false)
+		idle.spent = used
+		camper.add_child(idle)
 		panel(Rect2(x - 5, 700, 300, 98), Color(0.07, 0.05, 0.07, 0.9))
 		label_at(str(State.hero(hero_id)["name"]).to_upper(), Vector2(x + 12, 708), 270, 22)
 		label_at(str(State.HEROES[hero_id]["name"]),Vector2(x+12,738),270,16)

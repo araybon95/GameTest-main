@@ -16,7 +16,7 @@ func run() -> void:
  var hero: TextureRect = battle.hero_portraits["warden"]
  var hp: int = battle.hero_state["warden"]["hp"]
  var enemy_hp: int = battle.enemy_hp
- var backdrop: TextureRect = battle.get_node("BattlefieldBackdrop/BackgroundArt")
+ var backdrop: TextureRect = battle.get_node("BattlefieldBackdrop/BattlefieldLayers/RoomBackground")
  var backdrop_rect: Rect2 = backdrop.get_rect()
  var backdrop_pivot: Vector2 = backdrop.pivot_offset
  boss.set_meta("boss",true)

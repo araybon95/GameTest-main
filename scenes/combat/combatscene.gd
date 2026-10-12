@@ -1566,7 +1566,7 @@ func _create_card_view(card_id: String, card: Dictionary) -> Button:
 	if level > 0:
 		header += " ★%d" % level
 	(button.get_node("Contents/Header") as Label).text = header
-	var art_path: String = "res://assets/ui/skills/%s.svg" % card_id
+	var art_path: String = preload("res://scripts/painted_skill_art.gd").path_for(card_id)
 	if not ResourceLoader.exists(art_path): art_path = CARD_ART_DIR + card_id + ".png"
 	picture.texture = _load_texture(art_path)
 	picture.visible = picture.texture != null
@@ -1707,6 +1707,14 @@ func _build_enemy_cards() -> void:
 		(view.get_node("EnemyIntent") as Label).add_theme_font_size_override("font_size", 12)
 		(view.get_node("EnemyIntent") as Label).autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		_place(view.get_node("HealthBar"), Rect2(12, 408, 226, 14))
+		if not view.has_node("VitalCaption"):
+			var vital := _make_label("",13,Color("#FFF0D9"),true)
+			vital.name = "VitalCaption"
+			vital.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			vital.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			vital.add_theme_color_override("font_shadow_color",Color.BLACK)
+			vital.add_theme_constant_override("shadow_offset_y",2)
+			view.add_child(vital)
 		var badges = view.get_node_or_null("StatusStrip")
 		if badges == null:
 			badges = preload("res://scenes/combat/status_strip.gd").new()
@@ -1740,22 +1748,23 @@ func _refresh_enemies() -> void:
 		var classification: String = str(entry.get("creature_class",GameState.creature(str(entry["creature"])).get("creature_class","Corrupted")))
 		classification += " · Cocoon" if entry.get("cocoon",false) else " · Boss" if entry["boss"] else " · " + GameState.Depth.role(str(entry["creature"]),bool(entry["support"]))
 		var display_name: String = enemy_name.replace("Creation of Anguish: ","Anguish ").replace("The Coterie: ","").trim_prefix("Support ")
-		label.text = ("▶ " if index == original else "") + "P%d · %s\n%s\nHP %d / %d · Block %d" % [enemy_position(index),display_name,classification,enemy_hp,enemy_max_hp,enemy_block]
+		label.text = ("▶ " if index == original else "") + "P%d · %s\n%s" % [enemy_position(index),display_name,classification]
 		var intent: Label = view.get_node("EnemyIntent")
-		intent.text = ("Stage %d / 3\n" % (int(entry.get("phase_index", 0)) + 1) if entry.has("phase_creatures") else "") + _enemy_intent_text() + "\n" + Rules.status_text(entry["statuses"])
+		intent.text = _enemy_intent_text()
+		view.get_node("VitalCaption").text = "%d / %d HP · Block %d" % [enemy_hp,enemy_max_hp,enemy_block]
+		intent.add_theme_font_size_override("font_size",15)
+		intent.tooltip_text = "Stage %d / 3" % (int(entry.get("phase_index",0))+1) if entry.has("phase_creatures") else ""
 		view.get_node("StatusStrip").sync(entry["statuses"],int(entry.get("weak",0)))
 		intent.text = intent.text.strip_edges()
 		var boss_hint: String = GameState.Mechanics.boss_hint(str(entry["creature"]), round_number)
 		if not boss_hint.is_empty():
-			intent.text = intent.text.strip_edges() + "\n" + boss_hint
-			intent.add_theme_font_size_override("font_size", 12)
+			intent.tooltip_text += "\n" + boss_hint
 		if entry.get("surprised", false):
-			intent.text = intent.text.strip_edges() + "\nSurprised: −30% DMG · 70% hit"
-			intent.add_theme_font_size_override("font_size", 12)
+			intent.tooltip_text += "\nSurprised: −30% DMG · 70% hit"
 		if enemy_mark_bonus > 0:
-			intent.text += " · Mark +%d" % enemy_mark_bonus
+			intent.tooltip_text += " · Mark +%d" % enemy_mark_bonus
 		if enemy_weak_rounds > 0:
-			intent.text += " · Weak %d" % enemy_weak_rounds
+			intent.tooltip_text += " · Weak %d" % enemy_weak_rounds
 		var meter: ProgressBar = view.get_node("HealthBar")
 		meter.max_value = enemy_max_hp
 		meter.value = enemy_hp
@@ -2005,14 +2014,8 @@ func _ground_battlefield() -> void:
 	backdrop.stretch_mode = TextureRect.STRETCH_SCALE
 	# Use the same optional layered setting as the room and its approach.
 	var scenery_theme: String = preload("res://scripts/dungeon_scenery.gd").theme_for(GameState.selected_expedition,GameState.floor_index)
-	var local_profile: Variant = preload("res://scripts/local_dungeon_art.gd").load_profile_files(scenery_theme,GameState.floor_index)
-	var layers: Control
-	if local_profile is Dictionary:
-		layers = preload("res://scripts/local_hallway_layers.gd").new()
-		layers.profile = local_profile
-	else:
-		layers = preload("res://scripts/hallway_scenery.gd").new()
-		layers.scene_theme = scenery_theme
+	var layers: Control = preload("res://scripts/room_scene_art.gd").new()
+	layers.scene_theme = scenery_theme
 	layers.ground_y = GROUND_Y
 	layers.size = stage.size
 	stage.add_child(layers)
@@ -2066,10 +2069,8 @@ func _plant_combatant(view: Button, portrait: TextureRect, height: float) -> voi
 	shadow.scale = Vector2(1.65,1.15) if portrait.get_meta("boss",false) else Vector2(0.8,0.85) if portrait.get_meta("support",false) else Vector2.ONE
 	shadow.position = Vector2(view.size.x*0.5,foot-2)
 	shadow.z_index = -1
-	var tint := Color("#FFF2E4")
-	var theme_path: String = GameState.floor_background("combat")
-	if theme_path.contains("apothecary"): tint = Color("#EBF9FF")
-	elif theme_path.contains("keep"): tint = Color("#F0F3FF")
+	var room_theme: String = preload("res://scripts/dungeon_scenery.gd").theme_for(GameState.selected_expedition,GameState.floor_index)
+	var tint: Color = preload("res://scripts/room_scene_art.gd").lighting(room_theme)
 	if str(portrait.get_meta("hero_id","")) == "crusader": tint = tint.darkened(0.13)
 	if portrait.material is ShaderMaterial and portrait.get_node_or_null("StatusVisual") != null:
 		portrait.material.set_shader_parameter("ambient",Vector3(tint.r,tint.g,tint.b))
@@ -2112,9 +2113,11 @@ func _configure_enemy_stage(index: int) -> void:
 	portrait.set_meta("support",support)
 	portrait.set_meta("creature",str(entry["creature"]))
 	portrait.set_meta("encounter_theme",_encounter_theme(str(entry["creature"])))
-	_place(view.get_node("EnemyInfo"),Rect2(10,282,width-20,68))
-	_place(view.get_node("EnemyIntent"),Rect2(10,350,width-20,58))
+	_place(view.get_node("EnemyInfo"),Rect2(10,282,width-20,48))
+	_place(view.get_node("EnemyIntent"),Rect2(10,333,width-20,72))
+	view.get_node("EnemyIntent").clip_text = true
 	_place(view.get_node("HealthBar"),Rect2(12,408,width-24,14))
+	_place(view.get_node("VitalCaption"),Rect2(12,405,width-24,21))
 	_place(view.get_node("StatusStrip"),Rect2(12,430,width-24,26))
 	view.get_node("EnemyInfo").add_theme_font_size_override("font_size",14)
 

@@ -14,6 +14,7 @@ var was_visible: bool = true
 var complete: bool = false
 var tint: Color = Color("#CC554B")
 var sounded: bool = false
+var staging_motif: String = "gallows"
 
 func _ready() -> void:
  set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -28,6 +29,7 @@ func _ready() -> void:
  if int(entry.get("phase",1)) > 1: duration = 2.25
  original.visible = false
  tint = {"remade":Color("#D96867"),"keep":Color("#B0CCD9"),"moth":Color("#B3D497")}.get(str(entry.get("theme","bandit")),Color("#CC554B"))
+ staging_motif = {"remade":"stitched_halo","keep":"broken_crown","moth":"wing_vigil"}.get(str(entry.get("theme","bandit")),"gallows")
  model = TextureRect.new()
  model.texture = entry.get("texture",original.texture)
  model.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -100,6 +102,7 @@ func _draw() -> void:
  draw_line(Vector2(570,693),Vector2(1350,693),line_color,1)
  draw_circle(Vector2(960,478),4,Color("#EED8B1"))
  if model != null:
+  draw_guardian_motif(fade)
   # A restrained, theme-colored wake frames the actual boss without obscuring its body.
   var foot: Vector2 = model.position+Vector2(model.size.x*0.5,model.size.y)
   var width: float = minf(220,model.size.x*0.5+24)
@@ -115,6 +118,28 @@ func _draw() -> void:
    fracture.a = fade*0.65
    for index in range(int(entry.get("total",1))):
     draw_line(Vector2(916+index*44,702),Vector2(936+index*44,707),fracture if index < int(entry.get("phase",1)) else wake,3,true)
+
+func draw_guardian_motif(fade: float) -> void:
+ var center: Vector2 = model.position+model.size*Vector2(0.5,0.42)
+ var ink := tint.darkened(0.4)
+ ink.a = fade*0.32
+ var radius: float = minf(205.0,model.size.y*0.48)
+ match staging_motif:
+  "stitched_halo":
+   draw_arc(center,radius,0,TAU,48,ink,3,true)
+   for i in range(12):
+    var ray := Vector2.from_angle(i*TAU/12)
+    draw_line(center+ray*(radius-8),center+ray*(radius+14),ink,2,true)
+  "broken_crown":
+   var points := PackedVector2Array([center+Vector2(-radius,40),center+Vector2(-radius,-65),center+Vector2(-radius*0.5,-20),center+Vector2(0,-radius),center+Vector2(radius*0.5,-20),center+Vector2(radius,-65),center+Vector2(radius,40)])
+   draw_polyline(points,ink,4,true)
+  "wing_vigil":
+   for side in [-1,1]:
+    draw_arc(center+Vector2(side*radius*0.4,0),radius*0.75,-PI*0.8,PI*0.8,36,ink,3,true)
+    draw_line(center+Vector2(side*radius,-radius*0.5),center+Vector2(side*radius*0.3,radius*0.8),ink,2,true)
+  _:
+   draw_line(center+Vector2(-radius,-radius),center+Vector2(radius,-radius),ink,4,true)
+   for side in [-1,1]: draw_line(center+Vector2(side*radius,-radius),center+Vector2(side*radius,radius),ink,3,true)
 
 func finish() -> void:
  if complete: return

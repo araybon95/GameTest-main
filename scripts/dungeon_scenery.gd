@@ -54,7 +54,8 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func _process(delta: float) -> void:
-	time += delta
+	var runtime := get_node_or_null("/root/GameSettings")
+	if runtime == null or runtime.ambient_motion: time += delta
 	queue_redraw()
 
 func _draw() -> void:
@@ -109,3 +110,6 @@ func draw_fire() -> void:
 	for index in range(4):
 		var drift: float = fposmod(time*24+index*27,120)
 		draw_circle(fire_position+Vector2(sin(time+index)*28,-drift),1.8,Color(0.9,0.5,0.25,(1-drift/120)*.45))
+	for index in range(4):
+		var rise: float = fposmod(time*12+index*29,145)
+		ellipse(fire_position+Vector2(sin(time*0.6+index)*18,-30-rise),Vector2(16+rise*0.13,9+rise*0.08),Color(0.12,0.105,0.12,(1-rise/145)*0.14))

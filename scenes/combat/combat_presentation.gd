@@ -145,7 +145,8 @@ func next() -> void:
   add_child(tell)
 
 func _prepare_backdrop() -> void:
- var original: TextureRect = get_parent().get_node_or_null("BattlefieldBackdrop/BackgroundArt")
+ var original: TextureRect = get_parent().get_node_or_null("BattlefieldBackdrop/BattlefieldLayers/RoomBackground")
+ if original == null: original = get_parent().get_node_or_null("BattlefieldBackdrop/BackgroundArt")
  if original == null or original.texture == null: return
  # Move only the actual scenery inside its stage clip. A duplicate backdrop
  # above the actors would obscure the dimmed, nonparticipating combatants.
@@ -269,7 +270,7 @@ func _process(delta: float) -> void:
  var boss: bool = active.get("source_boss",false)
  var weight: float = 1.35 if boss else 1.0
  var motion: float = clampf(motion_strength,0,1)
- var zoom: float = sin(clampf(clock/duration,0,1)*PI)*0.032*motion
+ var zoom: float = smoothstep(0.0,0.14,clock)*(1.0-smoothstep(0.42,0.76,clock))*(0.065 if boss else 0.045)*motion
  var shake: float = sin(clock*135)*exp(-maxf(0,clock-0.28)*28)*(4.0 if boss else 1.6)*motion if clock >= 0.28 and clock < 0.45 and harmful else 0.0
  var source_shift: float = lunge * (95.0 if str(active["title"]).to_lower().contains("charge") else 65.0 if active["attack_kind"] == "sword" else 12.0)*weight - anticipation*(23 if boss else 12)
  var tilt: float = 0.12 if kind == "sword" else -0.045
@@ -281,6 +282,10 @@ func _process(delta: float) -> void:
   source_shift = float(movement["source_x"])*weight
   source_rotation = float(movement["rotation"])
   impact = float(movement["reaction"])
+  if active["attack_kind"] == "sword" and harmful and profile in ["light","heavy","charge"]:
+   var gap: float = float(active["target_position"].x)-(float(active["source_position"].x)+float(active["source_size"].x)) if hero else float(active["source_position"].x)-(float(active["target_position"].x)+float(active["target_size"].x))
+   var contact_weight: float = float(frame["flight"]) if frame["phase"] == "release" else 1.0 if frame["phase"] == "hold" else 1.0-float(frame["recovery"]) if frame["phase"] == "recover" else 0.0
+   source_shift += minf(160.0,maxf(0,gap-70)*0.45)*contact_weight
  fighters[0].position = source_position + Vector2(direction*source_shift*motion,0)
  if profile == "charge" and hero and motion > 0 and get_parent().has_method("_arrange_party"):
   # A changed weapon silhouette must not cross the ally displaced by the charge.
@@ -314,7 +319,8 @@ func _process(delta: float) -> void:
 func _draw() -> void:
  if active.is_empty(): return
  var fade: float = minf(1.0,age/0.06) * minf(1.0,(float(active.get("duration",duration))-age)/0.10)
- draw_rect(Rect2(Vector2.ZERO,size),Color(0.015,0.012,0.018,0.74*fade))
+ draw_rect(Rect2(0,0,size.x,600),Color(0.015,0.012,0.018,0.74*fade))
+ draw_rect(Rect2(0,600,size.x,maxf(0,size.y-600)),Color(0.015,0.012,0.018,0.30*fade))
  draw_rect(Rect2(0,0,size.x,25),Color(0.006,0.004,0.008,0.7*fade))
  # Effects draw above portraits through a separate child canvas.
 func _draw_effects(canvas: Node2D) -> void:

@@ -47,7 +47,7 @@ func run() -> void:
 	await settle()
 	assert(current_scene.has_method("_play_card"))
 	assert(current_scene.GROUND_Y == Travel.GROUND_Y)
-	assert(current_scene.get_node("BattlefieldBackdrop/BattlefieldLayers").background.texture.resource_path.contains("hallway_bandit_panorama"), "Combat retains the built-in passage theme without a local installation")
+	assert(current_scene.get_node("BattlefieldBackdrop/BattlefieldLayers").background.texture.resource_path.ends_with("rooms/bandit_combat.png"), "Combat uses the independent themed room backdrop without a local installation")
 	assert(current_scene.journey_map.visible and not current_scene.journey_log.visible)
 	current_scene.toggle_journey_panel()
 	assert(not current_scene.journey_map.visible and current_scene.journey_log.visible)

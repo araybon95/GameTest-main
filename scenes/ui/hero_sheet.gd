@@ -171,7 +171,7 @@ func build_character(hero: Dictionary, state: Dictionary) -> void:
 		panel(Rect2(pos, Vector2(202, 119)), Color("#191314"), Color("#594932"))
 		var art := TextureRect.new()
 		art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		var path := "res://assets/ui/skills/%s.svg" % ability_id
+		var path := preload("res://scripts/painted_skill_art.gd").path_for(str(ability_id))
 		if not ResourceLoader.exists(path): path = "res://assets/generated/%s.png" % ability_id
 		if ResourceLoader.exists(path): art.texture = load(path)
 		art.position = pos + Vector2(8, 9)
