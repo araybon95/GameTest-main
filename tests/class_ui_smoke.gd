@@ -36,7 +36,7 @@ func run() -> void:
  screen.choose(1,1)
  await process_frame
  assert(screen.get_node("EmbarkButton").disabled)
- assert(screen.get_node("StageEdgeOverlay").mouse_filter == Control.MOUSE_FILTER_IGNORE)
+ assert(screen.get_node("RegionMap").mouse_filter == Control.MOUSE_FILTER_IGNORE)
  assert(State.loot_rng.state == rng)
  print("PASS: five class borders, stable repeated decoration, input-transparent map overlay and unchanged dungeon locks/RNG")
  quit()

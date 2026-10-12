@@ -30,6 +30,13 @@ func _draw() -> void:
   if seal != null: draw_texture_rect(seal,rect,false,Color(0.45,0.43,0.46) if sealed else Color.WHITE)
   if selected: draw_arc(size*.5,size.x*.47,0,TAU,48,tint,2.5,true)
   if sealed:
+   if size.x <= 64:
+    var center := size*0.5
+    draw_arc(center-Vector2(0,4),9,PI,TAU,16,Color("#A49B8A"),2,true)
+    draw_rect(Rect2(center-Vector2(11,1),Vector2(22,19)),Color("#191619"))
+    draw_rect(Rect2(center-Vector2(11,1),Vector2(22,19)),Color("#A49B8A"),false,1.5)
+    draw_circle(center+Vector2(0,7),2,Color("#A49B8A"))
+    return
    for direction in [-1,1]:
     for i in range(6):
      var p := Vector2(18+i*10,18+i*10 if direction == 1 else size.y-18-i*10)
