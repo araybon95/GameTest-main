@@ -131,7 +131,8 @@ func _hero_card(hero_id: String, tag_text: String, highlighted: bool) -> Button:
 	var frame := PanelContainer.new()
 	frame.custom_minimum_size = Vector2(0, 160)
 	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	frame.add_theme_stylebox_override("panel", _style(Color("#25171D"), Color(GOLD)))
+	frame.add_theme_stylebox_override("panel", _style(Color(0.06,0.045,0.05,0.12), Color(GOLD)))
+	frame.set_meta("untextured",true)
 	contents.add_child(frame)
 	if hero_id != "":
 		var texture: Texture2D = _load_texture(str(GameState.hero(hero_id).get("art", "")))

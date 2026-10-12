@@ -40,36 +40,25 @@ static func class_color(id: String) -> Color:
  return {"crusader":Color("#B5A09D"),"occultist":Color("#A990C7"),"ranger":Color("#92AA7A"),"healer":Color("#D8C38D"),"warden":Color("#98ACB9")}.get(id,Color("#AC9776"))
 
 func draw_class_border() -> void:
- # Ornaments stay inside a ten-pixel border, leaving labels and art unobstructed.
  var tint := class_color(hero_id)
  var owner := get_parent()
  if owner is BaseButton:
-  if owner.disabled: tint = tint.darkened(0.48)
-  elif owner.is_hovered() or owner.has_focus(): tint = tint.lightened(0.25)
- draw_rect(Rect2(5,5,size.x-10,size.y-10),Color("#08090B"),false,4)
- draw_rect(Rect2(5,5,size.x-10,size.y-10),tint.darkened(0.3),false,1)
- for side in [4.0,size.x-4.0]:
-  var inward: float = 1.0 if side < size.x*0.5 else -1.0
-  for y in range(25,int(size.y)-18,30):
-   var point := Vector2(side,y)
-   match hero_id:
-    "crusader":
-     draw_line(point-Vector2(0,11),point+Vector2(0,11),tint,2,true)
-     draw_polyline(PackedVector2Array([point+Vector2(-inward*3,-5),point+Vector2(inward*4,0),point+Vector2(-inward*3,5)]),tint,1.6,true)
-    "occultist":
-     draw_polyline(PackedVector2Array([point+Vector2(0,-6),point+Vector2(inward*4,-2),point+Vector2(0,5),point+Vector2(0,-6),point+Vector2(-inward*3,1)]),tint,1.4,true)
-    "ranger":
-     draw_colored_polygon(PackedVector2Array([point-Vector2(0,6),point+Vector2(inward*4,0),point+Vector2(0,5)]),tint)
-    "healer":
-     draw_line(point-Vector2(0,5),point+Vector2(0,5),tint,1.6,true)
-     draw_line(point-Vector2(3,0),point+Vector2(3,0),tint,1.6,true)
-    _:
-     draw_circle(point,2.2,tint)
- if hero_id == "occultist":
-  draw_arc(Vector2(size.x*0.5,7),5,0,TAU,20,tint,1.3,true)
- elif hero_id == "crusader":
-  draw_line(Vector2(size.x*.5-15,6),Vector2(size.x*.5+15,6),tint,2)
-  for x in [-10,0,10]: draw_line(Vector2(size.x*.5+x-3,3),Vector2(size.x*.5+x+3,10),tint,1.5)
+  if owner.disabled: tint = tint.darkened(0.5)
+  elif owner.is_hovered() or owner.has_focus(): tint = tint.lightened(0.18)
+ # One engraved class mark and a fine header rule; ornaments never cross text.
+ draw_rect(Rect2(5,5,size.x-10,size.y-10),tint.darkened(0.48),false,1)
+ draw_line(Vector2(28,8),Vector2(size.x-12,8),Color(tint,0.5),1,true)
+ var p := Vector2(17,9)
+ match hero_id:
+  "warden": draw_polyline(PackedVector2Array([p+Vector2(-5,-4),p+Vector2(5,-4),p+Vector2(4,2),p+Vector2(0,6),p+Vector2(-4,2),p+Vector2(-5,-4)]),tint,1.3,true)
+  "ranger":
+   draw_line(p+Vector2(-5,4),p+Vector2(5,-4),tint,1.3,true)
+   draw_line(p+Vector2(0,-4),p+Vector2(5,-4),tint,1.3,true)
+  "occultist": draw_arc(p,5,0.4,5.4,20,tint,1.3,true)
+  "healer":
+   draw_line(p+Vector2(0,-5),p+Vector2(0,5),tint,1.5,true)
+   draw_line(p+Vector2(-4,-1),p+Vector2(4,-1),tint,1.5,true)
+  "crusader": draw_polyline(PackedVector2Array([p+Vector2(-5,4),p+Vector2(-3,-3),p+Vector2(0,3),p+Vector2(3,-4),p+Vector2(5,4)]),tint,1.4,true)
 
 func draw_painted_frame() -> void:
  # Nine-slice only the border: inventory dividers and tabs never cover text.

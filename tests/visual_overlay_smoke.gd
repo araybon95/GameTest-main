@@ -16,7 +16,7 @@ func run() -> void:
 	host.add_child(panel)
 	Overlays.frame(panel)
 	Overlays.frame(panel)
-	assert(panel.get_child_count() == 1 and panel.get_node("IronFittings").mouse_filter == Control.MOUSE_FILTER_IGNORE)
+	assert(panel.get_child_count() == 2 and panel.get_node("IronFittings").mouse_filter == Control.MOUSE_FILTER_IGNORE)
 	assert(panel.get_node("IronFittings").painted_frame == null)
 	var label := Label.new()
 	label.size = Vector2(920,60)

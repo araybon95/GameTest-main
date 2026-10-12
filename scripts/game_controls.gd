@@ -168,6 +168,8 @@ func open_guide() -> void:
 	note.size = Vector2(1140, 40)
 	note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	panel.add_child(note)
+	overlay.set_meta("grimdark_scope",true)
+	get_node("/root/GothicPresentation").decorate(overlay)
 	close.grab_focus()
 
 func close_guide() -> void:

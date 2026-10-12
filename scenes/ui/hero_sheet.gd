@@ -86,6 +86,9 @@ func refresh() -> void:
 		switch.set_meta("hero_id", id)
 		preload("res://scripts/visual_overlays.gd").frame(switch, id)
 
+	set_meta("grimdark_scope",true)
+	get_node("/root/GothicPresentation").decorate(self)
+
 func build_equipment() -> void:
 	band("EQUIPMENT", Rect2(135, 211, 190, 35), 20)
 	for index in range(State.Items.SLOTS.size()):
@@ -365,11 +368,7 @@ func panel(rect: Rect2, fill: Color, border: Color) -> void:
 	if rect.size.y > 80: preload("res://scripts/visual_overlays.gd").frame(result, hero_id)
 
 func frame(fill: Color, border: Color) -> StyleBoxFlat:
-	var box := StyleBoxFlat.new()
-	box.bg_color = fill
-	box.border_color = border
-	box.set_border_width_all(2)
-	return box
+	return preload("res://scripts/ui_skin.gd").frame(fill,border)
 
 func label_at(value: String, position: Vector2, width: float, font_size: int, color: Color = Color("#EADFC7")) -> Label:
 	var result := Label.new()

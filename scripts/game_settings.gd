@@ -152,6 +152,12 @@ func open_settings() -> void:
 	background.color = Color(0.035, 0.025, 0.04, 0.98)
 	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	overlay.add_child(background)
+	var backing := Panel.new()
+	backing.position = Vector2(145,72)
+	backing.size = Vector2(1630,960)
+	backing.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	backing.add_theme_stylebox_override("panel",preload("res://scripts/ui_skin.gd").frame(Color("#111012"),Color("#665B4E")))
+	overlay.add_child(backing)
 	text("SETTINGS & SAVED JOURNEYS", Vector2(180, 100), 1550, 40)
 	for index in range(4):
 		var key: String = ["master", "music", "effects", "brightness"][index]
@@ -216,6 +222,8 @@ func open_settings() -> void:
 		load_button.tooltip_text = str(info.error) if not info.loadable else "Resume this saved party and journey."
 	notice = text("Changes apply immediately. F10 or Escape to close.", Vector2(180, 975), 1200, 20)
 	action_button("CLOSE", Vector2(1510, 965), close_settings)
+	overlay.set_meta("grimdark_scope",true)
+	get_node("/root/GothicPresentation").decorate(overlay)
 
 func set_local_dungeon_art(is_enabled: bool) -> void:
 	var source_root: String = LocalArt.get_root()

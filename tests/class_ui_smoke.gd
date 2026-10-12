@@ -17,8 +17,10 @@ func run() -> void:
   Visual.frame(card,id)
   Visual.frame(card,id)
   var trim = card.get_node("IronFittings")
-  assert(card.get_child_count() == 1 and trim.hero_id == id)
+  assert(card.get_child_count() == 2 and trim.hero_id == id)
   assert(trim.mouse_filter == Control.MOUSE_FILTER_IGNORE)
+  assert(card.get_node("InkSurface").mouse_filter == Control.MOUSE_FILTER_IGNORE)
+  assert(card.get_node("InkSurface").material.get_shader_parameter("illustrated"))
   assert(trim.class_color(id) != trim.class_color("unknown"))
   card.disabled = true
   trim.queue_redraw()
@@ -28,6 +30,8 @@ func run() -> void:
  await process_frame
  assert(screen.get_node("Expedition_village/IronFittings").visible == false)
  assert(screen.get_node("Expedition_path/IronFittings").visible == false)
+ assert(not screen.get_node("Expedition_path/InkSurface").visible)
+ assert(not screen.get_node("Expedition_village/InkSurface").visible)
  assert(screen.get_node("Dungeon_old_road/IronFittings").hero_id == "warden")
  screen.choose_region(1)
  await process_frame

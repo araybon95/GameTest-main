@@ -55,6 +55,7 @@ func refresh() -> void:
 		var region_rect := Rect2(center - footprint * 0.5, footprint)
 		var hotspot := button_at("", region_rect, choose_region.bind(r))
 		hotspot.get_node("IronFittings").hide()
+		hotspot.get_node("InkSurface").hide()
 		hotspot.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		hotspot.name = "Expedition_" + ("village" if r == 0 else "path")
 		var marker := preload("res://scenes/ui/expedition_decoration.gd").new()
@@ -87,6 +88,7 @@ func refresh() -> void:
 		var center: Vector2 = map_rect.position + Vector2(0.25 if index == 0 else 0.76, 0.70) * map_rect.size
 		var sealed := button_at("", Rect2(center - Vector2(100, 55), Vector2(200, 110)), show_future.bind(index))
 		sealed.get_node("IronFittings").hide()
+		sealed.get_node("InkSurface").hide()
 		sealed.name = "FutureExpedition_%d" % index
 		sealed.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		sealed.tooltip_text = "Sealed location · Future expedition"
@@ -106,6 +108,7 @@ func refresh() -> void:
 		preload("res://scripts/visual_overlays.gd").frame(option,"warden" if region_index == 0 else "occultist")
 		option.get_node("IronFittings").painted_frame = null
 		option.get_node("IronFittings").hide()
+		option.get_node("InkSurface").hide()
 		var seal := preload("res://scenes/ui/expedition_decoration.gd").new()
 		seal.name = "DungeonSeal"
 		seal.mode = "seal"
@@ -148,6 +151,7 @@ func build_manifest() -> void:
 	var footer := panel(Rect2(0,945,1920,135),Color(0.045,0.035,0.045,0.95))
 	footer.name = "PartyManifest"
 	footer.get_node("IronFittings").hide()
+	footer.get_node("InkSurface").hide()
 	label_at("PARTY",Vector2(520,953),75,16).add_theme_color_override("font_color",Color("#BCAF98"))
 	label_at("%d GOLD" % State.gold,Vector2(55,967),335,27)
 	label_at("%d inventory stacks" % State.inventory.size(),Vector2(55,1014),335,17).add_theme_color_override("font_color",Color("#A99C8B"))
@@ -158,6 +162,7 @@ func build_manifest() -> void:
 		var card := button_at("",Rect2(pos,Vector2(250,110)),inspect_hero.bind(id))
 		card.name = "PartyHero_"+id
 		card.get_node("IronFittings").hide()
+		card.get_node("InkSurface").hide()
 		var backing := StyleBoxFlat.new()
 		backing.bg_color = Color("#191518")
 		backing.border_color = Color("#4C4140")

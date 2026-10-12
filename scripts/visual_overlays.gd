@@ -39,6 +39,12 @@ class Banner extends Control:
 				draw_line(Vector2(30,y+3),Vector2(size.x-30,y+3),Color("#292626"),1)
 
 static func frame(panel: Control, hero_id: String = "") -> void:
+	if not panel.has_node("InkSurface"):
+		var surface = preload("res://scenes/ui/ink_surface.gd").new()
+		surface.name = "InkSurface"
+		panel.add_child(surface)
+		panel.move_child(surface,0)
+	panel.get_node("InkSurface").configure(hero_id)
 	if not panel.has_node("IronFittings"):
 		var new_frame = Frame.new()
 		new_frame.name = "IronFittings"

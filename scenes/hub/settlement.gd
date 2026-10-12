@@ -13,49 +13,52 @@ const GOLD = "#C9A24B"
 const MUTED = "#9A8B86"
 
 const ART_MOTE = "res://assets/generated/mote.png"
-const ART_GLOW = "res://assets/generated/glow_warm.png"
 
 ## Hotspots over the painted vista. `pos` = centre and `size` = footprint, both in
 ## the 1920x1080 layout. `subtitle` is the line shown beneath the name on hover.
 ## `expeditions: true` opens the expedition list; `locked: true` shows a sealed
 ## note. Listed back-to-front: the road is last so it sits in front.
 const BUILDINGS: Array[Dictionary] = [
-	{"id": "graveyard", "name": "The Graveyard", "subtitle": "Names and deeds of those who fell", "pos": [350, 580], "size": [195, 170], "highlight": Color("#B8C4B7"), "glow_scale": 1.0, "highlight_art": "res://assets/generated/graveyard_ink_marker.png", "scene": "res://scenes/hub/graveyard.tscn", "locked": false},
+	{"id": "graveyard", "name": "The Graveyard", "subtitle": "Names and deeds of those who fell", "pos": [350, 580], "size": [195, 170], "scene": "res://scenes/hub/graveyard.tscn", "locked": false},
 	{
 		"id": "apothecary", "name": "The Infested Apothecary", "subtitle": "Clear four rooms to restore the medical ward",
-		"pos": [635, 305], "size": [175, 205], "highlight": Color("#8CDDAD"), "glow_scale": 0.9,
+		"pos": [635, 305], "size": [175, 205],
 		"scene": "res://scenes/hub/apothecary.tscn", "locked": false,
 	},
 	{
 		"id": "barracks", "name": "The Barracks", "subtitle": "Compose your party of three",
-		"pos": [220, 260], "size": [330, 400], "highlight": Color("#A9B9C8"), "glow_scale": 0.92,
+		"pos": [220, 260], "size": [330, 400],
 		"scene": "res://scenes/hub/barracks.tscn", "locked": false,
 	},
 
 	{
 		"id": "forge", "name": "The Forge", "subtitle": "Spend Gold to temper your abilities",
-		"pos": [1660, 700], "size": [340, 340], "highlight": Color("#F58B43"), "glow_scale": 0.96,
+		"pos": [1660, 700], "size": [340, 340],
 		"scene": "res://scenes/hub/forge.tscn", "locked": false,
 	},
 	{
 		"id": "road", "name": "The Old Road", "subtitle": "Take the road on an expedition",
-		"pos": [960, 805], "size": [390, 350], "highlight": Color("#D6B66A"), "glow_scale": 1.0,
-		"highlight_art": "res://assets/generated/building_gate.png", "highlight_alpha": 0.24,
+		"pos": [960, 805], "size": [390, 350],
 		"scene": "", "locked": false, "expeditions": true,
 	},
 	{
 		"id": "chapel", "name": "The Chapel Archive", "subtitle": "Dungeon books, creature records and lore",
-		"pos": [855, 175], "size": [145, 340], "highlight": Color("#D89A61"), "glow_scale": 1.0,
-		"highlight_art": "res://assets/generated/building_bestiary.png", "highlight_alpha": 0.55,
+		"pos": [855, 175], "size": [145, 340],
 		"scene": "res://scenes/hub/bestiary.tscn", "locked": false,
 	},
-	{"id": "watchtower", "name": "The Watchtower", "subtitle": "Reclaim the scouts' tower", "pos": [1250, 400], "size": [165, 220], "highlight": Color("#AAC7DC"), "service": "watchtower", "locked": false},
-	{"id": "infirmary", "name": "The Infirmary", "subtitle": "Restore the abandoned sickhouse", "pos": [535, 610], "size": [165, 185], "highlight": Color("#8CDDAD"), "service": "infirmary", "locked": false},
-	{"id": "workshop", "name": "The Workshop", "subtitle": "Reclaim the craftsmen's quarter", "pos": [1335, 630], "size": [170, 190], "highlight": Color("#D6B66A"), "service": "workshop", "locked": false},
+	{"id": "watchtower", "name": "The Watchtower", "subtitle": "Reclaim the scouts' tower", "pos": [1250, 400], "size": [165, 220], "service": "watchtower", "locked": false},
+	{"id": "infirmary", "name": "The Infirmary", "subtitle": "Restore the abandoned sickhouse", "pos": [535, 610], "size": [165, 185], "service": "infirmary", "locked": false},
+	{"id": "workshop", "name": "The Workshop", "subtitle": "Reclaim the craftsmen's quarter", "pos": [1335, 630], "size": [170, 190], "service": "workshop", "locked": false},
 ]
 
 # Traced contours in the painted settlement's 1920x1080 coordinate space.
 const BUILDING_OUTLINES = {
+ "apothecary": [Vector2(534,319),Vector2(572,266),Vector2(600,211),Vector2(624,230),Vector2(635,209),Vector2(650,216),Vector2(651,255),Vector2(675,270),Vector2(680,309),Vector2(697,326),Vector2(698,373),Vector2(655,384),Vector2(609,372),Vector2(570,374),Vector2(546,360)],
+ "watchtower": [Vector2(1203,389),Vector2(1220,361),Vector2(1236,303),Vector2(1252,352),Vector2(1270,392),Vector2(1257,403),Vector2(1259,499),Vector2(1280,520),Vector2(1243,534),Vector2(1219,512),Vector2(1218,406)],
+ "infirmary": [Vector2(490,455),Vector2(517,414),Vector2(542,400),Vector2(565,438),Vector2(589,415),Vector2(614,449),Vector2(642,487),Vector2(627,498),Vector2(636,555),Vector2(600,574),Vector2(553,569),Vector2(510,546),Vector2(512,480)],
+ "forge": [Vector2(1457,682),Vector2(1502,605),Vector2(1548,525),Vector2(1569,508),Vector2(1595,536),Vector2(1682,562),Vector2(1718,601),Vector2(1790,663),Vector2(1916,717),Vector2(1919,1015),Vector2(1856,1036),Vector2(1731,1045),Vector2(1657,1028),Vector2(1599,1046),Vector2(1503,1000),Vector2(1487,841),Vector2(1446,815),Vector2(1462,782)],
+ "graveyard": [Vector2(273,554),Vector2(312,551),Vector2(348,558),Vector2(372,545),Vector2(414,561),Vector2(441,608),Vector2(420,656),Vector2(367,667),Vector2(308,645),Vector2(270,616)],
+ "road": [Vector2(838,956),Vector2(838,843),Vector2(852,782),Vector2(879,746),Vector2(921,715),Vector2(955,709),Vector2(986,726),Vector2(1023,752),Vector2(1050,796),Vector2(1068,861),Vector2(1068,967),Vector2(1022,975),Vector2(972,957),Vector2(916,964),Vector2(876,975)],
  "barracks": [Vector2(0,195),Vector2(106,141),Vector2(139,102),Vector2(174,107),Vector2(181,73),Vector2(221,79),Vector2(241,26),Vector2(249,0),Vector2(352,0),Vector2(353,59),Vector2(381,89),Vector2(417,116),Vector2(447,203),Vector2(483,256),Vector2(455,273),Vector2(460,400),Vector2(482,468),Vector2(447,505),Vector2(407,516),Vector2(396,543),Vector2(343,566),Vector2(286,568),Vector2(226,568),Vector2(171,552),Vector2(149,510),Vector2(92,482),Vector2(60,396),Vector2(28,383),Vector2(0,390)],
  "chapel": [Vector2(649,439),Vector2(683,352),Vector2(720,319),Vector2(758,252),Vector2(783,207),Vector2(779,145),Vector2(795,88),Vector2(809,36),Vector2(822,94),Vector2(843,151),Vector2(843,199),Vector2(868,248),Vector2(887,224),Vector2(893,149),Vector2(911,75),Vector2(923,45),Vector2(934,69),Vector2(938,0),Vector2(1030,0),Vector2(1050,60),Vector2(1074,134),Vector2(1065,158),Vector2(1089,210),Vector2(1085,468),Vector2(1081,493),Vector2(1040,480),Vector2(998,476),Vector2(956,482),Vector2(906,473),Vector2(847,496),Vector2(795,513),Vector2(752,540),Vector2(718,522),Vector2(683,498),Vector2(664,478)],
  "workshop": [Vector2(1208,637),Vector2(1232,590),Vector2(1257,540),Vector2(1282,518),Vector2(1298,472),Vector2(1312,527),Vector2(1342,545),Vector2(1377,552),Vector2(1407,588),Vector2(1434,639),Vector2(1405,645),Vector2(1404,724),Vector2(1360,741),Vector2(1307,731),Vector2(1280,749),Vector2(1239,727),Vector2(1241,652)]
@@ -129,17 +132,6 @@ func _building_size(building: Dictionary) -> Vector2:
 	return Vector2(float(s[0]), float(s[1]))
 
 
-func _building_texture(building: Dictionary) -> Texture2D:
-	var explicit_path: String = str(building.get("highlight_art", ""))
-	if explicit_path != "":
-		return _load_texture(explicit_path)
-	var id: String = str(building.get("id", ""))
-	var art_path: String = "res://assets/generated/building_%s.png" % id
-	if ResourceLoader.exists(art_path):
-		return _load_texture(art_path)
-	return _load_texture(ART_GLOW)
-
-
 func _build_atmosphere() -> void:
 	var atmosphere: Control = $Atmosphere
 	# Drifting dust motes.
@@ -182,89 +174,50 @@ func _make_hotspot(building: Dictionary) -> Button:
 	button.focus_mode = Control.FOCUS_ALL
 	button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 
-	# A building-shaped cutout is layered over the matching structure. The
-	# transparent PNG silhouette preserves the painted background everywhere else.
+	# Sample the SAME painted vista, with UVs in its original pixel space.
+	# No replacement building art can drift across roofs, walls or neighboring props.
 	var highlight := TextureRect.new()
 	highlight.name = "GlowHover"
-	highlight.texture = _building_texture(building)
-	highlight.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	highlight.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	highlight.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var highlight_scale: float = float(building.get("glow_scale", 0.86))
-	var hsize := footprint * highlight_scale
-	highlight.z_index = 1
-	highlight.size = hsize
-	highlight.position = (footprint - hsize) * 0.5
-	if str(building.get("id", "")) == "road":
-		highlight.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	var building_tint: Color = building.get("highlight", Color("#D89A61"))
-	var highlight_alpha: float = float(building.get("highlight_alpha", 0.28))
-	button.set_meta("highlight_alpha", highlight_alpha)
-	highlight.modulate = Color(building_tint.r, building_tint.g, building_tint.b, 0.0)
+	highlight.size = footprint
+	highlight.modulate.a = 0.0
+	button.set_meta("highlight_alpha",1.0)
 	button.add_child(highlight)
-	var id: String = str(building.get("id", ""))
-	if BUILDING_OUTLINES.has(id):
-		highlight.texture = null
-		highlight.position = -button.position
-		highlight.size = Vector2(1920,1080)
-		button.set_meta("highlight_alpha", 1.0)
-		# Open roof and wall paths leave the painted ground free of a baseline.
-		var glow_path: Array = BUILDING_OUTLINES[id]
-		match id:
-			"barracks": glow_path = glow_path.slice(25) + glow_path.slice(0, 20)
-			"chapel": glow_path = glow_path.slice(0, 26)
-			"workshop": glow_path = glow_path.slice(15) + glow_path.slice(0, 12)
-		for index in range(4):
-			var contour := Line2D.new()
-			contour.points = PackedVector2Array(glow_path)
-			contour.closed = false
-			contour.width = [22.0, 13.0, 6.0, 2.5][index]
-			contour.default_color = Color(1,1,1,[0.055,0.12,0.3,0.95][index])
-			contour.antialiased = true
-			contour.joint_mode = Line2D.LINE_JOINT_ROUND
-			contour.begin_cap_mode = Line2D.LINE_CAP_ROUND
-			contour.end_cap_mode = Line2D.LINE_CAP_ROUND
-			highlight.add_child(contour)
-
-	# A very subdued idle silhouette keeps hotspots discoverable without
-	# putting an unrelated circular glow across the neighboring buildings.
-	var idle := TextureRect.new()
-	idle.name = "GlowIdle"
-	idle.texture = _load_texture(ART_GLOW)
-	idle.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	idle.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	idle.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	idle.size = Vector2(1.0, 1.0)
-	idle.modulate = Color(1.0, 1.0, 1.0, 0.0)
-	button.add_child(idle)
-	if building.get("id", "") == "graveyard":
-		var stones := TextureRect.new()
-		stones.name = "CemeteryMarker"
-		stones.texture = _building_texture(building)
-		stones.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		stones.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		stones.size = footprint
-		stones.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		# Bring the standalone painted cluster into the town's subdued dusk light.
-		stones.modulate = Color(0.73,0.70,0.67)
-		var cemetery_ink := ShaderMaterial.new()
-		cemetery_ink.shader = preload("res://scripts/ink_art.gdshader")
-		stones.material = cemetery_ink
-		highlight.material = cemetery_ink
-		button.add_child(stones)
+	var vista: TextureRect = $Background
+	var painted := Polygon2D.new()
+	painted.name = "PaintedHighlight"
+	painted.polygon = button.silhouette
+	painted.texture = vista.texture
+	var texture_size := vista.texture.get_size()
+	var cover_scale: float = maxf(vista.size.x / texture_size.x,vista.size.y / texture_size.y)
+	var cover_offset := (vista.size-texture_size*cover_scale)*0.5
+	var source_uvs := PackedVector2Array()
+	for point in outline:
+		source_uvs.append((point-vista.position-cover_offset)/cover_scale)
+	painted.uv = source_uvs
+	var paint_material := ShaderMaterial.new()
+	paint_material.shader = preload("res://assets/shaders/settlement_highlight.gdshader")
+	painted.material = paint_material
+	highlight.add_child(painted)
+	# A narrow warm roof edge, kept below the luminance of the painted firelight.
+	var roof := Line2D.new()
+	roof.points = button.silhouette.slice(0,maxi(3,button.silhouette.size()-4))
+	roof.width = 1.5
+	roof.default_color = Color(0.83,0.69,0.47,0.30)
+	roof.antialiased = true
+	highlight.add_child(roof)
 
 	# Name + purpose, revealed on hover (Darkest Dungeon style).
 	var banner := VBoxContainer.new()
 	banner.name = "Banner"
 	banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	banner.add_theme_constant_override("separation", 0)
-	banner.size = Vector2(footprint.x, 74.0)
-	var top_y := centre.y - footprint.y * 0.5
-	banner.position = Vector2(0.0, maxf(-70.0, 208.0 - top_y))
+	banner.size = Vector2(720.0, 84.0)
+	banner.position = Vector2(600.0, 984.0)-button.position
 	banner.modulate.a = 0.0
 	button.add_child(banner)
 
-	var name_label: Label = _make_label(str(building.get("name", "")), 27 if building.get("id", "") == "apothecary" else 38, Color(IVORY), true)
+	var name_label: Label = _make_label(str(building.get("name", "")), 32, Color(IVORY), true)
 	name_label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.95))
 	name_label.add_theme_constant_override("shadow_offset_x", 3)
 	name_label.add_theme_constant_override("shadow_offset_y", 3)
@@ -281,11 +234,21 @@ func _make_hotspot(building: Dictionary) -> Button:
 
 	button.mouse_entered.connect(_on_hotspot_hover.bind(button, true))
 	button.mouse_exited.connect(_on_hotspot_hover.bind(button, false))
+	button.focus_entered.connect(_on_hotspot_hover.bind(button, true))
+	button.focus_exited.connect(_on_hotspot_hover.bind(button, false))
 	button.pressed.connect(_on_building_pressed.bind(building))
 	return button
 
 
 func _on_hotspot_hover(button: Button, entered: bool) -> void:
+	if entered:
+		# Only one town caption occupies the shared footer at a time.
+		for other in _map_view.get_children():
+			if other == button or not other.has_node("GlowHover"): continue
+			var other_key: int = other.get_instance_id()
+			if _hover_tweens.has(other_key): _hover_tweens[other_key].kill()
+			other.get_node("GlowHover").modulate.a = 0.0
+			other.get_node("Banner").modulate.a = 0.0
 	var highlight: TextureRect = button.get_node_or_null("GlowHover") as TextureRect
 	var banner: Control = button.get_node_or_null("Banner") as Control
 	var key: int = button.get_instance_id()
