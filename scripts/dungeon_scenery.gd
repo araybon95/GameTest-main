@@ -35,6 +35,8 @@ static func grounded_texture(path: String, padding: int = 0) -> Texture2D:
 	atlas.atlas = original
 	atlas.region = bounds
 	atlas.filter_clip = true
+	for key in ["pose_id","appearance_style","portrait_view","idle_pixel_height"]:
+		if original.has_meta(key): atlas.set_meta(key,original.get_meta(key))
 	return atlas
 
 static func apply_hero_palette(picture: TextureRect, id: String, chosen_color: String) -> void:

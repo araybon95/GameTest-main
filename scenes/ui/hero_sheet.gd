@@ -118,7 +118,7 @@ func build_portrait(hero: Dictionary, state: Dictionary) -> void:
 	add_child(stage)
 	var portrait := TextureRect.new()
 	portrait.name = "SheetPortrait"
-	portrait.texture = Scenery.grounded_texture(str(hero["art"]))
+	portrait.texture = Scenery.grounded_texture(str(hero.get("portrait_art",hero["art"])))
 	portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	portrait.position = Vector2(359, 236)

@@ -21,7 +21,10 @@ func run() -> void:
   assert(interior.get_node("Attendant").mouse_filter == Control.MOUSE_FILTER_IGNORE)
   assert(interior.get_node("InteriorBackground").texture != null)
   assert(interior.attendant.size.is_equal_approx(interior.npc_rect.size))
-  if entry[0] != "apothecary": assert(interior.has_node("EarnedRelic_0"))
+  if entry[0] == "customization":
+   assert(not interior.attendant.visible,"Wardrobe preview keeps the attendant out of the hero's space")
+   assert(not interior.has_node("EarnedRelic_0"),"Wardrobe controls replace interior captions and relic clutter")
+  elif entry[0] != "apothecary": assert(interior.has_node("EarnedRelic_0"))
   assert(interior.progress_marks().size() >= 2)
   var position: Vector2 = interior.attendant.position
   runtime.ambient_motion = false

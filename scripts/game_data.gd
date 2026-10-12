@@ -19,6 +19,8 @@ const TRAINING_STATS: Dictionary = {
  "debuff_resist": {"name": "Resolve", "amount": 3, "description": "+3% resistance to debuff application"}
 }
 static var hero_colors: Dictionary = {}
+static var hero_outfits: Dictionary = {}
+static var hero_portraits: Dictionary = {}
 static var formation: Dictionary = {}
 static var hero_positions: Dictionary = {}
 static var journey: Dictionary = {}
@@ -226,6 +228,8 @@ static func load_progression() -> void:
 		hero_names = config.get_value("progress", "hero_names", {})
 		hero_journals = config.get_value("progress", "hero_journals", {})
 		hero_colors = config.get_value("progress", "hero_colors", {})
+		hero_outfits = config.get_value("progress", "hero_outfits", {})
+		hero_portraits = config.get_value("progress", "hero_portraits", {})
 		graves = config.get_value("progress", "graves", [])
 		crusader_unlocked = bool(config.get_value("progress", "crusader_unlocked", false))
 		for id in config.get_value("progress", "completed", []):
@@ -242,6 +246,8 @@ static func save_progression() -> void:
 	config.set_value("progress", "hero_names", hero_names)
 	config.set_value("progress", "hero_journals", hero_journals)
 	config.set_value("progress", "hero_colors", hero_colors)
+	config.set_value("progress", "hero_outfits", hero_outfits)
+	config.set_value("progress", "hero_portraits", hero_portraits)
 	config.set_value("progress", "crusader_unlocked", crusader_unlocked)
 	config.set_value("progress", "completed", completed_expeditions)
 	config.set_value("progress", "modifications", modifications)
@@ -276,6 +282,14 @@ static func hero(hero_id: String) -> Dictionary:
 	if not result.is_empty():
 		result["class"] = result["name"]
 		result["name"] = hero_names.get(hero_id, result["name"])
+		var appearance = preload("res://scripts/hero_appearance.gd")
+		if hero_outfits.get(hero_id,"original") == "alternate" and appearance.available(hero_id):
+			result["art"] = appearance.path(hero_id)
+			result["camp_art"] = appearance.path(hero_id,"camp")
+		result["portrait_art"] = result["art"]
+		if hero_portraits.get(hero_id,"full") == "bust":
+			var purpose: String = "portrait" if hero_outfits.get(hero_id,"original") == "alternate" else "original_portrait"
+			if ResourceLoader.exists(appearance.path(hero_id,purpose)): result["portrait_art"] = appearance.path(hero_id,purpose)
 	return result
 
 
@@ -1054,13 +1068,17 @@ static func next_floor_entrance() -> Dictionary:
 			result["description"] = "The giant falls silent. A gate bound in sacred stitches parts before the Choir of Remaking." if next_depth == 1 else "The Coterie's final form lies still. Beneath its altar, a breathing passage opens toward the Howling Head."
 	return result
 
-static func customize_hero(id: String, chosen_name: String, color: String) -> bool:
+static func customize_hero(id: String, chosen_name: String, color: String, outfit: String = "", portrait: String = "") -> bool:
 	if not service_unlocked("workshop") or not HEROES.has(id) or color not in ["original", "red", "green", "blue", "gold"]:
 		return false
+	if not outfit.is_empty() and (outfit not in ["original","alternate"] or (outfit == "alternate" and not preload("res://scripts/hero_appearance.gd").available(id))): return false
+	if not portrait.is_empty() and portrait not in ["full","bust"]: return false
 	var clean: String = chosen_name.strip_edges().replace("\n", " ").replace("\r", " ").left(20)
 	if clean.is_empty(): hero_names.erase(id)
 	else: hero_names[id] = clean
 	hero_colors[id] = color
+	if not outfit.is_empty(): hero_outfits[id] = outfit
+	if not portrait.is_empty(): hero_portraits[id] = portrait
 	if run_heroes.has(id): run_heroes[id]["name"] = hero(id)["name"]
 	save_progression()
 	return true
@@ -1076,6 +1094,7 @@ static func record_death(id: String, cause: String) -> void:
 	var tribute: Dictionary = Stories.farewell(load("res://scripts/game_data.gd"),id)
 	graves.append({"id": memorial_id, "hero": id, "name": hero(id)["name"], "class": HEROES[id]["name"], "dungeon": selected_expedition.get("name", "The wilderness"), "floor": floor_index + 1, "cause": cause, "date": Time.get_date_string_from_system(), "deeds": run_deeds.get(id, {"battles": 0, "damage": 0, "healing": 0}).duplicate(true)})
 	graves.back().merge(tribute)
+	graves.back()["appearance"] = {"outfit":hero_outfits.get(id,"original"),"colour":hero_colors.get(id,"original"),"portrait":hero_portraits.get(id,"full")}
 	hero_journals.erase(id)
 	for journal in hero_journals.values(): journal.get("ties",{}).erase(id)
 	save_progression()

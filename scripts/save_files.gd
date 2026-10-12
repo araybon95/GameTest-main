@@ -17,6 +17,7 @@ static func save(slot: int) -> bool:
 		"modifications": State.modifications, "names": State.hero_names, "colors": State.hero_colors,
 		"graves": State.graves, "deeds": State.run_deeds, "run_id": State.run_id,
 		"hero_journals": State.hero_journals,
+		"hero_outfits":State.hero_outfits,"hero_portraits":State.hero_portraits,
 		"formation": State.formation, "expedition": State.selected_expedition.get("id", "old_road"),
 		"active": State.run_active, "complete": State.run_complete, "floor": State.floor_index,
 		"count": State.floor_count, "floors": State.floors, "position": State.room_position,
@@ -46,6 +47,7 @@ static func load_slot(slot: int) -> bool:
 	if data["active"] and (not data["floors"] is Array or int(data["floor"]) < 0 or int(data["floor"]) >= data["floors"].size() or not data["floors"][int(data["floor"])].has(data["position"])): return false
 	if not data.get("hero_progress", {}) is Dictionary: return false
 	if not data.get("hero_journals", {}) is Dictionary: return false
+	if not data.get("hero_outfits", {}) is Dictionary or not data.get("hero_portraits", {}) is Dictionary: return false
 	for key in ["hero_positions", "journey", "last_report"]:
 		if not data.get(key, {}) is Dictionary: return false
 	State.hero_positions = data.get("hero_positions", {})
@@ -63,6 +65,8 @@ static func load_slot(slot: int) -> bool:
 	State.modifications = data["modifications"]
 	State.hero_names = data["names"]
 	State.hero_journals = data.get("hero_journals", {})
+	State.hero_outfits = data.get("hero_outfits", {})
+	State.hero_portraits = data.get("hero_portraits", {})
 	State.hero_colors = data["colors"]
 	for grave in data.get("graves", []):
 		if not State.graves.any(func(existing): return existing.get("id", "") == grave.get("id", "")): State.graves.append(grave)

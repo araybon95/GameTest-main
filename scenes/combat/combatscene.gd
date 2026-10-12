@@ -1035,7 +1035,7 @@ func _refresh_all() -> void:
 	var hero: Dictionary = hero_state[selected_hero]
 	hand_title.text = "ABILITIES · %d / 2 AP · 1–5 SELECT · ENTER USE" % int(hero["ap"])
 	selected_portrait.set_meta("hero_id", selected_hero)
-	selected_portrait.texture = _load_texture(str(GameState.hero(selected_hero).get("art", "")))
+	selected_portrait.texture = _load_texture(str(GameState.hero(selected_hero).get("portrait_art",GameState.hero(selected_hero).get("art", ""))))
 	_sync_portrait(selected_portrait, hero)
 	selected_info.text = "%s\nHealth  %d / %d\nStress  %d / 100\nBlock  %d\nAction points  %d / 2\n%s" % [str(hero["name"]).to_upper(), int(hero["hp"]), int(hero["max_hp"]), int(hero["stress"]), int(hero["block"]), int(hero["ap"]), "DEATH'S DOOR" if hero["deaths_door"] else str(hero["resolve_tag"])]
 	selected_info.text += "\n" + Rules.status_text(hero["statuses"]) + "\n" + GameState.buff_text(hero)

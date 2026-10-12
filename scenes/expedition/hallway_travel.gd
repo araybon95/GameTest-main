@@ -189,6 +189,11 @@ func _ready() -> void:
 
 func build_walkers() -> void:
  for id in State.HEROES:
+  if State.hero_outfits.get(id,"original") == "alternate" and preload("res://scripts/hero_appearance.gd").available(id):
+   var variant_frames: Array[Texture2D] = []
+   for index in range(4,8): variant_frames.append(preload("res://scripts/hero_appearance.gd").frame(id,index))
+   walk_frames[id] = variant_frames
+   continue
   var path: String = "res://assets/generated/hero_%s_walk.png" % id
   if not ResourceLoader.exists(path) or not Regions.WALK.has(id): continue
   var sheet: Texture2D = load(path)
