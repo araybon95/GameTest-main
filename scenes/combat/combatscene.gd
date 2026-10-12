@@ -874,6 +874,9 @@ func _apply_damage(hero_id: String, amount: int, bypass_block: bool = false, cau
 	if damage <= 0:
 		if amount > 0 and absorbed == amount and not bypass_block:
 			_play_attack_sound("block")
+			if state.get("deaths_door", false):
+				var protection: String = "off_hand" if GameState.equipment.get(hero_id, {}).has("off_hand") else "armor"
+				GameState.ItemStories.deed(GameState,hero_id,protection,"door_block","Shielded %s from a blow at Death's Door." % _name_of(hero_id))
 		if presentation != null and amount > 0:
 			presentation.popup(hero_buttons[hero_id],"BLOCK",Color("#BCD8F1"))
 			presentation.block_impact()
@@ -895,6 +898,8 @@ func _apply_damage(hero_id: String, amount: int, bypass_block: bool = false, cau
 		GameState.run_heroes = hero_state.duplicate(true)
 		GameState.record_death(hero_id, cause if not cause.is_empty() else enemy_name)
 		var tribute: Dictionary = GameState.graves.back()
+		if not tribute.get("heirloom", {}).is_empty():
+			_add_log("Recovered %s, heirloom of %s." % [tribute.heirloom.name,tribute.heirloom.owner])
 		_add_log("%s: “%s”" % [tribute.get("speaker_name","The hamlet"),tribute.get("tribute","Your name will remain.")])
 		if not str(tribute.get("speaker","")).is_empty(): _speech(str(tribute.speaker),"Your name stays with us.",Color("#D7C3A1"))
 		_add_log("%s is slain at Death's Door!" % _name_of(hero_id))
@@ -1211,6 +1216,7 @@ func _award_reward() -> void:
 		var guardian_name: String = str(GameState.creature(guardian_id).get("name","the floor guardian"))
 		for survivor in _standing_heroes():
 			GameState.Stories.remember(GameState,str(survivor),"boss:"+guardian_id,"Stood against %s in %s." % [guardian_name,GameState.floor_title()])
+			GameState.ItemStories.guardian(GameState,str(survivor),guardian_name)
 	var reward := 2
 	if not GameState.selected_expedition.is_empty():
 		reward = int(GameState.selected_expedition.get("reward", 5)) if not GameState.run_active or GameState.current_room_kind() == "boss" else 2

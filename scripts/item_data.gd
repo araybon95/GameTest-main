@@ -83,8 +83,18 @@ const PROVISIONS: Dictionary = {
 }
 const SLOTS: Array[String] = ["weapon", "off_hand", "head", "armor", "trinket", "charm"]
 
+static var histories: Dictionary = {}
+
+static func base_id(item_id: String) -> String:
+	return str(histories.get(item_id, {}).get("base", item_id))
+
 static func item(item_id: String) -> Dictionary:
-	return SCROLLS.get(item_id, POTIONS.get(item_id, PROVISIONS.get(item_id, EQUIPMENT.get(item_id, {}))))
+	var base: String = base_id(item_id)
+	var entry: Dictionary = SCROLLS.get(base, POTIONS.get(base, PROVISIONS.get(base, EQUIPMENT.get(base, {}))))
+	if histories.has(item_id):
+		entry = entry.duplicate(true)
+		if not str(histories[item_id].get("name", "")).is_empty(): entry["name"] = histories[item_id].name
+	return entry
 
 static func description(item_id: String) -> String:
 	var entry: Dictionary = item(item_id)
@@ -123,14 +133,20 @@ static func description(item_id: String) -> String:
 
 static func icon_path(item_id: String) -> String:
 	# A per-item PNG override takes priority. SVGs remain editable source assets.
-	var base: String = "res://assets/items/" + item_id
+	var base: String = "res://assets/items/" + base_id(item_id)
 	return base + ".png" if ResourceLoader.exists(base + ".png") else base + ".svg"
 
 static func tooltip(item_id: String) -> String:
 	var entry: Dictionary = item(item_id)
 	if entry.is_empty():
 		return "Empty slot"
-	return "%s\n%s\n%s" % [entry["name"], str(entry["rarity"]).to_upper(), description(item_id).replace(" · ", "\n")]
+	var text: String = "%s\n%s\n%s" % [entry["name"], str(entry["rarity"]).to_upper(), description(item_id).replace(" · ", "\n")]
+	if histories.has(item_id):
+		var record: Dictionary = histories[item_id]
+		text += "\n\n" + str(EQUIPMENT[base_id(item_id)]["name"])
+		for owner in record.get("owners", []): text += "\nHeirloom of " + str(owner)
+		for deed in record.get("deeds", []): text += "\n• " + str(deed)
+	return text
 
 static func roll_rarity(rng: RandomNumberGenerator) -> String:
 	var roll: int = rng.randi_range(1, 100)

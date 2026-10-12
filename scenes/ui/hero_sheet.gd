@@ -102,7 +102,57 @@ func build_equipment() -> void:
 		add_child(icon)
 		label_at(slot.replace("_", " ").capitalize(), icon.position + Vector2(-3, 76), 88, 14, Color("#BAAA89"))
 	band("BASE STATS", Rect2(135, 590, 190, 35), 20)
-	label_at("Max HP  %d\nDamage  +%d\nMight  +%d%%\nBlock  +%d\nHealing  +%d\nAccuracy  %d%%\nTraining  %d" % [State.hero_max_hp(hero_id), State.hero_bonus(hero_id, "damage"), State.hero_bonus(hero_id, "damage_percent"), State.hero_bonus(hero_id, "block"), State.hero_bonus(hero_id, "heal"), State.hero_accuracy(hero_id, hero_state()), State.leveling(hero_id)["points"]], Vector2(148, 641), 180, 21)
+	label_at("Max HP  %d\nDamage  +%d\nMight  +%d%%\nBlock  +%d\nHealing  +%d\nAccuracy  %d%%\nTraining  %d" % [State.hero_max_hp(hero_id), State.hero_bonus(hero_id, "damage"), State.hero_bonus(hero_id, "damage_percent"), State.hero_bonus(hero_id, "block"), State.hero_bonus(hero_id, "heal"), State.hero_accuracy(hero_id, hero_state()), State.leveling(hero_id)["points"]], Vector2(148, 641), 180, 18)
+	var inscribe := button("NAME EQUIPMENT", Rect2(135, 841, 190, 45), inscribe_item)
+	inscribe.add_theme_font_size_override("font_size",18)
+	inscribe.disabled = combat_open() or State.equipment.get(hero_id, {}).is_empty() or hero_state().get("dead", false)
+
+func inscribe_item() -> void:
+	if combat_open() or hero_state().get("dead", false): return
+	var loadout: Dictionary = State.equipment.get(hero_id, {})
+	if loadout.is_empty(): return
+	var dialog := ConfirmationDialog.new()
+	dialog.title = "Name a cherished item"
+	dialog.ok_button_text = "Inscribe"
+	dialog.add_theme_stylebox_override("panel", frame(Color("#110D0F"),Color("#A58C5C")))
+	dialog.add_theme_color_override("title_color",Color("#EAD5A3"))
+	var column := VBoxContainer.new()
+	var slots := OptionButton.new()
+	slots.name = "KeepsakeSlot"
+	for slot in loadout:
+		slots.add_item(str(slot).capitalize() + " · " + str(State.Items.item(loadout[slot]).name))
+		slots.set_item_metadata(slots.item_count - 1, slot)
+	var field := LineEdit.new()
+	field.name = "KeepsakeName"
+	field.max_length = 32
+	field.placeholder_text = "Leave blank to restore the original name"
+	field.add_theme_stylebox_override("normal",frame(Color("#21171B"),Color("#705439")))
+	field.add_theme_color_override("font_color",Color("#FFF0D4"))
+	for control in [slots,dialog.get_ok_button(),dialog.get_cancel_button()]:
+		control.add_theme_stylebox_override("normal",frame(Color("#27191B"),Color("#927747")))
+		control.add_theme_stylebox_override("hover",frame(Color("#45302C"),Color("#E8C88D")))
+		control.add_theme_color_override("font_color",Color("#EAD5A3"))
+	column.add_child(slots)
+	column.add_child(field)
+	var hint := Label.new()
+	hint.text = "The item keeps its original type, rarity and effects."
+	column.add_child(hint)
+	dialog.add_child(column)
+	add_child(dialog)
+	var select_name := func(_index: int):
+		var id: String = str(loadout[slots.get_item_metadata(slots.selected)])
+		field.text = str(State.Items.histories.get(id, {}).get("name", ""))
+	slots.item_selected.connect(select_name)
+	select_name.call(0)
+	dialog.confirmed.connect(func():
+		if State.ItemStories.name_item(State,hero_id,str(slots.get_item_metadata(slots.selected)),field.text):
+			State._save_economy()
+			status_text = "Equipment inscription saved."
+			inventory_changed.emit()
+		dialog.queue_free()
+		refresh())
+	dialog.canceled.connect(dialog.queue_free)
+	dialog.popup_centered(Vector2i(620, 180))
 
 func build_portrait(hero: Dictionary, state: Dictionary) -> void:
 	panel(Rect2(350, 211, 390, 620), Color("#171718"), Color("#5D513A"))
@@ -243,7 +293,7 @@ func build_inventory() -> void:
 		empty.text = "No items in this category."
 		grid.add_child(empty)
 	band("ITEM DETAILS", Rect2(780, 723, 995, 35))
-	var details := label_at(status_text if not status_text.is_empty() else "Hover over an item to read its effects. Items of the same name stack in the party inventory.", Vector2(794, 783), 965, 20, Color("#E4CC9F"))
+	var details := label_at(status_text if not status_text.is_empty() else "Hover to read effects and history. Name equipped gear with NAME EQUIPMENT. Consumables stack; cherished equipment keeps its own history.", Vector2(794, 783), 965, 20, Color("#E4CC9F"))
 	details.clip_text = true
 	details.size.y = 88
 

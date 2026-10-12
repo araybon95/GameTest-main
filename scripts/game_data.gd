@@ -9,6 +9,7 @@ static var run_id: String = ""
 static var hero_names: Dictionary = {}
 static var hero_journals: Dictionary = {}
 const Stories = preload("res://scripts/hero_stories.gd")
+const ItemStories = preload("res://scripts/item_stories.gd")
 static var hero_progress: Dictionary = {}
 const HERO_LEVEL_CAP: int = 10
 const TRAINING_STATS: Dictionary = {
@@ -227,6 +228,7 @@ static func load_progression() -> void:
 		hero_progress = config.get_value("progress", "hero_progress", {})
 		hero_names = config.get_value("progress", "hero_names", {})
 		hero_journals = config.get_value("progress", "hero_journals", {})
+		Items.histories = config.get_value("progress", "item_histories", {})
 		hero_colors = config.get_value("progress", "hero_colors", {})
 		hero_outfits = config.get_value("progress", "hero_outfits", {})
 		hero_portraits = config.get_value("progress", "hero_portraits", {})
@@ -245,6 +247,7 @@ static func save_progression() -> void:
 	config.set_value("progress", "graves", graves)
 	config.set_value("progress", "hero_names", hero_names)
 	config.set_value("progress", "hero_journals", hero_journals)
+	config.set_value("progress", "item_histories", Items.histories)
 	config.set_value("progress", "hero_colors", hero_colors)
 	config.set_value("progress", "hero_outfits", hero_outfits)
 	config.set_value("progress", "hero_portraits", hero_portraits)
@@ -799,7 +802,7 @@ static func service_unlocked(service: String) -> bool:
 	return Mechanics.SERVICES.has(service) and completed_expeditions.has(Mechanics.SERVICES[service]["quest"])
 
 static func modify_equipment(item_id: String, mode: String) -> bool:
-	if not service_unlocked("workshop") or mode not in ["keen", "fortified"] or not Items.EQUIPMENT.has(item_id) or modifications.has(item_id) or gold < 12:
+	if not service_unlocked("workshop") or mode not in ["keen", "fortified"] or not Items.EQUIPMENT.has(Items.base_id(item_id)) or modifications.has(item_id) or gold < 12:
 		return false
 	var owned: bool = int(inventory.get(item_id, 0)) > 0
 	for loadout in equipment.values():
@@ -843,7 +846,7 @@ static func sync_equipped_health(hero_id: String) -> void:
 		run_heroes[hero_id]["hp"] = mini(int(run_heroes[hero_id]["hp"]), hero_max_hp(hero_id))
 
 static func equip_item(hero_id: String, item_id: String) -> bool:
-	var entry: Dictionary = Items.EQUIPMENT.get(item_id, {})
+	var entry: Dictionary = Items.item(item_id)
 	if entry.is_empty() or not entry.has("slot") or (entry.has("hero") and entry["hero"] != hero_id) or not party.has(hero_id) or int(inventory.get(item_id, 0)) <= 0:
 		return false
 	if not equipment.has(hero_id):
@@ -972,6 +975,7 @@ static func sell_item(item_id: String) -> bool:
 	return true
 
 static func purchase_item(item_id: String) -> bool:
+	if Items.histories.has(item_id): return false
 	var entry: Dictionary = Items.item(item_id)
 	if entry.get("apothecary", false) and not apothecary_unlocked():
 		return false
@@ -1094,6 +1098,7 @@ static func record_death(id: String, cause: String) -> void:
 	var tribute: Dictionary = Stories.farewell(load("res://scripts/game_data.gd"),id)
 	graves.append({"id": memorial_id, "hero": id, "name": hero(id)["name"], "class": HEROES[id]["name"], "dungeon": selected_expedition.get("name", "The wilderness"), "floor": floor_index + 1, "cause": cause, "date": Time.get_date_string_from_system(), "deeds": run_deeds.get(id, {"battles": 0, "damage": 0, "healing": 0}).duplicate(true)})
 	graves.back().merge(tribute)
+	graves.back()["heirloom"] = ItemStories.heirloom(load("res://scripts/game_data.gd"), id)
 	graves.back()["appearance"] = {"outfit":hero_outfits.get(id,"original"),"colour":hero_colors.get(id,"original"),"portrait":hero_portraits.get(id,"full")}
 	hero_journals.erase(id)
 	for journal in hero_journals.values(): journal.get("ties",{}).erase(id)

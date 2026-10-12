@@ -111,6 +111,8 @@ func _memorial(grave: Dictionary,index: int) -> PanelContainer:
 		var tribute := _record_text("%s: “%s”" % [grave.get("speaker_name","The hamlet"),grave.tribute],22,Color("#D7BD96"))
 		tribute.name = "CompanionTribute"
 		contents.add_child(tribute)
+	if not grave.get("heirloom", {}).is_empty():
+		contents.add_child(_record_text("Heirloom returned to the party: " + str(grave.heirloom.name),21,Color("#E8C777")))
 	return row
 
 func _record_text(value: String,font_size: int,color: Color) -> Label:

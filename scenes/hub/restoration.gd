@@ -42,7 +42,7 @@ func refresh() -> void:
 			for item_id in loadout.values():
 				if not owned.has(item_id): owned.append(item_id)
 		for item_id in owned:
-			if not State.Items.EQUIPMENT.has(item_id): continue
+			if not State.Items.EQUIPMENT.has(State.Items.base_id(item_id)): continue
 			var row := HBoxContainer.new()
 			row.custom_minimum_size.y = 75
 			list.add_child(row)
