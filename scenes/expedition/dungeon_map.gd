@@ -19,7 +19,9 @@ func room_rect(location: Vector2i) -> Rect2:
 		first = false
 	var factor: float = minf((size.x-30)/maxf(1,bounds.size.x),(size.y-16)/maxf(1,bounds.size.y))
 	var offset: Vector2 = (size-bounds.size*factor)*0.5-bounds.position*factor
-	return Rect2(offset+rect.position*factor,rect.size*factor)
+	var fitted := Rect2(offset+rect.position*factor,rect.size*factor)
+	var extent := fitted.size.max(Vector2(22,16) if rect.size.y < 60 else Vector2(26,26))
+	return Rect2(fitted.get_center()-extent*0.5,extent)
 
 func full_room_rect(location: Vector2i) -> Rect2:
 	var size := Vector2(88, 88)
@@ -30,6 +32,9 @@ func full_room_rect(location: Vector2i) -> Rect2:
 	return Rect2(Vector2(170 + location.x * 295, 95 + location.y * 150) - size * 0.5, size)
 
 func _draw() -> void:
+	if compact:
+		draw_route_map()
+		return
 	if map_backing != null:
 		draw_texture_rect_region(map_backing,Rect2(Vector2.ZERO,size),Rect2(20,20,630,320),Color(1,1,1,0.35))
 	var rooms: Dictionary = State.floors[State.floor_index]
@@ -105,3 +110,19 @@ func _draw() -> void:
 		if room["kind"] == "event" and room.get("event_layout", "") == "corridor":
 			caption = "Hall event"
 		if not compact: draw_string(ThemeDB.fallback_font, Vector2(center.x - 65, rect.end.y + 22), caption + (" ✓" if room["cleared"] else ""), HORIZONTAL_ALIGNMENT_CENTER, 130, 14, Color("#CABCB0"))
+
+func draw_route_map() -> void:
+	var art = preload("res://scripts/route_map_art.gd")
+	art.backing(self)
+	var rooms: Dictionary = State.floors[State.floor_index]
+	for location in rooms:
+		if not rooms[location].get("seen",false): continue
+		for direction in [Vector2i.RIGHT,Vector2i.DOWN]:
+			var next: Vector2i = location+direction
+			if rooms.has(next) and rooms[next].get("seen",false):
+				art.corridor(self,room_rect(location).get_center(),room_rect(next).get_center())
+	for location in rooms:
+		if rooms[location].get("seen",false): art.room(self,room_rect(location),rooms[location],location == State.room_position)
+	if rooms.has(State.room_position):
+		var rect: Rect2 = room_rect(State.room_position)
+		art.party(self,rect.get_center()+Vector2(0,-rect.size.y*0.5-8))

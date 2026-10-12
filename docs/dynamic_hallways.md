@@ -2,6 +2,8 @@
 
 ## Exploration presentation
 
+The compact route maps share `scripts/route_map_art.gd`: a dark survey grid, compass detail, tiled stone corridors, framed encounter symbols, blue merchant-orb badges and a gold diamond party marker. The chosen walking route uses a brighter gold trail. Combat, boss, event, camp, treasure and stair symbols have distinct silhouettes; cleared rooms use subdued colors. Corridor events use flatter frames. The same coordinate layout supplies room click targets and visible artwork.
+
 Rooms and passages share a closer, uniform 1.25× camera with a 750-pixel scene above a compact travel desk. This enlarges actors without distorting their proportions. The unused travel skill grid is removed; hero inspection, health/stress summaries, inventory, route selection, Scout, Retreat and destination controls remain available. Dark edge silhouettes, a fading ground vignette and theme-colored divider connect the scene to the interface. Existing optional installation layers and original panorama fallback both use the same camera.
 
 After the first fifth of a passage, a short thematic clue describes the destination: bandit boot prints, steel in the keep, prayers and drag marks for the Remade, or wing dust for moth encounters. Known cleared passages, roaming enemies, coins, camps, curios and stairs have their own hints. These are cosmetic descriptions of existing encounter data; they do not roll rewards or apply ambush modifiers. Arrival still waits for explicit interaction. Compact room maps now fit the whole floor within their bounds, with symbols scaled to each room and click targets derived from the same layout.

@@ -78,6 +78,7 @@ class PassageMap extends Control:
  var route: Array = []
  var fraction: float = 0.0
  var positions: Dictionary = {}
+ var icon_extent: float = 30.0
  func _ready() -> void:
   mouse_filter = Control.MOUSE_FILTER_IGNORE
   var minimum := Vector2(10000,10000)
@@ -89,25 +90,25 @@ class PassageMap extends Control:
   var actual_span: Vector2 = maximum-minimum
   var span: Vector2 = actual_span.max(Vector2.ONE)
   var step: float = minf((size.x-36)/span.x,(size.y-36)/span.y)
+  icon_extent = clampf(step*0.62,14.0,30.0)
   var offset := (size-actual_span*step)*0.5
   for location in rooms:
    if rooms[location].get("seen",false): positions[location] = offset+(Vector2(location)-minimum)*step
  func _draw() -> void:
+  var art = preload("res://scripts/route_map_art.gd")
+  art.backing(self)
   for location in positions:
    for direction in [Vector2i.RIGHT,Vector2i.DOWN]:
     var next: Vector2i = location+direction
-    if positions.has(next): draw_line(positions[location],positions[next],Color("#494345"),3)
+    if positions.has(next): art.corridor(self,positions[location],positions[next])
   var trail: Array = [origin]
   trail.append_array(route)
   for index in range(trail.size()-1):
    if positions.has(trail[index]) and positions.has(trail[index+1]):
-    draw_line(positions[trail[index]],positions[trail[index+1]],Color("#B89760"),4)
+    art.corridor(self,positions[trail[index]],positions[trail[index+1]],true)
   for location in positions:
-   var room: Dictionary = rooms[location]
-   var color: Color = Color("#675F59") if room.get("cleared",false) else {"battle":Color("#AD3D3F"),"boss":Color("#D75243"),"event":Color("#56BCA9"),"camp":Color("#D6AA55"),"stairs":Color("#A395C9")}.get(str(room.get("kind","")),Color("#877969"))
-   var radius: float = 5.0 if room.get("event_layout","") == "corridor" else 7.0
-   draw_rect(Rect2(positions[location]-Vector2.ONE*radius,Vector2.ONE*radius*2),Color("#070609"))
-   draw_rect(Rect2(positions[location]-Vector2.ONE*(radius-2),Vector2.ONE*(radius-2)*2),color)
+   var extent := Vector2(icon_extent,icon_extent*0.6) if rooms[location].get("event_layout","") == "corridor" else Vector2.ONE*icon_extent
+   art.room(self,Rect2(positions[location]-extent*0.5,extent),rooms[location])
   if trail.is_empty() or not positions.has(trail[0]): return
   var current: Vector2 = positions[trail[0]]
   if trail.size() > 1:
