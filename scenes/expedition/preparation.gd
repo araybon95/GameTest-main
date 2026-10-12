@@ -49,12 +49,19 @@ func refresh() -> void:
 		var gear := RichTextLabel.new()
 		gear.name = "HeroEquipment_%s" % id
 		gear.position = Vector2(x+178,401)
-		gear.size = Vector2(332,68)
+		gear.size = Vector2(332,48)
 		gear.text = "No equipment equipped." if hero["equipment"].is_empty() else "\n".join(hero["equipment"])
 		gear.add_theme_font_size_override("normal_font_size",17)
 		gear.add_theme_color_override("default_color",Color("#EADDD0"))
 		gear.tooltip_text = role_description(id)+"\n\n"+gear.text
 		add_child(gear)
+		var formation: Dictionary = Readiness.formation_advice(State,id)
+		var availability := label_at(str(formation["text"]),Vector2(x+178,451),332,16)
+		availability.name = "FormationAdvice_%s" % id
+		availability.size = Vector2(332,32)
+		availability.mouse_filter = Control.MOUSE_FILTER_STOP
+		availability.tooltip_text = "Position availability only; target reach, AP and cooldowns also matter in combat.\n" + str(formation["details"])
+		availability.add_theme_color_override("font_color",Color("#D8B981") if not formation["blocked"].is_empty() else Color("#C9BAA7"))
 		var toggle := button_at("POSITION %d · MOVE" % State.Depth.position_of(State, id), Rect2(x + 178, 485, 332, 38), toggle_rank.bind(id))
 		toggle.name = "Position_%s" % id
 		preload("res://scripts/visual_overlays.gd").frame(toggle,id)
@@ -70,6 +77,7 @@ func refresh() -> void:
 		buy.add_theme_font_size_override("font_size", 21)
 		buy.disabled = State.gold < State.item_price(id)
 		buy.tooltip_text = State.Items.description(id)
+	label_at("I · FIELD GUIDE: formation, shared turns, scouting and recovery",Vector2(75,758),940,19)
 	var depart := button_at("EMBARK WITH THIS PARTY", Rect2(1050, 755, 760, 40), embark)
 	depart.name = "EmbarkButton"
 	depart.disabled = departing

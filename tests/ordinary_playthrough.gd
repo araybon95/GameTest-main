@@ -507,7 +507,8 @@ func one_run(world_seed: int, third: String, policy: String, carryover: bool = f
 func run() -> void:
 	var args: PackedStringArray = OS.get_cmdline_user_args()
 	if args.size()>0 and args[0]=="campaign":
-		await one_run(2026,"occultist","cautious")
+		var campaign_seed: int = int(args[1]) if args.size()>1 else 2026
+		await one_run(campaign_seed,"occultist","cautious")
 		if report["outcome"]=="complete":
 			for id in State.party:
 				var count: int = 0
@@ -517,7 +518,7 @@ func run() -> void:
 					count+=1
 			expedition_id="path_beast"
 			use_objectives=true
-			await one_run(2026,"occultist","cautious",true)
+			await one_run(campaign_seed,"occultist","cautious",true)
 	elif args.size()>0 and args[0]=="path_matrix":
 		expedition_id="path_beast"
 		use_objectives=args.size()>1 and args[1]=="objectives"

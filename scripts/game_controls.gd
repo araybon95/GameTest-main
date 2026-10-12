@@ -59,6 +59,7 @@ func context_name() -> String:
 	var scene := get_tree().current_scene
 	if scene == null: return "GENERAL"
 	if scene.has_method("_play_card"): return "COMBAT"
+	if scene.scene_file_path.contains("/expedition/preparation."): return "PREPARATION"
 	if State.run_active: return "EXPEDITION"
 	if scene.scene_file_path.contains("title_screen"): return "TITLE SCREEN"
 	return "SETTLEMENT"
@@ -69,11 +70,16 @@ func guide_sections() -> Array:
 		["HERO DETAILS", [["RIGHT-CLICK", "Inspect a hero portrait or combat card"], ["C", "Open the selected hero's character sheet"], ["Q / E", "Previous / next hero while the sheet is open"]]]
 	]
 	match context_name():
+		"PREPARATION":
+			sections.append(["BEFORE YOU EMBARK", [["POSITION · MOVE", "Swap allies freely here. P1 is nearest the enemy; check blocked-skill hints before leaving."], ["PARTY ROLES", "Warden protects P1; Ranger attacks from P2/P3. P2 lets the Occultist use both Drain and Dark Blast."], ["SUPPLIES", "Optional purchases use your gold. Three basic rations are provided even when you cannot buy extras."], ["TRAINING", "Spend earned level points in the Barracks between expeditions. Leveling increases maximum HP without healing current wounds."]]])
+			sections.append(["YOUR FIRST EXPEDITION", [["SHARED TURNS", "Each hero has their own AP. Act in any order; selecting another hero does not end the party turn."], ["SCOUT", "Reveal nearby rooms from a cleared room. Hover discovered map icons to inspect encounters and find camps."], ["RECOVERY", "Each camp rests once: full health, debuffs cleared and 90% stress relief for living heroes. Keep Watch prevents a camp ambush."], ["DESCENT", "Stairs can appear before you earn a level. Explore for XP and equipment before entering the harder keep."]]])
 		"EXPEDITION":
 			sections.append(["DUNGEON PROGRESSION", [["MAP CLICK", "Choose a connected room or explored route"], ["A / ←", "Walk backward; leave at the starting door"], ["D / →", "Walk forward toward the destination"], ["W / E / ENTER", "Enter the room or encounter when reached"], ["SPACE", "Toggle automatic walking"], ["TAB", "Alternate the map / hallway and party inventory"]]])
+			sections.append(["EXPLORATION AND RECOVERY", [["SCOUT", "From a cleared room, reveal nearby rooms. Hover map icons for encounter details; detour to discovered camps when wounded."], ["CAMP", "Rest once per camp to heal living heroes, clear debuffs and relieve 90% of stress. Keep Watch prevents an ambush."], ["STAIRS", "Stay to explore before descending. The descent screen lists discovered unused camps and warns about unprepared heroes."], ["RETREAT", "Return with earned inventory and surviving heroes. Spend level points in the Barracks before the next departure."]]])
 		"COMBAT":
 			sections.append(["SHARED PARTY TURN", [["1–5", "Select and preview a skill for the active hero"], ["ENEMY CLICK", "Choose an enemy target"], ["ENTER", "Use the selected skill if available"], ["HERO CLICK", "Change the active hero"], ["LOOT", "Victory rewards are collected automatically"]]])
 			sections.append(["JOURNEY HUD", [["TAB", "Alternate the dungeon map and battle log"], ["ITEMS", "Inspect party inventory; use consumables in the combat strip"]]])
+			sections.append(["TACTICS", [["AP", "Each hero spends their own AP. Switch heroes freely and read skill availability before acting."], ["END PARTY TURN", "Lets enemies act and starts the next party turn. Use remaining AP for attacks, protection or recovery first."], ["POSITION", "Movement swaps allies and normally costs 1 AP. Equipment can change the cost; formation controls show it."], ["BOSS OBJECTIVES", "Read enemy intents and battlefield props. The Undying Lord heals while its support lives; defeat the attendant first."]]])
 		"SETTLEMENT":
 			sections.append(["SETTLEMENT", [["BUILDING CLICK", "Enter a building or choose an expedition"], ["HERO CLICK", "Choose a party slot / roster hero in the Barracks"], ["ESC", "Return from a building to the settlement"]]])
 		_:

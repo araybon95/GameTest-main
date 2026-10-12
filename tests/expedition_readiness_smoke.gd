@@ -15,6 +15,7 @@ func run() -> void:
 	State.hero_progress.clear()
 	State.equipment.clear()
 	State.inventory.clear()
+	State.hero_positions = {"warden":1,"ranger":2,"occultist":3}
 	State.run_active = false
 	State.hero_names = {"warden":"Sir Vane","ranger":"Thorn","occultist":"Mother Ash"}
 	assert(State.select_expedition("path_beast"))
@@ -29,6 +30,24 @@ func run() -> void:
 	root.add_child(preparation)
 	await settle()
 	assert(not preparation.get_node("EmbarkButton").disabled,"Suggested Veteran progression never blocks departure")
+	var positions: Dictionary = State.hero_positions.duplicate(true)
+	assert(Readiness.formation_advice(State,"occultist")["blocked"].has(str(State.card_stats("oc_drain")["name"])))
+	assert(preparation.get_node("FormationAdvice_occultist").text.contains("try P2"))
+	State.Depth.move_hero(State,"occultist",2)
+	preparation.refresh()
+	assert(Readiness.formation_advice(State,"occultist")["blocked"].is_empty())
+	assert(preparation.get_node("FormationAdvice_occultist").text.contains("All 5 skills"))
+	assert(Readiness.formation_advice(State,"ranger")["blocked"].is_empty())
+	State.Depth.move_hero(State,"ranger",1)
+	assert(Readiness.formation_advice(State,"ranger")["blocked"].size() == 3)
+	var unchanged: Dictionary = State.hero_positions.duplicate(true)
+	Readiness.formation_advice(State,"ranger")
+	assert(State.hero_positions == unchanged,"Formation advice never swaps heroes")
+	State.hero_positions = positions
+	State.equipment["occultist"] = {"weapon":"occultist_legend"}
+	assert(Readiness.formation_advice(State,"occultist")["blocked"].has("Gravetide Offering"),"Equipped signature skills participate in the position check")
+	State.equipment.clear()
+	preparation.refresh()
 	assert(preparation.get_node("HeroName_warden").text == "SIR VANE")
 	assert(preparation.get_node("HeroClass_warden").text.contains("Warden") and preparation.get_node("HeroClass_warden").text.contains("LEVEL 1"))
 	assert(preparation.get_node("HeroEquipment_warden").text == "No equipment equipped.")
@@ -115,6 +134,23 @@ func run() -> void:
 	assert(State.run_heroes["warden"]["statuses"].is_empty() and State.run_heroes["warden"]["stress"] == 8)
 	assert(State.run_heroes["occultist"]["dead"] and State.run_heroes["occultist"]["hp"] == 0)
 	assert(not State.rest_at_camp() and Readiness.known_unused_camps(State).is_empty())
+	State.end_run()
+	State.hero_progress.clear()
+	assert(State.select_expedition("old_road"))
+	State.start_run(20)
+	var saved_journey: Dictionary = State.journey.duplicate(true)
+	var saved_rng: int = State.loot_rng.state
+	guidance = Readiness.descent_advice(State)
+	assert(guidance.contains("No battles won") and guidance.contains("Still level 1") and guidance.contains("SCOUT"))
+	assert(State.journey == saved_journey and State.loot_rng.state == saved_rng,"Progression advice preserves journey and loot RNG")
+	State.journey["kills"] = 1
+	guidance = Readiness.descent_advice(State)
+	assert(not guidance.contains("No battles won") and guidance.contains("Still level 1"))
+	for id in State.party: State.gain_hero_xp(id,40)
+	assert(not Readiness.descent_advice(State).contains("Still level 1"))
+	State.floor_index = 1
+	State.hero_progress.clear()
+	assert(not Readiness.descent_advice(State).contains("Still level 1"),"First-keep guidance does not repeat at later descents")
 	preload("res://scripts/settlement_music.gd").stop()
 	await create_timer(0.12).timeout
 	print("PASS: named party/class/level/maxHP/equipment, nonblocking Veteran guidance, training/supplies/formation, dangerous party advice, camp secrecy, exactly-once descend/stay and unchanged recovery")

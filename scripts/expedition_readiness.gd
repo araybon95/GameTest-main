@@ -2,6 +2,32 @@ extends RefCounted
 ## Read-only preparation advice. It never reveals the map or changes embark rules.
 const EQUIPMENT_ORDER: Array[String] = ["weapon","armor","head","trinket","charm"]
 
+static func formation_advice(state, id: String) -> Dictionary:
+	var position: int = state.Depth.position_of(state,id)
+	var blocked: Array[String] = []
+	var details: Array[String] = []
+	var counts: Array[int] = []
+	var skills: Array = state.hero_abilities(id)
+	for candidate in range(1,state.party.size()+1):
+		var usable: int = 0
+		for skill in skills:
+			if state.Depth.skill_rule(str(skill))["use"].has(candidate): usable += 1
+		counts.append(usable)
+	for skill in skills:
+		var rule: Dictionary = state.Depth.skill_rule(str(skill))
+		if rule["use"].has(position): continue
+		var title: String = str(state.card_stats(str(skill))["name"])
+		blocked.append(title)
+		details.append("%s · %s" % [title,state.Depth.rank_text(str(skill))])
+	var best: Array[String] = []
+	for index in range(counts.size()):
+		if counts[index] == counts.max(): best.append("P%d" % (index+1))
+	var text: String = "P%d · All %d skills usable here" % [position,skills.size()]
+	if not blocked.is_empty():
+		text = "P%d · %d skill%s blocked" % [position,blocked.size(),"" if blocked.size() == 1 else "s"]
+		if counts[position-1] < counts.max(): text += " · try " + " / ".join(best)
+	return {"text":text,"blocked":blocked,"details":"\n".join(details)}
+
 static func party_snapshot(state, during_run: bool = false) -> Array[Dictionary]:
 	var party: Array[Dictionary] = []
 	for id in state.party:
@@ -88,10 +114,17 @@ static func descent_advice(state) -> String:
 	if not debuffed.is_empty(): advice.append("Active debuffs: %s. Camp clears debuffs and restores living heroes to full health." % ", ".join(debuffed))
 	if not stressed.is_empty(): advice.append("High stress: %s. Camp reduces current stress by 90%%." % ", ".join(stressed))
 	if not fallen.is_empty(): advice.append("Slain: %s. Camp cannot revive fallen companions." % ", ".join(fallen))
+	if state.selected_expedition.get("id","") == "old_road" and state.floor_index == 0:
+		var novice: Array[String] = []
+		for hero in party_snapshot(state,true):
+			if not hero["dead"] and int(hero["level"]) == 1: novice.append(hero["name"])
+		if not novice.is_empty():
+			var progress: String = "No battles won this expedition. " if int(state.journey.get("kills",0)) == 0 else ""
+			advice.append(progress + "Still level 1: %s. Optional fights earn XP and equipment before the harder keep; stairs do not require clearing this floor." % ", ".join(novice))
 	if points > 0: advice.append("%d unspent level points can be trained at the Barracks between runs." % points)
 	var camps: Array[Dictionary] = known_unused_camps(state)
 	if camps.is_empty():
-		advice.append("No discovered unused camp is marked. You may explore this floor for recovery before leaving.")
+		advice.append("No discovered unused camp is marked. Use SCOUT on the map to reveal nearby rooms, or explore for recovery before leaving.")
 	else:
 		var places: Array[String] = []
 		for camp in camps: places.append("%s (map %d, %d)" % [camp["name"],camp["location"].x+1,camp["location"].y+1])
