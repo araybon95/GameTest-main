@@ -68,6 +68,12 @@ func portrait_at(hero_id: String, rect: Rect2) -> void:
 	add_child(picture)
 
 func refresh() -> void:
+	if traveling:
+		# Equipment edits must not rebuild an active passage or reset its progress.
+		for child in get_children():
+			if child.has_method("refresh_equipment_frames"):
+				for id in GameState.party: child.refresh_equipment_frames(id)
+		return
 	var runtime = get_node_or_null("/root/GameSettings")
 	if runtime != null: runtime.checkpoint_pending = true
 	if GameState.run_active and GameState.floors[GameState.floor_index][GameState.room_position].get("cleared", false): preload("res://scripts/save_files.gd").save(0)

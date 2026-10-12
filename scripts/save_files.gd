@@ -19,6 +19,7 @@ static func save(slot: int) -> bool:
 		"hero_journals": State.hero_journals,
 		"item_histories": State.Items.histories,
 		"item_favourites": State.Items.favourites,
+		"equipment_appearance":State.equipment_appearance,
 		"hero_outfits":State.hero_outfits,"hero_portraits":State.hero_portraits,
 		"formation": State.formation, "expedition": State.selected_expedition.get("id", "old_road"),
 		"active": State.run_active, "complete": State.run_complete, "floor": State.floor_index,
@@ -71,6 +72,7 @@ static func load_slot(slot: int) -> bool:
 	State.hero_journals = data.get("hero_journals", {})
 	State.Items.histories = data.get("item_histories", {})
 	State.Items.favourites = data.get("item_favourites", {})
+	State.equipment_appearance = bool(data.get("equipment_appearance",true))
 	State.hero_outfits = data.get("hero_outfits", {})
 	State.hero_portraits = data.get("hero_portraits", {})
 	State.hero_colors = data["colors"]

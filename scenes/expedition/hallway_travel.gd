@@ -34,6 +34,7 @@ var walkers: Array[TextureRect] = []
 var bases: Array[Vector2] = []
 var walk_frames: Dictionary = {}
 var standing_frames: Dictionary = {}
+var wardrobe_looks: Dictionary = {}
 var shadows: Array[Node2D] = []
 var progress: PassageProgress
 var encounter: TextureRect
@@ -189,7 +190,13 @@ func _ready() -> void:
 
 func build_walkers() -> void:
  for id in State.HEROES:
-  if State.hero_outfits.get(id,"original") == "alternate" and preload("res://scripts/hero_appearance.gd").available(id):
+  var costume: String = str(State.hero(id).get("equipment_look","original"))
+  if costume == "relic" and preload("res://scripts/equipment_art.gd").available(id):
+   var equipped_frames: Array[Texture2D] = []
+   for index in range(4,8): equipped_frames.append(preload("res://scripts/equipment_art.gd").frame(id,index))
+   walk_frames[id] = equipped_frames
+   continue
+  if costume == "alternate" and preload("res://scripts/hero_appearance.gd").available(id):
    var variant_frames: Array[Texture2D] = []
    for index in range(4,8): variant_frames.append(preload("res://scripts/hero_appearance.gd").frame(id,index))
    walk_frames[id] = variant_frames
@@ -211,6 +218,7 @@ func build_walkers() -> void:
   if State.run_heroes.get(id,{}).get("dead",false): continue
   var picture := TextureRect.new()
   standing_frames[id] = Scenery.grounded_texture(str(State.hero(id)["art"]))
+  wardrobe_looks[id] = str(State.hero(id).get("equipment_look","original"))
   picture.texture = walk_frames[id][0] if walk_frames.has(id) else standing_frames[id]
   picture.name = "Walker_%s" % id
   picture.set_meta("walker",id)
@@ -573,6 +581,7 @@ func update_walkers() -> void:
  for index in range(walkers.size()):
   var picture: TextureRect = walkers[index]
   var id: String = picture.get_meta("walker")
+  if str(State.hero(id).get("equipment_look","original")) != str(wardrobe_looks.get(id,"original")): refresh_equipment_frames(id)
   var phase: float = animation_clock*7.0+index*0.45
   var texture: Texture2D = walk_frames[id][int(phase)%4] if not arrived and walk_frames.has(id) else standing_frames[id]
   var width: float = HERO_HEIGHT*texture.get_width()/float(maxi(1,texture.get_height()))
@@ -582,6 +591,28 @@ func update_walkers() -> void:
   picture.pivot_offset = Vector2(width*0.5,HERO_HEIGHT)
   picture.position = bases[index]-Vector2(width*0.5,HERO_HEIGHT)
   picture.rotation = 0.0
+
+func refresh_equipment_frames(id: String) -> void:
+ var outfit: String = str(State.hero(id).get("equipment_look","original"))
+ var frames: Array[Texture2D] = []
+ if outfit == "relic":
+  for index in range(4,8): frames.append(preload("res://scripts/equipment_art.gd").frame(id,index))
+ elif outfit == "alternate":
+  for index in range(4,8): frames.append(preload("res://scripts/hero_appearance.gd").frame(id,index))
+ else:
+  var path: String = "res://assets/generated/hero_%s_walk.png" % id
+  if ResourceLoader.exists(path) and Regions.WALK.has(id):
+   var sheet: Texture2D = load(path)
+   for region in Regions.WALK[id]:
+    var frame := AtlasTexture.new()
+    frame.atlas = sheet
+    frame.region = region
+    frame.filter_clip = true
+    frames.append(frame)
+ if frames.is_empty(): walk_frames.erase(id)
+ else: walk_frames[id] = frames
+ standing_frames[id] = Scenery.grounded_texture(str(State.hero(id).art))
+ wardrobe_looks[id] = outfit
 
 func arrive() -> void:
  arrived = true

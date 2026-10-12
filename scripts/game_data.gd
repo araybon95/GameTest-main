@@ -21,6 +21,7 @@ const TRAINING_STATS: Dictionary = {
 }
 static var hero_colors: Dictionary = {}
 static var hero_outfits: Dictionary = {}
+static var equipment_appearance: bool = true
 static var hero_portraits: Dictionary = {}
 static var formation: Dictionary = {}
 static var hero_positions: Dictionary = {}
@@ -232,6 +233,7 @@ static func load_progression() -> void:
 		Items.favourites = config.get_value("progress", "item_favourites", {})
 		hero_colors = config.get_value("progress", "hero_colors", {})
 		hero_outfits = config.get_value("progress", "hero_outfits", {})
+		equipment_appearance = bool(config.get_value("progress","equipment_appearance",true))
 		hero_portraits = config.get_value("progress", "hero_portraits", {})
 		graves = config.get_value("progress", "graves", [])
 		crusader_unlocked = bool(config.get_value("progress", "crusader_unlocked", false))
@@ -252,6 +254,7 @@ static func save_progression() -> void:
 	config.set_value("progress", "item_favourites", Items.favourites)
 	config.set_value("progress", "hero_colors", hero_colors)
 	config.set_value("progress", "hero_outfits", hero_outfits)
+	config.set_value("progress","equipment_appearance",equipment_appearance)
 	config.set_value("progress", "hero_portraits", hero_portraits)
 	config.set_value("progress", "crusader_unlocked", crusader_unlocked)
 	config.set_value("progress", "completed", completed_expeditions)
@@ -282,19 +285,26 @@ static func select_expedition(expedition_id: String) -> bool:
 	return false
 
 
-static func hero(hero_id: String) -> Dictionary:
+static func hero(hero_id: String, preview_item: String = "") -> Dictionary:
 	var result: Dictionary = HEROES.get(hero_id, {}).duplicate(true)
 	if not result.is_empty():
 		result["class"] = result["name"]
 		result["name"] = hero_names.get(hero_id, result["name"])
 		var appearance = preload("res://scripts/hero_appearance.gd")
-		if hero_outfits.get(hero_id,"original") == "alternate" and appearance.available(hero_id):
+		var outfit: String = preload("res://scripts/equipment_looks.gd").choice(load("res://scripts/game_data.gd"),hero_id,preview_item)
+		if outfit == "relic" and not preload("res://scripts/equipment_art.gd").available(hero_id): outfit = str(hero_outfits.get(hero_id,"original"))
+		result["equipment_look"] = outfit
+		if outfit == "relic":
+			result["art"] = "res://assets/equipment/hero_%s_idle.tres" % hero_id
+			result["camp_art"] = "res://assets/equipment/hero_%s_camp.tres" % hero_id
+		elif outfit == "alternate" and appearance.available(hero_id):
 			result["art"] = appearance.path(hero_id)
 			result["camp_art"] = appearance.path(hero_id,"camp")
 		result["portrait_art"] = result["art"]
 		if hero_portraits.get(hero_id,"full") == "bust":
-			var purpose: String = "portrait" if hero_outfits.get(hero_id,"original") == "alternate" else "original_portrait"
-			if ResourceLoader.exists(appearance.path(hero_id,purpose)): result["portrait_art"] = appearance.path(hero_id,purpose)
+			var purpose: String = "portrait" if outfit == "alternate" else "original_portrait"
+			if outfit == "relic": result["portrait_art"] = "res://assets/equipment/hero_%s_portrait.tres" % hero_id
+			elif ResourceLoader.exists(appearance.path(hero_id,purpose)): result["portrait_art"] = appearance.path(hero_id,purpose)
 	return result
 
 

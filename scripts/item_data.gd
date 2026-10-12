@@ -25,6 +25,19 @@ const POTIONS: Dictionary = {
  "solace_potion": {"name": "Solace Potion", "rarity": "common", "kind": "potion", "effect": "solace", "amount": 15, "price": 8, "description": "Reduce the selected living hero's Stress by 15. Single use; 1 AP in combat."},
 }
 const EQUIPMENT: Dictionary = {
+	"warden_armor":{"name":"Roadwatch Cuirass","rarity":"common","hero":"warden","slot":"armor","max_hp":4,"block":1,"equipment_look":"original","lore":"Iron patched by three generations of roadwardens. Its dents are older than the current watch."},
+	"warden_faction_armor":{"name":"Calden Sentinel Plate","rarity":"epic","hero":"warden","slot":"armor","max_hp":6,"debuff_resist":10,"equipment_look":"alternate","lore":"A dead keep's plate, reforged for a living oath."},
+	"warden_relic_armor":{"name":"Oathkeeper's Last Watch","rarity":"legendary","hero":"warden","slot":"armor","max_hp":8,"block":2,"bleed_resist":15,"equipment_look":"relic","lore":"A pale oath burns beneath the breastplate. Its bearer stands where the watch ended."},
+	"ranger_common_armor":{"name":"Trailwarden Jack","rarity":"common","hero":"ranger","slot":"armor","accuracy":5,"bleed_resist":10,"equipment_look":"original","lore":"Waxed leather and careful stitching. It was made for returning home."},
+	"ranger_relic_armor":{"name":"Thornsong Mantle","rarity":"legendary","hero":"ranger","slot":"armor","max_hp":5,"accuracy":8,"debuff_resist":15,"equipment_look":"relic","lore":"Thorns guard the seams; a green clasp holds the woodland's last vow."},
+	"occultist_armor":{"name":"Gravecloth Wraps","rarity":"common","hero":"occultist","slot":"armor","max_hp":2,"poison_resist":20,"equipment_look":"original","lore":"Burial cloth washed clean of names, but not of whispers."},
+	"occultist_faction_armor":{"name":"Seamkeeper's Vestments","rarity":"epic","hero":"occultist","slot":"armor","max_hp":6,"damage_percent":6,"equipment_look":"alternate","lore":"Stolen from the choir, these bindings keep their wearer whole."},
+	"occultist_relic_armor":{"name":"Gravetide Ribmantle","rarity":"legendary","hero":"occultist","slot":"armor","damage_percent":10,"debuff_resist":15,"equipment_look":"relic","lore":"An ivory cage worn outside the flesh. Each rib binds a promise that should have remained buried."},
+	"healer_armor":{"name":"Pilgrim's Apron","rarity":"common","hero":"healer","slot":"armor","max_hp":4,"poison_resist":15,"equipment_look":"original","lore":"The stains survive every washing. Its pockets still hold clean thread."},
+	"healer_faction_armor":{"name":"Sickhouse Half-Plate","rarity":"epic","hero":"healer","slot":"armor","heal":1,"block":1,"debuff_resist":10,"equipment_look":"alternate","lore":"A physician's apron reinforced for wards where mercy needs armour."},
+	"healer_relic_armor":{"name":"Dawnmantle of Mercy","rarity":"legendary","hero":"healer","slot":"armor","heal":2,"max_hp":6,"debuff_resist":10,"equipment_look":"relic","lore":"Its candle clasp burns for patients whose names the ward has forgotten."},
+	"crusader_common_armor":{"name":"Penitent's Iron Shirt","rarity":"common","hero":"crusader","slot":"armor","max_hp":4,"bleed_resist":15,"equipment_look":"original","lore":"A shirt of iron rings. Pain waits between every link."},
+	"crusader_relic_armor":{"name":"Sacrament of Iron","rarity":"legendary","hero":"crusader","slot":"armor","max_hp":8,"damage_percent":8,"debuff_resist":10,"equipment_look":"relic","lore":"The barbs turn outward. For once, the curse has something else to wound."},
 	"chieftain_trophy": {"name":"Gallows King's Signet","rarity":"legendary","kind":"trinket","slot":"charm","boss_only":true,"damage_vs_human":15,"accuracy":5,"lore":"A stolen crown hammered into a ring. Its notches count the travellers who never returned."},
 	"son_trophy": {"name":"The Last Oath","rarity":"legendary","kind":"trinket","slot":"charm","boss_only":true,"block":2,"bleed_resist":20,"lore":"A broken sword bound with an oath-ribbon. Even death failed to loosen its owner's grip."},
 	"lord_trophy": {"name":"Calden's Deathless Seal","rarity":"legendary","kind":"trinket","slot":"charm","boss_only":true,"max_hp_percent":12,"damage_vs_corrupted":15,"lore":"A blackened seal that outlived its kingdom. Beneath the wax, something still beats."},
@@ -44,7 +57,7 @@ const EQUIPMENT: Dictionary = {
 	"cursed_thorn_relic": {"name": "Thornbound Reliquary", "rarity": "unique", "kind": "trinket", "slot": "charm", "damage_percent": 25, "curse_stress": 2},
 	"cursed_physician_seal": {"name": "Septic Physician's Seal", "rarity": "unique", "kind": "trinket", "slot": "charm", "heal": 4, "curse_dot": 1},
  "crusader_axe": {"name": "Penitent's Axe", "rarity": "common", "hero": "crusader", "slot": "weapon", "damage": 1},
- "crusader_armor": {"name": "Barbed Cuirass", "rarity": "rare", "hero": "crusader", "slot": "armor", "block": 2, "max_hp": 4},
+ "crusader_armor": {"name": "Barbed Cuirass", "rarity": "rare", "hero": "crusader", "slot": "armor", "block": 2, "max_hp": 4,"equipment_look":"alternate"},
  "crusader_epic": {"name": "Agony's Edge", "rarity": "epic", "hero": "crusader", "slot": "weapon", "damage": 3, "bleed_resist": 20},
  "crusader_unique": {"name": "Winter Penance", "rarity": "unique", "hero": "crusader", "slot": "weapon", "damage": 2, "unique_chill": 30},
  "crusader_legend": {"name": "Unending Sacrament", "rarity": "legendary", "hero": "crusader", "slot": "weapon", "damage": 4, "max_hp": 6, "life_drain": 15},
@@ -75,7 +88,7 @@ const EQUIPMENT: Dictionary = {
 	"warden_shield": {"name": "Sentinel Shield", "rarity": "rare", "hero": "warden", "slot": "off_hand", "block": 3},
 	"warden_legend": {"name": "Oathkeeper", "rarity": "legendary", "hero": "warden", "slot": "weapon", "damage": 4, "max_hp": 8, "reflection": 25},
 	"ranger_bow": {"name": "Hunting Bow", "rarity": "common", "hero": "ranger", "slot": "weapon", "damage": 1},
-	"ranger_armor": {"name": "Soothing Stalker Leathers", "rarity": "rare", "hero": "ranger", "slot": "armor", "max_hp": 8, "regeneration": 1},
+	"ranger_armor": {"name": "Soothing Stalker Leathers", "rarity": "rare", "hero": "ranger", "slot": "armor", "max_hp": 8, "regeneration": 1,"equipment_look":"alternate"},
 	"ranger_legend": {"name": "Venomous Thornsong", "rarity": "legendary", "hero": "ranger", "slot": "weapon", "damage": 5, "poison_chance": 25},
 	"occultist_staff": {"name": "Bonewood Staff", "rarity": "common", "hero": "occultist", "slot": "weapon", "damage": 1},
 	"occultist_focus": {"name": "Purifying Gravebound Grimoire", "rarity": "rare", "hero": "occultist", "slot": "off_hand", "damage": 2, "heal": 2, "poison_resist": 50},
@@ -116,6 +129,7 @@ static func description(item_id: String) -> String:
 	if entry.has("description"):
 		return str(entry["description"])
 	var text: String = (str(entry["hero"]).capitalize() + " only" if entry.has("hero") else "Any hero") + " · " + str(entry["slot"]).replace("_", " ")
+	if entry.has("equipment_look"): text += " · " + str({"original":"Practical costume","alternate":"Faction costume","relic":"Relic costume"}.get(entry.equipment_look,"Equipment costume"))
 	for stat in ["damage", "block", "heal", "max_hp"]:
 		if entry.has(stat):
 			text += " · +%d %s" % [int(entry[stat]), stat.replace("_", " ")]

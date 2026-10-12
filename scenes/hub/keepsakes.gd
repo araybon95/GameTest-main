@@ -60,7 +60,7 @@ func refresh() -> void:
 	if not selected_item.is_empty():
 		var entry: Dictionary = State.Items.item(selected_item)
 		var hero_id: String = str(entry.get("hero",State.party[0]))
-		var preview := picture(str(State.hero(hero_id).art),Rect2(620,240,400,465))
+		var preview := picture(str(State.hero(hero_id,selected_item).art),Rect2(620,240,400,465))
 		preview.name = "EquipmentPreview"
 		Accents.attach(preview,hero_id,selected_item)
 		label_at("COSMETIC PREVIEW · " + str(State.HEROES[hero_id].name),Vector2(610,725),435,20)

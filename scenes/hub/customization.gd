@@ -72,6 +72,8 @@ func refresh() -> void:
   option.add_theme_font_size_override("font_size",20)
  button_at("SAVE APPEARANCE",Rect2(700,700,1080,55),save_appearance).name = "SaveAppearance"
  saved_notice = label_at("Appearance choices do not change equipment or combat stats.",Vector2(700,760),1080,16)
+ var gear_toggle := button_at("EQUIPMENT COSTUMES · " + ("ON" if State.equipment_appearance else "OFF"),Rect2(75,770,565,35),toggle_equipment_costumes)
+ gear_toggle.add_theme_font_size_override("font_size",18)
  party_bar(return_to_workshop,"RETURN TO WORKSHOP")
  update_preview()
 func select_hero(id: String) -> void:
@@ -79,6 +81,11 @@ func select_hero(id: String) -> void:
  chosen_color = State.hero_colors.get(id,"original")
  chosen_outfit = State.hero_outfits.get(id,"original")
  chosen_portrait = State.hero_portraits.get(id,"full")
+ refresh()
+func toggle_equipment_costumes() -> void:
+ State.equipment_appearance = not State.equipment_appearance
+ State.save_progression()
+ State._save_economy()
  refresh()
 func change_color(color: String) -> void:
  chosen_color = color

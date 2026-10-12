@@ -1,5 +1,7 @@
 # Equipment legacy and visual identity audit
 
+This audit records the pool before the equipment-costume expansion. The current implementation and updated counts are documented in [equipment artwork](../assets/equipment/README.md): 15 class armour pieces and five relic pose sets.
+
 Implemented: the unlocked Workshop's **Equipment Legacies** view lists owned gear with live hero previews and scrollable item histories; **Keepsakes** filters to individually recorded or favourited gear. It supports one permanent transformation per copy, separate from the existing Keen/Fortified modification:
 
 | Choice | Cost | Gameplay effect | Cosmetic detail |
