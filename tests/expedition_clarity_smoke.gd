@@ -29,7 +29,7 @@ func run() -> void:
  await create_timer(0.5).timeout
  var dossier: Control = screen.get_node("DungeonDossier")
  assert(not dossier.route_open and not dossier.get_node("FloorSummary_0").visible)
- assert(dossier.get_node("EntrancePlate").visible)
+ assert(not dossier.get_node("EntrancePlate").visible,"The estate layout prioritizes mission text over a second map image")
  await click(dossier.get_node("RouteToggle").get_global_rect().get_center())
  assert(dossier.route_open and dossier.get_node("FloorSummary_2").visible)
  await click(dossier.get_node("RouteToggle").get_global_rect().get_center())
@@ -42,7 +42,7 @@ func run() -> void:
  await settle()
  assert(not screen.get_node("EmbarkButton").disabled)
  assert(not screen.get_node("Dungeon_path_lament/IronFittings").visible)
- assert(screen.get_node("Dungeon_path_beast").size.y == 84)
+ assert(screen.get_node("Dungeon_path_beast").size.is_equal_approx(Vector2(84,84)))
  screen.choose(1,1)
  await settle()
  assert(screen.get_node("EmbarkButton").disabled)

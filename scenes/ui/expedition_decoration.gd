@@ -7,13 +7,14 @@ var completed: bool = false
 var region: int = 0
 var clock: float = 0.0
 var seal: Texture2D
+var emphatic: bool = false
 func _ready() -> void:
  mouse_filter = Control.MOUSE_FILTER_IGNORE
  if mode == "seal": seal = load("res://assets/presentation/settlement/%s_seal.png" % ("path" if region == 1 else "village"))
 func _process(delta: float) -> void:
  var settings := get_node_or_null("/root/GameSettings")
  if settings == null or settings.ambient_motion: clock += delta
- if selected: queue_redraw()
+ if selected or emphatic: queue_redraw()
 func _draw() -> void:
  var tint := Color("#B595CC") if region == 1 else Color("#D5B276")
  if mode == "location":
@@ -26,11 +27,19 @@ func _draw() -> void:
    draw_circle(Vector2(size.x*.5,8),17,Color("#19120F"))
    draw_polyline(PackedVector2Array([Vector2(size.x*.5-8,8),Vector2(size.x*.5-1,15),Vector2(size.x*.5+10,-1)]),Color("#E5C37E"),3,true)
  else:
+  if emphatic:
+   var active: bool = selected or get_parent().is_hovered() or get_parent().has_focus()
+   draw_circle(size*0.5,size.x*0.49,Color("#08070A"))
+   if active:
+    var glow := tint
+    glow.a = 0.16
+    draw_arc(size*0.5,size.x*0.47,0,TAU,48,glow,12,true)
+   draw_arc(size*0.5,size.x*0.47,0,TAU,48,tint if active else Color("#7A6651"),4 if active else 2.5,true)
   var rect := Rect2(Vector2(9,9),size-Vector2(18,18))
-  if seal != null: draw_texture_rect(seal,rect,false,Color(0.45,0.43,0.46) if sealed else Color.WHITE)
+  if seal != null and not (emphatic and sealed): draw_texture_rect(seal,rect,false,Color(0.45,0.43,0.46) if sealed else Color.WHITE)
   if selected: draw_arc(size*.5,size.x*.47,0,TAU,48,tint,2.5,true)
   if sealed:
-   if size.x <= 64:
+   if emphatic or size.x <= 64:
     var center := size*0.5
     draw_arc(center-Vector2(0,4),9,PI,TAU,16,Color("#A49B8A"),2,true)
     draw_rect(Rect2(center-Vector2(11,1),Vector2(22,19)),Color("#191619"))
