@@ -103,6 +103,13 @@ const PROVISIONS: Dictionary = {
  "cleansing_herbs": {"name": "Cleansing Herbs", "kind": "provision", "rarity": "common", "price": 3, "description": "Purify tainted supplies or a votive reliquary for a safe guaranteed reward. Consumed once."}
 }
 const SLOTS: Array[String] = ["weapon", "off_hand", "head", "armor", "trinket", "charm"]
+const LEGEND_LORE: Dictionary = {
+	"warden_legend":"The watch ended without a bell. Its last keeper left this blade across the doorway, an oath that another might survive.",
+	"ranger_legend":"The grove fell silent, but its thorns remembered every trespass. Draw the bow and the woodland answers in a bitter chorus.",
+	"occultist_legend":"A grave need not keep everything it takes. This staff draws warmth from the condemned and lends it, briefly, to the living.",
+	"healer_legend":"One candle remained in the plague ward. The hand that carried it is gone; the mercy it offered has not yet guttered out.",
+	"crusader_legend":"The curse demands another wound. Its bearer turns the barbs outward, offering his own blood before taking the enemy's."
+}
 
 static var histories: Dictionary = {}
 static var favourites: Dictionary = {}
@@ -113,6 +120,9 @@ static func base_id(item_id: String) -> String:
 static func item(item_id: String) -> Dictionary:
 	var base: String = base_id(item_id)
 	var entry: Dictionary = SCROLLS.get(base, POTIONS.get(base, PROVISIONS.get(base, EQUIPMENT.get(base, {}))))
+	if LEGEND_LORE.has(base):
+		entry = entry.duplicate(true)
+		entry["lore"] = LEGEND_LORE[base]
 	if histories.has(item_id):
 		entry = entry.duplicate(true)
 		if not str(histories[item_id].get("name", "")).is_empty(): entry["name"] = histories[item_id].name

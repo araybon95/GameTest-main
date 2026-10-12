@@ -1,7 +1,7 @@
 extends RefCounted
 ## Tactical positions and journey systems; no light, quirks or persistent injuries.
 const SKILL_RANKS = {
-	"relic_ranger":{"use":[2,3],"target":[1,2,3]},"relic_occultist":{"use":[1,2],"target":[1,2,3]},"relic_crusader":{"use":[2,3],"target":[1,2]},
+	"relic_ranger":{"use":[2,3],"target":[1,2,3]},"relic_occultist":{"use":[1,2],"target":[1,2,3]},"relic_crusader":{"use":[1,2,3],"target":[1,2]},
  "wd_slash": {"use": [1,2], "target": [1,2]}, "wd_bash": {"use": [1,2], "target": [1,2]}, "wd_heavy": {"use": [1,2], "target": [1,2]},
  "rg_quick": {"use": [2,3], "target": [1,2,3]}, "rg_pierce": {"use": [2,3], "target": [1,2,3]}, "rg_volley": {"use": [2,3], "target": [1,2,3]},
  "oc_drain": {"use": [1,2], "target": [1,2,3]}, "oc_blast": {"use": [2,3], "target": [1,2,3]},

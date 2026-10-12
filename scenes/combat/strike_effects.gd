@@ -89,6 +89,7 @@ static func draw(presentation: Control, canvas: Node2D) -> void:
     canvas.draw_colored_polygon(PackedVector2Array([fang+Vector2(-5,-8),fang+Vector2(5,-8),fang+Vector2(0,12)]),with_alpha(BONE,strength*0.85))
 
  weapon_accent(canvas,data,str(active.get("weapon_signature","")),kind)
+ preload("res://scenes/combat/relic_effects.gd").draw(canvas,data,active)
 
 static func seed_value(index: int, salt: float = 0.0) -> float:
  return fposmod(sin(index*12.9898+salt*78.233)*43758.5453,1.0)

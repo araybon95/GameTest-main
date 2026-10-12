@@ -17,7 +17,7 @@ static func resolve(combat, hero: String, card: Dictionary) -> void:
 			combat.hero_state[hero]["oath_target"] = target
 			combat.hero_state[hero]["oath_retaliated"] = false
 			combat._gain_block(hero,int(card.block))
-			if combat.presentation != null: combat.presentation.strike(combat.hero_portraits[hero],combat.hero_portraits[target],"block",str(card.name),true,{"effect":"block"})
+			if combat.presentation != null: combat.presentation.strike(combat.hero_portraits[hero],combat.hero_portraits[target],"block",str(card.name),true,{"effect":"block","relic_fx":"relic_guard"})
 			state.Stories.aid(state,hero,target,false,true)
 			combat._add_log("%s guards %s until the next party turn." % [combat._name_of(hero),combat._name_of(target)])
 		"relic_volley":
@@ -33,14 +33,16 @@ static func resolve(combat, hero: String, card: Dictionary) -> void:
 			var dealt: int = combat._attack_with_equipment(hero,card)
 			var target: String = ally(combat,hero,false,true)
 			if target.is_empty(): target = hero
-			if dealt > 0: combat._heal_hero(target,mini(dealt,int(card.heal)),hero)
+			if dealt > 0:
+				combat._heal_hero(target,mini(dealt,int(card.heal)),hero)
+				if combat.presentation != null: combat.presentation.strike(combat.hero_portraits[hero],combat.hero_portraits[target],"heal","Gravetide's Gift",true,{"relic_fx":"drain_return","effect":"heal"})
 		"relic_cleanse":
 			var target: String = ally(combat,hero,true)
 			if target.is_empty(): return
 			for debuff in ["burn","bleed","poison","chill"]: combat.hero_state[target].statuses.erase(debuff)
 			combat._gain_block(target,int(card.block))
 			state.Stories.aid(state,hero,target,false,true)
-			if combat.presentation != null: combat.presentation.strike(combat.hero_portraits[hero],combat.hero_portraits[target],"heal",str(card.name),true,{"effect":"heal"})
+			if combat.presentation != null: combat.presentation.strike(combat.hero_portraits[hero],combat.hero_portraits[target],"heal",str(card.name),true,{"effect":"heal","relic_fx":"relic_cleanse"})
 			combat._play_attack_sound("spell")
 			combat._add_log("%s cleanses and wards %s." % [combat._name_of(hero),combat._name_of(target)])
 		"relic_charge":

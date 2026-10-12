@@ -107,6 +107,7 @@ func run() -> void:
 	battle._play_card("crusader",card_index)
 	assert(battle.hero_state.crusader.hp == 18 and battle.hero_state.crusader.ap == 0)
 	assert(State.Depth.position_of(State,"crusader") == 1)
+	assert(State.Depth.skill_allowed(State,"crusader","relic_crusader",1),"The legendary charge remains usable from the front")
 	assert(battle.enemies[0].statuses.has("bleed") and battle.hero_state.crusader.block >= 4)
 	battle.queue_free()
 	await process_frame

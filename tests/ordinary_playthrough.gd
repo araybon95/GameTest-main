@@ -1,5 +1,7 @@
 extends SceneTree
-## Automated ordinary gameplay. No damage fixtures, health grants, forced loot, or production edits.
+## Automated ordinary gameplay. No damage fixtures or health grants.
+## Optional common/legendary starting gear is a controlled comparison fixture,
+## held constant through the run; the default campaign earns and equips loot.
 const State = preload("res://scripts/game_data.gd")
 const Saves = preload("res://scripts/save_files.gd")
 const Travel = preload("res://scenes/expedition/hallway_travel.gd")
@@ -11,6 +13,7 @@ var route_policy: String = "cautious"
 var expedition_id: String = "old_road"
 var use_objectives: bool = false
 var validation_failed: bool = false
+var equipment_fixture: String = ""
 
 func _initialize() -> void:
 	call_deferred("run")
@@ -46,7 +49,7 @@ func reset_party(third: String, seed_value: int) -> void:
 	State.hero_journals.clear()
 	State.Items.histories.clear()
 	State.Items.favourites.clear()
-	State.crusader_unlocked = false
+	State.crusader_unlocked = third == "crusader"
 	State.gold = 0
 	State.progress_loaded = true
 	State.progress_path = "user://ordinary_progress_%s.cfg" % report["id"]
@@ -55,6 +58,11 @@ func reset_party(third: String, seed_value: int) -> void:
 	State.navigation_votes.clear()
 	assert(State.select_expedition(expedition_id))
 	seed(seed_value + 5000)
+	if not equipment_fixture.is_empty():
+		for hero in State.party:
+			var weapon: String = str(hero)+"_legend" if equipment_fixture == "legendary" else {"warden":"warden_sword","ranger":"ranger_bow","occultist":"occultist_staff","healer":"healer_mace","crusader":"crusader_axe"}[hero]
+			var armor: String = str(hero)+"_relic_armor" if equipment_fixture == "legendary" else {"warden":"warden_armor","ranger":"ranger_common_armor","occultist":"occultist_armor","healer":"healer_armor","crusader":"crusader_common_armor"}[hero]
+			State.equipment[hero] = {"weapon":weapon,"armor":armor}
 	State.start_run(seed_value)
 	# Legal preparation positions: healing/drain caster in second, archer in third.
 	State.Depth.move_hero(State,third,2)
@@ -137,12 +145,33 @@ func choose_action(battle) -> Dictionary:
 			var card: Dictionary = State.card_stats(skill)
 			var cost: int = int(card["cost"])
 			if cost > int(h["ap"]) or int(h["cooldowns"].get(skill,0)) > 0: continue
+			if card.has("self_damage") and int(h["hp"]) <= int(card.self_damage): continue
 			for target in targets:
 				if not State.Depth.skill_allowed(State,hero,skill,battle.enemy_position(target)): continue
 				battle._load_enemy(target)
 				var score: float = 0.0
 				var effect: String = str(card["effect"])
-				if effect in ["attack","pierce","attack_block","drain","stress_attack"]:
+				if effect == "relic_volley":
+					for enemy_index in targets:
+						battle._load_enemy(enemy_index)
+						score += damage_value(battle,hero,card,enemy_index)
+					battle._load_enemy(target)
+				elif effect == "relic_guard":
+					var ally: String = preload("res://scripts/relic_combat.gd").ally(battle,hero,false,true)
+					if not ally.is_empty() and float(pressure.get(ally,0)) > 0:
+						score = minf(float(pressure.get(ally,0)),float(card.block)+State.hero_bonus(hero,"block"))+6
+				elif effect == "relic_cleanse":
+					var ally: String = preload("res://scripts/relic_combat.gd").ally(battle,hero,true)
+					for status in battle.hero_state[ally].statuses.values(): score += float(status.get("damage",0))*int(status.get("turns",0))
+					score += block_value(battle,ally,int(card.block)+State.hero_bonus(hero,"block"),pressure)
+				elif effect == "relic_drain":
+					var ally: String = preload("res://scripts/relic_combat.gd").ally(battle,hero,false,true)
+					score = damage_value(battle,hero,card,target)
+					score += heal_value(battle,ally,int(card.heal)+State.hero_bonus(hero,"heal"),pressure)
+				elif effect in ["barbed_charge","relic_charge"]:
+					score = damage_value(battle,hero,card,target)+block_value(battle,hero,int(card.block)+State.hero_bonus(hero,"block"),pressure)-int(card.get("self_damage",0))
+				elif effect == "pain_heal": score = heal_value(battle,hero,int(State.hero_max_hp(hero)*int(card.heal_percent)/100),pressure)-int(card.self_damage)
+				elif effect in ["attack","pierce","attack_block","drain","stress_attack"]:
 					score = damage_value(battle,hero,card,target)
 					if effect == "attack_block": score += block_value(battle,hero,int(card["block"])+State.hero_bonus(hero,"block"),pressure)
 					if effect == "drain": score += heal_value(battle,hero,int(card["heal"])+State.hero_bonus(hero,"heal"),pressure)
@@ -235,7 +264,7 @@ func combat() -> void:
 				battle._use_scroll(chosen["item"])
 				report["consumables_used"][chosen["item"]] = int(report["consumables_used"].get(chosen["item"],0))+1
 			else: battle._play_card(hero,chosen["index"])
-			if int(battle.hero_state[hero]["ap"]) >= ap:
+			if int(battle.hero_state[hero]["ap"]) >= ap and not (chosen.has("move") and battle.hero_state[hero].get("free_move_used",false)):
 				validation_failed=true
 				report["outcome"]="policy_validation_failure"
 				push_error("AI selected an illegal/nonexecuting action")
@@ -269,6 +298,7 @@ func gear_score(hero: String, item: Dictionary) -> float:
 	return int(item.get("damage_vs_"+class_key,0))*0.3 + int(item.get("ward_vs_"+class_key,0))*0.25 + int(item.get("damage",0))*4.0 + int(item.get("damage_percent",0))*0.3 + int(item.get("max_hp",0))*0.5 + int(item.get("max_hp_percent",0))*0.25 + int(item.get("heal",0))*(3 if hero=="healer" else 1.5) + int(item.get("block",0))*2.0 + int(item.get("regeneration",0))*4.0 + int(item.get("life_drain",0))*0.3 + int(item.get("poison_chance",0))*0.2 + int(item.get("unique_poison",0))*0.2 + int(item.get("unique_chill",0))*0.2 + int(item.get("bleed_resist",0))*0.06 + int(item.get("poison_resist",0))*0.05 + int(item.get("debuff_resist",0))*0.05 - int(item.get("curse_dot",0))*4.0 - int(item.get("curse_stress",0))*3.0
 
 func equip_loot() -> void:
+	if not equipment_fixture.is_empty(): return
 	for item_id in State.inventory.keys():
 		var item: Dictionary = State.Items.item(str(item_id))
 		if not item.has("slot"): continue
@@ -298,13 +328,13 @@ func visit_shop() -> void:
 		if current_scene.sell_inventory_item(item_id): sales.append(item_id)
 	current_scene.set_trade_mode("Buy")
 	for id in State.party:
-		var weapon: String = {"warden":"warden_sword","ranger":"ranger_bow","occultist":"occultist_staff","healer":"healer_mace"}[id]
+		var weapon: String = {"warden":"warden_sword","ranger":"ranger_bow","occultist":"occultist_staff","healer":"healer_mace","crusader":"crusader_axe"}[id]
 		if State.equipment.get(id,{}).get("weapon","")=="" and State.gold>=State.item_price(weapon):
 			current_scene.purchase(weapon);purchases.append(weapon)
 	while State.gold >= State.item_price("healing_potion") and int(State.inventory.get("healing_potion",0)) < 2:
 		current_scene.purchase("healing_potion");purchases.append("healing_potion")
 	for id in State.party:
-		var armor: String = {"warden":"warden_armor","ranger":"ranger_common_armor","occultist":"occultist_armor","healer":"healer_armor"}[id]
+		var armor: String = {"warden":"warden_armor","ranger":"ranger_common_armor","occultist":"occultist_armor","healer":"healer_armor","crusader":"crusader_common_armor"}[id]
 		if State.equipment.get(id,{}).get("armor","") == "" and State.gold >= State.item_price(armor):
 			if current_scene.purchase(armor): purchases.append(armor)
 	report["shops"].append({"floor":State.floor_index+1,"purchases":purchases,"sales":sales,"gold_remaining":State.gold})
@@ -430,7 +460,7 @@ func move_actual(destination: Vector2i) -> void:
 
 func one_run(world_seed: int, third: String, policy: String, carryover: bool = false) -> void:
 	route_policy=policy
-	report={"id":"%s_%s_%s_%s" % [expedition_id,world_seed,third,policy],"expedition":expedition_id,"objectives":use_objectives,"seed":world_seed,"third_hero":third,"route":policy,"outcome":"running","fights":[],"spaces":[],"camps":[],"shops":[],"events":[],"equipment_actions":[],"consumables_used":{},"floor_summaries":[],"starting_gold":0}
+	report={"id":"%s_%s_%s_%s" % [expedition_id,world_seed,third,policy],"expedition":expedition_id,"objectives":use_objectives,"seed":world_seed,"third_hero":third,"route":policy,"outcome":"running","fights":[],"spaces":[],"camps":[],"shops":[],"events":[],"equipment_actions":[],"consumables_used":{},"floor_summaries":[],"starting_gold":0,"equipment_fixture":equipment_fixture}
 	if not carryover: reset_party(third,world_seed)
 	else:
 		assert(not State.run_active)
@@ -496,6 +526,7 @@ func run() -> void:
 	elif args.size()>=3:
 		if args.size()>=4: expedition_id=args[3]
 		if args.size()>=5: use_objectives=args[4]=="objectives"
+		if args.size()>=6: equipment_fixture=args[5]
 		await one_run(int(args[0]),args[1],args[2])
 	else:
 		for world_seed in [2026,20]:

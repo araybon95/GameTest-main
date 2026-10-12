@@ -47,7 +47,7 @@ const CARDS: Dictionary = {
 	"relic_ranger":{"name":"Thornsong Volley","cost":2,"cooldown":3,"effect":"relic_volley","damage":3,"description":"Shoot each living enemy once. On damage: Poison for 2 turns. Weapon bonuses apply to each shot."},
 	"relic_occultist":{"name":"Gravetide Offering","cost":2,"cooldown":3,"effect":"relic_drain","damage":6,"heal":5,"description":"Damage one enemy. Restore up to 5 HP to the most wounded companion, limited by damage dealt."},
 	"relic_healer":{"name":"Dawn's Absolution","cost":1,"cooldown":3,"effect":"relic_cleanse","block":4,"description":"Remove Burn, Bleed, Poison and Chill from the most afflicted living ally. Grant 4 Block."},
-	"relic_crusader":{"name":"Unending Charge","cost":2,"cooldown":3,"effect":"relic_charge","self_damage":2,"damage":8,"block":4,"status":"bleed","description":"Pay 2 HP; advance to the front, strike and gain 4 Block. On damage: Bleed for 2 turns. Needs more than 2 HP."},
+	"relic_crusader":{"name":"Unending Charge","cost":2,"cooldown":3,"effect":"relic_charge","self_damage":2,"damage":12,"block":6,"status":"bleed","description":"Pay 2 HP; advance to the front from any position, deal 12 base damage and gain 6 Block. On damage: Bleed for 2 turns. Needs more than 2 HP."},
  "pc_strike": {"name": "Barbed Strike", "cost": 1, "effect": "attack", "damage": 6},
  "pc_guard": {"name": "Iron Penance", "cost": 1, "effect": "block", "block": 6},
  "pc_pain": {"name": "Rapture of Pain", "cost": 1, "effect": "pain_heal", "self_damage": 2, "heal_percent": 15},
@@ -415,7 +415,10 @@ static func hero_abilities(hero_id: String) -> Array:
 	return result
 
 static func legendary_skill(hero_id: String) -> String:
-	var item_id: String = Items.base_id(str(equipment.get(hero_id,{}).get("weapon","")))
+	return legendary_skill_for_item(str(equipment.get(hero_id,{}).get("weapon","")))
+
+static func legendary_skill_for_item(id: String) -> String:
+	var item_id: String = Items.base_id(id)
 	return {"warden_legend":"relic_warden","ranger_legend":"relic_ranger","occultist_legend":"relic_occultist","healer_legend":"relic_healer","crusader_legend":"relic_crusader"}.get(item_id,"")
 
 static func ability_cooldown(ability_id: String) -> int:

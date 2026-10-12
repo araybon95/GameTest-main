@@ -10,7 +10,7 @@ const PROFILES: Dictionary = {
  "guard":{"duration":0.68,"release":0.14,"impact":0.25,"hold":0.09,"travel":5.0,"pullback":0.0,"tilt":0.03,"recoil":0.0},
  "object":{"duration":0.80,"release":0.23,"impact":0.36,"hold":0.08,"travel":42.0,"pullback":12.0,"tilt":0.12,"recoil":0.0}
 }
-const SKILLS: Dictionary = {"wd_heavy":"heavy","wd_bash":"heavy","pc_verdict":"heavy","pc_charge":"charge","rg_quick":"bow","rg_volley":"bow","rg_pierce":"bow","oc_hex":"spell","oc_drain":"spell","oc_blast":"spell","hl_smite":"spell","hl_turn":"spell"}
+const SKILLS: Dictionary = {"relic_crusader":"charge","relic_ranger":"bow","relic_occultist":"spell","relic_healer":"heal","relic_warden":"guard","wd_heavy":"heavy","wd_bash":"heavy","pc_verdict":"heavy","pc_charge":"charge","rg_quick":"bow","rg_volley":"bow","rg_pierce":"bow","oc_hex":"spell","oc_drain":"spell","oc_blast":"spell","hl_smite":"spell","hl_turn":"spell"}
 
 static func resolve(kind: String, title: String, options: Dictionary, boss: bool = false, legacy_duration: float = 0.76) -> Dictionary:
  if options.is_empty():

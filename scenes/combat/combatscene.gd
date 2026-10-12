@@ -546,7 +546,7 @@ func _resolve_card(hero_id: String, card: Dictionary) -> void:
 func _attack_with_equipment(hero_id: String, card: Dictionary, ignore_block: bool = false) -> int:
 	var attack_kind: String = "bow" if hero_id == "ranger" else "spell" if hero_id in ["occultist", "healer"] else "sword"
 	if presentation != null:
-		presentation.strike(hero_portraits[hero_id], enemy_views[selected_enemy_index].get_node("EnemyArt"), attack_kind, str(card.get("name", "Strike")),true,{"skill_id":str(card.get("skill_id","")),"effect":str(card.get("effect","")),"weapon_signature":preload("res://scripts/weapon_signatures.gd").resolve(GameState,hero_id)})
+		presentation.strike(hero_portraits[hero_id], enemy_views[selected_enemy_index].get_node("EnemyArt"), attack_kind, str(card.get("name", "Strike")),true,{"skill_id":str(card.get("skill_id","")),"effect":str(card.get("effect","")),"relic_fx":str(card.get("effect","")),"weapon_signature":preload("res://scripts/weapon_signatures.gd").resolve(GameState,hero_id)})
 	_play_attack_sound(attack_kind)
 	var accuracy: float = GameState.hero_accuracy(hero_id, hero_state[hero_id])
 	if accuracy < 100.0 and randf() * 100.0 >= accuracy:
@@ -1079,6 +1079,8 @@ func _refresh_all() -> void:
 	var role_hint: Label = get_node("SelectedHeroInfo").find_child("RoleHint", true, false) as Label
 	if role_hint != null:
 		role_hint.text = {"warden": "Marked targets: +2 damage.\nFront protects against melee.", "ranger": "Rear: +1 damage. Mark targets\nfor the Warden to exploit.", "occultist": "Damaging skills inflict Poison.\nCombine pressure with allies.", "crusader": "Bleeding targets: +2 damage.\nCharge inflicts Bleed.", "healer": "Party healing removes Bleed.\nKeep your companions fighting."}.get(selected_hero, "Heroes act in any order.")
+	if has_node("FormationEquipmentHint"):
+		get_node("FormationEquipmentHint").text = get_node("PartyTacticsFeedback").movement_text(selected_hero)
 	if formation_button != null:
 		var move_cost: int = formation_move_cost(selected_hero)
 		formation_button.text = "ADVANCE → · %d AP" % move_cost
@@ -1439,6 +1441,14 @@ func _layout_combat() -> void:
 	withdraw_button.add_theme_font_size_override("font_size",18)
 	withdraw_button.pressed.connect(move_position.bind(1))
 	add_child(withdraw_button)
+	var tactics = preload("res://scenes/combat/party_tactics_feedback.gd").new()
+	tactics.name = "PartyTacticsFeedback"
+	tactics.combat = self
+	add_child(tactics)
+	var move_hint := _make_label("",14,Color("#DCC58B"))
+	move_hint.name = "FormationEquipmentHint"
+	_place(move_hint,Rect2(40,1050,455,24))
+	add_child(move_hint)
 	var log_panel := PanelContainer.new()
 	log_panel.name = "BattleLogPanel"
 	journey_log = log_panel
@@ -1961,7 +1971,8 @@ func _show_relic_reward() -> void:
 	if relic_revealed: return
 	relic_revealed = true
 	for id in victory_loot:
-		if not GameState.Items.item(id).get("boss_only",false): continue
+		var reward_item: Dictionary = GameState.Items.item(id)
+		if reward_item.get("rarity","") != "legendary" or not reward_item.has("slot"): continue
 		# Saving a favourite during the reveal must resume a cleared encounter.
 		if GameState.run_active: GameState.finish_encounter()
 		var reveal = preload("res://scenes/ui/relic_reveal.gd").new()

@@ -8,7 +8,7 @@ Legendary class weapons grant an additional combat skill while equipped, includi
 | Venomous Thornsong | Thornsong Volley | 2 | 3 base damage to each living enemy; damaging hits apply two-turn Poison unless resisted. Equipment bonuses apply per shot. |
 | Vampiric Gravetide | Gravetide Offering | 2 | 6 base damage; heal the most wounded companion, capped by both actual damage and 5 base healing plus equipment/training bonuses. |
 | Dawn's Mercy | Dawn's Absolution | 1 | Cleanse Burn, Bleed, Poison and Chill from the most afflicted living ally; grant 4 base Block. |
-| Unending Sacrament | Unending Charge | 2 | Pay 2 HP, advance to P1, deal 8 base damage and gain 4 base Block; damaging hits apply two-turn Bleed unless resisted. Requires more than 2 HP. |
+| Unending Sacrament | Unending Charge | 2 | Pay 2 HP, advance to P1 from any position, deal 12 base damage and gain 6 base Block; damaging hits apply two-turn Bleed unless resisted. Requires more than 2 HP. |
 
 Heavy Warden faction/relic plate and Crusader rare/relic armour cost 2 AP for manual formation moves. Ranger armour grants one free manual move per party turn and reduces skill Block by 1. Occultist faction/relic vestments reduce skill Block by 1. Healer faction/relic armour reduces skill damage by 5%. Skill-driven movement retains its skill cost. Item descriptions, comparisons and formation buttons expose these trade-offs.
 

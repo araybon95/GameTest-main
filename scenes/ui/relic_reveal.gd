@@ -17,17 +17,33 @@ func _ready() -> void:
 	shade.size = size
 	shade.color = Color(0.015,0.005,0.01,0.88)
 	add_child(shade)
-	panel(Rect2(370,175,1180,725),Color("#120C11"))
-	relic_text("A TROPHY OF THE FALLEN",Vector2(435,218),1050,26,Color("#D5AF64"))
+	var backing: Panel = panel(Rect2(370,175,1180,725),Color("#120C11"))
 	var entry: Dictionary = State.Items.item(item_id)
+	preload("res://scripts/visual_overlays.gd").frame(backing,str(entry.get("hero","")))
+	var skill_id: String = State.legendary_skill_for_item(item_id)
+	relic_text("A TROPHY OF THE FALLEN" if entry.get("boss_only",false) else "AN OATH TAKES SHAPE",Vector2(435,218),1050,26,Color("#D5AF64"))
 	relic_text(str(entry.get("name","Relic")),Vector2(680,294),790,34,Color("#FFE2A2"))
 	var art := picture(State.Items.icon_path(item_id),Rect2(430,298,210,260))
 	art.name = "RelicArt"
 	var lore := relic_text(str(entry.get("lore","")),Vector2(680,361),770,24,Color("#DBC7B2"))
 	lore.size.y = 120
-	relic_text("Taken from " + str(State.Items.histories.get(item_id,{}).get("origin","the guardian")),Vector2(680,498),770,22,Color("#BE9E78"))
-	var effects := relic_text(State.Items.description(item_id).replace(" · ","\n"),Vector2(450,595),1000,23,Color("#F5E9CF"))
-	effects.size.y = 150
+	relic_text("Taken from " + str(State.Items.histories.get(item_id,{}).get("origin","the expedition")),Vector2(680,498),770,22,Color("#BE9E78"))
+	var scroll := ScrollContainer.new()
+	scroll.name = "RelicDetails"
+	scroll.position = Vector2(450,590)
+	scroll.size = Vector2(1000,185)
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	add_child(scroll)
+	var effects := Label.new()
+	effects.custom_minimum_size.x = 970
+	effects.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	effects.add_theme_font_size_override("font_size",22)
+	effects.add_theme_color_override("font_color",Color("#F5E9CF"))
+	effects.text = State.Items.description(item_id).replace(" · ","\n")
+	if not skill_id.is_empty():
+		var skill: Dictionary = State.card_stats(skill_id)
+		effects.text = "WHILE EQUIPPED · %s · %d AP · 3-TURN COOLDOWN\n%s\n\n%s" % [skill.name,skill.cost,State.card_description(skill),effects.text]
+	scroll.add_child(effects)
 	relic_text("Legendary · Already added to party inventory",Vector2(450,550),1000,20,Color("#E7C467"))
 	var mark := button_at("★ MARK FAVOURITE",Rect2(435,799,470,65),toggle_favourite)
 	mark.name = "RelicFavourite"
