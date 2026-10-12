@@ -94,6 +94,7 @@ func build_equipment() -> void:
 		var icon = ItemButton.new()
 		icon.name = "Equipment_" + slot
 		icon.configure(item_id)
+		icon.favourite_changed.connect(refresh)
 		icon.position = Vector2(145 + (index % 2) * 89, 269 + (index / 2) * 101)
 		icon.custom_minimum_size = Vector2(74, 74)
 		icon.size = Vector2(74, 74)
@@ -286,6 +287,7 @@ func build_inventory() -> void:
 		var icon = ItemButton.new()
 		icon.name = "Inventory_" + str(item_id)
 		icon.configure(str(item_id), int(State.inventory[item_id]))
+		icon.favourite_changed.connect(refresh)
 		icon.pressed.connect(choose_item.bind(str(item_id)))
 		grid.add_child(icon)
 	if grid.get_child_count() == 0:

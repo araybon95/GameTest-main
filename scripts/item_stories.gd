@@ -8,6 +8,7 @@ static func identify(state, hero_id: String, slot: String) -> String:
 	while state.Items.histories.has(copy_id): copy_id += "_"
 	state.Items.histories[copy_id] = {"base":id,"name":"","deeds":[],"keys":[],"owners":[]}
 	state.equipment[hero_id][slot] = copy_id
+	if state.Items.favourites.get(id,false): state.Items.favourites[copy_id] = true
 	if state.modifications.has(id): state.modifications[copy_id] = state.modifications[id]
 	return copy_id
 
@@ -45,3 +46,12 @@ static func heirloom(state, hero_id: String) -> Dictionary:
 	state.add_item(id)
 	loadout.erase(slot)
 	return snapshot
+
+const TROPHIES: Dictionary = {"ash_chieftain":"chieftain_trophy","keep_son":"son_trophy","undying_lord":"lord_trophy","harrowed_giant":"giant_trophy","coterie_seamkeeper":"coterie_trophy","howling_head":"head_trophy","moth_oleander":"oleander_trophy","moth_exuvia":"exuvia_trophy"}
+static func boss_relic(state, boss: String) -> String:
+	if not TROPHIES.has(boss) or state.party.is_empty(): return ""
+	var id: String = "keepsake_" + str(Time.get_ticks_usec())
+	while state.Items.histories.has(id): id += "_"
+	var bearer: String = str(state.party[state.loot_rng.randi_range(0,state.party.size()-1)])
+	state.Items.histories[id] = {"base":TROPHIES[boss],"hero":bearer,"origin":state.creature(boss).get("name",boss),"name":"","deeds":[],"keys":[],"owners":[]}
+	return id

@@ -80,6 +80,8 @@ var enemy_weak_rounds: int = 0
 var round_number: int = 1
 var battle_over: bool = false
 var reward_given: bool = false
+var victory_loot: Array[String] = []
+var relic_revealed: bool = false
 var battle_log: Array[String] = []
 
 var round_label: Label
@@ -236,6 +238,7 @@ func _check_battle_over() -> void:
 				hero_state[id]["max_hp"] = GameState.hero_max_hp(str(id))
 				_add_log("%s gains %d XP%s." % [GameState.hero(str(id))["name"], xp_rewards[id]["xp"], " — LEVEL %d! Train in the Barracks" % GameState.leveling(str(id))["level"] if xp_rewards[id]["levels"] > 0 else ""])
 
+		_show_relic_reward()
 		_offer_floor_entrance()
 	elif _standing_heroes().is_empty():
 		battle_over = true
@@ -245,6 +248,8 @@ func _check_battle_over() -> void:
 func _start_battle() -> void:
 	battle_over = false
 	reward_given = false
+	victory_loot.clear()
+	relic_revealed = false
 	selected_skill_id = ""
 	round_number = 1
 	enemy_hp = enemy_max_hp
@@ -337,6 +342,7 @@ func _select_hero(hero_id: String) -> void:
 
 
 func _combat_shortcuts_blocked() -> bool:
+	if has_node("RelicLootReveal"): return true
 	var controls: Node = get_node_or_null("/root/GameControls")
 	if controls != null and controls.has_method("input_blocked") and controls.input_blocked():
 		return true
@@ -1222,7 +1228,8 @@ func _award_reward() -> void:
 		reward = int(GameState.selected_expedition.get("reward", 5)) if not GameState.run_active or GameState.current_room_kind() == "boss" else 2
 	GameState.gold += reward
 	_add_log("Spoils: +%d Gold (total %d)." % [reward, GameState.gold])
-	for item_id in GameState.claim_room_loot():
+	victory_loot = GameState.claim_room_loot()
+	for item_id in victory_loot:
 		var item: Dictionary = GameState.Items.item(item_id)
 		_add_log("Loot: %s [%s]." % [item["name"], str(item["rarity"]).to_upper()])
 
@@ -1686,6 +1693,7 @@ func _on_hero_pressed(hero_id: String) -> void:
 
 
 func _on_end_turn_button_pressed() -> void:
+	if has_node("RelicLootReveal"): return
 	if battle_over:
 		if GameState.run_active and _living_enemies().is_empty():
 			GameState.run_heroes = hero_state.duplicate(true)
@@ -1893,6 +1901,7 @@ func _hurt_portrait(portrait: TextureRect) -> void:
 		portrait.get_node("StatusVisual").hurt()
 
 func _offer_floor_entrance() -> void:
+	if has_node("RelicLootReveal") and not get_node("RelicLootReveal").answered: return
 	if floor_prompt_shown or not GameState.run_active or GameState.current_room_kind() != "boss":
 		return
 	var room: Dictionary = GameState.floors[GameState.floor_index][GameState.room_position]
@@ -1902,6 +1911,19 @@ func _offer_floor_entrance() -> void:
 	GameState.run_heroes = hero_state.duplicate(true)
 	GameState.finish_encounter()
 	call_deferred("_show_floor_entrance")
+
+func _show_relic_reward() -> void:
+	if relic_revealed: return
+	relic_revealed = true
+	for id in victory_loot:
+		if not GameState.Items.item(id).get("boss_only",false): continue
+		# Saving a favourite during the reveal must resume a cleared encounter.
+		if GameState.run_active: GameState.finish_encounter()
+		var reveal = preload("res://scenes/ui/relic_reveal.gd").new()
+		reveal.item_id = id
+		reveal.dismissed.connect(func(): call_deferred("_offer_floor_entrance"))
+		add_child(reveal)
+		break
 
 func _show_floor_entrance() -> void:
 	if not GameState.can_descend():

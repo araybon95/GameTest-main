@@ -86,6 +86,7 @@ func refresh() -> void:
 		rows.add_child(row)
 		var icon = ItemButton.new()
 		icon.configure(str(item_id), int(State.inventory.get(item_id, 0)))
+		icon.favourite_changed.connect(refresh)
 		icon.custom_minimum_size = Vector2(90, 90)
 		icon.mouse_default_cursor_shape = Control.CURSOR_HELP
 		row.add_child(icon)
@@ -117,7 +118,11 @@ func refresh() -> void:
 		buy.custom_minimum_size = Vector2(230, 90)
 		buy.add_theme_font_size_override("font_size", 23)
 		buy.disabled = unit_price <= 0 if is_selling() else State.gold < unit_price
+		if is_selling() and State.Items.favourites.get(item_id,false):
+			buy.disabled = true
+			buy.text = "★ PROTECTED"
 		buy.tooltip_text = "Sell one unequipped copy." if is_selling() and unit_price > 0 else "The 25% value rounds down to 0 gold. This item stays in your inventory." if is_selling() else "Buy one copy for your inventory."
+		if is_selling() and State.Items.favourites.get(item_id,false): buy.tooltip_text = "Favourite protected. Right-click its icon to allow selling."
 		buy.pressed.connect(sell_inventory_item.bind(item_id) if is_selling() else purchase.bind(item_id))
 		row.add_child(buy)
 	var status := label_at(transaction_message,Vector2(500,738),1340,20)
@@ -201,6 +206,7 @@ func sell_inventory_item(item_id: String) -> bool:
 	var value: int = State.item_sell_price(item_id)
 	var sold: bool = State.sell_item(item_id)
 	transaction_message = "Sold 1 %s for %d gold · %d remaining." % [State.Items.item(item_id).get("name",item_id),value,int(State.inventory.get(item_id,0))] if sold else "Sale unavailable: an unequipped copy with resale value is required."
+	if State.Items.favourites.get(item_id,false): transaction_message = "Favourite protected. Right-click its icon to allow selling."
 	refresh_after_transaction()
 	return sold
 

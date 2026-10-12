@@ -25,6 +25,9 @@ func win_fight(final: bool = false) -> void:
 		enemy["hp"] = 0
 	battle.enemy_hp = 0
 	battle._check_battle_over()
+	if battle.has_node("RelicLootReveal"):
+		battle.get_node("RelicLootReveal").dismiss()
+		await settle()
 	battle._on_end_turn_button_pressed()
 	await settle()
 	assert(current_scene.scene_file_path == "res://scenes/expedition/aftermath.tscn" if final else current_scene.has_node("DungeonMap"))
@@ -67,5 +70,8 @@ func run() -> void:
 	current_scene._on_building_pressed({"scene": "res://scenes/hub/apothecary.tscn"})
 	await settle()
 	assert(current_scene.apothecary_mode)
+	current_scene.queue_free()
+	for i in range(3): await process_frame
+	await create_timer(0.2).timeout
 	print("PASS: real scene flow through three fights, camp, victory, settlement and reclaimed shop")
 	quit()

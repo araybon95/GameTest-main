@@ -112,6 +112,9 @@ func controlled_victory() -> void:
 	assert(State.gold == earned_gold and State.inventory == earned_items and State.hero_progress == earned_progress)
 	assert(State.claim_room_loot().is_empty() and State.award_victory_xp().is_empty())
 	combats += 1
+	if battle.has_node("RelicLootReveal"):
+		battle.get_node("RelicLootReveal").dismiss()
+		await settle()
 	if battle.has_node("FloorEntrancePrompt"):
 		assert(State.can_descend())
 		battle.get_node("FloorEntrancePrompt").stay_here()

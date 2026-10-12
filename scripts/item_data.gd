@@ -25,6 +25,14 @@ const POTIONS: Dictionary = {
  "solace_potion": {"name": "Solace Potion", "rarity": "common", "kind": "potion", "effect": "solace", "amount": 15, "price": 8, "description": "Reduce the selected living hero's Stress by 15. Single use; 1 AP in combat."},
 }
 const EQUIPMENT: Dictionary = {
+	"chieftain_trophy": {"name":"Gallows King's Signet","rarity":"legendary","kind":"trinket","slot":"charm","boss_only":true,"damage_vs_human":15,"accuracy":5,"lore":"A stolen crown hammered into a ring. Its notches count the travellers who never returned."},
+	"son_trophy": {"name":"The Last Oath","rarity":"legendary","kind":"trinket","slot":"charm","boss_only":true,"block":2,"bleed_resist":20,"lore":"A broken sword bound with an oath-ribbon. Even death failed to loosen its owner's grip."},
+	"lord_trophy": {"name":"Calden's Deathless Seal","rarity":"legendary","kind":"trinket","slot":"charm","boss_only":true,"max_hp_percent":12,"damage_vs_corrupted":15,"lore":"A blackened seal that outlived its kingdom. Beneath the wax, something still beats."},
+	"giant_trophy": {"name":"The Harrowed Shackle","rarity":"legendary","kind":"trinket","slot":"charm","boss_only":true,"max_hp":6,"bleed_resist":25,"lore":"An iron restraint cut from the giant's wrist. Its inner barbs bear a lifetime of prayers."},
+	"coterie_trophy": {"name":"Threefold Suture","rarity":"legendary","kind":"trinket","slot":"charm","boss_only":true,"debuff_resist":20,"damage_vs_remade":15,"lore":"Three needles, one endless thread. The hymn ended; the stitches remember its rhythm."},
+	"head_trophy": {"name":"The Silenced Litany","rarity":"legendary","kind":"trinket","slot":"charm","boss_only":true,"damage_percent":12,"debuff_resist":15,"lore":"A reliquary clasped around a voiceless tongue. Silence is the only mercy its altar ever offered."},
+	"oleander_trophy": {"name":"Oleander's Vigil","rarity":"legendary","kind":"trinket","slot":"charm","boss_only":true,"block":2,"poison_resist":30,"lore":"A wing-shaped shield fragment. The knight kept his watch long after he forgot whom he guarded."},
+	"exuvia_trophy": {"name":"The Queen's Empty Crown","rarity":"legendary","kind":"trinket","slot":"charm","boss_only":true,"heal":2,"debuff_resist":20,"lore":"A crown woven from discarded chitin. Its soft glow remembers every body sacrificed to the queen."},
 	"outlaw_tally": {"name":"Outlaw's Tally", "rarity":"rare", "kind":"trinket", "slot":"trinket", "damage_vs_human":10},
 	"warden_gravewatch": {"name":"Gravewatch Medal", "rarity":"epic", "kind":"trinket", "slot":"trinket", "hero":"warden", "damage_vs_corrupted":15},
 	"occultist_severed_litany": {"name":"Severed Litany", "rarity":"epic", "kind":"trinket", "slot":"trinket", "hero":"occultist", "damage_vs_remade":15},
@@ -84,6 +92,7 @@ const PROVISIONS: Dictionary = {
 const SLOTS: Array[String] = ["weapon", "off_hand", "head", "armor", "trinket", "charm"]
 
 static var histories: Dictionary = {}
+static var favourites: Dictionary = {}
 
 static func base_id(item_id: String) -> String:
 	return str(histories.get(item_id, {}).get("base", item_id))
@@ -94,6 +103,7 @@ static func item(item_id: String) -> Dictionary:
 	if histories.has(item_id):
 		entry = entry.duplicate(true)
 		if not str(histories[item_id].get("name", "")).is_empty(): entry["name"] = histories[item_id].name
+		if histories[item_id].has("hero"): entry["hero"] = histories[item_id].hero
 	return entry
 
 static func description(item_id: String) -> String:
@@ -141,8 +151,11 @@ static func tooltip(item_id: String) -> String:
 	if entry.is_empty():
 		return "Empty slot"
 	var text: String = "%s\n%s\n%s" % [entry["name"], str(entry["rarity"]).to_upper(), description(item_id).replace(" · ", "\n")]
+	if entry.has("lore"): text += "\n\n" + str(entry.lore)
+	if favourites.get(item_id,false): text += "\n★ Favourite · protected from sale"
 	if histories.has(item_id):
 		var record: Dictionary = histories[item_id]
+		if record.has("origin"): text += "\nTaken from " + str(record.origin)
 		text += "\n\n" + str(EQUIPMENT[base_id(item_id)]["name"])
 		for owner in record.get("owners", []): text += "\nHeirloom of " + str(owner)
 		for deed in record.get("deeds", []): text += "\n• " + str(deed)
@@ -170,6 +183,7 @@ static func roll_equipment(rng: RandomNumberGenerator, active_party: Array, guar
 	var pool: Array[String] = []
 	for item_id in EQUIPMENT:
 		var entry: Dictionary = EQUIPMENT[item_id]
+		if entry.get("boss_only",false): continue
 		if entry["rarity"] == rarity and (active_party.has(entry.get("hero", "")) or (not guaranteed_legendary and not entry.has("hero"))):
 			pool.append(str(item_id))
 	return "" if pool.is_empty() else pool[rng.randi_range(0, pool.size() - 1)]

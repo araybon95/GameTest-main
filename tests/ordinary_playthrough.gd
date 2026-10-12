@@ -251,6 +251,9 @@ func combat() -> void:
 	if not battle.battle_over:
 		report["outcome"]="combat_round_bound"
 		return
+	if battle.has_node("RelicLootReveal"):
+		battle.get_node("RelicLootReveal").dismiss()
+		await settle()
 	if battle.has_node("FloorEntrancePrompt"):
 		battle.get_node("FloorEntrancePrompt").stay_here()
 	else: battle._on_end_turn_button_pressed()

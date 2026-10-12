@@ -1,6 +1,7 @@
 extends Button
 
 const Items = preload("res://scripts/item_data.gd")
+signal favourite_changed
 var item_id: String = ""
 
 func configure(id: String, amount: int = 1) -> void:
@@ -23,6 +24,7 @@ func configure(id: String, amount: int = 1) -> void:
 	add_theme_stylebox_override("hover", hover)
 	add_theme_stylebox_override("focus", hover)
 	tooltip_text = Items.tooltip(id)
+	tooltip_text += "\nRight-click an owned item to toggle favourite."
 	if entry.is_empty():
 		text = "—"
 		return
@@ -51,6 +53,25 @@ func configure(id: String, amount: int = 1) -> void:
 	quantity.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 	quantity.offset_right = -5
 	quantity.offset_bottom = -3
+	var star := Label.new()
+	star.name = "FavouriteStar"
+	star.text = "★" if Items.favourites.get(id,false) else ""
+	star.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	star.add_theme_font_size_override("font_size",23)
+	star.add_theme_color_override("font_color",Color("#FFD978"))
+	star.add_theme_color_override("font_outline_color",Color.BLACK)
+	star.add_theme_constant_override("outline_size",4)
+	star.position = Vector2(5,2)
+	add_child(star)
+
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
+		var state: Script = load("res://scripts/game_data.gd")
+		if state.toggle_item_favourite(item_id):
+			if has_node("FavouriteStar"): get_node("FavouriteStar").text = "★" if Items.favourites.get(item_id,false) else ""
+			tooltip_text = Items.tooltip(item_id) + "\nRight-click an owned item to toggle favourite."
+			favourite_changed.emit()
+		accept_event()
 
 func _make_custom_tooltip(for_text: String) -> Object:
 	var panel := PanelContainer.new()

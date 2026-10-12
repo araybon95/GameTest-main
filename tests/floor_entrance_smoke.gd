@@ -24,6 +24,14 @@ func run() -> void:
 		battle._check_battle_over()
 		await process_frame
 		await process_frame
+		assert(battle.has_node("RelicLootReveal"))
+		assert(not battle.has_node("FloorEntrancePrompt"))
+		battle.get_node("RelicLootReveal").toggle_favourite()
+		var checkpoint := ConfigFile.new()
+		assert(checkpoint.load(preload("res://scripts/save_files.gd").path(0)) == OK)
+		assert(checkpoint.get_value("save","data").floors[State.floor_index][State.room_position].cleared)
+		battle.get_node("RelicLootReveal").dismiss()
+		for i in range(3): await process_frame
 		assert(battle.has_node("FloorEntrancePrompt"))
 		assert(State.can_descend() and not State.run_complete)
 		assert(State.run_heroes == battle.hero_state)
@@ -55,6 +63,10 @@ func run() -> void:
 		coterie._check_battle_over()
 		await process_frame
 		await process_frame
+		if phase == 2:
+			assert(coterie.has_node("RelicLootReveal"))
+			coterie.get_node("RelicLootReveal").dismiss()
+			for i in range(3): await process_frame
 		assert(coterie.has_node("FloorEntrancePrompt") == (phase == 2))
 	coterie.queue_free()
 	await process_frame

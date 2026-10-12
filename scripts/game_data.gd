@@ -229,6 +229,7 @@ static func load_progression() -> void:
 		hero_names = config.get_value("progress", "hero_names", {})
 		hero_journals = config.get_value("progress", "hero_journals", {})
 		Items.histories = config.get_value("progress", "item_histories", {})
+		Items.favourites = config.get_value("progress", "item_favourites", {})
 		hero_colors = config.get_value("progress", "hero_colors", {})
 		hero_outfits = config.get_value("progress", "hero_outfits", {})
 		hero_portraits = config.get_value("progress", "hero_portraits", {})
@@ -248,6 +249,7 @@ static func save_progression() -> void:
 	config.set_value("progress", "hero_names", hero_names)
 	config.set_value("progress", "hero_journals", hero_journals)
 	config.set_value("progress", "item_histories", Items.histories)
+	config.set_value("progress", "item_favourites", Items.favourites)
 	config.set_value("progress", "hero_colors", hero_colors)
 	config.set_value("progress", "hero_outfits", hero_outfits)
 	config.set_value("progress", "hero_portraits", hero_portraits)
@@ -880,7 +882,9 @@ static func claim_room_loot() -> Array[String]:
 		return result
 	room["loot_claimed"] = true
 	if kind in ["boss", "treasure"] or loot_rng.randf() < Items.GEAR_CHANCE:
-		var item_id: String = Items.roll_equipment(loot_rng, party, kind == "boss")
+		var boss_id: String = str(room.get("creature", ""))
+		var item_id: String = ItemStories.boss_relic(load("res://scripts/game_data.gd"),boss_id) if kind == "boss" else ""
+		if item_id.is_empty(): item_id = Items.roll_equipment(loot_rng, party, kind == "boss")
 		if item_id != "":
 			add_item(item_id)
 			result.append(item_id)
@@ -958,6 +962,7 @@ static func _save_economy() -> bool:
 	return saves != null and saves.save(0)
 
 static func sell_item(item_id: String) -> bool:
+	if Items.favourites.get(item_id,false): return false
 	var count: int = int(inventory.get(item_id, 0))
 	var value: int = item_sell_price(item_id)
 	if count <= 0 or value <= 0:
@@ -972,6 +977,16 @@ static func sell_item(item_id: String) -> bool:
 		inventory[item_id] = count
 		gold -= value
 		return false
+	return true
+
+static func toggle_item_favourite(item_id: String) -> bool:
+	var owned: bool = int(inventory.get(item_id,0)) > 0
+	for loadout in equipment.values(): owned = owned or loadout.values().has(item_id)
+	if not owned or Items.item(item_id).is_empty(): return false
+	if Items.favourites.get(item_id,false): Items.favourites.erase(item_id)
+	else: Items.favourites[item_id] = true
+	save_progression()
+	_save_economy()
 	return true
 
 static func purchase_item(item_id: String) -> bool:
