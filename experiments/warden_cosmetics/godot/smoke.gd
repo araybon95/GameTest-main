@@ -21,7 +21,7 @@ func run() -> void:
 	var brooch_texture = actor.parts.insignia.texture
 	lab.get_node("Choice_helmet").item_selected.emit(0)
 	actor.refresh()
-	check(actor.helmet == "original" and actor.parts.helmet.texture.region != head_texture.region,"Helmet swap failed")
+	check(actor.helmet == "original" and actor.parts.helmet.texture.atlas != head_texture.atlas,"Helmet swap failed")
 	check(actor.parts.rear_cloak.texture == cape_texture and actor.parts.insignia.texture.region == brooch_texture.region,"Helmet swap changed another slot")
 	lab.get_node("PreviewReward").button_pressed = false
 	check(not lab.unlocked and actor.helmet == "original" and actor.cloak == "original" and actor.insignia == "iron","Preview lock must reset cosmetics")

@@ -82,6 +82,16 @@
       "mode": "RGB",
       "sha256": "a8ea5fce4162a8ae4f8edf9d4ef8c12ec97441cd5b045ce12e95926d136d85dc",
       "source": "unchanged main-game copy"
+    },
+    {
+      "file": "corrupted_warhelm.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "sha256": "db5691aca86269341d1a95e37e8b6e953666ea95356ebd06b282a73cbc207065",
+      "source": "OpenAI image generation/edit, preserved original output; corrupted wolf warhelm revision"
     }
   ]
 }

@@ -59,12 +59,6 @@
         512,
         512
       ],
-      "crown_region": [
-        512,
-        0,
-        512,
-        512
-      ],
       "socket": [
         794,
         209
@@ -73,7 +67,13 @@
         280,
         470
       ],
-      "scale": 0.55
+      "scale": 0.55,
+      "crown_source": "corrupted_warhelm.png",
+      "normalized_canvas": [
+        512,
+        512
+      ],
+      "theme": "Corrupted wolf warhelm: integrated predatory visor and broken relics, based on the ruined keep wolf banners"
     },
     "insignia": {
       "source": "components.png",

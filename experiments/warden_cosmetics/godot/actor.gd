@@ -69,6 +69,9 @@ func tile(index: int) -> AtlasTexture:
 	texture.atlas = preload("res://assets/components.png")
 	var cell := texture.atlas.get_size()/Vector2(3,2)
 	texture.region = Rect2(Vector2(index%3,int(index/3))*cell,cell)
+	if index == 1:
+		texture.atlas = preload("res://assets/corrupted_warhelm.png")
+		texture.region = Rect2(Vector2.ZERO,texture.atlas.get_size())
 	texture.filter_clip = true
 	tiles[index] = texture
 	return texture
@@ -80,7 +83,7 @@ func refresh() -> void:
 		cloth_variant = cloak
 	var head: Sprite2D = parts.helmet
 	head.texture = tile(1 if helmet == "crown" else 0)
-	# Normalize each tile to 512 px; artists keep its neck joint at (256,410).
+	# Normalize each helmet to 512 px; its neck joint is (280,470).
 	head.scale = Vector2.ONE*helmet_scale*512.0/head.texture.get_width()
 	head.position = HEAD_SOCKET+helmet_offset-HEAD_JOINT*helmet_scale
 	var clasp: Sprite2D = parts.insignia

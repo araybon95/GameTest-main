@@ -6,7 +6,7 @@ Standalone visual experiment. **Nothing is integrated into the game:** the live 
 
 ## What to review
 
-The current flattened Warden is shown beside an assembled model with independently swappable greathelm, rear cloak, and insignia. The reward concept is a fractured **Undying Crown**, a gold-embroidered **Crowned Mantle**, and a crown brooch or embroidered patch. These are appearance studies for the Undying Lord, not actual unlocks or stat equipment.
+The current flattened Warden is shown beside an assembled model with independently swappable greathelm, rear cloak, and insignia. The reward concept is a corrupted **Wolf Warhelm**, a gold-embroidered **Crowned Mantle**, and a crown brooch or embroidered patch. The warhelm replaces the earlier crown-on-greathelm concept with a predatory metal visor, fang-like cheek guards, jagged forged ears, and tarnished relics integrated into the armor. Its wolf motif follows the ruined keep's wolf banners and the last son's beastlike corruption. These are appearance studies for the Undying Lord, not actual unlocks or stat equipment.
 
 The **Preview boss reward** checkbox simulates availability within this lab only. Turning it off restores ordinary parts and disables reward choices. Compare different combinations, inspect a single layer, overlay the original to check alignment, or separate the components to see the construction.
 
@@ -41,12 +41,14 @@ Helmet X/Y and scale controls let us inspect the neck fit without editing pixels
 
 ## Artist kit and alignment
 
-All source PNGs live in **`godot/assets/`**. The original Warden and room are byte-identical copies from main-game commit `5782f68`. The body, arms/gear, scarf, cloak, reward cloak, and component sheet were generated/edited with the session's OpenAI image tool. Original output pixels are preserved unchanged; Godot applies fitting transforms when rendering.
+All source PNGs live in **`godot/assets/`**. The original Warden and room are byte-identical copies from main-game commit `5782f68`. The body, arms/gear, scarf, cloak, reward cloak, corrupted warhelm, and component sheet were generated/edited with the session's OpenAI image tool. Original output pixels are preserved unchanged; Godot applies fitting transforms when rendering.
 
 - `sources.json` records dimensions and SHA-256 hashes.
 - `components.json` records layer order, texture regions, source-space sockets, and the patch's cloth attachment.
 - `alignment.json` records per-layer affine registration to the original 1247 × 1261 canvas. Image-feature analysis supplied initial fitting; native screenshots were used to review the result. Running the lab does not require Python or OpenCV.
-- `components.png` is a transparent 1536 × 1024 sheet: stock helmet, crowned helmet, iron clasp, crown clasp, embroidered patch, and a spare company pin in 512 × 512 cells.
+- `components.png` is a transparent 1536 × 1024 sheet: stock helmet, earlier crowned helmet study (retained but unused), iron clasp, crown clasp, embroidered patch, and a spare company pin in 512 × 512 cells.
+
+- `corrupted_warhelm.png` is the separate active reward helmet; the internal `crown` variant ID is retained for existing lab fitting exports. Its canvas is normalized to 512 × 512 at render time, with the neck joint at (280,470).
 
 For hand-drawn replacements, keep the corresponding PNG's existing canvas, transparency, and part position. If you instead redraw directly on the canonical 1247 × 1261 reference canvas, replace that layer's registration matrix with identity in `alignment.json`. Keep hidden overlap beneath collars, shoulders, and equipment so seams do not open when layering. Helmets should share a neck joint rather than being scaled by their total bounds: a taller crown should grow upward without shrinking the faceplate.
 

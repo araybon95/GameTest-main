@@ -58,7 +58,7 @@ func _ready() -> void:
 	panel.add_theme_stylebox_override("panel",frame(Color("#151316"),Color("#665B4E")))
 	add_child(panel)
 	check("Preview boss reward","PreviewReward",Vector2(945,119),true,set_reward_preview)
-	selector("Helmet","helmet",Vector2(945,160),["Original greathelm","Undying crown · prototype"])
+	selector("Helmet","helmet",Vector2(945,160),["Original greathelm","Wolf warhelm · prototype"])
 	selector("Rear cloak","cloak",Vector2(945,223),["Original oxblood","Crowned mantle · prototype"])
 	selector("Insignia","insignia",Vector2(945,286),["Iron clasp","Crown brooch","Embroidered crown patch"])
 	check("Breathing & cloth wind","AnimateModel",Vector2(945,353),false,func(value): actor.animate = value)
