@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "prototype_only": true,
+  "reference_commit": "5782f68",
+  "images": [
+    {
+      "file": "arms_gear.png",
+      "dimensions": [
+        1130,
+        1392
+      ],
+      "mode": "RGBA",
+      "sha256": "de95beb7aa4a54a141f647488ce559993159982f940172e020a63b96ae3092d2",
+      "source": "OpenAI image generation/edit, preserved original output"
+    },
+    {
+      "file": "body.png",
+      "dimensions": [
+        1247,
+        1261
+      ],
+      "mode": "RGBA",
+      "sha256": "05c7208d9744ad440591edfb252c2d42e6dbd56142239067d9f25b49268a2f59",
+      "source": "OpenAI image generation/edit, preserved original output"
+    },
+    {
+      "file": "collar.png",
+      "dimensions": [
+        1130,
+        1392
+      ],
+      "mode": "RGBA",
+      "sha256": "8c435dfcf95abb1523e75ee697f83ec0e7a602a7f6bbec90a553b2fc9bb625c5",
+      "source": "OpenAI image generation/edit, preserved original output"
+    },
+    {
+      "file": "components.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "d1c58f3723d1ee4efda0df2aab8659824c8a76ec2272574ffcde230d3d7fc38f",
+      "source": "OpenAI image generation/edit, preserved original output"
+    },
+    {
+      "file": "original.png",
+      "dimensions": [
+        1247,
+        1261
+      ],
+      "mode": "RGBA",
+      "sha256": "a201a98ae843d41becf4922e9df6ac216ce5481e238ed61ed782bebfd0e99ae9",
+      "source": "unchanged main-game copy"
+    },
+    {
+      "file": "rear_cloak.png",
+      "dimensions": [
+        1247,
+        1261
+      ],
+      "mode": "RGBA",
+      "sha256": "3659d5c1351a3880e7b48140009f09b4aa34a2c0829de4ce74b115870842801f",
+      "source": "OpenAI image generation/edit, preserved original output"
+    },
+    {
+      "file": "rear_cloak_crown.png",
+      "dimensions": [
+        1247,
+        1261
+      ],
+      "mode": "RGBA",
+      "sha256": "3091fc6fb310e6291a8cbc055c9be4244337efb42c3763b3ff21245de40ef7df",
+      "source": "OpenAI image generation/edit, preserved original output"
+    },
+    {
+      "file": "room.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "mode": "RGB",
+      "sha256": "a8ea5fce4162a8ae4f8edf9d4ef8c12ec97441cd5b045ce12e95926d136d85dc",
+      "source": "unchanged main-game copy"
+    }
+  ]
+}
