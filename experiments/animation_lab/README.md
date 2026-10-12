@@ -1,6 +1,6 @@
 # Standalone walking animation lab
 
-The shipped game stays on its current subtle hallway motion. This folder is a separate Godot project for reviewing a more animated walk before deciding whether to port it. The parent `.gdignore` keeps the experiment out of the main project's editor import scan and resource export scan. No production scripts, settings, saves, or live artwork are changed.
+This experiment is paused. The shipped game uses its original four-frame walk by default, with subtle motion available through **F10 → Experimental walking**. This folder remains a separate Godot project for future animation review. The parent `.gdignore` keeps the experiment out of the main project's editor import scan and resource export scan; running the lab does not change the game or its saves.
 
 ![Animated stride preview](preview/animated-stride.gif)
 

@@ -8,6 +8,7 @@ func run() -> void:
 	State.progress_loaded = true
 	State.crusader_unlocked = true
 	var runtime = root.get_node("GameSettings")
+	assert(not runtime.experimental_walking,"Experimental walking is opt-in for new and existing players")
 	runtime.ambient_motion = true
 	for outfit in ["original","alternate","relic"]:
 		for party in [["warden","ranger","occultist"],["healer","crusader","warden"]]:
@@ -23,11 +24,26 @@ func run() -> void:
 			State.add_item("warden_epic")
 			State.equip_item("warden","warden_epic")
 			var before := snapshot()
+			runtime.experimental_walking = false
 			var travel := Travel.new()
 			travel.duration = 12.0
 			root.add_child(travel)
 			travel.set_process(false)
 			travel._process(0.2)
+			for phase in range(4):
+				travel.animation_clock = phase/7.0
+				travel.update_walkers()
+				for index in range(travel.walkers.size()):
+					var picture: TextureRect = travel.walkers[index]
+					var id: String = picture.get_meta("walker")
+					assert(picture.texture == travel.walk_frames[id][int(phase+index*0.45)%4],"Original frame cadence restored")
+					assert(not picture.material.get_shader_parameter("actor_motion"))
+			travel.arrived = true
+			travel.update_walkers()
+			for picture in travel.walkers: assert(picture.texture == travel.standing_frames[picture.get_meta("walker")],"Original standing pose on arrival")
+			travel.arrived = false
+			runtime.experimental_walking = true
+			travel._process(0)
 			var frames: Dictionary = {}
 			var profiles: Array = []
 			for picture in travel.walkers:
@@ -77,5 +93,5 @@ func run() -> void:
 			assert(snapshot() == before,"Presentation does not alter travel commits, health, gold, rooms or RNG")
 			travel.free()
 	await process_frame
-	print("PASS: all five heroes/three costume families, steady silhouettes/grounding, idle breath, eased stops, frozen modals/reduced motion, aligned gear and unchanged gameplay/RNG")
+	print("PASS: original default frame cadence/arrival and opt-in subtle motion for five heroes/three costumes; grounding, idle breath, eased stops, frozen modals/reduced motion, aligned gear and unchanged gameplay/RNG")
 	quit()

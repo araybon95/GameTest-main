@@ -5,7 +5,8 @@ cape shapes, weapon positions and measured widths differed substantially, so cyc
 them made the party visibly pop between silhouettes. Pausing held a walk frame;
 arrival switched to another portrait and could produce another abrupt change.
 
-Hallway actors now keep a consistent, planted-foot stance through travel, pauses
+The original four-frame walking loop is the default. With **Experimental walking**
+enabled in settings, hallway actors keep a consistent, planted-foot stance through travel, pauses
 and arrival. A small opt-in shader deformation supplies breathing, gentle upper-body
 sway and distance-linked weight shifts. Starts and stops ease over roughly a third
 of a second. Each class has its own amplitude/phase profile. Boots and contact
@@ -32,8 +33,11 @@ a clearer view of the small movements.
 
 ## Controls and scope
 
-**F10 → Animate scenes & hero movement** toggles the presentation. Disabling it
-removes the portrait deformation while retaining navigation and footsteps. Settings,
+**F10 → Experimental walking** opts into this subtle presentation and persists the
+choice; it starts disabled, including for existing settings files. Disabling it restores
+the original frame cadence and standing portrait on arrival. The separate
+**Animate scenes & hero movement** option controls breathing and scene effects;
+disabling that removes portrait deformation while retaining navigation and footsteps. Settings,
 inventory and other modal panels freeze actor motion. A manually paused party still
 breathes when motion is enabled, without advancing the route or playing footsteps.
 

@@ -5,6 +5,7 @@ const Music = preload("res://scripts/settlement_music.gd")
 const LocalArt = preload("res://scripts/local_dungeon_art.gd")
 var values: Dictionary = {"master": 0.8, "music": 0.8, "effects": 0.8, "brightness": 1.0}
 var ambient_motion: bool = true
+var experimental_walking: bool = false
 var combat_speed: float = 1.0
 var settings_path: String = "user://settings.cfg"
 var layer: CanvasLayer
@@ -49,6 +50,7 @@ func _ready() -> void:
 	brightness.material = material
 	light_layer.add_child(brightness)
 	ambient_motion = bool(cfg.get_value("settings","ambient_motion",true))
+	experimental_walking = bool(cfg.get_value("settings","experimental_walking",false))
 	var stored_speed: Variant = cfg.get_value("settings","combat_speed",1.0)
 	combat_speed = float(stored_speed) if stored_speed is float or stored_speed is int else 1.0
 	if not combat_speed in [1.0,1.5,2.0]: combat_speed = 1.0
@@ -68,6 +70,7 @@ func set_value(key: String, value: float) -> void:
 	var cfg := ConfigFile.new()
 	for setting in values: cfg.set_value("settings", setting, values[setting])
 	cfg.set_value("settings","ambient_motion",ambient_motion)
+	cfg.set_value("settings","experimental_walking",experimental_walking)
 	cfg.set_value("settings","combat_speed",combat_speed)
 	cfg.save(settings_path)
 
@@ -204,7 +207,17 @@ func open_settings() -> void:
 	speed.select([1.0,1.5,2.0].find(combat_speed))
 	speed.item_selected.connect(func(index): set_combat_speed([1.0,1.5,2.0][index]))
 	overlay.add_child(speed)
-	text("Speeds attacks and boss reveals; combat rules stay the same.",Vector2(850,522),850,20)
+	speed.tooltip_text = "Speeds attacks and boss reveals; combat rules stay the same."
+	var walking := CheckBox.new()
+	walking.name = "ExperimentalWalking"
+	walking.text = "Experimental walking"
+	walking.tooltip_text = "Opt into subtle hallway breathing and weight shifts. Disable to use the original four-frame walking animation. Scene animation must be enabled for breathing."
+	walking.position = Vector2(1080,517)
+	walking.size = Vector2(650,43)
+	walking.add_theme_font_size_override("font_size",22)
+	walking.button_pressed = experimental_walking
+	walking.toggled.connect(func(enabled): experimental_walking = enabled; set_value("brightness",values["brightness"]))
+	overlay.add_child(walking)
 	text(save_unavailable_reason() if not safe_to_save() else "Ready to save. AUTO is a separate checkpoint; manual slots can be overwritten.", Vector2(180, 578), 1560, 20).name = "SaveAvailability"
 	for slot in range(4):
 		var y: float = 625 + slot * 75

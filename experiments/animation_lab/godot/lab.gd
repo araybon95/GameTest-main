@@ -22,7 +22,7 @@ func _ready() -> void:
 		skin.set_stylebox(state,"Button",box)
 	theme = skin
 	label("ASHEN · ANIMATION LAB",Vector2(24,18),900,26)
-	label("Standalone stride experiment · the main game remains on subtle movement",Vector2(25,54),1100,16,MUTED)
+	label("Standalone stride experiment · isolated from the main game",Vector2(25,54),1100,16,MUTED)
 	stage = Control.new()
 	stage.name = "PreviewStage"
 	stage.position = Vector2(20,90)

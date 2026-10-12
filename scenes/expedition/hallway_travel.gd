@@ -242,6 +242,7 @@ func build_walkers() -> void:
   bases.append(Vector2(center_x,GROUND_Y))
   Scenery.apply_hero_palette(picture,id,State.hero_colors.get(id,"original"))
   ActorMotion.attach(picture,id)
+ update_walkers()
 
 func build_hud() -> void:
  build_exploration_frame()
@@ -586,7 +587,7 @@ func update_summaries() -> void:
 
 func advance_actor_motion(delta: float, blocked: bool) -> void:
  var runtime := get_node_or_null("/root/GameSettings")
- var enabled: bool = runtime == null or runtime.ambient_motion
+ var enabled: bool = runtime != null and runtime.experimental_walking and runtime.ambient_motion
  if not enabled:
   actor_walking = 0.0
  elif not blocked:
@@ -596,14 +597,17 @@ func advance_actor_motion(delta: float, blocked: bool) -> void:
 
 func update_walkers() -> void:
  var runtime := get_node_or_null("/root/GameSettings")
- var enabled: bool = runtime == null or runtime.ambient_motion
+ var experimental: bool = runtime != null and runtime.experimental_walking
+ var enabled: bool = experimental and runtime.ambient_motion
  for index in range(walkers.size()):
   var picture: TextureRect = walkers[index]
   var id: String = picture.get_meta("walker")
   if str(State.hero(id).get("equipment_look","original")) != str(wardrobe_looks.get(id,"original")): refresh_equipment_frames(id)
-  # Keep one measured, planted-foot stance through walking, pause and arrival.
-  # Generated frame-to-frame changes in silhouette no longer cause visible popping.
-  var texture: Texture2D = walk_frames[id][QUIET_WALK_POSE] if walk_frames.has(id) else standing_frames[id]
+  var phase: float = animation_clock*7.0+index*0.45
+  var texture: Texture2D = standing_frames[id]
+  if walk_frames.has(id):
+   if experimental: texture = walk_frames[id][QUIET_WALK_POSE]
+   elif not arrived: texture = walk_frames[id][int(phase)%4]
   var width: float = HERO_HEIGHT*texture.get_width()/float(maxi(1,texture.get_height()))
   picture.texture = texture
   picture.flip_h = facing_left

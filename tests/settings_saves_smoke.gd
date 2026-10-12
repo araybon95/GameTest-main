@@ -50,6 +50,29 @@ func run() -> void:
  settings.open_settings()
  await settle()
  assert(settings.overlay != null)
+ var walking: CheckBox = settings.overlay.get_node("ExperimentalWalking")
+ assert(walking.text == "Experimental walking" and not walking.button_pressed)
+ walking.button_pressed = true
+ assert(settings.experimental_walking)
+ var saved_settings := ConfigFile.new()
+ assert(saved_settings.load(settings.settings_path) == OK)
+ assert(saved_settings.get_value("settings","experimental_walking",false))
+ var reloaded = load("res://scripts/game_settings.gd").new()
+ reloaded.settings_path = settings.settings_path
+ root.add_child(reloaded)
+ assert(reloaded.experimental_walking,"Walking preference persists on restart")
+ reloaded.free()
+ walking.button_pressed = false
+ assert(not settings.experimental_walking)
+ assert(saved_settings.load(settings.settings_path) == OK)
+ assert(not saved_settings.get_value("settings","experimental_walking",true),"Disabling the option persists")
+ saved_settings.erase_section_key("settings","experimental_walking")
+ assert(saved_settings.save(settings.settings_path) == OK)
+ var legacy = load("res://scripts/game_settings.gd").new()
+ legacy.settings_path = settings.settings_path
+ root.add_child(legacy)
+ assert(not legacy.experimental_walking and legacy.ambient_motion == settings.ambient_motion,"Existing scene animation preference must not enable experimental walking")
+ legacy.free()
  if DisplayServer.get_name() != "headless":
   await RenderingServer.frame_post_draw
   root.get_texture().get_image().save_png("C:/GAME/Ashen/settings-preview.png")

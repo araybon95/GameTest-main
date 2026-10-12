@@ -11,6 +11,7 @@ func run() -> void:
 	root.content_scale_size = Vector2i(1920,1080)
 	root.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
 	State.progress_loaded = true
+	root.get_node("GameSettings").experimental_walking = true
 	State.progress_path = "user://quiet_walk_preview.cfg"
 	State.party.assign(["warden","ranger","healer"])
 	State.hero_colors.warden = "blue"

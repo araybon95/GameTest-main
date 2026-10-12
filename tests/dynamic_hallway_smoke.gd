@@ -85,11 +85,11 @@ func run() -> void:
 			advance(travel, 0.8)
 			assert(travel.scenery.position.x < start and travel.distance_travelled > 0.0)
 			assert(travel.footsteps_played > 0, "Footsteps accompany walking")
-			var first_frame: Texture2D = travel.walkers[0].texture
 			var first_motion: float = travel.walkers[0].material.get_shader_parameter("actor_stride")
 			advance(travel, 0.4)
 			assert(travel.route_clue.text.is_empty(),"Clues wait until the party approaches")
-			assert(travel.walkers[0].texture == first_frame, "Quiet walking preserves the silhouette")
+			var walker_id: String = travel.walkers[0].get_meta("walker")
+			assert(travel.walkers[0].texture == travel.walk_frames[walker_id][int(travel.animation_clock*7.0)%4], "Original walking follows the frame cadence")
 			assert(travel.walkers[0].material.get_shader_parameter("actor_stride") > first_motion, "Weight shifts track travel without switching poses")
 			for walker in travel.walkers:
 				if walker.get_meta("walker") == "warden": assert(walker.material is ShaderMaterial, "Workshop palette survives walking")
