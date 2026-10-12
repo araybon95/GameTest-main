@@ -26,7 +26,7 @@ static func pose(original: Texture2D, hurt: bool = false) -> Texture2D:
  var pose_key: String = key + ("/hurt" if hurt else "/attack")
  if cache.has(pose_key): return cache[pose_key]
  var id: String = mapped_id
- var path: String = "res://assets/generated/combat_pose_%s.png" % id
+ var path: String = "res://assets/art_library/generated/combat_pose_%s.png" % id
  if not ResourceLoader.exists(path): return original
  var sheet: Texture2D = load(path)
  var split: int = int(sheet.get_width()*float(Regions.SPLITS.get(id,0.5)))

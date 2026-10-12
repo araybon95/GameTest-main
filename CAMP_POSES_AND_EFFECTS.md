@@ -2,10 +2,10 @@
 
 Four new transparent seated sprites preserve the original standing character designs:
 
-- `assets/generated/hero_warden_camp.png`
-- `assets/generated/hero_ranger_camp.png`
-- `assets/generated/hero_occultist_camp.png`
-- `assets/generated/hero_healer_camp.png`
+- `assets/art_library/generated/hero_warden_camp.png`
+- `assets/art_library/generated/hero_ranger_camp.png`
+- `assets/art_library/generated/hero_occultist_camp.png`
+- `assets/art_library/generated/hero_healer_camp.png`
 
 The `camp_art` field in `scripts/game_data.gd` selects the resting pose. Camp scenes use these sprites around the fire; combat, inventory and other portraits keep the standing artwork. All four poses were created with the built-in imagegen tool using their existing sprite as an edit target. Full final prompts are in `ART_PROMPTS.md`. Individual poses can be replaced without changing the code.
 

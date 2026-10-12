@@ -1,7 +1,7 @@
 extends Control
 ## Provides a quiet battlefield beneath the combatants.
 
-const MOTE_TEXTURE_PATH: String = "res://assets/generated/mote.png"
+const MOTE_TEXTURE_PATH: String = "res://assets/art_library/generated/mote.png"
 
 
 func _ready() -> void:

@@ -6,6 +6,9 @@
 /build/
 /exports/
 
+# Documentation screenshots are review artifacts, not game textures.
+/docs/**/*.png.import
+
 # Local editor assistant (installed separately)
 /addons/ziva_agent/
 

@@ -1,7 +1,7 @@
 extends "res://scenes/ui/party_screen.gd"
 const Scenery = preload("res://scripts/dungeon_scenery.gd")
 const ORB_SCENE: String = "res://scenes/expedition/merchant_orb_room.tscn"
-const ORB_ART: String = "res://assets/generated/merchant_orb_ink.png"
+const ORB_ART: String = "res://assets/art_library/generated/merchant_orb_ink.png"
 var transitioning: bool = false
 
 # Keep the native Button's keyboard activation while inspecting only painted pixels.

@@ -50,7 +50,7 @@ func run() -> void:
  assert(strip.get_child_count() == 0 and statuses.size() == 2)
  strip.queue_free()
  for id in State.CARDS:
-  var path: String = preload("res://scripts/painted_skill_art.gd").path_for(str(id)) if str(id).begins_with("relic_") else "res://assets/ui/skills/%s.svg" % id
+  var path: String = preload("res://scripts/painted_skill_art.gd").path_for(str(id)) if str(id).begins_with("relic_") else "res://assets/art_library/skills/%s.svg" % id
   assert(ResourceLoader.exists(path))
  preload("res://scripts/settlement_music.gd").stop()
  await create_timer(0.12).timeout

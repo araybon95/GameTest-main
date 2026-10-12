@@ -1,0 +1,578 @@
+[
+  {
+    "id": "healing_scroll",
+    "name": "Healing Scroll",
+    "group": "SCROLLS",
+    "details": ""
+  },
+  {
+    "id": "storm_lance_scroll",
+    "name": "Storm Lance Scroll",
+    "group": "SCROLLS",
+    "details": ""
+  },
+  {
+    "id": "fire_bolt_scroll",
+    "name": "Fire Bolt Scroll",
+    "group": "SCROLLS",
+    "details": ""
+  },
+  {
+    "id": "lightning_bolt_scroll",
+    "name": "Lightning Bolt Scroll",
+    "group": "SCROLLS",
+    "details": ""
+  },
+  {
+    "id": "sunfire_scroll",
+    "name": "Sunfire Scroll",
+    "group": "SCROLLS",
+    "details": ""
+  },
+  {
+    "id": "bandage",
+    "name": "Field Bandage",
+    "group": "POTIONS",
+    "details": ""
+  },
+  {
+    "id": "antidote",
+    "name": "Field Antidote",
+    "group": "POTIONS",
+    "details": ""
+  },
+  {
+    "id": "calming_incense",
+    "name": "Calming Incense",
+    "group": "POTIONS",
+    "details": ""
+  },
+  {
+    "id": "might_tonic",
+    "name": "Tonic of Might",
+    "group": "POTIONS",
+    "details": ""
+  },
+  {
+    "id": "focus_tonic",
+    "name": "Tonic of Focus",
+    "group": "POTIONS",
+    "details": ""
+  },
+  {
+    "id": "ward_tonic",
+    "name": "Tonic of Warding",
+    "group": "POTIONS",
+    "details": ""
+  },
+  {
+    "id": "healing_potion",
+    "name": "Healing Potion",
+    "group": "POTIONS",
+    "details": ""
+  },
+  {
+    "id": "cleansing_potion",
+    "name": "Cleansing Potion",
+    "group": "POTIONS",
+    "details": ""
+  },
+  {
+    "id": "solace_potion",
+    "name": "Solace Potion",
+    "group": "POTIONS",
+    "details": ""
+  },
+  {
+    "id": "trail_food",
+    "name": "Trail Rations",
+    "group": "PROVISIONS",
+    "details": ""
+  },
+  {
+    "id": "lock_tools",
+    "name": "Locksmith Tools",
+    "group": "PROVISIONS",
+    "details": ""
+  },
+  {
+    "id": "cleansing_herbs",
+    "name": "Cleansing Herbs",
+    "group": "PROVISIONS",
+    "details": ""
+  },
+  {
+    "id": "warden_armor",
+    "name": "Roadwatch Cuirass",
+    "group": "EQUIPMENT",
+    "details": "warden; armor; Iron patched by three generations of roadwardens. Its dents are older than the current watch."
+  },
+  {
+    "id": "warden_faction_armor",
+    "name": "Calden Sentinel Plate",
+    "group": "EQUIPMENT",
+    "details": "warden; armor; A dead keep's plate, reforged for a living oath."
+  },
+  {
+    "id": "warden_relic_armor",
+    "name": "Oathkeeper's Last Watch",
+    "group": "EQUIPMENT",
+    "details": "warden; armor; A pale oath burns beneath the breastplate. Its bearer stands where the watch ended."
+  },
+  {
+    "id": "ranger_common_armor",
+    "name": "Trailwarden Jack",
+    "group": "EQUIPMENT",
+    "details": "ranger; armor; Waxed leather and careful stitching. It was made for returning home."
+  },
+  {
+    "id": "ranger_relic_armor",
+    "name": "Thornsong Mantle",
+    "group": "EQUIPMENT",
+    "details": "ranger; armor; Thorns guard the seams; a green clasp holds the woodland's last vow."
+  },
+  {
+    "id": "occultist_armor",
+    "name": "Gravecloth Wraps",
+    "group": "EQUIPMENT",
+    "details": "occultist; armor; Burial cloth washed clean of names, but not of whispers."
+  },
+  {
+    "id": "occultist_faction_armor",
+    "name": "Seamkeeper's Vestments",
+    "group": "EQUIPMENT",
+    "details": "occultist; armor; Stolen from the choir, these bindings keep their wearer whole."
+  },
+  {
+    "id": "occultist_relic_armor",
+    "name": "Gravetide Ribmantle",
+    "group": "EQUIPMENT",
+    "details": "occultist; armor; An ivory cage worn outside the flesh. Each rib binds a promise that should have remained buried."
+  },
+  {
+    "id": "healer_armor",
+    "name": "Pilgrim's Apron",
+    "group": "EQUIPMENT",
+    "details": "healer; armor; The stains survive every washing. Its pockets still hold clean thread."
+  },
+  {
+    "id": "healer_faction_armor",
+    "name": "Sickhouse Half-Plate",
+    "group": "EQUIPMENT",
+    "details": "healer; armor; A physician's apron reinforced for wards where mercy needs armour."
+  },
+  {
+    "id": "healer_relic_armor",
+    "name": "Dawnmantle of Mercy",
+    "group": "EQUIPMENT",
+    "details": "healer; armor; Its candle clasp burns for patients whose names the ward has forgotten."
+  },
+  {
+    "id": "crusader_common_armor",
+    "name": "Penitent's Iron Shirt",
+    "group": "EQUIPMENT",
+    "details": "crusader; armor; A shirt of iron rings. Pain waits between every link."
+  },
+  {
+    "id": "crusader_relic_armor",
+    "name": "Sacrament of Iron",
+    "group": "EQUIPMENT",
+    "details": "crusader; armor; The barbs turn outward. For once, the curse has something else to wound."
+  },
+  {
+    "id": "chieftain_trophy",
+    "name": "Gallows King's Signet",
+    "group": "EQUIPMENT",
+    "details": "charm; A stolen crown hammered into a ring. Its notches count the travellers who never returned."
+  },
+  {
+    "id": "son_trophy",
+    "name": "The Last Oath",
+    "group": "EQUIPMENT",
+    "details": "charm; A broken sword bound with an oath-ribbon. Even death failed to loosen its owner's grip."
+  },
+  {
+    "id": "lord_trophy",
+    "name": "Calden's Deathless Seal",
+    "group": "EQUIPMENT",
+    "details": "charm; A blackened seal that outlived its kingdom. Beneath the wax, something still beats."
+  },
+  {
+    "id": "giant_trophy",
+    "name": "The Harrowed Shackle",
+    "group": "EQUIPMENT",
+    "details": "charm; An iron restraint cut from the giant's wrist. Its inner barbs bear a lifetime of prayers."
+  },
+  {
+    "id": "coterie_trophy",
+    "name": "Threefold Suture",
+    "group": "EQUIPMENT",
+    "details": "charm; Three needles, one endless thread. The hymn ended; the stitches remember its rhythm."
+  },
+  {
+    "id": "head_trophy",
+    "name": "The Silenced Litany",
+    "group": "EQUIPMENT",
+    "details": "charm; A reliquary clasped around a voiceless tongue. Silence is the only mercy its altar ever offered."
+  },
+  {
+    "id": "oleander_trophy",
+    "name": "Oleander's Vigil",
+    "group": "EQUIPMENT",
+    "details": "charm; A wing-shaped shield fragment. The knight kept his watch long after he forgot whom he guarded."
+  },
+  {
+    "id": "exuvia_trophy",
+    "name": "The Queen's Empty Crown",
+    "group": "EQUIPMENT",
+    "details": "charm; A crown woven from discarded chitin. Its soft glow remembers every body sacrificed to the queen."
+  },
+  {
+    "id": "outlaw_tally",
+    "name": "Outlaw's Tally",
+    "group": "EQUIPMENT",
+    "details": "trinket"
+  },
+  {
+    "id": "warden_gravewatch",
+    "name": "Gravewatch Medal",
+    "group": "EQUIPMENT",
+    "details": "trinket; warden"
+  },
+  {
+    "id": "occultist_severed_litany",
+    "name": "Severed Litany",
+    "group": "EQUIPMENT",
+    "details": "trinket; occultist"
+  },
+  {
+    "id": "ranger_chitin_lens",
+    "name": "Chitin Hunter's Lens",
+    "group": "EQUIPMENT",
+    "details": "trinket; ranger"
+  },
+  {
+    "id": "roadward_seal",
+    "name": "Roadward Seal",
+    "group": "EQUIPMENT",
+    "details": "charm"
+  },
+  {
+    "id": "graveward_locket",
+    "name": "Graveward Locket",
+    "group": "EQUIPMENT",
+    "details": "charm"
+  },
+  {
+    "id": "crusader_penitent_stitch",
+    "name": "Penitent's Stitch",
+    "group": "EQUIPMENT",
+    "details": "charm; crusader"
+  },
+  {
+    "id": "healer_chrysalis_rosary",
+    "name": "Chrysalis Rosary",
+    "group": "EQUIPMENT",
+    "details": "charm; healer"
+  },
+  {
+    "id": "cursed_thorn_relic",
+    "name": "Thornbound Reliquary",
+    "group": "EQUIPMENT",
+    "details": "charm"
+  },
+  {
+    "id": "cursed_physician_seal",
+    "name": "Septic Physician's Seal",
+    "group": "EQUIPMENT",
+    "details": "charm"
+  },
+  {
+    "id": "crusader_axe",
+    "name": "Penitent's Axe",
+    "group": "EQUIPMENT",
+    "details": "crusader; weapon"
+  },
+  {
+    "id": "crusader_armor",
+    "name": "Barbed Cuirass",
+    "group": "EQUIPMENT",
+    "details": "crusader; armor"
+  },
+  {
+    "id": "crusader_epic",
+    "name": "Agony's Edge",
+    "group": "EQUIPMENT",
+    "details": "crusader; weapon"
+  },
+  {
+    "id": "crusader_unique",
+    "name": "Winter Penance",
+    "group": "EQUIPMENT",
+    "details": "crusader; weapon"
+  },
+  {
+    "id": "crusader_legend",
+    "name": "Unending Sacrament",
+    "group": "EQUIPMENT",
+    "details": "crusader; weapon"
+  },
+  {
+    "id": "venom_heart",
+    "name": "Venom Heart",
+    "group": "EQUIPMENT",
+    "details": "trinket"
+  },
+  {
+    "id": "winter_shard",
+    "name": "Winter Shard",
+    "group": "EQUIPMENT",
+    "details": "charm"
+  },
+  {
+    "id": "warden_frostblade",
+    "name": "Vigil of Winter",
+    "group": "EQUIPMENT",
+    "details": "warden; weapon"
+  },
+  {
+    "id": "ranger_venombow",
+    "name": "Adder's Requiem",
+    "group": "EQUIPMENT",
+    "details": "ranger; weapon"
+  },
+  {
+    "id": "occultist_plaguestaff",
+    "name": "Septic Covenant",
+    "group": "EQUIPMENT",
+    "details": "occultist; weapon"
+  },
+  {
+    "id": "healer_frostmace",
+    "name": "Cold Benediction",
+    "group": "EQUIPMENT",
+    "details": "healer; weapon"
+  },
+  {
+    "id": "clotting_seal",
+    "name": "Clotting Seal",
+    "group": "EQUIPMENT",
+    "details": "trinket"
+  },
+  {
+    "id": "vitality_locket",
+    "name": "Vitality Locket",
+    "group": "EQUIPMENT",
+    "details": "trinket"
+  },
+  {
+    "id": "warding_eye",
+    "name": "Warding Eye",
+    "group": "EQUIPMENT",
+    "details": "trinket"
+  },
+  {
+    "id": "hunters_compass",
+    "name": "Hunter's Compass",
+    "group": "EQUIPMENT",
+    "details": "trinket"
+  },
+  {
+    "id": "warden_bastion",
+    "name": "Bastion Medal",
+    "group": "EQUIPMENT",
+    "details": "trinket; warden"
+  },
+  {
+    "id": "ranger_sight",
+    "name": "Falcon Sight",
+    "group": "EQUIPMENT",
+    "details": "trinket; ranger"
+  },
+  {
+    "id": "occultist_sigil",
+    "name": "Veiled Sigil",
+    "group": "EQUIPMENT",
+    "details": "trinket; occultist"
+  },
+  {
+    "id": "healer_beads",
+    "name": "Merciful Beads",
+    "group": "EQUIPMENT",
+    "details": "trinket; healer"
+  },
+  {
+    "id": "warden_relic",
+    "name": "Last Watch Relic",
+    "group": "EQUIPMENT",
+    "details": "charm; warden"
+  },
+  {
+    "id": "ranger_relic",
+    "name": "Unerring Talon",
+    "group": "EQUIPMENT",
+    "details": "charm; ranger"
+  },
+  {
+    "id": "occultist_relic",
+    "name": "Black Covenant",
+    "group": "EQUIPMENT",
+    "details": "charm; occultist"
+  },
+  {
+    "id": "healer_relic",
+    "name": "Dawn Reliquary",
+    "group": "EQUIPMENT",
+    "details": "charm; healer"
+  },
+  {
+    "id": "warden_epic",
+    "name": "Dreadsteel Longsword",
+    "group": "EQUIPMENT",
+    "details": "warden; weapon"
+  },
+  {
+    "id": "ranger_epic",
+    "name": "Nightthorn Bow",
+    "group": "EQUIPMENT",
+    "details": "ranger; weapon"
+  },
+  {
+    "id": "occultist_epic",
+    "name": "Sanguine Bonewood",
+    "group": "EQUIPMENT",
+    "details": "occultist; weapon"
+  },
+  {
+    "id": "healer_epic",
+    "name": "Emberlight Mace",
+    "group": "EQUIPMENT",
+    "details": "healer; weapon"
+  },
+  {
+    "id": "warden_sword",
+    "name": "Iron Longsword",
+    "group": "EQUIPMENT",
+    "details": "warden; weapon"
+  },
+  {
+    "id": "warden_shield",
+    "name": "Sentinel Shield",
+    "group": "EQUIPMENT",
+    "details": "warden; off_hand"
+  },
+  {
+    "id": "warden_legend",
+    "name": "Oathkeeper",
+    "group": "EQUIPMENT",
+    "details": "warden; weapon"
+  },
+  {
+    "id": "ranger_bow",
+    "name": "Hunting Bow",
+    "group": "EQUIPMENT",
+    "details": "ranger; weapon"
+  },
+  {
+    "id": "ranger_armor",
+    "name": "Soothing Stalker Leathers",
+    "group": "EQUIPMENT",
+    "details": "ranger; armor"
+  },
+  {
+    "id": "ranger_legend",
+    "name": "Venomous Thornsong",
+    "group": "EQUIPMENT",
+    "details": "ranger; weapon"
+  },
+  {
+    "id": "occultist_staff",
+    "name": "Bonewood Staff",
+    "group": "EQUIPMENT",
+    "details": "occultist; weapon"
+  },
+  {
+    "id": "occultist_focus",
+    "name": "Purifying Gravebound Grimoire",
+    "group": "EQUIPMENT",
+    "details": "occultist; off_hand"
+  },
+  {
+    "id": "occultist_legend",
+    "name": "Vampiric Gravetide",
+    "group": "EQUIPMENT",
+    "details": "occultist; weapon"
+  },
+  {
+    "id": "healer_mace",
+    "name": "Pilgrim Mace",
+    "group": "EQUIPMENT",
+    "details": "healer; weapon"
+  },
+  {
+    "id": "healer_symbol",
+    "name": "Consecrated Symbol",
+    "group": "EQUIPMENT",
+    "details": "healer; off_hand"
+  },
+  {
+    "id": "healer_legend",
+    "name": "Dawn's Mercy",
+    "group": "EQUIPMENT",
+    "details": "healer; weapon"
+  },
+  {
+    "id": "camp_watch",
+    "name": "Keep Watch: a hooded watchman lantern with a vigilant eye carved in aged iron",
+    "group": "CAMP",
+    "details": ""
+  },
+  {
+    "id": "camp_ward",
+    "name": "Protective Rite: three beeswax candles in a circle of chalk runes, soft ivory blue light",
+    "group": "CAMP",
+    "details": ""
+  },
+  {
+    "id": "camp_sharpen",
+    "name": "Ready Weapons: a battered sword blade and a whetstone with bright steel sparks",
+    "group": "CAMP",
+    "details": ""
+  },
+  {
+    "id": "camp_scout",
+    "name": "Study the Route: an unfolded worn map with a brass compass and crimson route line",
+    "group": "CAMP",
+    "details": ""
+  },
+  {
+    "id": "camp_rest",
+    "name": "Rest by the Fire: a small warm orange campfire of stacked logs and glowing embers",
+    "group": "CAMP",
+    "details": ""
+  },
+  {
+    "id": "slot_head",
+    "name": "Empty head equipment symbol: a battered medieval iron helmet",
+    "group": "SLOTS",
+    "details": ""
+  },
+  {
+    "id": "slot_off_hand",
+    "name": "Empty off-hand equipment symbol: a sturdy medieval shield",
+    "group": "SLOTS",
+    "details": ""
+  },
+  {
+    "id": "slot_armor",
+    "name": "Empty armour equipment symbol: a dark steel breastplate",
+    "group": "SLOTS",
+    "details": ""
+  },
+  {
+    "id": "slot_weapon",
+    "name": "Empty weapon equipment symbol: a weathered straight sword",
+    "group": "SLOTS",
+    "details": ""
+  }
+]

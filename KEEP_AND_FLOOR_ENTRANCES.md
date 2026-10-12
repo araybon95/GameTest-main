@@ -18,13 +18,13 @@ Generated bitmap assets use the built-in ImageGen tool; source reference photogr
 
 ## Saved assets
 
-- C:/GAME/Ashen/latest/GameTest-main/assets/generated/enemy_undying_lord.png
-- C:/GAME/Ashen/latest/GameTest-main/assets/generated/enemy_keep_son.png
-- C:/GAME/Ashen/latest/GameTest-main/assets/generated/enemy_keep_troops.png
-- C:/GAME/Ashen/latest/GameTest-main/assets/generated/enemy_keep_footman.tres
-- C:/GAME/Ashen/latest/GameTest-main/assets/generated/enemy_keep_crossbow.tres
-- C:/GAME/Ashen/latest/GameTest-main/assets/generated/enemy_keep_wolfguard.tres
-- C:/GAME/Ashen/latest/GameTest-main/assets/generated/keep_hall.png
+- C:/GAME/Ashen/latest/GameTest-main/assets/art_library/generated/enemy_undying_lord.png
+- C:/GAME/Ashen/latest/GameTest-main/assets/art_library/generated/enemy_keep_son.png
+- C:/GAME/Ashen/latest/GameTest-main/assets/art_library/generated/enemy_keep_troops.png
+- C:/GAME/Ashen/latest/GameTest-main/assets/art_library/generated/enemy_keep_footman.tres
+- C:/GAME/Ashen/latest/GameTest-main/assets/art_library/generated/enemy_keep_crossbow.tres
+- C:/GAME/Ashen/latest/GameTest-main/assets/art_library/generated/enemy_keep_wolfguard.tres
+- C:/GAME/Ashen/latest/GameTest-main/assets/art_library/generated/keep_hall.png
 
 ## Generation prompts
 

@@ -10,7 +10,7 @@ var seal: Texture2D
 var emphatic: bool = false
 func _ready() -> void:
  mouse_filter = Control.MOUSE_FILTER_IGNORE
- if mode == "seal": seal = load("res://assets/presentation/settlement/%s_seal.png" % ("path" if region == 1 else "village"))
+ if mode == "seal": seal = load("res://assets/art_library/presentation/settlement/%s_seal.png" % ("path" if region == 1 else "village"))
 func _process(delta: float) -> void:
  var settings := get_node_or_null("/root/GameSettings")
  if settings == null or settings.ambient_motion: clock += delta

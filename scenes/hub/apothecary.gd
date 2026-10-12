@@ -11,7 +11,7 @@ func _ready() -> void:
 
 func show_infestation() -> void:
 	clear_screen()
-	var art := picture("res://assets/generated/apothecary_interior.png", Rect2(0, 0, 1920, 1080), 0.55)
+	var art := picture("res://assets/art_library/generated/apothecary_interior.png", Rect2(0, 0, 1920, 1080), 0.55)
 	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	panel(Rect2(70, 55, 1780, 980), Color(0.07, 0.05, 0.07, 0.88))
 	label_at("THE INFESTED APOTHECARY", Vector2(110, 85), 1660, 42)

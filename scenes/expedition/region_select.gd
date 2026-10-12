@@ -30,7 +30,7 @@ func refresh() -> void:
 	var heading := label_at("EXPEDITIONS", Vector2(50, 28), 480, 34)
 	heading.size.y = 52
 	var map_rect := Rect2(500,0,1420,945)
-	var art := picture("res://assets/presentation/expedition/estate_map.png", map_rect)
+	var art := picture("res://assets/art_library/presentation/expedition/estate_map.png", map_rect)
 	art.stretch_mode = TextureRect.STRETCH_SCALE
 	art.name = "RegionMap"
 	art.modulate = Color(0.87,0.82,0.79)

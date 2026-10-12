@@ -1,5 +1,7 @@
 # Ashen Expedition
 
+All 87 items now have painted grimdark sprites, and camp actions have illustrated cards with visible effects and preparation states. The game loads its artwork from [the live art library](assets/art_library/README.md), which includes a searchable catalog and instructions for replacing individual sprites with hand-drawn PNGs. See [Item and camp artwork](docs/item_camp_art.md) for previews and verification.
+
 Boss battles now show live tactics cues, and **F10 → Combat playback** offers 1×, 1.5× and 2× animation speed. Saved journeys preview the party, explain save restrictions and reject invalid data before loading. See [Boss clarity, pacing, campaign economy and saved journeys](docs/boss_pacing_campaign_save_review.md) for the broader Healer/Crusader campaign results.
 
 Preparation now shows skills blocked by each hero's position, and **I** opens a field guide for formation, shared turns, scouting and recovery. The first keep descent warns about level-1 heroes and explains optional exploration. See [First-expedition guidance and campaign samples](docs/first_expedition_usability.md).
@@ -134,7 +136,7 @@ points reset to two each round. The card hand scrolls horizontally when it grows
 
 ### Artwork
 
-All art lives in `assets/generated/` (transparent PNGs, Dark style):
+All art lives in `assets/art_library/generated/` (transparent PNGs, Dark style):
 
 - `bg_crypt.png`, `settlement_hamlet.png`, `title_key_art.png` — backgrounds
 - `hero_warden.png`, `hero_ranger.png`, `hero_occultist.png`, `hero_healer.png` — portraits

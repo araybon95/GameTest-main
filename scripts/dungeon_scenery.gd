@@ -16,10 +16,10 @@ static func theme_for(expedition: Dictionary, floor: int) -> String:
 
 static func stage_path(path: String) -> String:
 	var stages: Dictionary = {"bandit_combat.png":"bandit_battle_stage.png", "keep_hall.png":"keep_battle_stage.png", "beast_sanctuary.png":"beast_battle_stage.png", "apothecary_interior.png":"apothecary_battle_stage.png"}
-	return "res://assets/generated/" + str(stages[path.get_file()]) if stages.has(path.get_file()) else path
+	return "res://assets/art_library/generated/" + str(stages[path.get_file()]) if stages.has(path.get_file()) else path
 
 static func threshold_path(kind: String) -> String:
-	var illustrated: String = "res://assets/generated/threshold_%s.tres" % kind
+	var illustrated: String = "res://assets/art_library/generated/threshold_%s.tres" % kind
 	return illustrated if ResourceLoader.exists(illustrated) else "res://assets/ui/threshold_%s.svg" % kind
 
 static func tint(kind: String) -> Color:

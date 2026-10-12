@@ -96,7 +96,7 @@ func build_equipment() -> void:
 		var item_id: String = str(State.equipment.get(hero_id, {}).get(slot, ""))
 		var icon = ItemButton.new()
 		icon.name = "Equipment_" + slot
-		icon.configure(item_id)
+		icon.configure(item_id,1,"",slot)
 		icon.favourite_changed.connect(refresh)
 		icon.position = Vector2(145 + (index % 2) * 89, 269 + (index / 2) * 101)
 		icon.custom_minimum_size = Vector2(74, 74)
@@ -194,7 +194,7 @@ static func hero_backdrop_path(id: String) -> String:
 		"healer":"apothecary_reclaimed.png",
 		"crusader":"bg_crypt.png"
 	}
-	return "res://assets/generated/" + str(backdrops.get(id,"keep_hall.png"))
+	return "res://assets/art_library/generated/" + str(backdrops.get(id,"keep_hall.png"))
 
 func build_character(hero: Dictionary, state: Dictionary) -> void:
 	band("LORE", Rect2(780, 211, 325, 35))
@@ -226,7 +226,7 @@ func build_character(hero: Dictionary, state: Dictionary) -> void:
 		var art := TextureRect.new()
 		art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		var path := preload("res://scripts/painted_skill_art.gd").path_for(str(ability_id))
-		if not ResourceLoader.exists(path): path = "res://assets/generated/%s.png" % ability_id
+		if not ResourceLoader.exists(path): path = "res://assets/art_library/generated/%s.png" % ability_id
 		if ResourceLoader.exists(path): art.texture = load(path)
 		art.position = pos + Vector2(8, 9)
 		art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
@@ -251,15 +251,11 @@ func build_character(hero: Dictionary, state: Dictionary) -> void:
 	var choices: Array = State.Depth.CAMP_CHOICES.keys()
 	for index in range(choices.size()):
 		var choice: Dictionary = State.Depth.CAMP_CHOICES[choices[index]]
-		var x: float = 1148 + index * 158
-		panel(Rect2(x, 606, 149, 91), Color("#191314"), Color("#594932"))
-		label_at(str(choice["name"]), Vector2(x + 8, 617), 135, 17, Color("#DDC494"))
-		label_at("%d camp points" % int(choice["cost"]), Vector2(x + 8, 665), 135, 14, Color("#AC9B7F"))
-		var hint := Control.new()
-		hint.position = Vector2(x, 606)
-		hint.size = Vector2(149, 91)
-		hint.tooltip_text = str(choice["description"]) + "\nPrepare this skill at a camp after resting."
-		add_child(hint)
+		var skill := preload("res://scenes/ui/camp_action_card.gd").new()
+		skill.position = Vector2(1148+(index%2)*318,606+(index/2)*54)
+		skill.size = Vector2(310,50)
+		skill.configure(str(choices[index]),choice,false,3,false,true)
+		add_child(skill)
 	band("RESISTANCES", Rect2(1145, 723, 630, 35))
 	label_at("Bleed  %d%%\nPoison  %d%%" % [mini(100, State.equipment_bonus(hero_id, "bleed_resist") + State.hero_bonus(hero_id, "debuff_resist")), mini(100, State.equipment_bonus(hero_id, "poison_resist") + State.hero_bonus(hero_id, "debuff_resist"))], Vector2(1163, 782), 280, 21)
 	label_at("Debuffs  %d%%\nMaximum health  +%d%%" % [State.hero_bonus(hero_id, "debuff_resist"), State.equipment_bonus(hero_id, "max_hp_percent")], Vector2(1463, 782), 300, 21)

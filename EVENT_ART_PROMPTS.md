@@ -1,6 +1,6 @@
 # Event artwork prompts
 
-Mode: built-in image_gen, original text-to-image. Individual assets saved as assets/generated/event_<id>.png.
+Mode: built-in image_gen, original text-to-image. Individual assets saved as assets/art_library/generated/event_<id>.png.
 
 ## bandit_strongbox
 

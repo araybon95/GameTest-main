@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dse0k8ts16k47"]
 
 [ext_resource type="Script" uid="uid://0gyuft14fsbq" path="res://scenes/combat/arena.gd" id="1_arena_script"]
-[ext_resource type="Texture2D" uid="uid://bhnms88r8ctju" path="res://assets/generated/crypt_battle_floor.png" id="2_floor"]
+[ext_resource type="Texture2D" uid="uid://bhnms88r8ctju" path="res://assets/art_library/generated/crypt_battle_floor.png" id="2_floor"]
 
 [node name="Arena" type="Control" unique_id=1880748126]
 layout_mode = 3

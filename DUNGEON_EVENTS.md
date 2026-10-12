@@ -15,6 +15,6 @@ Outcomes are 50% reward alone, 25% reward plus debuff, and 25% debuff alone. Rew
 
 Each event has a seed assigned during floor generation. Reopening the scene does not reroll it. Resolution is recorded on the room before the UI refreshes, and subsequent clicks cannot duplicate rewards. Event state follows the current in-memory expedition, like existing dungeon state; this is not an active-run disk save feature.
 
-Implementation: `scripts/dungeon_events.gd`, generation in `scripts/game_data.gd`, `scenes/expedition/event_room.gd`. Art: `assets/generated/event_*.png`. Prompts and built-in image-generation mode are recorded in `EVENT_ART_PROMPTS.md`.
+Implementation: `scripts/dungeon_events.gd`, generation in `scripts/game_data.gd`, `scenes/expedition/event_room.gd`. Art: `assets/art_library/generated/event_*.png`. Prompts and built-in image-generation mode are recorded in `EVENT_ART_PROMPTS.md`.
 
 Validation: event placement across both dungeon themes and 200 seeds, gold and item outcomes, debuff isolation, duplicate-click protection, safe leave, hero eligibility, status persistence into combat, and scene interaction in `tests/events_smoke.gd`. Existing RPG, multi-enemy, camp/merchant, loot, and Beast progression checks cover integration.

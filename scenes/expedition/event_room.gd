@@ -26,7 +26,7 @@ func refresh() -> void:
 	var corridor: bool = room.get("event_layout", "room") == "corridor"
 	var background: String = State.floor_background("combat")
 	if corridor and not (State.selected_expedition.get("id", "") == "old_road" and State.floor_index > 0):
-		background = "res://assets/generated/event_%s_corridor.png" % ("beast" if State.selected_expedition.get("faction", "") == "remade" else "bandit")
+		background = "res://assets/art_library/generated/event_%s_corridor.png" % ("beast" if State.selected_expedition.get("faction", "") == "remade" else "bandit")
 	else:
 		background = Scenery.stage_path(background)
 	var backdrop := picture(background, Rect2(0, 0, 1920, 815))
@@ -101,9 +101,9 @@ func refresh() -> void:
 	# The silhouette is the hover target; a rectangular button fill would hide the room.
 	for state in ["normal", "disabled", "pressed", "hover", "focus"]:
 		object_button.add_theme_stylebox_override(state, StyleBoxEmpty.new())
-	var prop := picture("res://assets/generated/event_%s.png" % id, Rect2(1240, 250, 420, 440))
+	var prop := picture("res://assets/art_library/generated/event_%s.png" % id, Rect2(1240, 250, 420, 440))
 	prop.name = "EventProp"
-	prop.texture = Scenery.grounded_texture("res://assets/generated/event_%s.png" % id,4)
+	prop.texture = Scenery.grounded_texture("res://assets/art_library/generated/event_%s.png" % id,4)
 	# Supply crates and chests sit below shoulder height; shrines and the coffin can stand tall.
 	var max_prop_height: float = 270.0 if id in ["bandit_strongbox","bandit_supplies"] else 430.0
 	var max_prop_width: float = 380.0 if id in ["bandit_strongbox","bandit_supplies"] else 520.0

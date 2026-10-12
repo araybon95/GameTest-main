@@ -37,7 +37,7 @@ func configure(hero_id: String) -> void:
 	var extent: Vector2 = owner.size.max(owner.custom_minimum_size)
 	var illustrated: bool = BACKDROPS.has(hero_id) and extent.y >= 180 and extent.y <= 650 and extent.x <= 800
 	if illustrated:
-		texture = load("res://assets/generated/"+BACKDROPS[hero_id])
+		texture = load("res://assets/art_library/generated/"+BACKDROPS[hero_id])
 	else:
 		var flat := GradientTexture2D.new()
 		flat.width = 2; flat.height = 2

@@ -8,7 +8,7 @@ func _ready() -> void:
 func refresh() -> void:
 	clear_screen()
 	var expedition: Dictionary = State.selected_expedition
-	var art := picture(str(expedition.get("combat_background", "res://assets/generated/bandit_combat.png")), Rect2(0, 0, 1920, 1080), 0.4)
+	var art := picture(str(expedition.get("combat_background", "res://assets/art_library/generated/bandit_combat.png")), Rect2(0, 0, 1920, 1080), 0.4)
 	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	panel(Rect2(40, 35, 1840, 770), Color(0.07, 0.05, 0.07, 0.94))
 	label_at("PREPARE · " + str(expedition.get("name", "Expedition")).to_upper(), Vector2(75, 60), 1780, 35)

@@ -1,6 +1,6 @@
 # Static-screen presentation
 
-The chapel/archive, barracks, forge, restored workshop, appearance workshop, infirmary/watchtower restoration rooms, apothecary shop and emporium share an input-transparent scenery system. Three new original generated interior PNGs replace the reused exterior backdrop; existing reclaimed apothecary art remains the medical setting. Supplied reference attendants and quest seals are individual PNG layers. Sources and generation prompts are in assets/presentation/settlement/README.md and reference_assets.json.
+The chapel/archive, barracks, forge, restored workshop, appearance workshop, infirmary/watchtower restoration rooms, apothecary shop and emporium share an input-transparent scenery system. Three new original generated interior PNGs replace the reused exterior backdrop; existing reclaimed apothecary art remains the medical setting. Supplied reference attendants and quest seals are individual PNG layers. Sources and generation prompts are in assets/art_library/presentation/settlement/README.md and reference_assets.json.
 
 The ten presentation steps are implemented as follows:
 

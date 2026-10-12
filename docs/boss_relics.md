@@ -10,6 +10,6 @@ The encounter is marked cleared before the reveal, so a checkpoint made while ma
 
 Right-click an owned item icon to mark or unmark it. Gold stars mark favourites, merchant sell buttons show **PROTECTED**, and the underlying sale API also rejects them. A normal stacked item marks the entire stack; individually recorded gear marks only that copy. Equipping and history promotion preserve protection. Optional `item_favourites` dictionaries persist in progression and save slots; older saves default to no favourites.
 
-Original icons live under `assets/items/*_trophy.svg`. A same-name PNG can replace any one icon later through the existing per-item override mechanism.
+Original icons live under `assets/art_library/items/*_trophy.svg`. A same-name PNG can replace any one icon later through the existing per-item override mechanism.
 
 Checks: `boss_relics_smoke.gd`, updated `floor_entrance_smoke.gd`, existing equipment, economy, loot, save and UI smoke checks. Visual previews use isolated user data.

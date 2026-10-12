@@ -4,11 +4,11 @@ const Poses = preload("res://scripts/combat_poses.gd")
 func _initialize() -> void: call_deferred("run")
 func run() -> void:
  for key in Poses.POSES:
-  var original: Texture2D = load("res://assets/generated/" + key)
+  var original: Texture2D = load("res://assets/art_library/generated/" + key)
   for hurt in [false,true]:
    var pose: Texture2D = Poses.pose(original,hurt)
    assert(pose != original and pose.get_width() > 0 and pose.get_height() > 0,"Every shipped character pose loads")
- var fallback: Texture2D = load("res://assets/generated/enemy_howling_head.png")
+ var fallback: Texture2D = load("res://assets/art_library/generated/enemy_howling_head.png")
  assert(Poses.pose(fallback,true) == fallback,"Unmapped models keep their original art")
  State.progress_loaded = true
  State.party = ["warden","ranger","occultist"]

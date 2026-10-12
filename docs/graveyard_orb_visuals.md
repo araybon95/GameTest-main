@@ -1,6 +1,6 @@
 # Graveyard and merchant orb visual update
 
-The graveyard and merchant orb now use original generated artwork that matches the game's dark ink contours, chipped stone, worn iron and restrained bright accents. Three PNG assets were created with the built-in imagegen tool and saved in `assets/generated/`: `graveyard_ink_background.png`, `graveyard_ink_marker.png` and `merchant_orb_ink.png`. The complete production prompt set and viewed style references are recorded in [the art provenance manifest](graveyard_orb_art_provenance.json).
+The graveyard and merchant orb now use original generated artwork that matches the game's dark ink contours, chipped stone, worn iron and restrained bright accents. Three PNG assets were created with the built-in imagegen tool and saved in `assets/art_library/generated/`: `graveyard_ink_background.png`, `graveyard_ink_marker.png` and `merchant_orb_ink.png`. The complete production prompt set and viewed style references are recorded in [the art provenance manifest](graveyard_orb_art_provenance.json).
 
 The graveyard opens onto a painted cemetery vista with a charcoal memorial ledger, iron corner fittings and warm ivory names. Class, dungeon, floor, date, final trial and deeds remain visible in scrollable records. Long names wrap; empty records retain the unwritten-stones message. The settlement uses the matching painted cemetery cluster at its existing location.
 

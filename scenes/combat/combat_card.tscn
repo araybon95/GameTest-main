@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dle8mgox3uqti"]
 
 [ext_resource type="Theme" uid="uid://c3reqpa1n06fq" path="res://assets/new_theme.tres" id="1_theme"]
-[ext_resource type="Texture2D" uid="uid://vx870j1q7e71" path="res://assets/generated/wd_slash.png" id="2_art"]
+[ext_resource type="Texture2D" uid="uid://vx870j1q7e71" path="res://assets/art_library/generated/wd_slash.png" id="2_art"]
 
 [node name="CombatCard" type="Button" unique_id=407269981]
 custom_minimum_size = Vector2(190, 270)

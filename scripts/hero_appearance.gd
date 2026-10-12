@@ -3,14 +3,14 @@ extends RefCounted
 const TITLES = {"warden":"Blacksteel Sentinel","ranger":"Winter Tracker","occultist":"Ashen Ritualist","healer":"Field Medic","crusader":"Chainbound Penitent"}
 static var cache: Dictionary = {}
 static func path(id: String, purpose: String = "idle") -> String:
- return "res://assets/appearance/hero_%s_%s.tres" % [id,purpose]
+ return "res://assets/art_library/appearance/hero_%s_%s.tres" % [id,purpose]
 static func available(id: String) -> bool:
  return ResourceLoader.exists(path(id))
 static func frame(id: String, index: int) -> Texture2D:
  var key: String = id+":"+str(index)
  if cache.has(key): return cache[key]
- var sheet: Texture2D = load("res://assets/appearance/hero_%s_outfit.png" % id)
- var region: Rect2 = preload("res://assets/appearance/regions.gd").REGIONS[id][index]
+ var sheet: Texture2D = load("res://assets/art_library/appearance/hero_%s_outfit.png" % id)
+ var region: Rect2 = preload("res://assets/art_library/appearance/regions.gd").REGIONS[id][index]
  var texture := AtlasTexture.new()
  texture.atlas = sheet
  texture.region = region

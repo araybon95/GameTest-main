@@ -33,7 +33,7 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	background = TextureRect.new()
 	background.name = "CorridorPanorama"
-	var illustrated: String = "res://assets/generated/hallway_%s_panorama.png" % scene_theme
+	var illustrated: String = "res://assets/art_library/generated/hallway_%s_panorama.png" % scene_theme
 	var path: String = panorama_path
 	if path.is_empty():
 		path = illustrated if ResourceLoader.exists(illustrated) else Scenery.stage_path(State.floor_background("combat"))

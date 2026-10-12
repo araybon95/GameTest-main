@@ -18,11 +18,11 @@ Cult attacks include bleed, burn, poison, chill, hymns that inflict party stress
 
 All new artwork is original generated art; referenced miniature ranges and the supplied estate image guided the theme without being imported as game assets.
 
-- `assets/generated/expedition_map_four_regions.png`: four-location expedition map: dilapidated village, descending pilgrimage path, and two sealed future expedition landmarks. Building labels and click areas match those locations. Dungeon options appear beneath the map after selecting a released expedition.
-- `assets/generated/region_map.png`: retained earlier regional map artwork.
-- `assets/generated/bandit_combat.png` and `bandit_camp.png`: ruined village, barricades, outlaw banners and a courtyard fire.
-- `assets/generated/beast_sanctuary.png` and `beast_camp.png`: devotional anatomy, bone arches, votive candles and sheltered ritual recesses.
-- `assets/generated/enemy_anguish_penitent.png`, `enemy_anguish_vessel.png`, `enemy_harrowed_giant.png`, `enemy_coterie_seamkeeper.png`, `enemy_coterie_cantor.png`, `enemy_coterie_matron.png`, `enemy_howling_head.png`: individual transparent enemy assets.
+- `assets/art_library/generated/expedition_map_four_regions.png`: four-location expedition map: dilapidated village, descending pilgrimage path, and two sealed future expedition landmarks. Building labels and click areas match those locations. Dungeon options appear beneath the map after selecting a released expedition.
+- `assets/art_library/generated/region_map.png`: retained earlier regional map artwork.
+- `assets/art_library/generated/bandit_combat.png` and `bandit_camp.png`: ruined village, barricades, outlaw banners and a courtyard fire.
+- `assets/art_library/generated/beast_sanctuary.png` and `beast_camp.png`: devotional anatomy, bone arches, votive candles and sheltered ritual recesses.
+- `assets/art_library/generated/enemy_anguish_penitent.png`, `enemy_anguish_vessel.png`, `enemy_harrowed_giant.png`, `enemy_coterie_seamkeeper.png`, `enemy_coterie_cantor.png`, `enemy_coterie_matron.png`, `enemy_howling_head.png`: individual transparent enemy assets.
 
 Expedition background paths live in `scripts/game_data.gd`. Replace these PNGs individually or change the paths there. Prompts and generation mode are recorded in `EXPEDITION_ART_PROMPTS.md`.
 

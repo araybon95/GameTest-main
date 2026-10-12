@@ -5,7 +5,7 @@ var ground_y: float = 430.0
 var background: TextureRect
 var clock: float = 0.0
 static func path_for(kind: String, mode: String) -> String:
- return "res://assets/presentation/rooms/%s_%s.png" % [kind,mode]
+ return "res://assets/art_library/presentation/rooms/%s_%s.png" % [kind,mode]
 static func lighting(kind: String) -> Color:
  return {"bandit":Color("#E7CDB8"),"keep":Color("#CDD4E0"),"beast":Color("#DDC0BB"),"medical":Color("#CFDAC2")}.get(kind,Color.WHITE)
 func _ready() -> void:

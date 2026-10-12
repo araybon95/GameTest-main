@@ -10,11 +10,11 @@ Measured pose and walk rectangles live in `scripts/ink_sprite_regions.gd`. Atlas
 
 The exact generation and spacing-correction prompts are in `docs/ink_expansion_prompts.json`. These sheets were generated with `image_gen.imagegen`, using the project's existing original assets as references. No external game sprites were imported.
 
-Combat's lower interface uses compact iron corner fittings and a three-column, two-row skill arrangement. All 26 skills have separate original SVG glyphs in `assets/ui/skills/`, with restrained class color accents. Descriptions stay visible in their cards. The hero information and log panels fit alongside the full six-skill Healer set. Burn, bleed, poison and chill have visible glyphs with remaining turns; hover details include stack counts and tick damage.
+Combat's lower interface uses compact iron corner fittings and a three-column, two-row skill arrangement. All 26 skills have separate original SVG glyphs in `assets/art_library/skills/`, with restrained class color accents. Descriptions stay visible in their cards. The hero information and log panels fit alongside the full six-skill Healer set. Burn, bleed, poison and chill have visible glyphs with remaining turns; hover details include stack counts and tick damage.
 
 ## Artwork
 
-Production PNGs are in `assets/generated/`:
+Production PNGs are in `assets/art_library/generated/`:
 
 - `hero_warden.png`: darker idle Warden with a tiny cyan mace rune.
 - `enemy_ash_raider.png`: darker idle raider with small ember visor and blade highlights.
@@ -34,7 +34,7 @@ No Workshop artwork was imported. Immersive Area Backgrounds is a visual referen
 
 ## Items
 
-All 58 editable SVG item assets received stepped material shading, darker contour shadows and narrow colored edge gleams. Existing licensed geometry and credits remain intact in `assets/items/CREDITS.md`. Rarity borders remain separate UI elements. Each item can still be replaced independently with an SVG or a same-name PNG override. Item brightness amplification was reduced to avoid bleaching the new shading.
+All 58 editable SVG item assets received stepped material shading, darker contour shadows and narrow colored edge gleams. Existing licensed geometry and credits remain intact in `assets/art_library/items/CREDITS.md`. Rarity borders remain separate UI elements. Each item can still be replaced independently with an SVG or a same-name PNG override. Item brightness amplification was reduced to avoid bleaching the new shading.
 
 ## Hallway travel
 

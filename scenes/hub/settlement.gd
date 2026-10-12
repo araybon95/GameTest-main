@@ -12,7 +12,7 @@ const IVORY = "#E7DACB"
 const GOLD = "#C9A24B"
 const MUTED = "#9A8B86"
 
-const ART_MOTE = "res://assets/generated/mote.png"
+const ART_MOTE = "res://assets/art_library/generated/mote.png"
 
 ## Hotspots over the painted vista. `pos` = centre and `size` = footprint, both in
 ## the 1920x1080 layout. `subtitle` is the line shown beneath the name on hover.

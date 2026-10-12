@@ -1,6 +1,6 @@
 extends SceneTree
 const Art = preload("res://scripts/local_dungeon_art.gd")
-const Catalog = preload("res://assets/presentation/art_catalog.gd")
+const Catalog = preload("res://assets/art_library/presentation/art_catalog.gd")
 const State = preload("res://scripts/game_data.gd")
 
 func _initialize() -> void:
@@ -16,7 +16,7 @@ func run() -> void:
 		assert(Art.texture_size(str(key)) == Vector2i(texture.get_size()))
 	for pair in [["bandit", 0], ["keep", 1], ["medical", 0], ["beast", 0], ["beast", 1], ["beast", 2]]:
 		var profile = Art.load_profile_files(pair[0], pair[1])
-		assert(profile is Dictionary and profile["background"].resource_path.begins_with("res://assets/presentation/"))
+		assert(profile is Dictionary and profile["background"].resource_path.begins_with("res://assets/art_library/presentation/"))
 		assert(profile["walls"].size() == profile["floors"].size() and not profile["walls"].is_empty())
 	Art.configure("C:/missing-reference-installation/dungeons", true, false)
 	assert(Art.load_profile_files("bandit") == null, "The explicitly external-only fallback stays available")

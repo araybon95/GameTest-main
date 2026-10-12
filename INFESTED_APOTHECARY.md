@@ -24,14 +24,14 @@ Built-in ImageGen generated all raster art from the primary collection reference
 Strong visual guidance used for the Metamorphs' elongated proboscis and distorted bodies, Oleander's stooped sword-bearing form and wing crest, and Exuvia's many arms, eye-marked wings and swollen abdomen. Reference photos are not bundled in the game. Backgrounds and enemy sprites are individual replaceable files; the original hamlet vista remains intact.
 
 Saved project assets:
-- C:/GAME/Ashen/latest/GameTest-main/assets/generated/hamlet_vista_apothecary.png
-- C:/GAME/Ashen/latest/GameTest-main/assets/generated/apothecary_interior.png
-- C:/GAME/Ashen/latest/GameTest-main/assets/generated/apothecary_reclaimed.png
-- C:/GAME/Ashen/latest/GameTest-main/assets/generated/enemy_moth_metamorph.png
-- C:/GAME/Ashen/latest/GameTest-main/assets/generated/enemy_moth_oleander.png
-- C:/GAME/Ashen/latest/GameTest-main/assets/generated/enemy_moth_exuvia.png
+- C:/GAME/Ashen/latest/GameTest-main/assets/art_library/generated/hamlet_vista_apothecary.png
+- C:/GAME/Ashen/latest/GameTest-main/assets/art_library/generated/apothecary_interior.png
+- C:/GAME/Ashen/latest/GameTest-main/assets/art_library/generated/apothecary_reclaimed.png
+- C:/GAME/Ashen/latest/GameTest-main/assets/art_library/generated/enemy_moth_metamorph.png
+- C:/GAME/Ashen/latest/GameTest-main/assets/art_library/generated/enemy_moth_oleander.png
+- C:/GAME/Ashen/latest/GameTest-main/assets/art_library/generated/enemy_moth_exuvia.png
 
-Item SVGs: C:/GAME/Ashen/latest/GameTest-main/assets/items/{healing_scroll,might_tonic,focus_tonic,ward_tonic}.svg. Icon attribution in assets/items/CREDITS.md.
+Item SVGs: C:/GAME/Ashen/latest/GameTest-main/assets/art_library/items/{healing_scroll,might_tonic,focus_tonic,ward_tonic}.svg. Icon attribution in assets/art_library/items/CREDITS.md.
 
 ## Final prompts
 

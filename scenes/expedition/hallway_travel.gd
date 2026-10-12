@@ -201,7 +201,7 @@ func build_walkers() -> void:
    for index in range(4,8): variant_frames.append(preload("res://scripts/hero_appearance.gd").frame(id,index))
    walk_frames[id] = variant_frames
    continue
-  var path: String = "res://assets/generated/hero_%s_walk.png" % id
+  var path: String = "res://assets/art_library/generated/hero_%s_walk.png" % id
   if not ResourceLoader.exists(path) or not Regions.WALK.has(id): continue
   var sheet: Texture2D = load(path)
   var frames: Array[Texture2D] = []
@@ -600,7 +600,7 @@ func refresh_equipment_frames(id: String) -> void:
  elif outfit == "alternate":
   for index in range(4,8): frames.append(preload("res://scripts/hero_appearance.gd").frame(id,index))
  else:
-  var path: String = "res://assets/generated/hero_%s_walk.png" % id
+  var path: String = "res://assets/art_library/generated/hero_%s_walk.png" % id
   if ResourceLoader.exists(path) and Regions.WALK.has(id):
    var sheet: Texture2D = load(path)
    for region in Regions.WALK[id]:
@@ -699,14 +699,14 @@ func build_destination() -> void:
    art = str(State.CREATURES.get(id,{}).get("art",art))
   elif kind == "event":
    if room.get("corridor_encounter","") == "gold":
-    art = "res://assets/generated/hallway_gold_cache.png" if ResourceLoader.exists("res://assets/generated/hallway_gold_cache.png") else "res://assets/ui/encounter_gold.svg"
+    art = "res://assets/art_library/generated/hallway_gold_cache.png" if ResourceLoader.exists("res://assets/art_library/generated/hallway_gold_cache.png") else "res://assets/ui/encounter_gold.svg"
    else:
-    var candidate: String = "res://assets/generated/event_%s.png" % room.get("event_id","bandit_strongbox")
+    var candidate: String = "res://assets/art_library/generated/event_%s.png" % room.get("event_id","bandit_strongbox")
     if ResourceLoader.exists(candidate): art = candidate
   elif kind == "camp":
-   art = "res://assets/generated/hallway_campfire.png" if ResourceLoader.exists("res://assets/generated/hallway_campfire.png") else "res://assets/ui/encounter_camp.svg"
-  elif kind == "treasure": art = "res://assets/generated/event_bandit_strongbox.png"
- if room_mode and State.merchant_orb_available(): art = "res://assets/generated/merchant_orb_ink.png"
+   art = "res://assets/art_library/generated/hallway_campfire.png" if ResourceLoader.exists("res://assets/art_library/generated/hallway_campfire.png") else "res://assets/ui/encounter_camp.svg"
+  elif kind == "treasure": art = "res://assets/art_library/generated/event_bandit_strongbox.png"
+ if room_mode and State.merchant_orb_available(): art = "res://assets/art_library/generated/merchant_orb_ink.png"
  encounter_shadow = preload("res://scenes/combat/ground_shadow.gd").new()
  encounter_shadow.position = Vector2(encounter_start_x,GROUND_Y)
  travel_stage.add_child(encounter_shadow)

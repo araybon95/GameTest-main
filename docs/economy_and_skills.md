@@ -34,7 +34,7 @@ Buy and Sell tabs retain the All, Weapons, Armor, Trinkets, Relics and Consumabl
 
 There is one merchant orb per floor in an ordinary combat room. Combat has no merchant button. After victory, the continue action reads **Inspect Merchant Orb** and opens `merchant_orb_room.tscn` with the floor's bandit, keep or Remade backdrop and lore. Click the outlined blue orb to enter the Emporium. **Return Through Orb** brings the party back to this event; **Continue Exploring** returns to the same map location. The map's Inspect Merchant Orb action allows subsequent visits.
 
-The event and entry handler both require a cleared merchant room. Repeated visits grant no rewards, do not resolve a random event and do not restore or change hero health, status, XP or position. The painted pedestal is an independent asset at `assets/generated/merchant_orb_ink.png`; see [the graveyard and orb visual update](graveyard_orb_visuals.md).
+The event and entry handler both require a cleared merchant room. Repeated visits grant no rewards, do not resolve a random event and do not restore or change hero health, status, XP or position. The painted pedestal is an independent asset at `assets/art_library/generated/merchant_orb_ink.png`; see [the graveyard and orb visual update](graveyard_orb_visuals.md).
 
 Manual and automatic saves are available in the cleared orb event and its merchant. Loading a saved journey returns to the dungeon map with the room still cleared and the orb available. Buy/sell checkpoints include the current transaction; save data does not need to retain a transient shop scene.
 

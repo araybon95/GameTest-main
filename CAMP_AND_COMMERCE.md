@@ -15,6 +15,6 @@ Gold replaces Embers for rewards, purchases and Forge upgrades. Existing reward 
 
 Scrolls still have an independent 15% chance to accompany loot. Common/Rare/Epic scroll prices are 6/12/20 Gold. The Epic Storm Lance deals 22 damage ignoring Block for 1 AP, once, usable by any hero. Each hero class now has Epic gear. Bosses always drop Legendary equipment for a party class.
 
-The new backdrop is `assets/generated/camp_ruins.png`. Existing hero art remains unchanged. Epic icons have separate replaceable SVG files in `assets/items/`; individual same-ID PNG files override their SVGs after Godot imports them. Attribution and sources remain in `assets/items/CREDITS.md` and `SOURCES.json`.
+The new backdrop is `assets/art_library/generated/camp_ruins.png`. Existing hero art remains unchanged. Epic icons have separate replaceable SVG files in `assets/art_library/items/`; individual same-ID PNG files override their SVGs after Godot imports them. Attribution and sources remain in `assets/art_library/items/CREDITS.md` and `SOURCES.json`.
 
 Validation: `tests/camp_merchant_smoke.gd` checks recovery, repeated-rest rejection, stress and debuff reset, slain heroes, 200 generation seeds, orb gating, actual merchant/return scene travel, gold transactions, Epic purchases and Legendary exclusion. Existing RPG, loot-distribution and multiple-enemy suites pass. `tests/camp_merchant_preview.gd` renders camp, merchant, orb and map previews.

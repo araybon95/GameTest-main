@@ -35,4 +35,4 @@ The subsequent balance and tactics pass is recorded in [ordinary_playthrough_bal
 
 The next pass adds party preparation and descent guidance, victory XP for Death's Door survivors, and skill-specific timing with sound cues at release/contact. Details and verification are recorded in [readiness_and_attack_timing.md](readiness_and_attack_timing.md).
 
-Generated creature prompts, corrective prompts, source hashes and frame regions are recorded in [creature_art_provenance.json](creature_art_provenance.json). Door artwork provenance is in [thresholds_PROVENANCE.md](../assets/generated/thresholds_PROVENANCE.md).
+Generated creature prompts, corrective prompts, source hashes and frame regions are recorded in [creature_art_provenance.json](creature_art_provenance.json). Door artwork provenance is in [thresholds_PROVENANCE.md](../assets/art_library/generated/thresholds_PROVENANCE.md).

@@ -47,12 +47,12 @@ func run() -> void:
  await settle()
  assert(not current_scene.hero_state["warden"]["camp_ward"] and not current_scene.hero_state["warden"]["camp_might"])
  # Watch is guaranteed protection; every ambush seed is deterministic and one-use.
- State.floors[0][Vector2i.ZERO] = {"kind":"camp","cleared":true,"camp_used":true,"camp_choices":["watch"]}
+ State.floors[0][Vector2i.ZERO] = {"kind":"camp","cleared":true,"seen":true,"camp_used":true,"camp_choices":["watch"]}
  assert(not State.Depth.camp_ambush(State))
  var found: bool = false
  for value in range(100):
   State.run_seed = value
-  State.floors[0][Vector2i.ZERO] = {"kind":"camp","cleared":true,"camp_used":true}
+  State.floors[0][Vector2i.ZERO] = {"kind":"camp","cleared":true,"seen":true,"camp_used":true}
   if State.Depth.camp_ambush(State):
    found = true
    assert(State.floors[0][Vector2i.ZERO]["enemies"].size() == 1)

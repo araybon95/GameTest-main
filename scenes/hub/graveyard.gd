@@ -1,7 +1,7 @@
 extends "res://scenes/ui/party_screen.gd"
 const Scenery = preload("res://scripts/dungeon_scenery.gd")
 const IronFrame = preload("res://scenes/combat/iron_frame.gd")
-const BACKGROUND: String = "res://assets/generated/graveyard_ink_background.png"
+const BACKGROUND: String = "res://assets/art_library/generated/graveyard_ink_background.png"
 const IVORY: Color = Color("#E8D7B9")
 const PARCHMENT: Color = Color("#C4B399")
 const STONE: Color = Color("#25282B")
@@ -146,7 +146,7 @@ func _iron_panel(rect: Rect2,fill: Color,border: Color) -> Panel:
 func _add_atmosphere() -> void:
 	var haze := CPUParticles2D.new()
 	haze.name = "CemeteryMotes"
-	haze.texture = load("res://assets/generated/mote.png")
+	haze.texture = load("res://assets/art_library/generated/mote.png")
 	haze.amount = 32
 	haze.lifetime = 12.0
 	haze.preprocess = 12.0

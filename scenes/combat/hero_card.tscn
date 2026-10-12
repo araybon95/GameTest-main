@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3]
 
-[ext_resource type="Texture2D" path="res://assets/generated/hero_warden.png" id="1_hero"]
+[ext_resource type="Texture2D" path="res://assets/art_library/generated/hero_warden.png" id="1_hero"]
 [ext_resource type="Theme" path="res://assets/new_theme.tres" id="2_theme"]
 
 [node name="HeroCard" type="Button"]

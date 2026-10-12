@@ -1,0 +1,7130 @@
+{
+  "schema": 1,
+  "note": "Live source bank includes current art and retained variants/fallbacks. References are literal references, not an exhaustive runtime reachability claim.",
+  "assets": [
+    {
+      "file": "appearance/hero_crusader_camp.tres",
+      "resource": "res://assets/art_library/appearance/hero_crusader_camp.tres",
+      "dimensions": [
+        361.0,
+        282.0
+      ],
+      "references": [],
+      "atlas": "appearance/hero_crusader_outfit.png",
+      "region": [
+        14.0,
+        748.0,
+        361.0,
+        282.0
+      ]
+    },
+    {
+      "file": "appearance/hero_crusader_idle.tres",
+      "resource": "res://assets/art_library/appearance/hero_crusader_idle.tres",
+      "dimensions": [
+        349.0,
+        352.0
+      ],
+      "references": [],
+      "atlas": "appearance/hero_crusader_outfit.png",
+      "region": [
+        24.0,
+        10.0,
+        349.0,
+        352.0
+      ]
+    },
+    {
+      "file": "appearance/hero_crusader_original_portrait.tres",
+      "resource": "res://assets/art_library/appearance/hero_crusader_original_portrait.tres",
+      "dimensions": [
+        238.0,
+        212.0
+      ],
+      "references": [],
+      "atlas": "generated/hero_crusader_combat_v2.png",
+      "region": [
+        178.0,
+        30.0,
+        238.0,
+        212.0
+      ]
+    },
+    {
+      "file": "appearance/hero_crusader_outfit.png",
+      "resource": "res://assets/art_library/appearance/hero_crusader_outfit.png",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "references": [
+        "assets/art_library/appearance/hero_crusader_camp.tres",
+        "assets/art_library/appearance/hero_crusader_idle.tres",
+        "assets/art_library/appearance/hero_crusader_portrait.tres"
+      ]
+    },
+    {
+      "file": "appearance/hero_crusader_portrait.tres",
+      "resource": "res://assets/art_library/appearance/hero_crusader_portrait.tres",
+      "dimensions": [
+        294.0,
+        336.0
+      ],
+      "references": [],
+      "atlas": "appearance/hero_crusader_outfit.png",
+      "region": [
+        384.0,
+        726.0,
+        294.0,
+        336.0
+      ]
+    },
+    {
+      "file": "appearance/hero_healer_camp.tres",
+      "resource": "res://assets/art_library/appearance/hero_healer_camp.tres",
+      "dimensions": [
+        318.0,
+        299.0
+      ],
+      "references": [],
+      "atlas": "appearance/hero_healer_outfit.png",
+      "region": [
+        39.0,
+        696.0,
+        318.0,
+        299.0
+      ]
+    },
+    {
+      "file": "appearance/hero_healer_idle.tres",
+      "resource": "res://assets/art_library/appearance/hero_healer_idle.tres",
+      "dimensions": [
+        254.0,
+        321.0
+      ],
+      "references": [],
+      "atlas": "appearance/hero_healer_outfit.png",
+      "region": [
+        79.0,
+        34.0,
+        254.0,
+        321.0
+      ]
+    },
+    {
+      "file": "appearance/hero_healer_original_portrait.tres",
+      "resource": "res://assets/art_library/appearance/hero_healer_original_portrait.tres",
+      "dimensions": [
+        193.0,
+        207.0
+      ],
+      "references": [],
+      "atlas": "generated/hero_healer_combat_sheet.png",
+      "region": [
+        183.0,
+        48.0,
+        193.0,
+        207.0
+      ]
+    },
+    {
+      "file": "appearance/hero_healer_outfit.png",
+      "resource": "res://assets/art_library/appearance/hero_healer_outfit.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/appearance/hero_healer_camp.tres",
+        "assets/art_library/appearance/hero_healer_idle.tres",
+        "assets/art_library/appearance/hero_healer_portrait.tres"
+      ]
+    },
+    {
+      "file": "appearance/hero_healer_portrait.tres",
+      "resource": "res://assets/art_library/appearance/hero_healer_portrait.tres",
+      "dimensions": [
+        314.0,
+        279.0
+      ],
+      "references": [],
+      "atlas": "appearance/hero_healer_outfit.png",
+      "region": [
+        425.0,
+        713.0,
+        314.0,
+        279.0
+      ]
+    },
+    {
+      "file": "appearance/hero_occultist_camp.tres",
+      "resource": "res://assets/art_library/appearance/hero_occultist_camp.tres",
+      "dimensions": [
+        328.0,
+        304.0
+      ],
+      "references": [],
+      "atlas": "appearance/hero_occultist_outfit.png",
+      "region": [
+        23.0,
+        695.0,
+        328.0,
+        304.0
+      ]
+    },
+    {
+      "file": "appearance/hero_occultist_idle.tres",
+      "resource": "res://assets/art_library/appearance/hero_occultist_idle.tres",
+      "dimensions": [
+        294.0,
+        345.0
+      ],
+      "references": [],
+      "atlas": "appearance/hero_occultist_outfit.png",
+      "region": [
+        55.0,
+        14.0,
+        294.0,
+        345.0
+      ]
+    },
+    {
+      "file": "appearance/hero_occultist_original_portrait.tres",
+      "resource": "res://assets/art_library/appearance/hero_occultist_original_portrait.tres",
+      "dimensions": [
+        200.0,
+        198.0
+      ],
+      "references": [],
+      "atlas": "generated/hero_occultist_combat_sheet.png",
+      "region": [
+        166.0,
+        52.0,
+        200.0,
+        198.0
+      ]
+    },
+    {
+      "file": "appearance/hero_occultist_outfit.png",
+      "resource": "res://assets/art_library/appearance/hero_occultist_outfit.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/appearance/hero_occultist_camp.tres",
+        "assets/art_library/appearance/hero_occultist_idle.tres",
+        "assets/art_library/appearance/hero_occultist_portrait.tres"
+      ]
+    },
+    {
+      "file": "appearance/hero_occultist_portrait.tres",
+      "resource": "res://assets/art_library/appearance/hero_occultist_portrait.tres",
+      "dimensions": [
+        319.0,
+        297.0
+      ],
+      "references": [],
+      "atlas": "appearance/hero_occultist_outfit.png",
+      "region": [
+        390.0,
+        711.0,
+        319.0,
+        297.0
+      ]
+    },
+    {
+      "file": "appearance/hero_ranger_camp.tres",
+      "resource": "res://assets/art_library/appearance/hero_ranger_camp.tres",
+      "dimensions": [
+        363.0,
+        304.0
+      ],
+      "references": [],
+      "atlas": "appearance/hero_ranger_outfit.png",
+      "region": [
+        8.0,
+        765.0,
+        363.0,
+        304.0
+      ]
+    },
+    {
+      "file": "appearance/hero_ranger_idle.tres",
+      "resource": "res://assets/art_library/appearance/hero_ranger_idle.tres",
+      "dimensions": [
+        329.0,
+        355.0
+      ],
+      "references": [],
+      "atlas": "appearance/hero_ranger_outfit.png",
+      "region": [
+        14.0,
+        11.0,
+        329.0,
+        355.0
+      ]
+    },
+    {
+      "file": "appearance/hero_ranger_original_portrait.tres",
+      "resource": "res://assets/art_library/appearance/hero_ranger_original_portrait.tres",
+      "dimensions": [
+        220.0,
+        188.0
+      ],
+      "references": [],
+      "atlas": "generated/hero_ranger_combat_sheet.png",
+      "region": [
+        193.0,
+        65.0,
+        220.0,
+        188.0
+      ]
+    },
+    {
+      "file": "appearance/hero_ranger_outfit.png",
+      "resource": "res://assets/art_library/appearance/hero_ranger_outfit.png",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "references": [
+        "assets/art_library/appearance/hero_ranger_camp.tres",
+        "assets/art_library/appearance/hero_ranger_idle.tres",
+        "assets/art_library/appearance/hero_ranger_portrait.tres"
+      ]
+    },
+    {
+      "file": "appearance/hero_ranger_portrait.tres",
+      "resource": "res://assets/art_library/appearance/hero_ranger_portrait.tres",
+      "dimensions": [
+        370.0,
+        322.0
+      ],
+      "references": [],
+      "atlas": "appearance/hero_ranger_outfit.png",
+      "region": [
+        371.0,
+        750.0,
+        370.0,
+        322.0
+      ]
+    },
+    {
+      "file": "appearance/hero_warden_camp.tres",
+      "resource": "res://assets/art_library/appearance/hero_warden_camp.tres",
+      "dimensions": [
+        386.0,
+        263.0
+      ],
+      "references": [],
+      "atlas": "appearance/hero_warden_outfit.png",
+      "region": [
+        6.0,
+        728.0,
+        386.0,
+        263.0
+      ]
+    },
+    {
+      "file": "appearance/hero_warden_idle.tres",
+      "resource": "res://assets/art_library/appearance/hero_warden_idle.tres",
+      "dimensions": [
+        318.0,
+        325.0
+      ],
+      "references": [],
+      "atlas": "appearance/hero_warden_outfit.png",
+      "region": [
+        24.0,
+        23.0,
+        318.0,
+        325.0
+      ]
+    },
+    {
+      "file": "appearance/hero_warden_original_portrait.tres",
+      "resource": "res://assets/art_library/appearance/hero_warden_original_portrait.tres",
+      "dimensions": [
+        183.0,
+        148.0
+      ],
+      "references": [],
+      "atlas": "generated/hero_warden_combat_v2.png",
+      "region": [
+        187.0,
+        115.0,
+        183.0,
+        148.0
+      ]
+    },
+    {
+      "file": "appearance/hero_warden_outfit.png",
+      "resource": "res://assets/art_library/appearance/hero_warden_outfit.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/appearance/hero_warden_camp.tres",
+        "assets/art_library/appearance/hero_warden_idle.tres",
+        "assets/art_library/appearance/hero_warden_portrait.tres"
+      ]
+    },
+    {
+      "file": "appearance/hero_warden_portrait.tres",
+      "resource": "res://assets/art_library/appearance/hero_warden_portrait.tres",
+      "dimensions": [
+        327.0,
+        299.0
+      ],
+      "references": [],
+      "atlas": "appearance/hero_warden_outfit.png",
+      "region": [
+        409.0,
+        695.0,
+        327.0,
+        299.0
+      ]
+    },
+    {
+      "file": "camp/rest.tres",
+      "resource": "res://assets/art_library/camp/rest.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        256.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "camp/rest.png"
+    },
+    {
+      "file": "camp/scout.tres",
+      "resource": "res://assets/art_library/camp/scout.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        0.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "camp/scout.png"
+    },
+    {
+      "file": "camp/sharpen.tres",
+      "resource": "res://assets/art_library/camp/sharpen.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        1280.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "camp/sharpen.png"
+    },
+    {
+      "file": "camp/ward.tres",
+      "resource": "res://assets/art_library/camp/ward.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        1024.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "camp/ward.png"
+    },
+    {
+      "file": "camp/watch.tres",
+      "resource": "res://assets/art_library/camp/watch.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        768.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "camp/watch.png"
+    },
+    {
+      "file": "equipment/hero_crusader_attack_relic.png",
+      "resource": "res://assets/art_library/equipment/hero_crusader_attack_relic.png",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "references": [
+        "scripts/equipment_art.gd"
+      ]
+    },
+    {
+      "file": "equipment/hero_crusader_camp.tres",
+      "resource": "res://assets/art_library/equipment/hero_crusader_camp.tres",
+      "dimensions": [
+        369.0,
+        288.0
+      ],
+      "references": [],
+      "atlas": "equipment/hero_crusader_relic.png",
+      "region": [
+        7.0,
+        746.0,
+        369.0,
+        288.0
+      ]
+    },
+    {
+      "file": "equipment/hero_crusader_idle.tres",
+      "resource": "res://assets/art_library/equipment/hero_crusader_idle.tres",
+      "dimensions": [
+        368.0,
+        358.0
+      ],
+      "references": [],
+      "atlas": "equipment/hero_crusader_relic.png",
+      "region": [
+        19.0,
+        8.0,
+        368.0,
+        358.0
+      ]
+    },
+    {
+      "file": "equipment/hero_crusader_portrait.tres",
+      "resource": "res://assets/art_library/equipment/hero_crusader_portrait.tres",
+      "dimensions": [
+        311.0,
+        349.0
+      ],
+      "references": [],
+      "atlas": "equipment/hero_crusader_relic.png",
+      "region": [
+        381.0,
+        711.0,
+        311.0,
+        349.0
+      ]
+    },
+    {
+      "file": "equipment/hero_crusader_relic.png",
+      "resource": "res://assets/art_library/equipment/hero_crusader_relic.png",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "references": [
+        "assets/art_library/equipment/hero_crusader_camp.tres",
+        "assets/art_library/equipment/hero_crusader_idle.tres",
+        "assets/art_library/equipment/hero_crusader_portrait.tres"
+      ]
+    },
+    {
+      "file": "equipment/hero_healer_camp.tres",
+      "resource": "res://assets/art_library/equipment/hero_healer_camp.tres",
+      "dimensions": [
+        343.0,
+        321.0
+      ],
+      "references": [],
+      "atlas": "equipment/hero_healer_relic.png",
+      "region": [
+        0.0,
+        674.0,
+        343.0,
+        321.0
+      ]
+    },
+    {
+      "file": "equipment/hero_healer_idle.tres",
+      "resource": "res://assets/art_library/equipment/hero_healer_idle.tres",
+      "dimensions": [
+        283.0,
+        338.0
+      ],
+      "references": [],
+      "atlas": "equipment/hero_healer_relic.png",
+      "region": [
+        42.0,
+        2.0,
+        283.0,
+        338.0
+      ]
+    },
+    {
+      "file": "equipment/hero_healer_portrait.tres",
+      "resource": "res://assets/art_library/equipment/hero_healer_portrait.tres",
+      "dimensions": [
+        356.0,
+        308.0
+      ],
+      "references": [],
+      "atlas": "equipment/hero_healer_relic.png",
+      "region": [
+        385.0,
+        690.0,
+        356.0,
+        308.0
+      ]
+    },
+    {
+      "file": "equipment/hero_healer_relic.png",
+      "resource": "res://assets/art_library/equipment/hero_healer_relic.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/equipment/hero_healer_camp.tres",
+        "assets/art_library/equipment/hero_healer_idle.tres",
+        "assets/art_library/equipment/hero_healer_portrait.tres"
+      ]
+    },
+    {
+      "file": "equipment/hero_occultist_camp.tres",
+      "resource": "res://assets/art_library/equipment/hero_occultist_camp.tres",
+      "dimensions": [
+        340.0,
+        307.0
+      ],
+      "references": [],
+      "atlas": "equipment/hero_occultist_relic.png",
+      "region": [
+        12.0,
+        695.0,
+        340.0,
+        307.0
+      ]
+    },
+    {
+      "file": "equipment/hero_occultist_idle.tres",
+      "resource": "res://assets/art_library/equipment/hero_occultist_idle.tres",
+      "dimensions": [
+        305.0,
+        356.0
+      ],
+      "references": [],
+      "atlas": "equipment/hero_occultist_relic.png",
+      "region": [
+        44.0,
+        4.0,
+        305.0,
+        356.0
+      ]
+    },
+    {
+      "file": "equipment/hero_occultist_portrait.tres",
+      "resource": "res://assets/art_library/equipment/hero_occultist_portrait.tres",
+      "dimensions": [
+        343.0,
+        323.0
+      ],
+      "references": [],
+      "atlas": "equipment/hero_occultist_relic.png",
+      "region": [
+        386.0,
+        696.0,
+        343.0,
+        323.0
+      ]
+    },
+    {
+      "file": "equipment/hero_occultist_relic.png",
+      "resource": "res://assets/art_library/equipment/hero_occultist_relic.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/equipment/hero_occultist_camp.tres",
+        "assets/art_library/equipment/hero_occultist_idle.tres",
+        "assets/art_library/equipment/hero_occultist_portrait.tres"
+      ]
+    },
+    {
+      "file": "equipment/hero_ranger_camp.tres",
+      "resource": "res://assets/art_library/equipment/hero_ranger_camp.tres",
+      "dimensions": [
+        381.0,
+        308.0
+      ],
+      "references": [],
+      "atlas": "equipment/hero_ranger_relic.png",
+      "region": [
+        4.0,
+        764.0,
+        381.0,
+        308.0
+      ]
+    },
+    {
+      "file": "equipment/hero_ranger_idle.tres",
+      "resource": "res://assets/art_library/equipment/hero_ranger_idle.tres",
+      "dimensions": [
+        328.0,
+        360.0
+      ],
+      "references": [],
+      "atlas": "equipment/hero_ranger_relic.png",
+      "region": [
+        24.0,
+        6.0,
+        328.0,
+        360.0
+      ]
+    },
+    {
+      "file": "equipment/hero_ranger_portrait.tres",
+      "resource": "res://assets/art_library/equipment/hero_ranger_portrait.tres",
+      "dimensions": [
+        386.0,
+        331.0
+      ],
+      "references": [],
+      "atlas": "equipment/hero_ranger_relic.png",
+      "region": [
+        370.0,
+        749.0,
+        386.0,
+        331.0
+      ]
+    },
+    {
+      "file": "equipment/hero_ranger_relic.png",
+      "resource": "res://assets/art_library/equipment/hero_ranger_relic.png",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "references": [
+        "assets/art_library/equipment/hero_ranger_camp.tres",
+        "assets/art_library/equipment/hero_ranger_idle.tres",
+        "assets/art_library/equipment/hero_ranger_portrait.tres"
+      ]
+    },
+    {
+      "file": "equipment/hero_warden_camp.tres",
+      "resource": "res://assets/art_library/equipment/hero_warden_camp.tres",
+      "dimensions": [
+        384.0,
+        271.0
+      ],
+      "references": [],
+      "atlas": "equipment/hero_warden_relic.png",
+      "region": [
+        7.0,
+        723.0,
+        384.0,
+        271.0
+      ]
+    },
+    {
+      "file": "equipment/hero_warden_idle.tres",
+      "resource": "res://assets/art_library/equipment/hero_warden_idle.tres",
+      "dimensions": [
+        308.0,
+        338.0
+      ],
+      "references": [],
+      "atlas": "equipment/hero_warden_relic.png",
+      "region": [
+        29.0,
+        15.0,
+        308.0,
+        338.0
+      ]
+    },
+    {
+      "file": "equipment/hero_warden_portrait.tres",
+      "resource": "res://assets/art_library/equipment/hero_warden_portrait.tres",
+      "dimensions": [
+        345.0,
+        310.0
+      ],
+      "references": [],
+      "atlas": "equipment/hero_warden_relic.png",
+      "region": [
+        399.0,
+        688.0,
+        345.0,
+        310.0
+      ]
+    },
+    {
+      "file": "equipment/hero_warden_relic.png",
+      "resource": "res://assets/art_library/equipment/hero_warden_relic.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/equipment/hero_warden_camp.tres",
+        "assets/art_library/equipment/hero_warden_idle.tres",
+        "assets/art_library/equipment/hero_warden_portrait.tres"
+      ]
+    },
+    {
+      "file": "generated/apothecary_battle_stage.png",
+      "resource": "res://assets/art_library/generated/apothecary_battle_stage.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/apothecary_interior.png",
+      "resource": "res://assets/art_library/generated/apothecary_interior.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": [
+        "scenes/hub/apothecary.gd",
+        "scripts/game_data.gd"
+      ]
+    },
+    {
+      "file": "generated/apothecary_reclaimed.png",
+      "resource": "res://assets/art_library/generated/apothecary_reclaimed.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/bandit_battle_stage.png",
+      "resource": "res://assets/art_library/generated/bandit_battle_stage.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/bandit_camp.png",
+      "resource": "res://assets/art_library/generated/bandit_camp.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ]
+    },
+    {
+      "file": "generated/bandit_combat.png",
+      "resource": "res://assets/art_library/generated/bandit_combat.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": [
+        "scenes/expedition/preparation.gd",
+        "scripts/game_data.gd"
+      ]
+    },
+    {
+      "file": "generated/beast_battle_stage.png",
+      "resource": "res://assets/art_library/generated/beast_battle_stage.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/beast_camp.png",
+      "resource": "res://assets/art_library/generated/beast_camp.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ]
+    },
+    {
+      "file": "generated/beast_sanctuary.png",
+      "resource": "res://assets/art_library/generated/beast_sanctuary.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ]
+    },
+    {
+      "file": "generated/bg_crypt.png",
+      "resource": "res://assets/art_library/generated/bg_crypt.png",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "references": [
+        "scenes/combat/combatscene.tscn"
+      ]
+    },
+    {
+      "file": "generated/building_barracks.png",
+      "resource": "res://assets/art_library/generated/building_barracks.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/building_bestiary.png",
+      "resource": "res://assets/art_library/generated/building_bestiary.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/building_forge.png",
+      "resource": "res://assets/art_library/generated/building_forge.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/building_gate.png",
+      "resource": "res://assets/art_library/generated/building_gate.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/camp_ruins.png",
+      "resource": "res://assets/art_library/generated/camp_ruins.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ]
+    },
+    {
+      "file": "generated/combat_pose_captain.png",
+      "resource": "res://assets/art_library/generated/combat_pose_captain.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/combat_pose_crossbow.png",
+      "resource": "res://assets/art_library/generated/combat_pose_crossbow.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/combat_pose_crusader.png",
+      "resource": "res://assets/art_library/generated/combat_pose_crusader.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/combat_pose_footman.png",
+      "resource": "res://assets/art_library/generated/combat_pose_footman.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/combat_pose_giant.png",
+      "resource": "res://assets/art_library/generated/combat_pose_giant.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/combat_pose_healer.png",
+      "resource": "res://assets/art_library/generated/combat_pose_healer.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/combat_pose_lord.png",
+      "resource": "res://assets/art_library/generated/combat_pose_lord.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/combat_pose_occultist.png",
+      "resource": "res://assets/art_library/generated/combat_pose_occultist.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/combat_pose_penitent.png",
+      "resource": "res://assets/art_library/generated/combat_pose_penitent.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/combat_pose_raider.png",
+      "resource": "res://assets/art_library/generated/combat_pose_raider.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/combat_pose_ranger.png",
+      "resource": "res://assets/art_library/generated/combat_pose_ranger.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/combat_pose_scout.png",
+      "resource": "res://assets/art_library/generated/combat_pose_scout.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/combat_pose_seamkeeper.png",
+      "resource": "res://assets/art_library/generated/combat_pose_seamkeeper.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/combat_pose_skeleton.png",
+      "resource": "res://assets/art_library/generated/combat_pose_skeleton.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/combat_pose_son.png",
+      "resource": "res://assets/art_library/generated/combat_pose_son.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/combat_pose_vessel.png",
+      "resource": "res://assets/art_library/generated/combat_pose_vessel.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/combat_pose_villager.png",
+      "resource": "res://assets/art_library/generated/combat_pose_villager.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/combat_pose_warden.png",
+      "resource": "res://assets/art_library/generated/combat_pose_warden.png",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/combat_pose_wolfguard.png",
+      "resource": "res://assets/art_library/generated/combat_pose_wolfguard.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/crypt_battle_floor.png",
+      "resource": "res://assets/art_library/generated/crypt_battle_floor.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "references": [
+        "scenes/combat/arena.tscn"
+      ]
+    },
+    {
+      "file": "generated/dungeon_threshold_sheet.png",
+      "resource": "res://assets/art_library/generated/dungeon_threshold_sheet.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "references": [
+        "assets/art_library/generated/threshold_bandit.tres",
+        "assets/art_library/generated/threshold_beast.tres",
+        "assets/art_library/generated/threshold_keep.tres",
+        "assets/art_library/generated/threshold_medical.tres"
+      ]
+    },
+    {
+      "file": "generated/enemy_anguish_penitent.png",
+      "resource": "res://assets/art_library/generated/enemy_anguish_penitent.png",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/enemy_anguish_penitent_combat_sheet.png",
+      "resource": "res://assets/art_library/generated/enemy_anguish_penitent_combat_sheet.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "references": [
+        "assets/art_library/generated/enemy_anguish_penitent_ink.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_anguish_penitent_ink.tres",
+      "resource": "res://assets/art_library/generated/enemy_anguish_penitent_ink.tres",
+      "dimensions": [
+        574.0,
+        705.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/enemy_anguish_penitent_combat_sheet.png",
+      "region": [
+        15.0,
+        8.0,
+        574.0,
+        705.0
+      ]
+    },
+    {
+      "file": "generated/enemy_anguish_vessel.png",
+      "resource": "res://assets/art_library/generated/enemy_anguish_vessel.png",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/enemy_anguish_vessel_combat_sheet.png",
+      "resource": "res://assets/art_library/generated/enemy_anguish_vessel_combat_sheet.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "references": [
+        "assets/art_library/generated/enemy_anguish_vessel_ink.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_anguish_vessel_ink.tres",
+      "resource": "res://assets/art_library/generated/enemy_anguish_vessel_ink.tres",
+      "dimensions": [
+        412.0,
+        510.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/enemy_anguish_vessel_combat_sheet.png",
+      "region": [
+        183.0,
+        105.0,
+        412.0,
+        510.0
+      ]
+    },
+    {
+      "file": "generated/enemy_ash_bandit_captain.png",
+      "resource": "res://assets/art_library/generated/enemy_ash_bandit_captain.png",
+      "dimensions": [
+        1223,
+        1286
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/enemy_ash_bandit_captain.tres",
+      "resource": "res://assets/art_library/generated/enemy_ash_bandit_captain.tres",
+      "dimensions": [
+        757.0,
+        636.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/enemy_ash_bandit_captain_combat_sheet.png",
+      "region": [
+        10.0,
+        80.0,
+        757.0,
+        636.0
+      ]
+    },
+    {
+      "file": "generated/enemy_ash_bandit_captain_combat_sheet.png",
+      "resource": "res://assets/art_library/generated/enemy_ash_bandit_captain_combat_sheet.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "references": [
+        "assets/art_library/generated/enemy_ash_bandit_captain.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_ash_raider.png",
+      "resource": "res://assets/art_library/generated/enemy_ash_raider.png",
+      "dimensions": [
+        1247,
+        1261
+      ],
+      "references": [
+        "scenes/combat/combatscene.gd",
+        "scripts/game_data.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_ash_raider_combat_idle.tres",
+      "resource": "res://assets/art_library/generated/enemy_ash_raider_combat_idle.tres",
+      "dimensions": [
+        480.0,
+        451.0
+      ],
+      "references": [
+        "scenes/combat/combatscene.gd"
+      ],
+      "atlas": "generated/enemy_ash_raider_combat_v2.png",
+      "region": [
+        9.0,
+        62.0,
+        480.0,
+        451.0
+      ]
+    },
+    {
+      "file": "generated/enemy_ash_raider_combat_v2.png",
+      "resource": "res://assets/art_library/generated/enemy_ash_raider_combat_v2.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/generated/enemy_ash_raider_combat_idle.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_bone_rabble.png",
+      "resource": "res://assets/art_library/generated/enemy_bone_rabble.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/enemy_bone_rabble_combat_sheet.png",
+      "resource": "res://assets/art_library/generated/enemy_bone_rabble_combat_sheet.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "references": [
+        "assets/art_library/generated/enemy_bone_rabble_ink.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_bone_rabble_ink.tres",
+      "resource": "res://assets/art_library/generated/enemy_bone_rabble_ink.tres",
+      "dimensions": [
+        471.0,
+        481.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/enemy_bone_rabble_combat_sheet.png",
+      "region": [
+        126.0,
+        119.0,
+        471.0,
+        481.0
+      ]
+    },
+    {
+      "file": "generated/enemy_coterie_cantor.png",
+      "resource": "res://assets/art_library/generated/enemy_coterie_cantor.png",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/enemy_coterie_cantor_combat_sheet.png",
+      "resource": "res://assets/art_library/generated/enemy_coterie_cantor_combat_sheet.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/generated/enemy_coterie_cantor_ink.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_coterie_cantor_ink.tres",
+      "resource": "res://assets/art_library/generated/enemy_coterie_cantor_ink.tres",
+      "dimensions": [
+        375.0,
+        418.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/enemy_coterie_cantor_combat_sheet.png",
+      "region": [
+        237.0,
+        48.0,
+        375.0,
+        418.0
+      ]
+    },
+    {
+      "file": "generated/enemy_coterie_matron.png",
+      "resource": "res://assets/art_library/generated/enemy_coterie_matron.png",
+      "dimensions": [
+        1208,
+        1302
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/enemy_coterie_matron_combat_sheet.png",
+      "resource": "res://assets/art_library/generated/enemy_coterie_matron_combat_sheet.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/generated/enemy_coterie_matron_ink.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_coterie_matron_ink.tres",
+      "resource": "res://assets/art_library/generated/enemy_coterie_matron_ink.tres",
+      "dimensions": [
+        508.0,
+        407.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/enemy_coterie_matron_combat_sheet.png",
+      "region": [
+        154.0,
+        56.0,
+        508.0,
+        407.0
+      ]
+    },
+    {
+      "file": "generated/enemy_coterie_seamkeeper.png",
+      "resource": "res://assets/art_library/generated/enemy_coterie_seamkeeper.png",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/enemy_coterie_seamkeeper_combat_sheet.png",
+      "resource": "res://assets/art_library/generated/enemy_coterie_seamkeeper_combat_sheet.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/generated/enemy_coterie_seamkeeper_ink.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_coterie_seamkeeper_ink.tres",
+      "resource": "res://assets/art_library/generated/enemy_coterie_seamkeeper_ink.tres",
+      "dimensions": [
+        547.0,
+        425.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/enemy_coterie_seamkeeper_combat_sheet.png",
+      "region": [
+        116.0,
+        48.0,
+        547.0,
+        425.0
+      ]
+    },
+    {
+      "file": "generated/enemy_gallows_scout.png",
+      "resource": "res://assets/art_library/generated/enemy_gallows_scout.png",
+      "dimensions": [
+        1205,
+        1306
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/enemy_gallows_scout.tres",
+      "resource": "res://assets/art_library/generated/enemy_gallows_scout.tres",
+      "dimensions": [
+        561.0,
+        581.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/enemy_gallows_scout_combat_sheet.png",
+      "region": [
+        46.0,
+        188.0,
+        561.0,
+        581.0
+      ]
+    },
+    {
+      "file": "generated/enemy_gallows_scout_combat_sheet.png",
+      "resource": "res://assets/art_library/generated/enemy_gallows_scout_combat_sheet.png",
+      "dimensions": [
+        1881,
+        836
+      ],
+      "references": [
+        "assets/art_library/generated/enemy_gallows_scout.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_harrowed_giant.png",
+      "resource": "res://assets/art_library/generated/enemy_harrowed_giant.png",
+      "dimensions": [
+        1217,
+        1292
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/enemy_harrowed_giant_combat_sheet.png",
+      "resource": "res://assets/art_library/generated/enemy_harrowed_giant_combat_sheet.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/generated/enemy_harrowed_giant_ink.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_harrowed_giant_ink.tres",
+      "resource": "res://assets/art_library/generated/enemy_harrowed_giant_ink.tres",
+      "dimensions": [
+        527.0,
+        423.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/enemy_harrowed_giant_combat_sheet.png",
+      "region": [
+        158.0,
+        40.0,
+        527.0,
+        423.0
+      ]
+    },
+    {
+      "file": "generated/enemy_hollow_villager.png",
+      "resource": "res://assets/art_library/generated/enemy_hollow_villager.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "references": [
+        "scenes/combat/combatscene.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_hollow_villager_combat_sheet.png",
+      "resource": "res://assets/art_library/generated/enemy_hollow_villager_combat_sheet.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "references": [
+        "assets/art_library/generated/enemy_hollow_villager_ink.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_hollow_villager_ink.tres",
+      "resource": "res://assets/art_library/generated/enemy_hollow_villager_ink.tres",
+      "dimensions": [
+        473.0,
+        534.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/enemy_hollow_villager_combat_sheet.png",
+      "region": [
+        129.0,
+        109.0,
+        473.0,
+        534.0
+      ]
+    },
+    {
+      "file": "generated/enemy_howling_head.png",
+      "resource": "res://assets/art_library/generated/enemy_howling_head.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "tests/presentation_smoke.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_howling_head_combat_sheet.png",
+      "resource": "res://assets/art_library/generated/enemy_howling_head_combat_sheet.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/generated/enemy_howling_head_ink.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_howling_head_ink.tres",
+      "resource": "res://assets/art_library/generated/enemy_howling_head_ink.tres",
+      "dimensions": [
+        556.0,
+        385.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/enemy_howling_head_combat_sheet.png",
+      "region": [
+        128.0,
+        70.0,
+        556.0,
+        385.0
+      ]
+    },
+    {
+      "file": "generated/enemy_keep_crossbow.tres",
+      "resource": "res://assets/art_library/generated/enemy_keep_crossbow.tres",
+      "dimensions": [
+        720.0,
+        724.0
+      ],
+      "references": [],
+      "atlas": "generated/enemy_keep_troops.png",
+      "region": [
+        690.0,
+        0.0,
+        720.0,
+        724.0
+      ]
+    },
+    {
+      "file": "generated/enemy_keep_crossbow_combat_sheet.png",
+      "resource": "res://assets/art_library/generated/enemy_keep_crossbow_combat_sheet.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "references": [
+        "assets/art_library/generated/enemy_keep_crossbow_ink.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_keep_crossbow_ink.tres",
+      "resource": "res://assets/art_library/generated/enemy_keep_crossbow_ink.tres",
+      "dimensions": [
+        640.0,
+        707.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/enemy_keep_crossbow_combat_sheet.png",
+      "region": [
+        0.0,
+        8.0,
+        640.0,
+        707.0
+      ]
+    },
+    {
+      "file": "generated/enemy_keep_footman.tres",
+      "resource": "res://assets/art_library/generated/enemy_keep_footman.tres",
+      "dimensions": [
+        690.0,
+        724.0
+      ],
+      "references": [],
+      "atlas": "generated/enemy_keep_troops.png",
+      "region": [
+        0.0,
+        0.0,
+        690.0,
+        724.0
+      ]
+    },
+    {
+      "file": "generated/enemy_keep_footman_combat_sheet.png",
+      "resource": "res://assets/art_library/generated/enemy_keep_footman_combat_sheet.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "references": [
+        "assets/art_library/generated/enemy_keep_footman_ink.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_keep_footman_ink.tres",
+      "resource": "res://assets/art_library/generated/enemy_keep_footman_ink.tres",
+      "dimensions": [
+        688.0,
+        666.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/enemy_keep_footman_combat_sheet.png",
+      "region": [
+        12.0,
+        40.0,
+        688.0,
+        666.0
+      ]
+    },
+    {
+      "file": "generated/enemy_keep_son.png",
+      "resource": "res://assets/art_library/generated/enemy_keep_son.png",
+      "dimensions": [
+        1208,
+        1302
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/enemy_keep_son_combat_sheet.png",
+      "resource": "res://assets/art_library/generated/enemy_keep_son_combat_sheet.png",
+      "dimensions": [
+        1423,
+        1105
+      ],
+      "references": [
+        "assets/art_library/generated/enemy_keep_son_ink.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_keep_son_ink.tres",
+      "resource": "res://assets/art_library/generated/enemy_keep_son_ink.tres",
+      "dimensions": [
+        608.0,
+        515.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/enemy_keep_son_combat_sheet.png",
+      "region": [
+        95.0,
+        34.0,
+        608.0,
+        515.0
+      ]
+    },
+    {
+      "file": "generated/enemy_keep_troops.png",
+      "resource": "res://assets/art_library/generated/enemy_keep_troops.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "references": [
+        "assets/art_library/generated/enemy_keep_crossbow.tres",
+        "assets/art_library/generated/enemy_keep_footman.tres",
+        "assets/art_library/generated/enemy_keep_wolfguard.tres"
+      ]
+    },
+    {
+      "file": "generated/enemy_keep_wolfguard.tres",
+      "resource": "res://assets/art_library/generated/enemy_keep_wolfguard.tres",
+      "dimensions": [
+        762.0,
+        724.0
+      ],
+      "references": [],
+      "atlas": "generated/enemy_keep_troops.png",
+      "region": [
+        1410.0,
+        0.0,
+        762.0,
+        724.0
+      ]
+    },
+    {
+      "file": "generated/enemy_keep_wolfguard_combat_sheet.png",
+      "resource": "res://assets/art_library/generated/enemy_keep_wolfguard_combat_sheet.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "references": [
+        "assets/art_library/generated/enemy_keep_wolfguard_ink.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_keep_wolfguard_ink.tres",
+      "resource": "res://assets/art_library/generated/enemy_keep_wolfguard_ink.tres",
+      "dimensions": [
+        678.0,
+        599.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/enemy_keep_wolfguard_combat_sheet.png",
+      "region": [
+        16.0,
+        102.0,
+        678.0,
+        599.0
+      ]
+    },
+    {
+      "file": "generated/enemy_moth_exuvia.png",
+      "resource": "res://assets/art_library/generated/enemy_moth_exuvia.png",
+      "dimensions": [
+        1189,
+        1323
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/enemy_moth_exuvia_combat_sheet.png",
+      "resource": "res://assets/art_library/generated/enemy_moth_exuvia_combat_sheet.png",
+      "dimensions": [
+        1323,
+        1189
+      ],
+      "references": [
+        "assets/art_library/generated/enemy_moth_exuvia_ink.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_moth_exuvia_ink.tres",
+      "resource": "res://assets/art_library/generated/enemy_moth_exuvia_ink.tres",
+      "dimensions": [
+        451.0,
+        445.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/enemy_moth_exuvia_combat_sheet.png",
+      "region": [
+        124.0,
+        108.0,
+        451.0,
+        445.0
+      ]
+    },
+    {
+      "file": "generated/enemy_moth_metamorph.png",
+      "resource": "res://assets/art_library/generated/enemy_moth_metamorph.png",
+      "dimensions": [
+        1145,
+        1374
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/enemy_moth_metamorph_combat_sheet.png",
+      "resource": "res://assets/art_library/generated/enemy_moth_metamorph_combat_sheet.png",
+      "dimensions": [
+        2079,
+        756
+      ],
+      "references": [
+        "assets/art_library/generated/enemy_moth_metamorph_ink.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_moth_metamorph_ink.tres",
+      "resource": "res://assets/art_library/generated/enemy_moth_metamorph_ink.tres",
+      "dimensions": [
+        469.0,
+        536.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/enemy_moth_metamorph_combat_sheet.png",
+      "region": [
+        138.0,
+        119.0,
+        469.0,
+        536.0
+      ]
+    },
+    {
+      "file": "generated/enemy_moth_oleander.png",
+      "resource": "res://assets/art_library/generated/enemy_moth_oleander.png",
+      "dimensions": [
+        1145,
+        1374
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/enemy_moth_oleander_combat_sheet.png",
+      "resource": "res://assets/art_library/generated/enemy_moth_oleander_combat_sheet.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/generated/enemy_moth_oleander_ink.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_moth_oleander_ink.tres",
+      "resource": "res://assets/art_library/generated/enemy_moth_oleander_ink.tres",
+      "dimensions": [
+        469.0,
+        386.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/enemy_moth_oleander_combat_sheet.png",
+      "region": [
+        221.0,
+        81.0,
+        469.0,
+        386.0
+      ]
+    },
+    {
+      "file": "generated/enemy_undying_lord.png",
+      "resource": "res://assets/art_library/generated/enemy_undying_lord.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/enemy_undying_lord_combat_sheet.png",
+      "resource": "res://assets/art_library/generated/enemy_undying_lord_combat_sheet.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/generated/enemy_undying_lord_ink.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/enemy_undying_lord_ink.tres",
+      "resource": "res://assets/art_library/generated/enemy_undying_lord_ink.tres",
+      "dimensions": [
+        555.0,
+        400.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/enemy_undying_lord_combat_sheet.png",
+      "region": [
+        98.0,
+        49.0,
+        555.0,
+        400.0
+      ]
+    },
+    {
+      "file": "generated/event_bandit_corridor.png",
+      "resource": "res://assets/art_library/generated/event_bandit_corridor.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/event_bandit_strongbox.png",
+      "resource": "res://assets/art_library/generated/event_bandit_strongbox.png",
+      "dimensions": [
+        1374,
+        1145
+      ],
+      "references": [
+        "scenes/expedition/hallway_travel.gd"
+      ]
+    },
+    {
+      "file": "generated/event_bandit_supplies.png",
+      "resource": "res://assets/art_library/generated/event_bandit_supplies.png",
+      "dimensions": [
+        1374,
+        1145
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/event_beast_corridor.png",
+      "resource": "res://assets/art_library/generated/event_beast_corridor.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/event_beast_offering.png",
+      "resource": "res://assets/art_library/generated/event_beast_offering.png",
+      "dimensions": [
+        1247,
+        1261
+      ],
+      "references": [
+        "scenes/combat/combatscene.gd"
+      ]
+    },
+    {
+      "file": "generated/event_beast_reliquary.png",
+      "resource": "res://assets/art_library/generated/event_beast_reliquary.png",
+      "dimensions": [
+        1145,
+        1374
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/event_crusader_coffin.png",
+      "resource": "res://assets/art_library/generated/event_crusader_coffin.png",
+      "dimensions": [
+        1164,
+        1351
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/expedition_map_four_regions.png",
+      "resource": "res://assets/art_library/generated/expedition_map_four_regions.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/glow_warm.png",
+      "resource": "res://assets/art_library/generated/glow_warm.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/graveyard.svg",
+      "resource": "res://assets/art_library/generated/graveyard.svg",
+      "dimensions": [
+        260.0,
+        210.0
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/graveyard_ink_background.png",
+      "resource": "res://assets/art_library/generated/graveyard_ink_background.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": [
+        "scenes/hub/graveyard.gd",
+        "tests/graveyard_smoke.gd"
+      ]
+    },
+    {
+      "file": "generated/graveyard_ink_marker.png",
+      "resource": "res://assets/art_library/generated/graveyard_ink_marker.png",
+      "dimensions": [
+        1343,
+        1171
+      ],
+      "references": [
+        "tests/graveyard_smoke.gd"
+      ]
+    },
+    {
+      "file": "generated/hallway_bandit_panorama.png",
+      "resource": "res://assets/art_library/generated/hallway_bandit_panorama.png",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/hallway_beast_panorama.png",
+      "resource": "res://assets/art_library/generated/hallway_beast_panorama.png",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/hallway_campfire.png",
+      "resource": "res://assets/art_library/generated/hallway_campfire.png",
+      "dimensions": [
+        1484,
+        1060
+      ],
+      "references": [
+        "scenes/expedition/hallway_travel.gd"
+      ]
+    },
+    {
+      "file": "generated/hallway_gold_cache.png",
+      "resource": "res://assets/art_library/generated/hallway_gold_cache.png",
+      "dimensions": [
+        1682,
+        935
+      ],
+      "references": [
+        "scenes/expedition/hallway_travel.gd"
+      ]
+    },
+    {
+      "file": "generated/hallway_keep_panorama.png",
+      "resource": "res://assets/art_library/generated/hallway_keep_panorama.png",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/hallway_medical_panorama.png",
+      "resource": "res://assets/art_library/generated/hallway_medical_panorama.png",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/hamlet_vista.png",
+      "resource": "res://assets/art_library/generated/hamlet_vista.png",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/hamlet_vista_apothecary.png",
+      "resource": "res://assets/art_library/generated/hamlet_vista_apothecary.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": [
+        "scenes/hub/settlement.tscn"
+      ]
+    },
+    {
+      "file": "generated/hero_crusader.tres",
+      "resource": "res://assets/art_library/generated/hero_crusader.tres",
+      "dimensions": [
+        900.0,
+        1024.0
+      ],
+      "references": [
+        "scenes/combat/combatscene.gd",
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/hero_crusader_poses.png",
+      "region": [
+        0.0,
+        0.0,
+        900.0,
+        1024.0
+      ]
+    },
+    {
+      "file": "generated/hero_crusader_camp.tres",
+      "resource": "res://assets/art_library/generated/hero_crusader_camp.tres",
+      "dimensions": [
+        636.0,
+        824.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/hero_crusader_poses.png",
+      "region": [
+        900.0,
+        150.0,
+        636.0,
+        824.0
+      ]
+    },
+    {
+      "file": "generated/hero_crusader_combat_idle.tres",
+      "resource": "res://assets/art_library/generated/hero_crusader_combat_idle.tres",
+      "dimensions": [
+        433.0,
+        472.0
+      ],
+      "references": [
+        "scenes/combat/combatscene.gd"
+      ],
+      "atlas": "generated/hero_crusader_combat_v2.png",
+      "region": [
+        36.0,
+        30.0,
+        433.0,
+        472.0
+      ]
+    },
+    {
+      "file": "generated/hero_crusader_combat_v2.png",
+      "resource": "res://assets/art_library/generated/hero_crusader_combat_v2.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/appearance/hero_crusader_original_portrait.tres",
+        "assets/art_library/generated/hero_crusader_combat_idle.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/hero_crusader_poses.png",
+      "resource": "res://assets/art_library/generated/hero_crusader_poses.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/generated/hero_crusader.tres",
+        "assets/art_library/generated/hero_crusader_camp.tres"
+      ]
+    },
+    {
+      "file": "generated/hero_crusader_walk.png",
+      "resource": "res://assets/art_library/generated/hero_crusader_walk.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/hero_healer.png",
+      "resource": "res://assets/art_library/generated/hero_healer.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/hero_healer.tres",
+      "resource": "res://assets/art_library/generated/hero_healer.tres",
+      "dimensions": [
+        351.0,
+        461.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/hero_healer_combat_sheet.png",
+      "region": [
+        68.0,
+        48.0,
+        351.0,
+        461.0
+      ]
+    },
+    {
+      "file": "generated/hero_healer_camp.png",
+      "resource": "res://assets/art_library/generated/hero_healer_camp.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ]
+    },
+    {
+      "file": "generated/hero_healer_combat_sheet.png",
+      "resource": "res://assets/art_library/generated/hero_healer_combat_sheet.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/appearance/hero_healer_original_portrait.tres",
+        "assets/art_library/generated/hero_healer.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/hero_healer_walk.png",
+      "resource": "res://assets/art_library/generated/hero_healer_walk.png",
+      "dimensions": [
+        1355,
+        1161
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/hero_occultist.png",
+      "resource": "res://assets/art_library/generated/hero_occultist.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/hero_occultist.tres",
+      "resource": "res://assets/art_library/generated/hero_occultist.tres",
+      "dimensions": [
+        364.0,
+        442.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/hero_occultist_combat_sheet.png",
+      "region": [
+        46.0,
+        52.0,
+        364.0,
+        442.0
+      ]
+    },
+    {
+      "file": "generated/hero_occultist_camp.png",
+      "resource": "res://assets/art_library/generated/hero_occultist_camp.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ]
+    },
+    {
+      "file": "generated/hero_occultist_combat_sheet.png",
+      "resource": "res://assets/art_library/generated/hero_occultist_combat_sheet.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/appearance/hero_occultist_original_portrait.tres",
+        "assets/art_library/generated/hero_occultist.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/hero_occultist_walk.png",
+      "resource": "res://assets/art_library/generated/hero_occultist_walk.png",
+      "dimensions": [
+        1312,
+        1199
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/hero_ranger.png",
+      "resource": "res://assets/art_library/generated/hero_ranger.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/hero_ranger.tres",
+      "resource": "res://assets/art_library/generated/hero_ranger.tres",
+      "dimensions": [
+        401.0,
+        419.0
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ],
+      "atlas": "generated/hero_ranger_combat_sheet.png",
+      "region": [
+        61.0,
+        65.0,
+        401.0,
+        419.0
+      ]
+    },
+    {
+      "file": "generated/hero_ranger_camp.png",
+      "resource": "res://assets/art_library/generated/hero_ranger_camp.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ]
+    },
+    {
+      "file": "generated/hero_ranger_combat_sheet.png",
+      "resource": "res://assets/art_library/generated/hero_ranger_combat_sheet.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/appearance/hero_ranger_original_portrait.tres",
+        "assets/art_library/generated/hero_ranger.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/hero_ranger_walk.png",
+      "resource": "res://assets/art_library/generated/hero_ranger_walk.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/hero_warden.png",
+      "resource": "res://assets/art_library/generated/hero_warden.png",
+      "dimensions": [
+        1247,
+        1261
+      ],
+      "references": [
+        "scenes/combat/combatscene.gd",
+        "scenes/combat/hero_card.tscn",
+        "scripts/game_data.gd"
+      ]
+    },
+    {
+      "file": "generated/hero_warden_camp.png",
+      "resource": "res://assets/art_library/generated/hero_warden_camp.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ]
+    },
+    {
+      "file": "generated/hero_warden_combat_idle.tres",
+      "resource": "res://assets/art_library/generated/hero_warden_combat_idle.tres",
+      "dimensions": [
+        333.0,
+        331.0
+      ],
+      "references": [
+        "scenes/combat/combatscene.gd"
+      ],
+      "atlas": "generated/hero_warden_combat_v2.png",
+      "region": [
+        78.0,
+        115.0,
+        333.0,
+        331.0
+      ]
+    },
+    {
+      "file": "generated/hero_warden_combat_v2.png",
+      "resource": "res://assets/art_library/generated/hero_warden_combat_v2.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/appearance/hero_warden_original_portrait.tres",
+        "assets/art_library/generated/hero_warden_combat_idle.tres",
+        "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/hero_warden_walk.png",
+      "resource": "res://assets/art_library/generated/hero_warden_walk.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/hl_blessing.png",
+      "resource": "res://assets/art_library/generated/hl_blessing.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/hl_mend.png",
+      "resource": "res://assets/art_library/generated/hl_mend.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/hl_smite.png",
+      "resource": "res://assets/art_library/generated/hl_smite.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/hl_solace.png",
+      "resource": "res://assets/art_library/generated/hl_solace.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/hl_turn.png",
+      "resource": "res://assets/art_library/generated/hl_turn.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/hl_ward.png",
+      "resource": "res://assets/art_library/generated/hl_ward.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/keep_battle_stage.png",
+      "resource": "res://assets/art_library/generated/keep_battle_stage.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": [
+        "tests/keep_smoke.gd"
+      ]
+    },
+    {
+      "file": "generated/keep_hall.png",
+      "resource": "res://assets/art_library/generated/keep_hall.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": [
+        "scripts/game_data.gd"
+      ]
+    },
+    {
+      "file": "generated/merchant_orb_ink.png",
+      "resource": "res://assets/art_library/generated/merchant_orb_ink.png",
+      "dimensions": [
+        1153,
+        1364
+      ],
+      "references": [
+        "scenes/expedition/hallway_travel.gd",
+        "scenes/expedition/merchant_orb_room.gd",
+        "tests/merchant_orb_event_preview.gd"
+      ]
+    },
+    {
+      "file": "generated/mote.png",
+      "resource": "res://assets/art_library/generated/mote.png",
+      "dimensions": [
+        64,
+        64
+      ],
+      "references": [
+        "scenes/combat/arena.gd",
+        "scenes/hub/graveyard.gd",
+        "scenes/hub/settlement.gd"
+      ]
+    },
+    {
+      "file": "generated/oc_blast.png",
+      "resource": "res://assets/art_library/generated/oc_blast.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/oc_drain.png",
+      "resource": "res://assets/art_library/generated/oc_drain.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/oc_hex.png",
+      "resource": "res://assets/art_library/generated/oc_hex.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/oc_veil.png",
+      "resource": "res://assets/art_library/generated/oc_veil.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/oc_weak.png",
+      "resource": "res://assets/art_library/generated/oc_weak.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/path_stone.png",
+      "resource": "res://assets/art_library/generated/path_stone.png",
+      "dimensions": [
+        128,
+        128
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/region_map.png",
+      "resource": "res://assets/art_library/generated/region_map.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/rg_dodge.png",
+      "resource": "res://assets/art_library/generated/rg_dodge.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/rg_mark.png",
+      "resource": "res://assets/art_library/generated/rg_mark.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/rg_pierce.png",
+      "resource": "res://assets/art_library/generated/rg_pierce.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/rg_quick.png",
+      "resource": "res://assets/art_library/generated/rg_quick.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/rg_volley.png",
+      "resource": "res://assets/art_library/generated/rg_volley.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/settlement_hamlet.png",
+      "resource": "res://assets/art_library/generated/settlement_hamlet.png",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "references": [
+        "scenes/hub/barracks.tscn",
+        "scenes/hub/bestiary.tscn",
+        "scenes/hub/forge.tscn"
+      ]
+    },
+    {
+      "file": "generated/threshold_bandit.tres",
+      "resource": "res://assets/art_library/generated/threshold_bandit.tres",
+      "dimensions": [
+        438.0,
+        399.0
+      ],
+      "references": [],
+      "atlas": "generated/dungeon_threshold_sheet.png",
+      "region": [
+        119.0,
+        128.0,
+        438.0,
+        399.0
+      ]
+    },
+    {
+      "file": "generated/threshold_beast.tres",
+      "resource": "res://assets/art_library/generated/threshold_beast.tres",
+      "dimensions": [
+        456.0,
+        446.0
+      ],
+      "references": [],
+      "atlas": "generated/dungeon_threshold_sheet.png",
+      "region": [
+        104.0,
+        669.0,
+        456.0,
+        446.0
+      ]
+    },
+    {
+      "file": "generated/threshold_keep.tres",
+      "resource": "res://assets/art_library/generated/threshold_keep.tres",
+      "dimensions": [
+        424.0,
+        394.0
+      ],
+      "references": [],
+      "atlas": "generated/dungeon_threshold_sheet.png",
+      "region": [
+        706.0,
+        133.0,
+        424.0,
+        394.0
+      ]
+    },
+    {
+      "file": "generated/threshold_medical.tres",
+      "resource": "res://assets/art_library/generated/threshold_medical.tres",
+      "dimensions": [
+        454.0,
+        399.0
+      ],
+      "references": [],
+      "atlas": "generated/dungeon_threshold_sheet.png",
+      "region": [
+        689.0,
+        713.0,
+        454.0,
+        399.0
+      ]
+    },
+    {
+      "file": "generated/title_key_art.png",
+      "resource": "res://assets/art_library/generated/title_key_art.png",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "references": [
+        "scenes/ui/title_screen.tscn"
+      ]
+    },
+    {
+      "file": "generated/wd_bash.png",
+      "resource": "res://assets/art_library/generated/wd_bash.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/wd_guard.png",
+      "resource": "res://assets/art_library/generated/wd_guard.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/wd_heavy.png",
+      "resource": "res://assets/art_library/generated/wd_heavy.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/wd_rally.png",
+      "resource": "res://assets/art_library/generated/wd_rally.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": []
+    },
+    {
+      "file": "generated/wd_slash.png",
+      "resource": "res://assets/art_library/generated/wd_slash.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "references": [
+        "scenes/combat/combat_card.tscn"
+      ]
+    },
+    {
+      "file": "items/antidote.svg",
+      "resource": "res://assets/art_library/items/antidote.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/antidote.png"
+    },
+    {
+      "file": "items/antidote.tres",
+      "resource": "res://assets/art_library/items/antidote.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        0.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/antidote.png"
+    },
+    {
+      "file": "items/bandage.svg",
+      "resource": "res://assets/art_library/items/bandage.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/bandage.png"
+    },
+    {
+      "file": "items/bandage.tres",
+      "resource": "res://assets/art_library/items/bandage.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        1280.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/bandage.png"
+    },
+    {
+      "file": "items/calming_incense.svg",
+      "resource": "res://assets/art_library/items/calming_incense.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/calming_incense.png"
+    },
+    {
+      "file": "items/calming_incense.tres",
+      "resource": "res://assets/art_library/items/calming_incense.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        256.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/calming_incense.png"
+    },
+    {
+      "file": "items/chieftain_trophy.svg",
+      "resource": "res://assets/art_library/items/chieftain_trophy.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/chieftain_trophy.png"
+    },
+    {
+      "file": "items/chieftain_trophy.tres",
+      "resource": "res://assets/art_library/items/chieftain_trophy.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        0.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/chieftain_trophy.png"
+    },
+    {
+      "file": "items/cleansing_herbs.svg",
+      "resource": "res://assets/art_library/items/cleansing_herbs.svg",
+      "dimensions": [
+        64.0,
+        64.0
+      ],
+      "references": [],
+      "individual_png_override": "items/cleansing_herbs.png"
+    },
+    {
+      "file": "items/cleansing_herbs.tres",
+      "resource": "res://assets/art_library/items/cleansing_herbs.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        1024.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/cleansing_herbs.png"
+    },
+    {
+      "file": "items/cleansing_potion.svg",
+      "resource": "res://assets/art_library/items/cleansing_potion.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/cleansing_potion.png"
+    },
+    {
+      "file": "items/cleansing_potion.tres",
+      "resource": "res://assets/art_library/items/cleansing_potion.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        0.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/cleansing_potion.png"
+    },
+    {
+      "file": "items/clotting_seal.svg",
+      "resource": "res://assets/art_library/items/clotting_seal.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/clotting_seal.png"
+    },
+    {
+      "file": "items/clotting_seal.tres",
+      "resource": "res://assets/art_library/items/clotting_seal.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        1280.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/clotting_seal.png"
+    },
+    {
+      "file": "items/coterie_trophy.svg",
+      "resource": "res://assets/art_library/items/coterie_trophy.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/coterie_trophy.png"
+    },
+    {
+      "file": "items/coterie_trophy.tres",
+      "resource": "res://assets/art_library/items/coterie_trophy.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        1024.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/coterie_trophy.png"
+    },
+    {
+      "file": "items/crusader_armor.svg",
+      "resource": "res://assets/art_library/items/crusader_armor.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/crusader_armor.png"
+    },
+    {
+      "file": "items/crusader_armor.tres",
+      "resource": "res://assets/art_library/items/crusader_armor.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        256.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/crusader_armor.png"
+    },
+    {
+      "file": "items/crusader_axe.svg",
+      "resource": "res://assets/art_library/items/crusader_axe.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/crusader_axe.png"
+    },
+    {
+      "file": "items/crusader_axe.tres",
+      "resource": "res://assets/art_library/items/crusader_axe.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        0.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/crusader_axe.png"
+    },
+    {
+      "file": "items/crusader_common_armor.svg",
+      "resource": "res://assets/art_library/items/crusader_common_armor.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/crusader_common_armor.png"
+    },
+    {
+      "file": "items/crusader_common_armor.tres",
+      "resource": "res://assets/art_library/items/crusader_common_armor.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        1024.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/crusader_common_armor.png"
+    },
+    {
+      "file": "items/crusader_epic.svg",
+      "resource": "res://assets/art_library/items/crusader_epic.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/crusader_epic.png"
+    },
+    {
+      "file": "items/crusader_epic.tres",
+      "resource": "res://assets/art_library/items/crusader_epic.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        512.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/crusader_epic.png"
+    },
+    {
+      "file": "items/crusader_legend.svg",
+      "resource": "res://assets/art_library/items/crusader_legend.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/crusader_legend.png"
+    },
+    {
+      "file": "items/crusader_legend.tres",
+      "resource": "res://assets/art_library/items/crusader_legend.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        1024.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/crusader_legend.png"
+    },
+    {
+      "file": "items/crusader_penitent_stitch.svg",
+      "resource": "res://assets/art_library/items/crusader_penitent_stitch.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/crusader_penitent_stitch.png"
+    },
+    {
+      "file": "items/crusader_penitent_stitch.tres",
+      "resource": "res://assets/art_library/items/crusader_penitent_stitch.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        512.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/crusader_penitent_stitch.png"
+    },
+    {
+      "file": "items/crusader_relic_armor.svg",
+      "resource": "res://assets/art_library/items/crusader_relic_armor.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/crusader_relic_armor.png"
+    },
+    {
+      "file": "items/crusader_relic_armor.tres",
+      "resource": "res://assets/art_library/items/crusader_relic_armor.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        1280.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/crusader_relic_armor.png"
+    },
+    {
+      "file": "items/crusader_unique.svg",
+      "resource": "res://assets/art_library/items/crusader_unique.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/crusader_unique.png"
+    },
+    {
+      "file": "items/crusader_unique.tres",
+      "resource": "res://assets/art_library/items/crusader_unique.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        768.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/crusader_unique.png"
+    },
+    {
+      "file": "items/cursed_physician_seal.svg",
+      "resource": "res://assets/art_library/items/cursed_physician_seal.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/cursed_physician_seal.png"
+    },
+    {
+      "file": "items/cursed_physician_seal.tres",
+      "resource": "res://assets/art_library/items/cursed_physician_seal.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        1280.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/cursed_physician_seal.png"
+    },
+    {
+      "file": "items/cursed_thorn_relic.svg",
+      "resource": "res://assets/art_library/items/cursed_thorn_relic.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/cursed_thorn_relic.png"
+    },
+    {
+      "file": "items/cursed_thorn_relic.tres",
+      "resource": "res://assets/art_library/items/cursed_thorn_relic.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        1024.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/cursed_thorn_relic.png"
+    },
+    {
+      "file": "items/exuvia_trophy.svg",
+      "resource": "res://assets/art_library/items/exuvia_trophy.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/exuvia_trophy.png"
+    },
+    {
+      "file": "items/exuvia_trophy.tres",
+      "resource": "res://assets/art_library/items/exuvia_trophy.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        256.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/exuvia_trophy.png"
+    },
+    {
+      "file": "items/fire_bolt_scroll.svg",
+      "resource": "res://assets/art_library/items/fire_bolt_scroll.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/fire_bolt_scroll.png"
+    },
+    {
+      "file": "items/fire_bolt_scroll.tres",
+      "resource": "res://assets/art_library/items/fire_bolt_scroll.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        512.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/fire_bolt_scroll.png"
+    },
+    {
+      "file": "items/focus_tonic.svg",
+      "resource": "res://assets/art_library/items/focus_tonic.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/focus_tonic.png"
+    },
+    {
+      "file": "items/focus_tonic.tres",
+      "resource": "res://assets/art_library/items/focus_tonic.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        768.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/focus_tonic.png"
+    },
+    {
+      "file": "items/giant_trophy.svg",
+      "resource": "res://assets/art_library/items/giant_trophy.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/giant_trophy.png"
+    },
+    {
+      "file": "items/giant_trophy.tres",
+      "resource": "res://assets/art_library/items/giant_trophy.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        768.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/giant_trophy.png"
+    },
+    {
+      "file": "items/graveward_locket.svg",
+      "resource": "res://assets/art_library/items/graveward_locket.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/graveward_locket.png"
+    },
+    {
+      "file": "items/graveward_locket.tres",
+      "resource": "res://assets/art_library/items/graveward_locket.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        256.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/graveward_locket.png"
+    },
+    {
+      "file": "items/head_trophy.svg",
+      "resource": "res://assets/art_library/items/head_trophy.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/head_trophy.png"
+    },
+    {
+      "file": "items/head_trophy.tres",
+      "resource": "res://assets/art_library/items/head_trophy.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        1280.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/head_trophy.png"
+    },
+    {
+      "file": "items/healer_armor.svg",
+      "resource": "res://assets/art_library/items/healer_armor.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/healer_armor.png"
+    },
+    {
+      "file": "items/healer_armor.tres",
+      "resource": "res://assets/art_library/items/healer_armor.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        256.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/healer_armor.png"
+    },
+    {
+      "file": "items/healer_beads.svg",
+      "resource": "res://assets/art_library/items/healer_beads.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/healer_beads.png"
+    },
+    {
+      "file": "items/healer_beads.tres",
+      "resource": "res://assets/art_library/items/healer_beads.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        0.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/healer_beads.png"
+    },
+    {
+      "file": "items/healer_chrysalis_rosary.svg",
+      "resource": "res://assets/art_library/items/healer_chrysalis_rosary.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/healer_chrysalis_rosary.png"
+    },
+    {
+      "file": "items/healer_chrysalis_rosary.tres",
+      "resource": "res://assets/art_library/items/healer_chrysalis_rosary.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        768.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/healer_chrysalis_rosary.png"
+    },
+    {
+      "file": "items/healer_epic.svg",
+      "resource": "res://assets/art_library/items/healer_epic.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/healer_epic.png"
+    },
+    {
+      "file": "items/healer_epic.tres",
+      "resource": "res://assets/art_library/items/healer_epic.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        512.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/healer_epic.png"
+    },
+    {
+      "file": "items/healer_faction_armor.svg",
+      "resource": "res://assets/art_library/items/healer_faction_armor.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/healer_faction_armor.png"
+    },
+    {
+      "file": "items/healer_faction_armor.tres",
+      "resource": "res://assets/art_library/items/healer_faction_armor.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        512.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/healer_faction_armor.png"
+    },
+    {
+      "file": "items/healer_frostmace.svg",
+      "resource": "res://assets/art_library/items/healer_frostmace.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/healer_frostmace.png"
+    },
+    {
+      "file": "items/healer_frostmace.tres",
+      "resource": "res://assets/art_library/items/healer_frostmace.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        1024.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/healer_frostmace.png"
+    },
+    {
+      "file": "items/healer_legend.svg",
+      "resource": "res://assets/art_library/items/healer_legend.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/healer_legend.png"
+    },
+    {
+      "file": "items/healer_legend.tres",
+      "resource": "res://assets/art_library/items/healer_legend.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        512.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/healer_legend.png"
+    },
+    {
+      "file": "items/healer_mace.svg",
+      "resource": "res://assets/art_library/items/healer_mace.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/healer_mace.png"
+    },
+    {
+      "file": "items/healer_mace.tres",
+      "resource": "res://assets/art_library/items/healer_mace.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        0.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/healer_mace.png"
+    },
+    {
+      "file": "items/healer_relic.svg",
+      "resource": "res://assets/art_library/items/healer_relic.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/healer_relic.png"
+    },
+    {
+      "file": "items/healer_relic.tres",
+      "resource": "res://assets/art_library/items/healer_relic.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        1024.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/healer_relic.png"
+    },
+    {
+      "file": "items/healer_relic_armor.svg",
+      "resource": "res://assets/art_library/items/healer_relic_armor.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/healer_relic_armor.png"
+    },
+    {
+      "file": "items/healer_relic_armor.tres",
+      "resource": "res://assets/art_library/items/healer_relic_armor.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        768.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/healer_relic_armor.png"
+    },
+    {
+      "file": "items/healer_symbol.svg",
+      "resource": "res://assets/art_library/items/healer_symbol.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/healer_symbol.png"
+    },
+    {
+      "file": "items/healer_symbol.tres",
+      "resource": "res://assets/art_library/items/healer_symbol.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        256.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/healer_symbol.png"
+    },
+    {
+      "file": "items/healing_potion.svg",
+      "resource": "res://assets/art_library/items/healing_potion.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/healing_potion.png"
+    },
+    {
+      "file": "items/healing_potion.tres",
+      "resource": "res://assets/art_library/items/healing_potion.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        1280.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/healing_potion.png"
+    },
+    {
+      "file": "items/healing_scroll.svg",
+      "resource": "res://assets/art_library/items/healing_scroll.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/healing_scroll.png"
+    },
+    {
+      "file": "items/healing_scroll.tres",
+      "resource": "res://assets/art_library/items/healing_scroll.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        0.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/healing_scroll.png"
+    },
+    {
+      "file": "items/hunters_compass.svg",
+      "resource": "res://assets/art_library/items/hunters_compass.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/hunters_compass.png"
+    },
+    {
+      "file": "items/hunters_compass.tres",
+      "resource": "res://assets/art_library/items/hunters_compass.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        512.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/hunters_compass.png"
+    },
+    {
+      "file": "items/lightning_bolt_scroll.svg",
+      "resource": "res://assets/art_library/items/lightning_bolt_scroll.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/lightning_bolt_scroll.png"
+    },
+    {
+      "file": "items/lightning_bolt_scroll.tres",
+      "resource": "res://assets/art_library/items/lightning_bolt_scroll.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        768.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/lightning_bolt_scroll.png"
+    },
+    {
+      "file": "items/lock_tools.svg",
+      "resource": "res://assets/art_library/items/lock_tools.svg",
+      "dimensions": [
+        64.0,
+        64.0
+      ],
+      "references": [],
+      "individual_png_override": "items/lock_tools.png"
+    },
+    {
+      "file": "items/lock_tools.tres",
+      "resource": "res://assets/art_library/items/lock_tools.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        768.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/lock_tools.png"
+    },
+    {
+      "file": "items/lord_trophy.svg",
+      "resource": "res://assets/art_library/items/lord_trophy.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/lord_trophy.png"
+    },
+    {
+      "file": "items/lord_trophy.tres",
+      "resource": "res://assets/art_library/items/lord_trophy.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        512.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/lord_trophy.png"
+    },
+    {
+      "file": "items/might_tonic.svg",
+      "resource": "res://assets/art_library/items/might_tonic.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/might_tonic.png"
+    },
+    {
+      "file": "items/might_tonic.tres",
+      "resource": "res://assets/art_library/items/might_tonic.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        512.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/might_tonic.png"
+    },
+    {
+      "file": "items/occultist_armor.svg",
+      "resource": "res://assets/art_library/items/occultist_armor.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/occultist_armor.png"
+    },
+    {
+      "file": "items/occultist_armor.tres",
+      "resource": "res://assets/art_library/items/occultist_armor.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        1024.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/occultist_armor.png"
+    },
+    {
+      "file": "items/occultist_epic.svg",
+      "resource": "res://assets/art_library/items/occultist_epic.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/occultist_epic.png"
+    },
+    {
+      "file": "items/occultist_epic.tres",
+      "resource": "res://assets/art_library/items/occultist_epic.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        256.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/occultist_epic.png"
+    },
+    {
+      "file": "items/occultist_faction_armor.svg",
+      "resource": "res://assets/art_library/items/occultist_faction_armor.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/occultist_faction_armor.png"
+    },
+    {
+      "file": "items/occultist_faction_armor.tres",
+      "resource": "res://assets/art_library/items/occultist_faction_armor.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        1280.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/occultist_faction_armor.png"
+    },
+    {
+      "file": "items/occultist_focus.svg",
+      "resource": "res://assets/art_library/items/occultist_focus.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/occultist_focus.png"
+    },
+    {
+      "file": "items/occultist_focus.tres",
+      "resource": "res://assets/art_library/items/occultist_focus.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        1024.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/occultist_focus.png"
+    },
+    {
+      "file": "items/occultist_legend.svg",
+      "resource": "res://assets/art_library/items/occultist_legend.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/occultist_legend.png"
+    },
+    {
+      "file": "items/occultist_legend.tres",
+      "resource": "res://assets/art_library/items/occultist_legend.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        1280.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/occultist_legend.png"
+    },
+    {
+      "file": "items/occultist_plaguestaff.svg",
+      "resource": "res://assets/art_library/items/occultist_plaguestaff.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/occultist_plaguestaff.png"
+    },
+    {
+      "file": "items/occultist_plaguestaff.tres",
+      "resource": "res://assets/art_library/items/occultist_plaguestaff.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        768.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/occultist_plaguestaff.png"
+    },
+    {
+      "file": "items/occultist_relic.svg",
+      "resource": "res://assets/art_library/items/occultist_relic.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/occultist_relic.png"
+    },
+    {
+      "file": "items/occultist_relic.tres",
+      "resource": "res://assets/art_library/items/occultist_relic.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        768.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/occultist_relic.png"
+    },
+    {
+      "file": "items/occultist_relic_armor.svg",
+      "resource": "res://assets/art_library/items/occultist_relic_armor.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/occultist_relic_armor.png"
+    },
+    {
+      "file": "items/occultist_relic_armor.tres",
+      "resource": "res://assets/art_library/items/occultist_relic_armor.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        0.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/occultist_relic_armor.png"
+    },
+    {
+      "file": "items/occultist_severed_litany.svg",
+      "resource": "res://assets/art_library/items/occultist_severed_litany.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/occultist_severed_litany.png"
+    },
+    {
+      "file": "items/occultist_severed_litany.tres",
+      "resource": "res://assets/art_library/items/occultist_severed_litany.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        1024.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/occultist_severed_litany.png"
+    },
+    {
+      "file": "items/occultist_sigil.svg",
+      "resource": "res://assets/art_library/items/occultist_sigil.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/occultist_sigil.png"
+    },
+    {
+      "file": "items/occultist_sigil.tres",
+      "resource": "res://assets/art_library/items/occultist_sigil.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        1280.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/occultist_sigil.png"
+    },
+    {
+      "file": "items/occultist_staff.svg",
+      "resource": "res://assets/art_library/items/occultist_staff.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/occultist_staff.png"
+    },
+    {
+      "file": "items/occultist_staff.tres",
+      "resource": "res://assets/art_library/items/occultist_staff.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        768.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/occultist_staff.png"
+    },
+    {
+      "file": "items/oleander_trophy.svg",
+      "resource": "res://assets/art_library/items/oleander_trophy.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/oleander_trophy.png"
+    },
+    {
+      "file": "items/oleander_trophy.tres",
+      "resource": "res://assets/art_library/items/oleander_trophy.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        0.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/oleander_trophy.png"
+    },
+    {
+      "file": "items/outlaw_tally.svg",
+      "resource": "res://assets/art_library/items/outlaw_tally.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/outlaw_tally.png"
+    },
+    {
+      "file": "items/outlaw_tally.tres",
+      "resource": "res://assets/art_library/items/outlaw_tally.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        512.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/outlaw_tally.png"
+    },
+    {
+      "file": "items/ranger_armor.svg",
+      "resource": "res://assets/art_library/items/ranger_armor.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/ranger_armor.png"
+    },
+    {
+      "file": "items/ranger_armor.tres",
+      "resource": "res://assets/art_library/items/ranger_armor.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        256.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/ranger_armor.png"
+    },
+    {
+      "file": "items/ranger_bow.svg",
+      "resource": "res://assets/art_library/items/ranger_bow.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/ranger_bow.png"
+    },
+    {
+      "file": "items/ranger_bow.tres",
+      "resource": "res://assets/art_library/items/ranger_bow.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        0.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/ranger_bow.png"
+    },
+    {
+      "file": "items/ranger_chitin_lens.svg",
+      "resource": "res://assets/art_library/items/ranger_chitin_lens.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/ranger_chitin_lens.png"
+    },
+    {
+      "file": "items/ranger_chitin_lens.tres",
+      "resource": "res://assets/art_library/items/ranger_chitin_lens.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        1280.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/ranger_chitin_lens.png"
+    },
+    {
+      "file": "items/ranger_common_armor.svg",
+      "resource": "res://assets/art_library/items/ranger_common_armor.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/ranger_common_armor.png"
+    },
+    {
+      "file": "items/ranger_common_armor.tres",
+      "resource": "res://assets/art_library/items/ranger_common_armor.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        512.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/ranger_common_armor.png"
+    },
+    {
+      "file": "items/ranger_epic.svg",
+      "resource": "res://assets/art_library/items/ranger_epic.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/ranger_epic.png"
+    },
+    {
+      "file": "items/ranger_epic.tres",
+      "resource": "res://assets/art_library/items/ranger_epic.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        0.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/ranger_epic.png"
+    },
+    {
+      "file": "items/ranger_legend.svg",
+      "resource": "res://assets/art_library/items/ranger_legend.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/ranger_legend.png"
+    },
+    {
+      "file": "items/ranger_legend.tres",
+      "resource": "res://assets/art_library/items/ranger_legend.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        512.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/ranger_legend.png"
+    },
+    {
+      "file": "items/ranger_relic.svg",
+      "resource": "res://assets/art_library/items/ranger_relic.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/ranger_relic.png"
+    },
+    {
+      "file": "items/ranger_relic.tres",
+      "resource": "res://assets/art_library/items/ranger_relic.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        512.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/ranger_relic.png"
+    },
+    {
+      "file": "items/ranger_relic_armor.svg",
+      "resource": "res://assets/art_library/items/ranger_relic_armor.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/ranger_relic_armor.png"
+    },
+    {
+      "file": "items/ranger_relic_armor.tres",
+      "resource": "res://assets/art_library/items/ranger_relic_armor.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        768.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/ranger_relic_armor.png"
+    },
+    {
+      "file": "items/ranger_sight.svg",
+      "resource": "res://assets/art_library/items/ranger_sight.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/ranger_sight.png"
+    },
+    {
+      "file": "items/ranger_sight.tres",
+      "resource": "res://assets/art_library/items/ranger_sight.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        1024.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/ranger_sight.png"
+    },
+    {
+      "file": "items/ranger_venombow.svg",
+      "resource": "res://assets/art_library/items/ranger_venombow.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/ranger_venombow.png"
+    },
+    {
+      "file": "items/ranger_venombow.tres",
+      "resource": "res://assets/art_library/items/ranger_venombow.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        512.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/ranger_venombow.png"
+    },
+    {
+      "file": "items/roadward_seal.svg",
+      "resource": "res://assets/art_library/items/roadward_seal.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/roadward_seal.png"
+    },
+    {
+      "file": "items/roadward_seal.tres",
+      "resource": "res://assets/art_library/items/roadward_seal.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        0.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/roadward_seal.png"
+    },
+    {
+      "file": "items/sheets/ink_loot_01.png",
+      "resource": "res://assets/art_library/items/sheets/ink_loot_01.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/items/antidote.tres",
+        "assets/art_library/items/bandage.tres",
+        "assets/art_library/items/calming_incense.tres",
+        "assets/art_library/items/cleansing_herbs.tres",
+        "assets/art_library/items/cleansing_potion.tres",
+        "assets/art_library/items/fire_bolt_scroll.tres",
+        "assets/art_library/items/focus_tonic.tres",
+        "assets/art_library/items/healing_potion.tres",
+        "assets/art_library/items/healing_scroll.tres",
+        "assets/art_library/items/lightning_bolt_scroll.tres",
+        "assets/art_library/items/lock_tools.tres",
+        "assets/art_library/items/might_tonic.tres",
+        "assets/art_library/items/occultist_armor.tres",
+        "assets/art_library/items/occultist_faction_armor.tres",
+        "assets/art_library/items/ranger_common_armor.tres",
+        "assets/art_library/items/ranger_relic_armor.tres",
+        "assets/art_library/items/solace_potion.tres",
+        "assets/art_library/items/storm_lance_scroll.tres",
+        "assets/art_library/items/sunfire_scroll.tres",
+        "assets/art_library/items/trail_food.tres",
+        "assets/art_library/items/ward_tonic.tres",
+        "assets/art_library/items/warden_armor.tres",
+        "assets/art_library/items/warden_faction_armor.tres",
+        "assets/art_library/items/warden_relic_armor.tres"
+      ]
+    },
+    {
+      "file": "items/sheets/ink_loot_02.png",
+      "resource": "res://assets/art_library/items/sheets/ink_loot_02.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/items/chieftain_trophy.tres",
+        "assets/art_library/items/coterie_trophy.tres",
+        "assets/art_library/items/crusader_common_armor.tres",
+        "assets/art_library/items/crusader_penitent_stitch.tres",
+        "assets/art_library/items/crusader_relic_armor.tres",
+        "assets/art_library/items/cursed_physician_seal.tres",
+        "assets/art_library/items/cursed_thorn_relic.tres",
+        "assets/art_library/items/exuvia_trophy.tres",
+        "assets/art_library/items/giant_trophy.tres",
+        "assets/art_library/items/graveward_locket.tres",
+        "assets/art_library/items/head_trophy.tres",
+        "assets/art_library/items/healer_armor.tres",
+        "assets/art_library/items/healer_chrysalis_rosary.tres",
+        "assets/art_library/items/healer_faction_armor.tres",
+        "assets/art_library/items/healer_relic_armor.tres",
+        "assets/art_library/items/lord_trophy.tres",
+        "assets/art_library/items/occultist_relic_armor.tres",
+        "assets/art_library/items/occultist_severed_litany.tres",
+        "assets/art_library/items/oleander_trophy.tres",
+        "assets/art_library/items/outlaw_tally.tres",
+        "assets/art_library/items/ranger_chitin_lens.tres",
+        "assets/art_library/items/roadward_seal.tres",
+        "assets/art_library/items/son_trophy.tres",
+        "assets/art_library/items/warden_gravewatch.tres"
+      ]
+    },
+    {
+      "file": "items/sheets/ink_loot_03.png",
+      "resource": "res://assets/art_library/items/sheets/ink_loot_03.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/items/clotting_seal.tres",
+        "assets/art_library/items/crusader_armor.tres",
+        "assets/art_library/items/crusader_axe.tres",
+        "assets/art_library/items/crusader_epic.tres",
+        "assets/art_library/items/crusader_legend.tres",
+        "assets/art_library/items/crusader_unique.tres",
+        "assets/art_library/items/healer_beads.tres",
+        "assets/art_library/items/healer_frostmace.tres",
+        "assets/art_library/items/healer_relic.tres",
+        "assets/art_library/items/hunters_compass.tres",
+        "assets/art_library/items/occultist_plaguestaff.tres",
+        "assets/art_library/items/occultist_relic.tres",
+        "assets/art_library/items/occultist_sigil.tres",
+        "assets/art_library/items/ranger_relic.tres",
+        "assets/art_library/items/ranger_sight.tres",
+        "assets/art_library/items/ranger_venombow.tres",
+        "assets/art_library/items/venom_heart.tres",
+        "assets/art_library/items/vitality_locket.tres",
+        "assets/art_library/items/warden_bastion.tres",
+        "assets/art_library/items/warden_epic.tres",
+        "assets/art_library/items/warden_frostblade.tres",
+        "assets/art_library/items/warden_relic.tres",
+        "assets/art_library/items/warding_eye.tres",
+        "assets/art_library/items/winter_shard.tres"
+      ]
+    },
+    {
+      "file": "items/sheets/ink_loot_04.png",
+      "resource": "res://assets/art_library/items/sheets/ink_loot_04.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "assets/art_library/camp/rest.tres",
+        "assets/art_library/camp/scout.tres",
+        "assets/art_library/camp/sharpen.tres",
+        "assets/art_library/camp/ward.tres",
+        "assets/art_library/camp/watch.tres",
+        "assets/art_library/items/healer_epic.tres",
+        "assets/art_library/items/healer_legend.tres",
+        "assets/art_library/items/healer_mace.tres",
+        "assets/art_library/items/healer_symbol.tres",
+        "assets/art_library/items/occultist_epic.tres",
+        "assets/art_library/items/occultist_focus.tres",
+        "assets/art_library/items/occultist_legend.tres",
+        "assets/art_library/items/occultist_staff.tres",
+        "assets/art_library/items/ranger_armor.tres",
+        "assets/art_library/items/ranger_bow.tres",
+        "assets/art_library/items/ranger_epic.tres",
+        "assets/art_library/items/ranger_legend.tres",
+        "assets/art_library/items/slot_armor.tres",
+        "assets/art_library/items/slot_head.tres",
+        "assets/art_library/items/slot_off_hand.tres",
+        "assets/art_library/items/slot_weapon.tres",
+        "assets/art_library/items/warden_legend.tres",
+        "assets/art_library/items/warden_shield.tres",
+        "assets/art_library/items/warden_sword.tres"
+      ]
+    },
+    {
+      "file": "items/slot_armor.tres",
+      "resource": "res://assets/art_library/items/slot_armor.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        1024.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/slot_armor.png"
+    },
+    {
+      "file": "items/slot_head.tres",
+      "resource": "res://assets/art_library/items/slot_head.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        512.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/slot_head.png"
+    },
+    {
+      "file": "items/slot_off_hand.tres",
+      "resource": "res://assets/art_library/items/slot_off_hand.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        768.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/slot_off_hand.png"
+    },
+    {
+      "file": "items/slot_weapon.tres",
+      "resource": "res://assets/art_library/items/slot_weapon.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        1280.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/slot_weapon.png"
+    },
+    {
+      "file": "items/solace_potion.svg",
+      "resource": "res://assets/art_library/items/solace_potion.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/solace_potion.png"
+    },
+    {
+      "file": "items/solace_potion.tres",
+      "resource": "res://assets/art_library/items/solace_potion.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        256.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/solace_potion.png"
+    },
+    {
+      "file": "items/son_trophy.svg",
+      "resource": "res://assets/art_library/items/son_trophy.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/son_trophy.png"
+    },
+    {
+      "file": "items/son_trophy.tres",
+      "resource": "res://assets/art_library/items/son_trophy.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        256.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/son_trophy.png"
+    },
+    {
+      "file": "items/storm_lance_scroll.svg",
+      "resource": "res://assets/art_library/items/storm_lance_scroll.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/storm_lance_scroll.png"
+    },
+    {
+      "file": "items/storm_lance_scroll.tres",
+      "resource": "res://assets/art_library/items/storm_lance_scroll.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        256.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/storm_lance_scroll.png"
+    },
+    {
+      "file": "items/sunfire_scroll.svg",
+      "resource": "res://assets/art_library/items/sunfire_scroll.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/sunfire_scroll.png"
+    },
+    {
+      "file": "items/sunfire_scroll.tres",
+      "resource": "res://assets/art_library/items/sunfire_scroll.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        1024.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/sunfire_scroll.png"
+    },
+    {
+      "file": "items/trail_food.svg",
+      "resource": "res://assets/art_library/items/trail_food.svg",
+      "dimensions": [
+        64.0,
+        64.0
+      ],
+      "references": [],
+      "individual_png_override": "items/trail_food.png"
+    },
+    {
+      "file": "items/trail_food.tres",
+      "resource": "res://assets/art_library/items/trail_food.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        512.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/trail_food.png"
+    },
+    {
+      "file": "items/venom_heart.svg",
+      "resource": "res://assets/art_library/items/venom_heart.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/venom_heart.png"
+    },
+    {
+      "file": "items/venom_heart.tres",
+      "resource": "res://assets/art_library/items/venom_heart.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        1280.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/venom_heart.png"
+    },
+    {
+      "file": "items/vitality_locket.svg",
+      "resource": "res://assets/art_library/items/vitality_locket.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/vitality_locket.png"
+    },
+    {
+      "file": "items/vitality_locket.tres",
+      "resource": "res://assets/art_library/items/vitality_locket.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        0.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/vitality_locket.png"
+    },
+    {
+      "file": "items/ward_tonic.svg",
+      "resource": "res://assets/art_library/items/ward_tonic.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/ward_tonic.png"
+    },
+    {
+      "file": "items/ward_tonic.tres",
+      "resource": "res://assets/art_library/items/ward_tonic.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        1024.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/ward_tonic.png"
+    },
+    {
+      "file": "items/warden_armor.svg",
+      "resource": "res://assets/art_library/items/warden_armor.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/warden_armor.png"
+    },
+    {
+      "file": "items/warden_armor.tres",
+      "resource": "res://assets/art_library/items/warden_armor.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        1280.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/warden_armor.png"
+    },
+    {
+      "file": "items/warden_bastion.svg",
+      "resource": "res://assets/art_library/items/warden_bastion.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/warden_bastion.png"
+    },
+    {
+      "file": "items/warden_bastion.tres",
+      "resource": "res://assets/art_library/items/warden_bastion.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        768.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/warden_bastion.png"
+    },
+    {
+      "file": "items/warden_epic.svg",
+      "resource": "res://assets/art_library/items/warden_epic.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/warden_epic.png"
+    },
+    {
+      "file": "items/warden_epic.tres",
+      "resource": "res://assets/art_library/items/warden_epic.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        1280.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/warden_epic.png"
+    },
+    {
+      "file": "items/warden_faction_armor.svg",
+      "resource": "res://assets/art_library/items/warden_faction_armor.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/warden_faction_armor.png"
+    },
+    {
+      "file": "items/warden_faction_armor.tres",
+      "resource": "res://assets/art_library/items/warden_faction_armor.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        0.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/warden_faction_armor.png"
+    },
+    {
+      "file": "items/warden_frostblade.svg",
+      "resource": "res://assets/art_library/items/warden_frostblade.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/warden_frostblade.png"
+    },
+    {
+      "file": "items/warden_frostblade.tres",
+      "resource": "res://assets/art_library/items/warden_frostblade.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        256.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/warden_frostblade.png"
+    },
+    {
+      "file": "items/warden_gravewatch.svg",
+      "resource": "res://assets/art_library/items/warden_gravewatch.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/warden_gravewatch.png"
+    },
+    {
+      "file": "items/warden_gravewatch.tres",
+      "resource": "res://assets/art_library/items/warden_gravewatch.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_02.png",
+      "region": [
+        768.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/warden_gravewatch.png"
+    },
+    {
+      "file": "items/warden_legend.svg",
+      "resource": "res://assets/art_library/items/warden_legend.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/warden_legend.png"
+    },
+    {
+      "file": "items/warden_legend.tres",
+      "resource": "res://assets/art_library/items/warden_legend.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        1280.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/warden_legend.png"
+    },
+    {
+      "file": "items/warden_relic.svg",
+      "resource": "res://assets/art_library/items/warden_relic.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/warden_relic.png"
+    },
+    {
+      "file": "items/warden_relic.tres",
+      "resource": "res://assets/art_library/items/warden_relic.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        256.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/warden_relic.png"
+    },
+    {
+      "file": "items/warden_relic_armor.svg",
+      "resource": "res://assets/art_library/items/warden_relic_armor.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/warden_relic_armor.png"
+    },
+    {
+      "file": "items/warden_relic_armor.tres",
+      "resource": "res://assets/art_library/items/warden_relic_armor.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_01.png",
+      "region": [
+        256.0,
+        768.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/warden_relic_armor.png"
+    },
+    {
+      "file": "items/warden_shield.svg",
+      "resource": "res://assets/art_library/items/warden_shield.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/warden_shield.png"
+    },
+    {
+      "file": "items/warden_shield.tres",
+      "resource": "res://assets/art_library/items/warden_shield.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        1024.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/warden_shield.png"
+    },
+    {
+      "file": "items/warden_sword.svg",
+      "resource": "res://assets/art_library/items/warden_sword.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/warden_sword.png"
+    },
+    {
+      "file": "items/warden_sword.tres",
+      "resource": "res://assets/art_library/items/warden_sword.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_04.png",
+      "region": [
+        768.0,
+        0.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/warden_sword.png"
+    },
+    {
+      "file": "items/warding_eye.svg",
+      "resource": "res://assets/art_library/items/warding_eye.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/warding_eye.png"
+    },
+    {
+      "file": "items/warding_eye.tres",
+      "resource": "res://assets/art_library/items/warding_eye.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        256.0,
+        512.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/warding_eye.png"
+    },
+    {
+      "file": "items/winter_shard.svg",
+      "resource": "res://assets/art_library/items/winter_shard.svg",
+      "dimensions": [
+        128.0,
+        128.0
+      ],
+      "references": [],
+      "individual_png_override": "items/winter_shard.png"
+    },
+    {
+      "file": "items/winter_shard.tres",
+      "resource": "res://assets/art_library/items/winter_shard.tres",
+      "dimensions": [
+        256.0,
+        256.0
+      ],
+      "references": [],
+      "atlas": "items/sheets/ink_loot_03.png",
+      "region": [
+        0.0,
+        256.0,
+        256.0,
+        256.0
+      ],
+      "individual_png_override": "items/winter_shard.png"
+    },
+    {
+      "file": "presentation/dungeons/apothecary/background.png",
+      "resource": "res://assets/art_library/presentation/dungeons/apothecary/background.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/apothecary/doorway.png",
+      "resource": "res://assets/art_library/presentation/dungeons/apothecary/doorway.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/apothecary/foreground_bottom.png",
+      "resource": "res://assets/art_library/presentation/dungeons/apothecary/foreground_bottom.png",
+      "dimensions": [
+        720,
+        180
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/apothecary/foreground_top.png",
+      "resource": "res://assets/art_library/presentation/dungeons/apothecary/foreground_top.png",
+      "dimensions": [
+        720,
+        332
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/apothecary/midground.png",
+      "resource": "res://assets/art_library/presentation/dungeons/apothecary/midground.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/apothecary/wall_01.png",
+      "resource": "res://assets/art_library/presentation/dungeons/apothecary/wall_01.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/apothecary/wall_02.png",
+      "resource": "res://assets/art_library/presentation/dungeons/apothecary/wall_02.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/apothecary/wall_03.png",
+      "resource": "res://assets/art_library/presentation/dungeons/apothecary/wall_03.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/apothecary/wall_05.png",
+      "resource": "res://assets/art_library/presentation/dungeons/apothecary/wall_05.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/apothecary/wall_06.png",
+      "resource": "res://assets/art_library/presentation/dungeons/apothecary/wall_06.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/apothecary/wall_07.png",
+      "resource": "res://assets/art_library/presentation/dungeons/apothecary/wall_07.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/keep/background.png",
+      "resource": "res://assets/art_library/presentation/dungeons/keep/background.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/keep/doorway.png",
+      "resource": "res://assets/art_library/presentation/dungeons/keep/doorway.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/keep/foreground_bottom.png",
+      "resource": "res://assets/art_library/presentation/dungeons/keep/foreground_bottom.png",
+      "dimensions": [
+        720,
+        101
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/keep/foreground_top.png",
+      "resource": "res://assets/art_library/presentation/dungeons/keep/foreground_top.png",
+      "dimensions": [
+        720,
+        330
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/keep/midground.png",
+      "resource": "res://assets/art_library/presentation/dungeons/keep/midground.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/keep/wall_01.png",
+      "resource": "res://assets/art_library/presentation/dungeons/keep/wall_01.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/keep/wall_02.png",
+      "resource": "res://assets/art_library/presentation/dungeons/keep/wall_02.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/keep/wall_03.png",
+      "resource": "res://assets/art_library/presentation/dungeons/keep/wall_03.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/keep/wall_04.png",
+      "resource": "res://assets/art_library/presentation/dungeons/keep/wall_04.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/keep/wall_05.png",
+      "resource": "res://assets/art_library/presentation/dungeons/keep/wall_05.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/keep/wall_06.png",
+      "resource": "res://assets/art_library/presentation/dungeons/keep/wall_06.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_1/background.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_1/background.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_1/doorway.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_1/doorway.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_1/foreground_bottom.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_1/foreground_bottom.png",
+      "dimensions": [
+        720,
+        200
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_1/foreground_top.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_1/foreground_top.png",
+      "dimensions": [
+        720,
+        298
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_1/midground.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_1/midground.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_1/wall_01.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_1/wall_01.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_1/wall_02.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_1/wall_02.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_1/wall_03.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_1/wall_03.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_1/wall_04.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_1/wall_04.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_1/wall_05.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_1/wall_05.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_2/background.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_2/background.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_2/doorway.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_2/doorway.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_2/foreground_bottom.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_2/foreground_bottom.png",
+      "dimensions": [
+        720,
+        200
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_2/foreground_top.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_2/foreground_top.png",
+      "dimensions": [
+        720,
+        298
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_2/midground.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_2/midground.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_2/wall_01.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_2/wall_01.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_2/wall_02.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_2/wall_02.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_2/wall_03.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_2/wall_03.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_2/wall_04.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_2/wall_04.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_2/wall_05.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_2/wall_05.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_3/background.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_3/background.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_3/doorway.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_3/doorway.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_3/foreground_bottom.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_3/foreground_bottom.png",
+      "dimensions": [
+        720,
+        215
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_3/foreground_top.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_3/foreground_top.png",
+      "dimensions": [
+        720,
+        226
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_3/midground.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_3/midground.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_3/wall_01.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_3/wall_01.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_3/wall_02.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_3/wall_02.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_3/wall_03.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_3/wall_03.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_3/wall_04.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_3/wall_04.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/remade_floor_3/wall_05.png",
+      "resource": "res://assets/art_library/presentation/dungeons/remade_floor_3/wall_05.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/village/background.png",
+      "resource": "res://assets/art_library/presentation/dungeons/village/background.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/village/doorway.png",
+      "resource": "res://assets/art_library/presentation/dungeons/village/doorway.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/village/foreground_bottom.png",
+      "resource": "res://assets/art_library/presentation/dungeons/village/foreground_bottom.png",
+      "dimensions": [
+        720,
+        197
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/village/foreground_top.png",
+      "resource": "res://assets/art_library/presentation/dungeons/village/foreground_top.png",
+      "dimensions": [
+        720,
+        293
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/village/midground.png",
+      "resource": "res://assets/art_library/presentation/dungeons/village/midground.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/village/wall_01.png",
+      "resource": "res://assets/art_library/presentation/dungeons/village/wall_01.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/village/wall_02.png",
+      "resource": "res://assets/art_library/presentation/dungeons/village/wall_02.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/village/wall_03.png",
+      "resource": "res://assets/art_library/presentation/dungeons/village/wall_03.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/village/wall_04.png",
+      "resource": "res://assets/art_library/presentation/dungeons/village/wall_04.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/village/wall_05.png",
+      "resource": "res://assets/art_library/presentation/dungeons/village/wall_05.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/village/wall_06.png",
+      "resource": "res://assets/art_library/presentation/dungeons/village/wall_06.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/village/wall_07.png",
+      "resource": "res://assets/art_library/presentation/dungeons/village/wall_07.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/village/wall_08.png",
+      "resource": "res://assets/art_library/presentation/dungeons/village/wall_08.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/village/wall_09.png",
+      "resource": "res://assets/art_library/presentation/dungeons/village/wall_09.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/dungeons/village/wall_10.png",
+      "resource": "res://assets/art_library/presentation/dungeons/village/wall_10.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/expedition/estate_map.png",
+      "resource": "res://assets/art_library/presentation/expedition/estate_map.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": [
+        "scenes/expedition/region_select.gd"
+      ]
+    },
+    {
+      "file": "presentation/fx/blood_splatter_atlas.png",
+      "resource": "res://assets/art_library/presentation/fx/blood_splatter_atlas.png",
+      "dimensions": [
+        313,
+        286
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/rooms/bandit_camp.png",
+      "resource": "res://assets/art_library/presentation/rooms/bandit_camp.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": []
+    },
+    {
+      "file": "presentation/rooms/bandit_combat.png",
+      "resource": "res://assets/art_library/presentation/rooms/bandit_combat.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "references": []
+    },
+    {
+      "file": "presentation/rooms/beast_camp.png",
+      "resource": "res://assets/art_library/presentation/rooms/beast_camp.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": []
+    },
+    {
+      "file": "presentation/rooms/beast_combat.png",
+      "resource": "res://assets/art_library/presentation/rooms/beast_combat.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "references": []
+    },
+    {
+      "file": "presentation/rooms/keep_camp.png",
+      "resource": "res://assets/art_library/presentation/rooms/keep_camp.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": []
+    },
+    {
+      "file": "presentation/rooms/keep_combat.png",
+      "resource": "res://assets/art_library/presentation/rooms/keep_combat.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "references": []
+    },
+    {
+      "file": "presentation/rooms/medical_camp.png",
+      "resource": "res://assets/art_library/presentation/rooms/medical_camp.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": []
+    },
+    {
+      "file": "presentation/rooms/medical_combat.png",
+      "resource": "res://assets/art_library/presentation/rooms/medical_combat.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "references": []
+    },
+    {
+      "file": "presentation/settlement/apothecary_attendant.png",
+      "resource": "res://assets/art_library/presentation/settlement/apothecary_attendant.png",
+      "dimensions": [
+        811,
+        757
+      ],
+      "references": []
+    },
+    {
+      "file": "presentation/settlement/barracks_attendant.png",
+      "resource": "res://assets/art_library/presentation/settlement/barracks_attendant.png",
+      "dimensions": [
+        811,
+        757
+      ],
+      "references": []
+    },
+    {
+      "file": "presentation/settlement/barracks_interior.png",
+      "resource": "res://assets/art_library/presentation/settlement/barracks_interior.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": []
+    },
+    {
+      "file": "presentation/settlement/chapel_attendant.png",
+      "resource": "res://assets/art_library/presentation/settlement/chapel_attendant.png",
+      "dimensions": [
+        811,
+        757
+      ],
+      "references": []
+    },
+    {
+      "file": "presentation/settlement/chapel_interior.png",
+      "resource": "res://assets/art_library/presentation/settlement/chapel_interior.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": []
+    },
+    {
+      "file": "presentation/settlement/forge_attendant.png",
+      "resource": "res://assets/art_library/presentation/settlement/forge_attendant.png",
+      "dimensions": [
+        865,
+        760
+      ],
+      "references": []
+    },
+    {
+      "file": "presentation/settlement/merchant_attendant.png",
+      "resource": "res://assets/art_library/presentation/settlement/merchant_attendant.png",
+      "dimensions": [
+        811,
+        757
+      ],
+      "references": []
+    },
+    {
+      "file": "presentation/settlement/path_seal.png",
+      "resource": "res://assets/art_library/presentation/settlement/path_seal.png",
+      "dimensions": [
+        48,
+        48
+      ],
+      "references": []
+    },
+    {
+      "file": "presentation/settlement/sealed_seal.png",
+      "resource": "res://assets/art_library/presentation/settlement/sealed_seal.png",
+      "dimensions": [
+        72,
+        72
+      ],
+      "references": []
+    },
+    {
+      "file": "presentation/settlement/village_seal.png",
+      "resource": "res://assets/art_library/presentation/settlement/village_seal.png",
+      "dimensions": [
+        48,
+        48
+      ],
+      "references": []
+    },
+    {
+      "file": "presentation/settlement/workshop_attendant.png",
+      "resource": "res://assets/art_library/presentation/settlement/workshop_attendant.png",
+      "dimensions": [
+        811,
+        757
+      ],
+      "references": []
+    },
+    {
+      "file": "presentation/settlement/workshop_interior.png",
+      "resource": "res://assets/art_library/presentation/settlement/workshop_interior.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": []
+    },
+    {
+      "file": "presentation/ui/attack_banner.png",
+      "resource": "res://assets/art_library/presentation/ui/attack_banner.png",
+      "dimensions": [
+        629,
+        99
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/ui/map_backing.png",
+      "resource": "res://assets/art_library/presentation/ui/map_backing.png",
+      "dimensions": [
+        720,
+        360
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/ui/panel_frame.png",
+      "resource": "res://assets/art_library/presentation/ui/panel_frame.png",
+      "dimensions": [
+        720,
+        360
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/ui/status_bleed.png",
+      "resource": "res://assets/art_library/presentation/ui/status_bleed.png",
+      "dimensions": [
+        24,
+        24
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/ui/status_burn.png",
+      "resource": "res://assets/art_library/presentation/ui/status_burn.png",
+      "dimensions": [
+        24,
+        24
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "presentation/ui/status_poison.png",
+      "resource": "res://assets/art_library/presentation/ui/status_poison.png",
+      "dimensions": [
+        24,
+        24
+      ],
+      "references": [
+        "assets/art_library/presentation/art_catalog.gd"
+      ]
+    },
+    {
+      "file": "skills/hl_blessing.svg",
+      "resource": "res://assets/art_library/skills/hl_blessing.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/hl_blessing.png"
+    },
+    {
+      "file": "skills/hl_blessing.tres",
+      "resource": "res://assets/art_library/skills/hl_blessing.tres",
+      "dimensions": [
+        245.0,
+        245.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        254.0,
+        755.0,
+        245.0,
+        245.0
+      ],
+      "individual_png_override": "skills/hl_blessing.png"
+    },
+    {
+      "file": "skills/hl_mend.svg",
+      "resource": "res://assets/art_library/skills/hl_mend.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/hl_mend.png"
+    },
+    {
+      "file": "skills/hl_mend.tres",
+      "resource": "res://assets/art_library/skills/hl_mend.tres",
+      "dimensions": [
+        245.0,
+        245.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        3.0,
+        755.0,
+        245.0,
+        245.0
+      ],
+      "individual_png_override": "skills/hl_mend.png"
+    },
+    {
+      "file": "skills/hl_smite.svg",
+      "resource": "res://assets/art_library/skills/hl_smite.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/hl_smite.png"
+    },
+    {
+      "file": "skills/hl_smite.tres",
+      "resource": "res://assets/art_library/skills/hl_smite.tres",
+      "dimensions": [
+        244.0,
+        245.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        505.0,
+        755.0,
+        244.0,
+        245.0
+      ],
+      "individual_png_override": "skills/hl_smite.png"
+    },
+    {
+      "file": "skills/hl_solace.svg",
+      "resource": "res://assets/art_library/skills/hl_solace.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/hl_solace.png"
+    },
+    {
+      "file": "skills/hl_solace.tres",
+      "resource": "res://assets/art_library/skills/hl_solace.tres",
+      "dimensions": [
+        244.0,
+        245.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        254.0,
+        755.0,
+        244.0,
+        245.0
+      ],
+      "individual_png_override": "skills/hl_solace.png"
+    },
+    {
+      "file": "skills/hl_turn.svg",
+      "resource": "res://assets/art_library/skills/hl_turn.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/hl_turn.png"
+    },
+    {
+      "file": "skills/hl_turn.tres",
+      "resource": "res://assets/art_library/skills/hl_turn.tres",
+      "dimensions": [
+        245.0,
+        245.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        755.0,
+        755.0,
+        245.0,
+        245.0
+      ],
+      "individual_png_override": "skills/hl_turn.png"
+    },
+    {
+      "file": "skills/hl_ward.svg",
+      "resource": "res://assets/art_library/skills/hl_ward.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/hl_ward.png"
+    },
+    {
+      "file": "skills/hl_ward.tres",
+      "resource": "res://assets/art_library/skills/hl_ward.tres",
+      "dimensions": [
+        245.0,
+        245.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        1006.0,
+        755.0,
+        245.0,
+        245.0
+      ],
+      "individual_png_override": "skills/hl_ward.png"
+    },
+    {
+      "file": "skills/oc_blast.svg",
+      "resource": "res://assets/art_library/skills/oc_blast.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/oc_blast.png"
+    },
+    {
+      "file": "skills/oc_blast.tres",
+      "resource": "res://assets/art_library/skills/oc_blast.tres",
+      "dimensions": [
+        244.0,
+        244.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        505.0,
+        505.0,
+        244.0,
+        244.0
+      ],
+      "individual_png_override": "skills/oc_blast.png"
+    },
+    {
+      "file": "skills/oc_drain.svg",
+      "resource": "res://assets/art_library/skills/oc_drain.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/oc_drain.png"
+    },
+    {
+      "file": "skills/oc_drain.tres",
+      "resource": "res://assets/art_library/skills/oc_drain.tres",
+      "dimensions": [
+        245.0,
+        244.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        254.0,
+        505.0,
+        245.0,
+        244.0
+      ],
+      "individual_png_override": "skills/oc_drain.png"
+    },
+    {
+      "file": "skills/oc_hex.svg",
+      "resource": "res://assets/art_library/skills/oc_hex.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/oc_hex.png"
+    },
+    {
+      "file": "skills/oc_hex.tres",
+      "resource": "res://assets/art_library/skills/oc_hex.tres",
+      "dimensions": [
+        245.0,
+        244.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        3.0,
+        505.0,
+        245.0,
+        244.0
+      ],
+      "individual_png_override": "skills/oc_hex.png"
+    },
+    {
+      "file": "skills/oc_veil.svg",
+      "resource": "res://assets/art_library/skills/oc_veil.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/oc_veil.png"
+    },
+    {
+      "file": "skills/oc_veil.tres",
+      "resource": "res://assets/art_library/skills/oc_veil.tres",
+      "dimensions": [
+        245.0,
+        244.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        755.0,
+        505.0,
+        245.0,
+        244.0
+      ],
+      "individual_png_override": "skills/oc_veil.png"
+    },
+    {
+      "file": "skills/oc_weak.svg",
+      "resource": "res://assets/art_library/skills/oc_weak.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/oc_weak.png"
+    },
+    {
+      "file": "skills/oc_weak.tres",
+      "resource": "res://assets/art_library/skills/oc_weak.tres",
+      "dimensions": [
+        245.0,
+        244.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        1006.0,
+        505.0,
+        245.0,
+        244.0
+      ],
+      "individual_png_override": "skills/oc_weak.png"
+    },
+    {
+      "file": "skills/painted_skills.png",
+      "resource": "res://assets/art_library/skills/painted_skills.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "references": [
+        "assets/art_library/skills/hl_blessing.tres",
+        "assets/art_library/skills/hl_mend.tres",
+        "assets/art_library/skills/hl_smite.tres",
+        "assets/art_library/skills/hl_solace.tres",
+        "assets/art_library/skills/hl_turn.tres",
+        "assets/art_library/skills/hl_ward.tres",
+        "assets/art_library/skills/oc_blast.tres",
+        "assets/art_library/skills/oc_drain.tres",
+        "assets/art_library/skills/oc_hex.tres",
+        "assets/art_library/skills/oc_veil.tres",
+        "assets/art_library/skills/oc_weak.tres",
+        "assets/art_library/skills/pc_charge.tres",
+        "assets/art_library/skills/pc_guard.tres",
+        "assets/art_library/skills/pc_pain.tres",
+        "assets/art_library/skills/pc_strike.tres",
+        "assets/art_library/skills/pc_verdict.tres",
+        "assets/art_library/skills/rg_dodge.tres",
+        "assets/art_library/skills/rg_mark.tres",
+        "assets/art_library/skills/rg_pierce.tres",
+        "assets/art_library/skills/rg_quick.tres",
+        "assets/art_library/skills/rg_volley.tres",
+        "assets/art_library/skills/wd_bash.tres",
+        "assets/art_library/skills/wd_guard.tres",
+        "assets/art_library/skills/wd_heavy.tres",
+        "assets/art_library/skills/wd_rally.tres",
+        "assets/art_library/skills/wd_slash.tres"
+      ],
+      "individual_png_override": "skills/painted_skills.png"
+    },
+    {
+      "file": "skills/pc_charge.svg",
+      "resource": "res://assets/art_library/skills/pc_charge.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/pc_charge.png"
+    },
+    {
+      "file": "skills/pc_charge.tres",
+      "resource": "res://assets/art_library/skills/pc_charge.tres",
+      "dimensions": [
+        245.0,
+        245.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        755.0,
+        1006.0,
+        245.0,
+        245.0
+      ],
+      "individual_png_override": "skills/pc_charge.png"
+    },
+    {
+      "file": "skills/pc_guard.svg",
+      "resource": "res://assets/art_library/skills/pc_guard.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/pc_guard.png"
+    },
+    {
+      "file": "skills/pc_guard.tres",
+      "resource": "res://assets/art_library/skills/pc_guard.tres",
+      "dimensions": [
+        245.0,
+        245.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        254.0,
+        1006.0,
+        245.0,
+        245.0
+      ],
+      "individual_png_override": "skills/pc_guard.png"
+    },
+    {
+      "file": "skills/pc_pain.svg",
+      "resource": "res://assets/art_library/skills/pc_pain.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/pc_pain.png"
+    },
+    {
+      "file": "skills/pc_pain.tres",
+      "resource": "res://assets/art_library/skills/pc_pain.tres",
+      "dimensions": [
+        244.0,
+        245.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        505.0,
+        1006.0,
+        244.0,
+        245.0
+      ],
+      "individual_png_override": "skills/pc_pain.png"
+    },
+    {
+      "file": "skills/pc_strike.svg",
+      "resource": "res://assets/art_library/skills/pc_strike.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/pc_strike.png"
+    },
+    {
+      "file": "skills/pc_strike.tres",
+      "resource": "res://assets/art_library/skills/pc_strike.tres",
+      "dimensions": [
+        245.0,
+        245.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        3.0,
+        1006.0,
+        245.0,
+        245.0
+      ],
+      "individual_png_override": "skills/pc_strike.png"
+    },
+    {
+      "file": "skills/pc_verdict.svg",
+      "resource": "res://assets/art_library/skills/pc_verdict.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/pc_verdict.png"
+    },
+    {
+      "file": "skills/pc_verdict.tres",
+      "resource": "res://assets/art_library/skills/pc_verdict.tres",
+      "dimensions": [
+        245.0,
+        245.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        1006.0,
+        1006.0,
+        245.0,
+        245.0
+      ],
+      "individual_png_override": "skills/pc_verdict.png"
+    },
+    {
+      "file": "skills/rg_dodge.svg",
+      "resource": "res://assets/art_library/skills/rg_dodge.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/rg_dodge.png"
+    },
+    {
+      "file": "skills/rg_dodge.tres",
+      "resource": "res://assets/art_library/skills/rg_dodge.tres",
+      "dimensions": [
+        245.0,
+        245.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        1006.0,
+        254.0,
+        245.0,
+        245.0
+      ],
+      "individual_png_override": "skills/rg_dodge.png"
+    },
+    {
+      "file": "skills/rg_mark.svg",
+      "resource": "res://assets/art_library/skills/rg_mark.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/rg_mark.png"
+    },
+    {
+      "file": "skills/rg_mark.tres",
+      "resource": "res://assets/art_library/skills/rg_mark.tres",
+      "dimensions": [
+        245.0,
+        245.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        755.0,
+        254.0,
+        245.0,
+        245.0
+      ],
+      "individual_png_override": "skills/rg_mark.png"
+    },
+    {
+      "file": "skills/rg_pierce.svg",
+      "resource": "res://assets/art_library/skills/rg_pierce.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/rg_pierce.png"
+    },
+    {
+      "file": "skills/rg_pierce.tres",
+      "resource": "res://assets/art_library/skills/rg_pierce.tres",
+      "dimensions": [
+        244.0,
+        245.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        505.0,
+        254.0,
+        244.0,
+        245.0
+      ],
+      "individual_png_override": "skills/rg_pierce.png"
+    },
+    {
+      "file": "skills/rg_quick.svg",
+      "resource": "res://assets/art_library/skills/rg_quick.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/rg_quick.png"
+    },
+    {
+      "file": "skills/rg_quick.tres",
+      "resource": "res://assets/art_library/skills/rg_quick.tres",
+      "dimensions": [
+        245.0,
+        245.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        3.0,
+        254.0,
+        245.0,
+        245.0
+      ],
+      "individual_png_override": "skills/rg_quick.png"
+    },
+    {
+      "file": "skills/rg_volley.svg",
+      "resource": "res://assets/art_library/skills/rg_volley.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/rg_volley.png"
+    },
+    {
+      "file": "skills/rg_volley.tres",
+      "resource": "res://assets/art_library/skills/rg_volley.tres",
+      "dimensions": [
+        245.0,
+        245.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        254.0,
+        254.0,
+        245.0,
+        245.0
+      ],
+      "individual_png_override": "skills/rg_volley.png"
+    },
+    {
+      "file": "skills/wd_bash.svg",
+      "resource": "res://assets/art_library/skills/wd_bash.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/wd_bash.png"
+    },
+    {
+      "file": "skills/wd_bash.tres",
+      "resource": "res://assets/art_library/skills/wd_bash.tres",
+      "dimensions": [
+        244.0,
+        245.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        505.0,
+        3.0,
+        244.0,
+        245.0
+      ],
+      "individual_png_override": "skills/wd_bash.png"
+    },
+    {
+      "file": "skills/wd_guard.svg",
+      "resource": "res://assets/art_library/skills/wd_guard.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/wd_guard.png"
+    },
+    {
+      "file": "skills/wd_guard.tres",
+      "resource": "res://assets/art_library/skills/wd_guard.tres",
+      "dimensions": [
+        245.0,
+        245.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        254.0,
+        3.0,
+        245.0,
+        245.0
+      ],
+      "individual_png_override": "skills/wd_guard.png"
+    },
+    {
+      "file": "skills/wd_heavy.svg",
+      "resource": "res://assets/art_library/skills/wd_heavy.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/wd_heavy.png"
+    },
+    {
+      "file": "skills/wd_heavy.tres",
+      "resource": "res://assets/art_library/skills/wd_heavy.tres",
+      "dimensions": [
+        245.0,
+        245.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        755.0,
+        3.0,
+        245.0,
+        245.0
+      ],
+      "individual_png_override": "skills/wd_heavy.png"
+    },
+    {
+      "file": "skills/wd_rally.svg",
+      "resource": "res://assets/art_library/skills/wd_rally.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/wd_rally.png"
+    },
+    {
+      "file": "skills/wd_rally.tres",
+      "resource": "res://assets/art_library/skills/wd_rally.tres",
+      "dimensions": [
+        245.0,
+        245.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        1006.0,
+        3.0,
+        245.0,
+        245.0
+      ],
+      "individual_png_override": "skills/wd_rally.png"
+    },
+    {
+      "file": "skills/wd_slash.svg",
+      "resource": "res://assets/art_library/skills/wd_slash.svg",
+      "dimensions": [
+        108.0,
+        112.0
+      ],
+      "references": [],
+      "individual_png_override": "skills/wd_slash.png"
+    },
+    {
+      "file": "skills/wd_slash.tres",
+      "resource": "res://assets/art_library/skills/wd_slash.tres",
+      "dimensions": [
+        245.0,
+        245.0
+      ],
+      "references": [],
+      "atlas": "skills/painted_skills.png",
+      "region": [
+        3.0,
+        3.0,
+        245.0,
+        245.0
+      ],
+      "individual_png_override": "skills/wd_slash.png"
+    }
+  ]
+}

@@ -5,7 +5,7 @@ signal favourite_changed
 var item_id: String = ""
 var comparison_hero: String = ""
 
-func configure(id: String, amount: int = 1, hero: String = "") -> void:
+func configure(id: String, amount: int = 1, hero: String = "", empty_slot: String = "") -> void:
 	item_id = id
 	comparison_hero = hero
 	custom_minimum_size = Vector2(80, 80)
@@ -29,6 +29,22 @@ func configure(id: String, amount: int = 1, hero: String = "") -> void:
 	tooltip_text += "\nRight-click an owned item to toggle favourite."
 	if entry.is_empty():
 		text = "—"
+		if empty_slot in ["weapon","off_hand","head","armor"]:
+			text = ""
+			tooltip_text = "Empty "+empty_slot.replace("_"," ")+" slot"
+			var placeholder := TextureRect.new()
+			placeholder.name = "EmptySlotArt"
+			placeholder.texture = load(Items.icon_path("slot_"+empty_slot))
+			placeholder.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			placeholder.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			placeholder.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			placeholder.modulate = Color(0.7,0.7,0.7,0.35)
+			add_child(placeholder)
+			placeholder.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+			placeholder.offset_left = 8
+			placeholder.offset_top = 8
+			placeholder.offset_right = -8
+			placeholder.offset_bottom = -8
 		return
 	var picture := TextureRect.new()
 	picture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE

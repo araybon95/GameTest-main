@@ -2,7 +2,7 @@
 
 Mode: built-in image_gen, edit of the existing original region_map.png.
 
-Saved asset: assets/generated/expedition_map_four_regions.png. Original map retained.
+Saved asset: assets/art_library/generated/expedition_map_four_regions.png. Original map retained.
 
 Final prompt:
 

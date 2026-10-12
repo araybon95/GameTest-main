@@ -41,7 +41,7 @@ func run() -> void:
 		assert(Ink.SHEETS[id] == entry["sheet"] and State.creature(id)["art"] == entry["idle"])
 		assert(entry["alpha_threshold"] == 48 and entry["margin_pixels"] == 3)
 		assert(not str(entry["prompt"]).is_empty())
-		assert(ResourceLoader.exists("res://assets/generated/" + entry["original"]), "Original artwork remains replaceable")
+		assert(ResourceLoader.exists("res://assets/art_library/generated/" + entry["original"]), "Original artwork remains replaceable")
 		assert(FileAccess.get_sha256(entry["sheet"]) == entry["sheet_sha256"])
 		assert(entry["sheet_sha256"] == entry["source_sha256"], "PNG is a byte-for-byte generated source copy")
 		var idle: AtlasTexture = load(entry["idle"])

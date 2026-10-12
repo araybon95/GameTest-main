@@ -1,5 +1,5 @@
 extends RefCounted
-## Original Ashen equipment and consumables; licensed icons credited in assets/items/CREDITS.md.
+## Original Ashen equipment and consumables; licensed icons credited in assets/art_library/items/CREDITS.md.
 const Matchups = preload("res://scripts/creature_matchups.gd")
 
 const SCROLL_CHANCE: float = 0.15
@@ -173,9 +173,11 @@ static func description(item_id: String) -> String:
 	return text
 
 static func icon_path(item_id: String) -> String:
-	# A per-item PNG override takes priority. SVGs remain editable source assets.
-	var base: String = "res://assets/items/" + base_id(item_id)
-	return base + ".png" if ResourceLoader.exists(base + ".png") else base + ".svg"
+	# Individual hand-drawn PNGs override generated atlas tiles and legacy SVGs.
+	var base: String = "res://assets/art_library/items/" + base_id(item_id)
+	for extension in ["png","tres","svg"]:
+		if ResourceLoader.exists(base + "." + extension): return base + "." + extension
+	return base + ".svg"
 
 static func tooltip(item_id: String) -> String:
 	var entry: Dictionary = item(item_id)

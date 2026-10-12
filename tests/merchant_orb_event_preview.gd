@@ -52,7 +52,7 @@ func run() -> void:
 		await create_timer(0.9).timeout
 		var prop: TextureRect = current_scene.get_node("MerchantOrbProp")
 		var object: Button = current_scene.get_node("MerchantOrbObject")
-		assert(prop.texture is AtlasTexture and prop.texture.atlas.resource_path == "res://assets/generated/merchant_orb_ink.png")
+		assert(prop.texture is AtlasTexture and prop.texture.atlas.resource_path == "res://assets/art_library/generated/merchant_orb_ink.png")
 		assert(prop.size.x <= 380.01 and prop.size.y <= 470.01 and is_equal_approx(prop.position.y + prop.size.y, 690.0))
 		check_silhouette_hit_testing(object, prop)
 		await move_pointer(Vector2(1860, 710))

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dognut0ucmly3"]
 
 [ext_resource type="Script" uid="uid://c2gdptppy1yr8" path="res://scenes/ui/title_screen.gd" id="1_script"]
-[ext_resource type="Texture2D" uid="uid://bvfni7jqn221u" path="res://assets/generated/title_key_art.png" id="2_keyart"]
+[ext_resource type="Texture2D" uid="uid://bvfni7jqn221u" path="res://assets/art_library/generated/title_key_art.png" id="2_keyart"]
 [ext_resource type="Theme" uid="uid://c3reqpa1n06fq" path="res://assets/new_theme.tres" id="3_theme"]
 
 [node name="TitleScreen" type="Control" unique_id=1866433377]

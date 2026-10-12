@@ -1,6 +1,6 @@
 # Trinkets and room/hallway map
 
-Twelve original trinkets join the existing equipment pool. Ordinary trinkets use the Trinket slot; Legendary class relics use the Charm slot. Items have separate editable SVG icons in `assets/items/<item_id>.svg`, following the existing item icon system. Individual PNG replacements at the same basename take priority automatically. The supplied reference artwork was not copied.
+Twelve original trinkets join the existing equipment pool. Ordinary trinkets use the Trinket slot; Legendary class relics use the Charm slot. Items have separate editable SVG icons in `assets/art_library/items/<item_id>.svg`, following the existing item icon system. Individual PNG replacements at the same basename take priority automatically. The supplied reference artwork was not copied.
 
 | Item | Class | Rarity | Bonuses |
 |---|---|---|---|

@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://c3reqpa1n06fq" path="res://assets/new_theme.tres" id="1_2sta6"]
 [ext_resource type="Script" uid="uid://0rm1qvfyrbw4" path="res://scenes/combat/combatscene.gd" id="1_gg2et"]
-[ext_resource type="Texture2D" uid="uid://j41782tspm3u" path="res://assets/generated/bg_crypt.png" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://j41782tspm3u" path="res://assets/art_library/generated/bg_crypt.png" id="2_bg"]
 [ext_resource type="PackedScene" path="res://scenes/combat/hero_card.tscn" id="3_hero_card"]
 [ext_resource type="PackedScene" uid="uid://dle8mgox3uqti" path="res://scenes/combat/combat_card.tscn" id="4_combat_card"]
 [ext_resource type="PackedScene" path="res://scenes/combat/arena.tscn" id="5_arena"]

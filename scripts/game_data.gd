@@ -80,25 +80,25 @@ const CARDS: Dictionary = {
 ## The roster the player draws a party of three from. Add a hero by appending an
 ## entry here (and dropping a portrait at `art`). `deck` lists card ids.
 const HEROES: Dictionary = {
- "crusader": {"name": "Penitent Crusader", "max_hp": 50, "art": "res://assets/generated/hero_crusader.tres", "camp_art": "res://assets/generated/hero_crusader_camp.tres", "abilities": ["pc_strike", "pc_guard", "pc_pain", "pc_charge", "pc_verdict"], "lore": "During the Hell Crusades, a demon of pain cursed him with an unending hunger for sensation. Barbs beneath his armor pull at his flesh with every breath. He calls each wound a sacrament, and each moment of relief a debt."},
+ "crusader": {"name": "Penitent Crusader", "max_hp": 50, "art": "res://assets/art_library/generated/hero_crusader.tres", "camp_art": "res://assets/art_library/generated/hero_crusader_camp.tres", "abilities": ["pc_strike", "pc_guard", "pc_pain", "pc_charge", "pc_verdict"], "lore": "During the Hell Crusades, a demon of pain cursed him with an unending hunger for sensation. Barbs beneath his armor pull at his flesh with every breath. He calls each wound a sacrament, and each moment of relief a debt."},
 	"warden": {
-		"name": "Warden", "max_hp": 55, "art": "res://assets/generated/hero_warden.png",
-		"camp_art": "res://assets/generated/hero_warden_camp.png",
+		"name": "Warden", "max_hp": 55, "art": "res://assets/art_library/generated/hero_warden.png",
+		"camp_art": "res://assets/art_library/generated/hero_warden_camp.png",
 		"abilities": ["wd_slash", "wd_guard", "wd_bash", "wd_rally", "wd_heavy"],
 	},
 	"ranger": {
-		"name": "Ranger", "max_hp": 38, "art": "res://assets/generated/hero_ranger.tres",
-		"camp_art": "res://assets/generated/hero_ranger_camp.png",
+		"name": "Ranger", "max_hp": 38, "art": "res://assets/art_library/generated/hero_ranger.tres",
+		"camp_art": "res://assets/art_library/generated/hero_ranger_camp.png",
 		"abilities": ["rg_quick", "rg_dodge", "rg_mark", "rg_pierce", "rg_volley"],
 	},
 	"occultist": {
-		"name": "Occultist", "max_hp": 34, "art": "res://assets/generated/hero_occultist.tres",
-		"camp_art": "res://assets/generated/hero_occultist_camp.png",
+		"name": "Occultist", "max_hp": 34, "art": "res://assets/art_library/generated/hero_occultist.tres",
+		"camp_art": "res://assets/art_library/generated/hero_occultist_camp.png",
 		"abilities": ["oc_hex", "oc_veil", "oc_weak", "oc_drain", "oc_blast"],
 	},
 	"healer": {
-		"name": "Healer", "max_hp": 42, "art": "res://assets/generated/hero_healer.tres",
-		"camp_art": "res://assets/generated/hero_healer_camp.png",
+		"name": "Healer", "max_hp": 42, "art": "res://assets/art_library/generated/hero_healer.tres",
+		"camp_art": "res://assets/art_library/generated/hero_healer_camp.png",
 		"abilities": ["hl_smite", "hl_turn", "hl_mend", "hl_blessing", "hl_ward", "hl_solace"],
 	},
 }
@@ -110,45 +110,45 @@ static var party: Array[String] = ["warden", "ranger", "occultist"]
 ## Lore and stats for every enemy. `undead` heroes take bonus damage from the
 ## Healer's holy attacks.
 const CREATURES: Dictionary = {
-	"moth_metamorph": {"creature_class": "Insect", "name": "Moth Acolyte Metamorph", "hp": 42, "attack": 6, "art": "res://assets/generated/enemy_moth_metamorph_ink.tres", "undead": false, "tags": ["Moth", "Cultist"], "lore": "A patient remade by the dispensary's luminous infestation. Beneath the rags, humanity has become a hunger with wings."},
-	"moth_oleander": {"creature_class": "Insect", "name": "Moth Knight Oleander", "hp": 54, "attack": 6, "art": "res://assets/generated/enemy_moth_oleander_ink.tres", "undead": false, "tags": ["Moth", "Knight", "Boss"], "lore": "The queen's sworn guardian keeps vigil over the ruined surgical ward, his broken chivalry surviving in a body stripped of humanity."},
-	"moth_exuvia": {"creature_class": "Insect", "name": "Moth Queen Exuvia", "hp": 75, "attack": 7, "art": "res://assets/generated/enemy_moth_exuvia_ink.tres", "undead": false, "tags": ["Moth", "Boss"], "lore": "A swollen sovereign of luminous dust and discarded flesh. The apothecary's patients became offerings to her endless metamorphosis."},
- "keep_footman": {"creature_class": "Corrupted", "name": "Revenant Footman", "hp": 54, "attack": 8, "undead": true, "tags": ["Revenant", "Keep"], "art": "res://assets/generated/enemy_keep_footman_ink.tres", "lore": "The road gangs pay tribute to dead masters. Beneath their stolen banners, these ancient footmen march again, the wounds of the keep's fall still open."},
- "keep_crossbow": {"creature_class": "Corrupted", "name": "Grave Crossbowman", "hp": 48, "attack": 9, "undead": true, "tags": ["Revenant", "Keep"], "art": "res://assets/generated/enemy_keep_crossbow_ink.tres", "lore": "A wrapped face gives no warning as the bolt leaves its string. Rusted steel carries the cold of the crypt through living flesh."},
- "keep_wolfguard": {"creature_class": "Corrupted", "name": "Wolfguard Reaver", "hp": 62, "attack": 9, "undead": true, "tags": ["Revenant", "Elite", "Keep"], "art": "res://assets/generated/enemy_keep_wolfguard_ink.tres", "lore": "A noble guard beneath a ragged wolf mantle. Its poleaxe answers the lord's summons, and the gaps in its armor reveal what loyalty has cost."},
- "keep_son": {"creature_class": "Corrupted", "name": "The Last Honorable Son", "hp": 70, "attack": 8, "undead": true, "tags": ["Revenant", "Knight", "Boss"], "art": "res://assets/generated/enemy_keep_son_ink.tres", "lore": "The last scion of the ruined keep still bars the stair to his father's court. A beast's howl escapes where an honorable oath once lived."},
- "undying_lord": {"creature_class": "Corrupted", "name": "The Undying Lord", "hp": 90, "attack": 8, "undead": true, "tags": ["Revenant", "Monstrosity", "Boss"], "art": "res://assets/generated/enemy_undying_lord_ink.tres", "lore": "An ancestral tyrant wears his household's relics as a crown. Many hands clutch the instruments of his reign, and no wound has taught him to release them."},
-	"anguish_penitent": {"creature_class": "The Remade", "name": "Creation of Anguish: Penitent", "hp": 48, "attack": 7, "undead": false, "tags": ["Remade", "Cult"], "art": "res://assets/generated/enemy_anguish_penitent_ink.tres", "lore": "The faithful call each new wound a doorway. This supplicant begs to be remade again."},
-	"anguish_vessel": {"creature_class": "The Remade", "name": "Creation of Anguish: Vessel", "hp": 54, "attack": 8, "undead": false, "tags": ["Remade", "Cult"], "art": "res://assets/generated/enemy_anguish_vessel_ink.tres", "lore": "Several prayers inhabit one body. None can finish a sentence without another mouth answering."},
-	"harrowed_giant": {"creature_class": "The Remade", "name": "Harrowed Slave Giant", "hp": 76, "attack": 8, "undead": false, "tags": ["Remade", "Boss"], "art": "res://assets/generated/enemy_harrowed_giant_ink.tres", "lore": "A living reliquary kneels beneath the weight of the congregation. Its chains are sacred to those who forged them."},
-	"coterie_seamkeeper": {"creature_class": "The Remade", "name": "The Coterie: Seamkeeper", "hp": 28, "attack": 5, "undead": false, "tags": ["Remade", "Boss"], "art": "res://assets/generated/enemy_coterie_seamkeeper_ink.tres", "lore": "The first master stitches devotion into unwilling flesh."},
-	"coterie_cantor": {"creature_class": "The Remade", "name": "The Coterie: Bone Cantor", "hp": 34, "attack": 6, "undead": false, "tags": ["Remade", "Boss"], "art": "res://assets/generated/enemy_coterie_cantor_ink.tres", "lore": "The second master conducts a choir through the pipes of a remade chest."},
-	"coterie_matron": {"creature_class": "The Remade", "name": "The Coterie: Matron of Remaking", "hp": 40, "attack": 7, "undead": false, "tags": ["Remade", "Boss"], "art": "res://assets/generated/enemy_coterie_matron_ink.tres", "lore": "The last master blesses the congregation with another shape, and another grief."},
-	"howling_head": {"creature_class": "The Remade", "name": "The Howling Head", "hp": 84, "attack": 8, "undead": false, "tags": ["Remade", "Boss"], "art": "res://assets/generated/enemy_howling_head_ink.tres", "lore": "At the end of the pilgrimage, every prayer becomes a single unending howl."},
+	"moth_metamorph": {"creature_class": "Insect", "name": "Moth Acolyte Metamorph", "hp": 42, "attack": 6, "art": "res://assets/art_library/generated/enemy_moth_metamorph_ink.tres", "undead": false, "tags": ["Moth", "Cultist"], "lore": "A patient remade by the dispensary's luminous infestation. Beneath the rags, humanity has become a hunger with wings."},
+	"moth_oleander": {"creature_class": "Insect", "name": "Moth Knight Oleander", "hp": 54, "attack": 6, "art": "res://assets/art_library/generated/enemy_moth_oleander_ink.tres", "undead": false, "tags": ["Moth", "Knight", "Boss"], "lore": "The queen's sworn guardian keeps vigil over the ruined surgical ward, his broken chivalry surviving in a body stripped of humanity."},
+	"moth_exuvia": {"creature_class": "Insect", "name": "Moth Queen Exuvia", "hp": 75, "attack": 7, "art": "res://assets/art_library/generated/enemy_moth_exuvia_ink.tres", "undead": false, "tags": ["Moth", "Boss"], "lore": "A swollen sovereign of luminous dust and discarded flesh. The apothecary's patients became offerings to her endless metamorphosis."},
+ "keep_footman": {"creature_class": "Corrupted", "name": "Revenant Footman", "hp": 54, "attack": 8, "undead": true, "tags": ["Revenant", "Keep"], "art": "res://assets/art_library/generated/enemy_keep_footman_ink.tres", "lore": "The road gangs pay tribute to dead masters. Beneath their stolen banners, these ancient footmen march again, the wounds of the keep's fall still open."},
+ "keep_crossbow": {"creature_class": "Corrupted", "name": "Grave Crossbowman", "hp": 48, "attack": 9, "undead": true, "tags": ["Revenant", "Keep"], "art": "res://assets/art_library/generated/enemy_keep_crossbow_ink.tres", "lore": "A wrapped face gives no warning as the bolt leaves its string. Rusted steel carries the cold of the crypt through living flesh."},
+ "keep_wolfguard": {"creature_class": "Corrupted", "name": "Wolfguard Reaver", "hp": 62, "attack": 9, "undead": true, "tags": ["Revenant", "Elite", "Keep"], "art": "res://assets/art_library/generated/enemy_keep_wolfguard_ink.tres", "lore": "A noble guard beneath a ragged wolf mantle. Its poleaxe answers the lord's summons, and the gaps in its armor reveal what loyalty has cost."},
+ "keep_son": {"creature_class": "Corrupted", "name": "The Last Honorable Son", "hp": 70, "attack": 8, "undead": true, "tags": ["Revenant", "Knight", "Boss"], "art": "res://assets/art_library/generated/enemy_keep_son_ink.tres", "lore": "The last scion of the ruined keep still bars the stair to his father's court. A beast's howl escapes where an honorable oath once lived."},
+ "undying_lord": {"creature_class": "Corrupted", "name": "The Undying Lord", "hp": 90, "attack": 8, "undead": true, "tags": ["Revenant", "Monstrosity", "Boss"], "art": "res://assets/art_library/generated/enemy_undying_lord_ink.tres", "lore": "An ancestral tyrant wears his household's relics as a crown. Many hands clutch the instruments of his reign, and no wound has taught him to release them."},
+	"anguish_penitent": {"creature_class": "The Remade", "name": "Creation of Anguish: Penitent", "hp": 48, "attack": 7, "undead": false, "tags": ["Remade", "Cult"], "art": "res://assets/art_library/generated/enemy_anguish_penitent_ink.tres", "lore": "The faithful call each new wound a doorway. This supplicant begs to be remade again."},
+	"anguish_vessel": {"creature_class": "The Remade", "name": "Creation of Anguish: Vessel", "hp": 54, "attack": 8, "undead": false, "tags": ["Remade", "Cult"], "art": "res://assets/art_library/generated/enemy_anguish_vessel_ink.tres", "lore": "Several prayers inhabit one body. None can finish a sentence without another mouth answering."},
+	"harrowed_giant": {"creature_class": "The Remade", "name": "Harrowed Slave Giant", "hp": 76, "attack": 8, "undead": false, "tags": ["Remade", "Boss"], "art": "res://assets/art_library/generated/enemy_harrowed_giant_ink.tres", "lore": "A living reliquary kneels beneath the weight of the congregation. Its chains are sacred to those who forged them."},
+	"coterie_seamkeeper": {"creature_class": "The Remade", "name": "The Coterie: Seamkeeper", "hp": 28, "attack": 5, "undead": false, "tags": ["Remade", "Boss"], "art": "res://assets/art_library/generated/enemy_coterie_seamkeeper_ink.tres", "lore": "The first master stitches devotion into unwilling flesh."},
+	"coterie_cantor": {"creature_class": "The Remade", "name": "The Coterie: Bone Cantor", "hp": 34, "attack": 6, "undead": false, "tags": ["Remade", "Boss"], "art": "res://assets/art_library/generated/enemy_coterie_cantor_ink.tres", "lore": "The second master conducts a choir through the pipes of a remade chest."},
+	"coterie_matron": {"creature_class": "The Remade", "name": "The Coterie: Matron of Remaking", "hp": 40, "attack": 7, "undead": false, "tags": ["Remade", "Boss"], "art": "res://assets/art_library/generated/enemy_coterie_matron_ink.tres", "lore": "The last master blesses the congregation with another shape, and another grief."},
+	"howling_head": {"creature_class": "The Remade", "name": "The Howling Head", "hp": 84, "attack": 8, "undead": false, "tags": ["Remade", "Boss"], "art": "res://assets/art_library/generated/enemy_howling_head_ink.tres", "lore": "At the end of the pilgrimage, every prayer becomes a single unending howl."},
 
 	"ash_raider": {"creature_class": "Human",
 		"name": "Ash Raider", "tags": ["Human", "Bandit"], "undead": false,
-		"hp": 58, "attack": 8, "art": "res://assets/generated/enemy_ash_raider.png",
+		"hp": 58, "attack": 8, "art": "res://assets/art_library/generated/enemy_ash_raider.png",
 		"lore": "A butcher of the ruined road, wrapped in stolen leather and rusted iron. Their toll is paid in blood.",
 	},
 	"gallows_scout": {"creature_class": "Human",
 		"name": "Gallows Scout", "tags": ["Human", "Bandit"], "undead": false,
-		"hp": 46, "attack": 10, "art": "res://assets/generated/enemy_gallows_scout.tres",
+		"hp": 46, "attack": 10, "art": "res://assets/art_library/generated/enemy_gallows_scout.tres",
 		"lore": "The gang's watchful hunter waits beneath the gallows, marking travelers for the cleaver.",
 	},
 	"ash_chieftain": {"creature_class": "Human",
 		"name": "Gallows Chieftain", "tags": ["Human", "Bandit", "Boss"], "undead": false,
-		"hp": 82, "attack": 10, "art": "res://assets/generated/enemy_ash_bandit_captain.tres",
+		"hp": 82, "attack": 10, "art": "res://assets/art_library/generated/enemy_ash_bandit_captain.tres",
 		"lore": "A scarred tyrant who binds the road gangs through terror. His shield is patched with the possessions of those who refused to kneel.",
 	},
 	"hollow_villager": {"creature_class": "Corrupted",
 		"name": "Hollow Villager", "tags": ["Mortal"], "undead": false,
-		"hp": 68, "attack": 7, "art": "res://assets/generated/enemy_hollow_villager_ink.tres",
+		"hp": 68, "attack": 7, "art": "res://assets/art_library/generated/enemy_hollow_villager_ink.tres",
 		"lore": "An ashen plague hollowed this peasant out and left the body walking. It remembers the road it died on, and bars the way to any who pass.",
 	},
 	"bone_rabble": {"creature_class": "Corrupted",
 		"name": "Bone Rabble", "tags": ["Undead"], "undead": true,
-		"hp": 58, "attack": 9, "art": "res://assets/generated/enemy_bone_rabble_ink.tres",
+		"hp": 58, "attack": 9, "art": "res://assets/art_library/generated/enemy_bone_rabble_ink.tres",
 		"lore": "The ossuary's tenants do not rest. Bound by an old curse, they rise as a clattering rank of bone — swift, spiteful, and quick to turn from the light.",
 	},
 	"weald_stalker": {"creature_class": "Corrupted",
@@ -173,11 +173,11 @@ const UPGRADE_BONUS := 2
 ## --- Expeditions --------------------------------------------------------------
 const EXPEDITIONS: Array[Dictionary] = [
 	{"id": "restore_watchtower", "name": "The Occupied Watchtower", "region": "The Hamlet", "difficulty": "Apprentice", "creature": "gallows_scout", "faction": "human", "reward": 8, "floor_count": 1, "internal": true, "restoration": "watchtower", "blurb": "Three rooms: scouts, camp, chieftain. Restore the watchtower."},
-	{"id": "restore_infirmary", "name": "The Abandoned Sickhouse", "region": "The Hamlet", "difficulty": "Initiate", "creature": "moth_metamorph", "faction": "moth", "reward": 8, "floor_count": 1, "internal": true, "restoration": "infirmary", "combat_background": "res://assets/generated/apothecary_interior.png", "camp_background": "res://assets/generated/apothecary_interior.png", "blurb": "Three rooms: infestation, camp, guardian. Restore the infirmary."},
+	{"id": "restore_infirmary", "name": "The Abandoned Sickhouse", "region": "The Hamlet", "difficulty": "Initiate", "creature": "moth_metamorph", "faction": "moth", "reward": 8, "floor_count": 1, "internal": true, "restoration": "infirmary", "combat_background": "res://assets/art_library/generated/apothecary_interior.png", "camp_background": "res://assets/art_library/generated/apothecary_interior.png", "blurb": "Three rooms: infestation, camp, guardian. Restore the infirmary."},
 	{"id": "restore_workshop", "name": "The Seized Workshop", "region": "The Hamlet", "difficulty": "Apprentice", "creature": "ash_raider", "faction": "human", "reward": 8, "floor_count": 1, "internal": true, "restoration": "workshop", "blurb": "Three rooms: raiders, camp, chieftain. Restore the workshop."},
-	{"id": "infested_apothecary", "name": "The Infested Apothecary", "region": "The Hamlet", "difficulty": "Initiate · Apprentice–Adept", "faction": "moth", "creature": "moth_metamorph", "reward": 10, "locked": false, "floor_count": 1, "internal": true, "floor_names": ["The Infested Medical Ward"], "combat_background": "res://assets/generated/apothecary_interior.png", "camp_background": "res://assets/generated/apothecary_interior.png", "blurb": "Four chambers. Three fights. One refuge. Clear the infestation to restore the hamlet's apothecary."},
+	{"id": "infested_apothecary", "name": "The Infested Apothecary", "region": "The Hamlet", "difficulty": "Initiate · Apprentice–Adept", "faction": "moth", "creature": "moth_metamorph", "reward": 10, "locked": false, "floor_count": 1, "internal": true, "floor_names": ["The Infested Medical Ward"], "combat_background": "res://assets/art_library/generated/apothecary_interior.png", "camp_background": "res://assets/art_library/generated/apothecary_interior.png", "blurb": "Four chambers. Three fights. One refuge. Clear the infestation to restore the hamlet's apothecary."},
 	{"id": "path_beast", "name": "Path of the Beast", "region": "The Path", "difficulty": "Veteran", "faction": "remade", "creature": "anguish_penitent", "reward": 15, "locked": false, "floor_count": 3,
-	"combat_background": "res://assets/generated/beast_sanctuary.png", "camp_background": "res://assets/generated/beast_camp.png",
+	"combat_background": "res://assets/art_library/generated/beast_sanctuary.png", "camp_background": "res://assets/art_library/generated/beast_camp.png",
 	"blurb": "Descend a pilgrimage of despair. The faithful worship being remade; their blessings leave no body whole.",
 	"floor_bosses": ["harrowed_giant", "coterie_seamkeeper", "howling_head"], "floor_names": ["The Halls of Anguish", "The Choir of Remaking", "The Altar of the Beast"]},
 	{"id": "village_chapel", "name": "The Hollow Chapel", "region": "The Abandoned Village", "floor_count": 3, "released": false, "requires": "old_road", "blurb": "A sealed chapel beyond the bandit road. Coming in a future release."},
@@ -186,13 +186,13 @@ const EXPEDITIONS: Array[Dictionary] = [
 	{"id": "path_ascension", "name": "Path of Ascension", "region": "The Path", "floor_count": 3, "released": false, "requires": "path_lament", "blurb": "The final sealed pilgrimage. Coming in a future release."},
 
 	{
-		"id": "old_road", "name": "The Old Road", "floor_count": 3, "region": "The Abandoned Village", "combat_background": "res://assets/generated/bandit_combat.png", "camp_background": "res://assets/generated/bandit_camp.png", "difficulty": "Apprentice",
+		"id": "old_road", "name": "The Old Road", "floor_count": 3, "region": "The Abandoned Village", "combat_background": "res://assets/art_library/generated/bandit_combat.png", "camp_background": "res://assets/art_library/generated/bandit_camp.png", "difficulty": "Apprentice",
 		"blurb": "Follow the bandits' tribute into a ruined keep. Break its last son's vigil, then end the Undying Lord's reign.",
 		"floor_names": ["The Bandit Road", "The Keep's Outer Ward", "The Undying Court"],
 		"floor_enemy_pools": [["ash_raider", "gallows_scout"], ["keep_footman", "keep_crossbow"], ["keep_wolfguard", "keep_footman", "keep_crossbow"]],
 		"floor_bosses": ["", "keep_son", "undying_lord"],
-		"floor_combat_backgrounds": ["res://assets/generated/bandit_combat.png", "res://assets/generated/keep_hall.png", "res://assets/generated/keep_hall.png"],
-		"floor_camp_backgrounds": ["res://assets/generated/bandit_camp.png", "res://assets/generated/keep_hall.png", "res://assets/generated/keep_hall.png"],
+		"floor_combat_backgrounds": ["res://assets/art_library/generated/bandit_combat.png", "res://assets/art_library/generated/keep_hall.png", "res://assets/art_library/generated/keep_hall.png"],
+		"floor_camp_backgrounds": ["res://assets/art_library/generated/bandit_camp.png", "res://assets/art_library/generated/keep_hall.png", "res://assets/art_library/generated/keep_hall.png"],
 		"creature": "ash_raider", "faction": "human", "reward": 5, "locked": false,
 	},
 	{
@@ -300,15 +300,15 @@ static func hero(hero_id: String, preview_item: String = "") -> Dictionary:
 		if outfit == "relic" and not preload("res://scripts/equipment_art.gd").available(hero_id): outfit = str(hero_outfits.get(hero_id,"original"))
 		result["equipment_look"] = outfit
 		if outfit == "relic":
-			result["art"] = "res://assets/equipment/hero_%s_idle.tres" % hero_id
-			result["camp_art"] = "res://assets/equipment/hero_%s_camp.tres" % hero_id
+			result["art"] = "res://assets/art_library/equipment/hero_%s_idle.tres" % hero_id
+			result["camp_art"] = "res://assets/art_library/equipment/hero_%s_camp.tres" % hero_id
 		elif outfit == "alternate" and appearance.available(hero_id):
 			result["art"] = appearance.path(hero_id)
 			result["camp_art"] = appearance.path(hero_id,"camp")
 		result["portrait_art"] = result["art"]
 		if hero_portraits.get(hero_id,"full") == "bust":
 			var purpose: String = "portrait" if outfit == "alternate" else "original_portrait"
-			if outfit == "relic": result["portrait_art"] = "res://assets/equipment/hero_%s_portrait.tres" % hero_id
+			if outfit == "relic": result["portrait_art"] = "res://assets/art_library/equipment/hero_%s_portrait.tres" % hero_id
 			elif ResourceLoader.exists(appearance.path(hero_id,purpose)): result["portrait_art"] = appearance.path(hero_id,purpose)
 	return result
 
@@ -1091,7 +1091,7 @@ static func floor_background(scene_kind: String) -> String:
 	var backgrounds: Array = selected_expedition.get("floor_" + scene_kind + "_backgrounds", [])
 	if floor_index < backgrounds.size():
 		return str(backgrounds[floor_index])
-	return str(selected_expedition.get(scene_kind + "_background", "res://assets/generated/camp_ruins.png" if scene_kind == "camp" else "res://assets/generated/bandit_combat.png"))
+	return str(selected_expedition.get(scene_kind + "_background", "res://assets/art_library/generated/camp_ruins.png" if scene_kind == "camp" else "res://assets/art_library/generated/bandit_combat.png"))
 
 static func next_floor_entrance() -> Dictionary:
 	if floor_index >= floor_count - 1:

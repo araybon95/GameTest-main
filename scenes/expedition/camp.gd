@@ -40,6 +40,9 @@ func refresh() -> void:
 	var rest := button_at("REST SPENT" if used else "REST BY THE FIRE", Rect2(750, 240, 420, 55), rest_party)
 	rest.name = "RestButton"
 	rest.disabled = used
+	rest.icon = preload("res://scripts/camp_art.gd").texture_for("rest")
+	rest.expand_icon = true
+	rest.add_theme_constant_override("icon_max_width",40)
 	for index in range(State.party.size()):
 		var hero_id: String = State.party[index]
 		var x: float = [310.0, 660.0, 1270.0][index]
@@ -47,12 +50,12 @@ func refresh() -> void:
 		var shadow = preload("res://scenes/combat/ground_shadow.gd").new()
 		shadow.position = Vector2(x+140,691)
 		add_child(shadow)
-		var camper := picture(str(State.hero(hero_id)["camp_art"]), Rect2(x - 20, 410, 330, 280), 0.2 if state.get("dead", false) else 1.0)
+		var camper := picture(str(State.hero(hero_id)["camp_art"]), Rect2(x - 20, 475, 330, 215), 0.2 if state.get("dead", false) else 1.0)
 		camper.name = "Camper_%s" % hero_id
 		camper.texture = Scenery.grounded_texture(str(State.hero(hero_id)["camp_art"]))
 		camper.stretch_mode = TextureRect.STRETCH_SCALE
-		camper.size = Vector2(280*camper.texture.get_width()/float(camper.texture.get_height()),280)
-		camper.position = Vector2(x+140-camper.size.x*.5,410)
+		camper.size = Vector2(215*camper.texture.get_width()/float(camper.texture.get_height()),215)
+		camper.position = Vector2(x+140-camper.size.x*.5,475)
 		camper.modulate *= Scenery.tint(floor_theme)
 		Scenery.apply_hero_palette(camper,hero_id,str(State.hero_colors.get(hero_id,"original")))
 		var idle := preload("res://scenes/expedition/camp_actor.gd").new()
@@ -69,10 +72,12 @@ func refresh() -> void:
 	for index in range(choices.size()):
 		var id: String = choices[index]
 		var entry: Dictionary = State.Depth.CAMP_CHOICES[id]
-		var skill := button_at("%s%s · %d %s" % ["✓ " if room.get("camp_choices",[]).has(id) else "",entry["name"],entry["cost"],"POINT" if entry["cost"] == 1 else "POINTS"],Rect2(270 + index * 350,350,335,50),prepare.bind(id))
-		skill.add_theme_font_size_override("font_size",20)
-		skill.disabled = not used or room.get("camp_choices",[]).has(id) or int(room.get("camp_points",3)) < int(entry["cost"])
-		skill.tooltip_text = entry["description"]
+		var skill := preload("res://scenes/ui/camp_action_card.gd").new()
+		skill.position = Vector2(270+index*350,350)
+		skill.size = Vector2(335,120)
+		skill.configure(id,entry,used,int(room.get("camp_points",3)),room.get("camp_choices",[]).has(id))
+		skill.pressed.connect(prepare.bind(id))
+		add_child(skill)
 	party_bar(leave_camp, "RETURN TO DUNGEON")
 	Scenery.decorate(self)
 

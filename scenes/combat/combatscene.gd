@@ -42,11 +42,11 @@ const RED = "#DF7870"
 const VIRTUE_COLOR = "#8FB07A"
 const AFFLICTION_COLOR = "#C25A55"
 
-const CARD_ART_DIR = "res://assets/generated/"
+const CARD_ART_DIR = "res://assets/art_library/generated/"
 const DEFAULT_ENEMY_NAME: String = "Hollow Villager"
 const DEFAULT_ENEMY_MAX_HP: int = 68
 const DEFAULT_ENEMY_ATTACK: int = 7
-const DEFAULT_ENEMY_ART: String = "res://assets/generated/enemy_hollow_villager.png"
+const DEFAULT_ENEMY_ART: String = "res://assets/art_library/generated/enemy_hollow_villager.png"
 const HUB_SCENE = "res://scenes/hub/settlement.tscn"
 
 ## Allow F6 preview of the combat layout with the default Old Road encounter.
@@ -1342,7 +1342,7 @@ func _build_interface() -> void:
 	if GameState.selected_expedition.has("combat_background"):
 		$BackgroundArt.texture = load(GameState.floor_background("combat"))
 	if enemies[0].get("surprised", false) and not (GameState.selected_expedition.get("id", "") == "old_road" and GameState.floor_index > 0):
-		$BackgroundArt.texture = load("res://assets/generated/event_%s_corridor.png" % ("beast" if GameState.selected_expedition.get("faction", "") == "remade" else "bandit"))
+		$BackgroundArt.texture = load("res://assets/art_library/generated/event_%s_corridor.png" % ("beast" if GameState.selected_expedition.get("faction", "") == "remade" else "bandit"))
 	round_label = $RoundLabel
 	hand_title = $HandTitle
 	hand_container = $CardHand/Cards
@@ -1661,8 +1661,8 @@ func _create_card_view(card_id: String, card: Dictionary) -> Button:
 
 func _load_texture(path: String) -> Texture2D:
 	# Dedicated combat atlases keep idle and action gear consistent on the stage.
-	if path == "res://assets/generated/hero_crusader.tres": path = "res://assets/generated/hero_crusader_combat_idle.tres"
-	path = {"res://assets/generated/hero_warden.png":"res://assets/generated/hero_warden_combat_idle.tres", "res://assets/generated/enemy_ash_raider.png":"res://assets/generated/enemy_ash_raider_combat_idle.tres"}.get(path,path)
+	if path == "res://assets/art_library/generated/hero_crusader.tres": path = "res://assets/art_library/generated/hero_crusader_combat_idle.tres"
+	path = {"res://assets/art_library/generated/hero_warden.png":"res://assets/art_library/generated/hero_warden_combat_idle.tres", "res://assets/art_library/generated/enemy_ash_raider.png":"res://assets/art_library/generated/enemy_ash_raider_combat_idle.tres"}.get(path,path)
 	if ResourceLoader.exists(path):
 		return load(path) as Texture2D
 	return null
@@ -2123,7 +2123,7 @@ func stress_behavior(id: String, roll: float = -1.0) -> void:
 
 
 func _make_cocoon() -> Dictionary:
-	var cocoon: Dictionary = Rules.make_enemy({"name": "Luminous Cocoon", "hp": 18, "attack": 0, "art": "res://assets/generated/event_beast_offering.png"}, "moth_cocoon", 0)
+	var cocoon: Dictionary = Rules.make_enemy({"name": "Luminous Cocoon", "hp": 18, "attack": 0, "art": "res://assets/art_library/generated/event_beast_offering.png"}, "moth_cocoon", 0)
 	cocoon["cocoon"] = true
 	cocoon["creature_class"] = "Insect"
 	cocoon["age"] = 0
@@ -2149,7 +2149,7 @@ func _ground_battlefield() -> void:
 	}
 	var file: String = backdrop.texture.resource_path.get_file() if backdrop.texture != null else ""
 	if variants.has(file):
-		var replacement: String = "res://assets/generated/" + variants[file]
+		var replacement: String = "res://assets/art_library/generated/" + variants[file]
 		if ResourceLoader.exists(replacement): backdrop.texture = load(replacement)
 	# The side-view wall meets the floor around 65% of these images.
 	_place(backdrop,Rect2(0,-330,1920,1080))

@@ -74,8 +74,8 @@ static func transition(scope: Control) -> void:
 func _ready() -> void:
  set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
  var settings: Dictionary = SETTINGS.get(kind,SETTINGS["barracks"])
- var path := "res://assets/presentation/settlement/" + str(settings["art"])
- if settings["art"] == "" or not ResourceLoader.exists(path): path = "res://assets/generated/" + str(settings["fallback"])
+ var path := "res://assets/art_library/presentation/settlement/" + str(settings["art"])
+ if settings["art"] == "" or not ResourceLoader.exists(path): path = "res://assets/art_library/generated/" + str(settings["fallback"])
  var background := TextureRect.new()
  background.name = "InteriorBackground"
  background.texture = load(path)
@@ -96,7 +96,7 @@ func _ready() -> void:
   attendant.z_index = 11
   attendant.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
   var npc_kind := "barracks" if kind == "watchtower" else kind
-  attendant.texture = load("res://assets/presentation/settlement/%s_attendant.png" % npc_kind)
+  attendant.texture = load("res://assets/art_library/presentation/settlement/%s_attendant.png" % npc_kind)
   attendant.position = npc_rect.position; attendant.size = npc_rect.size
   origin = attendant.position
   attendant.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED

@@ -1,6 +1,6 @@
 extends RefCounted
 ## Editable repository artwork first; optional local installation as fallback.
-const Catalog = preload("res://assets/presentation/art_catalog.gd")
+const Catalog = preload("res://assets/art_library/presentation/art_catalog.gd")
 const DEFAULT_ROOT = "C:/Program Files (x86)/Steam/steamapps/common/DarkestDungeon/dungeons"
 const CONFIG_PATH = "user://local_art.cfg"
 static var root_path: String = DEFAULT_ROOT

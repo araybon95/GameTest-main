@@ -4,10 +4,10 @@
   "mode": "Generate; four opaque panoramas and two transparent original prop sprites; one built-in tool call per asset",
   "purpose": "Original wide side-on corridor scenery for continuous horizontal hallway travel.",
   "viewed_style_references": [
-    "assets/generated/bandit_battle_stage.png",
-    "assets/generated/keep_battle_stage.png",
-    "assets/generated/beast_battle_stage.png",
-    "assets/generated/apothecary_battle_stage.png"
+    "assets/art_library/generated/bandit_battle_stage.png",
+    "assets/art_library/generated/keep_battle_stage.png",
+    "assets/art_library/generated/beast_battle_stage.png",
+    "assets/art_library/generated/apothecary_battle_stage.png"
   ],
   "tool_reference_images": [],
   "third_party_assets_used": false,
@@ -15,7 +15,7 @@
   "assets": [
     {
       "theme": "bandit",
-      "file": "assets/generated/hallway_bandit_panorama.png",
+      "file": "assets/art_library/generated/hallway_bandit_panorama.png",
       "dimensions": [
         1983,
         793
@@ -27,7 +27,7 @@
     },
     {
       "theme": "keep",
-      "file": "assets/generated/hallway_keep_panorama.png",
+      "file": "assets/art_library/generated/hallway_keep_panorama.png",
       "dimensions": [
         1983,
         793
@@ -39,7 +39,7 @@
     },
     {
       "theme": "beast",
-      "file": "assets/generated/hallway_beast_panorama.png",
+      "file": "assets/art_library/generated/hallway_beast_panorama.png",
       "dimensions": [
         1983,
         793
@@ -51,7 +51,7 @@
     },
     {
       "theme": "medical",
-      "file": "assets/generated/hallway_medical_panorama.png",
+      "file": "assets/art_library/generated/hallway_medical_panorama.png",
       "dimensions": [
         1983,
         793
@@ -63,7 +63,7 @@
     },
     {
       "theme": "gold_cache",
-      "file": "assets/generated/hallway_gold_cache.png",
+      "file": "assets/art_library/generated/hallway_gold_cache.png",
       "dimensions": [
         1682,
         935
@@ -81,7 +81,7 @@
     },
     {
       "theme": "campfire",
-      "file": "assets/generated/hallway_campfire.png",
+      "file": "assets/art_library/generated/hallway_campfire.png",
       "dimensions": [
         1484,
         1060

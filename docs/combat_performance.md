@@ -10,7 +10,7 @@ Boss entrances retain the boss's larger battlefield silhouette and lore card. Ph
 
 ## Individually replaceable files
 
-- `assets/generated/hero_warden_combat_v2.png` and `enemy_ash_raider_combat_v2.png`: original generated transparent pose sheets. Their measured regions are in `scripts/ink_sprite_regions.gd`; idle regions are in the corresponding `*_combat_idle.tres` files. Original sheets are retained.
+- `assets/art_library/generated/hero_warden_combat_v2.png` and `enemy_ash_raider_combat_v2.png`: original generated transparent pose sheets. Their measured regions are in `scripts/ink_sprite_regions.gd`; idle regions are in the corresponding `*_combat_idle.tres` files. Original sheets are retained.
 - `assets/audio/combat/impact.wav`, `death.wav`, `boss.wav` and `phase.wav`: original generated audio accents. Rebuild them with `tools/generate_combat_accents.py`, or replace each WAV individually. Existing weapon sounds play on release, impact/block on contact and defeat after the contact hold.
 - `scenes/combat/status_bursts.gd`: short status bursts. Persistent effects remain in `status_visual.gd`; slash/projectile art remains in `strike_effects.gd` and the presentation PNGs.
 
