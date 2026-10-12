@@ -286,7 +286,7 @@ func build_inventory() -> void:
 		if inventory_filter != "All" and category != inventory_filter: continue
 		var icon = ItemButton.new()
 		icon.name = "Inventory_" + str(item_id)
-		icon.configure(str(item_id), int(State.inventory[item_id]))
+		icon.configure(str(item_id), int(State.inventory[item_id]),hero_id)
 		icon.favourite_changed.connect(refresh)
 		icon.pressed.connect(choose_item.bind(str(item_id)))
 		grid.add_child(icon)
@@ -323,14 +323,28 @@ func choose_item(item_id: String) -> void:
 			inventory_changed.emit()
 		else: status_text = "Restorative items can be used on a living hero during an expedition."
 	elif item.has("slot"):
-		if State.equip_item(hero_id, item_id):
-			status_text = str(item["name"]) + " equipped."
-			var reaction: String = State.ItemStories.equipped_line(State,hero_id,item_id)
-			if not reaction.is_empty(): status_text += " " + reaction
-			inventory_changed.emit()
-		else: status_text = "This item belongs to another class."
+		show_equipment_comparison(item_id)
+		return
 	else:
 		status_text = State.Items.tooltip(item_id)
+	refresh()
+
+func show_equipment_comparison(item_id: String) -> void:
+	if has_node("EquipmentComparison"): return
+	var comparison = preload("res://scenes/ui/equipment_compare.gd").new()
+	comparison.hero_id = hero_id
+	comparison.item_id = item_id
+	comparison.equip_requested.connect(confirm_equipment.bind(item_id))
+	add_child(comparison)
+
+func confirm_equipment(item_id: String) -> void:
+	if combat_open() or not State.party.has(hero_id): return
+	if State.equip_item(hero_id,item_id):
+		status_text = str(State.Items.item(item_id).name) + " equipped."
+		var reaction: String = State.ItemStories.equipped_line(State,hero_id,item_id)
+		if not reaction.is_empty(): status_text += " " + reaction
+		inventory_changed.emit()
+	else: status_text = "This item belongs to another class or is no longer available."
 	refresh()
 
 func remove_equipment(slot: String) -> void:

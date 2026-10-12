@@ -57,6 +57,7 @@ func strike(source: TextureRect, target: TextureRect, kind: String, title: Strin
  if not options.is_empty(): resolved_options["creature"] = source.get_meta("creature","")
  var timing: Dictionary = Profiles.resolve(kind,title,resolved_options,source_boss,duration)
  pending.append({"source":source.texture,"target":target.texture,"source_node":source,"target_node":target,"source_material":source.material.duplicate() if source.material != null else null,"target_material":target.material.duplicate() if target.material != null else null,"kind":kind,"attack_kind":kind,"title":title,"hero":from_hero,"source_boss":source_boss,"target_boss":target.get_meta("boss",false),"creature":source.get_meta("creature",""),"duration":timing["duration"],"profile":timing["id"],"timing":timing,"skill_id":str(options.get("skill_id",""))})
+ pending.back()["weapon_signature"] = str(options.get("weapon_signature",""))
  if active.is_empty() and boss_reveal == null: next()
 func restore_participants() -> void:
  if active.is_empty(): return

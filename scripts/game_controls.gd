@@ -261,6 +261,11 @@ func _input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		return
 	if is_instance_valid(hero_sheet):
+		if hero_sheet.has_node("EquipmentComparison"):
+			if event.keycode == KEY_ESCAPE:
+				hero_sheet.get_node("EquipmentComparison").dismiss()
+			if event.keycode in [KEY_ESCAPE,KEY_C,KEY_Q,KEY_E,KEY_TAB]: get_viewport().set_input_as_handled()
+			return
 		match event.keycode:
 			KEY_ESCAPE, KEY_C: close_hero_sheet()
 			KEY_Q: hero_sheet.cycle_hero(-1)

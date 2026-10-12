@@ -3,9 +3,11 @@ extends Button
 const Items = preload("res://scripts/item_data.gd")
 signal favourite_changed
 var item_id: String = ""
+var comparison_hero: String = ""
 
-func configure(id: String, amount: int = 1) -> void:
+func configure(id: String, amount: int = 1, hero: String = "") -> void:
 	item_id = id
+	comparison_hero = hero
 	custom_minimum_size = Vector2(80, 80)
 	focus_mode = Control.FOCUS_ALL
 	var entry: Dictionary = Items.item(id)
@@ -88,6 +90,8 @@ func _gui_input(event: InputEvent) -> void:
 		accept_event()
 
 func _make_custom_tooltip(for_text: String) -> Object:
+	if not comparison_hero.is_empty() and Items.item(item_id).has("slot"):
+		return comparison_tooltip(for_text)
 	var panel := PanelContainer.new()
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color("#0C0A0E")
@@ -105,4 +109,35 @@ func _make_custom_tooltip(for_text: String) -> Object:
 	label.add_theme_constant_override("shadow_offset_x", 1)
 	label.add_theme_constant_override("shadow_offset_y", 1)
 	panel.add_child(label)
+	return panel
+
+func comparison_tooltip(for_text: String) -> PanelContainer:
+	var state: Script = load("res://scripts/game_data.gd")
+	var comparison: Script = preload("res://scripts/equipment_comparison.gd")
+	var panel := PanelContainer.new()
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color("#100B11")
+	style.border_color = Color("#C5A36E")
+	style.set_border_width_all(2)
+	style.set_content_margin_all(16)
+	panel.add_theme_stylebox_override("panel",style)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation",18)
+	panel.add_child(row)
+	var preview := TextureRect.new()
+	preview.name = "ComparisonPreview"
+	preview.texture = load(state.hero(comparison_hero,item_id).art)
+	preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	preview.custom_minimum_size = Vector2(145,255)
+	preview.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_child(preview)
+	var label := Label.new()
+	label.name = "ComparisonText"
+	label.text = comparison.text(state,comparison_hero,item_id) + "\n\n" + str(Items.item(item_id).name) + "\nClick to inspect full effects and history before equipping."
+	label.custom_minimum_size.x = 370
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.add_theme_font_size_override("font_size",18)
+	label.add_theme_color_override("font_color",Color("#FFF1D8"))
+	row.add_child(label)
 	return panel

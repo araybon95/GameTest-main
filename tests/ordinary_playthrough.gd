@@ -42,6 +42,10 @@ func reset_party(third: String, seed_value: int) -> void:
 	State.graves.clear()
 	State.hero_names.clear()
 	State.hero_colors.clear()
+	State.hero_outfits.clear()
+	State.hero_journals.clear()
+	State.Items.histories.clear()
+	State.Items.favourites.clear()
 	State.crusader_unlocked = false
 	State.gold = 0
 	State.progress_loaded = true
@@ -287,13 +291,23 @@ func visit_shop() -> void:
 	current_scene.touch_orb()
 	await settle()
 	var purchases: Array = []
+	var sales: Array = []
+	current_scene.set_trade_mode("Sell")
+	for item_id in State.inventory.keys():
+		if not State.Items.item(item_id).has("slot"): continue
+		if current_scene.sell_inventory_item(item_id): sales.append(item_id)
+	current_scene.set_trade_mode("Buy")
 	for id in State.party:
 		var weapon: String = {"warden":"warden_sword","ranger":"ranger_bow","occultist":"occultist_staff","healer":"healer_mace"}[id]
 		if State.equipment.get(id,{}).get("weapon","")=="" and State.gold>=State.item_price(weapon):
 			current_scene.purchase(weapon);purchases.append(weapon)
 	while State.gold >= State.item_price("healing_potion") and int(State.inventory.get("healing_potion",0)) < 2:
 		current_scene.purchase("healing_potion");purchases.append("healing_potion")
-	report["shops"].append({"floor":State.floor_index+1,"purchases":purchases,"gold_remaining":State.gold})
+	for id in State.party:
+		var armor: String = {"warden":"warden_armor","ranger":"ranger_common_armor","occultist":"occultist_armor","healer":"healer_armor"}[id]
+		if State.equipment.get(id,{}).get("armor","") == "" and State.gold >= State.item_price(armor):
+			if current_scene.purchase(armor): purchases.append(armor)
+	report["shops"].append({"floor":State.floor_index+1,"purchases":purchases,"sales":sales,"gold_remaining":State.gold})
 	current_scene.return_to_party()
 	await settle()
 	current_scene.continue_exploring()

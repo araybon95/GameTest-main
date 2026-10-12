@@ -85,7 +85,7 @@ func refresh() -> void:
 		row.add_theme_constant_override("separation", 20)
 		rows.add_child(row)
 		var icon = ItemButton.new()
-		icon.configure(str(item_id), int(State.inventory.get(item_id, 0)))
+		icon.configure(str(item_id), int(State.inventory.get(item_id, 0)),str(item.get("hero",State.party[0])))
 		icon.favourite_changed.connect(refresh)
 		icon.custom_minimum_size = Vector2(90, 90)
 		icon.mouse_default_cursor_shape = Control.CURSOR_HELP

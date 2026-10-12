@@ -88,8 +88,40 @@ static func draw(presentation: Control, canvas: Node2D) -> void:
     var fang: Vector2 = point+Vector2.from_angle(-0.8+i*0.27)*(30+strength*55)
     canvas.draw_colored_polygon(PackedVector2Array([fang+Vector2(-5,-8),fang+Vector2(5,-8),fang+Vector2(0,12)]),with_alpha(BONE,strength*0.85))
 
+ weapon_accent(canvas,data,str(active.get("weapon_signature","")),kind)
+
 static func seed_value(index: int, salt: float = 0.0) -> float:
  return fposmod(sin(index*12.9898+salt*78.233)*43758.5453,1.0)
+
+static func weapon_accent(canvas: Node2D, data: Dictionary, signature: String, kind: String) -> void:
+ if signature.is_empty(): return
+ var tint: Color = {"frost":Color("#91D1DD"),"venom":Color("#91B35C"),"blood":Color("#A83E5B"),"holy":Color("#E3C78B")}.get(signature,BONE)
+ var start: Vector2 = data.start
+ var aim: Vector2 = data.aim
+ var flight: float = data.progress
+ var strength: float = data.impact
+ if kind in ["bow","arrow","spell"] and flight > 0.02 and flight < 0.98:
+  var point: Vector2 = start.lerp(aim,flight)
+  var tail: Vector2 = start.lerp(aim,maxf(0,flight-0.14))
+  var normal := (aim-start).normalized().orthogonal()
+  var line := PackedVector2Array([tail,tail.lerp(point,0.5)+normal*4,point])
+  canvas.draw_polyline(line,with_alpha(INK,0.9),6,true)
+  canvas.draw_polyline(line,with_alpha(tint,0.8),2,true)
+ if not data.harmful or strength <= 0: return
+ var center: Vector2 = data.target
+ if kind == "sword":
+  var cut := PackedVector2Array([center+Vector2(-48,34),center+Vector2(-6,-5),center+Vector2(44,-35)])
+  canvas.draw_polyline(cut,with_alpha(INK,strength),7,true)
+  canvas.draw_polyline(cut,with_alpha(tint,strength*0.85),2,true)
+ for i in range(5):
+  var angle: float = -2.6+i*0.61
+  var point: Vector2 = center+Vector2.from_angle(angle)*(10+strength*(18+i*4))
+  if signature == "frost":
+   canvas.draw_colored_polygon(PackedVector2Array([point+Vector2(-2,7),point+Vector2(0,-8),point+Vector2(3,2)]),with_alpha(tint,strength*0.8))
+  elif signature == "holy":
+   canvas.draw_line(point+Vector2(-3,0),point+Vector2(3,0),with_alpha(tint,strength*0.8),1.4,true)
+   canvas.draw_line(point+Vector2(0,-5),point+Vector2(0,5),with_alpha(tint,strength*0.8),1.4,true)
+  else: canvas.draw_circle(point,1.5+i*0.25,with_alpha(tint,strength*0.7))
 
 static func spell_buildup(canvas: Node2D, point: Vector2, element_id: String, charge: float) -> void:
  var tint: Color = ELEMENTS[element_id]

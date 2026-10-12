@@ -531,7 +531,7 @@ func _resolve_card(hero_id: String, card: Dictionary) -> void:
 func _attack_with_equipment(hero_id: String, card: Dictionary, ignore_block: bool = false) -> void:
 	var attack_kind: String = "bow" if hero_id == "ranger" else "spell" if hero_id in ["occultist", "healer"] else "sword"
 	if presentation != null:
-		presentation.strike(hero_portraits[hero_id], enemy_views[selected_enemy_index].get_node("EnemyArt"), attack_kind, str(card.get("name", "Strike")),true,{"skill_id":str(card.get("skill_id","")),"effect":str(card.get("effect",""))})
+		presentation.strike(hero_portraits[hero_id], enemy_views[selected_enemy_index].get_node("EnemyArt"), attack_kind, str(card.get("name", "Strike")),true,{"skill_id":str(card.get("skill_id","")),"effect":str(card.get("effect","")),"weapon_signature":preload("res://scripts/weapon_signatures.gd").resolve(GameState,hero_id)})
 	_play_attack_sound(attack_kind)
 	var accuracy: float = GameState.hero_accuracy(hero_id, hero_state[hero_id])
 	if accuracy < 100.0 and randf() * 100.0 >= accuracy:
