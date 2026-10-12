@@ -5,6 +5,7 @@ const Music = preload("res://scripts/settlement_music.gd")
 const LocalArt = preload("res://scripts/local_dungeon_art.gd")
 var values: Dictionary = {"master": 0.8, "music": 0.8, "effects": 0.8, "brightness": 1.0}
 var ambient_motion: bool = true
+var combat_speed: float = 1.0
 var settings_path: String = "user://settings.cfg"
 var layer: CanvasLayer
 var overlay: Control
@@ -48,6 +49,9 @@ func _ready() -> void:
 	brightness.material = material
 	light_layer.add_child(brightness)
 	ambient_motion = bool(cfg.get_value("settings","ambient_motion",true))
+	var stored_speed: Variant = cfg.get_value("settings","combat_speed",1.0)
+	combat_speed = float(stored_speed) if stored_speed is float or stored_speed is int else 1.0
+	if not combat_speed in [1.0,1.5,2.0]: combat_speed = 1.0
 	apply_values()
 
 func apply_values() -> void:
@@ -64,7 +68,12 @@ func set_value(key: String, value: float) -> void:
 	var cfg := ConfigFile.new()
 	for setting in values: cfg.set_value("settings", setting, values[setting])
 	cfg.set_value("settings","ambient_motion",ambient_motion)
+	cfg.set_value("settings","combat_speed",combat_speed)
 	cfg.save(settings_path)
+
+func set_combat_speed(value: float) -> void:
+	combat_speed = value if value in [1.0,1.5,2.0] else 1.0
+	set_value("brightness",values["brightness"])
 
 func _process(delta: float) -> void:
 	elapsed += delta
@@ -78,7 +87,7 @@ func _process(delta: float) -> void:
 	if elapsed < 0.4: return
 	elapsed = 0.0
 	style_portraits(current)
-	if (checkpoint_pending or save_elapsed >= 5.0) and safe_to_save():
+	if (checkpoint_pending or save_elapsed >= 5.0) and safe_to_save() and not is_instance_valid(overlay):
 		save_elapsed = 0.0
 		checkpoint_pending = false
 		if scene_path != "res://scenes/ui/title_screen.tscn": Saves.save(0)
@@ -91,6 +100,13 @@ func safe_to_save() -> bool:
 	if path in ["res://scenes/expedition/merchant_orb_room.tscn", "res://scenes/hub/item_shop.tscn"]:
 		return State.merchant_orb_available()
 	return path == "res://scenes/expedition/dungeon.tscn" and not State.floors.is_empty() and State.floors[State.floor_index][State.room_position].get("cleared", false)
+
+func save_unavailable_reason() -> String:
+	var current := get_tree().current_scene
+	if current == null or current.scene_file_path.contains("title_screen"): return "Begin or load a journey before saving."
+	if current.scene_file_path == "res://scenes/expedition/dungeon.tscn" and current.traveling: return "Finish the hallway or return to its starting door before saving."
+	if State.run_active: return "Return to a cleared map room or merchant between encounters to save. Combat and camp actions cannot be saved mid-encounter."
+	return "Saving is unavailable on this screen."
 
 func style_portraits(node: Node) -> void:
 	if node.get_meta("palette_preview", false): return
@@ -139,7 +155,7 @@ func open_settings() -> void:
 	text("SETTINGS & SAVED JOURNEYS", Vector2(180, 100), 1550, 40)
 	for index in range(4):
 		var key: String = ["master", "music", "effects", "brightness"][index]
-		var y: float = 190 + index * 90
+		var y: float = 175 + index * 75
 		text(key.capitalize(), Vector2(180, y), 300)
 		var slider := HSlider.new()
 		slider.position = Vector2(510, y + 8)
@@ -154,7 +170,7 @@ func open_settings() -> void:
 	var local_art := CheckBox.new()
 	local_art.name = "LocalDungeonArtwork"
 	local_art.text = "Use layered dungeon artwork and painted UI"
-	local_art.position = Vector2(180, 507)
+	local_art.position = Vector2(180, 465)
 	local_art.size = Vector2(800, 43)
 	local_art.add_theme_font_size_override("font_size", 23)
 	local_art.button_pressed = LocalArt.get_enabled()
@@ -165,22 +181,40 @@ func open_settings() -> void:
 	var motion := CheckBox.new()
 	motion.name = "AmbientMotion"
 	motion.text = "Animate interiors & transitions"
-	motion.position = Vector2(1080,507)
+	motion.position = Vector2(1080,465)
 	motion.size = Vector2(650,43)
 	motion.add_theme_font_size_override("font_size",22)
 	motion.button_pressed = ambient_motion
 	motion.toggled.connect(func(enabled): ambient_motion = enabled; set_value("brightness",values["brightness"]))
 	overlay.add_child(motion)
-	text("Save between encounters. Loading replaces the current journey. Slots can be overwritten; the automatic checkpoint uses a separate file.", Vector2(180, 555), 1560, 21)
+	text("Combat playback",Vector2(180,522),300,22)
+	var speed := OptionButton.new()
+	speed.name = "CombatPlayback"
+	speed.position = Vector2(510,517)
+	speed.size = Vector2(310,45)
+	speed.add_theme_font_size_override("font_size",22)
+	for option in ["1× · Original","1.5× · Brisk","2× · Fast"]: speed.add_item(option)
+	speed.select([1.0,1.5,2.0].find(combat_speed))
+	speed.item_selected.connect(func(index): set_combat_speed([1.0,1.5,2.0][index]))
+	overlay.add_child(speed)
+	text("Speeds attacks and boss reveals; combat rules stay the same.",Vector2(850,522),850,20)
+	text(save_unavailable_reason() if not safe_to_save() else "Ready to save. AUTO is a separate checkpoint; manual slots can be overwritten.", Vector2(180, 578), 1560, 20).name = "SaveAvailability"
 	for slot in range(4):
 		var y: float = 625 + slot * 75
-		text(("AUTO" if slot == 0 else "SLOT %d" % slot) + " · " + Saves.summary(slot), Vector2(180, y), 1120, 18)
+		var info: Dictionary = Saves.slot_info(slot)
+		var summary_label := text(("AUTO" if slot == 0 else "SLOT %d" % slot) + " · " + str(info.summary) + ("\n"+str(info.detail) if info.loadable else ""), Vector2(180, y), 1120, 18)
+		summary_label.tooltip_text = str(info.error)
+		summary_label.mouse_filter = Control.MOUSE_FILTER_PASS
 		if slot > 0:
-			var save_button := action_button("SAVE", Vector2(1320, y), save_slot.bind(slot))
+			var save_button := action_button("SAVE", Vector2(1320, y), request_save.bind(slot))
+			save_button.name = "SaveSlot%d" % slot
 			save_button.disabled = not safe_to_save()
+			save_button.tooltip_text = "Save this journey here." if safe_to_save() else save_unavailable_reason()
 		var load_button := action_button("LOAD", Vector2(1510, y), request_load.bind(slot))
-		load_button.disabled = Saves.summary(slot) == "Empty"
-	notice = text("F10 or Escape to close. Sound and brightness apply immediately.", Vector2(180, 975), 1200, 20)
+		load_button.name = "LoadSlot%d" % slot
+		load_button.disabled = not info.loadable
+		load_button.tooltip_text = str(info.error) if not info.loadable else "Resume this saved party and journey."
+	notice = text("Changes apply immediately. F10 or Escape to close.", Vector2(180, 975), 1200, 20)
 	action_button("CLOSE", Vector2(1510, 965), close_settings)
 
 func set_local_dungeon_art(is_enabled: bool) -> void:
@@ -211,9 +245,16 @@ func save_slot(slot: int) -> void:
 	notice.text = "Journey saved." if ok else "Could not write the save file."
 
 func request_load(slot: int) -> void:
+	var info: Dictionary = Saves.slot_info(slot)
+	if not info.loadable:
+		if is_instance_valid(notice): notice.text = str(info.error) if not str(info.error).is_empty() else "This slot is empty."
+		return
 	var dialog := ConfirmationDialog.new()
+	dialog.name = "LoadJourneyConfirmation"
 	dialog.title = "Load saved journey?"
-	dialog.dialog_text = "Your current unsaved journey will be replaced."
+	dialog.dialog_text = str(info.summary)+"\n"+str(info.detail)
+	if get_tree().current_scene != null and not get_tree().current_scene.scene_file_path.contains("title_screen"):
+		dialog.dialog_text += "\nYour current unsaved journey will be replaced."
 	dialog.confirmed.connect(func(): load_slot(slot))
 	dialog.canceled.connect(dialog.queue_free)
 	overlay.add_child(dialog)
@@ -221,13 +262,27 @@ func request_load(slot: int) -> void:
 
 func load_slot(slot: int) -> bool:
 	if not Saves.load_slot(slot):
-		if notice != null: notice.text = "This save could not be loaded."
+		if is_instance_valid(notice): notice.text = str(Saves.slot_info(slot).error)
 		return false
 	close_settings()
 	if State.run_active: Music.stop()
 	else: Music.play()
 	get_tree().change_scene_to_file("res://scenes/expedition/dungeon.tscn" if State.run_active else "res://scenes/hub/settlement.tscn")
 	return true
+
+func request_save(slot: int) -> void:
+	if not safe_to_save(): return
+	if Saves.summary(slot) == "Empty":
+		save_slot(slot)
+		return
+	var dialog := ConfirmationDialog.new()
+	dialog.name = "SaveOverwriteConfirmation"
+	dialog.title = "Replace saved journey?"
+	dialog.dialog_text = "Replace SLOT %d?\n%s\nThe previous journey in this slot will be overwritten." % [slot,Saves.summary(slot)]
+	dialog.confirmed.connect(func(): save_slot(slot))
+	dialog.canceled.connect(dialog.queue_free)
+	overlay.add_child(dialog)
+	dialog.popup_centered(Vector2i(680,230))
 
 func close_settings() -> void:
 	if overlay != null: overlay.queue_free()

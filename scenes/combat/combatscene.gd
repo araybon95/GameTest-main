@@ -1889,17 +1889,17 @@ func _enter_merchant_orb() -> void:
 
 func _objective_index() -> int:
 	for index in range(enemies.size()):
-		if enemies[index]["boss"] and int(enemies[index]["hp"]) > 0 and not enemies[index].get("objective",{}).is_empty(): return index
+		if enemies[index]["boss"] and int(enemies[index]["hp"]) > 0 and enemies[index].get("objective",{}).has("kind"): return index
 	return -1
 
 func _build_boss_objective() -> void:
-	if _objective_index() < 0: return
+	if not enemies.any(func(e): return e.get("boss",false)): return
 	objective_panel = Panel.new()
 	objective_panel.name = "BossObjectivePanel"
 	_place(objective_panel,Rect2(40,576,450,104))
 	_style_card_backing(objective_panel,Color("#160E12"),Color("#79513D"))
 	add_child(objective_panel)
-	objective_hint = _make_label("",14,Color(IVORY))
+	objective_hint = _make_label("",16,Color(IVORY))
 	objective_hint.name = "ObjectiveHint"
 	objective_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_place(objective_hint,Rect2(12,6,426,56))
@@ -1918,18 +1918,55 @@ func _build_boss_objective() -> void:
 
 func _refresh_boss_objective() -> void:
 	if not is_instance_valid(objective_panel): return
-	var index: int = _objective_index()
+	var index: int = -1
+	for candidate in range(enemies.size()):
+		if enemies[candidate].get("boss",false) and int(enemies[candidate]["hp"]) > 0:
+			index = candidate
+			break
 	objective_panel.visible = index >= 0 and not battle_over
-	objective_prop.visible = objective_panel.visible
+	objective_prop.visible = false
 	if not objective_panel.visible: return
-	var state: Dictionary = enemies[index]["objective"]
+	var state: Dictionary = enemies[index].get("objective",{})
+	var has_objective: bool = state.has("kind")
+	objective_hint.text = boss_tactics_text(index)
+	objective_hint.tooltip_text = Objectives.hint(state) if has_objective else objective_hint.text
+	objective_button.visible = has_objective
+	objective_prop.visible = has_objective
+	objective_hint.size.y = 56 if has_objective else 92
+	if not has_objective: return
 	var usable: bool = hero_state.has(selected_hero) and _is_standing(selected_hero) and int(hero_state[selected_hero]["ap"]) >= 1 and Objectives.available(state)
-	objective_hint.text = Objectives.hint(state)
 	objective_button.text = str(state["action"]) + " · 1 AP" if Objectives.available(state) else "RITE INTERRUPTED" if state.get("suppression_pending",false) else "OBJECTIVE COMPLETE"
 	objective_button.disabled = not usable
 	objective_prop.call("sync",state,usable)
 	objective_prop.tooltip_text = "%s\n%s\nSelected hero spends 1 AP. Any living hero may interact." % [state["name"],Objectives.hint(state)]
 	objective_button.tooltip_text = objective_prop.tooltip_text
+	if not usable and Objectives.available(state):
+		objective_button.tooltip_text += "\nSelect a living hero with at least 1 AP."
+		objective_prop.tooltip_text = objective_button.tooltip_text
+
+func boss_tactics_text(index: int) -> String:
+	var boss: Dictionary = enemies[index]
+	var state: Dictionary = boss.get("objective",{})
+	match str(state.get("kind","")):
+		"chains":
+			var remaining: int = int(state.uses)-int(state.spent)
+			return "CHAINS %d/2 · %d%% damage reduction\nSever: −10%% attack / −5%% damage reduction." % [remaining,remaining*5]
+		"rite":
+			var phase: int = int(boss.get("phase_index",0))+1
+			if state.get("suppression_pending",false): return "COTERIE %d/3 · RITE BROKEN\nNext ritual canceled / strike halved, no debuff." % phase
+			return "COTERIE %d/3 · %s\n%s" % [phase,"Rite intact" if Objectives.available(state) else "Rite spent","Break: cancel ritual / halve strike, no debuff." if Objectives.available(state) else "The next form brings a fresh rite."]
+		"idol": return "IDOL INTACT · Prayer: 8 Stress + Chill.\nSilence: 4 Stress, no Chill." if Objectives.available(state) else "IDOL SILENCED\nPrayer: 4 Stress, no Chill."
+	match str(boss.creature):
+		"undying_lord":
+			var support: bool = enemies.any(func(e): return e.get("support",false) and int(e.hp)>0)
+			return "TRIBUTE ACTIVE · Support restores up to 8 HP each enemy turn. Defeat support first." if support else "TRIBUTE STOPPED · Support defeated. Focus the Lord."
+		"keep_son","moth_oleander":
+			return "GUARDING · 50% less incoming damage. A heavy strike follows next round." if round_number%3 == 1 else "HEAVY STRIKE · Protect wounded heroes. Exposed next round." if round_number%3 == 2 else "EXPOSED · +50% incoming damage this round. Attack now."
+		"moth_exuvia":
+			for enemy in enemies:
+				if enemy.get("cocoon",false) and int(enemy.hp)>0: return "COCOON · %d enemy turn(s) before hatching. Destroy it first." % maxi(0,2-int(enemy.get("age",0)))
+			return "No living cocoon. A new one can appear every third round."
+	return "FLOOR GUARDIAN · Read its intent and protect wounded heroes."
 
 func _interact_boss_objective() -> bool:
 	_store_enemy()

@@ -239,7 +239,8 @@ func defeat(target: TextureRect) -> void:
  entry["sounds"] = sounds
 func _process(delta: float) -> void:
  if active.is_empty(): return
- age += delta
+ var settings := get_node_or_null("/root/GameSettings")
+ age += delta * (float(settings.combat_speed) if settings != null else 1.0)
  var active_duration: float = float(active.get("duration",duration))
  if age >= active_duration:
   next()

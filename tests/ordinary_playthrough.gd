@@ -323,22 +323,25 @@ func visit_shop() -> void:
 	await settle()
 	var purchases: Array = []
 	var sales: Array = []
+	var gold_before: int = State.gold
 	current_scene.set_trade_mode("Sell")
 	for item_id in State.inventory.keys():
 		if not State.Items.item(item_id).has("slot"): continue
 		if current_scene.sell_inventory_item(item_id): sales.append(item_id)
+	var gold_from_sales: int = State.gold-gold_before
 	current_scene.set_trade_mode("Buy")
 	for id in State.party:
 		var weapon: String = {"warden":"warden_sword","ranger":"ranger_bow","occultist":"occultist_staff","healer":"healer_mace","crusader":"crusader_axe"}[id]
 		if State.equipment.get(id,{}).get("weapon","")=="" and State.gold>=State.item_price(weapon):
-			current_scene.purchase(weapon);purchases.append(weapon)
+			if current_scene.purchase(weapon): purchases.append(weapon)
 	while State.gold >= State.item_price("healing_potion") and int(State.inventory.get("healing_potion",0)) < 2:
-		current_scene.purchase("healing_potion");purchases.append("healing_potion")
+		if not current_scene.purchase("healing_potion"): break
+		purchases.append("healing_potion")
 	for id in State.party:
 		var armor: String = {"warden":"warden_armor","ranger":"ranger_common_armor","occultist":"occultist_armor","healer":"healer_armor","crusader":"crusader_common_armor"}[id]
 		if State.equipment.get(id,{}).get("armor","") == "" and State.gold >= State.item_price(armor):
 			if current_scene.purchase(armor): purchases.append(armor)
-	report["shops"].append({"floor":State.floor_index+1,"purchases":purchases,"sales":sales,"gold_remaining":State.gold})
+	report["shops"].append({"floor":State.floor_index+1,"purchases":purchases,"sales":sales,"gold_before":gold_before,"gold_from_sales":gold_from_sales,"gold_spent":gold_before+gold_from_sales-State.gold,"gold_remaining":State.gold})
 	preparation_shops["%d:%s" % [State.floor_index,State.room_position]] = true
 	current_scene.return_to_party()
 	await settle()
@@ -533,17 +536,25 @@ func run() -> void:
 	var args: PackedStringArray = OS.get_cmdline_user_args()
 	if args.size()>0 and args[0]=="campaign":
 		var campaign_seed: int = int(args[1]) if args.size()>1 else 2026
-		await one_run(campaign_seed,"occultist","cautious")
+		var campaign_hero: String = args[2] if args.size()>2 else "occultist"
+		var campaign_route: String = args[3] if args.size()>3 else "cautious"
+		assert(campaign_hero in ["occultist","healer","crusader"] and campaign_route in ["cautious","prepared","direct"])
+		await one_run(campaign_seed,campaign_hero,campaign_route)
 		if report["outcome"]=="complete":
 			for id in State.party:
 				var count: int = 0
 				while int(State.leveling(str(id))["points"])>0:
-					var stat: String = "damage_percent" if id=="ranger" else "block" if id=="warden" and count%2==0 else "heal" if id=="occultist" and count%2==0 else "max_hp"
+					var stat: String = "damage_percent" if id=="ranger" or id=="crusader" and count%2==0 else "block" if id=="warden" and count%2==0 else "heal" if id in ["occultist","healer"] and count%2==0 else "max_hp"
+					if int(State.leveling(str(id))["stats"].get(stat,0)) >= 6:
+						for fallback in ["max_hp","debuff_resist","block","heal","damage_percent"]:
+							if int(State.leveling(str(id))["stats"].get(fallback,0)) < 6:
+								stat = fallback
+								break
 					assert(State.train_hero(str(id),stat))
 					count+=1
 			expedition_id="path_beast"
 			use_objectives=true
-			await one_run(campaign_seed,"occultist","cautious",true)
+			await one_run(campaign_seed,campaign_hero,campaign_route,true)
 	elif args.size()>0 and args[0]=="path_matrix":
 		expedition_id="path_beast"
 		use_objectives=args.size()>1 and args[1]=="objectives"

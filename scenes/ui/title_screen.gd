@@ -23,10 +23,13 @@ func _ready() -> void:
 	tree_exiting.connect(music.stop)
 	music.play()
 	var continue_button := Button.new()
+	continue_button.name = "ContinueJourney"
 	continue_button.text = "CONTINUE SAVED JOURNEY"
 	continue_button.position = Vector2(700, 845)
 	continue_button.size = Vector2(520, 60)
-	continue_button.disabled = preload("res://scripts/save_files.gd").summary(0) == "Empty"
+	var checkpoint: Dictionary = preload("res://scripts/save_files.gd").slot_info(0)
+	continue_button.disabled = not checkpoint.loadable
+	continue_button.tooltip_text = str(checkpoint.summary)+"\n"+str(checkpoint.detail) if checkpoint.loadable else str(checkpoint.error)
 	continue_button.pressed.connect(func(): get_node("/root/GameSettings").request_continue())
 	add_child(continue_button)
 	_style_buttons()

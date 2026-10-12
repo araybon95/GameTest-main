@@ -46,7 +46,7 @@ static func modify_move(state: Dictionary, original: Dictionary) -> Dictionary:
 	return move
 
 static func consume_action(state: Dictionary) -> void:
-	state["suppression_pending"] = false
+	if state.has("kind"): state["suppression_pending"] = false
 
 static func hint(state: Dictionary) -> String:
 	match str(state.get("kind","")):

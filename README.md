@@ -1,5 +1,7 @@
 # Ashen Expedition
 
+Boss battles now show live tactics cues, and **F10 → Combat playback** offers 1×, 1.5× and 2× animation speed. Saved journeys preview the party, explain save restrictions and reject invalid data before loading. See [Boss clarity, pacing, campaign economy and saved journeys](docs/boss_pacing_campaign_save_review.md) for the broader Healer/Crusader campaign results.
+
 Preparation now shows skills blocked by each hero's position, and **I** opens a field guide for formation, shared turns, scouting and recovery. The first keep descent warns about level-1 heroes and explains optional exploration. See [First-expedition guidance and campaign samples](docs/first_expedition_usability.md).
 
 Descent advice now names heroes missing weapons or armour and lists discovered merchants. Cyan **M** diamonds identify merchants on the route map; fight tooltips explain XP and equipment opportunities. See [Equipment and route guidance](docs/equipment_and_route_guidance.md) for the paired seed 27 preparation test.

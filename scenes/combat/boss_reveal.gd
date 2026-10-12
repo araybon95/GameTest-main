@@ -76,7 +76,8 @@ func label(value: String, pos: Vector2, width: float, font_size: int, color: Col
 
 func _process(delta: float) -> void:
  if complete: return
- age += delta
+ var settings := get_node_or_null("/root/GameSettings")
+ age += delta * (float(settings.combat_speed) if settings != null else 1.0)
  if age >= 0.28 and not sounded:
   sounded = true
   reveal_sound.emit("phase" if int(entry.get("phase",1)) > 1 else "boss")
