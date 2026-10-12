@@ -52,10 +52,13 @@ static func room(canvas: Control, rect: Rect2, data: Dictionary, current: bool =
    for step in range(4): canvas.draw_line(Vector2(-10+step*4,-8+step*5),Vector2(10,-8+step*5),tint,2)
   _: canvas.draw_rect(Rect2(-6,-10,12,20),tint,false,2)
  canvas.draw_set_transform(Vector2.ZERO,0,Vector2.ONE)
+ if kind == "battle" and not cleared:
+  canvas.draw_rect(rect.grow(2),Color("#D3746C"),false,1.5)
  if data.get("merchant_orb",false):
   var point := rect.position+Vector2(rect.size.x,0)
-  canvas.draw_circle(point,5,Color("#0B1520"))
-  canvas.draw_arc(point,4,0,TAU,16,Color("#82CFE2"),1.5,true)
+  canvas.draw_colored_polygon(PackedVector2Array([point+Vector2(0,-10),point+Vector2(11,0),point+Vector2(0,10),point+Vector2(-11,0)]),Color("#0B1520"))
+  canvas.draw_polyline(PackedVector2Array([point+Vector2(0,-10),point+Vector2(11,0),point+Vector2(0,10),point+Vector2(-11,0),point+Vector2(0,-10)]),Color("#82CFE2"),1.5,true)
+  canvas.draw_string(ThemeDB.fallback_font,point+Vector2(-6,5),"M",HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("#B2E1EF"))
  if current: canvas.draw_rect(rect.grow(5),Color("#E9C786"),false,1.5)
 
 static func party(canvas: Control, point: Vector2) -> void:

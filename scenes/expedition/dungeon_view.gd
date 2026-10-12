@@ -50,13 +50,15 @@ static func build(owner: Control) -> void:
 		if room.get("seen",false): revealed += 1
 		if room.get("cleared",false): cleared += 1
 	owner.label_at("CLEARED %d%%   EXPLORED %d%%" % [int(100.0*cleared/rooms.size()),int(100.0*revealed/rooms.size())],Vector2(1150,815),15)
+	owner.label_at("M: MERCHANT · SWORDS: XP / LOOT CHANCE",Vector2(1450,815),15)
 	for location in rooms:
 		var room: Dictionary = rooms[location]
 		if not room.get("seen",false): continue
 		var rect: Rect2 = map.room_rect(location)
-		var button: Button = owner.button_at("",map.position+rect.position,owner.move_to.bind(location))
+		var hit: Rect2 = rect.grow_individual(0,11,11,0) if room.get("merchant_orb",false) else rect
+		var button: Button = owner.button_at("",map.position+hit.position,owner.move_to.bind(location))
 		button.name = "Room_%d_%d" % [location.x,location.y]
-		button.size = rect.size
+		button.size = hit.size
 		for state in ["normal","disabled","pressed"]: button.add_theme_stylebox_override(state,StyleBoxEmpty.new())
 		var hover := StyleBoxFlat.new()
 		hover.bg_color = Color(0.85,0.7,0.45,0.18)
@@ -64,6 +66,8 @@ static func build(owner: Control) -> void:
 		hover.set_border_width_all(2)
 		button.add_theme_stylebox_override("hover",hover)
 		button.tooltip_text = "%s · %s\n%s" % [str(room.get("name",str(room["kind"]).capitalize())),"Cleared" if room.get("cleared",false) else "Unexplored",State.scouting_description(room)]
+		var guidance: String = Map.room_guidance(room)
+		if not guidance.is_empty(): button.tooltip_text += "\n" + guidance
 		button.disabled = location == State.room_position or State.run_complete or owner.route_to(location).is_empty()
 	var scout: Button = owner.button_at("SCOUT · %d" % State.scout_uses,Vector2(1150,985),owner.scout_area)
 	scout.size = Vector2(180,45)

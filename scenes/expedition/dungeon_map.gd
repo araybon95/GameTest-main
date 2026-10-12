@@ -4,6 +4,15 @@ const State = preload("res://scripts/game_data.gd")
 var compact: bool = false
 var map_backing: Texture2D
 
+static func room_guidance(room: Dictionary) -> String:
+	if not room.get("seen",false): return ""
+	var hints: Array[String] = []
+	if room.get("merchant_orb",false):
+		hints.append("Merchant · orb ready. Enter this room to shop." if room.get("cleared",false) else "Merchant · win this encounter, then touch the orb to shop.")
+	if room.get("kind","") == "battle" and not room.get("cleared",false):
+		hints.append("Fight · victory earns XP and a chance of equipment. Inspect the enemies and party health before detouring.")
+	return "\n".join(hints)
+
 func _ready() -> void:
 	if compact: map_backing = preload("res://scripts/local_dungeon_art.gd").texture("../panels/panel_map.png")
 

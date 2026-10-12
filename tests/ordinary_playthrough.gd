@@ -14,6 +14,7 @@ var expedition_id: String = "old_road"
 var use_objectives: bool = false
 var validation_failed: bool = false
 var equipment_fixture: String = ""
+var preparation_shops: Dictionary = {}
 
 func _initialize() -> void:
 	call_deferred("run")
@@ -338,6 +339,7 @@ func visit_shop() -> void:
 		if State.equipment.get(id,{}).get("armor","") == "" and State.gold >= State.item_price(armor):
 			if current_scene.purchase(armor): purchases.append(armor)
 	report["shops"].append({"floor":State.floor_index+1,"purchases":purchases,"sales":sales,"gold_remaining":State.gold})
+	preparation_shops["%d:%s" % [State.floor_index,State.room_position]] = true
 	current_scene.return_to_party()
 	await settle()
 	current_scene.continue_exploring()
@@ -423,7 +425,7 @@ func full_path(goal: Vector2i) -> Array:
 
 func next_destination() -> Vector2i:
 	var goal: Vector2i = EXIT
-	if route_policy=="cautious":
+	if route_policy in ["cautious","prepared"]:
 		var wounded: bool = false
 		for id in State.party:
 			var h: Dictionary = State.run_heroes[id]
@@ -435,7 +437,27 @@ func next_destination() -> Vector2i:
 				if candidate["kind"]!="camp" or candidate.get("camp_used",false): continue
 				var length: int = full_path(location).size()
 				if length < best: goal=location;best=length
+		if route_policy == "prepared" and not wounded:
+			var rooms: Dictionary = State.floors[State.floor_index]
+			var gaps: Dictionary = preload("res://scripts/expedition_readiness.gd").equipment_gaps(State)
+			var missing_gear: bool = not gaps.weapon.is_empty() or not gaps.armor.is_empty()
+			var needs_xp: bool = State.party.any(func(id): return int(State.leveling(str(id)).level) < mini(State.floor_index+2,3))
+			var best: int = 999
+			# A deliberate preparation route seeks an affordable merchant first,
+			# otherwise ordinary fights for earned XP/loot. Like the existing camp
+			# planner it knows layout locations, but still travels revealed legal steps.
+			for location in rooms:
+				var candidate: Dictionary = rooms[location]
+				var shop_key: String = "%d:%s" % [State.floor_index,location]
+				var merchant: bool = missing_gear and State.gold >= 8 and candidate.get("merchant_orb",false) and not preparation_shops.has(shop_key)
+				var fight: bool = (needs_xp or missing_gear) and candidate.kind == "battle" and not candidate.cleared
+				if not merchant and not fight: continue
+				var path: Array = full_path(location)
+				if path.is_empty() and location != State.room_position: continue
+				var priority: int = path.size() + (0 if merchant else 100)
+				if priority < best: goal=location;best=priority
 	if goal==State.room_position:
+		if route_policy == "prepared" and State.merchant_orb_available() and not preparation_shops.has("%d:%s" % [State.floor_index,State.room_position]): return goal
 		if room()["kind"]=="camp" and not room().get("camp_used",false): return goal
 		goal=EXIT
 	var path: Array = full_path(goal)
@@ -446,7 +468,9 @@ func next_destination() -> Vector2i:
 func move_actual(destination: Vector2i) -> void:
 	var dungeon = current_scene
 	if destination==State.room_position:
-		dungeon.open_camp();await settle();return
+		if State.merchant_orb_available(): await visit_shop()
+		else: dungeon.open_camp();await settle()
+		return
 	if dungeon.route_to(destination).is_empty():
 		validation_failed=true
 		report["outcome"]="route_validation_failure"
@@ -460,6 +484,7 @@ func move_actual(destination: Vector2i) -> void:
 
 func one_run(world_seed: int, third: String, policy: String, carryover: bool = false) -> void:
 	route_policy=policy
+	preparation_shops.clear()
 	report={"id":"%s_%s_%s_%s" % [expedition_id,world_seed,third,policy],"expedition":expedition_id,"objectives":use_objectives,"seed":world_seed,"third_hero":third,"route":policy,"outcome":"running","fights":[],"spaces":[],"camps":[],"shops":[],"events":[],"equipment_actions":[],"consumables_used":{},"floor_summaries":[],"starting_gold":0,"equipment_fixture":equipment_fixture}
 	if not carryover: reset_party(third,world_seed)
 	else:
@@ -480,7 +505,7 @@ func one_run(world_seed: int, third: String, policy: String, carryover: bool = f
 		if not State.run_active or report["outcome"]!="running": break
 		if State.run_heroes.values().any(func(h): return h.get("dead",false)):
 			report["outcome"]="retreat_after_casualty";report["latest_health"]=health();current_scene.retreat();await settle();break
-		if State.room_position==EXIT and room()["cleared"]:
+		if State.room_position==EXIT and room()["cleared"] and (route_policy != "prepared" or next_destination() == EXIT):
 			report["floor_summaries"].append({"floor":State.floor_index+1,"health":health(),"gold":State.gold,"xp":State.hero_progress.duplicate(true),"camp_used":report["camps"].size(),"inventory":State.inventory.duplicate(true)})
 			if State.can_descend():
 				current_scene.descend()

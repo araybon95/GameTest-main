@@ -2,6 +2,8 @@
 
 Preparation now shows skills blocked by each hero's position, and **I** opens a field guide for formation, shared turns, scouting and recovery. The first keep descent warns about level-1 heroes and explains optional exploration. See [First-expedition guidance and campaign samples](docs/first_expedition_usability.md).
 
+Descent advice now names heroes missing weapons or armour and lists discovered merchants. Cyan **M** diamonds identify merchants on the route map; fight tooltips explain XP and equipment opportunities. See [Equipment and route guidance](docs/equipment_and_route_guidance.md) for the paired seed 27 preparation test.
+
 Settings (F10), saved journeys, Workshop names/colors, dungeon books, combat audio and the settlement Graveyard are available. See [Settings and continuity](SETTINGS_AND_CONTINUITY.md) and [Gameplay systems](GAMEPLAY_SYSTEMS.md) for controls and rules.
 
 Preparation and floor entrances now show party readiness and recovery advice. Living heroes at Death's Door earn victory XP, and heavy strikes, charges, bows and spells have distinct timing with synchronized sounds. See [Readiness and attack timing](docs/readiness_and_attack_timing.md).

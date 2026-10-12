@@ -92,6 +92,26 @@ static func known_unused_camps(state) -> Array[Dictionary]:
 	camps.sort_custom(func(a,b): return a["location"].y < b["location"].y or (a["location"].y == b["location"].y and a["location"].x < b["location"].x))
 	return camps
 
+static func equipment_gaps(state) -> Dictionary:
+	var gaps: Dictionary = {"weapon":[],"armor":[]}
+	for id in state.party:
+		if state.run_active and state.run_heroes.get(id,{}).get("dead",false): continue
+		var loadout: Dictionary = state.equipment.get(id,{})
+		for slot in gaps:
+			if state.Items.item(str(loadout.get(slot,""))).is_empty():
+				gaps[slot].append(str(state.hero(str(id))["name"]))
+	return gaps
+
+static func known_merchants(state) -> Array[Dictionary]:
+	var merchants: Array[Dictionary] = []
+	if not state.run_active or state.floor_index < 0 or state.floor_index >= state.floors.size(): return merchants
+	for location in state.floors[state.floor_index]:
+		var room: Dictionary = state.floors[state.floor_index][location]
+		if room.get("seen",false) and room.get("merchant_orb",false):
+			merchants.append({"location":location,"cleared":bool(room.get("cleared",false))})
+	merchants.sort_custom(func(a,b): return a["location"].y < b["location"].y or (a["location"].y == b["location"].y and a["location"].x < b["location"].x))
+	return merchants
+
 static func descent_advice(state) -> String:
 	var critical: Array[String] = []
 	var wounded: Array[String] = []
@@ -114,6 +134,19 @@ static func descent_advice(state) -> String:
 	if not debuffed.is_empty(): advice.append("Active debuffs: %s. Camp clears debuffs and restores living heroes to full health." % ", ".join(debuffed))
 	if not stressed.is_empty(): advice.append("High stress: %s. Camp reduces current stress by 90%%." % ", ".join(stressed))
 	if not fallen.is_empty(): advice.append("Slain: %s. Camp cannot revive fallen companions." % ", ".join(fallen))
+	var gaps: Dictionary = equipment_gaps(state)
+	if not gaps["weapon"].is_empty(): advice.append("No weapon equipped: %s." % ", ".join(gaps["weapon"]))
+	if not gaps["armor"].is_empty(): advice.append("No armour equipped: %s." % ", ".join(gaps["armor"]))
+	if not gaps["weapon"].is_empty() or not gaps["armor"].is_empty():
+		advice.append("Tab opens inventory to equip owned gear. Merchants sell basic class weapons and armour for 8 gold each; supplies also cost gold.")
+		var merchants: Array[Dictionary] = known_merchants(state)
+		if merchants.is_empty():
+			advice.append("No merchant discovered on this floor. SCOUT or explore; merchant rooms have an M diamond on the map.")
+		else:
+			var places: Array[String] = []
+			for merchant in merchants:
+				places.append("map %d, %d (%s)" % [merchant["location"].x+1,merchant["location"].y+1,"orb ready" if merchant["cleared"] else "win the encounter first"])
+			advice.append("Discovered merchants: " + "; ".join(places) + ".")
 	if state.selected_expedition.get("id","") == "old_road" and state.floor_index == 0:
 		var novice: Array[String] = []
 		for hero in party_snapshot(state,true):

@@ -1,0 +1,1670 @@
+{
+  "engine": "Godot 4.6.3.stable.official.7d41c59c4",
+  "base_commit": "3ef1bdeed51515d5b203a105390ee334a2e9dd22",
+  "method": "Paired seed 27 Warden/Ranger/Occultist fresh parties. Automated production actions; no equipment fixture, health grants or forced kills. Cautious route detours for camps. Prepared route additionally seeks affordable merchants when gear is missing and ordinary fights until the next floor level target or equipped weapon/armour. Same greedy combat policy. Route planner knows generated connectivity, camps and candidate merchants/fights; movement still validates revealed legal paths. Presentation waits skipped. This measures a combined route/XP/equipment strategy, not guidance effectiveness, human play or equipment alone.",
+  "source_sha256": {
+    "tests/ordinary_playthrough.gd": "6f799e2d125f25782cce0b52bf33d7e239aefe740f2861cec430ee2d9c0dacbd",
+    "scripts/game_data.gd": "e507394e1a78fc47d5cf479151bcf0cecf464a0a1b7917c081ca243d7882212a",
+    "scripts/item_data.gd": "1297d9ba34ddf9bf0fc63249963d99836b47b9373d47562547c79bf62105b597",
+    "scripts/dungeon_depth.gd": "14a0fc37e80e65fb79f2c86627ea47fb66886388860bff6290c7a928511343f9",
+    "scenes/combat/combatscene.gd": "82a1d0154e01a7565433984409403c347459ba3716dc830e3f829a2c8fe187e4"
+  },
+  "results": [
+    {
+      "id": "old_road_27_occultist_cautious",
+      "seed": 27,
+      "route": "cautious",
+      "outcome": "defeat",
+      "starting_gold": 0,
+      "starting_equipment": {},
+      "ending_gold": 49,
+      "ending_health": {
+        "occultist": {
+          "dead": true,
+          "hp": 0,
+          "level": 2,
+          "max_hp": 36,
+          "statuses": {
+            "bleed": {
+              "base_damage": 2,
+              "damage": 2,
+              "stacks": 1,
+              "turns": 1
+            },
+            "chill": {
+              "base_damage": 1,
+              "damage": 0,
+              "stacks": 1,
+              "turns": 2
+            }
+          },
+          "stress": 29
+        },
+        "ranger": {
+          "dead": true,
+          "hp": 0,
+          "level": 2,
+          "max_hp": 40,
+          "statuses": {},
+          "stress": 10
+        },
+        "warden": {
+          "dead": true,
+          "hp": 0,
+          "level": 2,
+          "max_hp": 57,
+          "statuses": {
+            "bleed": {
+              "base_damage": 2,
+              "damage": 2,
+              "stacks": 1,
+              "turns": 1
+            }
+          },
+          "stress": 14
+        }
+      },
+      "ending_equipment": {
+        "ranger": {
+          "charm": "keepsake_15698577"
+        }
+      },
+      "consumables_used": {
+        "fire_bolt_scroll": 3
+      },
+      "shops": [],
+      "floor_summaries": [
+        {
+          "camp_used": 3,
+          "floor": 1,
+          "gold": 20,
+          "health": {
+            "occultist": {
+              "dead": false,
+              "hp": 34,
+              "level": 1,
+              "max_hp": 34,
+              "statuses": {},
+              "stress": 0
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 38,
+              "level": 1,
+              "max_hp": 38,
+              "statuses": {},
+              "stress": 0
+            },
+            "warden": {
+              "dead": false,
+              "hp": 55,
+              "level": 1,
+              "max_hp": 55,
+              "statuses": {},
+              "stress": 0
+            }
+          },
+          "inventory": {
+            "fire_bolt_scroll": 1
+          },
+          "xp": {
+            "occultist": {
+              "level": 1,
+              "points": 0,
+              "stats": {},
+              "xp": 6
+            },
+            "ranger": {
+              "level": 1,
+              "points": 0,
+              "stats": {},
+              "xp": 6
+            },
+            "warden": {
+              "level": 1,
+              "points": 0,
+              "stats": {},
+              "xp": 6
+            }
+          }
+        },
+        {
+          "camp_used": 5,
+          "floor": 2,
+          "gold": 37,
+          "health": {
+            "occultist": {
+              "dead": false,
+              "hp": 34,
+              "level": 2,
+              "max_hp": 36,
+              "statuses": {},
+              "stress": 16
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 38,
+              "level": 2,
+              "max_hp": 40,
+              "statuses": {},
+              "stress": 0
+            },
+            "warden": {
+              "dead": false,
+              "hp": 23,
+              "level": 2,
+              "max_hp": 57,
+              "statuses": {},
+              "stress": 8
+            }
+          },
+          "inventory": {
+            "fire_bolt_scroll": 1
+          },
+          "xp": {
+            "occultist": {
+              "level": 2,
+              "points": 2,
+              "stats": {},
+              "xp": 5
+            },
+            "ranger": {
+              "level": 2,
+              "points": 2,
+              "stats": {},
+              "xp": 5
+            },
+            "warden": {
+              "level": 2,
+              "points": 2,
+              "stats": {},
+              "xp": 5
+            }
+          }
+        }
+      ],
+      "fight_count": 3,
+      "round_count": 20,
+      "camp_visits": 6,
+      "rests": 2,
+      "fights": [
+        {
+          "floor": 1,
+          "kind": "battle",
+          "enemies": [
+            {
+              "attack": 8,
+              "hp": 58,
+              "id": "ash_raider",
+              "support": false
+            }
+          ],
+          "rounds": 2,
+          "won": true,
+          "before": {
+            "occultist": {
+              "dead": false,
+              "hp": 34,
+              "level": 1,
+              "max_hp": 34,
+              "statuses": {},
+              "stress": 0
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 38,
+              "level": 1,
+              "max_hp": 38,
+              "statuses": {},
+              "stress": 0
+            },
+            "warden": {
+              "dead": false,
+              "hp": 55,
+              "level": 1,
+              "max_hp": 55,
+              "statuses": {},
+              "stress": 0
+            }
+          },
+          "after": {
+            "occultist": {
+              "dead": false,
+              "hp": 34,
+              "level": 1,
+              "max_hp": 34,
+              "statuses": {},
+              "stress": 0
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 38,
+              "level": 1,
+              "max_hp": 38,
+              "statuses": {},
+              "stress": 0
+            },
+            "warden": {
+              "dead": false,
+              "hp": 55,
+              "level": 1,
+              "max_hp": 55,
+              "statuses": {},
+              "stress": 0
+            }
+          }
+        },
+        {
+          "floor": 2,
+          "kind": "boss",
+          "enemies": [
+            {
+              "attack": 13,
+              "hp": 160,
+              "id": "keep_son",
+              "support": false
+            },
+            {
+              "attack": 3,
+              "hp": 17,
+              "id": "keep_crossbow",
+              "support": true
+            }
+          ],
+          "rounds": 5,
+          "won": true,
+          "before": {
+            "occultist": {
+              "dead": false,
+              "hp": 34,
+              "level": 1,
+              "max_hp": 34,
+              "statuses": {},
+              "stress": 0
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 38,
+              "level": 1,
+              "max_hp": 38,
+              "statuses": {},
+              "stress": 0
+            },
+            "warden": {
+              "dead": false,
+              "hp": 55,
+              "level": 1,
+              "max_hp": 55,
+              "statuses": {},
+              "stress": 0
+            }
+          },
+          "after": {
+            "occultist": {
+              "dead": false,
+              "hp": 34,
+              "level": 2,
+              "max_hp": 36,
+              "statuses": {},
+              "stress": 16
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 38,
+              "level": 2,
+              "max_hp": 40,
+              "statuses": {},
+              "stress": 0
+            },
+            "warden": {
+              "dead": false,
+              "hp": 23,
+              "level": 2,
+              "max_hp": 57,
+              "statuses": {},
+              "stress": 8
+            }
+          }
+        },
+        {
+          "floor": 3,
+          "kind": "battle",
+          "enemies": [
+            {
+              "attack": 13,
+              "hp": 82,
+              "id": "keep_wolfguard",
+              "support": false
+            },
+            {
+              "attack": 12,
+              "hp": 74,
+              "id": "keep_footman",
+              "support": false
+            },
+            {
+              "attack": 13,
+              "hp": 68,
+              "id": "keep_crossbow",
+              "support": false
+            }
+          ],
+          "rounds": 13,
+          "won": false,
+          "before": {
+            "occultist": {
+              "dead": false,
+              "hp": 36,
+              "level": 2,
+              "max_hp": 36,
+              "statuses": {},
+              "stress": 1
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 40,
+              "level": 2,
+              "max_hp": 40,
+              "statuses": {},
+              "stress": 0
+            },
+            "warden": {
+              "dead": false,
+              "hp": 57,
+              "level": 2,
+              "max_hp": 57,
+              "statuses": {
+                "poison": {
+                  "base_damage": 2,
+                  "damage": 2,
+                  "stacks": 1,
+                  "turns": 2
+                }
+              },
+              "stress": 0
+            }
+          },
+          "after": {
+            "occultist": {
+              "dead": true,
+              "hp": 0,
+              "level": 2,
+              "max_hp": 36,
+              "statuses": {
+                "bleed": {
+                  "base_damage": 2,
+                  "damage": 2,
+                  "stacks": 1,
+                  "turns": 1
+                },
+                "chill": {
+                  "base_damage": 1,
+                  "damage": 0,
+                  "stacks": 1,
+                  "turns": 2
+                }
+              },
+              "stress": 29
+            },
+            "ranger": {
+              "dead": true,
+              "hp": 0,
+              "level": 2,
+              "max_hp": 40,
+              "statuses": {},
+              "stress": 10
+            },
+            "warden": {
+              "dead": true,
+              "hp": 0,
+              "level": 2,
+              "max_hp": 57,
+              "statuses": {
+                "bleed": {
+                  "base_damage": 2,
+                  "damage": 2,
+                  "stacks": 1,
+                  "turns": 1
+                }
+              },
+              "stress": 14
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "old_road_27_occultist_prepared",
+      "seed": 27,
+      "route": "prepared",
+      "outcome": "complete",
+      "starting_gold": 0,
+      "starting_equipment": {},
+      "ending_gold": 44,
+      "ending_health": {
+        "occultist": {
+          "dead": false,
+          "hp": 22,
+          "level": 4,
+          "max_hp": 42,
+          "statuses": {},
+          "stress": 64
+        },
+        "ranger": {
+          "dead": false,
+          "hp": 50,
+          "level": 4,
+          "max_hp": 52,
+          "statuses": {},
+          "stress": 17
+        },
+        "warden": {
+          "dead": false,
+          "hp": 29,
+          "level": 4,
+          "max_hp": 78,
+          "statuses": {
+            "chill": {
+              "base_damage": 1,
+              "damage": 0,
+              "stacks": 1,
+              "turns": 1
+            }
+          },
+          "stress": 40
+        }
+      },
+      "ending_equipment": {
+        "occultist": {
+          "armor": "keepsake_49130473",
+          "charm": "keepsake_30998827",
+          "weapon": "keepsake_30998788"
+        },
+        "ranger": {
+          "armor": "keepsake_30998756",
+          "trinket": "keepsake_30998732",
+          "weapon": "keepsake_30998705"
+        },
+        "warden": {
+          "armor": "keepsake_49130245",
+          "charm": "keepsake_49130277",
+          "weapon": "keepsake_30998646"
+        }
+      },
+      "consumables_used": {
+        "fire_bolt_scroll": 2,
+        "healing_potion": 3,
+        "healing_scroll": 1
+      },
+      "shops": [
+        {
+          "floor": 1,
+          "gold_remaining": 4,
+          "purchases": [
+            "warden_sword",
+            "ranger_bow"
+          ],
+          "sales": []
+        },
+        {
+          "floor": 2,
+          "gold_remaining": 4,
+          "purchases": [
+            "occultist_staff"
+          ],
+          "sales": []
+        },
+        {
+          "floor": 3,
+          "gold_remaining": 21,
+          "purchases": [
+            "healing_potion",
+            "warden_armor",
+            "occultist_armor"
+          ],
+          "sales": [
+            "outlaw_tally"
+          ]
+        }
+      ],
+      "floor_summaries": [
+        {
+          "camp_used": 4,
+          "floor": 1,
+          "gold": 10,
+          "health": {
+            "occultist": {
+              "dead": false,
+              "hp": 36,
+              "level": 2,
+              "max_hp": 36,
+              "statuses": {},
+              "stress": 0
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 40,
+              "level": 2,
+              "max_hp": 40,
+              "statuses": {},
+              "stress": 0
+            },
+            "warden": {
+              "dead": false,
+              "hp": 57,
+              "level": 2,
+              "max_hp": 57,
+              "statuses": {},
+              "stress": 0
+            }
+          },
+          "inventory": {},
+          "xp": {
+            "occultist": {
+              "level": 2,
+              "points": 2,
+              "stats": {},
+              "xp": 2
+            },
+            "ranger": {
+              "level": 2,
+              "points": 2,
+              "stats": {},
+              "xp": 2
+            },
+            "warden": {
+              "level": 2,
+              "points": 2,
+              "stats": {},
+              "xp": 2
+            }
+          }
+        },
+        {
+          "camp_used": 7,
+          "floor": 2,
+          "gold": 23,
+          "health": {
+            "occultist": {
+              "dead": false,
+              "hp": 36,
+              "level": 3,
+              "max_hp": 38,
+              "statuses": {},
+              "stress": 8
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 48,
+              "level": 3,
+              "max_hp": 50,
+              "statuses": {},
+              "stress": 0
+            },
+            "warden": {
+              "dead": false,
+              "hp": 48,
+              "level": 3,
+              "max_hp": 59,
+              "statuses": {},
+              "stress": 8
+            }
+          },
+          "inventory": {
+            "outlaw_tally": 1
+          },
+          "xp": {
+            "occultist": {
+              "level": 3,
+              "points": 4,
+              "stats": {},
+              "xp": 8
+            },
+            "ranger": {
+              "level": 3,
+              "points": 4,
+              "stats": {},
+              "xp": 8
+            },
+            "warden": {
+              "level": 3,
+              "points": 4,
+              "stats": {},
+              "xp": 8
+            }
+          }
+        },
+        {
+          "floor": 3,
+          "gold": 44,
+          "health": {
+            "occultist": {
+              "dead": false,
+              "hp": 22,
+              "level": 4,
+              "max_hp": 42,
+              "statuses": {},
+              "stress": 64
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 50,
+              "level": 4,
+              "max_hp": 52,
+              "statuses": {},
+              "stress": 17
+            },
+            "warden": {
+              "dead": false,
+              "hp": 29,
+              "level": 4,
+              "max_hp": 78,
+              "statuses": {
+                "chill": {
+                  "base_damage": 1,
+                  "damage": 0,
+                  "stacks": 1,
+                  "turns": 1
+                }
+              },
+              "stress": 40
+            }
+          },
+          "inventory": {
+            "keepsake_49130500": 1,
+            "occultist_severed_litany": 1
+          },
+          "xp": {
+            "occultist": {
+              "level": 4,
+              "points": 6,
+              "stats": {},
+              "xp": 41
+            },
+            "ranger": {
+              "level": 4,
+              "points": 6,
+              "stats": {},
+              "xp": 41
+            },
+            "warden": {
+              "level": 4,
+              "points": 6,
+              "stats": {},
+              "xp": 41
+            }
+          }
+        }
+      ],
+      "fight_count": 12,
+      "round_count": 57,
+      "camp_visits": 8,
+      "rests": 5,
+      "fights": [
+        {
+          "floor": 1,
+          "kind": "battle",
+          "enemies": [
+            {
+              "attack": 8,
+              "hp": 58,
+              "id": "ash_raider",
+              "support": false
+            }
+          ],
+          "rounds": 2,
+          "won": true,
+          "before": {
+            "occultist": {
+              "dead": false,
+              "hp": 34,
+              "level": 1,
+              "max_hp": 34,
+              "statuses": {},
+              "stress": 0
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 38,
+              "level": 1,
+              "max_hp": 38,
+              "statuses": {},
+              "stress": 0
+            },
+            "warden": {
+              "dead": false,
+              "hp": 55,
+              "level": 1,
+              "max_hp": 55,
+              "statuses": {},
+              "stress": 0
+            }
+          },
+          "after": {
+            "occultist": {
+              "dead": false,
+              "hp": 34,
+              "level": 1,
+              "max_hp": 34,
+              "statuses": {},
+              "stress": 0
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 38,
+              "level": 1,
+              "max_hp": 38,
+              "statuses": {},
+              "stress": 0
+            },
+            "warden": {
+              "dead": false,
+              "hp": 45,
+              "level": 1,
+              "max_hp": 55,
+              "statuses": {
+                "bleed": {
+                  "base_damage": 2,
+                  "damage": 2,
+                  "stacks": 1,
+                  "turns": 1
+                }
+              },
+              "stress": 2
+            }
+          }
+        },
+        {
+          "floor": 1,
+          "kind": "battle",
+          "enemies": [
+            {
+              "attack": 10,
+              "hp": 46,
+              "id": "gallows_scout",
+              "support": false
+            },
+            {
+              "attack": 10,
+              "hp": 46,
+              "id": "gallows_scout",
+              "support": false
+            }
+          ],
+          "rounds": 3,
+          "won": true,
+          "before": {
+            "occultist": {
+              "dead": false,
+              "hp": 34,
+              "level": 1,
+              "max_hp": 34,
+              "statuses": {},
+              "stress": 0
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 38,
+              "level": 1,
+              "max_hp": 38,
+              "statuses": {},
+              "stress": 0
+            },
+            "warden": {
+              "dead": false,
+              "hp": 48,
+              "level": 1,
+              "max_hp": 55,
+              "statuses": {
+                "bleed": {
+                  "base_damage": 2,
+                  "damage": 2,
+                  "stacks": 1,
+                  "turns": 1
+                }
+              },
+              "stress": 2
+            }
+          },
+          "after": {
+            "occultist": {
+              "dead": false,
+              "hp": 34,
+              "level": 1,
+              "max_hp": 34,
+              "statuses": {},
+              "stress": 8
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 28,
+              "level": 1,
+              "max_hp": 38,
+              "statuses": {
+                "chill": {
+                  "base_damage": 1,
+                  "damage": 0,
+                  "stacks": 1,
+                  "turns": 2
+                }
+              },
+              "stress": 2
+            },
+            "warden": {
+              "dead": false,
+              "hp": 46,
+              "level": 1,
+              "max_hp": 55,
+              "statuses": {},
+              "stress": 2
+            }
+          }
+        },
+        {
+          "floor": 1,
+          "kind": "battle",
+          "enemies": [
+            {
+              "attack": 8,
+              "hp": 58,
+              "id": "ash_raider",
+              "support": false
+            }
+          ],
+          "rounds": 2,
+          "won": true,
+          "before": {
+            "occultist": {
+              "dead": false,
+              "hp": 34,
+              "level": 1,
+              "max_hp": 34,
+              "statuses": {},
+              "stress": 0
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 38,
+              "level": 1,
+              "max_hp": 38,
+              "statuses": {},
+              "stress": 0
+            },
+            "warden": {
+              "dead": false,
+              "hp": 55,
+              "level": 1,
+              "max_hp": 55,
+              "statuses": {},
+              "stress": 0
+            }
+          },
+          "after": {
+            "occultist": {
+              "dead": false,
+              "hp": 34,
+              "level": 1,
+              "max_hp": 34,
+              "statuses": {},
+              "stress": 0
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 38,
+              "level": 1,
+              "max_hp": 38,
+              "statuses": {},
+              "stress": 0
+            },
+            "warden": {
+              "dead": false,
+              "hp": 48,
+              "level": 1,
+              "max_hp": 55,
+              "statuses": {
+                "bleed": {
+                  "base_damage": 2,
+                  "damage": 2,
+                  "stacks": 1,
+                  "turns": 1
+                }
+              },
+              "stress": 2
+            }
+          }
+        },
+        {
+          "floor": 1,
+          "kind": "battle",
+          "enemies": [
+            {
+              "attack": 8,
+              "hp": 58,
+              "id": "ash_raider",
+              "support": false
+            },
+            {
+              "attack": 10,
+              "hp": 46,
+              "id": "gallows_scout",
+              "support": false
+            }
+          ],
+          "rounds": 3,
+          "won": true,
+          "before": {
+            "occultist": {
+              "dead": false,
+              "hp": 34,
+              "level": 1,
+              "max_hp": 34,
+              "statuses": {},
+              "stress": 0
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 38,
+              "level": 1,
+              "max_hp": 38,
+              "statuses": {},
+              "stress": 0
+            },
+            "warden": {
+              "dead": false,
+              "hp": 48,
+              "level": 1,
+              "max_hp": 55,
+              "statuses": {
+                "bleed": {
+                  "base_damage": 2,
+                  "damage": 2,
+                  "stacks": 1,
+                  "turns": 1
+                }
+              },
+              "stress": 2
+            }
+          },
+          "after": {
+            "occultist": {
+              "dead": false,
+              "hp": 34,
+              "level": 2,
+              "max_hp": 36,
+              "statuses": {},
+              "stress": 8
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 26,
+              "level": 2,
+              "max_hp": 40,
+              "statuses": {
+                "chill": {
+                  "base_damage": 1,
+                  "damage": 0,
+                  "stacks": 1,
+                  "turns": 2
+                }
+              },
+              "stress": 2
+            },
+            "warden": {
+              "dead": false,
+              "hp": 36,
+              "level": 2,
+              "max_hp": 57,
+              "statuses": {},
+              "stress": 4
+            }
+          }
+        },
+        {
+          "floor": 2,
+          "kind": "battle",
+          "enemies": [
+            {
+              "attack": 10,
+              "hp": 64,
+              "id": "keep_footman",
+              "support": false
+            },
+            {
+              "attack": 10,
+              "hp": 64,
+              "id": "keep_footman",
+              "support": false
+            },
+            {
+              "attack": 11,
+              "hp": 58,
+              "id": "keep_crossbow",
+              "support": false
+            }
+          ],
+          "rounds": 6,
+          "won": true,
+          "before": {
+            "occultist": {
+              "dead": false,
+              "hp": 36,
+              "level": 2,
+              "max_hp": 36,
+              "statuses": {},
+              "stress": 0
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 40,
+              "level": 2,
+              "max_hp": 40,
+              "statuses": {},
+              "stress": 0
+            },
+            "warden": {
+              "dead": false,
+              "hp": 57,
+              "level": 2,
+              "max_hp": 57,
+              "statuses": {},
+              "stress": 0
+            }
+          },
+          "after": {
+            "occultist": {
+              "dead": false,
+              "hp": 36,
+              "level": 2,
+              "max_hp": 36,
+              "statuses": {},
+              "stress": 16
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 7,
+              "level": 2,
+              "max_hp": 40,
+              "statuses": {
+                "chill": {
+                  "base_damage": 1,
+                  "damage": 0,
+                  "stacks": 1,
+                  "turns": 2
+                }
+              },
+              "stress": 6
+            },
+            "warden": {
+              "dead": false,
+              "hp": 19,
+              "level": 2,
+              "max_hp": 57,
+              "statuses": {},
+              "stress": 6
+            }
+          }
+        },
+        {
+          "floor": 2,
+          "kind": "battle",
+          "enemies": [
+            {
+              "attack": 11,
+              "hp": 58,
+              "id": "keep_crossbow",
+              "support": false
+            },
+            {
+              "attack": 11,
+              "hp": 58,
+              "id": "keep_crossbow",
+              "support": false
+            }
+          ],
+          "rounds": 3,
+          "won": true,
+          "before": {
+            "occultist": {
+              "dead": false,
+              "hp": 36,
+              "level": 2,
+              "max_hp": 36,
+              "statuses": {},
+              "stress": 1
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 48,
+              "level": 2,
+              "max_hp": 48,
+              "statuses": {},
+              "stress": 0
+            },
+            "warden": {
+              "dead": false,
+              "hp": 57,
+              "level": 2,
+              "max_hp": 57,
+              "statuses": {},
+              "stress": 0
+            }
+          },
+          "after": {
+            "occultist": {
+              "dead": false,
+              "hp": 36,
+              "level": 2,
+              "max_hp": 36,
+              "statuses": {},
+              "stress": 9
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 35,
+              "level": 2,
+              "max_hp": 48,
+              "statuses": {},
+              "stress": 4
+            },
+            "warden": {
+              "dead": false,
+              "hp": 57,
+              "level": 2,
+              "max_hp": 57,
+              "statuses": {},
+              "stress": 0
+            }
+          }
+        },
+        {
+          "floor": 2,
+          "kind": "boss",
+          "enemies": [
+            {
+              "attack": 13,
+              "hp": 160,
+              "id": "keep_son",
+              "support": false
+            },
+            {
+              "attack": 3,
+              "hp": 17,
+              "id": "keep_crossbow",
+              "support": true
+            }
+          ],
+          "rounds": 5,
+          "won": true,
+          "before": {
+            "occultist": {
+              "dead": false,
+              "hp": 36,
+              "level": 2,
+              "max_hp": 36,
+              "statuses": {},
+              "stress": 0
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 48,
+              "level": 2,
+              "max_hp": 48,
+              "statuses": {},
+              "stress": 0
+            },
+            "warden": {
+              "dead": false,
+              "hp": 57,
+              "level": 2,
+              "max_hp": 57,
+              "statuses": {},
+              "stress": 0
+            }
+          },
+          "after": {
+            "occultist": {
+              "dead": false,
+              "hp": 36,
+              "level": 3,
+              "max_hp": 38,
+              "statuses": {},
+              "stress": 8
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 48,
+              "level": 3,
+              "max_hp": 50,
+              "statuses": {},
+              "stress": 0
+            },
+            "warden": {
+              "dead": false,
+              "hp": 48,
+              "level": 3,
+              "max_hp": 59,
+              "statuses": {},
+              "stress": 8
+            }
+          }
+        },
+        {
+          "floor": 3,
+          "kind": "battle",
+          "enemies": [
+            {
+              "attack": 13,
+              "hp": 68,
+              "id": "keep_crossbow",
+              "support": false
+            },
+            {
+              "attack": 12,
+              "hp": 74,
+              "id": "keep_footman",
+              "support": false
+            }
+          ],
+          "rounds": 5,
+          "won": true,
+          "before": {
+            "occultist": {
+              "dead": false,
+              "hp": 36,
+              "level": 3,
+              "max_hp": 38,
+              "statuses": {},
+              "stress": 8
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 48,
+              "level": 3,
+              "max_hp": 50,
+              "statuses": {},
+              "stress": 0
+            },
+            "warden": {
+              "dead": false,
+              "hp": 48,
+              "level": 3,
+              "max_hp": 59,
+              "statuses": {
+                "poison": {
+                  "base_damage": 2,
+                  "damage": 2,
+                  "stacks": 1,
+                  "turns": 2
+                }
+              },
+              "stress": 8
+            }
+          },
+          "after": {
+            "occultist": {
+              "dead": false,
+              "hp": 36,
+              "level": 3,
+              "max_hp": 38,
+              "statuses": {},
+              "stress": 24
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 50,
+              "level": 3,
+              "max_hp": 50,
+              "statuses": {},
+              "stress": 0
+            },
+            "warden": {
+              "dead": false,
+              "hp": 29,
+              "level": 3,
+              "max_hp": 59,
+              "statuses": {
+                "chill": {
+                  "base_damage": 1,
+                  "damage": 0,
+                  "stacks": 1,
+                  "turns": 2
+                }
+              },
+              "stress": 14
+            }
+          }
+        },
+        {
+          "floor": 3,
+          "kind": "battle",
+          "enemies": [
+            {
+              "attack": 13,
+              "hp": 82,
+              "id": "keep_wolfguard",
+              "support": false
+            },
+            {
+              "attack": 12,
+              "hp": 74,
+              "id": "keep_footman",
+              "support": false
+            },
+            {
+              "attack": 13,
+              "hp": 68,
+              "id": "keep_crossbow",
+              "support": false
+            }
+          ],
+          "rounds": 14,
+          "won": true,
+          "before": {
+            "occultist": {
+              "dead": false,
+              "hp": 36,
+              "level": 3,
+              "max_hp": 40,
+              "statuses": {},
+              "stress": 30
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 50,
+              "level": 3,
+              "max_hp": 50,
+              "statuses": {},
+              "stress": 6
+            },
+            "warden": {
+              "dead": false,
+              "hp": 29,
+              "level": 3,
+              "max_hp": 63,
+              "statuses": {
+                "chill": {
+                  "base_damage": 1,
+                  "damage": 0,
+                  "stacks": 1,
+                  "turns": 2
+                }
+              },
+              "stress": 20
+            }
+          },
+          "after": {
+            "occultist": {
+              "dead": false,
+              "hp": 36,
+              "level": 3,
+              "max_hp": 40,
+              "statuses": {},
+              "stress": 46
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 15,
+              "level": 3,
+              "max_hp": 50,
+              "statuses": {},
+              "stress": 12
+            },
+            "warden": {
+              "dead": false,
+              "hp": 11,
+              "level": 3,
+              "max_hp": 63,
+              "statuses": {},
+              "stress": 42
+            }
+          }
+        },
+        {
+          "floor": 3,
+          "kind": "battle",
+          "enemies": [
+            {
+              "attack": 13,
+              "hp": 68,
+              "id": "keep_crossbow",
+              "support": false
+            }
+          ],
+          "rounds": 2,
+          "won": true,
+          "before": {
+            "occultist": {
+              "dead": false,
+              "hp": 40,
+              "level": 3,
+              "max_hp": 40,
+              "statuses": {},
+              "stress": 4
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 50,
+              "level": 3,
+              "max_hp": 50,
+              "statuses": {},
+              "stress": 1
+            },
+            "warden": {
+              "dead": false,
+              "hp": 75,
+              "level": 3,
+              "max_hp": 75,
+              "statuses": {},
+              "stress": 4
+            }
+          },
+          "after": {
+            "occultist": {
+              "dead": false,
+              "hp": 27,
+              "level": 3,
+              "max_hp": 40,
+              "statuses": {
+                "chill": {
+                  "base_damage": 1,
+                  "damage": 0,
+                  "stacks": 1,
+                  "turns": 2
+                }
+              },
+              "stress": 6
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 50,
+              "level": 3,
+              "max_hp": 50,
+              "statuses": {},
+              "stress": 1
+            },
+            "warden": {
+              "dead": false,
+              "hp": 75,
+              "level": 3,
+              "max_hp": 75,
+              "statuses": {},
+              "stress": 4
+            }
+          }
+        },
+        {
+          "floor": 3,
+          "kind": "battle",
+          "enemies": [
+            {
+              "attack": 12,
+              "hp": 74,
+              "id": "keep_footman",
+              "support": false
+            },
+            {
+              "attack": 12,
+              "hp": 74,
+              "id": "keep_footman",
+              "support": false
+            }
+          ],
+          "rounds": 5,
+          "won": true,
+          "before": {
+            "occultist": {
+              "dead": false,
+              "hp": 27,
+              "level": 3,
+              "max_hp": 40,
+              "statuses": {
+                "chill": {
+                  "base_damage": 1,
+                  "damage": 0,
+                  "stacks": 1,
+                  "turns": 2
+                }
+              },
+              "stress": 6
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 50,
+              "level": 3,
+              "max_hp": 50,
+              "statuses": {},
+              "stress": 1
+            },
+            "warden": {
+              "dead": false,
+              "hp": 75,
+              "level": 3,
+              "max_hp": 75,
+              "statuses": {},
+              "stress": 4
+            }
+          },
+          "after": {
+            "occultist": {
+              "dead": false,
+              "hp": 27,
+              "level": 3,
+              "max_hp": 40,
+              "statuses": {},
+              "stress": 22
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 50,
+              "level": 3,
+              "max_hp": 50,
+              "statuses": {},
+              "stress": 1
+            },
+            "warden": {
+              "dead": false,
+              "hp": 48,
+              "level": 3,
+              "max_hp": 75,
+              "statuses": {
+                "chill": {
+                  "base_damage": 1,
+                  "damage": 0,
+                  "stacks": 1,
+                  "turns": 2
+                }
+              },
+              "stress": 12
+            }
+          }
+        },
+        {
+          "floor": 3,
+          "kind": "boss",
+          "enemies": [
+            {
+              "attack": 15,
+              "hp": 220,
+              "id": "undying_lord",
+              "support": false
+            },
+            {
+              "attack": 4,
+              "hp": 20,
+              "id": "keep_crossbow",
+              "support": true
+            }
+          ],
+          "rounds": 7,
+          "won": true,
+          "before": {
+            "occultist": {
+              "dead": false,
+              "hp": 27,
+              "level": 3,
+              "max_hp": 40,
+              "statuses": {},
+              "stress": 28
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 50,
+              "level": 3,
+              "max_hp": 50,
+              "statuses": {},
+              "stress": 7
+            },
+            "warden": {
+              "dead": false,
+              "hp": 48,
+              "level": 3,
+              "max_hp": 75,
+              "statuses": {
+                "chill": {
+                  "base_damage": 1,
+                  "damage": 0,
+                  "stacks": 1,
+                  "turns": 2
+                }
+              },
+              "stress": 18
+            }
+          },
+          "after": {
+            "occultist": {
+              "dead": false,
+              "hp": 22,
+              "level": 4,
+              "max_hp": 42,
+              "statuses": {},
+              "stress": 64
+            },
+            "ranger": {
+              "dead": false,
+              "hp": 50,
+              "level": 4,
+              "max_hp": 52,
+              "statuses": {},
+              "stress": 17
+            },
+            "warden": {
+              "dead": false,
+              "hp": 29,
+              "level": 4,
+              "max_hp": 78,
+              "statuses": {
+                "chill": {
+                  "base_damage": 1,
+                  "damage": 0,
+                  "stacks": 1,
+                  "turns": 1
+                }
+              },
+              "stress": 40
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
