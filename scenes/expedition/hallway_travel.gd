@@ -63,6 +63,10 @@ var return_button: Button
 var hero_summaries: Dictionary = {}
 var gold_counter: Label
 var route_clue: Label
+var choice_panel: Control
+var preparation_button: Button
+var discovery_action: String = ""
+var investigator: String = ""
 
 class PassageProgress extends Control:
  var value: float = 0.0
@@ -238,6 +242,7 @@ func build_hud() -> void:
  return_button = action_button("RETURN",Rect2(1320,990,180,50),return_to_origin,"ReturnToOrigin")
  text_at("A / D move · W / Enter interact · Tab inventory · I controls",Vector2(55,1037),17,1040)
  gold_counter = text_at("GOLD  %d" % State.gold,Vector2(55,992),22,260)
+ preparation_button = action_button("PREPARE",Rect2(350,990,300,50),open_doorway_choices,"PrepareDoorway")
  for index in range(walkers.size()): build_hero_summary(str(walkers[index].get_meta("walker")),index)
  var map_panel := panel_at(Rect2(1130,775,735,200))
  text_at("ROUTE · FLOOR %d / %d" % [State.floor_index+1,State.floor_count],Vector2(1147,783),20,690)
@@ -350,6 +355,7 @@ func action_button(value: String, rect: Rect2, action: Callable, node_name: Stri
  return button
 
 func settings_open() -> bool:
+ if is_instance_valid(choice_panel): return true
  var controls := get_node_or_null("/root/GameControls")
  if controls != null and controls.input_blocked(): return true
  var settings := get_node_or_null("/root/GameSettings")
@@ -458,6 +464,29 @@ func update_controls() -> void:
  interact_button.text = "INTERACT · W / ENTER" if arrived else "WALK TO THE ENTRANCE"
  return_button.disabled = elapsed > 0.001
  source_button.visible = elapsed <= 0.001
+ preparation_button.visible = arrived and not destination_room().get("cleared",false) and (destination_room().get("kind","") in ["battle","boss"] or destination_room().has("event_id") or destination_room().get("corridor_encounter","") == "roamer")
+ preparation_button.text = "INVESTIGATE / PASS" if destination_room().has("event_id") else "PREPARE PARTY"
+
+func open_doorway_choices() -> void:
+ if not arrived or complete or settings_open(): return
+ choice_panel = preload("res://scenes/expedition/doorway_choices.gd").new()
+ choice_panel.room = destination_room()
+ choice_panel.discovery = destination_room().has("event_id")
+ choice_panel.chosen.connect(func(id: String, action: String):
+  close_doorway_choices()
+  if action == "leave" and destination_room().get("event_id","") == "crusader_coffin":
+   finish(false)
+   return
+  if action != "enter":
+   discovery_action = action
+   investigator = id
+  interact_destination())
+ choice_panel.dismissed.connect(close_doorway_choices)
+ add_child(choice_panel)
+
+func close_doorway_choices() -> void:
+ if is_instance_valid(choice_panel): choice_panel.queue_free()
+ choice_panel = null
 
 func _process(delta: float) -> void:
  if room_mode:

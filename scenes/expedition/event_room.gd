@@ -12,6 +12,8 @@ func _ready() -> void:
 		if not State.run_heroes[id].get("dead", false) and int(State.run_heroes[id]["hp"]) > 0:
 			selected_hero = id
 			break
+	var result: Dictionary = State.floors[State.floor_index][State.room_position].get("event_result",{})
+	if State.party.has(str(result.get("hero",""))): selected_hero = str(result["hero"])
 	refresh()
 	add_child(preload("res://scenes/expedition/scene_arrival.gd").new())
 

@@ -2,6 +2,14 @@
 
 ## Exploration presentation
 
+### Decisions at a destination
+
+At an unresolved curio, **Investigate / Pass** opens a themed object description, risk summary and living-hero selector directly over the walking scene. Investigate commits entry and resolves the existing deterministic event for that hero; class and supply options reuse the event's existing rules. Leave untouched commits a normal curio as passed without rewards or debuffs. Leaving the Crusader coffin returns to the starting room without resolving it, preserving the rescue for a later attempt. Dismissing the panel makes no encounter commitment. The outcome screen keeps the selected investigator visible.
+
+At a fight, boss or roaming enemy, **Prepare Party** opens hero ranks and supplies before entry. Changing rank swaps positions through the existing formation rules. Inventory supports equipment and restorative items on the selected hero. These choices persist into combat; movement pauses while either panel is open. Ordinary doorway interaction remains available for players who are ready to enter. Rewards and event effects remain deferred until navigation commits, preserving co-op authorization and stale-route checks.
+
+`tests/doorway_choices_smoke.gd` covers investigator selection, paused input, exactly-once resolution, passing without loot, revisiting the coffin, rank changes and potion use followed by combat entry.
+
 The compact route maps share `scripts/route_map_art.gd`: a dark survey grid, compass detail, tiled stone corridors, framed encounter symbols, blue merchant-orb badges and a gold diamond party marker. The chosen walking route uses a brighter gold trail. Combat, boss, event, camp, treasure and stair symbols have distinct silhouettes; cleared rooms use subdued colors. Corridor events use flatter frames. The same coordinate layout supplies room click targets and visible artwork.
 
 Rooms and passages share a closer, uniform 1.25× camera with a 750-pixel scene above a compact travel desk. This enlarges actors without distorting their proportions. The unused travel skill grid is removed; hero inspection, health/stress summaries, inventory, route selection, Scout, Retreat and destination controls remain available. Dark edge silhouettes, a fading ground vignette and theme-colored divider connect the scene to the interface. Existing optional installation layers and original panorama fallback both use the same camera.

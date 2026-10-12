@@ -252,6 +252,8 @@ func move_to(destination: Vector2i) -> void:
 	add_child(passage)
 	await passage.finished
 	var reached: bool = passage.reached_destination
+	var discovery_action: String = passage.discovery_action
+	var investigator: String = passage.investigator
 	traveling = false
 	# A load, retreat, or floor transition invalidates an old doorway interaction.
 	if not GameState.run_active or GameState.run_id != departure_run or GameState.floor_index != departure_floor or GameState.room_position != origin: return
@@ -268,6 +270,15 @@ func move_to(destination: Vector2i) -> void:
 			refresh()
 			return
 	var room: Dictionary = GameState.floors[GameState.floor_index][destination]
+	if reached and not discovery_action.is_empty() and room.get("kind","") == "event" and room.has("event_id"):
+		var outcome: Dictionary = GameState.Events.resolve(GameState,investigator,discovery_action == "leave",discovery_action)
+		if discovery_action == "leave" and not outcome.is_empty():
+			message = str(outcome.get("text","Left untouched."))
+			refresh()
+			return
+		if not outcome.is_empty():
+			get_tree().change_scene_to_file("res://scenes/expedition/event_room.tscn")
+			return
 	if room.has("travel_text"): message = str(room["travel_text"])
 	if room["cleared"] and not room.has("travel_text"):
 		message = "Returned to %s. Choose a connected passage." % str(room.get("name", room["kind"]))
