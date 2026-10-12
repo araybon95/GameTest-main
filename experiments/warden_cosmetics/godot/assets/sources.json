@@ -64,16 +64,6 @@
       "source": "OpenAI image generation/edit, preserved original output"
     },
     {
-      "file": "rear_cloak_crown.png",
-      "dimensions": [
-        1247,
-        1261
-      ],
-      "mode": "RGBA",
-      "sha256": "3091fc6fb310e6291a8cbc055c9be4244337efb42c3763b3ff21245de40ef7df",
-      "source": "OpenAI image generation/edit, preserved original output"
-    },
-    {
       "file": "room.png",
       "dimensions": [
         1672,
@@ -92,6 +82,26 @@
       "mode": "RGBA",
       "sha256": "db5691aca86269341d1a95e37e8b6e953666ea95356ebd06b282a73cbc207065",
       "source": "OpenAI image generation/edit, preserved original output; corrupted wolf warhelm revision"
+    },
+    {
+      "file": "rear_cloak_crown.png",
+      "dimensions": [
+        1247,
+        1261
+      ],
+      "mode": "RGBA",
+      "sha256": "df9726ab4ff116182c2ca914e9009ee025474db2df75005e97653f148d499017",
+      "source": "OpenAI image edit, preserved original output; warm ash-grey reward cloth revision"
+    },
+    {
+      "file": "collar_crown.png",
+      "dimensions": [
+        1130,
+        1392
+      ],
+      "mode": "RGBA",
+      "sha256": "96a20baa5e074e2d148045884ef50dc7804c1d59a1c8e6299dc58403ad5dcea7",
+      "source": "OpenAI image edit, preserved original output; warm ash-grey reward cloth revision"
     }
   ]
 }

@@ -21,7 +21,8 @@
     "rear_cloak": {
       "original": "rear_cloak.png",
       "crown": "rear_cloak_crown.png",
-      "deformation": "cloth.gdshader"
+      "deformation": "cloth.gdshader",
+      "palette": "warm ash-grey cloth, charcoal folds, aged-gold outline and embroidery"
     },
     "cloth_patch": {
       "source": "components.png",
@@ -49,7 +50,9 @@
       "contents": "both arms, gauntlets, mace and shield"
     },
     "collar": {
-      "source": "collar.png"
+      "source": "collar.png",
+      "crown": "collar_crown.png",
+      "variant_follows": "rear_cloak"
     },
     "helmet": {
       "source": "components.png",

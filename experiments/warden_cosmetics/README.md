@@ -6,7 +6,7 @@ Standalone visual experiment. **Nothing is integrated into the game:** the live 
 
 ## What to review
 
-The current flattened Warden is shown beside an assembled model with independently swappable greathelm, rear cloak, and insignia. The reward concept is a corrupted **Wolf Warhelm**, a gold-embroidered **Crowned Mantle**, and a crown brooch or embroidered patch. The warhelm replaces the earlier crown-on-greathelm concept with a predatory metal visor, fang-like cheek guards, jagged forged ears, and tarnished relics integrated into the armor. Its wolf motif follows the ruined keep's wolf banners and the last son's beastlike corruption. These are appearance studies for the Undying Lord, not actual unlocks or stat equipment.
+The current flattened Warden is shown beside an assembled model with independently swappable greathelm, rear cloak, and insignia. The reward concept is a corrupted **Wolf Warhelm**, an ash-grey, gold-embroidered **Crowned Mantle**, and a crown brooch or embroidered patch. The warhelm replaces the earlier crown-on-greathelm concept with a predatory metal visor, fang-like cheek guards, jagged forged ears, and tarnished relics integrated into the armor. Its wolf motif follows the ruined keep's wolf banners and the last son's beastlike corruption. The reward mantle and its neck wrap use weathered warm grey, echoing the boss's pale revenant details while retaining aged-gold trim. These are appearance studies for the Undying Lord, not actual unlocks or stat equipment.
 
 The **Preview boss reward** checkbox simulates availability within this lab only. Turning it off restores ordinary parts and disables reward choices. Compare different combinations, inspect a single layer, overlay the original to check alignment, or separate the components to see the construction.
 
@@ -41,7 +41,7 @@ Helmet X/Y and scale controls let us inspect the neck fit without editing pixels
 
 ## Artist kit and alignment
 
-All source PNGs live in **`godot/assets/`**. The original Warden and room are byte-identical copies from main-game commit `5782f68`. The body, arms/gear, scarf, cloak, reward cloak, corrupted warhelm, and component sheet were generated/edited with the session's OpenAI image tool. Original output pixels are preserved unchanged; Godot applies fitting transforms when rendering.
+All source PNGs live in **`godot/assets/`**. The original Warden and room are byte-identical copies from main-game commit `5782f68`. The body, arms/gear, scarf, cloak, reward cloak and matching grey scarf, corrupted warhelm, and component sheet were generated/edited with the session's OpenAI image tool. Original output pixels are preserved unchanged; Godot applies fitting transforms when rendering.
 
 - `sources.json` records dimensions and SHA-256 hashes.
 - `components.json` records layer order, texture regions, source-space sockets, and the patch's cloth attachment.

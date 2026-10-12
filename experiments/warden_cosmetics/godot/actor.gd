@@ -80,6 +80,7 @@ func refresh() -> void:
 	if cloth_variant != cloak:
 		cloth_texture = load("res://assets/rear_cloak"+("_crown" if cloak == "crown" else "")+".png")
 		parts.rear_cloak.texture = cloth_texture
+		parts.collar.texture = load("res://assets/collar"+("_crown" if cloak == "crown" else "")+".png")
 		cloth_variant = cloak
 	var head: Sprite2D = parts.helmet
 	head.texture = tile(1 if helmet == "crown" else 0)
