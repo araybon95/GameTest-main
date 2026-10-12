@@ -45,7 +45,7 @@ func configure(data: Dictionary) -> void:
 	add_child(icon)
 	label(str(data["description"]),Rect2(114,88,335,112),18,Color("#F1E6D2")).name = "Effects"
 	label(str(data["availability"]["reason"]),Rect2(20,207,432,50),17,READY if available else LOCKED).name = "Availability"
-	label("Cost %d AP · Current %d AP\nCooldown %d party turn(s) remaining" % [data["cost"],data["current_ap"],data["cooldown"]],Rect2(20,259,432,47),15,Color("#D6C7AF")).name = "Resources"
+	label("Cost %d AP · Current %d AP\nCooldown %d turn(s) · %d remaining" % [data["cost"],data["current_ap"],data.get("base_cooldown",0),data["cooldown"]],Rect2(20,259,432,47),15,Color("#D6C7AF")).name = "Resources"
 	label(str(data["rank"]),Rect2(20,313,432,22),14,Color("#D6C7AF")).name = "Rank"
 	label(str(data.get("note","")),Rect2(20,337,432,28),12,Color("#BFAF98")).name = "PreviewNote"
 

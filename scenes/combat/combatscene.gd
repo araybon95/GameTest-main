@@ -363,8 +363,8 @@ func _input(event: InputEvent) -> void:
 	if event.ctrl_pressed or event.alt_pressed or event.meta_pressed or _combat_shortcuts_blocked():
 		return
 	var key: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
-	var index: int = [KEY_1, KEY_2, KEY_3, KEY_4, KEY_5].find(key)
-	if index < 0: index = [KEY_KP_1, KEY_KP_2, KEY_KP_3, KEY_KP_4, KEY_KP_5].find(key)
+	var index: int = [KEY_1, KEY_2, KEY_3, KEY_4, KEY_5,KEY_6,KEY_7].find(key)
+	if index < 0: index = [KEY_KP_1, KEY_KP_2, KEY_KP_3, KEY_KP_4, KEY_KP_5,KEY_KP_6,KEY_KP_7].find(key)
 	if index >= 0:
 		quick_select_skill(index)
 		get_viewport().set_input_as_handled()
@@ -393,9 +393,21 @@ func _focus_selected_skill() -> void:
 		return
 	if view.disabled: view.inspect_focus.grab_focus()
 	else: view.grab_focus()
+	if hand_container.get_parent() is ScrollContainer:
+		_reveal_skill(view)
 	view.show_preview()
 	if view.preview != null and not view.disabled:
-		view.preview.get_node("PreviewNote").text = "ENTER · Use on %s. Click an enemy to retarget." % enemy_name
+		view.preview.get_node("PreviewNote").text = "ENTER · Automatically selects the ally described above." if selected_skill_id in ["relic_warden","relic_healer"] else "ENTER · Use on %s. Click an enemy to retarget." % enemy_name
+
+func _reveal_skill(view: Control) -> void:
+	# Scroll bounds update after the newly selected hero's hand is laid out.
+	await get_tree().process_frame
+	if not is_instance_valid(view) or not is_instance_valid(hand_container): return
+	var scroll: ScrollContainer = hand_container.get_parent()
+	scroll.scroll_vertical = maxi(0,int(view.position.y + view.size.y - scroll.size.y))
+	await get_tree().process_frame
+	if not is_instance_valid(view): return
+	view.show_preview()
 
 
 func confirm_selected_skill() -> bool:
@@ -432,8 +444,9 @@ func _play_card(hero_id: String, card_index: int) -> void:
 	if int(state["ap"]) < int(card["cost"]):
 		return
 
-	if card.get("effect", "") == "pain_heal" and int(state["hp"]) <= int(card["self_damage"]):
+	if card.has("self_damage") and int(state["hp"]) <= int(card["self_damage"]):
 		return
+	if card.get("effect","") == "relic_guard" and preload("res://scripts/relic_combat.gd").ally(self,hero_id,false,true).is_empty(): return
 	state["ap"] = int(state["ap"]) - int(card["cost"])
 	if int(state["cooldowns"].get(card_id, 0)) > 0:
 		state["ap"] = int(state["ap"]) + int(card["cost"])
@@ -478,6 +491,8 @@ func _resolve_card(hero_id: String, card: Dictionary) -> void:
 		# These support skills do not create a strike, so their cue plays now.
 		_emit_attack_sound("spell")
 	match str(card["effect"]):
+		"relic_guard","relic_volley","relic_drain","relic_cleanse","relic_charge":
+			preload("res://scripts/relic_combat.gd").resolve(self,hero_id,card)
 		"pain_heal":
 			if int(hero_state[hero_id]["hp"]) > int(card["self_damage"]):
 				hero_state[hero_id]["hp"] -= int(card["self_damage"])
@@ -528,7 +543,7 @@ func _resolve_card(hero_id: String, card: Dictionary) -> void:
 			_gain_stress(hero_id, int(card["stress"]))
 
 
-func _attack_with_equipment(hero_id: String, card: Dictionary, ignore_block: bool = false) -> void:
+func _attack_with_equipment(hero_id: String, card: Dictionary, ignore_block: bool = false) -> int:
 	var attack_kind: String = "bow" if hero_id == "ranger" else "spell" if hero_id in ["occultist", "healer"] else "sword"
 	if presentation != null:
 		presentation.strike(hero_portraits[hero_id], enemy_views[selected_enemy_index].get_node("EnemyArt"), attack_kind, str(card.get("name", "Strike")),true,{"skill_id":str(card.get("skill_id","")),"effect":str(card.get("effect","")),"weapon_signature":preload("res://scripts/weapon_signatures.gd").resolve(GameState,hero_id)})
@@ -537,13 +552,13 @@ func _attack_with_equipment(hero_id: String, card: Dictionary, ignore_block: boo
 	if accuracy < 100.0 and randf() * 100.0 >= accuracy:
 		_add_log("%s misses %s." % [_name_of(hero_id), enemy_name])
 		if presentation != null: presentation.popup(enemy_art,"MISS",Color("#DCCFB9"))
-		return
+		return 0
 	var target: int = selected_enemy_index
 	var phase: int = int(enemies[target].get("phase_index", 0))
 	var actual: int = _deal_enemy_damage(_attack_damage(hero_id, card), ignore_block, hero_id)
 	GameState.add_deed(hero_id, "damage", actual)
 	if actual <= 0:
-		return
+		return 0
 	if card.get("skill_id", "") == "wd_bash" and int(enemies[target]["hp"]) > 0: move_enemy(target, mini(_living_enemies().size(),enemy_position(target)+1))
 	if hero_id == "occultist" and int(enemies[target]["hp"]) > 0 and int(enemies[target].get("phase_index", 0)) == phase:
 		if _apply_enemy_status(target,"poison"):
@@ -564,6 +579,7 @@ func _attack_with_equipment(hero_id: String, card: Dictionary, ignore_block: boo
 			if chance > 0 and randf() * 100 < chance:
 				if _apply_enemy_status(target,effect,1.0,true):
 					_add_log("%s inflicts %s on %s." % [_name_of(hero_id), effect.capitalize(), enemies[target]["name"]])
+	return actual
 
 # -------------------- ENEMY --------------------
 
@@ -710,6 +726,8 @@ func _enemy_action() -> void:
 				var target: String = _enemy_target()
 				if target == "":
 					break
+				var intended: String = target
+				target = preload("res://scripts/relic_combat.gd").intercept(self,target)
 				if presentation != null:
 					presentation.strike(enemy_views[index].get_node("EnemyArt"), hero_portraits[target], attack_kind, str(move["name"]), false,{"effect":"attack"})
 				_play_attack_sound(attack_kind)
@@ -732,6 +750,10 @@ func _enemy_action() -> void:
 					_add_log("%s reflects %d damage to %s." % [_name_of(target), reflected, enemy_name])
 					if enemy_hp <= 0:
 						break
+				if target != intended:
+					var retaliation_phase: int = int(enemies[index].get("phase_index",0))
+					preload("res://scripts/relic_combat.gd").retaliate(self,target)
+					if enemy_hp <= 0 or int(enemies[index].get("phase_index",0)) != retaliation_phase: break
 			if enemy_weak_rounds > 0:
 				enemy_weak_rounds -= 1
 		_advance_chill(enemies[index]["statuses"])
@@ -1011,6 +1033,9 @@ func _end_turn() -> void:
 		var state: Dictionary = hero_state[hero_id]
 		_tick_hero_statuses(hero_id)
 		state["block"] = 0
+		state["oath_target"] = ""
+		state["oath_retaliated"] = true
+		state["free_move_used"] = false
 		state["enemy_mark"] = maxi(0,int(state.get("enemy_mark",0))-1)
 		GameState.tick_buffs(state)
 		state["block"] = GameState.buff_bonus(state, "ward")
@@ -1044,7 +1069,7 @@ func _refresh_all() -> void:
 	if not hero_state.has(selected_hero):
 		return
 	var hero: Dictionary = hero_state[selected_hero]
-	hand_title.text = "ABILITIES · %d / 2 AP · 1–5 SELECT · ENTER USE" % int(hero["ap"])
+	hand_title.text = "ABILITIES · %d / 2 AP · 1–%d SELECT · ENTER USE" % [int(hero["ap"]),hero.abilities.size()]
 	selected_portrait.set_meta("hero_id", selected_hero)
 	if selected_portrait.has_node("EquipmentAccents"): selected_portrait.get_node("EquipmentAccents").hero_id = selected_hero
 	selected_portrait.texture = _load_texture(str(GameState.hero(selected_hero).get("portrait_art",GameState.hero(selected_hero).get("art", ""))))
@@ -1055,9 +1080,11 @@ func _refresh_all() -> void:
 	if role_hint != null:
 		role_hint.text = {"warden": "Marked targets: +2 damage.\nFront protects against melee.", "ranger": "Rear: +1 damage. Mark targets\nfor the Warden to exploit.", "occultist": "Damaging skills inflict Poison.\nCombine pressure with allies.", "crusader": "Bleeding targets: +2 damage.\nCharge inflicts Bleed.", "healer": "Party healing removes Bleed.\nKeep your companions fighting."}.get(selected_hero, "Heroes act in any order.")
 	if formation_button != null:
-		formation_button.text = "ADVANCE → · 1 AP"
-		formation_button.disabled = battle_over or int(hero["ap"]) < 1 or not _is_standing(selected_hero) or GameState.Depth.position_of(GameState,selected_hero) == 1
-		withdraw_button.disabled = battle_over or int(hero["ap"]) < 1 or not _is_standing(selected_hero) or GameState.Depth.position_of(GameState,selected_hero) == party.size()
+		var move_cost: int = formation_move_cost(selected_hero)
+		formation_button.text = "ADVANCE → · %d AP" % move_cost
+		withdraw_button.text = "← FALL BACK · %d AP" % move_cost
+		formation_button.disabled = battle_over or int(hero["ap"]) < move_cost or not _is_standing(selected_hero) or GameState.Depth.position_of(GameState,selected_hero) == 1
+		withdraw_button.disabled = battle_over or int(hero["ap"]) < move_cost or not _is_standing(selected_hero) or GameState.Depth.position_of(GameState,selected_hero) == party.size()
 	for hero_id in party:
 		var state: Dictionary = hero_state[hero_id]
 		var tag: String = ""
@@ -1130,7 +1157,8 @@ func _skill_availability(hero_id: String, card_id: String) -> Dictionary:
 	var target: int = enemy_position(selected_enemy_index)
 	if not rule["target"].has(target): return {"available":false,"code":"target_range","badge":"TARGET P%d · REACH %s" % [target,_skill_ranks(rule["target"])],"reason":"UNAVAILABLE · Target is at P%d. Reach %s." % [target,_skill_ranks(rule["target"])]}
 	var health_cost: int = int(card.get("self_damage",2))
-	if card.get("effect","") == "pain_heal" and int(state["hp"]) <= health_cost: return {"available":false,"code":"health","badge":"NEED >%d HP · HAVE %d" % [health_cost,state["hp"]],"reason":"UNAVAILABLE · Needs more than %d HP; currently %d HP." % [health_cost,state["hp"]]}
+	if card.has("self_damage") and int(state["hp"]) <= health_cost: return {"available":false,"code":"health","badge":"NEED >%d HP · HAVE %d" % [health_cost,state["hp"]],"reason":"UNAVAILABLE · Needs more than %d HP; currently %d HP." % [health_cost,state["hp"]]}
+	if card.get("effect","") == "relic_guard" and preload("res://scripts/relic_combat.gd").ally(self,hero_id,false,true).is_empty(): return {"available":false,"code":"ally","badge":"NO LIVING COMPANION","reason":"Needs a living companion to guard."}
 	return {"available":true,"code":"ready","badge":"AVAILABLE","reason":"AVAILABLE · This hero can use the skill."}
 
 
@@ -1155,6 +1183,12 @@ func _skill_description(card_id: String, card: Dictionary) -> String:
 	if card_id == "wd_bash": description += "\nPush back 1."
 	if card_id == "rg_dodge": description += "\nFall back 1."
 	if card_id == "pc_charge": description = "Damage %d\nBlock %d · Bleed 2t\nAdvance to P1." % [card.get("damage",0),card.get("block",0)]
+	match card_id:
+		"relic_warden": description = "Guard wounded ally\nBlock %d · Return hit: 6\nUntil next party turn." % card.block
+		"relic_ranger": description = "Damage %d to each enemy\nOn damage: Poison 2t." % card.damage
+		"relic_occultist": description = "Damage %d · Heal wounded ally\nUp to %d HP, limited by damage." % [card.damage,card.heal]
+		"relic_healer": description = "Cleanse most afflicted ally\nRemove Burn/Bleed/Poison/Chill\nGrant %d Block." % card.block
+		"relic_crusader": description = "Pay 2 HP · Damage %d\nBlock %d · Bleed 2t\nAdvance to P1." % [card.damage,card.block]
 	return description
 
 
@@ -1165,6 +1199,7 @@ func _refresh_hand() -> void:
 	if not hero_state.has(selected_hero):
 		return
 	var hand: Array = hero_state[selected_hero]["abilities"]
+	hand_container.custom_minimum_size = Vector2(900,ceili(hand.size()/3.0)*156)
 	for index in range(hand.size()):
 		var card_id: String = str(hand[index])
 		var preview: Dictionary = _skill_preview(selected_hero,card_id)
@@ -1175,7 +1210,7 @@ func _refresh_hand() -> void:
 		var ranks: String = "Use %s · Reach %s · Now P%d → P%d" % [_skill_ranks(rule["use"]),_skill_ranks(rule["target"]),GameState.Depth.position_of(GameState,selected_hero),enemy_position(selected_enemy_index)]
 		var description: String = _skill_description(card_id,preview)
 		if selected_hero == "occultist" and preview.has("damage"): description += "\nOn damage: Poison 2t, unless resisted."
-		var details := {"hero_id":selected_hero,"availability":eligibility,"name":preview["name"],"hero_name":hero_state[selected_hero]["name"],"class_name":GameState.HEROES[selected_hero]["name"],"cost":preview["cost"],"current_ap":hero_state[selected_hero]["ap"],"cooldown":cooldown,"rank":ranks,"description":description,"icon":view.get_node("Contents/ArtFrame/CardArt").texture,"note":"Damage includes target traits and Mark; before Block." if preview.has("damage") else ""}
+		var details := {"hero_id":selected_hero,"availability":eligibility,"name":preview["name"],"hero_name":hero_state[selected_hero]["name"],"class_name":GameState.HEROES[selected_hero]["name"],"cost":preview["cost"],"current_ap":hero_state[selected_hero]["ap"],"cooldown":cooldown,"base_cooldown":GameState.ability_cooldown(card_id),"rank":ranks,"description":description,"icon":view.get_node("Contents/ArtFrame/CardArt").texture,"note":"Damage includes target traits and Mark; before Block." if preview.has("damage") else ""}
 		view.configure(details,self)
 		var badge: Label = view.get_node("Contents/Effect")
 		badge.text = str(eligibility["badge"])
@@ -1360,7 +1395,14 @@ func _layout_combat() -> void:
 	_place($Enemy/HealthBar, Rect2(20, 370, 400, 18))
 	_place(hand_title, Rect2(520, 685, 900, 35))
 	_place($CardHand, Rect2(520, 730, 900, 312))
-	hand_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var skill_scroll := ScrollContainer.new()
+	skill_scroll.name = "SkillScroll"
+	skill_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	$CardHand.add_child(skill_scroll)
+	skill_scroll.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	hand_container.reparent(skill_scroll)
+	hand_container.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+	hand_container.custom_minimum_size = Vector2(900,312)
 	_place(end_turn_button, Rect2(1470, 950, 400, 80))
 	var info_panel := PanelContainer.new()
 	info_panel.name = "SelectedHeroInfo"
@@ -1586,7 +1628,7 @@ func _create_card_view(card_id: String, card: Dictionary) -> Button:
 	effect_label.name = "Effect"
 	_place(effect_label, Rect2(5, 125, 270, 20))
 	contents.add_child(effect_label)
-	var description_label := _make_label("", 15 if card_id.begins_with("pc_") else 17, Color(IVORY))
+	var description_label := _make_label("", 14 if card_id.begins_with("relic_") else 15 if card_id.begins_with("pc_") else 17, Color(IVORY))
 	description_label.name = "Description"
 	description_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_place(description_label, Rect2(82, 40, 187, 85))
@@ -1944,12 +1986,18 @@ func change_rank() -> void:
 	move_position(1 if current == 1 else 1-current)
 
 func move_position(delta: int) -> void:
-	if battle_over or not _is_standing(selected_hero) or int(hero_state[selected_hero]["ap"]) < 1: return
+	var cost: int = formation_move_cost(selected_hero)
+	if battle_over or not _is_standing(selected_hero) or int(hero_state[selected_hero]["ap"]) < cost: return
 	var destination: int = GameState.Depth.position_of(GameState,selected_hero) + delta
 	if GameState.Depth.move_hero(GameState,selected_hero,destination):
-		hero_state[selected_hero]["ap"] -= 1
+		hero_state[selected_hero]["ap"] -= cost
+		if cost == 0: hero_state[selected_hero]["free_move_used"] = true
 		_add_log("%s moves to position %d, exchanging places with an ally." % [_name_of(selected_hero),destination])
 		_refresh_all()
+
+func formation_move_cost(hero_id: String) -> int:
+	if GameState.equipment_bonus(hero_id,"free_move") > 0 and not hero_state.get(hero_id,{}).get("free_move_used",false): return 0
+	return maxi(1,GameState.equipment_bonus(hero_id,"move_cost"))
 
 func enemy_position(index: int) -> int:
 	var living: Array[int] = _living_enemies()

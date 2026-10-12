@@ -11,6 +11,9 @@ func run() -> void:
  var runtime = root.get_node("GameSettings")
  for id in State.CARDS:
   var icon: Texture2D = load(Skills.path_for(str(id)))
+  if str(id).begins_with("relic_"):
+   assert(icon != null and Skills.path_for(str(id)) == State.Items.icon_path(str(id).trim_prefix("relic_")+"_legend"))
+   continue
   assert(icon is AtlasTexture and icon.atlas.resource_path.ends_with("painted_skills.png"))
   assert(icon.region.end.x <= icon.atlas.get_width() and icon.region.end.y <= icon.atlas.get_height())
  for context in [["old_road",0,"bandit"],["old_road",1,"keep"],["path_beast",0,"beast"],["infested_apothecary",0,"medical"]]:

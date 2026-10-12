@@ -43,6 +43,11 @@ static var scout_uses: int = 2
 ##          stress_attack, heal, team_heal, stress_heal.
 ## `undead_bonus` adds damage against Undead enemies.
 const CARDS: Dictionary = {
+	"relic_warden":{"name":"The Last Oath","cost":1,"cooldown":3,"effect":"relic_guard","block":6,"description":"Guard the most wounded other ally until next party turn. Gain 6 Block; intercept their hits and retaliate once for 6 damage."},
+	"relic_ranger":{"name":"Thornsong Volley","cost":2,"cooldown":3,"effect":"relic_volley","damage":3,"description":"Shoot each living enemy once. On damage: Poison for 2 turns. Weapon bonuses apply to each shot."},
+	"relic_occultist":{"name":"Gravetide Offering","cost":2,"cooldown":3,"effect":"relic_drain","damage":6,"heal":5,"description":"Damage one enemy. Restore up to 5 HP to the most wounded companion, limited by damage dealt."},
+	"relic_healer":{"name":"Dawn's Absolution","cost":1,"cooldown":3,"effect":"relic_cleanse","block":4,"description":"Remove Burn, Bleed, Poison and Chill from the most afflicted living ally. Grant 4 Block."},
+	"relic_crusader":{"name":"Unending Charge","cost":2,"cooldown":3,"effect":"relic_charge","self_damage":2,"damage":8,"block":4,"status":"bleed","description":"Pay 2 HP; advance to the front, strike and gain 4 Block. On damage: Bleed for 2 turns. Needs more than 2 HP."},
  "pc_strike": {"name": "Barbed Strike", "cost": 1, "effect": "attack", "damage": 6},
  "pc_guard": {"name": "Iron Penance", "cost": 1, "effect": "block", "block": 6},
  "pc_pain": {"name": "Rapture of Pain", "cost": 1, "effect": "pain_heal", "self_damage": 2, "heal_percent": 15},
@@ -337,7 +342,7 @@ static func upgrade_cost(card_id: String) -> int:
 
 
 static func can_upgrade(card_id: String) -> bool:
-	return card_level(card_id) < MAX_CARD_LEVEL
+	return not card_id.begins_with("relic_") and card_level(card_id) < MAX_CARD_LEVEL
 
 
 static func upgrade_card(card_id: String) -> bool:
@@ -355,7 +360,7 @@ static func upgrade_card(card_id: String) -> bool:
 static func card_stats(card_id: String) -> Dictionary:
 	var base: Dictionary = (CARDS.get(card_id, {}) as Dictionary).duplicate(true)
 	var level := card_level(card_id)
-	if level > 0:
+	if level > 0 and not card_id.begins_with("relic_"):
 		for key in ["damage", "block", "heal", "undead_bonus", "amount", "bonus"]:
 			if base.has(key):
 				base[key] = int(base[key]) + level * UPGRADE_BONUS
@@ -405,10 +410,17 @@ static func hero_abilities(hero_id: String) -> Array:
 	for ability_id in hero(hero_id).get("abilities", []):
 		if not result.has(ability_id):
 			result.append(ability_id)
+	var signature: String = legendary_skill(hero_id)
+	if not signature.is_empty(): result.append(signature)
 	return result
+
+static func legendary_skill(hero_id: String) -> String:
+	var item_id: String = Items.base_id(str(equipment.get(hero_id,{}).get("weapon","")))
+	return {"warden_legend":"relic_warden","ranger_legend":"relic_ranger","occultist_legend":"relic_occultist","healer_legend":"relic_healer","crusader_legend":"relic_crusader"}.get(item_id,"")
 
 static func ability_cooldown(ability_id: String) -> int:
 	var ability: Dictionary = card_stats(ability_id)
+	if ability.has("cooldown"): return int(ability.cooldown)
 	if str(ability.get("effect", "")) in ["heal", "team_heal", "stress_heal", "team_block", "weaken", "drain", "pain_heal", "barbed_charge"]:
 		return 2
 	return 1 if int(ability.get("cost", 1)) > 1 else 0

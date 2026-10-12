@@ -218,8 +218,8 @@ func build_character(hero: Dictionary, state: Dictionary) -> void:
 	for index in range(abilities.size()):
 		var ability_id: String = str(abilities[index])
 		var ability: Dictionary = State.card_stats(ability_id)
-		var pos := Vector2(1148 + (index % 3) * 213, 266 + (index / 3) * 134)
-		panel(Rect2(pos, Vector2(202, 119)), Color("#191314"), Color("#594932"))
+		var pos := Vector2(1148 + (index % 3) * 213, 266 + (index / 3) * (91 if abilities.size() > 6 else 134))
+		panel(Rect2(pos, Vector2(202, 84 if abilities.size() > 6 else 119)), Color("#191314"), Color("#594932"))
 		var art := TextureRect.new()
 		art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		var path := preload("res://scripts/painted_skill_art.gd").path_for(str(ability_id))
@@ -237,9 +237,10 @@ func build_character(hero: Dictionary, state: Dictionary) -> void:
 		var effects := label_at(State.card_description(ability), pos + Vector2(8, 82), 184, 14, Color("#BFAE90"))
 		effects.clip_text = true
 		effects.size.y = 31
+		effects.visible = abilities.size() <= 6
 		var hover := Control.new()
 		hover.position = pos
-		hover.size = Vector2(202, 119)
+		hover.size = Vector2(202, 84 if abilities.size() > 6 else 119)
 		hover.tooltip_text = str(ability["name"]) + "\n" + State.card_description(ability) + "\n" + State.Depth.rank_text(ability_id)
 		hover.mouse_filter = Control.MOUSE_FILTER_STOP
 		add_child(hover)
