@@ -72,6 +72,7 @@ func run() -> void:
 			var before: Dictionary = gameplay_snapshot()
 			var travel = await passage()
 			assert(travel.scene_theme == context[2] and travel.walkers.size() == 3)
+			assert(travel.travel_stage.scale.is_equal_approx(Vector2(1.25,1.25)),"Exploration zoom keeps actor proportions")
 			assert(is_equal_approx(travel.progress.size.y, 4.0), "Progress rail stays thin under the global Gothic theme")
 			assert(travel.progress.get_global_rect().end.y <= travel.passage_map.get_parent().get_global_rect().position.y, "Progress rail does not cover the map header")
 			assert(travel.encounter != null and travel.encounter.texture != null)
@@ -86,10 +87,13 @@ func run() -> void:
 			assert(travel.footsteps_played > 0, "Footsteps accompany walking")
 			var first_frame: Texture2D = travel.walkers[0].texture
 			advance(travel, 0.4)
+			assert(travel.route_clue.text.is_empty(),"Clues wait until the party approaches")
 			assert(travel.walkers[0].texture != first_frame, "Walking advances the hero animation frames")
 			for walker in travel.walkers:
 				if walker.get_meta("walker") == "warden": assert(walker.material is ShaderMaterial, "Workshop palette survives walking")
 				assert(is_equal_approx(walker.position.y + walker.size.y, Travel.GROUND_Y), "Walkers remain on the scene contact plane")
+			advance(travel,1.3)
+			assert(travel.route_clue.text == travel.passage_hint(),"Themed approach hints appear during traversal without rolling rewards")
 			travel.set_walking(false)
 			advance(travel, 0.0)
 			var paused_elapsed: float = travel.elapsed

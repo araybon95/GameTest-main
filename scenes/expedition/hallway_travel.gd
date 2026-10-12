@@ -62,6 +62,7 @@ var source_button: Button
 var return_button: Button
 var hero_summaries: Dictionary = {}
 var gold_counter: Label
+var route_clue: Label
 
 class PassageProgress extends Control:
  var value: float = 0.0
@@ -130,6 +131,9 @@ func _ready() -> void:
  travel_stage.name = "TravelStage"
  travel_stage.position = Vector2.ZERO
  travel_stage.size = Vector2(1920,600)
+ # A closer exploration camera preserves sprite proportions and the shared ground plane.
+ travel_stage.scale = Vector2(1.25,1.25)
+ travel_stage.position = Vector2(-180,0)
  travel_stage.clip_contents = true
  travel_stage.mouse_filter = Control.MOUSE_FILTER_STOP
  travel_stage.gui_input.connect(stage_input)
@@ -217,8 +221,13 @@ func build_walkers() -> void:
   Scenery.apply_hero_palette(picture,id,State.hero_colors.get(id,"original"))
 
 func build_hud() -> void:
- text_at("%s · %s" % [State.selected_expedition.get("name","Expedition"),State.floor_title()],Vector2(55,22),34,1540)
- arrival_label = text_at("Hold D / → to set out. Hold A / ← to return to the starting doorway.",Vector2(55,615),22,1040)
+ build_exploration_frame()
+ text_at("%s · %s" % [State.selected_expedition.get("name","Expedition"),State.floor_title()],Vector2(55,28),28,1540)
+ route_clue = text_at("",Vector2(55,695),22,1220)
+ route_clue.name = "RouteClue"
+ route_clue.add_theme_color_override("font_color",Color("#DCC39A"))
+ text_at("ON THE ROAD",Vector2(55,775),17,1000).add_theme_color_override("font_color",Color("#BDA57A"))
+ arrival_label = text_at("Hold D / → to set out. Hold A / ← to return to the starting doorway.",Vector2(55,806),21,1040)
  arrival_label.name = "EncounterInspection"
  arrival_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
  arrival_label.size.y = 64
@@ -226,11 +235,11 @@ func build_hud() -> void:
  interact_button = action_button("ENTER · W / ENTER",Rect2(1510,990,355,50),interact_destination,"SkipTravel")
  walk_button = action_button("WALK ON",Rect2(1130,990,180,50),toggle_walking,"WalkToggle")
  return_button = action_button("RETURN",Rect2(1320,990,180,50),return_to_origin,"ReturnToOrigin")
- text_at("A / ← back · D / → forward · Hold either side of the scene to walk · Tab inventory · I controls",Vector2(55,1040),18,1475)
- gold_counter = text_at("GOLD  %d" % State.gold,Vector2(55,990),22,260)
+ text_at("A / D move · W / Enter interact · Tab inventory · I controls",Vector2(55,1037),17,1040)
+ gold_counter = text_at("GOLD  %d" % State.gold,Vector2(55,992),22,260)
  for index in range(walkers.size()): build_hero_summary(str(walkers[index].get_meta("walker")),index)
- var map_panel := panel_at(Rect2(1130,610,735,370))
- text_at("DUNGEON MAP · THE PASSAGE",Vector2(1147,620),22,690)
+ var map_panel := panel_at(Rect2(1130,775,735,200))
+ text_at("ROUTE · FLOOR %d / %d" % [State.floor_index+1,State.floor_count],Vector2(1147,783),20,690)
  passage_map = PassageMap.new()
  passage_map.name = "PassageMap"
  passage_map.rooms = State.floors[State.floor_index] if State.run_active else {}
@@ -238,48 +247,47 @@ func build_hud() -> void:
  passage_map.route = route_steps.duplicate()
  if passage_map.route.is_empty(): passage_map.route = [State.room_position]
  passage_map.position = Vector2(10,32)
- passage_map.size = Vector2(715,318)
+ passage_map.size = Vector2(715,158)
  map_panel.add_child(passage_map)
  progress = PassageProgress.new()
  progress.name = "PassageProgress"
- progress.position = Vector2(55,599)
+ progress.position = Vector2(55,754)
  progress.size = Vector2(1810,4)
  add_child(progress)
- var id: String = str(State.party[0])
- text_at("%s · %s" % [State.hero(id)["name"],State.hero(id)["class"]],Vector2(55,682),28,1000)
- var skills: Array = State.hero_abilities(id)
- for index in range(skills.size()):
-  var ability: Dictionary = State.card_stats(str(skills[index]))
-  var button := action_button(str(ability["name"]),Rect2(55+index*204,738,196,66),func(): get_node("/root/GameControls").open_hero_sheet(id),"TravelSkill_%d" % index)
-  button.add_theme_font_size_override("font_size",17)
-  button.tooltip_text = State.card_description(ability)+"\nInspect hero. Skills become available in battle."
+
+func build_exploration_frame() -> void:
+ var frame := preload("res://scenes/expedition/exploration_frame.gd").new()
+ frame.name = "ExplorationFrame"
+ frame.scene_theme = scene_theme
+ frame.size = Vector2(1920,1080)
+ add_child(frame)
 
 func build_hero_summary(id: String, index: int) -> void:
  var left: float = 55.0+index*350.0
- var panel := panel_at(Rect2(left,840,335,123))
+ var panel := panel_at(Rect2(left,867,335,105))
  panel.set_meta("hero_id", id)
  var portrait := TextureRect.new()
  portrait.texture = standing_frames[id]
  portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
  portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
  portrait.position = Vector2(8,8)
- portrait.size = Vector2(78,102)
+ portrait.size = Vector2(65,88)
  portrait.mouse_filter = Control.MOUSE_FILTER_IGNORE
  Scenery.apply_hero_palette(portrait,id,State.hero_colors.get(id,"original"))
  panel.add_child(portrait)
  var hero: Dictionary = State.hero(id)
- var hero_name := text_at(str(hero["name"]),Vector2(left+95,848),24,226)
+ var hero_name := text_at(str(hero["name"]),Vector2(left+82,873),20,240)
  hero_name.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
- text_at(str(State.HEROES[id]["name"]),Vector2(left+96,881),18,226).add_theme_color_override("font_color",Color("#B7AB99"))
+ text_at(str(State.HEROES[id]["name"]),Vector2(left+82,901),16,240).add_theme_color_override("font_color",Color("#B7AB99"))
  var stats: Dictionary = State.run_heroes.get(id,{})
  var max_hp: int = int(stats.get("max_hp",hero.get("max_hp",1)))
  var hp: int = int(stats.get("hp",max_hp))
- var health := text_at("HP %d / %d" % [hp,max_hp],Vector2(left+96,911),17,125)
- var stress := text_at("STRESS %d" % int(stats.get("stress",0)),Vector2(left+218,912),16,112)
+ var health := text_at("HP %d / %d" % [hp,max_hp],Vector2(left+82,929),17,125)
+ var stress := text_at("STRESS %d" % int(stats.get("stress",0)),Vector2(left+212,930),16,112)
  stress.add_theme_color_override("font_color",Color("#C1B7AC"))
  var bar := ColorRect.new()
  bar.color = Color("#952C36")
- bar.position = Vector2(96,101)
+ bar.position = Vector2(82,94)
  bar.size = Vector2(224.0*clampf(float(hp)/maxi(1,max_hp),0,1),5)
  bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
  panel.add_child(bar)
@@ -368,7 +376,7 @@ func stage_input(event: InputEvent) -> void:
  if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
   auto_walk = false
   pointer_walking = event.pressed
-  pointer_direction = -1 if event.position.x < travel_stage.size.x * 0.5 else 1
+  pointer_direction = -1 if event.position.x < travel_stage.size.x * 0.5 - 1.0 else 1
   update_controls()
   travel_stage.accept_event()
 
@@ -444,7 +452,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func update_controls() -> void:
  if walk_button == null: return
  walk_button.disabled = arrived
- walk_button.text = "AT THE ENCOUNTER" if arrived else ("PAUSE WALKING" if auto_walk else "WALK ON")
+ walk_button.text = "ARRIVED" if arrived else ("PAUSE" if auto_walk else "WALK ON")
  interact_button.disabled = not arrived
  interact_button.text = "INTERACT · W / ENTER" if arrived else "WALK TO THE ENTRANCE"
  return_button.disabled = elapsed > 0.001
@@ -480,6 +488,7 @@ func _process(delta: float) -> void:
   footsteps.stop()
  var previous_distance: float = distance_travelled
  var fraction: float = clampf(elapsed/maxf(duration,0.001),0,1)
+ route_clue.text = passage_hint() if fraction >= 0.2 and not arrived else ""
  distance_travelled = fraction*(1500.0+minf(maxi(route_steps.size()-1,0),5)*220.0)
  if moving:
   stride_distance += absf(distance_travelled-previous_distance)
@@ -597,6 +606,20 @@ func destination_description() -> String:
  if kind == "treasure": return "A hidden cache waits ahead. Search the chamber."
  return "A doorway opens into the next chamber. Step through."
 
+func passage_hint() -> String:
+ var room: Dictionary = destination_room()
+ if room.get("cleared",false): return "Familiar tracks. This passage has already been cleared."
+ if room.get("corridor_encounter","") == "gold": return "A metallic glint catches the light between the floor stones."
+ if room.get("corridor_encounter","") == "roamer": return "A single set of footsteps. Its owner has not noticed you."
+ match str(room.get("kind","entry")):
+  "battle","boss":
+   return {"bandit":"Fresh boot prints. Voices carry from the chamber ahead.","keep":"Steel scrapes against stone. Someone holds the next doorway.","beast":"Drag marks cross the stones. A prayer answers from beyond.","medical":"Wing dust clings to the wall. Something stirs inside."}.get(scene_theme,"Something moves in the chamber ahead.")
+  "event": return "Something has been left beside the passage. Approach to investigate."
+  "camp": return "Warm air and wood smoke drift from a sheltered alcove."
+  "treasure": return "A forgotten cache lies beyond the next threshold."
+  "stairs": return "The air grows colder. A deeper floor waits below."
+ return "The passage opens toward another chamber."
+
 func build_destination() -> void:
  var room: Dictionary = destination_room()
  var kind: String = str(room.get("kind","entry"))
@@ -648,6 +671,8 @@ func build_destination() -> void:
  var height: float = minf(height_limit,width_limit*encounter.texture.get_height()/float(encounter.texture.get_width()))
  encounter.size = Vector2(height*encounter.texture.get_width()/float(encounter.texture.get_height()),height)
  encounter_end_x = 1280.0 if threshold else 1390.0 if kind == "boss" else 1430.0
+ var camera_right: float = (1920.0-travel_stage.position.x)/travel_stage.scale.x
+ encounter_end_x = minf(encounter_end_x,camera_right-encounter.size.x-28.0)
  encounter.position = Vector2(encounter_start_x,GROUND_Y-height)
  encounter_glow = ShaderMaterial.new()
  encounter_glow.shader = preload("res://assets/shaders/curio_highlight.gdshader")

@@ -9,7 +9,17 @@ func _ready() -> void:
 
 func room_rect(location: Vector2i) -> Rect2:
 	var rect: Rect2 = full_room_rect(location)
-	return Rect2(rect.position*0.45,rect.size*0.45) if compact else rect
+	if not compact: return rect
+	var bounds := Rect2()
+	var first: bool = true
+	for key in State.floors[State.floor_index]:
+		# Fit the whole floor so revealing a room never shifts its click target.
+		var candidate: Rect2 = full_room_rect(key).grow(18)
+		bounds = candidate if first else bounds.merge(candidate)
+		first = false
+	var factor: float = minf((size.x-30)/maxf(1,bounds.size.x),(size.y-16)/maxf(1,bounds.size.y))
+	var offset: Vector2 = (size-bounds.size*factor)*0.5-bounds.position*factor
+	return Rect2(offset+rect.position*factor,rect.size*factor)
 
 func full_room_rect(location: Vector2i) -> Rect2:
 	var size := Vector2(88, 88)
@@ -56,6 +66,8 @@ func _draw() -> void:
 		draw_rect(rect, Color("#D3AF72") if current else Color("#171417"), false, 3)
 		var center: Vector2 = rect.get_center()
 		var tint := Color("#B7736B") if not room["cleared"] else Color("#8F8271")
+		var icon_scale: float = minf(1.0,rect.size.x/70.0)
+		draw_set_transform(center*(1.0-icon_scale),0,Vector2.ONE*icon_scale)
 		match str(room["kind"]):
 			"event":
 				var font := ThemeDB.fallback_font
@@ -85,6 +97,7 @@ func _draw() -> void:
 			draw_circle(orb, 15, Color(0.2, 0.65, 0.85, 0.15))
 			draw_circle(orb, 10, Color("#598FA9"), false, 2)
 			draw_circle(orb, 5, Color("#B2E1EF") if room["cleared"] else Color("#406575"))
+		draw_set_transform(Vector2.ZERO,0,Vector2.ONE)
 		if current:
 			var marker := center + Vector2(0, -rect.size.y * 0.5 - 14)
 			draw_colored_polygon(PackedVector2Array([marker + Vector2(-10, -8), marker + Vector2(10, -8), marker + Vector2(0, 8)]), Color("#D9BC7F"))

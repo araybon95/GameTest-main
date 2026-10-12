@@ -5,68 +5,42 @@ const Travel = preload("res://scenes/expedition/hallway_travel.gd")
 const Map = preload("res://scenes/expedition/dungeon_map.gd")
 
 static func build(owner: Control) -> void:
-	owner.panel_at(Rect2(0,0,1920,1080),Color("#09080A"))
+	owner.panel_at(Rect2(0,0,1920,1080),Color("#09080A")).get_node("IronFittings").hide()
 	var view = Travel.new()
 	view.room_mode = true
 	view.route_origin = State.room_position
 	owner.add_child(view)
 	view.name = "RoomView"
+	view.build_exploration_frame()
 	view.room_interaction.connect(owner.interact_room)
 	view.destination_button.disabled = not owner.room_action_available()
 	view.destination_button.tooltip_text = owner.room_action_label()
-	owner.label_at("%s · %s" % [State.selected_expedition.get("name","Expedition"),State.floor_title()],Vector2(45,40),28)
-	owner.panel_at(Rect2(25,610,1080,445),Color("#100E10"))
-	owner.panel_at(Rect2(1120,610,775,445),Color("#100E10"))
+	owner.label_at("%s · %s" % [State.selected_expedition.get("name","Expedition"),State.floor_title()],Vector2(55,28),28)
+	owner.panel_at(Rect2(1120,775,775,202),Color("#100E10"))
 	var id: String = owner.selected_hero
 	if not State.party.has(id): id = str(State.party[0])
 	owner.selected_hero = id
 	var hero: Dictionary = State.hero(id)
 	var stats: Dictionary = State.run_heroes.get(id,{})
-	owner.label_at("%s · %s" % [hero["name"],hero["class"]],Vector2(60,630),28)
-	owner.label_at("HP %d / %d   STRESS %d   GOLD %d   RATIONS %d" % [stats.get("hp",State.hero_max_hp(id)),State.hero_max_hp(id),stats.get("stress",0),State.gold,State.journey.get("rations",0)],Vector2(60,679),20)
-	owner.portrait_at(id,Rect2(55,731,130,195))
-	var abilities: Array = State.hero_abilities(id)
-	for index in range(abilities.size()):
-		var card: Dictionary = State.card_stats(str(abilities[index]))
-		var description: String = State.card_description(card)
-		var button: Button = owner.button_at("",Vector2(210+(index%3)*286,730+(index/3)*92),owner.inspect_hero.bind(id))
-		button.size = Vector2(275,82)
-		var heading := Label.new()
-		heading.text = str(card["name"])
-		heading.position = Vector2(8,8)
-		heading.size = Vector2(259,24)
-		heading.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		heading.add_theme_font_size_override("font_size",17)
-		heading.add_theme_color_override("font_color",Color("#E6C99D"))
-		heading.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		button.add_child(heading)
-		var details := Label.new()
-		details.text = description
-		details.position = Vector2(8,34)
-		details.size = Vector2(259,42)
-		details.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		details.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		details.add_theme_font_size_override("font_size",16)
-		details.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		button.add_child(details)
-		button.tooltip_text = "%s · %d AP\n%s\nInspect hero; combat skills become available in battle." % [card["name"],card["cost"],description]
-	owner.label_at("Choose a route on the map. W / Enter interacts with this room.",Vector2(60,937),18)
+	owner.label_at("%s · %s" % [hero["name"],hero["class"]],Vector2(55,865),24)
+	owner.label_at("HP %d / %d   STRESS %d   GOLD %d   RATIONS %d" % [stats.get("hp",State.hero_max_hp(id)),State.hero_max_hp(id),stats.get("stress",0),State.gold,State.journey.get("rations",0)],Vector2(55,908),20)
+	owner.label_at("Choose a route · W / Enter interacts · Tab inventory · I controls",Vector2(55,1048),15)
 	for index in range(State.party.size()):
 		var hero_id: String = str(State.party[index])
 		var member: Dictionary = State.run_heroes.get(hero_id,{})
-		var button: Button = owner.button_at("%s · %s\n%s" % [State.hero(hero_id)["name"],State.hero(hero_id)["class"],"Slain" if member.get("dead",false) else "HP %d · Stress %d" % [member.get("hp",0),member.get("stress",0)]],Vector2(55+index*245,980),owner.select_view_hero.bind(hero_id))
+		var button: Button = owner.button_at("%s · %s\n%s" % [State.hero(hero_id)["name"],State.hero(hero_id)["class"],"Slain" if member.get("dead",false) else "HP %d · Stress %d" % [member.get("hp",0),member.get("stress",0)]],Vector2(55+index*245,974),owner.select_view_hero.bind(hero_id))
 		button.name = "Party_"+hero_id
 		button.set_meta("hero_id",hero_id)
-		button.size = Vector2(235,48)
+		button.size = Vector2(235,60)
 		button.add_theme_font_size_override("font_size",16)
 		if hero_id == id: button.add_theme_color_override("font_color",Color("#FFE0A0"))
-	var inventory: Button = owner.button_at("INVENTORY · TAB",Vector2(800,980),owner.open_inventory)
-	inventory.size = Vector2(270,48)
-	owner.label_at("DUNGEON MAP · FLOOR %d / %d" % [State.floor_index+1,State.floor_count],Vector2(1150,630),22)
+	var inventory: Button = owner.button_at("INVENTORY · TAB",Vector2(800,974),owner.open_inventory)
+	inventory.size = Vector2(270,60)
+	owner.label_at("ROUTE · FLOOR %d / %d" % [State.floor_index+1,State.floor_count],Vector2(1150,783),20)
 	var map = Map.new()
 	map.name = "DungeonMap"
-	map.position = Vector2(1145,686)
-	map.size = Vector2(720,280)
+	map.position = Vector2(1145,835)
+	map.size = Vector2(720,130)
 	map.compact = true
 	owner.add_child(map)
 	var rooms: Dictionary = State.floors[State.floor_index]
@@ -75,7 +49,7 @@ static func build(owner: Control) -> void:
 	for room in rooms.values():
 		if room.get("seen",false): revealed += 1
 		if room.get("cleared",false): cleared += 1
-	owner.label_at("CLEARED %d%%   EXPLORED %d%%" % [int(100.0*cleared/rooms.size()),int(100.0*revealed/rooms.size())],Vector2(1150,666),16)
+	owner.label_at("CLEARED %d%%   EXPLORED %d%%" % [int(100.0*cleared/rooms.size()),int(100.0*revealed/rooms.size())],Vector2(1150,815),15)
 	for location in rooms:
 		var room: Dictionary = rooms[location]
 		if not room.get("seen",false): continue
@@ -101,8 +75,8 @@ static func build(owner: Control) -> void:
 	retreat.size = Vector2(220,45)
 	var note := Label.new()
 	note.text = owner.message if not State.run_complete else ("VICTORY — the Apothecary is restored. Return to the Hamlet to purchase remedies." if State.selected_expedition.get("id","") == "infested_apothecary" else "VICTORY — the guardian has fallen. Return to the Hamlet.")
-	note.position = Vector2(45,555)
-	note.size = Vector2(1830,47)
+	note.position = Vector2(55,790)
+	note.size = Vector2(1030,60)
 	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	note.add_theme_font_size_override("font_size",18)
 	note.mouse_filter = Control.MOUSE_FILTER_IGNORE

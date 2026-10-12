@@ -1,5 +1,11 @@
 # Side-on hallway exploration
 
+## Exploration presentation
+
+Rooms and passages share a closer, uniform 1.25× camera with a 750-pixel scene above a compact travel desk. This enlarges actors without distorting their proportions. The unused travel skill grid is removed; hero inspection, health/stress summaries, inventory, route selection, Scout, Retreat and destination controls remain available. Dark edge silhouettes, a fading ground vignette and theme-colored divider connect the scene to the interface. Existing optional installation layers and original panorama fallback both use the same camera.
+
+After the first fifth of a passage, a short thematic clue describes the destination: bandit boot prints, steel in the keep, prayers and drag marks for the Remade, or wing dust for moth encounters. Known cleared passages, roaming enemies, coins, camps, curios and stairs have their own hints. These are cosmetic descriptions of existing encounter data; they do not roll rewards or apply ambush modifiers. Arrival still waits for explicit interaction. Compact room maps now fit the whole floor within their bounds, with symbols scaled to each room and click targets derived from the same layout.
+
 Hallway travel now uses a longer side-on walk with independently moving background, middle, wall, floor and foreground layers. When the optional local installation is available, the corridor layers are loaded from it at runtime; otherwise four original panoramic backgrounds cover the occupied village, chained keep, Remade sanctuary and infested apothecary. The heroes share one ground plane and retain their walking sheets, formation, names and Workshop colors.
 
 The resting room is now a side-on party scene instead of a full-screen map. Its lower HUD has the selected hero and readable skill descriptions on the left, with connected route buttons and room actions beside a compact dungeon map on the right. Selecting another party member updates the hero display; right-click or C inspects their record. Campfires, cleared merchant orbs and available descents can be clicked in the scene or accessed with W / Enter. The standing scene does not advance passage time or resolve a destination.
