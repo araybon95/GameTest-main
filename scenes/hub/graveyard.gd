@@ -103,6 +103,14 @@ func _memorial(grave: Dictionary,index: int) -> PanelContainer:
 	var account := _record_text("Survived %d battles. Dealt %d damage. Recovered %d health." % [int(deeds.get("battles",0)),int(deeds.get("damage",0)),int(deeds.get("healing",0))],22,IVORY)
 	account.name = "MemorialDeeds"
 	contents.add_child(account)
+	if grave.has("personality"):
+		contents.add_child(_record_text(str(grave.personality),20,Color("#BFA989")))
+	for memory in grave.get("story",{}).get("memories",[]):
+		contents.add_child(_record_text(str(memory),21,IVORY))
+	if grave.has("tribute"):
+		var tribute := _record_text("%s: “%s”" % [grave.get("speaker_name","The hamlet"),grave.tribute],22,Color("#D7BD96"))
+		tribute.name = "CompanionTribute"
+		contents.add_child(tribute)
 	return row
 
 func _record_text(value: String,font_size: int,color: Color) -> Label:

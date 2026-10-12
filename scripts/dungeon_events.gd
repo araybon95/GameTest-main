@@ -53,6 +53,7 @@ static func resolve(state, hero_id: String, leave: bool = false, action: String 
 		room["event_resolved"] = true
 		room["cleared"] = true
 		room["event_result"] = rescued
+		state.Stories.remember(state,hero_id,"freed_crusader","Opened the spiked coffin and freed the Penitent Crusader.")
 		return rescued
 	if action == "supply" and not leave: state.consume_item(supply)
 	# Use a room-specific seed so reopening or retreating cannot reroll this event.

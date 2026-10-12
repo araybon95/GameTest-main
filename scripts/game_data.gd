@@ -7,6 +7,8 @@ static var graves: Array = []
 static var run_deeds: Dictionary = {}
 static var run_id: String = ""
 static var hero_names: Dictionary = {}
+static var hero_journals: Dictionary = {}
+const Stories = preload("res://scripts/hero_stories.gd")
 static var hero_progress: Dictionary = {}
 const HERO_LEVEL_CAP: int = 10
 const TRAINING_STATS: Dictionary = {
@@ -222,6 +224,7 @@ static func load_progression() -> void:
 		last_report = config.get_value("progress", "last_report", {})
 		hero_progress = config.get_value("progress", "hero_progress", {})
 		hero_names = config.get_value("progress", "hero_names", {})
+		hero_journals = config.get_value("progress", "hero_journals", {})
 		hero_colors = config.get_value("progress", "hero_colors", {})
 		graves = config.get_value("progress", "graves", [])
 		crusader_unlocked = bool(config.get_value("progress", "crusader_unlocked", false))
@@ -237,6 +240,7 @@ static func save_progression() -> void:
 	config.set_value("progress", "hero_progress", hero_progress)
 	config.set_value("progress", "graves", graves)
 	config.set_value("progress", "hero_names", hero_names)
+	config.set_value("progress", "hero_journals", hero_journals)
 	config.set_value("progress", "hero_colors", hero_colors)
 	config.set_value("progress", "crusader_unlocked", crusader_unlocked)
 	config.set_value("progress", "completed", completed_expeditions)
@@ -885,6 +889,7 @@ static func ensure_run_heroes() -> void:
 				"statuses": {}, "damage_mod": 0, "stress_per_turn": 0,
 				"resolved": false, "resolve_tag": "", "resolve_type": ""
 			}
+		if not run_heroes[hero_id].get("dead",false): Stories.ensure(load("res://scripts/game_data.gd"),hero_id)
 
 static func rest_at_camp() -> bool:
 	if not run_active or current_room_kind() != "camp":
@@ -1068,5 +1073,9 @@ static func record_death(id: String, cause: String) -> void:
 	var memorial_id: String = run_id + ":" + id
 	for grave in graves:
 		if grave.get("id", "") == memorial_id: return
+	var tribute: Dictionary = Stories.farewell(load("res://scripts/game_data.gd"),id)
 	graves.append({"id": memorial_id, "hero": id, "name": hero(id)["name"], "class": HEROES[id]["name"], "dungeon": selected_expedition.get("name", "The wilderness"), "floor": floor_index + 1, "cause": cause, "date": Time.get_date_string_from_system(), "deeds": run_deeds.get(id, {"battles": 0, "damage": 0, "healing": 0}).duplicate(true)})
+	graves.back().merge(tribute)
+	hero_journals.erase(id)
+	for journal in hero_journals.values(): journal.get("ties",{}).erase(id)
 	save_progression()

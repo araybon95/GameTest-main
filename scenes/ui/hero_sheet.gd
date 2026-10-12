@@ -153,7 +153,7 @@ func build_character(hero: Dictionary, state: Dictionary) -> void:
 	lore_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	add_child(lore_scroll)
 	var lore_label := Label.new()
-	lore_label.text = lore
+	lore_label.text = lore+"\n\n"+State.Stories.biography(State,hero_id)
 	lore_label.add_theme_font_size_override("font_size", 21)
 	lore_label.add_theme_color_override("font_color", Color("#CABB9F"))
 	lore_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

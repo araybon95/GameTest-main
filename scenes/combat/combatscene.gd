@@ -497,11 +497,12 @@ func _resolve_card(hero_id: String, card: Dictionary) -> void:
 		"team_block":
 			for ally in _standing_heroes():
 				_gain_block(ally, int(card["block"]))
+				GameState.Stories.aid(GameState,hero_id,ally,false,true)
 		"heal":
 			_heal_hero(hero_id, int(card["heal"]))
 		"team_heal":
 			for ally in _standing_heroes():
-				_heal_hero(ally, int(card["heal"]))
+				_heal_hero(ally, int(card["heal"]),hero_id)
 				if hero_id == "healer":
 					hero_state[ally]["statuses"].erase("bleed")
 		"stress_heal":
@@ -891,7 +892,11 @@ func _apply_damage(hero_id: String, amount: int, bypass_block: bool = false, cau
 		if presentation != null: presentation.defeat(hero_portraits[hero_id])
 		state["deaths_door"] = false
 		_speech(hero_id,"SLAIN",Color("#E08478"))
+		GameState.run_heroes = hero_state.duplicate(true)
 		GameState.record_death(hero_id, cause if not cause.is_empty() else enemy_name)
+		var tribute: Dictionary = GameState.graves.back()
+		_add_log("%s: “%s”" % [tribute.get("speaker_name","The hamlet"),tribute.get("tribute","Your name will remain.")])
+		if not str(tribute.get("speaker","")).is_empty(): _speech(str(tribute.speaker),"Your name stays with us.",Color("#D7C3A1"))
 		_add_log("%s is slain at Death's Door!" % _name_of(hero_id))
 		return damage
 	var remaining: int = int(state["hp"]) - damage
@@ -905,13 +910,17 @@ func _apply_damage(hero_id: String, amount: int, bypass_block: bool = false, cau
 	return damage
 
 
-func _heal_hero(hero_id: String, amount: int) -> void:
+func _heal_hero(hero_id: String, amount: int, source: String = "") -> void:
 	var state: Dictionary = hero_state[hero_id]
 	if bool(state["dead"]):
 		return
 	if refuses_healing(hero_id): return
 	var before: int = int(state["hp"])
+	var was_at_door: bool = bool(state.get("deaths_door",false))
 	state["hp"] = mini(int(state["max_hp"]), before + amount)
+	if int(state["hp"]) > before:
+		GameState.Stories.aid(GameState,source,hero_id,was_at_door)
+		if was_at_door: GameState.Stories.remember(GameState,hero_id,"survived_door","Returned from Death's Door in %s." % GameState.floor_title())
 	GameState.add_deed(hero_id, "healing", int(state["hp"]) - before)
 	if presentation != null and int(state["hp"]) > before:
 		presentation.feedback(hero_buttons[hero_id],"heal",int(state["hp"])-before)
@@ -1196,6 +1205,12 @@ func _award_reward() -> void:
 	if GameState.run_active:
 		GameState.journey["kills"] = int(GameState.journey.get("kills",0)) + enemies.filter(func(e): return not e.get("cocoon",false)).size()
 	for survivor in _standing_heroes(): GameState.add_deed(str(survivor), "battles")
+	if GameState.run_active and GameState.current_room_kind() == "boss":
+		var guardian_room: Dictionary = GameState.floors[GameState.floor_index][GameState.room_position]
+		var guardian_id: String = str(guardian_room.get("enemies",[guardian_room.get("creature","")])[0])
+		var guardian_name: String = str(GameState.creature(guardian_id).get("name","the floor guardian"))
+		for survivor in _standing_heroes():
+			GameState.Stories.remember(GameState,str(survivor),"boss:"+guardian_id,"Stood against %s in %s." % [guardian_name,GameState.floor_title()])
 	var reward := 2
 	if not GameState.selected_expedition.is_empty():
 		reward = int(GameState.selected_expedition.get("reward", 5)) if not GameState.run_active or GameState.current_room_kind() == "boss" else 2

@@ -25,17 +25,11 @@ func refresh() -> void:
 	ambience.show_foreground = false
 	ambience.fire_spent = State.floors[State.floor_index][State.room_position].get("camp_used",false)
 	add_child(ambience)
-	var whispers: Dictionary = {
-		"bandit":"The outlaws used these ruins for shelter. Tonight, the fire belongs to you.",
-		"keep":"Beneath the wolf banners, a few stolen hours feel like mercy. Beyond the gate, the old household still keeps its watch.",
-		"beast":"Beyond the fire, unseen mouths whisper thanks for the pain. For now, let them pray alone.",
-		"medical":"The sickroom is sealed. No wings stir within its lamps. A breath, a bandage, a moment of quiet."
-	}
-	panel(Rect2(55,70,390,225),Color(0.045,0.035,0.045,0.8))
+	panel(Rect2(55,70,390,245),Color(0.045,0.035,0.045,0.8))
 	label_at("THE FIRE HOLDS",Vector2(80,93),340,23)
-	var lore := label_at(str(whispers.get(floor_theme,"The fire offers a moment beyond the dungeon's reach.")),Vector2(80,143),340,20)
+	var lore := label_at(State.Stories.camp_line(State),Vector2(80,143),340,18)
 	lore.name = "CampLore"
-	lore.size = Vector2(340,135)
+	lore.size = Vector2(340,155)
 	lore.clip_text = true
 	panel(Rect2(520, 45, 880, 265), Color(0.07, 0.05, 0.07, 0.9))
 	var heading := label_at("RESPITE · " + State.floor_title().to_upper(), Vector2(555, 70), 810, 32)
