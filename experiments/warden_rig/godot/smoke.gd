@@ -73,6 +73,9 @@ func run() -> void:
 	actor.mode = "idle"
 	actor.set_time(0)
 	var chest_height: float = actor.torso.global_position.distance_to(actor.head.to_global(Vector2(280,470)*actor.head.texture.get_width()/512.0))/actor.scale.y
+	check(float(actor.data.hip_height)/chest_height < 1.6,"Leg silhouette is too elongated relative to the chest")
+	for side in ["near","far"]:
+		check(actor.joints[side+"_shin"].global_position.x > actor.joints[side+"_thigh"].global_position.x,"Standing knees bend away from the forward-facing reference: "+side)
 	check(chest_height < 125,"Torso-to-neck proportion remains too long")
 	check(actor.joints.near_sole.global_position.distance_to(actor.joints.far_sole.global_position)/actor.scale.y > 65,"Standing feet do not form a stable stance")
 	actor.mode = "walk"
@@ -132,6 +135,15 @@ func run() -> void:
 				var second_grip := Vector2(spec.anchor[0],spec.anchor[1])+Vector2.DOWN*18.0/float(spec.scale)
 				check(view.weapon.to_global(second_grip).distance_to(view.joints.far_hand.global_position) < 0.05,"Second hand leaves the sword grip: "+pose_name+" at "+str(sample/20.0)+"s error="+str(view.weapon.to_global(second_grip).distance_to(view.joints.far_hand.global_position)))
 				check(view.contact_error < 0.05,"Pose foot target is unreachable: "+pose_name)
+	var combat_actor = lab.actors[1]
+	combat_actor.mode = "combat"
+	combat_actor.set_time(0)
+	var previous_elbow: Vector2 = combat_actor.joints.far_forearm.global_position
+	for frame_index in range(1,91):
+		combat_actor.set_time(frame_index/30.0)
+		var elbow: Vector2 = combat_actor.joints.far_forearm.global_position
+		check(elbow.distance_to(previous_elbow)/combat_actor.scale.y < 18.0,"Sword recovery elbow turns sharply near its shoulder")
+		previous_elbow = elbow
 	lab.set_slot("offhand","shield")
 	for view in lab.actors: check(view.shield.visible,"Shield selection not shared")
 	lab.set_slot("weapon","axe")

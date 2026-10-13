@@ -134,7 +134,15 @@ func registered(part: String) -> Transform2D:
 	var alignment: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://assets/alignment.json"))
 	var m: Array = alignment.layers[part].matrix
 	var factor: float = data.cloth_reference.scale
-	return Transform2D(Vector2(m[0][0],m[1][0])*factor,Vector2(m[0][1],m[1][1])*factor,(Vector2(m[0][2],m[1][2])-point(data.cloth_reference.source_origin))*factor)
+	var result := Transform2D(Vector2(m[0][0],m[1][0])*factor,Vector2(m[0][1],m[1][1])*factor,(Vector2(m[0][2],m[1][2])-point(data.cloth_reference.source_origin))*factor)
+	if part == "rear_cloak":
+		# Shorten the cape around its neck attachment with the compact body.
+		var vertical: float = data.cloth_reference.cape_vertical_scale
+		result.x.y *= vertical
+		result.y.y *= vertical
+		var neck_y: float = data.sockets.brooch[1]
+		result.origin.y = neck_y+(result.origin.y-neck_y)*vertical
+	return result
 func build_cloth() -> void:
 	cape = MeshInstance2D.new()
 	cape.name = "CapeAttachment"
@@ -174,8 +182,8 @@ func apply_appearance() -> void:
 		texture.region = Rect2(0,0,512,512)
 	texture.filter_clip = true
 	head.texture = texture
-	head.scale = Vector2.ONE*0.24*512.0/texture.get_width()
-	head.position = point(data.sockets.neck)-Vector2(280,470)*0.24
+	head.scale = Vector2.ONE*float(data.helmet_scale)*512.0/texture.get_width()
+	head.position = point(data.sockets.neck)-Vector2(280,470)*float(data.helmet_scale)
 	cape.texture = load("res://assets/rear_cloak"+("_crown" if appearance.cloak == "crown" else "")+".png")
 	collar.texture = load("res://assets/collar"+("_crown" if appearance.cloak == "crown" else "")+".png")
 	collar.transform = registered("collar")
@@ -203,7 +211,7 @@ func limb(side: String, target: Vector2, hip: Vector2) -> void:
 	var upper: float = data.lengths.thigh
 	var lower: float = data.lengths.shin
 	var ankle_target := target-Vector2(0,data.boot_drop)
-	var angles := Motion.solve(hip,ankle_target,upper,lower,1.0 if side == "near" else -1.0)
+	var angles := Motion.solve(hip,ankle_target,upper,lower,-1.0)
 	thigh.rotation = angles.x
 	shin.rotation = angles.y
 	joints[side+"_ankle"].rotation = -angles.x-angles.y
@@ -246,16 +254,16 @@ func refresh() -> void:
 	torso.position = Vector2(shift,-data.hip_height+bob)
 	torso.rotation = lean
 	contact_error = 0
-	var foot_base: float = lerpf(55.0,45.0,walk_blend)
+	var foot_base: float = lerpf(43.0,35.0,walk_blend)
 	limb("near",Vector2(-foot_base,0)+Motion.foot(clock,0)*walk_blend,Vector2(-22+shift,-data.hip_height+bob))
 	limb("far",Vector2(foot_base,0)+Motion.foot(clock,0.5)*walk_blend,Vector2(22+shift,-data.hip_height+bob))
 	var two_handed: bool = appearance.weapon == "sword" and appearance.offhand == "none"
 	var hand := Vector2(20,10) if two_handed else Vector2(-58,18)
 	var angle: float = 2.55
 	if fighting:
-		hand = Vector2(-18,-74).lerp(Vector2(-3,-135),windup).lerp(Vector2(78,-78),strike).lerp(Vector2(-18,-74),recover)
+		hand = Vector2(-18,-74).lerp(Vector2(-3,-125),windup).lerp(Vector2(65,-78),strike).lerp(Vector2(-18,-74),recover)
 		# Recover below the far shoulder instead of folding the elbow through it.
-		hand.y += sin(PI*recover)*20.0
+		hand.y += sin(PI*recover)*40.0
 		var impact: float = PI/2.0 if appearance.weapon == "sword" else 2.0
 		angle = lerpf(lerpf(lerpf(0.0,-0.65,windup),impact,strike),0.0,recover)
 	else:
@@ -269,7 +277,7 @@ func refresh() -> void:
 	turn_attachment(weapon,weapon_id,angle-joints.near_arm.rotation-joints.near_forearm.rotation)
 	turn_attachment(shield,"shield",-joints.far_arm.rotation-joints.far_forearm.rotation+sin(clock*1.8)*0.012)
 	head.rotation = -torso.rotation*0.7
-	head.position = point(data.sockets.neck)-(Vector2(280,470)*0.24).rotated(head.rotation)
+	head.position = point(data.sockets.neck)-(Vector2(280,470)*float(data.helmet_scale)).rotated(head.rotation)
 	cloth.set_shader_parameter("clock",clock)
 	cloth.set_shader_parameter("wind",lerpf(0.35,0.8,walk_blend))
 	joint_overlay.queue_redraw()

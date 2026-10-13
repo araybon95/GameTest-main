@@ -30,7 +30,7 @@
         65
       ],
       "width": 1,
-      "scale": 0.22
+      "scale": 0.25
     },
     "near_thigh": {
       "sheet": "body_parts.png",
@@ -44,7 +44,7 @@
         126,
         80
       ],
-      "width": 0.48,
+      "width": 1.08,
       "end": [
         128,
         354
@@ -62,7 +62,7 @@
         122,
         64
       ],
-      "width": 0.46,
+      "width": 1.08,
       "end": [
         112,
         342
@@ -80,7 +80,7 @@
         92,
         79
       ],
-      "width": 0.58,
+      "width": 1.1,
       "end": [
         80,
         374
@@ -98,7 +98,7 @@
         97,
         76
       ],
-      "width": 0.57,
+      "width": 1.1,
       "end": [
         87,
         370
@@ -120,7 +120,7 @@
         132,
         472
       ],
-      "width": 0.9
+      "width": 1.12
     },
     "near_forearm": {
       "sheet": "arm_parts.png",
@@ -138,7 +138,7 @@
         232,
         497
       ],
-      "width": 0.9
+      "width": 1.12
     },
     "far_arm": {
       "sheet": "arm_parts.png",
@@ -156,7 +156,7 @@
         114,
         471
       ],
-      "width": 0.85
+      "width": 1.04
     },
     "far_forearm": {
       "sheet": "arm_parts.png",
@@ -174,7 +174,7 @@
         230,
         487
       ],
-      "width": 0.85
+      "width": 1.04
     },
     "shield": {
       "sheet": "gear_parts.png",
@@ -273,8 +273,8 @@
       -72
     ],
     "far_shoulder": [
-      35,
-      -70
+      20,
+      -65
     ],
     "brooch": [
       0,
@@ -282,10 +282,10 @@
     ]
   },
   "lengths": {
-    "thigh": 110,
-    "shin": 95,
-    "upper_arm": 68,
-    "forearm": 62
+    "thigh": 76,
+    "shin": 70,
+    "upper_arm": 58,
+    "forearm": 54
   },
   "cloth_reference": {
     "scale": 0.31,
@@ -293,17 +293,19 @@
       794,
       520
     ],
-    "alignment": "alignment.json"
+    "alignment": "alignment.json",
+    "cape_vertical_scale": 0.82
   },
-  "notes": "Anatomy correction: compact torso, fitted shoulder sockets, no duplicated knee/elbow armor, and independent level boots. Actual source-region bounds preserve irregularly spaced atlas cutouts.",
+  "notes": "Compact, heavy reference silhouette: shorter broad legs, forward-facing knee bends and restrained stance. Actual cutout regions retain source pixels.",
   "coordinate_space": "source-region pixels",
-  "hip_height": 225,
-  "boot_drop": 30,
+  "hip_height": 156,
+  "boot_drop": 26,
   "grip_profiles": {
     "two_handed_far_arm": {
-      "upper": 35,
+      "upper": 38,
       "forearm": 40,
       "note": "Foreshortened far arm in the sword profile, matching the supplied raised-guard reference."
     }
-  }
+  },
+  "helmet_scale": 0.2
 }

@@ -8,7 +8,7 @@ The quick preview is reduced to 15 fps; use the [native 30 fps clip](preview/art
 
 ![Sword equipped across hallway, combat and card](preview/sword.png)
 
-The anatomical revision follows the supplied combat and walking references: a shorter/narrower torso, fitted shoulder and hip pivots, wider planted stance, shorter steps, separate boots kept level, and gripping forearms drawn in front of the neck wrap.
+The current proportion study moves toward the supplied combat and walking references with shorter, broader limbs, forward-facing knees, a tighter stance, a smaller helmet, separate level boots, and gripping forearms drawn in front of the neck wrap. The cape is shortened around its neck attachment and preview scales preserve the hero’s screen height. This is a visual review candidate: the fine metallic shading and some pose shapes still differ from the reference art.
 
 ![Walking, raised guard, wind-up and strike anatomy](preview/anatomy-poses.png)
 
@@ -61,7 +61,7 @@ The reference proves the same appearance IDs can drive moving, fighting and card
 
 ## Verification
 
-`smoke.gd` covers shared selections, unknown-ID and future-schema rejection, atomic imports, hand-grip registration for all three weapons in every view, animation phase preservation during swaps, articulated knees, reachable foot targets, loop continuity, refresh-rate independence, walk-to-idle easing, pause, facing and isolated profile round trips, legacy offhand imports, anatomy proportions, level boots, and both hands reaching the sword grip throughout walking, guard, wind-up, strike and the full attack loop. Native screenshots were inspected at 1440 × 900. The capture clip contains 270 frames at 30 fps, with sword/axe/mace changes, a pause, and reversed travel.
+`smoke.gd` covers shared selections, unknown-ID and future-schema rejection, atomic imports, hand-grip registration for all three weapons in every view, animation phase preservation during swaps, articulated knees, reachable foot targets, loop continuity, refresh-rate independence, walk-to-idle easing, pause, facing and isolated profile round trips, legacy offhand imports, anatomy proportions, forward knee direction, level boots, recovery elbow motion, and both hands reaching the sword grip throughout walking, guard, wind-up, strike and the full attack loop. Native screenshots were inspected at 1440 × 900. The capture clip contains 270 frames at 30 fps, with sword/axe/mace changes, a pause, and reversed travel.
 
 ```sh
 godot --headless --path experiments/warden_rig/godot --script res://smoke.gd

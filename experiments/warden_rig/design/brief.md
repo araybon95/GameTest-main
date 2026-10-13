@@ -7,3 +7,5 @@ Use one shared, validated appearance profile for weapon (sword, double-headed ax
 Godot 4.6+, no external runtime or Spine dependency, no game autoloads. The `.gdignore` and independent user-data directory keep this prototype outside main imports/saves. Generated source images remain unmodified; atlas regions, anchors and fitting live in metadata/code. Export only prototype IDs. Unknown IDs and unsupported schemas must be rejected without changing the current profile.
 
 This is an animation/customization reference, not a production wardrobe or online implementation. The anatomical revision supports a two-hand sword reference guard and held walking/guard/wind-up/strike poses. Other two-handed weapon families, dual-wielded axes, other heroes, campaign unlocks and final hand-drawn art are future work. Native preview evidence and a short clip are required before claiming completion.
+
+User visual feedback rejected the first anatomy pass as still far from the references. Prioritize the compact, heavy silhouette and forward-facing knees before motion polish; connected sockets alone do not establish a visual match. Preserve customizations and prototype isolation.
