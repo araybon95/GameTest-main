@@ -36,7 +36,7 @@ func run() -> void:
 				for index in range(travel.walkers.size()):
 					var picture: TextureRect = travel.walkers[index]
 					var id: String = picture.get_meta("walker")
-					assert(picture.texture == travel.walk_frames[id][int(phase+index*0.45)%4],"Original frame cadence restored")
+					assert(picture.texture == travel.walk_frames[id][int(travel.warden_clock/0.084)%10 if travel.costume_for_warden(id) else int(phase+index*0.45)%4],"Costume frame cadence restored")
 					assert(not picture.material.get_shader_parameter("actor_motion"))
 			travel.arrived = true
 			travel.update_walkers()
@@ -50,8 +50,8 @@ func run() -> void:
 				var id: String = picture.get_meta("walker")
 				frames[id] = picture.texture
 				profiles.append(picture.material.get_shader_parameter("actor_profile"))
-				assert(picture.material.get_shader_parameter("actor_motion"))
-				assert(picture.texture == travel.walk_frames[id][Travel.QUIET_WALK_POSE])
+				assert(picture.material.get_shader_parameter("actor_motion") == not travel.costume_for_warden(id))
+				assert(picture.texture == travel.walk_frames[id][0 if travel.costume_for_warden(id) else Travel.QUIET_WALK_POSE])
 				assert(picture.material.get_shader_parameter("recolor") == (id == party[0] or State.hero_colors.get(id,"original") != "original"))
 			assert(profiles[0] != profiles[1] and profiles[1] != profiles[2])
 			travel.set_walking(true)
@@ -60,7 +60,7 @@ func run() -> void:
 			for frame in range(90): travel._process(1.0/60.0)
 			assert(travel.actor_walking > 0.99)
 			for picture in travel.walkers:
-				assert(picture.texture == frames[picture.get_meta("walker")])
+				if not travel.costume_for_warden(str(picture.get_meta("walker"))): assert(picture.texture == frames[picture.get_meta("walker")])
 				assert(picture.position.y+picture.size.y == Travel.GROUND_Y)
 				var trim = picture.get_node("EquipmentAccents")
 				assert(trim.material.get_shader_parameter("actor_clock") == picture.material.get_shader_parameter("actor_clock"))
@@ -89,7 +89,7 @@ func run() -> void:
 				assert(picture.get_node("EquipmentAccents").flip_h)
 			travel.skip_travel()
 			travel._process(0.4)
-			for picture in travel.walkers: assert(picture.texture == frames[picture.get_meta("walker")])
+			for picture in travel.walkers: if not travel.costume_for_warden(str(picture.get_meta("walker"))): assert(picture.texture == frames[picture.get_meta("walker")])
 			assert(snapshot() == before,"Presentation does not alter travel commits, health, gold, rooms or RNG")
 			travel.free()
 	await process_frame

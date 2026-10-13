@@ -11,6 +11,8 @@ func _ready() -> void:
 	var flavor: String = "The road releases its survivors. Count the spoils. Remember the fallen."
 	if State.selected_expedition.get("faction","") == "remade": flavor = "The hymn follows you home. Beneath the earth, the congregation still begs to be remade."
 	label_at(flavor,Vector2(95,235),1700,22)
+	if report.get("cosmetic_reward", "") == "Ashen Wolf":
+		label_at("ARMOR SET UNLOCKED · Ashen Wolf — choose it in the Workshop",Vector2(95,270),1700,18).add_theme_color_override("font_color",Color("#FFE0A0"))
 	var heroes: Array = report.get("survivors",[]) + report.get("fallen",[])
 	for index in range(heroes.size()):
 		var entry: Dictionary = heroes[index]

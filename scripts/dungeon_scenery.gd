@@ -27,6 +27,7 @@ static func tint(kind: String) -> Color:
 
 static func grounded_texture(path: String, padding: int = 0) -> Texture2D:
 	var original: Texture2D = load(path)
+	if original.get_meta("appearance_style","") == "warden_complete": return original
 	var image: Image = original.get_image()
 	var bounds: Rect2i = image.get_used_rect()
 	if bounds.size.x <= 0 or bounds.size.y <= 0: return original
@@ -41,6 +42,7 @@ static func grounded_texture(path: String, padding: int = 0) -> Texture2D:
 
 static func apply_hero_palette(picture: TextureRect, id: String, chosen_color: String) -> void:
 	preload("res://scripts/equipment_accents.gd").attach(picture,id)
+	if picture.texture != null and picture.texture.get_meta("appearance_style","") == "warden_complete": preload("res://scripts/warden_idle_motion.gd").attach(picture)
 	if chosen_color == "original": return
 	var material := ShaderMaterial.new()
 	material.shader = preload("res://scripts/hero_palette.gdshader")

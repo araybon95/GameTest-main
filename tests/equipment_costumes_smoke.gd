@@ -67,7 +67,7 @@ func run() -> void:
 	assert(travel.walk_frames.warden[0].get_meta("appearance_style") == "equipment")
 	State.equip_item("warden","warden_armor")
 	travel.update_walkers()
-	assert(travel.walk_frames.warden[0].atlas.resource_path.contains("generated"))
+	assert(travel.walk_frames.warden[0].get_meta("appearance_style") == "warden_complete")
 	State.equip_item("warden","warden_relic_armor")
 	travel.update_walkers()
 	assert(travel.walk_frames.warden[0].get_meta("appearance_style") == "equipment")

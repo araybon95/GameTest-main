@@ -1,0 +1,14 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/art_library/warden_outfits/original.png" id="1"]
+
+[resource]
+atlas = ExtResource("1")
+region = Rect2(0, 0, 366, 380)
+margin = Rect2(7, 20, 14, 20)
+filter_clip = true
+metadata/pose_id = "warden"
+metadata/appearance_style = "warden_complete"
+metadata/warden_outfit = "original"
+metadata/idle_pixel_height = 400
+metadata/travel_unarmed = false

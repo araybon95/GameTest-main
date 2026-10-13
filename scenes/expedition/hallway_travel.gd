@@ -27,6 +27,7 @@ var reached_destination: bool = false
 var pointer_walking: bool = false
 var moving: bool = false
 var animation_clock: float = 0.0
+var warden_clock: float = 0.0
 var actor_clock: float = 0.0
 var actor_walking: float = 0.0
 var ambient_clock: float = 0.0
@@ -195,6 +196,9 @@ func _ready() -> void:
 func build_walkers() -> void:
  for id in State.HEROES:
   var costume: String = str(State.hero(id).get("equipment_look","original"))
+  if id == "warden" and costume in ["original","ashen_wolf"]:
+   walk_frames[id] = preload("res://scripts/warden_outfits.gd").walks(costume)
+   continue
   if costume == "relic" and preload("res://scripts/equipment_art.gd").available(id):
    var equipped_frames: Array[Texture2D] = []
    for index in range(4,8): equipped_frames.append(preload("res://scripts/equipment_art.gd").frame(id,index))
@@ -222,6 +226,7 @@ func build_walkers() -> void:
   if State.run_heroes.get(id,{}).get("dead",false): continue
   var picture := TextureRect.new()
   standing_frames[id] = Scenery.grounded_texture(str(State.hero(id)["art"]))
+  if id == "warden" and costume_for_warden(id): standing_frames[id] = walk_frames[id][0]
   wardrobe_looks[id] = str(State.hero(id).get("equipment_look","original"))
   picture.texture = walk_frames[id][QUIET_WALK_POSE] if walk_frames.has(id) else standing_frames[id]
   picture.name = "Walker_%s" % id
@@ -541,6 +546,8 @@ func _process(delta: float) -> void:
  route_clue.text = passage_hint() if fraction >= 0.2 and not arrived else ""
  distance_travelled = fraction*(1500.0+minf(maxi(route_steps.size()-1,0),5)*220.0)
  if moving:
+  var settings := get_node_or_null("/root/GameSettings")
+  if settings == null or settings.ambient_motion: warden_clock += delta
   stride_distance += absf(distance_travelled-previous_distance)
   animation_clock += absf(distance_travelled-previous_distance)/(STRIDE*3.5)
  else:
@@ -606,7 +613,8 @@ func update_walkers() -> void:
   var phase: float = animation_clock*7.0+index*0.45
   var texture: Texture2D = standing_frames[id]
   if walk_frames.has(id):
-   if experimental: texture = walk_frames[id][QUIET_WALK_POSE]
+   if id == "warden" and costume_for_warden(id): texture = walk_frames[id][0 if arrived or room_mode else int(warden_clock/0.084)%10]
+   elif experimental: texture = walk_frames[id][QUIET_WALK_POSE]
    elif not arrived: texture = walk_frames[id][int(phase)%4]
   var width: float = HERO_HEIGHT*texture.get_width()/float(maxi(1,texture.get_height()))
   picture.texture = texture
@@ -615,12 +623,17 @@ func update_walkers() -> void:
   picture.pivot_offset = Vector2(width*0.5,HERO_HEIGHT)
   picture.position = bases[index]-Vector2(width*0.5,HERO_HEIGHT)
   picture.rotation = 0.0
-  ActorMotion.update(picture,actor_clock,animation_clock*3.5*PI,actor_walking,enabled)
+  ActorMotion.update(picture,actor_clock,animation_clock*3.5*PI,actor_walking,enabled and not (id == "warden" and costume_for_warden(id)))
+
+func costume_for_warden(id: String) -> bool:
+ return id == "warden" and str(State.hero(id).get("equipment_look","original")) in ["original","ashen_wolf"]
 
 func refresh_equipment_frames(id: String) -> void:
  var outfit: String = str(State.hero(id).get("equipment_look","original"))
  var frames: Array[Texture2D] = []
- if outfit == "relic":
+ if id == "warden" and outfit in ["original","ashen_wolf"]:
+  frames = preload("res://scripts/warden_outfits.gd").walks(outfit)
+ elif outfit == "relic":
   for index in range(4,8): frames.append(preload("res://scripts/equipment_art.gd").frame(id,index))
  elif outfit == "alternate":
   for index in range(4,8): frames.append(preload("res://scripts/hero_appearance.gd").frame(id,index))
@@ -637,6 +650,7 @@ func refresh_equipment_frames(id: String) -> void:
  if frames.is_empty(): walk_frames.erase(id)
  else: walk_frames[id] = frames
  standing_frames[id] = Scenery.grounded_texture(str(State.hero(id).art))
+ if costume_for_warden(id): standing_frames[id] = frames[0]
  wardrobe_looks[id] = outfit
 
 func arrive() -> void:

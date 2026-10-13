@@ -298,14 +298,21 @@ static func hero(hero_id: String, preview_item: String = "") -> Dictionary:
 		var appearance = preload("res://scripts/hero_appearance.gd")
 		var outfit: String = preload("res://scripts/equipment_looks.gd").choice(load("res://scripts/game_data.gd"),hero_id,preview_item)
 		if outfit == "relic" and not preload("res://scripts/equipment_art.gd").available(hero_id): outfit = str(hero_outfits.get(hero_id,"original"))
+		if outfit == "ashen_wolf" and (hero_id != "warden" or not completed_expeditions.has("old_road")): outfit = "original"
 		result["equipment_look"] = outfit
-		if outfit == "relic":
+		if hero_id == "warden" and outfit in ["original","ashen_wolf"]:
+			result["art"] = preload("res://scripts/warden_outfits.gd").path(outfit)
+			result["camp_art"] = preload("res://scripts/warden_outfits.gd").path(outfit,"camp")
+		elif outfit == "relic":
 			result["art"] = "res://assets/art_library/equipment/hero_%s_idle.tres" % hero_id
 			result["camp_art"] = "res://assets/art_library/equipment/hero_%s_camp.tres" % hero_id
 		elif outfit == "alternate" and appearance.available(hero_id):
 			result["art"] = appearance.path(hero_id)
 			result["camp_art"] = appearance.path(hero_id,"camp")
 		result["portrait_art"] = result["art"]
+		if hero_id == "warden" and outfit in ["original","ashen_wolf"]:
+			result["portrait_art"] = preload("res://scripts/warden_outfits.gd").path(outfit,"portrait" if hero_portraits.get(hero_id,"full") == "bust" else "camp")
+			return result
 		if hero_portraits.get(hero_id,"full") == "bust":
 			var purpose: String = "portrait" if outfit == "alternate" else "original_portrait"
 			if outfit == "relic": result["portrait_art"] = "res://assets/art_library/equipment/hero_%s_portrait.tres" % hero_id
@@ -665,6 +672,7 @@ static func finish_encounter() -> void:
 		run_complete = true
 		var id: String = str(selected_expedition.get("id", ""))
 		if id != "" and not completed_expeditions.has(id):
+			if id == "old_road": floors[floor_index][room_position]["cosmetic_reward"] = "Ashen Wolf"
 			completed_expeditions.append(id)
 			save_progression()
 
@@ -681,6 +689,8 @@ static func descend() -> bool:
 static func end_run() -> void:
 	if run_active:
 		last_report = Depth.aftermath(load("res://scripts/game_data.gd"))
+		var reward: String = str(floors[floor_index].get(room_position,{}).get("cosmetic_reward",""))
+		if reward != "": last_report["cosmetic_reward"] = reward
 		save_progression()
 	run_active = false
 	run_heroes.clear()
@@ -1115,7 +1125,9 @@ static func next_floor_entrance() -> Dictionary:
 static func customize_hero(id: String, chosen_name: String, color: String, outfit: String = "", portrait: String = "") -> bool:
 	if not service_unlocked("workshop") or not HEROES.has(id) or color not in ["original", "red", "green", "blue", "gold"]:
 		return false
-	if not outfit.is_empty() and (outfit not in ["original","alternate"] or (outfit == "alternate" and not preload("res://scripts/hero_appearance.gd").available(id))): return false
+	if outfit == "ashen_wolf":
+		if id != "warden" or not completed_expeditions.has("old_road"): return false
+	elif not outfit.is_empty() and (outfit not in ["original","alternate"] or (outfit == "alternate" and not preload("res://scripts/hero_appearance.gd").available(id))): return false
 	if not portrait.is_empty() and portrait not in ["full","bust"]: return false
 	var clean: String = chosen_name.strip_edges().replace("\n", " ").replace("\r", " ").left(20)
 	if clean.is_empty(): hero_names.erase(id)
