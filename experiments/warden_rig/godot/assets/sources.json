@@ -10,19 +10,19 @@
         1254
       ],
       "mode": "RGBA",
-      "sha256": "c5658d4f61787390edcb099fad66b700ce2003c099587fa08e79f81d39543ca4",
-      "source": "OpenAI generated articulated cutout atlas; original output preserved",
+      "sha256": "94f04aeea4de83d0d38585a82a50f103c4086d083dee406fae32925f668f3d14",
+      "source": "OpenAI-generated anatomical cutout revision informed by user pose references; original output preserved",
       "active": true
     },
     {
       "file": "body_parts.png",
       "dimensions": [
-        1024,
-        1536
+        1254,
+        1254
       ],
       "mode": "RGBA",
-      "sha256": "4f092cd485d82748d7ced4a85b600546ed0792a4d351b174b293cd9b9c5fc8ec",
-      "source": "OpenAI generated articulated cutout atlas; original output preserved",
+      "sha256": "4d10026f8173b64df52649b1b5e5146f1e27b921f6c3915af3eacf392cbbc8a4",
+      "source": "OpenAI-generated anatomical cutout revision informed by user pose references; original output preserved",
       "active": true
     },
     {

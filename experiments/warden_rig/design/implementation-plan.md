@@ -28,7 +28,7 @@
 ### Task 1: Art and appearance contract
 
 **Files:** `godot/appearance.gd`, `godot/assets/{body_parts,arm_parts,gear_parts}.png`, `godot/assets/attachments.json`, `godot/smoke.gd`.
-**Interfaces:** Appearance `set_slot(slot:String,id:String)->bool`, `apply_data(data:Dictionary)->bool`, `to_dict()->Dictionary`, `appearance_changed` signal. Weapon IDs `sword`, `axe`, `mace`; helmet `original`, `wolf`; cloak `original`, `crown`.
+**Interfaces:** Appearance `set_slot(slot:String,id:String)->bool`, `apply_data(data:Dictionary)->bool`, `to_dict()->Dictionary`, `appearance_changed` signal. Weapon IDs `sword`, `axe`, `mace`; helmet `original`, `wolf`; cloak `original`, `crown`; offhand `none`, `shield`.
 
 - [x] Write and run smoke guard: absence of the profile/lab fails cleanly.
 - [x] Generate cutout atlases and retain original outputs; inspect tile contents and alpha.
@@ -55,3 +55,11 @@
 - [x] Verify clip metadata, profile semantics, source hashes and absence of live-game changes.
 - [x] Request a fresh final code review, address material findings and rerun affected checks.
 - [x] Commit and update the user-authorized GitHub repository.
+
+### Anatomical reference revision
+
+- [x] Fit a compact torso to corrected shoulder and hip sockets; use actual atlas regions and local pixel anchors.
+- [x] Separate thigh, shin and boot artwork; keep soles level with independent ankle pivots.
+- [x] Add a shared offhand selector, a foreshortened two-hand sword grip, and held guard/wind-up/strike poses.
+- [x] Verify both-hand grip reach through walking and attack recovery, profile compatibility, and native pose sheets.
+- [x] Review code and native renders independently; correct phase-sheet sampling and replacement-art guidance.

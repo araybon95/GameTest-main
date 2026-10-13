@@ -10,16 +10,21 @@ func run() -> void:
 		return
 	var profile = load("res://appearance.gd").new()
 	check(profile.set_slot("weapon","axe"),"Valid axe selection rejected")
+	check(profile.set_slot("offhand","none"),"Reference stance cannot remove the shield")
 	check(not profile.set_slot("weapon","unknown"),"Unknown equipment accepted")
 	check(profile.weapon == "axe","Rejected selection changed weapon")
 	var before: Dictionary = profile.to_dict()
+	var legacy: Dictionary = before.duplicate()
+	legacy.erase("offhand")
+	check(profile.apply_data(legacy) and profile.offhand == "shield","Legacy lab look lost its implicit shield")
+	profile.apply_data(before)
 	var invalid: Dictionary = before.duplicate()
 	invalid.weapon = "sword"
 	invalid.cloak = "missing"
 	check(not profile.apply_data(invalid) and profile.to_dict() == before,"Invalid later slot caused partial import")
 	check(not profile.apply_data({"schema":9,"prototype_only":true,"weapon":"sword"}),"Future schema accepted")
 	check(profile.to_dict() == before,"Failed import changed profile")
-	for pair in [["schema","1"],["schema",true],["prototype_only",1],["hero",[]],["weapon",{}],["cloak",2]]:
+	for pair in [["schema","1"],["schema",true],["prototype_only",1],["hero",[]],["weapon",{}],["cloak",2],["offhand",true]]:
 		var malformed: Dictionary = before.duplicate()
 		malformed[pair[0]] = pair[1]
 		var accepted = profile.apply_data(malformed)
@@ -41,13 +46,13 @@ func run() -> void:
 		check(actor.weapon_id == "axe","Weapon change failed to reach a view")
 		check(actor.weapon.get_parent() == actor.joints.near_hand,"Weapon is not bound to the hand socket")
 	for id in ["sword","axe","mace"]:
-		var held_angle: float = lab.actors[1].weapon.rotation
+		var held_phase: float = lab.actors[1].clock
 		lab.set_slot("weapon",id)
-		check(is_equal_approx(lab.actors[1].weapon.rotation,held_angle),"Swap changed the current attack pose")
+		check(is_equal_approx(lab.actors[1].clock,held_phase),"Swap restarted the attack phase")
 		for actor in lab.actors:
 			actor.set_time(1.3)
 			var spec: Dictionary = actor.data.parts[id]
-			var grip: Vector2 = Vector2(spec.anchor[0],spec.anchor[1])*actor.weapon.texture.get_width()/512.0
+			var grip: Vector2 = Vector2(spec.anchor[0],spec.anchor[1])
 			check(actor.weapon.to_global(grip).distance_to(actor.joints.near_hand.global_position) < 0.05,"Weapon grip detached during motion: "+id)
 	lab.set_slot("weapon","axe")
 	for offset in [-0.1,lab.scenery[0].width*0.9]:
@@ -61,6 +66,16 @@ func run() -> void:
 		check(left <= 0 and right >= lab.scenery[0].node.get_parent().size.x,"Reversed or wrapped corridor exposes an empty edge")
 	lab.travel = 0
 	var actor = lab.actors[0]
+	if not actor.joints.has("near_ankle"):
+		push_error("Boots need independent ankle pivots, not rotation baked into shins")
+		quit(1)
+		return
+	actor.mode = "idle"
+	actor.set_time(0)
+	var chest_height: float = actor.torso.global_position.distance_to(actor.head.to_global(Vector2(280,470)*actor.head.texture.get_width()/512.0))/actor.scale.y
+	check(chest_height < 125,"Torso-to-neck proportion remains too long")
+	check(actor.joints.near_sole.global_position.distance_to(actor.joints.far_sole.global_position)/actor.scale.y > 65,"Standing feet do not form a stable stance")
+	actor.mode = "walk"
 	actor.set_time(0.1)
 	var first: Vector2 = actor.joints.near_shin.global_position
 	actor.set_time(0.5)
@@ -68,6 +83,7 @@ func run() -> void:
 	for i in range(130):
 		actor.set_time(float(i)/100)
 		check(actor.contact_error < 0.05,"Foot endpoint does not reach its target")
+		check(absf(actor.joints.near_ankle.global_rotation) < 0.1,"Walking boot rotates with its shin")
 	actor.set_time(0)
 	var seam_start: Vector2 = actor.joints.near_shin.global_position
 	actor.set_time(1.3)
@@ -104,6 +120,21 @@ func run() -> void:
 	check(actor.visual.scale.x < 0,"Facing did not mirror the rig")
 	lab.set_slot("cloak","original")
 	check(lab.actors[0].cape.texture == lab.actors[1].cape.texture,"Cape differs between views")
+	lab.set_slot("weapon","sword")
+	lab.set_slot("offhand","none")
+	for view in lab.actors:
+		check(not view.shield.visible,"Free offhand left a shield visible")
+		for pose_name in ["walk","guard","windup","strike","combat"]:
+			view.mode = pose_name
+			for sample in range(61):
+				view.set_time(sample/20.0)
+				var spec: Dictionary = view.data.parts.sword
+				var second_grip := Vector2(spec.anchor[0],spec.anchor[1])+Vector2.DOWN*18.0/float(spec.scale)
+				check(view.weapon.to_global(second_grip).distance_to(view.joints.far_hand.global_position) < 0.05,"Second hand leaves the sword grip: "+pose_name+" at "+str(sample/20.0)+"s error="+str(view.weapon.to_global(second_grip).distance_to(view.joints.far_hand.global_position)))
+				check(view.contact_error < 0.05,"Pose foot target is unreachable: "+pose_name)
+	lab.set_slot("offhand","shield")
+	for view in lab.actors: check(view.shield.visible,"Shield selection not shared")
+	lab.set_slot("weapon","axe")
 	lab.save_profile()
 	lab.set_slot("weapon","sword")
 	lab.load_profile()

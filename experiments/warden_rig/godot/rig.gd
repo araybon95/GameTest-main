@@ -22,6 +22,8 @@ var data: Dictionary
 var atlas_cache: Dictionary = {}
 var cloth: ShaderMaterial
 var joint_overlay: Node2D
+var segment_art: Dictionary = {}
+var arm_lengths: Dictionary = {}
 func _ready() -> void:
 	walk_blend = 1.0 if mode == "walk" else 0.0
 	data = JSON.parse_string(FileAccess.get_file_as_string("res://assets/attachments.json"))
@@ -30,26 +32,31 @@ func _ready() -> void:
 	visual.z_index = 50
 	for side in ["far","near"]:
 		var thigh := joint(visual,side+"_thigh",Vector2.ZERO)
-		var shin := joint(thigh,side+"_shin",Vector2(0,100))
-		var sole := joint(shin,side+"_sole",Vector2(0,112))
+		var shin := joint(thigh,side+"_shin",Vector2(0,data.lengths.thigh))
+		var ankle := joint(shin,side+"_ankle",Vector2(0,data.lengths.shin))
+		var sole := joint(ankle,side+"_sole",Vector2(0,data.boot_drop))
+		joints[side+"_ankle"] = ankle
 		thigh.z_index = -20 if side == "far" else -10
 		joints[side+"_thigh"] = thigh
 		joints[side+"_shin"] = shin
 		joints[side+"_sole"] = sole
-		attach(thigh,side+"_thigh",100)
-		attach(shin,side+"_shin",112)
-	torso = joint(visual,"Torso",Vector2(0,-204))
+		attach(thigh,side+"_thigh",data.lengths.thigh)
+		attach(shin,side+"_shin",data.lengths.shin)
+		attach(ankle,side+"_boot")
+	torso = joint(visual,"Torso",Vector2(0,-data.hip_height))
 	build_cloth()
 	for side in ["far","near"]:
 		var arm := joint(torso,side+"_arm",point(data.sockets[side+"_shoulder"]))
-		var forearm := joint(arm,side+"_forearm",Vector2(0,65))
-		var hand := joint(forearm,side+"_hand",Vector2(0,70))
+		var forearm := joint(arm,side+"_forearm",Vector2(0,data.lengths.upper_arm))
+		var hand := joint(forearm,side+"_hand",Vector2(0,data.lengths.forearm))
+		# Raised gripping hands must pass in front of scarf/chest attachments.
+		if side == "near": forearm.z_index = 8
 		arm.z_index = -4 if side == "far" else 4
 		joints[side+"_arm"] = arm
 		joints[side+"_forearm"] = forearm
 		joints[side+"_hand"] = hand
-		attach(arm,side+"_arm",65)
-		attach(forearm,side+"_forearm",70)
+		segment_art[side+"_arm"] = attach(arm,side+"_arm",data.lengths.upper_arm)
+		segment_art[side+"_forearm"] = attach(forearm,side+"_forearm",data.lengths.forearm)
 	attach(torso,"torso")
 	var waist := attach(torso,"waist")
 	waist.z_index = 2
@@ -94,9 +101,7 @@ func tile(part: String) -> AtlasTexture:
 	var spec: Dictionary = data.parts[part]
 	var texture := AtlasTexture.new()
 	texture.atlas = load("res://assets/"+spec.sheet)
-	var grid := point(spec.grid)
-	var cell: Vector2 = texture.atlas.get_size()/grid
-	texture.region = Rect2(Vector2(int(spec.cell)%int(grid.x),int(int(spec.cell)/int(grid.x)))*cell,cell)
+	texture.region = Rect2(spec.region[0],spec.region[1],spec.region[2],spec.region[3])
 	texture.filter_clip = true
 	atlas_cache[part] = texture
 	return texture
@@ -106,13 +111,14 @@ func fit(sprite: Sprite2D, part: String, length: float = 0) -> void:
 	var anchor := point(spec.anchor)
 	var factor: float = spec.get("scale",0.3)
 	var turn: float = 0.0
+	var width: float = spec.get("width",1.0)
 	if length > 0:
-		var axis: Vector2 = point(spec.end)-anchor
+		var axis: Vector2 = (point(spec.end)-anchor)*Vector2(width,1)
 		factor = length/axis.length()
 		turn = PI/2.0-axis.angle()
-	sprite.scale = Vector2.ONE*factor*512.0/sprite.texture.get_width()
+	sprite.scale = Vector2(width,1)*factor
 	sprite.rotation = turn
-	sprite.position = (-anchor*factor).rotated(turn)
+	sprite.position = (-anchor*Vector2(width,1)*factor).rotated(turn)
 func attach(parent: Node, part: String, length: float = 0) -> Sprite2D:
 	var sprite := Sprite2D.new()
 	sprite.name = part.capitalize().replace(" ","")+"Art"
@@ -127,7 +133,8 @@ func turn_attachment(sprite: Sprite2D, part: String, angle: float) -> void:
 func registered(part: String) -> Transform2D:
 	var alignment: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://assets/alignment.json"))
 	var m: Array = alignment.layers[part].matrix
-	return Transform2D(Vector2(m[0][0],m[1][0])*0.34,Vector2(m[0][1],m[1][1])*0.34,(Vector2(m[0][2],m[1][2])-Vector2(794,570))*0.34)
+	var factor: float = data.cloth_reference.scale
+	return Transform2D(Vector2(m[0][0],m[1][0])*factor,Vector2(m[0][1],m[1][1])*factor,(Vector2(m[0][2],m[1][2])-point(data.cloth_reference.source_origin))*factor)
 func build_cloth() -> void:
 	cape = MeshInstance2D.new()
 	cape.name = "CapeAttachment"
@@ -193,42 +200,72 @@ func limb(side: String, target: Vector2, hip: Vector2) -> void:
 	var thigh: Node2D = joints[side+"_thigh"]
 	var shin: Node2D = joints[side+"_shin"]
 	thigh.position = hip
-	var angles := Motion.solve(hip,target,100,112)
+	var upper: float = data.lengths.thigh
+	var lower: float = data.lengths.shin
+	var ankle_target := target-Vector2(0,data.boot_drop)
+	var angles := Motion.solve(hip,ankle_target,upper,lower,1.0 if side == "near" else -1.0)
 	thigh.rotation = angles.x
 	shin.rotation = angles.y
-	var endpoint := hip+Vector2.DOWN.rotated(angles.x)*100+Vector2.DOWN.rotated(angles.x+angles.y)*112
-	contact_error = maxf(contact_error,endpoint.distance_to(target))
+	joints[side+"_ankle"].rotation = -angles.x-angles.y
+	var endpoint := hip+Vector2.DOWN.rotated(angles.x)*upper+Vector2.DOWN.rotated(angles.x+angles.y)*lower
+	contact_error = maxf(contact_error,endpoint.distance_to(ankle_target))
 func arm(side: String, target: Vector2) -> void:
 	var upper: Node2D = joints[side+"_arm"]
 	var lower: Node2D = joints[side+"_forearm"]
-	var angles := Motion.solve(upper.position,target,65,70,1 if side == "near" else -1)
+	var two_handed: bool = appearance.weapon == "sword" and appearance.offhand == "none"
+	var profile: Dictionary = data.grip_profiles.two_handed_far_arm if side == "far" and two_handed else {}
+	var a: float = profile.get("upper",data.lengths.upper_arm)
+	var b: float = profile.get("forearm",data.lengths.forearm)
+	if arm_lengths.get(side,Vector2.ZERO) != Vector2(a,b):
+		lower.position.y = a
+		joints[side+"_hand"].position.y = b
+		fit(segment_art[side+"_arm"],side+"_arm",a)
+		fit(segment_art[side+"_forearm"],side+"_forearm",b)
+		arm_lengths[side] = Vector2(a,b)
+	var angles := Motion.solve(upper.position,target,a,b,1 if side == "near" or two_handed else -1)
 	upper.rotation = angles.x
 	lower.rotation = angles.y
 func refresh() -> void:
 	if visual == null: return
 	visual.scale.x = -1 if reverse else 1
 	var phase: float = clock/Motion.PERIOD*TAU
-	var bob: float = lerpf(sin(clock*1.5)*0.45,cos(phase*2)*0.8,walk_blend)
-	torso.position = Vector2(sin(phase)*0.6*walk_blend,-204+bob)
-	torso.rotation = sin(phase)*0.009*walk_blend
-	contact_error = 0
-	limb("near",Vector2(-18,0)+Vector2(-8,0).lerp(Motion.foot(clock,0),walk_blend),Vector2(-16,-204+bob))
-	limb("far",Vector2(20,0)+Vector2(10,0).lerp(Motion.foot(clock,0.5),walk_blend),Vector2(18,-204+bob))
-	var hand := Vector2(-70,-20)
-	var angle: float = 2.55
-	if mode != "combat":
-		hand += Vector2(sin(phase)*3,cos(phase)*2)*walk_blend
-		angle += sin(phase-0.4)*0.035*walk_blend
-	else:
+	var bob: float = lerpf(sin(clock*1.5)*0.35,cos(phase*2)*0.45,walk_blend)
+	var fighting: bool = mode in ["combat","guard","windup","strike"]
+	var windup: float = 0.0
+	var strike: float = 0.0
+	var recover: float = 0.0
+	if mode == "combat":
 		var cycle: float = fposmod(clock,3.0)
-		var windup: float = smoothstep(0.3,1.05,cycle)
-		var strike: float = smoothstep(1.05,1.4,cycle)
-		var recover: float = smoothstep(1.55,2.5,cycle)
-		hand = hand.lerp(Vector2(-75,-115),windup).lerp(Vector2(78,-64),strike).lerp(Vector2(-70,-20),recover)
-		angle = lerpf(lerpf(lerpf(2.55,-0.65,windup),2.0,strike),2.55,recover)
-		torso.rotation = lerpf(lerpf(-0.06*windup,0.075,strike),0,recover)
+		windup = smoothstep(0.6,1.15,cycle)
+		strike = smoothstep(1.15,1.5,cycle)
+		recover = smoothstep(1.65,2.55,cycle)
+	elif mode == "windup": windup = 1.0
+	elif mode == "strike": windup = 1.0; strike = 1.0
+	var lean: float = lerpf(lerpf(-0.035*windup,0.07,strike),0,recover) if fighting else sin(phase)*0.006*walk_blend
+	var shift: float = lerpf(lerpf(-2.0*windup,9.0,strike),0,recover) if fighting else sin(phase)*0.35*walk_blend
+	torso.position = Vector2(shift,-data.hip_height+bob)
+	torso.rotation = lean
+	contact_error = 0
+	var foot_base: float = lerpf(55.0,45.0,walk_blend)
+	limb("near",Vector2(-foot_base,0)+Motion.foot(clock,0)*walk_blend,Vector2(-22+shift,-data.hip_height+bob))
+	limb("far",Vector2(foot_base,0)+Motion.foot(clock,0.5)*walk_blend,Vector2(22+shift,-data.hip_height+bob))
+	var two_handed: bool = appearance.weapon == "sword" and appearance.offhand == "none"
+	var hand := Vector2(20,10) if two_handed else Vector2(-58,18)
+	var angle: float = 2.55
+	if fighting:
+		hand = Vector2(-18,-74).lerp(Vector2(-3,-135),windup).lerp(Vector2(78,-78),strike).lerp(Vector2(-18,-74),recover)
+		# Recover below the far shoulder instead of folding the elbow through it.
+		hand.y += sin(PI*recover)*20.0
+		var impact: float = PI/2.0 if appearance.weapon == "sword" else 2.0
+		angle = lerpf(lerpf(lerpf(0.0,-0.65,windup),impact,strike),0.0,recover)
+	else:
+		hand += Vector2(sin(phase)*3,cos(phase)*1.4)*walk_blend
+		angle += sin(phase-0.4)*0.025*walk_blend
 	arm("near",hand)
-	arm("far",Vector2(66,-40)+Vector2(sin(phase+0.7)*1.5,0)*walk_blend)
+	var other_hand := hand+Vector2(0,18).rotated(angle) if two_handed else Vector2(52,-12 if appearance.offhand == "shield" else 18)
+	arm("far",other_hand)
+	joints.far_forearm.z_index = 14 if two_handed else 0
+	shield.visible = appearance.offhand == "shield"
 	turn_attachment(weapon,weapon_id,angle-joints.near_arm.rotation-joints.near_forearm.rotation)
 	turn_attachment(shield,"shield",-joints.far_arm.rotation-joints.far_forearm.rotation+sin(clock*1.8)*0.012)
 	head.rotation = -torso.rotation*0.7
@@ -240,8 +277,8 @@ func draw_joint_overlay() -> void:
 	if not show_joints or visual == null: return
 	var cyan := Color(0.25,0.88,0.88,0.8)
 	for side in ["near","far"]:
-		for chain in [["_thigh","_shin","_sole"],["_arm","_forearm","_hand"]]:
-			for i in range(3):
+		for chain in [["_thigh","_shin","_ankle","_sole"],["_arm","_forearm","_hand"]]:
+			for i in range(chain.size()):
 				var p: Vector2 = joint_overlay.to_local(joints[side+chain[i]].global_position)
 				joint_overlay.draw_circle(p,3.0,cyan)
-				if i < 2: joint_overlay.draw_line(p,joint_overlay.to_local(joints[side+chain[i+1]].global_position),cyan,1.5)
+				if i < chain.size()-1: joint_overlay.draw_line(p,joint_overlay.to_local(joints[side+chain[i+1]].global_position),cyan,1.5)

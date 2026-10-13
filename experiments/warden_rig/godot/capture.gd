@@ -10,6 +10,18 @@ func run() -> void:
 	var directory: String = args[0]
 	DirAccess.make_dir_recursive_absolute(directory)
 	root.size = Vector2i(1440,900)
+	if args.size() > 1 and args[1] == "poses":
+		change_scene_to_file("res://pose_board.tscn")
+		for i in range(6): await process_frame
+		if not await shot(directory,"anatomy-poses"): quit(1); return
+		current_scene.show_joints(true)
+		if not await shot(directory,"anatomy-joints"): quit(1); return
+		current_scene.show_joints(false)
+		current_scene.show_walk_cycle()
+		if not await shot(directory,"walking-phases"): quit(1); return
+		print("WARDEN_ANATOMY_CAPTURE_COMPLETE ",directory)
+		quit()
+		return
 	change_scene_to_file("res://lab.tscn")
 	for i in range(6): await process_frame
 	var lab = current_scene
@@ -29,7 +41,9 @@ func run() -> void:
 			if i%30 == 0: print("FRAME ",i)
 	else:
 		lab.actors[0].set_time(0.34)
-		lab.actors[1].set_time(1.3)
+		lab.actors[1].mode = "guard"
+		lab.get_node("CombatPose").select(1)
+		lab.actors[1].set_time(0.34)
 		lab.actors[2].set_time(0.34)
 		if not await shot(directory,"sword"): quit(1); return
 		lab.set_slot("weapon","axe")

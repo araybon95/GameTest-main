@@ -1,249 +1,309 @@
 {
-  "schema": 1,
+  "schema": 2,
   "prototype_only": true,
-  "normalized_tile": [
-    512,
-    512
-  ],
   "parts": {
     "torso": {
       "sheet": "body_parts.png",
-      "grid": [
-        2,
-        3
+      "region": [
+        125,
+        20,
+        300,
+        443
       ],
-      "cell": 0,
       "anchor": [
-        322,
-        392
+        165,
+        325
       ],
-      "scale": 0.46
+      "width": 1,
+      "scale": 0.36
     },
     "waist": {
       "sheet": "body_parts.png",
-      "grid": [
-        2,
-        3
+      "region": [
+        467,
+        86,
+        365,
+        345
       ],
-      "cell": 1,
       "anchor": [
-        288,
-        135
+        184,
+        65
       ],
-      "scale": 0.25
+      "width": 1,
+      "scale": 0.22
     },
     "near_thigh": {
       "sheet": "body_parts.png",
-      "grid": [
-        2,
-        3
+      "region": [
+        905,
+        28,
+        236,
+        414
       ],
-      "cell": 2,
       "anchor": [
-        315,
-        58
+        126,
+        80
       ],
+      "width": 0.48,
       "end": [
-        275,
-        410
+        128,
+        354
       ]
     },
     "far_thigh": {
       "sheet": "body_parts.png",
-      "grid": [
-        2,
-        3
+      "region": [
+        142,
+        464,
+        239,
+        397
       ],
-      "cell": 3,
       "anchor": [
-        222,
-        60
+        122,
+        64
       ],
+      "width": 0.46,
       "end": [
-        285,
-        420
+        112,
+        342
       ]
     },
     "near_shin": {
       "sheet": "body_parts.png",
-      "grid": [
-        2,
-        3
+      "region": [
+        545,
+        451,
+        205,
+        416
       ],
-      "cell": 4,
       "anchor": [
-        295,
-        58
+        92,
+        79
       ],
+      "width": 0.58,
       "end": [
-        270,
-        455
+        80,
+        374
       ]
     },
     "far_shin": {
       "sheet": "body_parts.png",
-      "grid": [
-        2,
-        3
+      "region": [
+        902,
+        451,
+        193,
+        408
       ],
-      "cell": 5,
       "anchor": [
-        242,
-        60
+        97,
+        76
       ],
+      "width": 0.57,
       "end": [
-        250,
-        435
+        87,
+        370
       ]
     },
     "near_arm": {
       "sheet": "arm_parts.png",
-      "grid": [
-        2,
-        2
+      "region": [
+        218,
+        38,
+        322,
+        547
       ],
-      "cell": 0,
       "anchor": [
-        315,
-        95
+        147,
+        117
       ],
       "end": [
-        267,
-        420
-      ]
+        132,
+        472
+      ],
+      "width": 0.9
     },
     "near_forearm": {
       "sheet": "arm_parts.png",
-      "grid": [
-        2,
-        2
+      "region": [
+        738,
+        38,
+        346,
+        585
       ],
-      "cell": 1,
       "anchor": [
-        210,
-        70
+        112,
+        107
       ],
       "end": [
-        294,
-        426
-      ]
+        232,
+        497
+      ],
+      "width": 0.9
     },
     "far_arm": {
       "sheet": "arm_parts.png",
-      "grid": [
-        2,
-        2
+      "region": [
+        241,
+        644,
+        270,
+        526
       ],
-      "cell": 2,
       "anchor": [
-        315,
-        95
+        124,
+        114
       ],
       "end": [
-        267,
-        420
-      ]
+        114,
+        471
+      ],
+      "width": 0.85
     },
     "far_forearm": {
       "sheet": "arm_parts.png",
-      "grid": [
-        2,
-        2
+      "region": [
+        743,
+        640,
+        348,
+        574
       ],
-      "cell": 3,
       "anchor": [
-        210,
-        70
+        97,
+        101
       ],
       "end": [
-        294,
-        426
-      ]
+        230,
+        487
+      ],
+      "width": 0.85
     },
     "shield": {
       "sheet": "gear_parts.png",
-      "grid": [
-        2,
-        2
-      ],
-      "cell": 0,
       "anchor": [
-        280,
-        160
+        342.890625,
+        195.9375
       ],
-      "scale": 0.38
+      "scale": 0.3103030303030303,
+      "region": [
+        0.0,
+        0.0,
+        627.0,
+        627.0
+      ]
     },
     "sword": {
       "sheet": "gear_parts.png",
-      "grid": [
-        2,
-        2
-      ],
-      "cell": 1,
       "anchor": [
-        256,
-        425
+        313.5,
+        520.458984375
       ],
-      "scale": 0.33
+      "scale": 0.2694736842105263,
+      "region": [
+        627.0,
+        0.0,
+        627.0,
+        627.0
+      ]
     },
     "axe": {
       "sheet": "gear_parts.png",
-      "grid": [
-        2,
-        2
-      ],
-      "cell": 2,
       "anchor": [
-        288,
-        400
+        352.6875,
+        489.84375
       ],
-      "scale": 0.33
+      "scale": 0.2694736842105263,
+      "region": [
+        0.0,
+        627.0,
+        627.0,
+        627.0
+      ]
     },
     "mace": {
       "sheet": "gear_parts.png",
-      "grid": [
-        2,
-        2
-      ],
-      "cell": 3,
       "anchor": [
-        256,
-        415
+        313.5,
+        508.212890625
       ],
-      "scale": 0.33
+      "scale": 0.2694736842105263,
+      "region": [
+        627.0,
+        627.0,
+        627.0,
+        627.0
+      ]
+    },
+    "near_boot": {
+      "sheet": "body_parts.png",
+      "region": [
+        111,
+        952,
+        315,
+        232
+      ],
+      "anchor": [
+        107,
+        52
+      ],
+      "width": 1,
+      "scale": 0.18
+    },
+    "far_boot": {
+      "sheet": "body_parts.png",
+      "region": [
+        495,
+        952,
+        325,
+        232
+      ],
+      "anchor": [
+        111,
+        52
+      ],
+      "width": 1,
+      "scale": 0.18
     }
   },
   "sockets": {
     "neck": [
-      26,
-      -140
+      12,
+      -107
     ],
     "near_shoulder": [
-      -48,
-      -132
+      -38,
+      -72
     ],
     "far_shoulder": [
-      47,
-      -125
+      35,
+      -70
     ],
     "brooch": [
-      5,
-      -128
+      0,
+      -101
     ]
   },
   "lengths": {
-    "thigh": 100,
-    "shin": 112,
-    "upper_arm": 65,
-    "forearm": 70
+    "thigh": 110,
+    "shin": 95,
+    "upper_arm": 68,
+    "forearm": 62
   },
   "cloth_reference": {
-    "scale": 0.34,
+    "scale": 0.31,
     "source_origin": [
       794,
-      570
+      520
     ],
     "alignment": "alignment.json"
   },
-  "notes": "Sprite pixels preserved; endpoint registration rotates art into each joint's downward rest axis. Lower legs include boots; sole-contact cleanup remains an artist review task."
+  "notes": "Anatomy correction: compact torso, fitted shoulder sockets, no duplicated knee/elbow armor, and independent level boots. Actual source-region bounds preserve irregularly spaced atlas cutouts.",
+  "coordinate_space": "source-region pixels",
+  "hip_height": 225,
+  "boot_drop": 30,
+  "grip_profiles": {
+    "two_handed_far_arm": {
+      "upper": 35,
+      "forearm": 40,
+      "note": "Foreshortened far arm in the sword profile, matching the supplied raised-guard reference."
+    }
+  }
 }
