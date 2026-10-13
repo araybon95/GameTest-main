@@ -38,10 +38,10 @@ func run() -> void:
 		sprite.texture = ImageTexture.create_from_image(image)
 		sprite.position = Vector2(675+(i%4)*150,185+(i/4)*166)
 		var fit := minf(130.0/image.get_width(),132.0/image.get_height())
-		sprite.scale = Vector2(fit,fit)
+		sprite.scale = Vector2(-fit if part.flip_x else fit,fit)
 		root.add_child(sprite)
 		label(root,part.name,Vector2(610+(i%4)*150,255+(i/4)*166),12)
-	label(root,"Near = visible mace side · Far = shield side. Setup requires artist adjustment in Spine.",Vector2(25,945),17)
+	label(root,"Parts shown in setup orientation · Near = mace side · Far = shield side · Alignment draft",Vector2(25,945),17)
 	await process_frame
 	await RenderingServer.frame_post_draw
 	assert(root.get_texture().get_image().save_png(directory+"/parts-preview.png") == OK)

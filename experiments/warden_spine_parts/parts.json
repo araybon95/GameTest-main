@@ -24526,11 +24526,11 @@
 			"width": 162.0
 		},
 		{
-			"bone_length": 187.882942280559,
-			"bone_rotation_world": -115.201123645475,
+			"bone_length": 171.172427686237,
+			"bone_rotation_world": -96.7098368077569,
 			"center_world": [
-				-100.899968601183,
-				402.573787220681
+				-70.0765346171961,
+				402.643649589199
 			],
 			"draw_order": 8.0,
 			"flip_x": false,
@@ -24545,8 +24545,8 @@
 				47.0,
 				19.0
 			],
-			"rotation_world": -42.153017890922,
-			"scale": 0.961066357007446,
+			"rotation_world": -23.6617310532039,
+			"scale": 0.875588062969962,
 			"sha256": "d4a80c5d716918df8eeaf05ac1c57bea9bc5e9cdaee7864dd67c57ae477ce610",
 			"source_pivot_pixels": [
 				47.0,
@@ -26388,17 +26388,17 @@
 			"width": 153.0
 		},
 		{
-			"bone_length": 228.035085019828,
-			"bone_rotation_world": -105.255118703058,
+			"bone_length": 250.599281722833,
+			"bone_rotation_world": -118.610459665965,
 			"center_world": [
-				-143.250256060089,
-				203.35950836463
+				-113.084013971689,
+				196.109462405126
 			],
 			"draw_order": 9.0,
 			"flip_x": false,
 			"height": 240.0,
 			"joint_world": [
-				-140.0,
+				-80.0,
 				320.0
 			],
 			"name": "near_lower_leg",
@@ -26407,8 +26407,8 @@
 				65.0,
 				21.0
 			],
-			"rotation_world": -9.07705380092946,
-			"scale": 1.16861191452081,
+			"rotation_world": -22.4323947638369,
+			"scale": 1.28424670425692,
 			"sha256": "e5376e704e17fbbb12fc2ad2e5c49eed80e93a45e98292767bcc8091c3d5707d",
 			"source_pivot_pixels": [
 				65.0,
@@ -32814,11 +32814,11 @@
 			"width": 311.0
 		},
 		{
-			"bone_length": 180.277563773199,
-			"bone_rotation_world": -70.5599651718238,
+			"bone_length": 202.484567313166,
+			"bone_rotation_world": -57.0947570770121,
 			"center_world": [
-				204.973817727976,
-				407.808421738069
+				229.698429063679,
+				409.368505304284
 			],
 			"draw_order": 5.0,
 			"flip_x": false,
@@ -32833,8 +32833,8 @@
 				110.0,
 				24.0
 			],
-			"rotation_world": 38.9131790311779,
-			"scale": 0.93903480420751,
+			"rotation_world": 52.3783871259896,
+			"scale": 1.05470726385658,
 			"sha256": "0ef8143c4b13f442720d5b679c66c2a2782824a400f8a75ec79e453b5544584e",
 			"source_pivot_pixels": [
 				110.0,
@@ -34666,27 +34666,27 @@
 			"width": 168.0
 		},
 		{
-			"bone_length": 225.88713996153,
-			"bone_rotation_world": -84.9203921399854,
+			"bone_length": 226.991189256323,
+			"bone_rotation_world": -97.5946433685914,
 			"center_world": [
-				219.684414039262,
-				205.208506841166
+				285.294170136823,
+				204.303688280785
 			],
 			"draw_order": 6.0,
-			"flip_x": false,
+			"flip_x": true,
 			"height": 249.0,
 			"joint_world": [
-				230.0,
+				280.0,
 				320.0
 			],
 			"name": "far_lower_leg",
 			"parent": "far_thigh",
 			"pivot_pixels": [
-				74.0,
+				83.0,
 				20.0
 			],
-			"rotation_world": -7.60077563180525,
-			"scale": 1.10188848761722,
+			"rotation_world": 5.08574012322838,
+			"scale": 1.10727409393328,
 			"sha256": "e8d12e22818f2be81a6bdd6a67b3f3337e3c742b07dc754b845dc9bc5389a5ce",
 			"source_pivot_pixels": [
 				74.0,

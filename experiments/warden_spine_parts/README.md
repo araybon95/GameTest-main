@@ -13,7 +13,9 @@ Twenty separate transparent PNGs based on the current red-cloaked in-game Warden
 - Near and far thighs, lower legs and feet.
 - Mace and shield, independently replaceable.
 
-**Near** is the visible mace side; **far** is the shield side. The limbs have dark overlapping joint caps to prevent gaps during small rotations. Shoulders are separate from the chest and upper arms. Feet are separate from the shins. The starter mirrors the far-foot attachment horizontally to face the reference direction; its source PNG remains unmodified.
+**Near** is the visible mace side; **far** is the shield side. The limbs have dark overlapping joint caps to prevent gaps during small rotations. Shoulders are separate from the chest and upper arms. Feet are separate from the shins. The starter mirrors the far-foot and far-lower-leg attachments horizontally so both boots and knee plates face forward (+X). Their source PNGs remain unmodified; the parts preview shows the orientation used in the Spine setup.
+
+Both knee joints sit forward of their ankle joints in this corrected setup pose. Thigh endpoints and shin roots share the same knee pivot. These setup coordinates are a starting pose, not a restriction on knee positions across a future walking cycle.
 
 The source game sprite is flattened. These parts are **AI-reconstructed**, not recovered original paint layers or pixel-identical copies of the game sprite. Hidden far limbs and covered joint surfaces were inferred. The assembled setup is an alignment draft: adjust proportions, overlap, pivots and draw order in Spine before authoring a walk. Joint caps should sit behind neighboring plates; large rotations may expose unfinished surfaces. No finished walking animation is included.
 
@@ -31,7 +33,7 @@ If your editor uses a different major/minor release, the format must be checked 
 
 Replace an individual `images/<part>.png` while preserving its canvas dimensions and joint registration from `parts.json`. Reload images in Spine. If the dimensions or attachment pivot change, update the attachment transform in the editor. Head, shoulder, weapon and shield each have independent slots for future cosmetic swaps. The starter uses one default skin; no game unlock or inventory behavior is implemented.
 
-`source_pivot_pixels` gives the anchor in the actual PNG, measured from its top-left corner. `pivot_pixels` gives the same anchor after the starter's optional horizontal flip. These differ only for the far foot.
+`source_pivot_pixels` gives the anchor in the actual PNG, measured from its top-left corner. `pivot_pixels` gives the same anchor after the starter's optional horizontal flip. These differ for the far foot and far lower leg.
 
 `parts.json` records source regions, owned-pixel spans, source and image hashes, pivots, setup transforms and draw order. The generated source sheet and original in-game reference are preserved in `source/`. Neighboring source pieces are isolated by owned-pixel extraction; selected color/alpha pixels are copied unchanged by the native exporter. The source sheet is not an atlas ready for runtime use.
 
@@ -49,6 +51,7 @@ node experiments/warden_spine_parts/validate.mjs \
   /absolute/path/to/experiments/warden_spine_parts \
   /absolute/path/to/scratch/node_modules/@esotericsoftware/spine-core
 python experiments/warden_spine_parts/verify_parts.py
+python experiments/warden_spine_parts/verify_knees.py
 ```
 
 The validation uses the official `@esotericsoftware/spine-core@4.3.13` runtime installed outside the game. It checks all 21 bones, 20 region attachments, image/source hashes and attachment centers. This confirms data registration, not animation quality or desktop-editor compatibility. Rebuilding overwrites generated starter assets: preserve your hand-edited Spine project and PNG replacements in a separate folder first.

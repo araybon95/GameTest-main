@@ -37,12 +37,12 @@ specs = [
  ('far_upper_arm',9,(478,507),(880,325),'far_shoulder',2,None,((551,671),(925,470))),
  ('far_lower_arm',10,(866,506),(925,470),'far_upper_arm',3,None,((779,679),(930,615))),
  ('far_hand',12,(1196,546),(930,615),'far_lower_arm',4,None,((1098,645),(935,680))),
- ('near_thigh',13,(165,711),(640,730),'waist',8,None,((222,898),(560,900))),
- ('near_lower_leg',14,(501,714),(560,900),'near_thigh',9,None,((480,908),(500,1120))),
+ ('near_thigh',13,(165,711),(640,730),'waist',8,None,((222,898),(620,900))),
+ ('near_lower_leg',14,(501,714),(620,900),'near_thigh',9,None,((480,908),(500,1120))),
  ('near_foot',16,(782,741),(500,1120),'near_lower_leg',10,1.0,None),
  ('mace',15,(1018,728),(560,680),'near_hand',18,None,((1204,860),(700,835))),
- ('far_thigh',17,(185,947),(870,730),'waist',5,None,((121,1128),(930,900))),
- ('far_lower_leg',18,(505,950),(930,900),'far_thigh',6,None,((550,1150),(950,1125))),
+ ('far_thigh',17,(185,947),(870,730),'waist',5,None,((121,1128),(980,900))),
+ ('far_lower_leg',18,(505,950),(980,900),'far_thigh',6,None,((550,1150),(950,1125))),
  ('far_foot',19,(848,991),(950,1125),'far_lower_leg',7,1.0,None),
  ('shield',15,(1140,1030),(955,600),'far_hand',19,2.1,None),
 ]
@@ -75,7 +75,7 @@ for name,component,pivot,target,parent,order,scale,end in specs:
         for segment in np.split(positions,np.where(np.diff(positions)>1)[0]+1):
             spans.append([row-y0,int(segment[0]),int(segment[-1]+1)])
     pivot_local=np.array([pivot[0]-x0,pivot[1]-y0],dtype=float)
-    flip=name=='far_foot'
+    flip=name in ('far_foot','far_lower_leg')
     if flip: pivot_local[0]=w-pivot_local[0]
     world=point(target)
     image_rotation=0.
@@ -84,6 +84,7 @@ for name,component,pivot,target,parent,order,scale,end in specs:
     if end:
         source_end,target_end=end
         source_delta=np.array([source_end[0]-pivot[0],pivot[1]-source_end[1]],dtype=float)
+        if flip: source_delta[0] = -source_delta[0]
         target_delta=point(target_end)-world
         scale=float(np.linalg.norm(target_delta)/np.linalg.norm(source_delta))
         bone_rotation=angle(target_delta)
