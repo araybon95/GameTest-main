@@ -2,7 +2,7 @@ config_version=5
 
 [application]
 config/name="Warden Painted Equipment Trial"
-run/main_scene="res://complete_lab.tscn"
+run/main_scene="res://ashen_wolf_lab.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 
 [display]

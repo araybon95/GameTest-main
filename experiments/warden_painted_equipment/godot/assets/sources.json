@@ -52,6 +52,11 @@
       "file": "complete_poses.png",
       "source": "Image-tool edit of the approved complete ten-frame Warden sheet: walking without mace or shield; combat remains armed. Original output copied unchanged.",
       "sha256": "aaa9f9db0d10c2126855770900d4a1e39feecf79b71a134d16aa476acdee2c83"
+    },
+    {
+      "file": "ashen_wolf_poses.png",
+      "source": "Image-tool animation atlas from the approved Ashen Wolf outfit concept and original complete Warden pose reference. Source pixels copied unchanged.",
+      "sha256": "ec61c2ae73bda1ee5deed2d18f0804c7798dcb1152816e2fefe390115e43d503"
     }
   ]
 }

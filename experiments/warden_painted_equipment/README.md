@@ -1,5 +1,35 @@
 # Warden painted movement and equipment
 
+## Ashen Wolf outfit animation — latest
+
+![Original outfit and Ashen Wolf animation](preview/ashen-wolf-animation.gif)
+
+[Native 30 fps clip](preview/ashen-wolf-animation.mp4)
+
+The original complete painted Warden appears on the left; the approved Ashen
+Wolf boss-reward outfit appears on the right. Both use the same ten-frame,
+0.84-second stride and whole-character rendering. Travel has empty hands, with
+no shield or mace. Combat switches to armed idle with breathing and one held
+overhead attack, then can return to travel.
+
+`ashen_wolf_actor.gd` supplies its outfit atlas and per-frame size/ground fitting
+to the same complete-character controller. There are no separate helmet/cloak
+attachments. The reward sheet was generated using the approved concept as the
+costume reference and the original complete atlas as the pose reference; details
+can still vary between generated drawings and should be reviewed in motion.
+
+The default project now opens `ashen_wolf_lab.tscn`. This is a visual trial;
+campaign boss-unlock ownership and gameplay integration remain separate work.
+The painted combat artwork currently uses a fixed mace and matching shield.
+
+```sh
+godot --headless --path experiments/warden_painted_equipment/godot --script res://ashen_wolf_smoke.gd
+godot --headless --path experiments/warden_painted_equipment/godot --script res://complete_smoke.gd
+```
+
+These checks cover single-image rendering, ten travel poses, grounding, facing,
+loop timing, armed combat idle/attack, recovery and return to travel for each set.
+
 ## Complete painted character trial — latest
 
 ![Earlier layered character and complete painted character](preview/complete-painted-stride.gif)
