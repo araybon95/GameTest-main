@@ -35,6 +35,8 @@ var cloth_material: ShaderMaterial
 var body_frames: Array[AtlasTexture] = []
 var hand_frames: Array[AtlasTexture] = []
 var equipment_cache: Dictionary = {}
+# The comparison scene can retain the original atlas fitting for its left view.
+var polished_walk: bool = true
 
 func region(index: int) -> Rect2:
 	var row: int = index / 4
@@ -161,12 +163,21 @@ func refresh() -> void:
 	breath_offset = (1.0-cos(clock*TAU/3.6))*0.85 if mode == "idle" else 0.0
 	var ground: float = GROUNDS[current_frame]
 	var origin := Vector2(-190,-ground)
+	var pose_scale := Vector2.ONE
+	if mode == "walk" and polished_walk:
+		# Register the torso height while retaining the existing foot baseline.
+		# Only the painted body changes size; helmets and cloth keep their size.
+		var stride_phase: float = fposmod(clock,FRAME_SECONDS*10.0)/(FRAME_SECONDS*10.0)
+		var neck_height: float = 306.0 + sin(stride_phase*TAU*2.0)*1.2
+		pose_scale.y = neck_height/(ground-NECKS[current_frame].y)
+		origin = Vector2(10.0-NECKS[current_frame].x,-ground*pose_scale.y)
 	var frame: Rect2 = region(current_frame)
 	body.texture = body_frames[current_frame]
 	body.position = origin
+	body.scale = pose_scale
 	body_material.set_shader_parameter("frame_uv",Vector4(frame.position.x/BODY.get_width(),frame.position.y/BODY.get_height(),frame.size.x/BODY.get_width(),frame.size.y/BODY.get_height()))
 	body_material.set_shader_parameter("breath_pixels",breath_offset)
-	var neck: Vector2 = origin + NECKS[current_frame] - Vector2(0,breath_offset)
+	var neck: Vector2 = origin + NECKS[current_frame]*pose_scale - Vector2(0,breath_offset)
 	cape.scale = Vector2(0.255,0.29)
 	cape.position = neck - Vector2(794,209)*cape.scale
 	cloth_material.set_shader_parameter("clock",clock)
@@ -179,13 +190,16 @@ func refresh() -> void:
 	var hand: Vector2 = HANDS[current_frame]
 	var relative: float = hand.y/frame.size.y
 	var blend: float = smoothstep(0.38,0.67,relative)
-	grip.position = origin + hand - Vector2(0,breath_offset*(1.0-blend))
+	grip.position = origin + hand*pose_scale - Vector2(0,breath_offset*(1.0-blend))
 	grip.rotation = 0.9 if mode == "attack" else 1.95
 	var spec: Dictionary = GEAR_SPECS[appearance.weapon]
 	weapon.scale = Vector2.ONE*float(spec.scale)
 	weapon.position = -Vector2(spec.anchor)*float(spec.scale)
 	gauntlet.texture = hand_frames[current_frame]
-	gauntlet.position = grip.position - Vector2(14,13)
+	gauntlet.position = grip.position - Vector2(14,13)*pose_scale
+	gauntlet.scale = pose_scale
+	weapon.visible = mode != "walk"
+	gauntlet.visible = mode != "walk"
 	visual.position.x = 14.0*minf(attack_elapsed/0.1,1.0)*clampf((ATTACK_SECONDS-attack_elapsed)/0.16,0,1)*visual.scale.x if mode == "attack" else 0.0
 
 func weapon_grip_error() -> float:

@@ -1,5 +1,43 @@
 # Warden painted movement and equipment
 
+## Weapon-free stride polish
+
+The latest trial keeps the same ten body drawings and 0.84-second stride. It
+removes the visible weapon during travel and corrects the per-frame upper-body
+registration: the original neck attachment drifted 11 source pixels sideways
+and 22 pixels vertically. The polished view holds the neck alignment steady,
+adds only a small continuous bob, and scales each body frame slightly vertically
+around the planted boot baseline. Helmets and cloaks keep their original size.
+No source image was repainted for this pass.
+
+![Current and polished weapon-free stride](preview/weapon-free-stride.gif)
+
+[Native 30 fps comparison](preview/weapon-free-stride.mp4)
+
+The default scene is now the stride comparison: current fitting on the left,
+polished fitting on the right. Both views holster the weapon while walking.
+Controls let you travel left/right, pause, enter armed combat idle, and play the
+held attack. Their clocks and travel speed match for comparison. The recorded
+clip includes left and right travel, drawing the mace for combat, attacking and
+returning to weapon-free travel.
+
+This pass reviews the original outfit's movement only. Complete boss-reward
+armor-set artwork and campaign reward integration are not implemented here.
+The original equipment workbench remains available as `godot/lab.tscn`; its
+walking view now also holsters the weapon. The older equipment clip below was
+captured before the stride-polish pass.
+
+```sh
+godot --headless --path experiments/warden_painted_equipment/godot --script res://stride_smoke.gd
+```
+
+This checks hidden weapons through all walking poses and swaps, stable neck
+registration, planted boot baselines, preserved loop timing, drawing the equipped
+weapon in combat and attack, and weapon-free leftward travel. Existing equipment
+and graphical cloak checks continue to apply.
+
+## Earlier equipment-swap trial
+
 A standalone trial combining the approved ten-frame painted movement with
 separate weapons, helmets and cloaks from this repository's existing experiments.
 The main game is unchanged; `.gdignore` isolates this nested Godot project.
