@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "prototype_only": true,
+  "canvas": [
+    590,
+    470
+  ],
+  "root": [
+    305,
+    420
+  ],
+  "hero_height": 280,
+  "frames": [
+    "frame_00.png",
+    "frame_01.png",
+    "frame_02.png",
+    "frame_03.png",
+    "frame_04.png",
+    "frame_05.png",
+    "frame_06.png",
+    "frame_07.png",
+    "frame_08.png",
+    "frame_09.png",
+    "frame_10.png",
+    "frame_11.png",
+    "frame_12.png",
+    "frame_13.png",
+    "frame_14.png",
+    "frame_15.png"
+  ],
+  "original_keyframes": [
+    0,
+    4,
+    8,
+    12
+  ],
+  "fps": 24,
+  "cycle_seconds": 0.6666666666666666,
+  "upper_sequence_fps": 6,
+  "notes": "Review candidate. Source upper poses and protected weapon pixels retained. New leg pixels and overlaps require visual acceptance before port."
+}

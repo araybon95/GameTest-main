@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "prototype_only": true,
+  "reference_commit": "0b8073d",
+  "images": [
+    {
+      "file": "hero_warden_walk.png",
+      "role": "unchanged live-game source sheet",
+      "sha256": "df15b830540bf53fdbef289da21b1a9747bd0f0c8ba22694bc987058458e145a"
+    },
+    {
+      "file": "warden_leg_inbetweens.png",
+      "role": "OpenAI-generated twelve intermediate full-body drawings; only lower-body regions used by prototype",
+      "sha256": "85e09e40420d7b3adc1a6178f3ba8ec24034dd9e8bc848a3e567a34018a410fa"
+    }
+  ]
+}
