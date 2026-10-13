@@ -25,7 +25,7 @@ static func padded(points: PackedVector2Array) -> PackedVector2Array:
 static func tween(index: int) -> Dictionary:
 	if tweens.is_empty():
 		var data = JSON.parse_string(FileAccess.get_file_as_string("res://tweens.json"))
-		var atlas_size := preload("res://assets/warden_leg_inbetweens.png").get_size()
+		var atlas_size := preload("res://assets/warden_leg_inbetweens_clean.png").get_size()
 		for source in data.frames:
-			tweens.append({"size":Vector2(source.display_size[0],source.display_size[1]),"origin":Vector2(source.origin[0],source.origin[1]),"gear":Vector3(source.gear_center[0],source.gear_center[1],source.gear_radius),"region_uv":Vector4(source.region[0]/atlas_size.x,source.region[1]/atlas_size.y,source.region[2]/atlas_size.x,source.region[3]/atlas_size.y)})
+			tweens.append({"size":Vector2(source.display_size[0],source.display_size[1]),"origin":Vector2(source.origin[0],source.origin[1]),"region_uv":Vector4(source.region[0]/atlas_size.x,source.region[1]/atlas_size.y,source.region[2]/atlas_size.x,source.region[3]/atlas_size.y)})
 	return tweens[index%12]

@@ -1,6 +1,6 @@
 # Warden walking frame pack
 
-Review prototype: sixteen transparent candidate PNGs, plus four original baseline PNGs. Twelve new leg drawings fill the transitions; the original upper-body sequence and protected weapon/hand pixels are retained. Leg/cloth seams still need visual review and artist cleanup before a live-game port.
+Cleaned review prototype: sixteen transparent candidate PNGs, plus four original baseline PNGs. Twelve new leg drawings fill the transitions; the original upper-body sequence and protected weapon/hand pixels are retained. The cleanup repairs clipped toe tips and mixed leg/cloth overlaps. Minor plate/cloth joins still need visual review before a live-game port.
 
 - Candidate sequence: `frame_00.png` through `frame_15.png`, played at 24 fps.
 - Original key poses: indices 0, 4, 8 and 12. One cycle lasts 2/3 second.

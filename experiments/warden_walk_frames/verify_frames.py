@@ -36,11 +36,20 @@ for group in range(4):
         candidate = np.asarray(Image.open(directory / f'frame_{group*4+step:02d}.png').convert('RGBA'))
         assert candidate.shape == original.shape
         assert np.array_equal(candidate[:275], original[:275]), f'Upper body changed in pose {group*4+step}'
+        assert np.array_equal(candidate[:305], original[:305]), f'Hip-plate join changed in pose {group*4+step}'
         assert np.array_equal(candidate[protected_gear], original[protected_gear]), f'Weapon/hand protection changed in pose {group*4+step}'
         if step == 0:
             assert np.array_equal(candidate, original), f'Original key pose changed in pose {group*4}'
 
 source = Path(__file__).parent / 'godot/assets'
 manifest = json.loads((source.parent / 'tweens.json').read_text())
-assert hashlib.sha256((source / 'warden_leg_inbetweens.png').read_bytes()).hexdigest() == manifest['source_sha256']
-print('WARDEN_FRAMES_OK: 16 poses, exact upper pixels, protected weapon/hands, original key poses, generated-source hash')
+assert hashlib.sha256((source / manifest['source_file']).read_bytes()).hexdigest() == manifest['source_sha256']
+sheet = np.asarray(Image.open(source / manifest['source_file']).convert('RGBA'))
+for index, frame in enumerate(manifest['frames']):
+    x, y, w, h = frame['region']
+    # Atlas capes/neighbor toe tips can cross nominal grid lines. Measured
+    # regions include a right margin; inspect forward toes in the bottom 20%.
+    lower = sheet[y+int(h*.8):y+h, x:x+w, 3]
+    assert not np.any(lower[:, -1] > 40), f'Boot silhouette clipped at source cell edge {index}'
+    assert not np.any(lower[-1] > 40), f'Boot silhouette clipped at source cell bottom {index}'
+print('WARDEN_FRAMES_OK: 16 poses, exact upper pixels, protected weapon/hands, original key poses, generated-source hash, unclipped source boots')

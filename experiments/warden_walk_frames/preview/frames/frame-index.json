@@ -37,5 +37,6 @@
   "fps": 24,
   "cycle_seconds": 0.6666666666666666,
   "upper_sequence_fps": 6,
-  "notes": "Review candidate. Source upper poses and protected weapon pixels retained. New leg pixels and overlaps require visual acceptance before port."
+  "notes": "Review candidate. Source upper poses and protected weapon pixels retained. New leg pixels and overlaps require visual acceptance before port.",
+  "cleanup": "Whole leg/cloth replacement from cleaned lower-weapon-free source; forward toe tips repaired; original upper and gear preserved."
 }

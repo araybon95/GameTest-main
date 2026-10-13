@@ -26,7 +26,7 @@ func set_phase(value: float) -> void:
 	var tween: Dictionary = DATA.tween(first*3+maxi(0,substep-1))
 	var material: ShaderMaterial = image.material
 	material.set_shader_parameter("atlas",preload("res://assets/hero_warden_walk.png"))
-	material.set_shader_parameter("tweens",preload("res://assets/warden_leg_inbetweens.png"))
+	material.set_shader_parameter("tweens",preload("res://assets/warden_leg_inbetweens_clean.png"))
 	material.set_shader_parameter("canvas_size",size)
 	material.set_shader_parameter("root_point",Vector2(305,420))
 	material.set_shader_parameter("region",a.region_uv)
@@ -34,8 +34,6 @@ func set_phase(value: float) -> void:
 	material.set_shader_parameter("tween_region",tween.region_uv)
 	material.set_shader_parameter("tween_size",tween.size)
 	material.set_shader_parameter("tween_origin",tween.origin)
-	material.set_shader_parameter("tween_gear",tween.gear)
-	material.set_shader_parameter("original_hand",a.hand)
 	material.set_shader_parameter("improved",improved and substep > 0)
 	for key in ["near","far","gear","shaft"]:
 		material.set_shader_parameter(key+"_mask",DATA.padded(a[key+"_mask"]))

@@ -12,6 +12,11 @@
       "file": "warden_leg_inbetweens.png",
       "role": "OpenAI-generated twelve intermediate full-body drawings; only lower-body regions used by prototype",
       "sha256": "85e09e40420d7b3adc1a6178f3ba8ec24034dd9e8bc848a3e567a34018a410fa"
+    },
+    {
+      "file": "warden_leg_inbetweens_clean.png",
+      "role": "AI cleanup of intermediate sheet: leg/cloth contours cleaned and lower weapons removed; upper body rendered from original source",
+      "sha256": "f30b4a83823ea0b9b37ff7bc42a27ceb79cafec5241179eab152e5b27e2812ef"
     }
   ]
 }
