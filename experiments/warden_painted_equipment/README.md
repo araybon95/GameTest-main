@@ -1,5 +1,36 @@
 # Warden painted movement and equipment
 
+## Complete painted character trial — latest
+
+![Earlier layered character and complete painted character](preview/complete-painted-stride.gif)
+
+[Native 30 fps video](preview/complete-painted-stride.mp4)
+
+The latest viewer compares the earlier layered character on the left with one
+complete painted character on the right. Every new walking frame includes the
+helmet, neck wrap, cloak, armor, arms and legs in a single image. Both the shield
+and mace are absent during walking; combat idle and attack use complete armed
+images. There are no independently fitted helmet, cloak or equipment nodes in
+the new actor. Idle retains subtle breathing.
+
+The approved sheet supplied the pose reference for a new image-tool edit. It
+keeps ten walking poses and the original 0.84-second loop, but the regenerated
+art can vary in detail. A whole-image scale/ground registration keeps the
+character size consistent; no separate body parts are warped or attached.
+
+The default scene is `godot/complete_lab.tscn`. Run `complete_smoke.gd` headlessly
+to check that there is exactly one character image node, all ten travel frames,
+grounding, facing, loop timing and transitions to/from armed combat images.
+
+This first whole-outfit pass is the original Warden set with a fixed painted
+mace/shield in combat. Weapon swaps, the complete reward set and real boss
+unlock integration are not implemented in this renderer. Earlier labs remain
+available for reference, but their modular movement is not used on the right.
+
+```sh
+godot --headless --path experiments/warden_painted_equipment/godot --script res://complete_smoke.gd
+```
+
 ## Weapon-free stride polish
 
 The latest trial keeps the same ten body drawings and 0.84-second stride. It
