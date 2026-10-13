@@ -1,0 +1,249 @@
+{
+  "schema": 1,
+  "prototype_only": true,
+  "normalized_tile": [
+    512,
+    512
+  ],
+  "parts": {
+    "torso": {
+      "sheet": "body_parts.png",
+      "grid": [
+        2,
+        3
+      ],
+      "cell": 0,
+      "anchor": [
+        322,
+        392
+      ],
+      "scale": 0.46
+    },
+    "waist": {
+      "sheet": "body_parts.png",
+      "grid": [
+        2,
+        3
+      ],
+      "cell": 1,
+      "anchor": [
+        288,
+        135
+      ],
+      "scale": 0.25
+    },
+    "near_thigh": {
+      "sheet": "body_parts.png",
+      "grid": [
+        2,
+        3
+      ],
+      "cell": 2,
+      "anchor": [
+        315,
+        58
+      ],
+      "end": [
+        275,
+        410
+      ]
+    },
+    "far_thigh": {
+      "sheet": "body_parts.png",
+      "grid": [
+        2,
+        3
+      ],
+      "cell": 3,
+      "anchor": [
+        222,
+        60
+      ],
+      "end": [
+        285,
+        420
+      ]
+    },
+    "near_shin": {
+      "sheet": "body_parts.png",
+      "grid": [
+        2,
+        3
+      ],
+      "cell": 4,
+      "anchor": [
+        295,
+        58
+      ],
+      "end": [
+        270,
+        455
+      ]
+    },
+    "far_shin": {
+      "sheet": "body_parts.png",
+      "grid": [
+        2,
+        3
+      ],
+      "cell": 5,
+      "anchor": [
+        242,
+        60
+      ],
+      "end": [
+        250,
+        435
+      ]
+    },
+    "near_arm": {
+      "sheet": "arm_parts.png",
+      "grid": [
+        2,
+        2
+      ],
+      "cell": 0,
+      "anchor": [
+        315,
+        95
+      ],
+      "end": [
+        267,
+        420
+      ]
+    },
+    "near_forearm": {
+      "sheet": "arm_parts.png",
+      "grid": [
+        2,
+        2
+      ],
+      "cell": 1,
+      "anchor": [
+        210,
+        70
+      ],
+      "end": [
+        294,
+        426
+      ]
+    },
+    "far_arm": {
+      "sheet": "arm_parts.png",
+      "grid": [
+        2,
+        2
+      ],
+      "cell": 2,
+      "anchor": [
+        315,
+        95
+      ],
+      "end": [
+        267,
+        420
+      ]
+    },
+    "far_forearm": {
+      "sheet": "arm_parts.png",
+      "grid": [
+        2,
+        2
+      ],
+      "cell": 3,
+      "anchor": [
+        210,
+        70
+      ],
+      "end": [
+        294,
+        426
+      ]
+    },
+    "shield": {
+      "sheet": "gear_parts.png",
+      "grid": [
+        2,
+        2
+      ],
+      "cell": 0,
+      "anchor": [
+        280,
+        160
+      ],
+      "scale": 0.38
+    },
+    "sword": {
+      "sheet": "gear_parts.png",
+      "grid": [
+        2,
+        2
+      ],
+      "cell": 1,
+      "anchor": [
+        256,
+        425
+      ],
+      "scale": 0.33
+    },
+    "axe": {
+      "sheet": "gear_parts.png",
+      "grid": [
+        2,
+        2
+      ],
+      "cell": 2,
+      "anchor": [
+        288,
+        400
+      ],
+      "scale": 0.33
+    },
+    "mace": {
+      "sheet": "gear_parts.png",
+      "grid": [
+        2,
+        2
+      ],
+      "cell": 3,
+      "anchor": [
+        256,
+        415
+      ],
+      "scale": 0.33
+    }
+  },
+  "sockets": {
+    "neck": [
+      26,
+      -140
+    ],
+    "near_shoulder": [
+      -48,
+      -132
+    ],
+    "far_shoulder": [
+      47,
+      -125
+    ],
+    "brooch": [
+      5,
+      -128
+    ]
+  },
+  "lengths": {
+    "thigh": 100,
+    "shin": 112,
+    "upper_arm": 65,
+    "forearm": 70
+  },
+  "cloth_reference": {
+    "scale": 0.34,
+    "source_origin": [
+      794,
+      570
+    ],
+    "alignment": "alignment.json"
+  },
+  "notes": "Sprite pixels preserved; endpoint registration rotates art into each joint's downward rest axis. Lower legs include boots; sole-contact cleanup remains an artist review task."
+}

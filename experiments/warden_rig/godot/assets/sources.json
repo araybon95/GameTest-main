@@ -1,0 +1,128 @@
+{
+  "schema": 1,
+  "prototype_only": true,
+  "reference_commit": "cbab089",
+  "images": [
+    {
+      "file": "arm_parts.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "sha256": "c5658d4f61787390edcb099fad66b700ce2003c099587fa08e79f81d39543ca4",
+      "source": "OpenAI generated articulated cutout atlas; original output preserved",
+      "active": true
+    },
+    {
+      "file": "body_parts.png",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "4f092cd485d82748d7ced4a85b600546ed0792a4d351b174b293cd9b9c5fc8ec",
+      "source": "OpenAI generated articulated cutout atlas; original output preserved",
+      "active": true
+    },
+    {
+      "file": "collar.png",
+      "dimensions": [
+        1130,
+        1392
+      ],
+      "mode": "RGBA",
+      "sha256": "8c435dfcf95abb1523e75ee697f83ec0e7a602a7f6bbec90a553b2fc9bb625c5",
+      "source": "unchanged reference copy from repository commit cbab089",
+      "active": true
+    },
+    {
+      "file": "collar_crown.png",
+      "dimensions": [
+        1130,
+        1392
+      ],
+      "mode": "RGBA",
+      "sha256": "96a20baa5e074e2d148045884ef50dc7804c1d59a1c8e6299dc58403ad5dcea7",
+      "source": "unchanged reference copy from repository commit cbab089",
+      "active": true
+    },
+    {
+      "file": "components.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "d1c58f3723d1ee4efda0df2aab8659824c8a76ec2272574ffcde230d3d7fc38f",
+      "source": "unchanged reference copy from repository commit cbab089",
+      "active": true
+    },
+    {
+      "file": "corridor.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "mode": "RGB",
+      "sha256": "9f92a4ff42812cdbad373ab5a74a1ec95ba11fd0745b9fbd583378b8133b34f5",
+      "source": "unchanged reference copy from repository commit cbab089",
+      "active": true
+    },
+    {
+      "file": "corrupted_warhelm.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "sha256": "db5691aca86269341d1a95e37e8b6e953666ea95356ebd06b282a73cbc207065",
+      "source": "unchanged reference copy from repository commit cbab089",
+      "active": true
+    },
+    {
+      "file": "gear_parts.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "sha256": "45aa5b875de9569932f1f829b8ae2f28d1c92e3a954a53b476583fbd29fc34c2",
+      "source": "OpenAI generated articulated cutout atlas; original output preserved",
+      "active": true
+    },
+    {
+      "file": "original.png",
+      "dimensions": [
+        1247,
+        1261
+      ],
+      "mode": "RGBA",
+      "sha256": "a201a98ae843d41becf4922e9df6ac216ce5481e238ed61ed782bebfd0e99ae9",
+      "source": "unchanged reference copy from repository commit cbab089",
+      "active": false
+    },
+    {
+      "file": "rear_cloak.png",
+      "dimensions": [
+        1247,
+        1261
+      ],
+      "mode": "RGBA",
+      "sha256": "3659d5c1351a3880e7b48140009f09b4aa34a2c0829de4ce74b115870842801f",
+      "source": "unchanged reference copy from repository commit cbab089",
+      "active": true
+    },
+    {
+      "file": "rear_cloak_crown.png",
+      "dimensions": [
+        1247,
+        1261
+      ],
+      "mode": "RGBA",
+      "sha256": "df9726ab4ff116182c2ca914e9009ee025474db2df75005e97653f148d499017",
+      "source": "unchanged reference copy from repository commit cbab089",
+      "active": true
+    }
+  ]
+}
