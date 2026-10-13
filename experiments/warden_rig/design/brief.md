@@ -17,3 +17,7 @@ The supplied pose sheet, raised two-hand sword combat stance, and three-position
 Compare static combat and walking key poses at equal character height before tuning motion. Prioritize the supplied reference shapes over preserving the proportions of the current generated cutouts; rebuild artwork when fitting alone cannot reproduce those shapes. Preserve swappable equipment and isolated prototype scope.
 
 The three-position walking image establishes visible pose targets; it does not by itself establish frame timing or the original animation rig. Distinguish observed details from inferred in-between motion. Show reference comparisons for visual review and do not claim an exact match solely because smoke tests pass. The source references were supplied in chat; this note does not imply their original image files have been archived in the repository.
+
+## Spine desktop authoring handoff
+
+The user accepted a shared Spine workflow and reports the latest standard edition. `spine_handoff/` supplies separate source-region PNGs and a basic-bone Spine 4.3 JSON starter. The user imports/saves and authors the final poses/animations in their licensed desktop editor; exported JSON, atlas/pages and editable project return for a later isolated Godot integration. The handoff's current art is still replaceable blockout, with the supplied references retaining priority. No live-game Spine dependency is introduced here.

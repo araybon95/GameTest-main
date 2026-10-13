@@ -70,3 +70,9 @@ godot --path experiments/warden_rig/godot --script res://capture.gd -- /tmp/ward
 godot --path experiments/warden_rig/godot --script res://capture.gd -- /tmp/warden-rig-movie movie
 ffmpeg -framerate 30 -i /tmp/warden-rig-movie/frame_%04d.png -c:v libx264 -crf 20 -pix_fmt yuv420p -movflags +faststart /tmp/articulated-warden.mp4
 ```
+
+## Spine desktop handoff
+
+[Download the Spine handoff ZIP](preview/warden-spine-handoff.zip) · [Import guide](spine_handoff/README.md) · [Setup preview](preview/spine-setup.png)
+
+The basic-bone Spine 4.3 starter includes 24 separate, lossless source-region PNGs, 20 bones, independent equipment attachments, pivot/provenance metadata, and a small idle blockout. The official Spine runtime verifies setup coordinates and attachment corners; no Spine runtime has been installed in the game. Import/save and final reference-matching animation must be checked in the user's desktop editor. This is the current replaceable Warden artwork, not an accepted reference match.

@@ -1,0 +1,439 @@
+{
+	"schema": 1,
+	"prototype_only": true,
+	"art_status": "existing replaceable blockout; not an accepted reference match",
+	"images": [
+		{
+			"path": "body/far_thigh",
+			"width": 239.0,
+			"height": 397.0,
+			"pivot_pixels": [
+				121.999969482422,
+				64.0
+			],
+			"source_file": "body_parts.png",
+			"source_region": [
+				142.0,
+				464.0,
+				239.0,
+				397.0
+			],
+			"source_sha256": "4d10026f8173b64df52649b1b5e5146f1e27b921f6c3915af3eacf392cbbc8a4",
+			"sha256": "95d60f6f0bc7b403840ae33c02592e94e07b0c7604cc698d0ccce4c9e0dda633"
+		},
+		{
+			"path": "body/far_shin",
+			"width": 193.0,
+			"height": 408.0,
+			"pivot_pixels": [
+				96.9999923706055,
+				75.9999694824219
+			],
+			"source_file": "body_parts.png",
+			"source_region": [
+				902.0,
+				451.0,
+				193.0,
+				408.0
+			],
+			"source_sha256": "4d10026f8173b64df52649b1b5e5146f1e27b921f6c3915af3eacf392cbbc8a4",
+			"sha256": "b7f6b7d3b40f9587d40d3491771a55c8929bb9afa3dfb88cb47a0b1f58ef52a5"
+		},
+		{
+			"path": "body/far_boot",
+			"width": 325.0,
+			"height": 232.0,
+			"pivot_pixels": [
+				111.000015258789,
+				52.0000152587891
+			],
+			"source_file": "body_parts.png",
+			"source_region": [
+				495.0,
+				952.0,
+				325.0,
+				232.0
+			],
+			"source_sha256": "4d10026f8173b64df52649b1b5e5146f1e27b921f6c3915af3eacf392cbbc8a4",
+			"sha256": "c35c88238df11088518eab1ce8016994bb3621c252f48252fa88e68ec828ce9a"
+		},
+		{
+			"path": "body/far_upper_arm",
+			"width": 270.0,
+			"height": 526.0,
+			"pivot_pixels": [
+				124.0,
+				114.0
+			],
+			"source_file": "arm_parts.png",
+			"source_region": [
+				241.0,
+				644.0,
+				270.0,
+				526.0
+			],
+			"source_sha256": "94f04aeea4de83d0d38585a82a50f103c4086d083dee406fae32925f668f3d14",
+			"sha256": "ccd59cfa45219e86c30100510d1249d9fffcdafdcb0b542c566791c969cd804b"
+		},
+		{
+			"path": "body/far_forearm",
+			"width": 348.0,
+			"height": 574.0,
+			"pivot_pixels": [
+				97.0,
+				100.999877929688
+			],
+			"source_file": "arm_parts.png",
+			"source_region": [
+				743.0,
+				640.0,
+				348.0,
+				574.0
+			],
+			"source_sha256": "94f04aeea4de83d0d38585a82a50f103c4086d083dee406fae32925f668f3d14",
+			"sha256": "a50fe7cc86b7250cd7e230ec58fac4849dc3098eb72849f7e7a9e9c82285c5e5"
+		},
+		{
+			"path": "body/near_thigh",
+			"width": 236.0,
+			"height": 414.0,
+			"pivot_pixels": [
+				125.999984741211,
+				80.0
+			],
+			"source_file": "body_parts.png",
+			"source_region": [
+				905.0,
+				28.0,
+				236.0,
+				414.0
+			],
+			"source_sha256": "4d10026f8173b64df52649b1b5e5146f1e27b921f6c3915af3eacf392cbbc8a4",
+			"sha256": "c5769b5d492ec38c99d48ed0dd590d11ab06c4cfa8865fbb6675d63fb0470493"
+		},
+		{
+			"path": "body/near_shin",
+			"width": 205.0,
+			"height": 416.0,
+			"pivot_pixels": [
+				92.0,
+				79.0
+			],
+			"source_file": "body_parts.png",
+			"source_region": [
+				545.0,
+				451.0,
+				205.0,
+				416.0
+			],
+			"source_sha256": "4d10026f8173b64df52649b1b5e5146f1e27b921f6c3915af3eacf392cbbc8a4",
+			"sha256": "c7d52d80c5c4965d909b5531214c4d38c4e88a3926cbc50b72f36c50841f869f"
+		},
+		{
+			"path": "body/near_boot",
+			"width": 315.0,
+			"height": 232.0,
+			"pivot_pixels": [
+				107.000015258789,
+				52.0000152587891
+			],
+			"source_file": "body_parts.png",
+			"source_region": [
+				111.0,
+				952.0,
+				315.0,
+				232.0
+			],
+			"source_sha256": "4d10026f8173b64df52649b1b5e5146f1e27b921f6c3915af3eacf392cbbc8a4",
+			"sha256": "00fedc9babe3605f11205c2dcd5d4d5ece7b813035107d72f7eac4e7aa0aa9b2"
+		},
+		{
+			"path": "body/near_upper_arm",
+			"width": 322.0,
+			"height": 547.0,
+			"pivot_pixels": [
+				147.0,
+				117.0
+			],
+			"source_file": "arm_parts.png",
+			"source_region": [
+				218.0,
+				38.0,
+				322.0,
+				547.0
+			],
+			"source_sha256": "94f04aeea4de83d0d38585a82a50f103c4086d083dee406fae32925f668f3d14",
+			"sha256": "0859e86fe8c9fd1ca1175401d77061aa70c21be559a8597d17f7d4f14634a720"
+		},
+		{
+			"path": "body/near_forearm",
+			"width": 346.0,
+			"height": 585.0,
+			"pivot_pixels": [
+				112.0,
+				107.0
+			],
+			"source_file": "arm_parts.png",
+			"source_region": [
+				738.0,
+				38.0,
+				346.0,
+				585.0
+			],
+			"source_sha256": "94f04aeea4de83d0d38585a82a50f103c4086d083dee406fae32925f668f3d14",
+			"sha256": "2a9f1846e8b05bcc4eef10df55b8861789855e2505adc2432603f012a2ec88ff"
+		},
+		{
+			"path": "body/torso",
+			"width": 300.0,
+			"height": 443.0,
+			"pivot_pixels": [
+				165.000015258789,
+				325.000030517578
+			],
+			"source_file": "body_parts.png",
+			"source_region": [
+				125.0,
+				20.0,
+				300.0,
+				443.0
+			],
+			"source_sha256": "4d10026f8173b64df52649b1b5e5146f1e27b921f6c3915af3eacf392cbbc8a4",
+			"sha256": "f2f72d04d5db13d883997bdbda2f6b8f0ee944dbcb4d5f92c28bb8de17a11eb6"
+		},
+		{
+			"path": "body/waist",
+			"width": 365.0,
+			"height": 345.0,
+			"pivot_pixels": [
+				184.0,
+				65.0
+			],
+			"source_file": "body_parts.png",
+			"source_region": [
+				467.0,
+				86.0,
+				365.0,
+				345.0
+			],
+			"source_sha256": "4d10026f8173b64df52649b1b5e5146f1e27b921f6c3915af3eacf392cbbc8a4",
+			"sha256": "8b0702c3316e66878bd2c019e2d644e6b0418f25075b3a1a8f8b8773aac78d16"
+		},
+		{
+			"path": "gear/shield",
+			"width": 627.0,
+			"height": 627.0,
+			"pivot_pixels": [
+				342.890655517578,
+				195.937561035156
+			],
+			"source_file": "gear_parts.png",
+			"source_region": [
+				0.0,
+				0.0,
+				627.0,
+				627.0
+			],
+			"source_sha256": "45aa5b875de9569932f1f829b8ae2f28d1c92e3a954a53b476583fbd29fc34c2",
+			"sha256": "c3da6065228c7f8ad791350dfd0c2ecc48b9b3180b280b6ddef92b2bccaef869"
+		},
+		{
+			"path": "gear/sword",
+			"width": 627.0,
+			"height": 627.0,
+			"pivot_pixels": [
+				313.499969482422,
+				520.458984375
+			],
+			"source_file": "gear_parts.png",
+			"source_region": [
+				627.0,
+				0.0,
+				627.0,
+				627.0
+			],
+			"source_sha256": "45aa5b875de9569932f1f829b8ae2f28d1c92e3a954a53b476583fbd29fc34c2",
+			"sha256": "3997b44ef335b5b041d4527e6c2a8c2e28ac9466a3c47181daaa63b188ec54fe"
+		},
+		{
+			"path": "gear/axe",
+			"width": 627.0,
+			"height": 627.0,
+			"pivot_pixels": [
+				352.687469482422,
+				489.84375
+			],
+			"source_file": "gear_parts.png",
+			"source_region": [
+				0.0,
+				627.0,
+				627.0,
+				627.0
+			],
+			"source_sha256": "45aa5b875de9569932f1f829b8ae2f28d1c92e3a954a53b476583fbd29fc34c2",
+			"sha256": "13ccafadb83708b5cce11779e7a4dad852a8fed03109e728236e87f3a0e80b52"
+		},
+		{
+			"path": "gear/mace",
+			"width": 627.0,
+			"height": 627.0,
+			"pivot_pixels": [
+				313.499969482422,
+				508.212890625
+			],
+			"source_file": "gear_parts.png",
+			"source_region": [
+				627.0,
+				627.0,
+				627.0,
+				627.0
+			],
+			"source_sha256": "45aa5b875de9569932f1f829b8ae2f28d1c92e3a954a53b476583fbd29fc34c2",
+			"sha256": "7f9d81d490a9b1bfef90773d236d9c950e113e2c73466307c1d2a40edaece85c"
+		},
+		{
+			"path": "cosmetics/greathelm",
+			"width": 512.0,
+			"height": 512.0,
+			"pivot_pixels": [
+				279.999969482422,
+				470.0
+			],
+			"source_file": "components.png",
+			"source_region": [
+				0,
+				0,
+				512.0,
+				512.0
+			],
+			"source_sha256": "d1c58f3723d1ee4efda0df2aab8659824c8a76ec2272574ffcde230d3d7fc38f",
+			"sha256": "313022eabb650b167244efc371e85e0bdce08da579a003c8d8fb145176b06629"
+		},
+		{
+			"path": "cosmetics/wolf_warhelm",
+			"width": 1254.0,
+			"height": 1254.0,
+			"pivot_pixels": [
+				685.78125,
+				1151.1328125
+			],
+			"source_file": "corrupted_warhelm.png",
+			"source_region": [
+				0,
+				0,
+				1254.0,
+				1254.0
+			],
+			"source_sha256": "db5691aca86269341d1a95e37e8b6e953666ea95356ebd06b282a73cbc207065",
+			"sha256": "232f931319876e46c4a254bbe1b8bffde9770560855a777cfda69d9a151fc5e8"
+		},
+		{
+			"path": "cosmetics/cape_oxblood",
+			"width": 1247.0,
+			"height": 1261.0,
+			"pivot_pixels": [
+				895.790893554688,
+				169.863403320312
+			],
+			"source_file": "rear_cloak.png",
+			"source_region": [
+				0,
+				0,
+				1247.0,
+				1261.0
+			],
+			"source_sha256": "3659d5c1351a3880e7b48140009f09b4aa34a2c0829de4ce74b115870842801f",
+			"sha256": "173b89234e63552b79e7b7a7de4b085134b95e96a68a2a44928e85dfd7429082"
+		},
+		{
+			"path": "cosmetics/scarf_oxblood",
+			"width": 1130.0,
+			"height": 1392.0,
+			"pivot_pixels": [
+				892.048522949219,
+				245.516418457031
+			],
+			"source_file": "collar.png",
+			"source_region": [
+				0,
+				0,
+				1130.0,
+				1392.0
+			],
+			"source_sha256": "8c435dfcf95abb1523e75ee697f83ec0e7a602a7f6bbec90a553b2fc9bb625c5",
+			"sha256": "dcb6a52798828302a4568a7f547b0f452e1ff8a2a60b7fcacdf8b90dfac1e2e1"
+		},
+		{
+			"path": "cosmetics/clasp_iron",
+			"width": 512.0,
+			"height": 512.0,
+			"pivot_pixels": [
+				256.0,
+				1602.66674804688
+			],
+			"source_file": "components.png",
+			"source_region": [
+				1024,
+				0,
+				512,
+				512
+			],
+			"source_sha256": "d1c58f3723d1ee4efda0df2aab8659824c8a76ec2272574ffcde230d3d7fc38f",
+			"sha256": "df66d673ec8877306fa2b183dafad8b1edc3effa4bb0fd611d996f35f8f58964"
+		},
+		{
+			"path": "cosmetics/cape_ash_grey",
+			"width": 1247.0,
+			"height": 1261.0,
+			"pivot_pixels": [
+				895.790893554688,
+				169.863403320312
+			],
+			"source_file": "rear_cloak_crown.png",
+			"source_region": [
+				0,
+				0,
+				1247.0,
+				1261.0
+			],
+			"source_sha256": "df9726ab4ff116182c2ca914e9009ee025474db2df75005e97653f148d499017",
+			"sha256": "115ceddc150d8075a72c4cb95922b2bc9c4cf32c6f8ed85d42dd1d57d7e3c7be"
+		},
+		{
+			"path": "cosmetics/scarf_ash_grey",
+			"width": 1130.0,
+			"height": 1392.0,
+			"pivot_pixels": [
+				892.048522949219,
+				245.516418457031
+			],
+			"source_file": "collar_crown.png",
+			"source_region": [
+				0,
+				0,
+				1130.0,
+				1392.0
+			],
+			"source_sha256": "96a20baa5e074e2d148045884ef50dc7804c1d59a1c8e6299dc58403ad5dcea7",
+			"sha256": "5ff9d5480c93d478c4443c5ffcb6ddd21fbd6d486e5bcd3ba46cd17663767308"
+		},
+		{
+			"path": "cosmetics/clasp_gold",
+			"width": 512.0,
+			"height": 512.0,
+			"pivot_pixels": [
+				256.0,
+				1602.66674804688
+			],
+			"source_file": "components.png",
+			"source_region": [
+				0,
+				512,
+				512,
+				512
+			],
+			"source_sha256": "d1c58f3723d1ee4efda0df2aab8659824c8a76ec2272574ffcde230d3d7fc38f",
+			"sha256": "f22b25ef1eec5c27225862d7ecd7cc1231c48152dc23187b156f0c78bca8f067"
+		}
+	]
+}
