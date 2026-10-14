@@ -23,3 +23,7 @@ The previews show the actual game scenes, using deterministic test save data.
 The source atlases are copied unchanged from the approved experiment.
 The walking preview is captured at 25 fps to preserve every stride pose.
 Per-frame body scaling matches the approved experiment while keeping feet planted.
+
+Walking poses use measured horizontal helm anchors so the complete character
+does not jump sideways between source frames. The anchors mirror when facing
+left; feet stay on the existing ground line.

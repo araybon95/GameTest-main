@@ -52,6 +52,17 @@ func run() -> void:
 	var clock: float = travel.warden_clock
 	travel._process(0.084)
 	assert(travel.warden_clock > clock, "Moving advances the painted stride")
+	for left in [false,true]:
+		travel.facing_left = left
+		for phase in range(10):
+			travel.warden_clock = (phase+0.1)*0.084
+			travel.update_walkers()
+			for picture in travel.walkers:
+				if picture.get_meta("walker") != "warden": continue
+				var anchor: float = picture.texture.get_meta("stride_anchor")
+				if left: anchor = 1.0-anchor
+				var index: int = travel.walkers.find(picture)
+				assert(absf(picture.position.x+picture.size.x*anchor-travel.bases[index].x) < 0.01,"Body anchor remains steady in both directions")
 	travel.set_walking(false)
 	clock = travel.warden_clock
 	travel._process(0.2)
@@ -80,6 +91,9 @@ func run() -> void:
 		for index in range(2,12):
 			var scaled_height: float = (catalog.GROUNDS[outfit][index]-catalog.HEAD_TOPS[outfit][index])*catalog.frame(outfit,index).get_meta("stride_scale")
 			assert(absf(scaled_height-(catalog.GROUNDS[outfit][0]-catalog.HEAD_TOPS[outfit][0])) < 0.01,"Stride preserves approved body scale")
+	for outfit in ["original","ashen_wolf"]:
+		for frame in preload("res://scripts/warden_outfits.gd").walks(outfit):
+			assert(frame.has_meta("stride_anchor"),"Walking frames need a body anchor, not rectangle centering")
 	var screen = load("res://scenes/hub/customization.tscn").instantiate()
 	root.add_child(screen)
 	await process_frame

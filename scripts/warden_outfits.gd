@@ -9,6 +9,12 @@ const HEAD_TOPS = {
 	"original": [40,62,50,52,10,9,12,13,5,5,7,8],
 	"ashen_wolf": [42,55,47,47,7,9,8,10,5,6,7,6],
 }
+## Helmet registration measured from the opaque upper-helm band in each pose.
+## Keeps the complete illustration aligned without splitting equipment layers.
+const WALK_ANCHORS = {
+	"original": [217.0,227.53,219.63,224.98,218.75,232.38,218.83,213.36,222.01,228.16],
+	"ashen_wolf": [214.95,238.44,218.58,227.88,217.86,240.48,218.08,212.85,213.51,235.53],
+}
 static var cache: Dictionary = {}
 static func supported(outfit: String) -> bool: return GROUNDS.has(outfit)
 static func unlocked(completed: Array) -> bool: return completed.has("old_road")
@@ -32,6 +38,7 @@ static func frame(outfit: String, index: int) -> Texture2D:
 	texture.set_meta("warden_outfit",outfit)
 	texture.set_meta("idle_pixel_height",400)
 	texture.set_meta("travel_unarmed",index >= 2)
+	if index >= 2: texture.set_meta("stride_anchor",(WALK_ANCHORS[outfit][index-2]+(380-width)/2)/380.0)
 	texture.set_meta("stride_scale",float(GROUNDS[outfit][0]-HEAD_TOPS[outfit][0])/float(GROUNDS[outfit][index]-HEAD_TOPS[outfit][index]) if index >= 2 else 1.0)
 	cache[key] = texture
 	return texture

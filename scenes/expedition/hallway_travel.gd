@@ -622,7 +622,9 @@ func update_walkers() -> void:
   picture.flip_h = facing_left
   picture.size = Vector2(width,height)
   picture.pivot_offset = Vector2(width*0.5,height)
-  picture.position = bases[index]-Vector2(width*0.5,height)
+  var anchor: float = float(texture.get_meta("stride_anchor",0.5))
+  if facing_left: anchor = 1.0-anchor
+  picture.position = bases[index]-Vector2(width*anchor,height)
   picture.rotation = 0.0
   ActorMotion.update(picture,actor_clock,animation_clock*3.5*PI,actor_walking,enabled and not (id == "warden" and costume_for_warden(id)))
 
