@@ -5,6 +5,16 @@ func _initialize() -> void:
   quit(1)
   return
  var stage = load("res://showcase.gd").new()
+ if not stage.has_method("blood_particles"):
+  push_error("Contact blood effects are missing")
+  quit(1)
+  return
+ for skill in ["slash","heavy","bash"]:
+  assert(stage.blood_particles(skill,stage.TIMINGS[skill].impact-0.01).is_empty(),"Blood must not appear before the hit")
+  assert(stage.blood_particles(skill,stage.TIMINGS[skill].impact+0.06).size() > 0,"Blood must appear at contact")
+  assert(stage.blood_particles(skill,2.9).is_empty(),"Blood must clear before the next attack")
+  assert(stage.blood_particles(skill,stage.TIMINGS[skill].impact+0.06,false).is_empty(),"Reduced motion must suppress flying droplets")
+ assert(stage.blood_particles("heavy",0.74).size() > stage.blood_particles("bash",0.49).size(),"Heavy hits must have a larger burst than shield impacts")
  var used: Array = []
  for skill in ["slash","heavy","bash"]:
   var windup: Dictionary = stage.sample(skill,0.1)
@@ -21,6 +31,14 @@ func _initialize() -> void:
  var quiet: Dictionary = stage.sample("heavy",0.7,false)
  assert(quiet.zoom == 1.0 and quiet.source_shift == 0.0 and quiet.target_shift == 0.0,"Reduced motion must preserve isolated static staging")
  stage.load_assets()
+ var blood := Image.create(800,540,false,Image.FORMAT_RGBA8)
+ stage.draw_blood(blood,"heavy",0.67,true)
+ assert(not blood.get_used_rect().has_area(),"Rendered blood must wait for impact")
+ stage.draw_blood(blood,"heavy",0.82,true)
+ assert(blood.get_used_rect().has_area() and blood.get_used_rect().end.y <= 412,"Rendered blood must be visible and remain above the HUD")
+ var cleared := Image.create(800,540,false,Image.FORMAT_RGBA8)
+ stage.draw_blood(cleared,"heavy",2.9,true)
+ assert(not cleared.get_used_rect().has_area(),"Rendered blood and floor stains must clear between attacks")
  assert(stage.poses.size() == 9 and stage.enemy != null,"All showcased assets must load")
  for time in [0.2,0.3,0.47,0.68]:
   var framing: Dictionary = stage.sample("heavy",time)
@@ -32,5 +50,5 @@ func _initialize() -> void:
  assert(first.get_region(Rect2i(0,420,800,120)).get_data() == impact.get_region(Rect2i(0,420,800,120)).get_data(),"Camera must never move or scale the HUD")
  assert(first.get_region(Rect2i(0,0,800,420)).get_data() != impact.get_region(Rect2i(0,0,800,420)).get_data(),"Rendered attacks must have distinct framing and silhouettes")
  stage.free()
- print("PASS: nine distinct attack-phase poses, isolated contact framing, ground anchors and reduced motion")
+ print("PASS: distinct poses, isolated framing, fixed HUD/ground, contact-only blood, heavier spray, fade-out and reduced motion")
  quit()

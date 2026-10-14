@@ -35,6 +35,57 @@ static func sample(skill: String, time: float, animate: bool = true) -> Dictiona
  var recoil: float = timing.recoil*(1.0-recovery) if time >= timing.impact else 0.0
  var index: int = ORDER.find(skill)*3+(0 if phase == "windup" else 1 if phase in ["release","hold"] else 2)
  return {"pose":index,"phase":phase,"zoom":1.0+zoom if animate else 1.0,"source_shift":shift if animate else 0.0,"target_shift":recoil if animate else 0.0,"ground":390.0,"contact":phase == "hold","active":time < timing.duration}
+static func blood_particles(skill: String, time: float, animate: bool = true) -> Array[Dictionary]:
+ var age: float = time-float(TIMINGS[skill].impact)
+ var particles: Array[Dictionary] = []
+ if not animate or age < 0.0 or age > 0.8: return particles
+ var count: int = 26 if skill == "heavy" else 16 if skill == "slash" else 8
+ for i in range(count):
+  var fraction: float = float((i*7)%count)/count
+  var angle: float = lerpf(-2.1,0.4,fraction) if skill == "heavy" else lerpf(-0.95,0.15,fraction) if skill == "slash" else lerpf(-1.6,-0.25,fraction)
+  var speed: float = 95.0+float((i*37)%110)
+  if skill == "bash": speed *= 0.58
+  var velocity: Vector2 = Vector2(cos(angle),sin(angle))*speed
+  var offset: Vector2 = velocity*age+Vector2(0,400.0*age*age)
+  var radius: float = (2.5+float(i%4)*0.8 if skill == "heavy" else 1.5+float(i%3)*0.65 if skill == "slash" else 1.2+float(i%2)*0.6)
+  particles.append({"offset":offset,"tail":(velocity+Vector2(0,800*age)).normalized()*(8.0 if skill == "heavy" else 5.0),"radius":radius,"alpha":1.0-smoothstep(0.34,0.8,age),"chunk":skill == "heavy" and i%6 == 0})
+ return particles
+func blood_stamp(canvas: Image, centre: Vector2, radius: Vector2, color: Color) -> void:
+ for y in range(floori(centre.y-radius.y),ceili(centre.y+radius.y)+1):
+  for x in range(floori(centre.x-radius.x),ceili(centre.x+radius.x)+1):
+   if x < 24 or x >= 776 or y < 48 or y >= 412: continue
+   var distance: float = ((Vector2(x,y)-centre)/radius).length()
+   if distance > 1.0: continue
+   var ink: Color = color
+   ink.a *= 1.0-smoothstep(0.65,1.0,distance)
+   canvas.set_pixel(x,y,canvas.get_pixel(x,y).blend(ink))
+func draw_blood(canvas: Image, skill: String, time: float, animate: bool) -> void:
+ var age: float = time-float(TIMINGS[skill].impact)
+ if age < 0 or age > 1.35: return
+ var hit: Dictionary = sample(skill,TIMINGS[skill].impact,animate)
+ var half_width: float = enemy_hurt.get_width()*0.77*hit.zoom*0.5
+ var target_x: float = clampf(400+(550+hit.target_shift-400)*hit.zoom,24+half_width,776-half_width)
+ var origin := Vector2(target_x-65,280 if skill == "heavy" else 218 if skill == "slash" else 245)
+ if not animate:
+  if age < 0.16: blood_stamp(canvas,origin,Vector2(8,5),Color("#721b2a"))
+  return
+ for particle in blood_particles(skill,time):
+  var point: Vector2 = origin+particle.offset
+  if point.y >= 390: continue
+  var radius: float = particle.radius
+  var color := Color("#681323") if particle.chunk else Color("#922b3a")
+  color.a = particle.alpha*0.92
+  for step in range(4):
+   var tail_point: Vector2 = point-particle.tail*float(step)/3.0
+   blood_stamp(canvas,tail_point,Vector2(radius,radius*0.7)*(1.0-step*0.15),color)
+ # Low, irregular stains linger briefly after the airborne spray.
+ if age > (0.42 if skill == "heavy" else 0.64 if skill == "slash" else 0.72):
+  var fade: float = 1.0-smoothstep(0.75,1.35,age)
+  var size: float = 13.0 if skill == "heavy" else 8.0 if skill == "slash" else 4.0
+  for i in range(4):
+   var color := Color("#5c1420")
+   color.a = fade*0.8
+   blood_stamp(canvas,Vector2(origin.x+12+i*11,393+(i%2)*2),Vector2(size*(1.0-i*0.14),2.5+(i%2)),color)
 func load_assets() -> void:
  if not poses.is_empty(): return
  var sheet: Image = Image.load_from_file("res://assets/warden_attacks.png")
@@ -87,10 +138,7 @@ func render(skill: String, time: float, animate: bool = true) -> Image:
  enemy_x = clampf(enemy_x,24+target_half,776-target_half)
  place(canvas,poses[pose],Vector2(warden_x,state.ground),warden_scale,anchors[pose])
  place(canvas,enemy_hurt if time >= TIMINGS[skill].impact and state.active else enemy,Vector2(enemy_x,state.ground),0.77*state.zoom)
- if state.contact:
-  var point := Vector2i(roundi((warden_x+enemy_x)*0.5),235)
-  canvas.fill_rect(Rect2i(point-Vector2i(14,2),Vector2i(28,4)),Color("#dfba82"))
-  canvas.fill_rect(Rect2i(point-Vector2i(2,13),Vector2i(4,26)),Color("#dfba82"))
+ draw_blood(canvas,skill,time,animate)
  # HUD is drawn after the camera composition, at fixed screen coordinates.
  canvas.fill_rect(Rect2i(0,420,800,120),Color("#171318"))
  canvas.fill_rect(Rect2i(35,475,265,7),Color("#735347"))

@@ -14,9 +14,12 @@ between attacks. Ground anchors stay at the same floor level, actors remain
 inside the stage, and the HUD stays fixed.
 
 This uses complete painted poses plus motion, rather than articulated limb
-animation. The prototype includes basic contact flashes; effects and audio can
-be refined after the framing and silhouettes are approved. The Warden carries
-his existing mace and heater shield.
+animation. Contact produces a dark-red directional spray: narrow for Slash,
+larger with heavier flecks for Heavy Strike, and smaller for Shield Bash.
+Droplets fall and fade; brief, low floor stains clear before the next attack.
+Reduced motion replaces the moving spray with a short static hit mark. Effects
+stay above the HUD. Audio is not included. The Warden carries his existing mace
+and heater shield.
 
 ## Play locally
 
@@ -41,6 +44,9 @@ godot --headless --path experimental/warden_showcase --script export_preview.gd 
 The smoke script checks nine distinct attack-phase selections, actual asset
 loading and rendered scene differences, unchanged HUD pixels, ground anchors,
 raised-mace vertical clearance, and reduced-motion camera/movement settings.
+It also checks that blood waits for contact, heavy bursts exceed shield
+spatter, droplets honor reduced motion, rendered blood stays above the HUD,
+and stains clear between attacks.
 The exporter produces 180 PNG frames at 20 FPS; the MP4 retains that cadence.
 The lightweight GitHub GIF is 640×432 at 15 FPS (135 frames), while the MP4 is
 800×540. Video captions are added during

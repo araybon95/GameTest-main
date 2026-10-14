@@ -14,7 +14,8 @@ as separate projects.
 ## Current previews
 
 - [Warden attack showcase](warden_showcase/README.md): Slash, Heavy Strike and
-  Shield Bash with dedicated painted poses, isolated framing and a fixed HUD.
+  Shield Bash with dedicated painted poses, isolated framing, contact blood
+  sprays and a fixed HUD.
 - [Grounded Raider breathing](hooded-raider-breathing.gif): revised idle with
   fixed legs and feet, continuous chest/shoulder breathing, subtle forearm sway
   and a cleaver that follows the gripping hand. The 1.6-second loop contains
