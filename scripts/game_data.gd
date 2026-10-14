@@ -435,6 +435,7 @@ static func ability_cooldown(ability_id: String) -> int:
 		return 2
 	return 1 if int(ability.get("cost", 1)) > 1 else 0
 
+static var map_travel_mode: bool = true
 static var run_active: bool = false
 static var run_complete: bool = false
 static var floor_index: int = 0
@@ -590,8 +591,13 @@ static func start_run(seed_value: int = -1) -> void:
 	ensure_run_heroes()
 	reveal_neighbors()
 
+static func encounter_room() -> Dictionary:
+	if not run_active or floors.is_empty(): return {}
+	var battle: Dictionary = preload("res://scripts/passage_events.gd").battle_room(load("res://scripts/game_data.gd"))
+	return battle if not battle.is_empty() else floors[floor_index][room_position]
+
 static func current_room_kind() -> String:
-	return str(floors[floor_index][room_position]["kind"]) if run_active else ""
+	return str(encounter_room().get("kind",""))
 
 static func enter_corridor() -> Dictionary:
 	if not run_active:
@@ -663,6 +669,13 @@ static func vote_move(voter_id: String, destination: Vector2i) -> bool:
 	return authorize_move(voter_id, destination) and commit_move(destination)
 
 static func finish_encounter() -> void:
+	var battle: Dictionary = preload("res://scripts/passage_events.gd").battle_room(load("res://scripts/game_data.gd"))
+	if not battle.is_empty():
+		battle["cleared"] = true
+		var event: Dictionary = journey.passages[journey.transit.event_key]
+		event["resolved"] = true
+		preload("res://scripts/passage_events.gd").mark_discovery(load("res://scripts/game_data.gd"),event)
+		return
 	floors[floor_index][room_position]["cleared"] = true
 	if current_room_kind() == "boss" and floors[floor_index][room_position].get("final_boss", true):
 		if selected_expedition.get("id", "") == "infested_apothecary" or selected_expedition.has("restoration"):
@@ -692,6 +705,7 @@ static func end_run() -> void:
 		var reward: String = str(floors[floor_index].get(room_position,{}).get("cosmetic_reward",""))
 		if reward != "": last_report["cosmetic_reward"] = reward
 		save_progression()
+	journey.erase("transit")
 	run_active = false
 	run_heroes.clear()
 	navigation_votes.clear()
@@ -783,7 +797,7 @@ static func award_victory_xp() -> Dictionary:
 	var rewards: Dictionary = {}
 	if not run_active or floors.is_empty():
 		return rewards
-	var room: Dictionary = floors[floor_index][room_position]
+	var room: Dictionary = encounter_room()
 	if room.get("xp_awarded", false) or room.get("cleared", false) or room.get("kind", "") not in ["battle", "boss"]:
 		return rewards
 	room["xp_awarded"] = true
@@ -909,7 +923,7 @@ static func claim_room_loot() -> Array[String]:
 	var result: Array[String] = []
 	if not run_active:
 		return result
-	var room: Dictionary = floors[floor_index][room_position]
+	var room: Dictionary = encounter_room()
 	if room.get("loot_claimed", false):
 		return result
 	var kind: String = current_room_kind()

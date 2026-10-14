@@ -18,6 +18,7 @@ func native_key(code: Key) -> void:
 		root.push_input(event, true)
 	await settle()
 func run() -> void:
+	State.map_travel_mode = false # Legacy room-HUD fixture; new map has separate coverage.
 	State.progress_loaded = true
 	State.progress_path = "user://controls_test_progress.cfg"
 	State.party = ["warden", "ranger", "occultist"]

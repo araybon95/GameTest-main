@@ -6,7 +6,7 @@ const ItemButton = preload("res://scenes/ui/item_icon_button.gd")
 var inventory_filter: String = "All"
 var selected_hero: String = "warden"
 var traveling: bool = false
-var message: String = "Choose a connected destination, then hold D to walk or A to retrace the hallway. W / Enter enters the destination. I opens controls."
+var message: String = "Choose a room on the map. Passage events happen before arrival; cleared routes can be retraced safely."
 
 func _ready() -> void:
 	if not GameState.run_active:
@@ -16,7 +16,11 @@ func _ready() -> void:
 	if GameState.floor_index < floor_lore.size(): message = str(floor_lore[GameState.floor_index])
 	if GameState.selected_expedition.get("id", "") == "infested_apothecary":
 		message = "Four chambers: weakened acolytes → camp → Oleander → Exuvia. Clear all three fights to restore the apothecary."
+	if GameState.map_travel_mode or not GameState.journey.get("transit",{}).is_empty():
+		preload("res://scripts/passage_events.gd").prepare_floor(GameState)
+	else: preload("res://scripts/passage_events.gd").restore_floor(GameState)
 	refresh()
+	if not GameState.journey.get("transit",{}).is_empty(): resume_map_travel.call_deferred()
 
 func label_at(text: String, pos: Vector2, font_size: int = 24) -> void:
 	var label := Label.new()
@@ -240,6 +244,15 @@ func route_to(destination: Vector2i) -> Array:
 
 func move_to(destination: Vector2i) -> void:
 	if traveling: return
+	if GameState.map_travel_mode:
+		var route: Array = route_to(destination)
+		if not valid_route(route,GameState.room_position): return
+		if not GameState.authorize_move("local",route[0]):
+			message = "The party must agree on the same passage before setting out."
+			return
+		if not preload("res://scripts/passage_events.gd").begin(GameState,route): return
+		resume_map_travel()
+		return
 	if GameState.floors[GameState.floor_index][GameState.room_position].get("cleared", false): preload("res://scripts/save_files.gd").save(0)
 	var route: Array = route_to(destination)
 	if route.is_empty(): return
@@ -275,8 +288,11 @@ func move_to(destination: Vector2i) -> void:
 		if not GameState.commit_move(step):
 			refresh()
 			return
+	enter_destination(destination,discovery_action,investigator)
+
+func enter_destination(destination: Vector2i, discovery_action: String = "", investigator: String = "") -> void:
 	var room: Dictionary = GameState.floors[GameState.floor_index][destination]
-	if reached and not discovery_action.is_empty() and room.get("kind","") == "event" and room.has("event_id"):
+	if not discovery_action.is_empty() and room.get("kind","") == "event" and room.has("event_id"):
 		var outcome: Dictionary = GameState.Events.resolve(GameState,investigator,discovery_action == "leave",discovery_action)
 		if discovery_action == "leave" and not outcome.is_empty():
 			message = str(outcome.get("text","Left untouched."))
@@ -345,4 +361,37 @@ func retreat() -> void:
 func scout_area() -> void:
 	if GameState.scout_area():
 		message = "Scouts reveal nearby encounters. Hover revealed rooms to inspect the danger."
+		refresh()
+
+func preview_route(destination: Vector2i) -> void:
+	if traveling or not has_node("RouteMap"): return
+	var room: Dictionary = GameState.floors[GameState.floor_index].get(destination,{})
+	if not room.get("seen",false): return
+	var route: Array = route_to(destination)
+	get_node("RouteMap").set_route(route)
+	get_node("RouteTitle").text = str(room.get("name",str(room.get("kind","Chamber")).capitalize()))
+	var known: String = "Already explored. Retrace a familiar route." if room.get("cleared",false) else GameState.scouting_description(room)
+	if room.get("kind","") == "chamber": known = "An unexplored chamber. The approaching hallway may hide a discovery."
+	get_node("RouteDetails").size.x = 520
+	get_node("RouteDetails").text = "%d passage%s · %s\n\n%s\n\nClick this room to travel." % [route.size(),"" if route.size() == 1 else "s","Explored" if room.get("cleared",false) else "Unexplored",known]
+func resume_map_travel() -> void:
+	var passages = preload("res://scripts/passage_events.gd")
+	if not passages.valid_transit(GameState):
+		GameState.journey.erase("transit")
+		message = "That route is no longer available. Choose another room."
+		refresh()
+		return
+	traveling = true
+	var travel = preload("res://scenes/expedition/map_travel.gd").new()
+	var run: String = GameState.run_id
+	var floor: int = GameState.floor_index
+	var destination: Vector2i = GameState.journey.transit.route.back()
+	add_child(travel)
+	await travel.finished
+	traveling = false
+	if not GameState.run_active or GameState.run_id != run or GameState.floor_index != floor: return
+	if travel.reached_destination:
+		enter_destination(destination)
+	else:
+		message = "The party waits in the last room. Choose another route."
 		refresh()

@@ -70,6 +70,7 @@ func run() -> void:
 	root.size = Vector2i(1920, 1080)
 	root.content_scale_size = Vector2i(1920, 1080)
 	root.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
+	State.map_travel_mode = false # Explicit legacy-walking fixture.
 	State.progress_loaded = true
 	State.progress_path = "user://hallway_navigation_progress.cfg"
 	Saves.directory = "user://hallway_navigation_saves/"

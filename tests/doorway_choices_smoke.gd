@@ -31,6 +31,7 @@ func press(panel: Control, value: String) -> void:
 func run() -> void:
  root.size = Vector2i(1920,1080)
  root.content_scale_size = root.size
+ State.map_travel_mode = false # Explicit legacy-walking fixture.
  State.progress_loaded = true
  State.party.assign(["warden","ranger","occultist"])
  root.get_node("GameSettings").ambient_motion = false

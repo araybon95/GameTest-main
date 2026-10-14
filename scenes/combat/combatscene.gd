@@ -120,7 +120,7 @@ func _apply_expedition() -> void:
 	var expedition: Dictionary = GameState.selected_expedition
 	expedition_title = str(expedition.get("name", "The Old Road"))
 	var depth: int = GameState.floor_index if GameState.run_active else 0
-	var room: Dictionary = GameState.floors[depth][GameState.room_position] if GameState.run_active else {}
+	var room: Dictionary = GameState.encounter_room() if GameState.run_active else {}
 	var ids: Array = room.get("enemies", [room.get("creature", expedition.get("creature", "hollow_villager"))])
 	enemies.clear()
 	var boss: bool = room.get("kind", "") == "boss"
@@ -292,7 +292,7 @@ func _start_battle() -> void:
 	for id in party:
 		hero_state[id]["camp_ward"] = boons.get("ward",false)
 		hero_state[id]["camp_might"] = boons.get("sharpen",false)
-		if GameState.run_active and GameState.floors[GameState.floor_index][GameState.room_position].get("camp_ambush",false): hero_state[id]["ap"] = 1
+		if GameState.run_active and GameState.encounter_room().get("camp_ambush",false): hero_state[id]["ap"] = 1
 		if int(hero_state[id]["stress"]) >= 100 and not hero_state[id]["resolved"]: _resolve_stress_test(str(id))
 	if not boons.is_empty(): _add_log("Camp preparation: protective rites and readied weapons aid this battle.")
 	if GameState.run_active: GameState.journey["boons"] = {}
@@ -308,7 +308,7 @@ func _start_battle() -> void:
 	_add_log("%d heroes. %d ability sets. One party turn." % [party.size(), party.size()])
 	_add_log("At 100 Stress a hero faces a resolve test — Virtue or Affliction.")
 	if GameState.run_active:
-		var room: Dictionary = GameState.floors[GameState.floor_index][GameState.room_position]
+		var room: Dictionary = GameState.encounter_room()
 		if room.has("travel_text"): _add_log(str(room["travel_text"]))
 		if room.get("camp_ambush",false): _add_log("AMBUSH — the unguarded fire draws a lone prowler. Heroes begin with 1 AP.")
 	_refresh_all()
@@ -1134,7 +1134,7 @@ func _refresh_all() -> void:
 	_refresh_enemies()
 	end_turn_button.disabled = false
 	var continue_text: String = "CONTINUE EXPEDITION"
-	if GameState.run_active and GameState.floors[GameState.floor_index][GameState.room_position].get("merchant_orb", false):
+	if GameState.run_active and GameState.encounter_room().get("merchant_orb", false):
 		continue_text = "INSPECT MERCHANT ORB"
 	end_turn_button.text = "END PARTY TURN" if not battle_over else (continue_text if _living_enemies().is_empty() and GameState.run_active else "RETURN TO THE HAMLET")
 	_refresh_hand()
@@ -1255,7 +1255,7 @@ func _award_reward() -> void:
 		GameState.journey["kills"] = int(GameState.journey.get("kills",0)) + enemies.filter(func(e): return not e.get("cocoon",false)).size()
 	for survivor in _standing_heroes(): GameState.add_deed(str(survivor), "battles")
 	if GameState.run_active and GameState.current_room_kind() == "boss":
-		var guardian_room: Dictionary = GameState.floors[GameState.floor_index][GameState.room_position]
+		var guardian_room: Dictionary = GameState.encounter_room()
 		var guardian_id: String = str(guardian_room.get("enemies",[guardian_room.get("creature","")])[0])
 		var guardian_name: String = str(GameState.creature(guardian_id).get("name","the floor guardian"))
 		for survivor in _standing_heroes():
@@ -1756,7 +1756,7 @@ func _on_end_turn_button_pressed() -> void:
 			if GameState.run_complete:
 				GameState.end_run()
 				get_tree().change_scene_to_file("res://scenes/expedition/aftermath.tscn")
-			elif GameState.merchant_orb_available():
+			elif GameState.journey.get("transit",{}).get("stage","") != "battle" and GameState.merchant_orb_available():
 				get_tree().change_scene_to_file("res://scenes/expedition/merchant_orb_room.tscn")
 			else:
 				get_tree().change_scene_to_file("res://scenes/expedition/dungeon.tscn")
@@ -1879,7 +1879,7 @@ func _update_target_hint() -> void:
 func _enter_merchant_orb() -> void:
 	if not battle_over or not _living_enemies().is_empty() or not GameState.run_active:
 		return
-	if not GameState.floors[GameState.floor_index][GameState.room_position].get("merchant_orb", false):
+	if not GameState.encounter_room().get("merchant_orb", false):
 		return
 	GameState.run_heroes = hero_state.duplicate(true)
 	GameState.finish_encounter()
@@ -1996,7 +1996,7 @@ func _offer_floor_entrance() -> void:
 	if has_node("RelicLootReveal") and not get_node("RelicLootReveal").answered: return
 	if floor_prompt_shown or not GameState.run_active or GameState.current_room_kind() != "boss":
 		return
-	var room: Dictionary = GameState.floors[GameState.floor_index][GameState.room_position]
+	var room: Dictionary = GameState.encounter_room()
 	if not room.get("exit_after_boss", false):
 		return
 	floor_prompt_shown = true
