@@ -118,10 +118,12 @@ func style_portraits(node: Node) -> void:
 	if node is TextureRect and node.texture != null:
 		var path: String = node.texture.resource_path
 		for id in State.HEROES:
-			if not path.contains("hero_" + id): continue
+			if str(node.get_meta("hero_id",node.texture.get_meta("pose_id",""))) != id and not path.contains("hero_" + id): continue
 			var color: String = State.hero_colors.get(id, "original")
 			if color == "original":
-				if node.has_meta("hero_palette"): node.material = null
+				if node.has_meta("hero_palette"):
+					var status = node.get_node_or_null("StatusVisual")
+					node.material = status.effect_material if status != null else null
 				return
 			var key: String = id + color
 			if not materials.has(key):

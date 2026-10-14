@@ -16,7 +16,7 @@ func run():
   assert(picture.texture.get_meta("standing_pose",false))
   assert(picture.texture.get_meta("pose_id","") == id)
   var body_height: float = picture.size.y*picture.texture.get_meta("standing_body_height")/picture.texture.get_height()
-  assert(absf(body_height-(216 if id in ["warden","crusader"] else 200)) < 0.01,"Heavy fighters are 8% taller; others share body height")
+  assert(absf(body_height-(216 if id in ["warden","crusader"] else 190 if id == "ranger" else 200)) < 0.01,"Heavy fighters are 8% taller; Ranger is 5% shorter; casters share baseline body height")
   assert(absf(picture.position.y+picture.size.y-600) < 0.01)
   assert(State.hero_max_hp(id) == health[id],"Build is visual only")
   picture.free()

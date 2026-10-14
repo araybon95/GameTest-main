@@ -1563,7 +1563,7 @@ func _make_hero_card(hero_id: String) -> Button:
 	var portrait: TextureRect = button.get_node("Portrait") as TextureRect
 	portrait.set_meta("hero_id", hero_id)
 	_place(portrait, Rect2(10, 5, 230, 270))
-	portrait.texture = _load_texture(str(hero.get("art", "")))
+	portrait.texture = preload("res://scripts/hero_proportions.gd").texture(_load_texture(str(hero.get("art", ""))),hero_id)
 	hero_portraits[hero_id] = portrait
 	StatusVisual.new().attach_to(portrait)
 	preload("res://scripts/equipment_accents.gd").attach(portrait,hero_id)
@@ -2196,6 +2196,11 @@ func _plant_combatant(view: Button, portrait: TextureRect, height: float) -> voi
 	var ratio: float = texture_size.x / maxf(1.0,texture_size.y)
 	var width: float = minf(490.0 if portrait.get_meta("boss",false) else 230.0 if portrait.get_meta("support",false) else 280.0,height * ratio)
 	var draw_height: float = width / ratio
+	var hero_id: String = str(portrait.get_meta("hero_id",""))
+	if not hero_id.is_empty():
+		var build_size: Vector2 = preload("res://scripts/hero_proportions.gd").dimensions(portrait.texture,hero_id,height)
+		width = build_size.x
+		draw_height = build_size.y
 	var foot: float = GROUND_Y - (view.global_position.y - global_position.y)
 	# Exact aspect-sized rectangles remove centered letterbox padding below feet.
 	_place(portrait,Rect2((view.size.x-width)*0.5,foot-draw_height,width,draw_height))
