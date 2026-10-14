@@ -10,6 +10,7 @@ var profiles: Dictionary
 var profile: Dictionary
 var bowstring: Line2D
 var arrow: Node2D
+var draw_fingers: Polygon2D
 
 static func weapon_element(item_id: String) -> String:
  var base: String = Items.base_id(item_id)
@@ -56,6 +57,9 @@ func painted_bounds() -> Rect2:
    bounds = bounds.expand(weapon.position+((corner+weapon.offset)*weapon.scale).rotated(weapon.rotation))
  if wisps.visible:
   bounds = bounds.merge(Rect2(wisps.position+smoke.position,smoke.size))
+ if hero_id == "ranger" and arrow != null and arrow.visible:
+  var nock: Vector2 = body.position+_point(profile.draw_hand)*body.scale
+  bounds = bounds.expand(nock).expand(Vector2(weapon.position.x+44,nock.y+4)).expand(Vector2(weapon.position.x+44,nock.y-4))
  return bounds
 
 func _point(values: Array) -> Vector2:
@@ -99,15 +103,18 @@ func _place_bow(spec: Dictionary, attacking: bool) -> void:
   arrow = Node2D.new()
   add_child(arrow)
   move_child(arrow,get_child_count()-2)
+  draw_fingers = Polygon2D.new()
+  add_child(draw_fingers)
  bowstring.visible = weapon.visible
  arrow.visible = weapon.visible and attacking
+ draw_fingers.visible = arrow.visible
  var top: Vector2 = weapon.position+((_point(spec.top)+weapon.offset)*weapon.scale).rotated(weapon.rotation)
  var bottom: Vector2 = weapon.position+((_point(spec.bottom)+weapon.offset)*weapon.scale).rotated(weapon.rotation)
  var draw_hand: Vector2 = body.position+_point(profile.get("draw_hand",profile.grip))*body.scale
  bowstring.points = PackedVector2Array([top,draw_hand,bottom]) if attacking else PackedVector2Array([top,bottom])
  for child in arrow.get_children(): child.free()
  if not attacking: return
- var end: Vector2 = weapon.position+Vector2(35,0)
+ var end := Vector2(weapon.position.x+35,draw_hand.y)
  var shaft := Line2D.new()
  shaft.width = 2.1
  shaft.default_color = Color("8d7651")
@@ -117,3 +124,14 @@ func _place_bow(spec: Dictionary, attacking: bool) -> void:
  tip.color = Color("b4b6ad")
  tip.polygon = PackedVector2Array([end+Vector2(9,0),end+Vector2(-5,-4),end+Vector2(-3,0),end+Vector2(-5,4)])
  arrow.add_child(tip)
+ # The drawing fingertips close over the nock/string rather than sitting behind it.
+ var centre: Vector2 = _point(profile.draw_hand)
+ var outline: PackedVector2Array = []
+ for index in range(12):
+  var angle: float = index*TAU/12.0
+  outline.append(centre+Vector2(cos(angle)*35,sin(angle)*44))
+ draw_fingers.texture = body.texture
+ draw_fingers.polygon = outline
+ draw_fingers.uv = outline
+ draw_fingers.position = body.position
+ draw_fingers.scale = body.scale

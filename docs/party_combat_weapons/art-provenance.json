@@ -93,15 +93,15 @@
     },
     {
       "asset": "assets/art_library/party_weapons/healer-weapons.png",
-      "sha256": "e7377642911b1f1ab175b6e6e1d86c96b640701bba9db62ba357cd6bc1558e61",
+      "sha256": "62970b32eaad3e8fd8870324b7cc00e4f232ca3c3e23eee9ed0b29481bbe0475",
       "dimensions": [
         1774,
         887
       ],
       "alpha_bounds": [
         0,
-        6,
-        1768,
+        2,
+        1755,
         887
       ],
       "pixel_policy": "Source imagegen PNG copied unchanged."
@@ -198,16 +198,16 @@
     },
     {
       "asset": "assets/art_library/party_weapons/occultist-weapons.png",
-      "sha256": "b26a326de23067a459e5b492f8daa32f05c42bd0055e6ace56aa831bf0ecd7b2",
+      "sha256": "661a8ef10f2a060e3f90649d3d65d1f0c634f204c25f6a5d674e51037ee21daa",
       "dimensions": [
         1774,
         887
       ],
       "alpha_bounds": [
+        19,
         0,
-        0,
-        1764,
-        878
+        1756,
+        887
       ],
       "pixel_policy": "Source imagegen PNG copied unchanged."
     },
@@ -303,13 +303,13 @@
     },
     {
       "asset": "assets/art_library/party_weapons/ranger-weapons.png",
-      "sha256": "ca613247990df10aaf98a8ef533ec31c9fed1a64e6e614fd5794b7602656185a",
+      "sha256": "57e1a5607baa3ca980f8777feb8debe317ae7eebd817ea6158b92bb8ece3415e",
       "dimensions": [
         1774,
         887
       ],
       "alpha_bounds": [
-        21,
+        0,
         0,
         1750,
         887

@@ -11,6 +11,21 @@ the Occultist and Healer retain slim builds. The Crusader keeps his current desi
 
 These galleries arrange the live combat layers for inspection.
 
+## Grip and shaft corrections
+
+The weapon atlases were revised after close-up review exposed misplaced bow
+pivots and crooked staff shafts. Every staff/mace now has a continuous straight
+shaft and a clear wrapped grip. Bow limbs retain their natural curve, with a
+straight central gripping section. Pivots are measured on opaque handle pixels.
+Arrows run level above the holding fingers; drawing fingertips overlay the nock
+and string. The unchanged body art and selected armour remain in use.
+
+[![Previous bow grips](grips-before.png)](grips-before.png)
+[![Corrected bow grips](grips-after.png)](grips-after.png)
+
+These enlarged crops are rendered from the actual model, including all three
+Ranger outfits in idle and attack poses.
+
 | Hero | Weapon | Intrinsic smoke and pixel sparkles |
 | --- | --- | --- |
 | Ranger | Hunting Bow | None |
@@ -71,8 +86,11 @@ Full prompts/references: [generation-prompts.json](generation-prompts.json).
 Source hashes: [art-provenance.json](art-provenance.json).
 `profiles.json` records regions and attachment points without modifying PNGs.
 
-Validation: 94 headless smoke checks and native `attack_profiles_smoke.gd`.
+Validation: 95 headless smoke checks and native `attack_profiles_smoke.gd`.
 Additionally, native `party_weapon_art_visual.gd` checks all 72 combinations
 (three classes × three outfits × four weapons × two poses) for complete silhouettes,
 headroom, grounding and attached grips. The integration test covers named gear,
 armour selection, effects, unequip, queued snapshots and consistent attack size.
+`party_weapon_grips_smoke.gd` verifies opaque grips, continuous shaft axes and
+level nocked arrows above the holding fingers. Source revisions and original
+generations are both recorded in the prompt provenance.
