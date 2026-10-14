@@ -1,4 +1,5 @@
 extends SceneTree
+# Requires a graphics display: silhouette checks sample live equipment textures.
 const State = preload("res://scripts/game_data.gd")
 const Profiles = preload("res://scripts/attack_profiles.gd")
 const Effects = preload("res://scenes/combat/strike_effects.gd")

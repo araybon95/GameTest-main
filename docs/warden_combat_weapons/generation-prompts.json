@@ -1,0 +1,38 @@
+[
+  {
+    "id": "alternate",
+    "reference": "/workspace/work/gametest-integration/work/warden-live/alternate-0.png",
+    "prompt": "Precise grimdark game sprite edit. Preserve the exact illustrated knight costume, helmet, shield, cloak, body proportions, feet and standing pose and lowered gripping fist. Remove ONLY the entire sword including blade, guard, pommel and handle. Retain the same closed empty gauntlet in exactly the same position. Reconstruct small armor areas behind the removed sword. Do not move the arm or redesign the clothing. One full-body figure on perfectly transparent alpha background, no smoke, haze, gradient, vignette or cast shadow. Same composition as reference with generous clear margins and full figure visible. A separate weapon will be attached in game code.",
+    "output_hint": "Generated images are saved to /workspace/generated_images as /workspace/generated_images/exec-7e3fb4ab-9cf1-48c8-96c8-82b4e29c3da9.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+  },
+  {
+    "id": "alternate_attack",
+    "reference": "/workspace/work/gametest-integration/work/warden-live/alternate-1.png",
+    "prompt": "Precise grimdark game sprite edit. Preserve the exact illustrated knight costume, helmet, shield, cloak, body proportions, feet and extended forward punching arm and gripping fist in this attack pose. Remove ONLY the entire sword including blade, guard, pommel and handle. Retain the same closed empty gauntlet in exactly the same position. Reconstruct small armor areas behind the removed sword. Do not move the arm or redesign the clothing. One full-body figure on perfectly transparent alpha background, no smoke, haze, gradient, vignette or cast shadow. Same composition as reference with generous clear margins and full figure visible. A separate weapon will be attached in game code.",
+    "output_hint": "Generated images are saved to /workspace/generated_images as /workspace/generated_images/exec-234bcf4f-08d3-4a9b-94f9-4bd71006e583.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+  },
+  {
+    "id": "relic",
+    "reference": "/workspace/work/gametest-integration/work/warden-live/relic-0.png",
+    "prompt": "Precise grimdark game sprite edit. Preserve the exact illustrated knight costume, helmet, shield, cloak, body proportions, feet and standing pose and lowered gripping fist. Remove ONLY the entire sword including blade, guard, pommel and handle. Retain the same closed empty gauntlet in exactly the same position. Reconstruct small armor areas behind the removed sword. Do not move the arm or redesign the clothing. One full-body figure on perfectly transparent alpha background, no smoke, haze, gradient, vignette or cast shadow. Same composition as reference with generous clear margins and full figure visible. A separate weapon will be attached in game code.",
+    "output_hint": "Generated images are saved to /workspace/generated_images as /workspace/generated_images/exec-23850d83-dad6-405f-ae14-ce98239e4a1b.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+  },
+  {
+    "id": "relic_attack",
+    "reference": "/workspace/work/gametest-integration/work/warden-live/relic-1.png",
+    "prompt": "Precise grimdark game sprite edit. Preserve the exact illustrated knight costume, helmet, shield, cloak, body proportions, feet and extended forward punching arm and gripping fist in this attack pose. Remove ONLY the entire sword including blade, guard, pommel and handle. Retain the same closed empty gauntlet in exactly the same position. Reconstruct small armor areas behind the removed sword. Do not move the arm or redesign the clothing. One full-body figure on perfectly transparent alpha background, no smoke, haze, gradient, vignette or cast shadow. Same composition as reference with generous clear margins and full figure visible. A separate weapon will be attached in game code.",
+    "output_hint": "Generated images are saved to /workspace/generated_images as /workspace/generated_images/exec-75a550ec-db30-40f2-b7de-98cc61eaec68.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+  },
+  {
+    "id": "warden_epic",
+    "reference": "/workspace/work/gametest-integration/work/warden-live/warden_epic.png",
+    "prompt": "Recreate this exact weapon identity as a single high-quality grimdark RPG held weapon sprite. Preserve the distinctive jagged dark steel longsword with barbs, worn blackened crossguard, dark leather grip and sparse torn burgundy ribbons. Match angular hand-painted ink shading and black contours of the reference. Full weapon straight VERTICAL, blade tip at top, grip and pommel at bottom, centered with15% empty margins. One weapon only, no hand or figure. Actual transparent background, no fog, shadow, glow, gradients or sparkles. Weapon proportions suitable for one-handed knight combat. Preserve complete sword and decorations inside image.",
+    "output_hint": "Generated images are saved to /workspace/generated_images as /workspace/generated_images/exec-e747729c-dbaa-4377-bbcc-10fd745e4f17.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+  },
+  {
+    "id": "warden_legend",
+    "reference": "/workspace/work/gametest-integration/work/warden-live/warden_legend.png",
+    "prompt": "Recreate this exact weapon identity as a single high-quality grimdark RPG held weapon sprite. Preserve the distinctive pale steel longsword with elaborate golden circular sun-ring crossguard, gold pommel, dark wrapped grip and sparse torn burgundy ribbons. Match angular hand-painted ink shading and black contours of the reference. Full weapon straight VERTICAL, blade tip at top, grip and pommel at bottom, centered with15% empty margins. One weapon only, no hand or figure. Actual transparent background, no fog, shadow, glow, gradients or sparkles. Weapon proportions suitable for one-handed knight combat. Preserve complete sword and decorations inside image.",
+    "output_hint": "Generated images are saved to /workspace/generated_images as /workspace/generated_images/exec-387b7908-3ea3-4913-b16b-441262ec040e.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+  }
+]
