@@ -1,7 +1,9 @@
 # Warden weapon preview
 
 A separate, playable art study for the approved weapon customization approach.
-The current game remains intact; this preview has not replaced live combat art.
+The approved layers now also drive the Warden in live combat; see the
+[combat integration and captures](../warden_combat_weapons/README.md).
+This standalone showcase remains available for visual comparisons.
 
 ## Compare weapons and armour
 
@@ -15,8 +17,8 @@ a gauntlet layer covering the handle. Weapon changes preserve the chosen armour,
 shield and body proportions.
 
 The sword and Vigil of Winter resolve to existing Warden catalog items. The mace
-is a visual sample, not a new loot item. Other Warden weapons and other heroes
-have not yet been authored for this approach.
+is a visual sample, not a new loot item. All four current Warden catalog swords are now supported in combat. Other heroes
+retain their existing art pending their weapon integration.
 
 ## Soft elemental smoke and neon pixel sparkles
 
@@ -49,7 +51,7 @@ godot --path . res://experiments/weapon_showcase.tscn
 Use **Idle**, **Attack pose**, and **Element colours** to compare the six figures.
 The standalone component is `experiments/warden_weapon_preview.tscn`.
 It reads equipped item data through `configure_equipped`; no game progression,
-save files, inventory or attack statistics are modified by the preview.
+save files, inventory or attack statistics are modified by the standalone preview.
 
 The revised preview uses gauntlet-shaped foreground masks instead of rectangular
 patches, preventing surrounding armour from hiding the handle. Each pose has a

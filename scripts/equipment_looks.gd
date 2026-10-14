@@ -9,5 +9,5 @@ static func choice(state, hero: String, preview_item: String = "") -> String:
 	var armor: Dictionary = Items.item(str(gear.get("armor","")))
 	if armor.has("equipment_look"): return str(armor.equipment_look)
 	var weapon: Dictionary = Items.item(str(gear.get("weapon","")))
-	if weapon.get("rarity","") == "legendary": return "relic"
+	if hero != "warden" and weapon.get("rarity","") == "legendary": return "relic"
 	return manual

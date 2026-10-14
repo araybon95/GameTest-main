@@ -1,0 +1,30 @@
+{
+  "tool": "image_gen.imagegen",
+  "notes": "PNG source pixels copied unchanged. Source-body frames rendered from existing alternate/relic atlases, and sword references rendered from existing catalog icons. Atlas regions, handles, gauntlet outlines and ground rows are measured at runtime or in code. Full prompts recorded separately.",
+  "assets": [
+    {
+      "asset": "assets/art_library/weapon_preview/alternate.png",
+      "sha256": "33a656e9a41d09ba4ea29c882f3c609ca5712e466c6f3675c0ded45c904a521e"
+    },
+    {
+      "asset": "assets/art_library/weapon_preview/alternate_attack.png",
+      "sha256": "19266a0be162309b544c77c1ea05c56fd418899377c52654c076bb5864b7c589"
+    },
+    {
+      "asset": "assets/art_library/weapon_preview/relic.png",
+      "sha256": "3fb390d7cb45b008a56379ba8565f978c522b1c51db34c3e402d4e756d13c77a"
+    },
+    {
+      "asset": "assets/art_library/weapon_preview/relic_attack.png",
+      "sha256": "d516c51e0d426bbaf2157089267c8de7a4bed6236d423003a466e3b1bb3e7822"
+    },
+    {
+      "asset": "assets/art_library/weapon_preview/warden_epic.png",
+      "sha256": "0737fcd340381a0f677951c51c86083c0bc883cf283c54a060d5746597571655"
+    },
+    {
+      "asset": "assets/art_library/weapon_preview/warden_legend.png",
+      "sha256": "eeb5633cedbf85e4bfc0e5a3ed5f430a39e8121c0dc3f4b6d575a76b6035e3a7"
+    }
+  ]
+}

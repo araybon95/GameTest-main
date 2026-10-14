@@ -7305,6 +7305,24 @@
       ]
     },
     {
+      "file": "weapon_preview/alternate.png",
+      "resource": "res://assets/art_library/weapon_preview/alternate.png",
+      "dimensions": [
+        1240,
+        1268
+      ],
+      "references": []
+    },
+    {
+      "file": "weapon_preview/alternate_attack.png",
+      "resource": "res://assets/art_library/weapon_preview/alternate_attack.png",
+      "dimensions": [
+        1503,
+        1047
+      ],
+      "references": []
+    },
+    {
       "file": "weapon_preview/ashen_wolf.png",
       "resource": "res://assets/art_library/weapon_preview/ashen_wolf.png",
       "dimensions": [
@@ -7337,6 +7355,42 @@
       "dimensions": [
         1227,
         1281
+      ],
+      "references": []
+    },
+    {
+      "file": "weapon_preview/relic.png",
+      "resource": "res://assets/art_library/weapon_preview/relic.png",
+      "dimensions": [
+        1197,
+        1314
+      ],
+      "references": []
+    },
+    {
+      "file": "weapon_preview/relic_attack.png",
+      "resource": "res://assets/art_library/weapon_preview/relic_attack.png",
+      "dimensions": [
+        1488,
+        1057
+      ],
+      "references": []
+    },
+    {
+      "file": "weapon_preview/warden_epic.png",
+      "resource": "res://assets/art_library/weapon_preview/warden_epic.png",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "references": []
+    },
+    {
+      "file": "weapon_preview/warden_legend.png",
+      "resource": "res://assets/art_library/weapon_preview/warden_legend.png",
+      "dimensions": [
+        1024,
+        1536
       ],
       "references": []
     },

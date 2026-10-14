@@ -30,13 +30,14 @@ func run() -> void:
 		var seen: Array[Rect2] = []
 		for state in ["attack","windup","guard","hurt","death"]:
 			var pose: Texture2D = Poses.state_pose(model.texture,state)
-			assert(pose is AtlasTexture)
 			if model == hero:
+				assert(pose.get_width() > 0 and pose.get_height() > 0 and pose.get_meta("appearance_style","") == "warden_weapon")
 				assert(pose.get_meta("combat_state") == state, "Painted Warden routes simplified poses to every action state")
 			else:
+				assert(pose is AtlasTexture)
 				assert(not seen.has(pose.region), "Raider keeps five distinct reaction poses")
-			assert(pose.region.end.x <= pose.atlas.get_width() and pose.region.end.y <= pose.atlas.get_height())
-			seen.append(pose.region)
+				assert(pose.region.end.x <= pose.atlas.get_width() and pose.region.end.y <= pose.atlas.get_height())
+				seen.append(pose.region)
 	var hp: int = battle.enemy_hp
 	var rng: int = State.loot_rng.state
 	cinema.strike(hero,target,"sword","Heavy Strike",true,{"skill_id":"wd_heavy"})
