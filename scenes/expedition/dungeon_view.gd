@@ -6,7 +6,9 @@ const Map = preload("res://scenes/expedition/dungeon_map.gd")
 
 static func build(owner: Control) -> void:
 	if State.map_travel_mode:
-		preload("res://scenes/expedition/map_exploration.gd").build(owner)
+		if not owner.map_open and preload("res://scenes/expedition/dungeon_entrance.gd").available():
+			preload("res://scenes/expedition/dungeon_entrance.gd").build(owner)
+		else: preload("res://scenes/expedition/map_exploration.gd").build(owner)
 		return
 	owner.panel_at(Rect2(0,0,1920,1080),Color("#09080A")).get_node("IronFittings").hide()
 	var view = Travel.new()

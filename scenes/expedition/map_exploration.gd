@@ -7,6 +7,10 @@ static func build(owner: Control) -> void:
  owner.label_at("Choose your next chamber. The passages between rooms hold their own dangers.",Vector2(65,110),21)
  owner.panel_at(Rect2(50,165,1190,725),Color("#171216"))
  owner.label_at("THE DUNGEON · FLOOR %d / %d" % [State.floor_index+1,State.floor_count],Vector2(80,185),23)
+ if preload("res://scenes/expedition/dungeon_entrance.gd").available():
+  var entrance: Button = owner.button_at("ENTRANCE CHAMBER",Vector2(950,185),owner.show_entrance)
+  entrance.size = Vector2(265,35)
+  entrance.add_theme_font_size_override("font_size",17)
  var map = preload("res://scenes/expedition/route_map.gd").new()
  map.name = "RouteMap"
  map.position = Vector2(80,240)
@@ -51,12 +55,7 @@ static func build(owner: Control) -> void:
  owner.label_at("YOUR PARTY",Vector2(1305,565),21)
  for i in range(State.party.size()):
   var id: String = State.party[i]
-  var image := TextureRect.new()
-  image.texture = Scenery.grounded_texture(State.hero(id).camp_art)
-  image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-  image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-  image.position = Vector2(1285+i*180,610)
-  image.size = Vector2(175,200)
+  var image = preload("res://scripts/standing_party.gd").create(id,Vector2(1372+i*180,805),160)
   image.name = "Party_"+id
   image.set_meta("hero_id",id)
   image.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -64,7 +63,7 @@ static func build(owner: Control) -> void:
    if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT: owner.inspect_hero(id)
   )
   owner.add_child(image)
-  Scenery.apply_hero_palette(image,id,str(State.hero_colors.get(id,"original")))
+
   var hero: Dictionary = State.run_heroes.get(id,{})
   owner.label_at("%s\n%s" % [State.hero(id).name,"Fallen" if hero.get("dead",false) else "%d/%d HP" % [hero.get("hp",0),State.hero_max_hp(id)]],Vector2(1300+i*180,815),16)
  owner.label_at("GOLD %d · RATIONS %d · SCOUTING %d" % [State.gold,State.journey.get("rations",0),State.scout_uses],Vector2(70,920),22)

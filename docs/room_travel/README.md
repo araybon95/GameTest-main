@@ -1,12 +1,18 @@
 # Room-to-room dungeon prototype
 
-[Watch the prototype](prototype.gif) · [Map](map.png) · [Travel event](event.png) · [Outcome](outcome.png)
+[Entrance chamber](entrance.png) · [Standing lineup](standing-lineup.png) · [Watch the prototype](prototype.gif) · [Map](map.png) · [Travel event](event.png) · [Outcome](outcome.png)
+
+New procedural expeditions begin in a grimdark entrance chamber. Click the iron
+gate or Dungeon Map to choose a route; clicking the gate does not move the party
+or spend resources. While at the entrance, the map can return to the chamber.
 
 Hover or focus a reachable room to highlight its route and inspect known details.
 Click it to travel automatically. Unexplored neighbouring rooms remain silhouettes;
 cleared rooms are marked. Inventory, scouting, room actions and retreat remain
-available. The stationary party uses the selected complete costume art with subtle
-breathing, avoiding the need for walking frames for each outfit.
+available. The party stands in combat-ready poses using selected complete costume art with
+subtle breathing. Standing body heights match approximately across the five
+classes; Warden and Crusader are 8% taller and 5% broader. These are visual
+proportions for the map, entrance and travel; combat rules and stats are unchanged.
 
 Each passage takes about 1.4 seconds. Most newly generated passages are quiet;
 others contain a discovery, gold or a lone-enemy ambush. Existing unresolved
@@ -33,7 +39,7 @@ passage outcomes.
 
 Built on the Warden outfit integration branch. Neither branch is merged into main.
 
-Validation: 85 of 86 smoke checks pass, including actual passage combat,
+Validation: 87 of 88 smoke checks pass, including actual passage combat,
 multi-edge routes, stale-transition isolation, saved outcomes, mode switching,
 Watch protection, event choices and the complete legacy dungeon lifecycle.
 The graveyard CemeteryMarker failure is reproduced on unchanged main. Some

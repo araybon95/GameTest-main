@@ -5,6 +5,7 @@ const FloorEntrance = preload("res://scenes/expedition/floor_entrance.gd")
 const ItemButton = preload("res://scenes/ui/item_icon_button.gd")
 var inventory_filter: String = "All"
 var selected_hero: String = "warden"
+var map_open: bool = false
 var traveling: bool = false
 var message: String = "Choose a room on the map. Passage events happen before arrival; cleared routes can be retraced safely."
 
@@ -395,3 +396,13 @@ func resume_map_travel() -> void:
 	else:
 		message = "The party waits in the last room. Choose another route."
 		refresh()
+
+func open_route_map() -> void:
+	if traveling: return
+	map_open = true
+	refresh()
+
+func show_entrance() -> void:
+	if traveling: return
+	map_open = false
+	refresh()

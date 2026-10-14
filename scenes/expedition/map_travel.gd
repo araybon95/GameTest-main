@@ -47,19 +47,10 @@ func _ready() -> void:
  for id in State.party:
   if State.run_heroes.get(id,{}).get("dead",false): continue
   if investigator.is_empty() and int(State.run_heroes.get(id,{}).get("hp",0)) > 0: investigator = id
-  var image := TextureRect.new()
+  var image = preload("res://scripts/standing_party.gd").create(id,Vector2(390+party_art.size()*410,710),380)
   image.name = "Traveler_"+id
-  image.texture = Scenery.grounded_texture(State.hero(id).camp_art)
-  image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-  image.stretch_mode = TextureRect.STRETCH_SCALE
-  var height: float = 410.0
-  image.size = Vector2(height*image.texture.get_width()/image.texture.get_height(),height)
-  image.position = Vector2(390+party_art.size()*410-image.size.x*0.5,710-height)
-  image.pivot_offset = Vector2(image.size.x*0.5,image.size.y)
-  image.mouse_filter = Control.MOUSE_FILTER_IGNORE
+  image.set_process(false)
   party.add_child(image)
-  Scenery.apply_hero_palette(image,id,str(State.hero_colors.get(id,"original")))
-  if image.has_node("WardenIdleMotion"): image.get_node("WardenIdleMotion").set_process(false) # This scene owns party breathing.
   party_art.append(image)
  panel(Rect2(55,800,1810,220),Color(0.06,0.05,0.06,0.94))
  label_at("TRAVELLING · FLOOR %d" % [State.floor_index+1],Vector2(90,830),1300,25)
@@ -99,7 +90,7 @@ func _process(delta: float) -> void:
  var animate: bool = settings == null or settings.ambient_motion
  if animate: breath_clock += delta
  for index in range(party_art.size()):
-  party_art[index].scale.y = 1.0+sin(breath_clock*TAU/3.6+index*0.8)*0.003 if animate else 1.0
+  party_art[index].update_motion(delta)
  if waiting_event: return
  elapsed += delta
  progress.value = minf(elapsed/duration,1.0)*100
@@ -206,4 +197,4 @@ func cancel_travel() -> void:
 func refresh_equipment_frames(_id: String) -> void:
  for image in party_art:
   var id: String = str(image.name).trim_prefix("Traveler_")
-  image.texture = Scenery.grounded_texture(State.hero(id).camp_art)
+  image.refresh_art()
