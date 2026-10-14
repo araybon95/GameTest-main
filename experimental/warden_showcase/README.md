@@ -41,7 +41,9 @@ godot --headless --path experimental/warden_showcase --script export_preview.gd 
 The smoke script checks nine distinct attack-phase selections, actual asset
 loading and rendered scene differences, unchanged HUD pixels, ground anchors,
 raised-mace vertical clearance, and reduced-motion camera/movement settings.
-The exporter produces 180 PNG frames at 20 FPS; video captions are added during
+The exporter produces 180 PNG frames at 20 FPS; the MP4 retains that cadence.
+The lightweight GitHub GIF is 640×432 at 15 FPS (135 frames), while the MP4 is
+800×540. Video captions are added during
 FFmpeg encoding. Frame export is checked in the cloud. Interactive window
 playback has not been verified here.
 
