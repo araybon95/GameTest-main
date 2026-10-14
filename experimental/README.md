@@ -14,8 +14,9 @@ as separate projects.
 ## Current previews
 
 - [Grounded Raider breathing](hooded-raider-breathing.gif): revised idle with
-  fixed legs and feet, continuous chest/shoulder motion and a 1.6-second loop.
-  All lower-body pixels are identical across the 32 preview frames.
+  fixed legs and feet, continuous chest/shoulder breathing, subtle forearm sway
+  and a cleaver that follows the gripping hand. The 1.6-second loop contains
+  32 frames; protected leg and boot pixels remain identical throughout.
 - [Hooded Ash Raider animation](hooded-raider-animation.gif): a looping artwork
   preview of the initial twelve painted poses. Its original idle frame stepping
   is superseded by the grounded breathing preview above. Action timing is
