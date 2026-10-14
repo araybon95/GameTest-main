@@ -52,7 +52,7 @@ func sync(state: Dictionary, usable: bool) -> void:
 	visible = true
 	portrait.texture = load(str(state["icon"]))
 	var remaining: int = int(state["uses"])-int(state["spent"])
-	caption.text = "%s %d/%d" % ["CHAINS" if state["kind"] == "chains" else "RITE" if state["kind"] == "rite" else "IDOL",remaining,state["uses"]]
+	caption.text = "%s %d/%d" % ["SHACKLES" if state["kind"] == "chains" else "RUNE" if state["kind"] == "rite" else "IDOL",remaining,state["uses"]]
 	disabled = not usable
 	portrait.modulate = Color(0.45,0.40,0.40) if remaining == 0 else Color.WHITE
 	outline.set_shader_parameter("strength",0.25 if usable else 0.1)

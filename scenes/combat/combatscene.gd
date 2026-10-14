@@ -215,7 +215,7 @@ func _advance_boss_phase(index: int) -> bool:
 		_configure_enemy_stage(index)
 		_plant_combatant(enemy_views[index],enemy_art,_enemy_stage_height(index))
 		_reveal_boss(index)
-	_add_log("THE COTERIE — Stage %d / %d: %s steps forward. The hymn continues." % [next + 1, phases.size(), replacement["name"]])
+	_add_log("THE HORNED PRIEST — Aspect %d / %d: the old shape sloughs away and %s rises in its place." % [next + 1, phases.size(), replacement["name"]])
 	return true
 
 func _advance_dead_bosses() -> void:
@@ -1831,7 +1831,7 @@ func _refresh_enemies() -> void:
 		var label: Label = view.get_node("EnemyInfo")
 		var classification: String = str(entry.get("creature_class",GameState.creature(str(entry["creature"])).get("creature_class","Corrupted")))
 		classification += " · Cocoon" if entry.get("cocoon",false) else " · Boss" if entry["boss"] else " · " + GameState.Depth.role(str(entry["creature"]),bool(entry["support"]))
-		var display_name: String = enemy_name.replace("Creation of Anguish: ","Anguish ").replace("The Coterie: ","").trim_prefix("Support ")
+		var display_name: String = enemy_name.replace("The Horned Priest: ","").trim_prefix("Support ")
 		label.text = ("▶ " if index == original else "") + "P%d · %s\n%s" % [enemy_position(index),display_name,classification]
 		var intent: Label = view.get_node("EnemyIntent")
 		intent.text = _enemy_intent_text()
@@ -1950,11 +1950,11 @@ func boss_tactics_text(index: int) -> String:
 	match str(state.get("kind","")):
 		"chains":
 			var remaining: int = int(state.uses)-int(state.spent)
-			return "CHAINS %d/2 · %d%% damage reduction\nSever: −10%% attack / −5%% damage reduction." % [remaining,remaining*5]
+			return "SHACKLES %d/2 · %d%% damage reduction\nSever: −10%% attack / −5%% damage reduction." % [remaining,remaining*5]
 		"rite":
 			var phase: int = int(boss.get("phase_index",0))+1
-			if state.get("suppression_pending",false): return "COTERIE %d/3 · RITE BROKEN\nNext ritual canceled / strike halved, no debuff." % phase
-			return "COTERIE %d/3 · %s\n%s" % [phase,"Rite intact" if Objectives.available(state) else "Rite spent","Break: cancel ritual / halve strike, no debuff." if Objectives.available(state) else "The next form brings a fresh rite."]
+			if state.get("suppression_pending",false): return "PRIEST %d/3 · RUNE BROKEN\nNext rite canceled / strike halved, no debuff." % phase
+			return "PRIEST %d/3 · %s\n%s" % [phase,"Rune intact" if Objectives.available(state) else "Rune spent","Break: cancel rite / halve strike, no debuff." if Objectives.available(state) else "The next aspect carves a fresh rune."]
 		"idol": return "IDOL INTACT · Prayer: 8 Stress + Chill.\nSilence: 4 Stress, no Chill." if Objectives.available(state) else "IDOL SILENCED\nPrayer: 4 Stress, no Chill."
 	match str(boss.creature):
 		"undying_lord":

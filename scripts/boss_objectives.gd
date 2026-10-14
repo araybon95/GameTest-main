@@ -1,11 +1,11 @@
 extends RefCounted
 ## Optional battlefield actions. State belongs to the boss, not to the prop UI.
 const DEFINITIONS = {
-	"harrowed_giant": {"kind":"chains", "name":"Sacred Chains", "action":"SEVER A CHAIN", "uses":2, "icon":"res://assets/ui/boss_chain_anchor.svg"},
-	"coterie_seamkeeper": {"kind":"rite", "name":"The Stitching Rite", "action":"BREAK THE RITE", "uses":1, "icon":"res://assets/ui/boss_ritual.svg"},
-	"coterie_cantor": {"kind":"rite", "name":"The Bone Canticle", "action":"BREAK THE RITE", "uses":1, "icon":"res://assets/ui/boss_ritual.svg"},
-	"coterie_matron": {"kind":"rite", "name":"The Remaking Rite", "action":"BREAK THE RITE", "uses":1, "icon":"res://assets/ui/boss_ritual.svg"},
-	"howling_head": {"kind":"idol", "name":"Choir Idol", "action":"SILENCE THE IDOL", "uses":1, "icon":"res://assets/ui/boss_choir_idol.svg"}
+	"harrowed_giant": {"kind":"chains", "name":"Hunting Shackles", "action":"SEVER A SHACKLE", "uses":2, "icon":"res://assets/ui/boss_chain_anchor.svg"},
+	"coterie_seamkeeper": {"kind":"rite", "name":"The Wolf Rune", "action":"BREAK THE RUNE", "uses":1, "icon":"res://assets/ui/boss_ritual.svg"},
+	"coterie_cantor": {"kind":"rite", "name":"The Chorus Rune", "action":"BREAK THE RUNE", "uses":1, "icon":"res://assets/ui/boss_ritual.svg"},
+	"coterie_matron": {"kind":"rite", "name":"The Horned Rune", "action":"BREAK THE RUNE", "uses":1, "icon":"res://assets/ui/boss_ritual.svg"},
+	"howling_head": {"kind":"idol", "name":"Idol of the Beast", "action":"SILENCE THE IDOL", "uses":1, "icon":"res://assets/ui/boss_choir_idol.svg"}
 }
 
 static func create(creature: String) -> Dictionary:
@@ -37,7 +37,7 @@ static func modify_move(state: Dictionary, original: Dictionary) -> Dictionary:
 	if state.get("suppression_pending",false):
 		if move.get("effect","") in ["lament","remake"]:
 			return {"name":"Interrupted " + str(move["name"]), "effect":"falter"}
-		move["name"] = "Broken Rite: " + str(move["name"])
+		move["name"] = "Broken Rune: " + str(move["name"])
 		move["scale"] = float(move.get("scale",1.0))*0.5
 		move.erase("status")
 	if state.get("kind","") == "idol" and move.get("effect","") == "lament":
@@ -52,17 +52,17 @@ static func hint(state: Dictionary) -> String:
 	match str(state.get("kind","")):
 		"chains":
 			var remaining: int = int(state["uses"])-int(state["spent"])
-			return "Chains %d/2 · %d%% damage reduction. Each severed chain lowers the Giant's attack by 10%%." % [remaining,remaining*5]
+			return "Shackles %d/2 · %d%% damage reduction. Each severed shackle lowers the Warbeast's attack by 10%%." % [remaining,remaining*5]
 		"rite":
-			if state.get("suppression_pending",false): return "Rite broken · next ritual canceled, or next strike halved with no debuff."
-			return "Once per form: cancel the next ritual, or halve its next strike and remove its debuff." if available(state) else "This form's rite has been broken. The next form brings a new rite."
+			if state.get("suppression_pending",false): return "Rune broken · next rite canceled, or next strike halved with no debuff."
+			return "Once per aspect: cancel the next rite, or halve its next strike and remove its debuff." if available(state) else "This aspect's rune has been broken. The next aspect carves a new one."
 		"idol":
-			return "Idol intact · Prayer causes 8 Stress + Chill. Silence it: 4 Stress, no Chill." if available(state) else "Choir silenced · Prayer causes 4 Stress with no Chill."
+			return "Idol intact · the Howl causes 8 Stress + Chill. Silence it: 4 Stress, no Chill." if available(state) else "Idol silenced · the Howl causes 4 Stress with no Chill."
 	return ""
 
 static func result_text(state: Dictionary) -> String:
 	match str(state.get("kind","")):
-		"chains": return "A sacred chain snaps. The Giant's attack falls by 10%; one armor bond is removed."
-		"rite": return "The rite is broken. The next ritual fails, or the next strike is halved without a debuff."
-		"idol": return "The choir idol falls silent. Unending Prayer causes 4 Stress and cannot inflict Chill."
+		"chains": return "A shackle snaps. The Warbeast's attack falls by 10%; one armor bond is removed."
+		"rite": return "The rune is broken. The next rite fails, or the next strike is halved without a debuff."
+		"idol": return "The idol falls silent. Unending Howl causes 4 Stress and cannot inflict Chill."
 	return ""

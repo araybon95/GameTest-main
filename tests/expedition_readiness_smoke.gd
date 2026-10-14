@@ -102,7 +102,7 @@ func run() -> void:
 	assert(prompt.get_node("DescentClass_warden").text.contains("Lv 3"))
 	assert(prompt.get_node("DescentVitality_warden").text.contains("HP 0 /"))
 	assert(prompt.get_node("DescentStatus_warden").text.contains("DEATH'S DOOR") and prompt.get_node("DescentStatus_warden").text.contains("Bleed"))
-	assert(prompt.get_node("NextFloorThreat").text.contains("three consecutive forms"))
+	assert(prompt.get_node("NextFloorThreat").text.contains("three beast aspects"))
 	prompt.accept_entrance()
 	prompt.accept_entrance()
 	prompt.stay_here()

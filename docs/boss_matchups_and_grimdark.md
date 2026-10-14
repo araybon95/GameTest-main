@@ -22,7 +22,7 @@ Existing undead and faction traits remain separate from these categories. Hunt t
 | --- | --- | --- |
 | Human | None | Outlaw's Tally, Roadward Seal |
 | Corrupted | 20% Bleed | Warden's Gravewatch Medal, Graveward Locket |
-| The Remade | 15% Chill | Occultist's Severed Litany, Crusader's Penitent Stitch |
+| The Beast | 15% Chill | Occultist's Severed Howl, Crusader's Supplicant's Brand |
 | Insect | 20% Poison | Ranger's Chitin Hunter's Lens, Healer's Chrysalis Rosary |
 
 These modest resistance chances prevent application; they do not make a category immune or alter an existing tick. Resisted effects show resistance feedback and do not log a successful application. All eight trinkets use the existing rare/epic loot and shop rules, class eligibility and independently replaceable original SVG icons. Merchants still exclude legendary items. Discovered bestiary pages explain category tactics and boss objectives; unknown pages conceal them. Longer field notes scroll.

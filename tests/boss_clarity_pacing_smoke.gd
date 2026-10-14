@@ -36,16 +36,16 @@ func run() -> void:
 	battle.enemies[0].objective = Objectives.create("coterie_cantor")
 	battle.enemies[0].phase_index = 1
 	battle._refresh_all()
-	assert(battle.objective_hint.text.contains("COTERIE 2/3") and battle.objective_button.visible)
+	assert(battle.objective_hint.text.contains("PRIEST 2/3") and battle.objective_button.visible)
 	battle.hero_state[battle.selected_hero].ap = 0
 	battle._refresh_all()
 	assert(battle.objective_button.disabled and battle.objective_button.tooltip_text.contains("at least 1 AP"))
 	Objectives.interact(battle.enemies[0].objective)
 	battle._refresh_all()
-	assert(battle.objective_hint.text.contains("RITE BROKEN"))
+	assert(battle.objective_hint.text.contains("RUNE BROKEN"))
 	Objectives.consume_action(battle.enemies[0].objective)
 	battle._refresh_all()
-	assert(battle.objective_hint.text.contains("Rite spent"))
+	assert(battle.objective_hint.text.contains("Rune spent"))
 	var settings = root.get_node("GameSettings")
 	settings.settings_path = "user://pacing_settings.cfg"
 	settings.set_combat_speed(2.0)

@@ -1150,8 +1150,8 @@
       "file": "generated/enemy_anguish_penitent.png",
       "resource": "res://assets/art_library/generated/enemy_anguish_penitent.png",
       "dimensions": [
-        1024,
-        1536
+        1217,
+        1292
       ],
       "references": []
     },
@@ -1171,26 +1171,26 @@
       "file": "generated/enemy_anguish_penitent_ink.tres",
       "resource": "res://assets/art_library/generated/enemy_anguish_penitent_ink.tres",
       "dimensions": [
-        574.0,
-        705.0
+        643.0,
+        624.0
       ],
       "references": [
         "scripts/game_data.gd"
       ],
       "atlas": "generated/enemy_anguish_penitent_combat_sheet.png",
       "region": [
-        15.0,
-        8.0,
-        574.0,
-        705.0
+        81.0,
+        39.0,
+        643.0,
+        624.0
       ]
     },
     {
       "file": "generated/enemy_anguish_vessel.png",
       "resource": "res://assets/art_library/generated/enemy_anguish_vessel.png",
       "dimensions": [
-        1024,
-        1536
+        1208,
+        1302
       ],
       "references": []
     },
@@ -1210,18 +1210,18 @@
       "file": "generated/enemy_anguish_vessel_ink.tres",
       "resource": "res://assets/art_library/generated/enemy_anguish_vessel_ink.tres",
       "dimensions": [
-        412.0,
-        510.0
+        481.0,
+        493.0
       ],
       "references": [
         "scripts/game_data.gd"
       ],
       "atlas": "generated/enemy_anguish_vessel_combat_sheet.png",
       "region": [
-        183.0,
-        105.0,
-        412.0,
-        510.0
+        147.0,
+        136.0,
+        481.0,
+        493.0
       ]
     },
     {
@@ -1348,8 +1348,8 @@
       "file": "generated/enemy_coterie_cantor.png",
       "resource": "res://assets/art_library/generated/enemy_coterie_cantor.png",
       "dimensions": [
-        1024,
-        1536
+        1223,
+        1286
       ],
       "references": []
     },
@@ -1369,26 +1369,26 @@
       "file": "generated/enemy_coterie_cantor_ink.tres",
       "resource": "res://assets/art_library/generated/enemy_coterie_cantor_ink.tres",
       "dimensions": [
-        375.0,
-        418.0
+        625.0,
+        497.0
       ],
       "references": [
         "scripts/game_data.gd"
       ],
       "atlas": "generated/enemy_coterie_cantor_combat_sheet.png",
       "region": [
-        237.0,
-        48.0,
-        375.0,
-        418.0
+        143.0,
+        13.0,
+        625.0,
+        497.0
       ]
     },
     {
       "file": "generated/enemy_coterie_matron.png",
       "resource": "res://assets/art_library/generated/enemy_coterie_matron.png",
       "dimensions": [
-        1208,
-        1302
+        1024,
+        1536
       ],
       "references": []
     },
@@ -1396,8 +1396,8 @@
       "file": "generated/enemy_coterie_matron_combat_sheet.png",
       "resource": "res://assets/art_library/generated/enemy_coterie_matron_combat_sheet.png",
       "dimensions": [
-        1536,
-        1024
+        1312,
+        1199
       ],
       "references": [
         "assets/art_library/generated/enemy_coterie_matron_ink.tres",
@@ -1408,26 +1408,26 @@
       "file": "generated/enemy_coterie_matron_ink.tres",
       "resource": "res://assets/art_library/generated/enemy_coterie_matron_ink.tres",
       "dimensions": [
-        508.0,
-        407.0
+        394.0,
+        503.0
       ],
       "references": [
         "scripts/game_data.gd"
       ],
       "atlas": "generated/enemy_coterie_matron_combat_sheet.png",
       "region": [
-        154.0,
-        56.0,
-        508.0,
-        407.0
+        126.0,
+        54.0,
+        394.0,
+        503.0
       ]
     },
     {
       "file": "generated/enemy_coterie_seamkeeper.png",
       "resource": "res://assets/art_library/generated/enemy_coterie_seamkeeper.png",
       "dimensions": [
-        1024,
-        1536
+        1199,
+        1312
       ],
       "references": []
     },
@@ -1447,18 +1447,18 @@
       "file": "generated/enemy_coterie_seamkeeper_ink.tres",
       "resource": "res://assets/art_library/generated/enemy_coterie_seamkeeper_ink.tres",
       "dimensions": [
-        547.0,
-        425.0
+        616.0,
+        470.0
       ],
       "references": [
         "scripts/game_data.gd"
       ],
       "atlas": "generated/enemy_coterie_seamkeeper_combat_sheet.png",
       "region": [
-        116.0,
-        48.0,
-        547.0,
-        425.0
+        152.0,
+        32.0,
+        616.0,
+        470.0
       ]
     },
     {
@@ -1504,8 +1504,8 @@
       "file": "generated/enemy_harrowed_giant.png",
       "resource": "res://assets/art_library/generated/enemy_harrowed_giant.png",
       "dimensions": [
-        1217,
-        1292
+        1312,
+        1199
       ],
       "references": []
     },
@@ -1525,18 +1525,18 @@
       "file": "generated/enemy_harrowed_giant_ink.tres",
       "resource": "res://assets/art_library/generated/enemy_harrowed_giant_ink.tres",
       "dimensions": [
-        527.0,
-        423.0
+        543.0,
+        415.0
       ],
       "references": [
         "scripts/game_data.gd"
       ],
       "atlas": "generated/enemy_harrowed_giant_combat_sheet.png",
       "region": [
-        158.0,
-        40.0,
-        527.0,
-        423.0
+        142.0,
+        63.0,
+        543.0,
+        415.0
       ]
     },
     {
@@ -1607,18 +1607,18 @@
       "file": "generated/enemy_howling_head_ink.tres",
       "resource": "res://assets/art_library/generated/enemy_howling_head_ink.tres",
       "dimensions": [
-        556.0,
-        385.0
+        733.0,
+        485.0
       ],
       "references": [
         "scripts/game_data.gd"
       ],
       "atlas": "generated/enemy_howling_head_combat_sheet.png",
       "region": [
-        128.0,
-        70.0,
-        556.0,
-        385.0
+        35.0,
+        16.0,
+        733.0,
+        485.0
       ]
     },
     {
@@ -2009,8 +2009,8 @@
       "file": "generated/event_beast_offering.png",
       "resource": "res://assets/art_library/generated/event_beast_offering.png",
       "dimensions": [
-        1247,
-        1261
+        1024,
+        1536
       ],
       "references": [
         "scenes/combat/combatscene.gd"
@@ -2020,8 +2020,8 @@
       "file": "generated/event_beast_reliquary.png",
       "resource": "res://assets/art_library/generated/event_beast_reliquary.png",
       "dimensions": [
-        1145,
-        1374
+        1225,
+        1284
       ],
       "references": []
     },
@@ -6226,8 +6226,8 @@
       "file": "presentation/rooms/beast_combat.png",
       "resource": "res://assets/art_library/presentation/rooms/beast_combat.png",
       "dimensions": [
-        2172,
-        724
+        1672,
+        941
       ],
       "references": []
     },

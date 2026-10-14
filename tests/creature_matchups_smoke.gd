@@ -14,13 +14,15 @@ func run() -> void:
 	State.select_expedition("old_road")
 	State.start_run(37)
 	var original: Dictionary = State.CREATURES.duplicate(true)
-	for entry in [["ash_raider","Human","human"],["keep_footman","Corrupted","corrupted"],["anguish_vessel","The Remade","remade"],["moth_metamorph","Insect","insect"]]:
+	for entry in [["ash_raider","Human","human"],["keep_footman","Corrupted","corrupted"],["anguish_vessel","The Beast","remade"],["moth_metamorph","Insect","insect"]]:
 		var creature: Dictionary = State.creature(entry[0])
 		assert(Matchups.class_of(creature) == entry[1])
 		assert(Matchups.offense_stat(creature) == "damage_vs_" + entry[2])
 		assert(Matchups.ward_stat(creature) == "ward_vs_" + entry[2])
 	assert(Matchups.class_of({"tags":["Human","Bandit"]}) == "Human")
-	assert(Matchups.class_of({"tags":["Remade","Cult"]}) == "The Remade")
+	assert(Matchups.class_of({"tags":["Beast","Supplicant"]}) == "The Beast")
+	assert(Matchups.class_of({"tags":["Remade","Cult"]}) == "The Beast")
+	assert(Matchups.class_of({"creature_class":"The Remade"}) == "The Beast")
 	assert(Matchups.class_of({"tags":["Moth","Cultist"]}) == "Insect")
 	assert(Matchups.class_of({"undead":true,"tags":["Undead"]}) == "Corrupted")
 	assert(is_equal_approx(Matchups.offense_multiplier(15),1.15))
@@ -82,7 +84,7 @@ func run() -> void:
 	var book = load("res://scenes/hub/bestiary.tscn").instantiate()
 	root.add_child(book)
 	await process_frame
-	for entry in [["old_road",1,"Human"],["old_road",3,"Corrupted"],["path_beast",1,"The Remade"],["infested_apothecary",0,"Insect"]]:
+	for entry in [["old_road",1,"Human"],["old_road",3,"Corrupted"],["path_beast",1,"The Beast"],["infested_apothecary",0,"Insect"]]:
 		book.open_volume(entry[0])
 		book.turn_page(entry[1])
 		assert(book.book_view.get_node("CreatureClass").text == "CLASS: " + entry[2])
@@ -92,7 +94,7 @@ func run() -> void:
 	assert(book.book_view.get_node_or_null("CreatureTactics") == null,"Undiscovered pages do not reveal tactics")
 	assert(book.book_view.get_node("CreatureResistance").text == "Innate traits not yet recorded.")
 	assert(book.book_view.get_node("CreatureNotes").text == "No observations recorded.","Undiscovered boss objectives remain unrecorded")
-	for entry in [["harrowed_giant",2,"Chains 2/2"],["coterie_seamkeeper",3,"Once per form"],["coterie_cantor",4,"Once per form"],["coterie_matron",5,"Once per form"],["howling_head",6,"Idol intact"]]:
+	for entry in [["harrowed_giant",2,"Shackles 2/2"],["coterie_seamkeeper",3,"Once per aspect"],["coterie_cantor",4,"Once per aspect"],["coterie_matron",5,"Once per aspect"],["howling_head",6,"Idol intact"]]:
 		State.discover_creature(entry[0])
 		book.turn_page(entry[1])
 		var notes: String = book.book_view.get_node("CreatureNotes").text

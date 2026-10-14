@@ -92,7 +92,7 @@ func refresh() -> void:
 	var lore: String = {
 		"bandit": "The brigands guarded more than stolen coin. Beneath their spoils, a blue glass orb burns without heat. Somewhere beyond its surface, a trader is waiting.",
 		"keep": "The fallen retainers kept this relic among the keep's plunder. Its cold light survives their oath, opening a passage to a trader beyond the ruined walls.",
-		"beast": "The chamber falls silent, but the blue pulse refuses the choir of the Remade. A merchant's refuge waits beyond the glass, untouched by their worship.",
+		"beast": "The chamber falls silent, but the blue pulse refuses the chorus of the Beast. A merchant's refuge waits beyond the glass, untouched by their worship.",
 		"medical": "Among abandoned instruments, an untainted blue light answers. Beyond it lies a trader's refuge, far from the infestation."
 	}.get(floor_theme, "A blue orb glimmers in the cleared chamber. A trader's refuge waits beyond its surface.")
 	label_at(lore, Vector2(65, 230), 535, 25).size = Vector2(535, 215)

@@ -15,13 +15,13 @@ const MOVES: Dictionary = {
  "keep_wolfguard": [{"name": "Wolf's Cleave", "scale": 1.0, "status": "bleed"}, {"name": "Rending Poleaxe", "scale": 0.6, "hits": 2}, {"name": "Winter's Hunt", "scale": 0.85, "status": "chill"}],
  "keep_son": [{"name": "Broken Oath", "scale": 1.0, "status": "bleed"}, {"name": "Howl of the Last Son", "effect": "lament", "stress": 4}, {"name": "Moonlit Greatsword", "scale": 0.9, "status": "chill"}],
  "undying_lord": [{"name": "Tyrant's Verdict", "scale": 1.0, "status": "bleed"}, {"name": "Grasp of the Court", "scale": 0.55, "hits": 2, "status": "chill"}, {"name": "Unending Dominion", "effect": "lament", "stress": 5}],
-	"anguish_penitent": [{"name": "Supplicant's Hook", "scale": 1.0, "status": "bleed"}, {"name": "Cauterizing Prayer", "scale": 0.8, "status": "burn"}, {"name": "Litany of Submission", "effect": "lament", "stress": 3}],
-	"anguish_vessel": [{"name": "Graft Lash", "scale": 0.55, "hits": 2}, {"name": "Septic Offering", "scale": 0.8, "status": "poison"}, {"name": "Numbing Touch", "scale": 0.8, "status": "chill"}],
-	"harrowed_giant": [{"name": "Chain Litany", "scale": 1.0, "status": "bleed"}, {"name": "Crushing Benediction", "scale": 1.2}, {"name": "Kneeling Hymn", "effect": "lament", "stress": 4}],
-	"coterie_seamkeeper": [{"name": "Sacred Incision", "scale": 1.0, "status": "bleed"}, {"name": "Needle Psalm", "scale": 0.55, "hits": 2}, {"name": "Purifying Brand", "scale": 0.8, "status": "burn"}],
-	"coterie_cantor": [{"name": "Cold Chorus", "scale": 0.85, "status": "chill"}, {"name": "Hymn of Unmaking", "effect": "lament", "stress": 4}, {"name": "Rib Flurry", "scale": 0.55, "hits": 2}],
-	"coterie_matron": [{"name": "Septic Blessing", "scale": 0.85, "status": "poison"}, {"name": "Blessed Remaking", "effect": "remake", "heal": 12}, {"name": "Candle Communion", "scale": 0.9, "status": "burn"}],
-	"howling_head": [{"name": "Unending Prayer", "effect": "lament", "stress": 6, "status": "chill"}, {"name": "Choir of Teeth", "scale": 1.1, "status": "bleed"}, {"name": "Tendon Lash", "scale": 0.6, "hits": 2}],
+	"anguish_penitent": [{"name": "Obsidian Offering", "scale": 1.0, "status": "bleed"}, {"name": "Rune Scour", "scale": 0.8, "status": "burn"}, {"name": "Renounce Grief", "effect": "lament", "stress": 3}],
+	"anguish_vessel": [{"name": "Raking Claws", "scale": 0.55, "hits": 2}, {"name": "Bloodborne Venom", "scale": 0.8, "status": "poison"}, {"name": "Grave-Cold Grasp", "scale": 0.8, "status": "chill"}],
+	"harrowed_giant": [{"name": "Shackle Lash", "scale": 1.0, "status": "bleed"}, {"name": "Packbreaker", "scale": 1.2}, {"name": "The Hunt Unbound", "effect": "lament", "stress": 4}],
+	"coterie_seamkeeper": [{"name": "Throat-Taker", "scale": 1.0, "status": "bleed"}, {"name": "Twin-Fang Rush", "scale": 0.55, "hits": 2}, {"name": "Blood Rune Brand", "scale": 0.8, "status": "burn"}],
+	"coterie_cantor": [{"name": "Cold Chorus", "scale": 0.85, "status": "chill"}, {"name": "Hymn of Hollow Throats", "effect": "lament", "stress": 4}, {"name": "Biting Choir", "scale": 0.55, "hits": 2}],
+	"coterie_matron": [{"name": "Blighted Benediction", "scale": 0.85, "status": "poison"}, {"name": "Blessing of the Pack", "effect": "remake", "heal": 12}, {"name": "Horned Brand", "scale": 0.9, "status": "burn"}],
+	"howling_head": [{"name": "Unending Howl", "effect": "lament", "stress": 6, "status": "chill"}, {"name": "Maw of the Beast", "scale": 1.1, "status": "bleed"}, {"name": "Lashing Tongues", "scale": 0.6, "hits": 2}],
 
 	"ash_raider": [
 		{"name": "Cleaver Slash", "scale": 1.0, "status": "bleed"},
@@ -61,7 +61,7 @@ static func make_enemy(state: Dictionary, creature_id: String, depth: int, boss:
 	elif support:
 		hp = maxi(1, int(round(normal_hp * 0.3)))
 		attack = maxi(1, int(round(normal_attack * 0.3)))
-	return {"creature": creature_id, "name": ("Support " if support else ("Dread " if boss and not state.get("tags", []).has("Remade") and not state.get("tags", []).has("Revenant") and not state.get("tags", []).has("Moth") else "")) + str(state.get("name", "Enemy")),
+	return {"creature": creature_id, "name": ("Support " if support else ("Dread " if boss and not state.get("tags", []).has("Beast") and not state.get("tags", []).has("Remade") and not state.get("tags", []).has("Revenant") and not state.get("tags", []).has("Moth") else "")) + str(state.get("name", "Enemy")),
 		"max_hp": hp, "hp": hp, "attack": attack, "normal_hp": normal_hp, "normal_attack": normal_attack,
 		"support": support, "boss": boss, "art": str(state.get("art", "")), "undead": bool(state.get("undead", false)), "creature_class": str(state.get("creature_class", "Corrupted")),
 		"block": 0, "mark": 0, "weak": 0, "statuses": {}, "moves": MOVES.get(creature_id, MOVES["hollow_villager"]).duplicate(true)}

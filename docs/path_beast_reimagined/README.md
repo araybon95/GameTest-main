@@ -1,7 +1,8 @@
 # Path of the Beast — reimagining concepts
 
-Concepts generated from the supplied retheme diff. These are review images;
-they have not replaced the live game's sprites, atlases or environments.
+Approved concepts generated from the supplied retheme diff. These designs now
+replace the live Beast roster, combat atlases, environments and event props.
+See the [implemented encounters](../beast_retheme/README.md) for in-game screenshots.
 
 ## Image gallery
 
@@ -58,22 +59,8 @@ roster a readable escalation from human remnants to primordial predator.
 Existing creature IDs, the `remade` faction identifier and item-stat keys are
 retained, which helps preserve current equipment and saved-data compatibility.
 
-Before integrating the artwork:
-
-1. Correct the legacy `assets/generated/` prompt paths to the live art library.
-2. Produce all required idle/action/hurt/cast or roar frames. The four legacy
-   two-pose prompts are not a complete replacement for the seven measured live
-   combat sheets. Re-measure atlas regions and foot anchors for new sheets.
-3. Update the active layered room/stage artwork as well as the two base
-   backgrounds. The current scenery redirects the Beast background to a stage
-   asset and uses room layers, so replacing the base PNG alone is insufficient.
-4. Keep a regression assertion for legacy `Remade` tags. The patch implements
-   the alias but replaces its existing test with a new `Beast`-tag assertion;
-   both cases should be covered.
-5. Regenerate the Fallen Idol and Offering Post artwork for the renamed events;
-   otherwise their text will describe the new theme over old object drawings.
-
-This is a review of the pasted diff and generated art concepts. The gameplay
-patch has not been applied or tested. Source prompt wording is recorded in
-[source-prompts.json](source-prompts.json); generation adds left-facing combat
-readability, clear margins, shared Priest costume cues and uncluttered ground.
+Integration is complete: combat frames and atlas anchors have been measured,
+active room layers and event props replaced, prompt paths corrected, and legacy
+Remade tags covered by regression checks. Source prompt wording is recorded in
+[source-prompts.json](source-prompts.json); the Choir revision is recorded in
+[revised-prompts.json](revised-prompts.json).
