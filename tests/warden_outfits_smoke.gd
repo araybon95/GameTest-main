@@ -75,6 +75,11 @@ func run() -> void:
 	motion._process(0.1)
 	assert(fighter.scale.y == 1.0, "Attack pose does not breathe")
 	fighter.queue_free()
+	for outfit in ["original","ashen_wolf"]:
+		var catalog = preload("res://scripts/warden_outfits.gd")
+		for index in range(2,12):
+			var scaled_height: float = (catalog.GROUNDS[outfit][index]-catalog.HEAD_TOPS[outfit][index])*catalog.frame(outfit,index).get_meta("stride_scale")
+			assert(absf(scaled_height-(catalog.GROUNDS[outfit][0]-catalog.HEAD_TOPS[outfit][0])) < 0.01,"Stride preserves approved body scale")
 	var screen = load("res://scenes/hub/customization.tscn").instantiate()
 	root.add_child(screen)
 	await process_frame

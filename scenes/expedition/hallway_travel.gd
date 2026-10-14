@@ -616,12 +616,13 @@ func update_walkers() -> void:
    if id == "warden" and costume_for_warden(id): texture = walk_frames[id][0 if arrived or room_mode else int(warden_clock/0.084)%10]
    elif experimental: texture = walk_frames[id][QUIET_WALK_POSE]
    elif not arrived: texture = walk_frames[id][int(phase)%4]
-  var width: float = HERO_HEIGHT*texture.get_width()/float(maxi(1,texture.get_height()))
+  var height: float = HERO_HEIGHT*float(texture.get_meta("stride_scale",1.0))
+  var width: float = height*texture.get_width()/float(maxi(1,texture.get_height()))
   picture.texture = texture
   picture.flip_h = facing_left
-  picture.size = Vector2(width,HERO_HEIGHT)
-  picture.pivot_offset = Vector2(width*0.5,HERO_HEIGHT)
-  picture.position = bases[index]-Vector2(width*0.5,HERO_HEIGHT)
+  picture.size = Vector2(width,height)
+  picture.pivot_offset = Vector2(width*0.5,height)
+  picture.position = bases[index]-Vector2(width*0.5,height)
   picture.rotation = 0.0
   ActorMotion.update(picture,actor_clock,animation_clock*3.5*PI,actor_walking,enabled and not (id == "warden" and costume_for_warden(id)))
 
