@@ -5404,6 +5404,195 @@
       "individual_png_override": "items/winter_shard.png"
     },
     {
+      "file": "party_weapons/healer-alternate-0.png",
+      "resource": "res://assets/art_library/party_weapons/healer-alternate-0.png",
+      "dimensions": [
+        1116,
+        1410
+      ],
+      "references": []
+    },
+    {
+      "file": "party_weapons/healer-alternate-1.png",
+      "resource": "res://assets/art_library/party_weapons/healer-alternate-1.png",
+      "dimensions": [
+        1461,
+        1077
+      ],
+      "references": []
+    },
+    {
+      "file": "party_weapons/healer-original-0.png",
+      "resource": "res://assets/art_library/party_weapons/healer-original-0.png",
+      "dimensions": [
+        1094,
+        1437
+      ],
+      "references": []
+    },
+    {
+      "file": "party_weapons/healer-original-1.png",
+      "resource": "res://assets/art_library/party_weapons/healer-original-1.png",
+      "dimensions": [
+        1516,
+        1038
+      ],
+      "references": []
+    },
+    {
+      "file": "party_weapons/healer-relic-0.png",
+      "resource": "res://assets/art_library/party_weapons/healer-relic-0.png",
+      "dimensions": [
+        1148,
+        1371
+      ],
+      "references": []
+    },
+    {
+      "file": "party_weapons/healer-relic-1.png",
+      "resource": "res://assets/art_library/party_weapons/healer-relic-1.png",
+      "dimensions": [
+        1474,
+        1067
+      ],
+      "references": []
+    },
+    {
+      "file": "party_weapons/healer-weapons.png",
+      "resource": "res://assets/art_library/party_weapons/healer-weapons.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
+      "file": "party_weapons/occultist-alternate-0.png",
+      "resource": "res://assets/art_library/party_weapons/occultist-alternate-0.png",
+      "dimensions": [
+        1158,
+        1359
+      ],
+      "references": []
+    },
+    {
+      "file": "party_weapons/occultist-alternate-1.png",
+      "resource": "res://assets/art_library/party_weapons/occultist-alternate-1.png",
+      "dimensions": [
+        1548,
+        1016
+      ],
+      "references": []
+    },
+    {
+      "file": "party_weapons/occultist-original-0.png",
+      "resource": "res://assets/art_library/party_weapons/occultist-original-0.png",
+      "dimensions": [
+        1138,
+        1382
+      ],
+      "references": []
+    },
+    {
+      "file": "party_weapons/occultist-original-1.png",
+      "resource": "res://assets/art_library/party_weapons/occultist-original-1.png",
+      "dimensions": [
+        1568,
+        1003
+      ],
+      "references": []
+    },
+    {
+      "file": "party_weapons/occultist-relic-0.png",
+      "resource": "res://assets/art_library/party_weapons/occultist-relic-0.png",
+      "dimensions": [
+        1161,
+        1355
+      ],
+      "references": []
+    },
+    {
+      "file": "party_weapons/occultist-relic-1.png",
+      "resource": "res://assets/art_library/party_weapons/occultist-relic-1.png",
+      "dimensions": [
+        1567,
+        1004
+      ],
+      "references": []
+    },
+    {
+      "file": "party_weapons/occultist-weapons.png",
+      "resource": "res://assets/art_library/party_weapons/occultist-weapons.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
+      "file": "party_weapons/ranger-alternate-0.png",
+      "resource": "res://assets/art_library/party_weapons/ranger-alternate-0.png",
+      "dimensions": [
+        1207,
+        1303
+      ],
+      "references": []
+    },
+    {
+      "file": "party_weapons/ranger-alternate-1.png",
+      "resource": "res://assets/art_library/party_weapons/ranger-alternate-1.png",
+      "dimensions": [
+        1265,
+        1244
+      ],
+      "references": []
+    },
+    {
+      "file": "party_weapons/ranger-original-0.png",
+      "resource": "res://assets/art_library/party_weapons/ranger-original-0.png",
+      "dimensions": [
+        1192,
+        1319
+      ],
+      "references": []
+    },
+    {
+      "file": "party_weapons/ranger-original-1.png",
+      "resource": "res://assets/art_library/party_weapons/ranger-original-1.png",
+      "dimensions": [
+        1319,
+        1193
+      ],
+      "references": []
+    },
+    {
+      "file": "party_weapons/ranger-relic-0.png",
+      "resource": "res://assets/art_library/party_weapons/ranger-relic-0.png",
+      "dimensions": [
+        1197,
+        1314
+      ],
+      "references": []
+    },
+    {
+      "file": "party_weapons/ranger-relic-1.png",
+      "resource": "res://assets/art_library/party_weapons/ranger-relic-1.png",
+      "dimensions": [
+        1247,
+        1261
+      ],
+      "references": []
+    },
+    {
+      "file": "party_weapons/ranger-weapons.png",
+      "resource": "res://assets/art_library/party_weapons/ranger-weapons.png",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "references": []
+    },
+    {
       "file": "presentation/dungeons/apothecary/background.png",
       "resource": "res://assets/art_library/presentation/dungeons/apothecary/background.png",
       "dimensions": [

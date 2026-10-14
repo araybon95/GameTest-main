@@ -66,7 +66,7 @@ func run():
  battle._refresh_all()
  assert(actor.texture.get_meta("equipped_weapon","") == "" and actor.texture.get_meta("weapon_element","") == "")
  assert(Poses.state_pose(old_texture,"attack").get_meta("equipped_weapon") == "named_frost", "Queued attacks retain the weapon captured before a swap")
- assert(not battle.hero_portraits.ranger.texture.has_meta("equipped_weapon"))
+ assert(battle.hero_portraits.ranger.texture.get_meta("pose_id") == "ranger", "Warden swaps do not replace another hero")
  battle.free()
  print("PASS: Warden equipment-driven combat art, attack snapshots, four outfits, named gear and safe unequip")
  quit()

@@ -1098,6 +1098,8 @@ func _refresh_all() -> void:
 		var portrait: TextureRect = hero_portraits[hero_id]
 		if hero_id == "warden" and portrait.has_node("WardenCombatArt"):
 			if portrait.get_node("WardenCombatArt").sync(): _plant_combatant(hero_buttons[hero_id],portrait,280.0)
+		elif portrait.has_node("PaintedCombatArt"):
+			if portrait.get_node("PaintedCombatArt").sync(): _plant_combatant(hero_buttons[hero_id],portrait,280.0)
 		preload("res://scripts/visual_overlays.gd").selection(portrait,hero_id == selected_hero and not bool(state["dead"]))
 		portrait.modulate = Color(0.5, 0.5, 0.54, 0.8) if bool(state["dead"]) else Color.WHITE
 		_sync_portrait(portrait, state)
@@ -1570,6 +1572,7 @@ func _make_hero_card(hero_id: String) -> Button:
 	StatusVisual.new().attach_to(portrait)
 	preload("res://scripts/equipment_accents.gd").attach(portrait,hero_id)
 	if hero_id == "warden": preload("res://scripts/warden_combat_art.gd").attach(portrait)
+	elif hero_id in ["ranger","occultist","healer"]: preload("res://scripts/warden_combat_art.gd").attach(portrait,hero_id)
 	var name_label: Label = button.get_node("HeroName") as Label
 	_place(name_label, Rect2(8, 285, 234, 27))
 	name_label.add_theme_font_size_override("font_size", 18)
