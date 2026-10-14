@@ -2373,18 +2373,18 @@
       "file": "generated/hero_ranger.tres",
       "resource": "res://assets/art_library/generated/hero_ranger.tres",
       "dimensions": [
-        401.0,
-        419.0
+        1104.0,
+        1222.0
       ],
       "references": [
         "scripts/game_data.gd"
       ],
-      "atlas": "generated/hero_ranger_combat_sheet.png",
+      "atlas": "generated/hero_ranger_narrow_idle.png",
       "region": [
-        61.0,
-        65.0,
-        401.0,
-        419.0
+        82.0,
+        21.0,
+        1104.0,
+        1222.0
       ]
     },
     {
@@ -2407,8 +2407,18 @@
       ],
       "references": [
         "assets/art_library/appearance/hero_ranger_original_portrait.tres",
-        "assets/art_library/generated/hero_ranger.tres",
         "scripts/ink_sprite_regions.gd"
+      ]
+    },
+    {
+      "file": "generated/hero_ranger_narrow_idle.png",
+      "resource": "res://assets/art_library/generated/hero_ranger_narrow_idle.png",
+      "dimensions": [
+        1227,
+        1282
+      ],
+      "references": [
+        "assets/art_library/generated/hero_ranger.tres"
       ]
     },
     {

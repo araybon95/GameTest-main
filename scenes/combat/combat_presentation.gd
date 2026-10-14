@@ -219,6 +219,7 @@ func apply_pose(index: int, role: String, changed: bool, hurt: bool = false, sta
  var base_size: Vector2 = active[role + "_size"]
  var height: float = base_size.y * (texture.get_height()/float(texture.get_meta("idle_pixel_height",texture.get_height())) if changed and texture.has_meta("idle_pixel_height") else 0.92 if changed and hurt else 1.0)
  var width: float = height * texture.get_width()/float(maxi(1,texture.get_height()))
+ width *= preload("res://scripts/hero_proportions.gd").width_factor(str(active[role+"_node"].get_meta("hero_id","")))
  var max_width: float = 620.0 if active.get(role+"_boss",false) else 480.0
  if width > max_width:
   height *= max_width/width
