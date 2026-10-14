@@ -25,7 +25,9 @@ Unknown encounters stay mysterious until entry. Scouting reveals nearby rooms;
 newly revealed rooms receive a brief NEW badge. Cleared rooms remain marked on
 the map. Inventory, scouting and retreat remain available. Party members stand
 in combat-ready poses using selected complete costume art and subtle breathing.
-Warden and Crusader remain 8% taller and 5% broader in these exploration views.
+Warden and Crusader are 8% taller and 10% broader; Ranger is slightly smaller,
+and Ranger/Healer/Occultist use slimmer builds shared with combat. See
+[the class proportions preview](../hero_proportions/README.md).
 
 Unresolved room discoveries from the earlier passage prototype are restored to
 rooms. Resolved discoveries stay resolved. An older saved journey already in a
