@@ -7303,6 +7303,53 @@
         242.0,
         220.0
       ]
+    },
+    {
+      "file": "weapon_preview/ashen_wolf.png",
+      "resource": "res://assets/art_library/weapon_preview/ashen_wolf.png",
+      "dimensions": [
+        1229,
+        1280
+      ],
+      "references": []
+    },
+    {
+      "file": "weapon_preview/ashen_wolf_attack.png",
+      "resource": "res://assets/art_library/weapon_preview/ashen_wolf_attack.png",
+      "dimensions": [
+        1229,
+        1280
+      ],
+      "references": []
+    },
+    {
+      "file": "weapon_preview/original.png",
+      "resource": "res://assets/art_library/weapon_preview/original.png",
+      "dimensions": [
+        1231,
+        1278
+      ],
+      "references": []
+    },
+    {
+      "file": "weapon_preview/original_attack.png",
+      "resource": "res://assets/art_library/weapon_preview/original_attack.png",
+      "dimensions": [
+        1227,
+        1281
+      ],
+      "references": []
+    },
+    {
+      "file": "weapon_preview/weapons.png",
+      "resource": "res://assets/art_library/weapon_preview/weapons.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "references": [
+        "scripts/warden_weapon_preview.gd"
+      ]
     }
   ]
 }

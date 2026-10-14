@@ -1,0 +1,41 @@
+{
+  "tool": "image_gen.imagegen",
+  "notes": "Generated PNGs copied unchanged. Runtime atlas rectangles and hand overlays are measured without modifying source pixels. Instruction summaries are recorded here; these are not verbatim transcripts.",
+  "assets": [
+    {
+      "asset": "assets/art_library/weapon_preview/original.png",
+      "generated_source": "exec-1344b0ca-aad2-4a3f-b29e-e1d97174c9bf.png",
+      "reference": "assets/art_library/warden_outfits/original.png frame 0",
+      "edit_instructions_summary": "Remove only mace and handle; retain standing pose, armour, shield and closed gripping fist.",
+      "sha256": "ceb98fb1065fd6df6db4d1ae8fc08a8d66797156354e51b541b693e5d0859e14"
+    },
+    {
+      "asset": "assets/art_library/weapon_preview/ashen_wolf.png",
+      "generated_source": "exec-66a70bd8-6cb5-4b58-9288-2b0b14b561f3.png",
+      "reference": "assets/art_library/warden_outfits/ashen_wolf.png frame 0",
+      "edit_instructions_summary": "Remove only mace and handle; retain standing pose, wolf helmet, grey cloak, armour, shield and closed fist.",
+      "sha256": "0a57e6e0c63319c97bb34bd8198345bc003ddecbca89319e39ccd4f879363c6f"
+    },
+    {
+      "asset": "assets/art_library/weapon_preview/original_attack.png",
+      "generated_source": "exec-4455ee2b-3e4a-44e7-8472-3bbdd9871abe.png",
+      "reference": "assets/art_library/warden_outfits/original.png frame 1",
+      "edit_instructions_summary": "Remove only mace and handle from overhead fist; preserve attack pose and costume.",
+      "sha256": "87ea33367a1afb661c3d4695f0afd79827c79eb3716cf556e66bc8848c6cdcfb"
+    },
+    {
+      "asset": "assets/art_library/weapon_preview/ashen_wolf_attack.png",
+      "generated_source": "exec-a0821407-a781-4ac0-88de-8f48b34c6406.png",
+      "reference": "assets/art_library/warden_outfits/ashen_wolf.png frame 1",
+      "edit_instructions_summary": "Remove only mace and handle from overhead fist; preserve attack pose and wolf costume.",
+      "sha256": "4928564808f77eabf7cea000bcb5c3ac248b2367f36bd4694f1f903ce39be766"
+    },
+    {
+      "asset": "assets/art_library/weapon_preview/weapons.png",
+      "generated_source": "exec-68b45265-350f-4a19-963b-8853d5b815ee.png",
+      "reference": "exec-ebfaf317-bde1-4643-b132-f7d95e2f11c0.png",
+      "edit_instructions_summary": "Three equal columns: iron sword, spiked mace, frost blade; points up, pommels down. Follow-up edit removes background, haze and shadows.",
+      "sha256": "b7a25bb68c30b3e841f6b74e50f561ceff9ccff94d0f7410983ca102a3ba35d2"
+    }
+  ]
+}
