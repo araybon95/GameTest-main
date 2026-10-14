@@ -77,10 +77,10 @@ func test_lament() -> bool:
 	var hp: Dictionary = {}
 	for id in State.party:
 		hp[id] = battle.hero_state[id]["hp"]
-	assert(battle._enemy_move(0)["name"] == "Unending Prayer")
+	assert(battle._enemy_move(0)["name"] == "Unending Howl")
 	battle._enemy_action()
 	var cinema: Control = battle.presentation
-	assert(cinema.active["kind"] == "spell" and cinema.active["title"] == "Unending Prayer" and not cinema.active["hero"])
+	assert(cinema.active["kind"] == "spell" and cinema.active["title"] == "Unending Howl" and not cinema.active["hero"])
 	assert(cinema.active["source_node"] == battle.enemy_art and cinema.active["target_node"] == battle.hero_portraits["warden"])
 	for id in ["warden", "occultist"]:
 		assert(battle.hero_state[id]["stress"] == 8 and battle.hero_state[id]["statuses"]["chill"]["turns"] == 2)
@@ -103,7 +103,7 @@ func test_remake() -> bool:
 	var cinema: Control = battle.presentation
 	assert(battle.enemy_hp == battle.enemy_max_hp and battle.enemies[0]["hp"] == battle.enemy_max_hp)
 	assert(battle.hero_state == heroes)
-	assert(cinema.active["kind"] == "heal" and cinema.active["title"] == "Blessed Remaking" and not cinema.active["hero"])
+	assert(cinema.active["kind"] == "heal" and cinema.active["title"] == "Blessing of the Pack" and not cinema.active["hero"])
 	assert(cinema.active["source_node"] == cinema.active["target_node"] and not cinema.fighters[1].visible)
 	assert(feedback_values(battle).has("+5 HP") and not feedback_values(battle).has("+12 HP"), "Healing feedback uses actual capped recovery")
 	assert(cinema.feedback_count["heal"] == 1 and cinema.feedback_count.get("damage", 0) == 0)

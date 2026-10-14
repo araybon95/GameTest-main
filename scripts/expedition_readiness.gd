@@ -171,6 +171,6 @@ static func next_threat(state) -> String:
 			if state.floor_index == 0: return "The keep's guards hit harder; crossbows threaten the rear. Recover, explore for supplies, and bring cleansing for Bleed, Poison and Chill."
 			if state.floor_index == 1: return "The Undying Lord is healed while its support survives. Defeat that attendant first; wolf guards can pull rear heroes forward."
 		"path_beast":
-			if state.floor_index == 0: return "The Coterie brings three consecutive forms in one battle. Each form has a rite you can break for 1 AP; preserve health for the whole fight."
-			if state.floor_index == 1: return "The Howling Head's hymns bring Stress and Chill. Silence its choir idol for 1 AP to weaken Unending Prayer; protect wounded allies."
+			if state.floor_index == 0: return "The Horned Priest wears three beast aspects back to back in one battle. Each aspect carves a rune you can break for 1 AP; preserve health for the whole fight."
+			if state.floor_index == 1: return "The Howl Made Flesh brings Stress and Chill. Silence the idol of the Beast for 1 AP to weaken Unending Howl; protect wounded allies."
 	return "The next floor brings stronger foes. Explore for supplies and recover before descending if the party is wounded."

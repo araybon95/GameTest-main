@@ -1,23 +1,25 @@
 extends RefCounted
 ## Creature classes inform direct-hit equipment and small status application chances.
 ## Existing faction tags and undead traits remain separate and are never changed here.
-const CLASS_KEYS: Dictionary = {"Human":"human", "Corrupted":"corrupted", "The Remade":"remade", "Insect":"insect"}
+const CLASS_KEYS: Dictionary = {"Human":"human", "Corrupted":"corrupted", "The Beast":"remade", "Insect":"insect"}
 const OFFENSE_CAP: int = 25
 const WARD_CAP: int = 20
 const INNATE_RESISTANCES: Dictionary = {
 	"Human": {},
 	"Corrupted": {"bleed":20},
-	"The Remade": {"chill":15},
+	"The Beast": {"chill":15},
 	"Insect": {"poison":20}
 }
 
 static func class_of(creature: Dictionary) -> String:
+	if creature.get("creature_class","") == "The Remade": return "The Beast"
 	var declared: String = str(creature.get("creature_class",""))
 	if CLASS_KEYS.has(declared): return declared
 	# Older saves and test fixtures can still carry only the existing faction tags.
 	var tags: Array = creature.get("tags",[])
 	if tags.has("Human"): return "Human"
-	if tags.has("Remade"): return "The Remade"
+	# "Remade" is the pre-retheme tag; older saves and fixtures may still carry it.
+	if tags.has("Beast") or tags.has("Remade"): return "The Beast"
 	if tags.has("Moth") or tags.has("Insect"): return "Insect"
 	return "Corrupted"
 
@@ -53,7 +55,7 @@ static func tactics(creature: Dictionary) -> String:
 	var advice: String = {
 		"Human":"Burn, Bleed, Poison and Chill apply normally against Humans. Human hunt trinkets improve direct damage; Human wards reduce direct hits. Damage-over-time is unaffected.",
 		"Corrupted":"Resists Bleed application 20% of the time. Burn, Poison and Chill apply normally. Corrupted hunt and ward trinkets affect direct hits only.",
-		"The Remade":"Chill has a 15% chance to be resisted on application. Burn, Bleed and Poison apply normally. The Remade hunt and ward trinkets affect direct hits only; damage-over-time is unaffected.",
+		"The Beast":"Chill has a 15% chance to be resisted on application. Burn, Bleed and Poison apply normally. Beast hunt and ward trinkets affect direct hits only; damage-over-time is unaffected.",
 		"Insect":"Poison has a 20% chance to be resisted on application. Burn, Bleed and Chill apply normally. Insect hunt and ward trinkets affect direct hits only; damage-over-time is unaffected."
 	}[category]
 	if creature.get("undead",false): advice += " Holy attacks keep their undead bonus."

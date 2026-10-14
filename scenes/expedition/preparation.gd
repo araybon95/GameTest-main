@@ -15,7 +15,7 @@ func refresh() -> void:
 	label_at("Positions 1–3: 1 is nearest the enemy. Skills show their usable positions and reach. Movement swaps allies.", Vector2(75, 115), 1780, 21)
 	var warning: String = "Bandits cause Bleed and Poison. Deeper keep guards can pull rear heroes forward."
 	if expedition.get("faction", "") == "remade":
-		warning = "The remade use Burn, Bleed, Poison and stressful hymns. The Coterie has three consecutive forms."
+		warning = "The Beast's packs use Burn, Bleed, Poison and howls that break nerve. The Horned Priest wears three aspects back to back."
 	elif expedition.get("faction", "") == "moth":
 		warning = "Moths cause Bleed and Poison. Oleander guards then exposes himself; Exuvia's cocoons must be destroyed before hatching."
 	label_at("SCOUT REPORT: " + warning, Vector2(75, 155), 1760, 20).size = Vector2(1760, 40)

@@ -1,10 +1,8 @@
 [gd_resource type="AtlasTexture" load_steps=2 format=3]
-
 [ext_resource type="Texture2D" path="res://assets/art_library/generated/enemy_harrowed_giant_combat_sheet.png" id="1"]
-
 [resource]
 atlas = ExtResource("1")
-region = Rect2(158, 40, 527, 423)
+region = Rect2(142, 63, 543, 415)
 filter_clip = true
 metadata/pose_id = "harrowed_giant"
-metadata/idle_pixel_height = 423
+metadata/idle_pixel_height = 415

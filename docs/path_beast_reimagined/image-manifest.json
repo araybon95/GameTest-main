@@ -1,0 +1,65 @@
+[
+  {
+    "file": "anguish_penitent.png",
+    "width": 1217,
+    "height": 1292,
+    "mode": "RGBA",
+    "has_alpha": true
+  },
+  {
+    "file": "anguish_vessel.png",
+    "width": 1208,
+    "height": 1302,
+    "mode": "RGBA",
+    "has_alpha": true
+  },
+  {
+    "file": "beast_camp.png",
+    "width": 1672,
+    "height": 941,
+    "mode": "RGB",
+    "has_alpha": false
+  },
+  {
+    "file": "beast_sanctuary.png",
+    "width": 1672,
+    "height": 941,
+    "mode": "RGB",
+    "has_alpha": false
+  },
+  {
+    "file": "coterie_cantor.png",
+    "width": 1223,
+    "height": 1286,
+    "mode": "RGBA",
+    "has_alpha": true
+  },
+  {
+    "file": "coterie_matron.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGBA",
+    "has_alpha": true
+  },
+  {
+    "file": "coterie_seamkeeper.png",
+    "width": 1199,
+    "height": 1312,
+    "mode": "RGBA",
+    "has_alpha": true
+  },
+  {
+    "file": "harrowed_giant.png",
+    "width": 1312,
+    "height": 1199,
+    "mode": "RGBA",
+    "has_alpha": true
+  },
+  {
+    "file": "howling_head.png",
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGBA",
+    "has_alpha": true
+  }
+]

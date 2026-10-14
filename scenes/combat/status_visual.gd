@@ -46,6 +46,7 @@ func sync(active_statuses: Dictionary, hp: int, max_hp: int, is_dead: bool = fal
 		portrait.texture = preload("res://scripts/combat_poses.gd").state_pose(living_texture,"death")
 		var height: float = living_rect.size.y*portrait.texture.get_height()/maxf(1,float(living_texture.get_meta("idle_pixel_height",living_texture.get_height())))
 		var width: float = height*portrait.texture.get_width()/maxf(1,portrait.texture.get_height())
+		width *= preload("res://scripts/hero_proportions.gd").width_factor(str(portrait.get_meta("hero_id","")))
 		portrait.size = Vector2(width,height)
 		portrait.position = living_rect.position+Vector2((living_rect.size.x-width)*0.5,living_rect.size.y-height)
 	elif dead and not is_dead:

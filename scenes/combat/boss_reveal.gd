@@ -47,7 +47,7 @@ func _ready() -> void:
  model.mouse_filter = Control.MOUSE_FILTER_IGNORE
  model.material = original.material.duplicate() if original.material != null else null
  add_child(model)
- marker = label("FLOOR GUARDIAN" if int(entry.get("total",1)) == 1 else "THE COTERIE · PHASE %d / %d" % [int(entry.get("phase",1)),int(entry.get("total",1))],Vector2(350,485),1220,19,tint)
+ marker = label("FLOOR GUARDIAN" if int(entry.get("total",1)) == 1 else "THE HORNED PRIEST · PHASE %d / %d" % [int(entry.get("phase",1)),int(entry.get("total",1))],Vector2(350,485),1220,19,tint)
  title = label(str(entry.get("name","The Guardian")).to_upper(),Vector2(220,520),1480,42,Color("#F5E5C7"))
  lore = label(str(entry.get("lore","")),Vector2(420,585),1080,22,Color("#CFBDA6"),true)
  lore.size = Vector2(1080,95)

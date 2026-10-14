@@ -31,7 +31,7 @@ const EQUIPMENT: Dictionary = {
 	"ranger_common_armor":{"free_move":1,"block":-1,"name":"Trailwarden Jack","rarity":"common","hero":"ranger","slot":"armor","accuracy":5,"bleed_resist":10,"equipment_look":"original","lore":"Waxed leather and careful stitching. It was made for returning home."},
 	"ranger_relic_armor":{"free_move":1,"block":-1,"name":"Thornsong Mantle","rarity":"legendary","hero":"ranger","slot":"armor","max_hp":5,"accuracy":8,"debuff_resist":15,"equipment_look":"relic","lore":"Thorns guard the seams; a green clasp holds the woodland's last vow."},
 	"occultist_armor":{"name":"Gravecloth Wraps","rarity":"common","hero":"occultist","slot":"armor","max_hp":2,"poison_resist":20,"equipment_look":"original","lore":"Burial cloth washed clean of names, but not of whispers."},
-	"occultist_faction_armor":{"block":-1,"name":"Seamkeeper's Vestments","rarity":"epic","hero":"occultist","slot":"armor","max_hp":6,"damage_percent":6,"equipment_look":"alternate","lore":"Stolen from the choir, these bindings keep their wearer whole."},
+	"occultist_faction_armor":{"block":-1,"name":"Rune-Scored Vestments","rarity":"epic","hero":"occultist","slot":"armor","max_hp":6,"damage_percent":6,"equipment_look":"alternate","lore":"Cut from a Priest's hide and worked into cloth. The runes still answer when a pack gathers, which is a warning if you can read them."},
 	"occultist_relic_armor":{"block":-1,"name":"Gravetide Ribmantle","rarity":"legendary","hero":"occultist","slot":"armor","damage_percent":10,"debuff_resist":15,"equipment_look":"relic","lore":"An ivory cage worn outside the flesh. Each rib binds a promise that should have remained buried."},
 	"healer_armor":{"name":"Pilgrim's Apron","rarity":"common","hero":"healer","slot":"armor","max_hp":4,"poison_resist":15,"equipment_look":"original","lore":"The stains survive every washing. Its pockets still hold clean thread."},
 	"healer_faction_armor":{"damage_percent":-5,"name":"Sickhouse Half-Plate","rarity":"epic","hero":"healer","slot":"armor","heal":1,"block":1,"debuff_resist":10,"equipment_look":"alternate","lore":"A physician's apron reinforced for wards where mercy needs armour."},
@@ -41,18 +41,18 @@ const EQUIPMENT: Dictionary = {
 	"chieftain_trophy": {"name":"Gallows King's Signet","rarity":"legendary","kind":"trinket","slot":"charm","boss_only":true,"damage_vs_human":15,"accuracy":5,"lore":"A stolen crown hammered into a ring. Its notches count the travellers who never returned."},
 	"son_trophy": {"name":"The Last Oath","rarity":"legendary","kind":"trinket","slot":"charm","boss_only":true,"block":2,"bleed_resist":20,"lore":"A broken sword bound with an oath-ribbon. Even death failed to loosen its owner's grip."},
 	"lord_trophy": {"name":"Calden's Deathless Seal","rarity":"legendary","kind":"trinket","slot":"charm","boss_only":true,"max_hp_percent":12,"damage_vs_corrupted":15,"lore":"A blackened seal that outlived its kingdom. Beneath the wax, something still beats."},
-	"giant_trophy": {"name":"The Harrowed Shackle","rarity":"legendary","kind":"trinket","slot":"charm","boss_only":true,"max_hp":6,"bleed_resist":25,"lore":"An iron restraint cut from the giant's wrist. Its inner barbs bear a lifetime of prayers."},
-	"coterie_trophy": {"name":"Threefold Suture","rarity":"legendary","kind":"trinket","slot":"charm","boss_only":true,"debuff_resist":20,"damage_vs_remade":15,"lore":"Three needles, one endless thread. The hymn ended; the stitches remember its rhythm."},
-	"head_trophy": {"name":"The Silenced Litany","rarity":"legendary","kind":"trinket","slot":"charm","boss_only":true,"damage_percent":12,"debuff_resist":15,"lore":"A reliquary clasped around a voiceless tongue. Silence is the only mercy its altar ever offered."},
+	"giant_trophy": {"name":"The Hunting Shackle","rarity":"legendary","kind":"trinket","slot":"charm","boss_only":true,"max_hp":6,"bleed_resist":25,"lore":"Cut from the warbeast's wrist. The barbs point inward, because the pack never expected the thing inside to mind."},
+	"coterie_trophy": {"name":"The Threefold Rune","rarity":"legendary","kind":"trinket","slot":"charm","boss_only":true,"debuff_resist":20,"damage_vs_remade":15,"lore":"Wolf, chorus and horn cut into one plate of obsidian. Worn separately they are a blessing; worn together they were a word, and the word has been broken."},
+	"head_trophy": {"name":"The Silenced Howl","rarity":"legendary","kind":"trinket","slot":"charm","boss_only":true,"damage_percent":12,"debuff_resist":15,"lore":"A shard of the altar idol, still warm. Hold it to your ear and there is nothing — which is more than anyone who knelt here was ever given."},
 	"oleander_trophy": {"name":"Oleander's Vigil","rarity":"legendary","kind":"trinket","slot":"charm","boss_only":true,"block":2,"poison_resist":30,"lore":"A wing-shaped shield fragment. The knight kept his watch long after he forgot whom he guarded."},
 	"exuvia_trophy": {"name":"The Queen's Empty Crown","rarity":"legendary","kind":"trinket","slot":"charm","boss_only":true,"heal":2,"debuff_resist":20,"lore":"A crown woven from discarded chitin. Its soft glow remembers every body sacrificed to the queen."},
 	"outlaw_tally": {"name":"Outlaw's Tally", "rarity":"rare", "kind":"trinket", "slot":"trinket", "damage_vs_human":10},
 	"warden_gravewatch": {"name":"Gravewatch Medal", "rarity":"epic", "kind":"trinket", "slot":"trinket", "hero":"warden", "damage_vs_corrupted":15},
-	"occultist_severed_litany": {"name":"Severed Litany", "rarity":"epic", "kind":"trinket", "slot":"trinket", "hero":"occultist", "damage_vs_remade":15},
+	"occultist_severed_litany": {"name":"Severed Howl", "rarity":"epic", "kind":"trinket", "slot":"trinket", "hero":"occultist", "damage_vs_remade":15},
 	"ranger_chitin_lens": {"name":"Chitin Hunter's Lens", "rarity":"epic", "kind":"trinket", "slot":"trinket", "hero":"ranger", "damage_vs_insect":15},
 	"roadward_seal": {"name":"Roadward Seal", "rarity":"rare", "kind":"trinket", "slot":"charm", "ward_vs_human":10},
 	"graveward_locket": {"name":"Graveward Locket", "rarity":"rare", "kind":"trinket", "slot":"charm", "ward_vs_corrupted":10},
-	"crusader_penitent_stitch": {"name":"Penitent's Stitch", "rarity":"epic", "kind":"trinket", "slot":"charm", "hero":"crusader", "ward_vs_remade":15},
+	"crusader_penitent_stitch": {"name":"Supplicant's Brand", "rarity":"epic", "kind":"trinket", "slot":"charm", "hero":"crusader", "ward_vs_remade":15},
 	"healer_chrysalis_rosary": {"name":"Chrysalis Rosary", "rarity":"epic", "kind":"trinket", "slot":"charm", "hero":"healer", "ward_vs_insect":15},
 	"cursed_thorn_relic": {"name": "Thornbound Reliquary", "rarity": "unique", "kind": "trinket", "slot": "charm", "damage_percent": 25, "curse_stress": 2},
 	"cursed_physician_seal": {"name": "Septic Physician's Seal", "rarity": "unique", "kind": "trinket", "slot": "charm", "heal": 4, "curse_dot": 1},
@@ -100,7 +100,7 @@ const EQUIPMENT: Dictionary = {
 const PROVISIONS: Dictionary = {
  "trail_food": {"name": "Trail Rations", "kind": "provision", "rarity": "common", "price": 2, "description": "One party ration. Automatically used after six newly visited map spaces; restores 3 HP to survivors. Three basic rations accompany every departure."},
  "lock_tools": {"name": "Locksmith Tools", "kind": "provision", "rarity": "common", "price": 4, "description": "Use at a strongbox for a guaranteed reward without a trap. Consumed once."},
- "cleansing_herbs": {"name": "Cleansing Herbs", "kind": "provision", "rarity": "common", "price": 3, "description": "Purify tainted supplies or a votive reliquary for a safe guaranteed reward. Consumed once."}
+ "cleansing_herbs": {"name": "Cleansing Herbs", "kind": "provision", "rarity": "common", "price": 3, "description": "Purify tainted supplies or a befouled shrine for a safe guaranteed reward. Consumed once."}
 }
 const SLOTS: Array[String] = ["weapon", "off_hand", "head", "armor", "trinket", "charm"]
 const LEGEND_LORE: Dictionary = {
