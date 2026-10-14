@@ -5,6 +5,7 @@ painted Warden attacks. Normal game combat and balancing are unchanged.
 
 - [Watch the looping GIF](warden-showcase.gif)
 - [Download the MP4](warden-showcase.mp4)
+- [Separate Warden execution experiment](EXECUTION.md)
 
 The nine-second clip shows Slash, Heavy Strike and Shield Bash in that order.
 Each has dedicated windup, contact and recovery artwork. The foreground Warden
