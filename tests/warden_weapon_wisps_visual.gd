@@ -37,5 +37,22 @@ func run():
    print("FAIL: wisps remain too faint/narrow against the dungeon")
    quit(1)
    return
- print("PASS: all four soft wisp colours remain visible against the dungeon")
+  figure.smoke.material.set_shader_parameter("sparkles_enabled",false)
+  await settle()
+  var soft_only: Image = root.get_texture().get_image()
+  figure.smoke.material.set_shader_parameter("sparkles_enabled",true)
+  await settle()
+  var sparkling: Image = root.get_texture().get_image()
+  var bright_pixels: int = 0
+  for y in range(int(figure.smoke.size.y)):
+   for x in range(int(figure.smoke.size.x)):
+    var a: Color = soft_only.get_pixelv(origin+Vector2i(x,y))
+    var b: Color = sparkling.get_pixelv(origin+Vector2i(x,y))
+    if maxf(b.r-a.r,maxf(b.g-a.g,b.b-a.b))*255 >= 60: bright_pixels += 1
+  print(element," neon sparkle pixels: ",bright_pixels)
+  if bright_pixels < 4 or bright_pixels > 80:
+   print("FAIL: a few small bright pixel sparkles must sit within the soft smoke")
+   quit(1)
+   return
+ print("PASS: four soft smoke colours with sparse bright pixel sparkles")
  quit()

@@ -2,6 +2,8 @@ extends Node2D
 ## Isolated equipment art preview. Does not alter the saved game or item balance.
 const Items = preload("res://scripts/item_data.gd")
 const COLOURS = {"bleed":Color("b45462"),"poison":Color("a0bd72"),"burn":Color("d99c65"),"chill":Color("adcedb")}
+# Usable handles, excluding the guard and pommel, measured in each atlas region.
+const HANDLE_SPANS = [Vector2(720,905),Vector2(326,872),Vector2(768,904)]
 const WEAPON_COLUMNS = {"warden_sword":0,"warden_epic":0,"warden_frostblade":2,"preview_mace":1}
 var body: Sprite2D
 var weapon: Sprite2D
@@ -84,7 +86,9 @@ func _place_pose() -> void:
  weapon.position = body.position+grip*body.scale
  var length: float = 150.0 if weapon_id == "preview_mace" else 205.0
  weapon.scale = Vector2.ONE * length/weapon.texture.get_height()
- weapon.offset = Vector2(-weapon.texture.get_width()/2.0,-weapon.texture.get_height()*0.86)
+ var span: Vector2 = HANDLE_SPANS[WEAPON_COLUMNS.get(weapon_id,0)]
+ var hand_pixel: float = lerpf(span.x,span.y,0.25)
+ weapon.offset = Vector2(-weapon.texture.get_width()/2.0,-hand_pixel)
  weapon.rotation = deg_to_rad(65.0 if attacking else 110.0)
  wisps.position = weapon.position
  var head_pixel := Vector2(weapon.texture.get_width()/2.0,weapon.texture.get_height()*(0.18 if weapon_id == "preview_mace" else 0.04))

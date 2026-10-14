@@ -53,6 +53,9 @@ func run():
     preview.configure(chosen_outfit,item_id)
     preview.set_pose(chosen_pose)
     assert(Geometry2D.is_point_in_polygon(preview.hand.to_local(preview.weapon.global_position),preview.hand.polygon), "Handle pivot stays within the actual gauntlet silhouette")
+    var span: Vector2 = {"warden_sword":Vector2(720,905),"preview_mace":Vector2(326,872),"warden_frostblade":Vector2(768,904)}[item_id]
+    var up_handle: float = (span.y+preview.weapon.offset.y)/(span.y-span.x)
+    assert(up_handle >= 0.72 and up_handle <= 0.78, "The hand grips three quarters up the handle, near the guard")
     var pixels: Image = preview.weapon.texture.get_image()
     var grip_pixel: Vector2i = Vector2i(-preview.weapon.offset)
     assert(pixels.get_pixelv(grip_pixel).a > 0.9, "Measured grip must land on the opaque weapon handle")

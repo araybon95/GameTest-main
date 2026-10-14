@@ -28,7 +28,7 @@ func _ready() -> void:
  shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
  add_child(shade)
  label_at("THE WARDEN · WEAPON STUDY",Vector2(0,20),32,1920)
- label_at("Same armour and build · interchangeable weapon · restrained elemental wisps",Vector2(0,70),20,1920)
+ label_at("Same armour and build · interchangeable weapon · soft smoke · sparse neon pixel sparkles",Vector2(0,70),20,1920)
  for row in range(2):
   label_at("Original armour" if row == 0 else "Ashen Wolf armour",Vector2(30,160+row*430),20,190)
   for column in range(3):
@@ -37,7 +37,7 @@ func _ready() -> void:
    figure.position = Vector2(430+column*560,500+row*430)
    figure.configure("original" if row == 0 else "ashen_wolf",["warden_sword","preview_mace","warden_frostblade"][column])
    figures.append(figure)
-   captions.append(label_at(["IRON LONGSWORD · no effect","SPIKED MACE · no effect","VIGIL OF WINTER · soft frost"][column],Vector2(230+column*560,510+row*430),18,440))
+   captions.append(label_at(["IRON LONGSWORD · no effect","SPIKED MACE · no effect","VIGIL OF WINTER · frost + pixel sparkles"][column],Vector2(230+column*560,510+row*430),18,440))
  var controls := HBoxContainer.new()
  controls.position = Vector2(740,1005)
  controls.add_theme_constant_override("separation",20)
@@ -56,7 +56,7 @@ func show_mode(value: String) -> void:
   var column: int = index%3
   figure.configure("original" if index < 3 else "ashen_wolf",["warden_sword","preview_mace","warden_frostblade"][column])
   figure.set_pose("attack" if value == "attack" else "idle")
-  captions[index].text = ["IRON LONGSWORD · no effect","SPIKED MACE · no effect","VIGIL OF WINTER · soft frost"][column]
+  captions[index].text = ["IRON LONGSWORD · no effect","SPIKED MACE · no effect","VIGIL OF WINTER · frost + pixel sparkles"][column]
   if value == "effects":
    figure.configure("original" if index < 3 else "ashen_wolf","warden_sword")
    var element: String = ["bleed","poison","burn"][column]
