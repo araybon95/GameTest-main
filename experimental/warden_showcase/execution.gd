@@ -15,11 +15,13 @@ func begin_finish(attacker: String, target_hp: int, direct_hit: bool, final_enem
  return true
 static func execution_sample(time: float, animate: bool = true) -> Dictionary:
  var warden_pose: int = -1 if time < 0.12 else 0 if time < 0.42 else 1 if time < FINAL_HIT else 2 if time < 1.5 else 3
- var target_pose: int = -1 if time < 0.25 else 0 if time < 0.42 else 1 if time < FINAL_HIT else 2 if time < COLLAPSE else 3
+ var target_pose: int = -1 if time < 0.29 else 0 if time < 0.42 else 1 if time < FINAL_HIT else 2 if time < COLLAPSE else 3
  var zoom: float = 1.0+0.16*smoothstep(0.0,0.4,time) if time < 1.5 else lerpf(1.16,1.08,smoothstep(1.5,DURATION,time))
- var shift: float = 65.0*smoothstep(0.05,0.25,time)
+ # Drive the shield through the near edge of the target, hold, then recover.
+ var shield_lunge: float = 65.0*smoothstep(0.12,0.22,time)*(1.0-smoothstep(0.34,0.58,time))
+ var shift: float = 65.0*smoothstep(0.05,0.25,time)+shield_lunge
  var shake: float = sin((time-FINAL_HIT)*110.0)*4.0*(1.0-smoothstep(FINAL_HIT,1.1,time)) if time >= FINAL_HIT and time < 1.1 else 0.0
- return {"warden_pose":warden_pose,"target_pose":target_pose,"zoom":zoom if animate else 1.0,"source_shift":shift if animate else 0.0,"shake":shake if animate else 0.0,"done":time >= DURATION,"phase":"SHIELD KNOCKDOWN" if time < 0.42 else "THE FINISHING BLOW" if time < COLLAPSE else "ENEMY FINISHED"}
+ return {"warden_pose":warden_pose,"target_pose":target_pose,"zoom":zoom if animate else 1.0,"source_shift":shift if animate else (130.0 if warden_pose == 0 else 0.0),"shake":shake if animate else 0.0,"done":time >= DURATION,"phase":"SHIELD KNOCKDOWN" if time < 0.42 else "THE FINISHING BLOW" if time < COLLAPSE else "ENEMY FINISHED"}
 static func execution_particles(time: float, animate: bool = true) -> Array[Dictionary]:
  var age: float = time-FINAL_HIT
  var result: Array[Dictionary] = []
@@ -39,10 +41,12 @@ func load_execution_assets() -> void:
  load_assets()
  var sheet: Image = Image.load_from_file("res://assets/warden_execution.png")
  assert(sheet != null and not sheet.is_empty(),"Execution artwork missing")
+ # Use only the corrected windup from this atlas; preserve every other approved pose.
+ var windup: Image = Image.load_from_file("res://assets/warden_execution_windup.png")
  # The raised figure's cape needs a second atlas slice; exclude the neighboring mace.
  var raised := Image.create(382,465,false,Image.FORMAT_RGBA8)
- raised.blend_rect(sheet,Rect2i(560,0,320,465),Vector2i(62,0))
- raised.blend_rect(sheet,Rect2i(498,270,62,195),Vector2i(0,270))
+ raised.blend_rect(windup,Rect2i(560,0,320,465),Vector2i(62,0))
+ raised.blend_rect(windup,Rect2i(498,270,62,195),Vector2i(0,270))
  execution_warden.append(raised.get_region(raised.get_used_rect()))
  execution_warden.append(trim_region(sheet,Rect2i(895,150,485,320)))
  execution_warden.append(trim_region(sheet,Rect2i(1380,85,345,385)))
