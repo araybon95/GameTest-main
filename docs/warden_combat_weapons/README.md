@@ -40,8 +40,9 @@ attacks. Inactive composites stop rendering after initialization, and their
 lifetime follows the combat actor. Dead heroes stop emitting weapon effects.
 Visible foot rows and body heights keep the class build grounded and consistent.
 
-This integration applies to the Warden's combat model. Other classes retain their
-existing art pending their weapon integration. Travel and inspection portraits
+This page documents the Warden's combat model. Ranger bows, Occultist staves and
+Healer maces are now integrated in [party combat weapons](../party_combat_weapons/README.md).
+The Crusader retains its existing art pending revisions. Travel and inspection portraits
 continue using their existing costume art. Stats, attack effects, proc chances,
 loot, progression and save schemas are unchanged.
 

@@ -221,7 +221,9 @@ func apply_pose(index: int, role: String, changed: bool, hurt: bool = false, sta
  var width: float = height * texture.get_width()/float(maxi(1,texture.get_height()))
  width *= preload("res://scripts/hero_proportions.gd").width_factor(str(active[role+"_node"].get_meta("hero_id","")))
  var max_width: float = 620.0 if active.get(role+"_boss",false) else 480.0
- if width > max_width:
+ # Equipment composites include transparent space for extended staves/capes.
+ # Capping that canvas would shrink the painted hero during every attack.
+ if width > max_width and texture.get_meta("appearance_style","") != "painted_weapon":
   height *= max_width/width
   width = max_width
  fighter.size = Vector2(width,height)
@@ -313,7 +315,12 @@ func _process(delta: float) -> void:
  for fighter in fighters:
   fighter.scale = Vector2.ONE*(1.0+zoom)
   fighter.position.x += (focus.x-(fighter.position.x+fighter.size.x*0.5))*zoom+shake
-  fighter.position.x = clampf(fighter.position.x,24.0,1920.0-fighter.size.x-24.0)
+  if fighter.texture.has_meta("painted_bounds"):
+   var bounds: Rect2 = fighter.texture.get_meta("painted_bounds")
+   var factor: Vector2 = fighter.size/fighter.texture.get_size()
+   fighter.position.x = clampf(fighter.position.x,24.0-bounds.position.x*factor.x,1920.0-24.0-bounds.end.x*factor.x)
+  else:
+   fighter.position.x = clampf(fighter.position.x,24.0,1920.0-fighter.size.x-24.0)
  if cinematic_backdrop != null:
   cinematic_backdrop.scale = backdrop_scale*(1.0+zoom*0.7)
   cinematic_backdrop.position = backdrop_position+Vector2(shake*0.45,0)

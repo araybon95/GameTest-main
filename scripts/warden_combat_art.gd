@@ -4,18 +4,20 @@ const Model = preload("res://scripts/warden_weapon_preview.gd")
 const Items = preload("res://scripts/item_data.gd")
 var frames: Dictionary = {}
 var actor: TextureRect
+var hero_id: String = "warden"
 
-static func attach(target: TextureRect) -> void:
+static func attach(target: TextureRect, hero: String = "warden") -> void:
  var renderer = load("res://scripts/warden_combat_art.gd").new()
- renderer.name = "WardenCombatArt"
+ renderer.name = "WardenCombatArt" if hero == "warden" else "PaintedCombatArt"
+ renderer.hero_id = hero
  renderer.actor = target
  target.add_child(renderer)
  renderer.sync()
 
 func sync() -> bool:
  var state = load("res://scripts/game_data.gd")
- var outfit: String = state.hero("warden").equipment_look
- var item: String = str(state.equipment.get("warden",{}).get("weapon",""))
+ var outfit: String = state.hero(hero_id).equipment_look
+ var item: String = str(state.equipment.get(hero_id,{}).get("weapon",""))
  var wanted: Texture2D = frame(outfit,item,"idle")
  var changed: bool = actor.texture != wanted
  if changed: actor.texture = wanted
@@ -31,13 +33,14 @@ func frame(outfit: String, item: String, state: String) -> Texture2D:
  if frames.has(key): return frames[key]
  var viewport := SubViewport.new()
  viewport.name = "Composite_%d" % frames.size()
- viewport.size = Vector2i(512,512)
+ viewport.size = Vector2i(512 if hero_id == "warden" else 896,512)
  viewport.disable_3d = true
  viewport.transparent_bg = true
  viewport.world_2d = World2D.new()
  viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
  add_child(viewport)
- var model = Model.new()
+ var model = Model.new() if hero_id == "warden" else load("res://scripts/party_weapon_model.gd").new()
+ if hero_id != "warden": model.hero_id = hero_id
  model.outfit = outfit
  model.weapon_id = item
  model.pose = "attack" if pose == "attack" else "idle"
@@ -46,17 +49,18 @@ func frame(outfit: String, item: String, state: String) -> Texture2D:
  model.allow_unarmed = true
  model.align_feet = true
  model.hide_effects = pose == "death"
- model.position = Vector2(256,512)
+ model.position = Vector2(viewport.size.x/2.0,512)
  viewport.add_child(model)
  var texture: Texture2D = viewport.get_texture()
- texture.set_meta("appearance_style","warden_weapon")
- texture.set_meta("pose_id","warden")
+ texture.set_meta("appearance_style","warden_weapon" if hero_id == "warden" else "painted_weapon")
+ texture.set_meta("pose_id",hero_id)
  texture.set_meta("warden_outfit",outfit)
+ texture.set_meta("equipment_outfit",outfit)
  texture.set_meta("equipped_weapon",item)
- texture.set_meta("weapon_element",Model.element_for_weapon(item))
+ texture.set_meta("weapon_element",Model.element_for_weapon(item) if hero_id == "warden" else load("res://scripts/party_weapon_model.gd").weapon_element(item))
  texture.set_meta("combat_state",state)
  texture.set_meta("idle_pixel_height",512)
- texture.set_meta("hero_body_fraction",Model.BODY_FRACTIONS.get(outfit,0.655))
+ texture.set_meta("hero_body_fraction",Model.BODY_FRACTIONS.get(outfit,0.655) if hero_id == "warden" else model.body_fraction())
  texture.set_meta("weapon_renderer",self)
  frames[key] = texture
  _cache_when_visible.call_deferred(viewport)
@@ -65,6 +69,8 @@ func frame(outfit: String, item: String, state: String) -> Texture2D:
 func _cache_when_visible(viewport: SubViewport) -> void:
  # Prime a new pose once; thereafter only textures actually drawn need rendering.
  if not is_inside_tree(): return
+ var model = viewport.get_child(0)
+ if hero_id != "warden": viewport.get_texture().set_meta("painted_bounds",Rect2(model.position+model.painted_bounds().position,model.painted_bounds().size))
  await get_tree().process_frame
  if not is_inside_tree(): return
  await get_tree().process_frame

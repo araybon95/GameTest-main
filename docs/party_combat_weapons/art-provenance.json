@@ -1,0 +1,320 @@
+{
+  "generator": "built-in imagegen",
+  "assets": [
+    {
+      "asset": "assets/art_library/party_weapons/healer-alternate-0.png",
+      "sha256": "fd921418ce5ca5df9b0acc328924b0a8ca3385d007d7747f1b512824f803f3b8",
+      "dimensions": [
+        1116,
+        1410
+      ],
+      "alpha_bounds": [
+        0,
+        35,
+        1096,
+        1384
+      ],
+      "pixel_policy": "Source imagegen PNG copied unchanged."
+    },
+    {
+      "asset": "assets/art_library/party_weapons/healer-alternate-1.png",
+      "sha256": "fd74de139a91dd41973fb7e25222614d5ba1dcbb90958d09f4cb648d337736d4",
+      "dimensions": [
+        1461,
+        1077
+      ],
+      "alpha_bounds": [
+        0,
+        21,
+        1431,
+        1077
+      ],
+      "pixel_policy": "Source imagegen PNG copied unchanged."
+    },
+    {
+      "asset": "assets/art_library/party_weapons/healer-original-0.png",
+      "sha256": "4671a8a440875f1d99f00a740f8b827a2fc40fa4e2df297b3a20ea9e6a3b4f20",
+      "dimensions": [
+        1094,
+        1437
+      ],
+      "alpha_bounds": [
+        25,
+        19,
+        1066,
+        1411
+      ],
+      "pixel_policy": "Source imagegen PNG copied unchanged."
+    },
+    {
+      "asset": "assets/art_library/party_weapons/healer-original-1.png",
+      "sha256": "0b095cf19a779ce537d5923ae34772f6a6fca3e38a05f31dd48a748901f2164a",
+      "dimensions": [
+        1516,
+        1038
+      ],
+      "alpha_bounds": [
+        0,
+        7,
+        1470,
+        1038
+      ],
+      "pixel_policy": "Source imagegen PNG copied unchanged."
+    },
+    {
+      "asset": "assets/art_library/party_weapons/healer-relic-0.png",
+      "sha256": "cce3175ed22c824c3b4fcd39699a7dbce8170a08665e04f993a1a15c620daad7",
+      "dimensions": [
+        1148,
+        1371
+      ],
+      "alpha_bounds": [
+        0,
+        17,
+        1128,
+        1347
+      ],
+      "pixel_policy": "Source imagegen PNG copied unchanged."
+    },
+    {
+      "asset": "assets/art_library/party_weapons/healer-relic-1.png",
+      "sha256": "cf20f1d8a83425cdf19d9651a5efccc20baf6b6b98488f935ee918e6ce3bc2c8",
+      "dimensions": [
+        1474,
+        1067
+      ],
+      "alpha_bounds": [
+        0,
+        19,
+        1446,
+        1067
+      ],
+      "pixel_policy": "Source imagegen PNG copied unchanged."
+    },
+    {
+      "asset": "assets/art_library/party_weapons/healer-weapons.png",
+      "sha256": "e7377642911b1f1ab175b6e6e1d86c96b640701bba9db62ba357cd6bc1558e61",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "alpha_bounds": [
+        0,
+        6,
+        1768,
+        887
+      ],
+      "pixel_policy": "Source imagegen PNG copied unchanged."
+    },
+    {
+      "asset": "assets/art_library/party_weapons/occultist-alternate-0.png",
+      "sha256": "54da01190dc7c1ef0d269cb1b8f8d2af80009ce103ba7ce3d86ea88127b18dd0",
+      "dimensions": [
+        1158,
+        1359
+      ],
+      "alpha_bounds": [
+        22,
+        19,
+        1086,
+        1359
+      ],
+      "pixel_policy": "Source imagegen PNG copied unchanged."
+    },
+    {
+      "asset": "assets/art_library/party_weapons/occultist-alternate-1.png",
+      "sha256": "3ed922a4f5e4d622d8763f3b8c2a68e8b2d2f06d41082063b852ae7ea2884dc3",
+      "dimensions": [
+        1548,
+        1016
+      ],
+      "alpha_bounds": [
+        0,
+        25,
+        1478,
+        1016
+      ],
+      "pixel_policy": "Source imagegen PNG copied unchanged."
+    },
+    {
+      "asset": "assets/art_library/party_weapons/occultist-original-0.png",
+      "sha256": "346ff438b9eb55502dde65c1f26c2ae13f5f85fdc3846e808567b824ed6436a8",
+      "dimensions": [
+        1138,
+        1382
+      ],
+      "alpha_bounds": [
+        13,
+        21,
+        1120,
+        1382
+      ],
+      "pixel_policy": "Source imagegen PNG copied unchanged."
+    },
+    {
+      "asset": "assets/art_library/party_weapons/occultist-original-1.png",
+      "sha256": "ea63e48086a7211a69e41e280f5c5ed254f17b4cf53b8a20339792a96b97bf4f",
+      "dimensions": [
+        1568,
+        1003
+      ],
+      "alpha_bounds": [
+        51,
+        41,
+        1530,
+        975
+      ],
+      "pixel_policy": "Source imagegen PNG copied unchanged."
+    },
+    {
+      "asset": "assets/art_library/party_weapons/occultist-relic-0.png",
+      "sha256": "a761de3856fde5c793331c14d50e0ad054161fe7de89824354d4797df5969d98",
+      "dimensions": [
+        1161,
+        1355
+      ],
+      "alpha_bounds": [
+        27,
+        23,
+        1125,
+        1331
+      ],
+      "pixel_policy": "Source imagegen PNG copied unchanged."
+    },
+    {
+      "asset": "assets/art_library/party_weapons/occultist-relic-1.png",
+      "sha256": "ed0e67e3fddfb6ef663458a909217dd9065f3c591c5ba6def39485ba166dae2b",
+      "dimensions": [
+        1567,
+        1004
+      ],
+      "alpha_bounds": [
+        59,
+        0,
+        1470,
+        1004
+      ],
+      "pixel_policy": "Source imagegen PNG copied unchanged."
+    },
+    {
+      "asset": "assets/art_library/party_weapons/occultist-weapons.png",
+      "sha256": "b26a326de23067a459e5b492f8daa32f05c42bd0055e6ace56aa831bf0ecd7b2",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "alpha_bounds": [
+        0,
+        0,
+        1764,
+        878
+      ],
+      "pixel_policy": "Source imagegen PNG copied unchanged."
+    },
+    {
+      "asset": "assets/art_library/party_weapons/ranger-alternate-0.png",
+      "sha256": "aaf7f4cc80113665d9ded5c688bc02c4436862c5f4de7422694ac71e82e57cca",
+      "dimensions": [
+        1207,
+        1303
+      ],
+      "alpha_bounds": [
+        0,
+        5,
+        1175,
+        1289
+      ],
+      "pixel_policy": "Source imagegen PNG copied unchanged."
+    },
+    {
+      "asset": "assets/art_library/party_weapons/ranger-alternate-1.png",
+      "sha256": "ca7d1bba64871994083b955bab02756e13b21b16734656ed54fe0799a57584b5",
+      "dimensions": [
+        1265,
+        1244
+      ],
+      "alpha_bounds": [
+        0,
+        22,
+        1219,
+        1224
+      ],
+      "pixel_policy": "Source imagegen PNG copied unchanged."
+    },
+    {
+      "asset": "assets/art_library/party_weapons/ranger-original-0.png",
+      "sha256": "20ec1377b472d48791ecf2dbcf732a55ca260282e13ec9ad942850c989ea7d65",
+      "dimensions": [
+        1192,
+        1319
+      ],
+      "alpha_bounds": [
+        0,
+        16,
+        1164,
+        1301
+      ],
+      "pixel_policy": "Source imagegen PNG copied unchanged."
+    },
+    {
+      "asset": "assets/art_library/party_weapons/ranger-original-1.png",
+      "sha256": "ae1c831078f5bd2e853eeb7d3ff32365ebc497b6a0e986a8c30aa567e5c18d6b",
+      "dimensions": [
+        1319,
+        1193
+      ],
+      "alpha_bounds": [
+        0,
+        67,
+        1277,
+        1177
+      ],
+      "pixel_policy": "Source imagegen PNG copied unchanged."
+    },
+    {
+      "asset": "assets/art_library/party_weapons/ranger-relic-0.png",
+      "sha256": "77bea1b0c317c32bb8297d49521c2f4e6504a1a2fc66c80dc07f3cdec48e3cca",
+      "dimensions": [
+        1197,
+        1314
+      ],
+      "alpha_bounds": [
+        0,
+        6,
+        1173,
+        1314
+      ],
+      "pixel_policy": "Source imagegen PNG copied unchanged."
+    },
+    {
+      "asset": "assets/art_library/party_weapons/ranger-relic-1.png",
+      "sha256": "4ba74eda50d41a7e09a97faffc99909fad93ae75b5dc7078886d4e651de615c2",
+      "dimensions": [
+        1247,
+        1261
+      ],
+      "alpha_bounds": [
+        0,
+        17,
+        1223,
+        1241
+      ],
+      "pixel_policy": "Source imagegen PNG copied unchanged."
+    },
+    {
+      "asset": "assets/art_library/party_weapons/ranger-weapons.png",
+      "sha256": "ca613247990df10aaf98a8ef533ec31c9fed1a64e6e614fd5794b7602656185a",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "alpha_bounds": [
+        21,
+        0,
+        1750,
+        887
+      ],
+      "pixel_policy": "Source imagegen PNG copied unchanged."
+    }
+  ]
+}
