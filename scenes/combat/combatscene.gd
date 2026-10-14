@@ -146,6 +146,9 @@ func _apply_expedition() -> void:
 		enemies.append(_make_cocoon())
 	for enemy in enemies:
 		if enemy["boss"]: enemy["objective"] = Objectives.create(str(enemy["creature"]))
+	for index in range(enemies.size()):
+		var art: String = preload("res://scripts/enemy_variants.gd").choose(str(enemies[index]["creature"]),GameState.run_seed,depth,GameState.room_position,index)
+		if not art.is_empty(): enemies[index]["art"] = art
 	selected_enemy_index = 0
 	_load_enemy(0)
 
@@ -1660,6 +1663,8 @@ func _create_card_view(card_id: String, card: Dictionary) -> Button:
 
 
 func _load_texture(path: String) -> Texture2D:
+	if path == preload("res://scripts/enemy_variants.gd").SHEET:
+		return preload("res://scripts/enemy_variants.gd").frame(0)
 	# Dedicated combat atlases keep idle and action gear consistent on the stage.
 	if path == "res://assets/art_library/generated/hero_crusader.tres": path = "res://assets/art_library/generated/hero_crusader_combat_idle.tres"
 	path = {"res://assets/art_library/generated/hero_warden.png":"res://assets/art_library/generated/hero_warden_combat_idle.tres", "res://assets/art_library/generated/enemy_ash_raider.png":"res://assets/art_library/generated/enemy_ash_raider_combat_idle.tres"}.get(path,path)
@@ -1809,6 +1814,7 @@ func _build_enemy_cards() -> void:
 	# Connect after duplication so each button selects only its own target.
 	for index in range(enemy_views.size()):
 		StatusVisual.new().attach_to(enemy_views[index].get_node("EnemyArt"))
+		preload("res://scripts/enemy_variants.gd").attach(enemy_views[index].get_node("EnemyArt"))
 		enemy_views[index].pressed.connect(_select_enemy.bind(index))
 	for index in range(enemy_views.size()):
 		_configure_enemy_stage(index)

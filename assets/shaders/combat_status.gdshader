@@ -7,10 +7,36 @@ uniform float chill = 0.0;
 uniform float wounded = 0.0;
 uniform float impact = 0.0;
 uniform float slain = 0.0;
+uniform float raider_breath = 0.0;
+uniform vec4 raider_region = vec4(0.0,0.0,1.0,1.0);
+varying vec4 actor_tint;
+
+void vertex() {
+ actor_tint = COLOR;
+}
+
+float raider_limb_weight(vec2 point) {
+ float edge = point.y < 270.0 ? 146.0-0.5*(point.y-240.0) : 131.0-0.6*(point.y-270.0);
+ float outside_leg = 1.0-smoothstep(edge-3.0,edge,point.x);
+ float weapon = smoothstep(20.0,30.0,point.x)*outside_leg*smoothstep(218.0,235.0,point.y)*(1.0-smoothstep(325.0,340.0,point.y));
+ float left_arm = smoothstep(90.0,100.0,point.x)*(1.0-smoothstep(150.0,165.0,point.x))*smoothstep(175.0,195.0,point.y)*(1.0-smoothstep(235.0,255.0,point.y))*outside_leg;
+ float right_arm = smoothstep(275.0,290.0,point.x)*(1.0-smoothstep(328.0,340.0,point.x))*smoothstep(175.0,195.0,point.y)*(1.0-smoothstep(235.0,245.0,point.y));
+ return max(weapon,max(left_arm,right_arm));
+}
 
 void fragment() {
 	// Fragment COLOR already includes the texture and vertex tint.
 	vec4 base = COLOR;
+ if (raider_breath != 0.0) {
+  vec2 local_uv = (UV-raider_region.xy)/raider_region.zw;
+  // Hips, legs and boots sample their original pixels, at every breath phase.
+  float upper = 1.0-smoothstep(0.22,0.62,local_uv.y);
+  vec2 point = UV/TEXTURE_PIXEL_SIZE;
+  vec2 torso_offset = vec2(-(local_uv.x-0.5)*raider_breath*0.5*upper,raider_breath*upper);
+  vec2 limb_offset = vec2(0.9,1.8)*raider_breath/6.0;
+  vec2 breath_uv = UV+mix(torso_offset,limb_offset,raider_limb_weight(point))*TEXTURE_PIXEL_SIZE;
+  base = texture(TEXTURE,breath_uv)*actor_tint;
+ }
 	float pulse = 0.5 + 0.5 * sin(TIME * 4.0);
 	float grain = fract(sin(dot(floor(UV * 95.0), vec2(12.9898, 78.233))) * 43758.5453);
 	vec3 color = base.rgb * ambient;

@@ -119,6 +119,8 @@ func next() -> void:
   var fighter := TextureRect.new()
   fighter.texture = active[role]
   fighter.material = active[role + "_material"]
+  if preload("res://scripts/enemy_variants.gd").supports(fighter.texture) and fighter.material is ShaderMaterial:
+   fighter.material.set_shader_parameter("raider_breath",0.0)
   fighter.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
   fighter.stretch_mode = TextureRect.STRETCH_SCALE
   var original: TextureRect = active[role + "_node"]
@@ -213,6 +215,23 @@ func apply_pose(index: int, role: String, changed: bool, hurt: bool = false, sta
  var original: Texture2D = active[role]
  var state: String = state_override if not state_override.is_empty() else "hurt" if hurt else "guard" if active["attack_kind"] == "block" else "cast" if active["attack_kind"] in ["spell","heal"] else "attack"
  var texture: Texture2D = Poses.state_pose(original,state) if changed else original
+ var variants = preload("res://scripts/enemy_variants.gd")
+ if variants.supports(original):
+  var sample: Dictionary = animation_sample()
+  var phase: String = sample.get("phase","windup")
+  var settings = get_node_or_null("/root/GameSettings")
+  var animate: bool = settings == null or settings.ambient_motion
+  var progress: float = 0.0
+  if role == "source" and active["attack_kind"] not in ["block","object"]:
+   state = "windup" if phase == "windup" else "attack" if phase in ["release","hold"] else "recover"
+   progress = float(sample.get("windup",0.0)) if phase == "windup" else float(sample.get("flight",1.0))
+  elif state == "death":
+   progress = float(sample.get("recovery",0.0))
+  elif changed and hurt:
+   progress = clampf((age-impact_time())/maxf(0.001,float(active["duration"])-impact_time()),0,1)
+  else:
+   state = "idle"
+  texture = variants.sample(original,state,progress,animate)
  var fighter: TextureRect = fighters[index]
  fighter.texture = texture
  fighter.flip_h = changed and not hurt and texture.resource_path.get_file() in ["hero_warden.png","hero_crusader.tres"]

@@ -74,7 +74,13 @@ func run() -> void:
 	var enemies_after: Array = battle.enemies.duplicate(true)
 	var heroes_after: Dictionary = battle.hero_state.duplicate(true)
 	at(cinema,cinema.impact_time()+float(cinema.active["timing"]["hold"])+0.04)
-	assert(cinema.fighters[1].texture == Poses.state_pose(cinema.active["target"],"death"))
+	var variants = preload("res://scripts/enemy_variants.gd")
+	if variants.supports(cinema.active["target"]):
+		assert(cinema.fighters[1].texture == variants.frame(10),"Painted variant begins its knee-collapse frame during early recovery")
+		at(cinema,float(cinema.active["duration"])-0.01)
+		assert(cinema.fighters[1].texture == variants.frame(11),"Painted variant holds its fallen frame before recovery completes")
+	else:
+		assert(cinema.fighters[1].texture == Poses.state_pose(cinema.active["target"],"death"))
 	assert(heard == ["sword","impact","death"],"Release, contact and defeat cues each play once")
 	at(cinema,2)
 	assert(heard == ["sword","impact","death"] and battle.enemies == enemies_after and battle.hero_state == heroes_after)

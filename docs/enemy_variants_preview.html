@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hooded Ash Raider — animation preview</title>
+<style>[hidden]{display:none!important}body{margin:0;background:#141113;color:#e6dbc8;font:17px system-ui;padding:32px}main{max-width:1000px;margin:auto}h1{color:#dec58d}button{background:#302527;color:#e6dbc8;border:1px solid #8c7755;padding:10px 20px;margin:4px;border-radius:4px;cursor:pointer}button[aria-pressed=true]{background:#615032}canvas{display:block;background:radial-gradient(ellipse at bottom,#433639,#1b171c);border:1px solid #5c4c46;max-width:100%;margin:24px auto}p{line-height:1.5;color:#c1b7ad}img{max-width:100%;background:#282428}label{display:inline-block;margin:12px}</style>
+<main><h1>Hooded Ash Raider</h1><p>Painted cosmetic variant · 12 frames · original combat stats</p>
+<nav aria-label="Animation"><button data-mode="idle" aria-pressed="true">Idle</button><button data-mode="attack" aria-pressed="false">Attack</button><button data-mode="hurt" aria-pressed="false">Hurt</button><button data-mode="death" aria-pressed="false">Death</button></nav>
+<label><input type="checkbox" id="freeze"> Freeze frame cycling</label><button id="replay">Replay</button>
+<canvas id="stage" width="800" height="460" aria-label="Animated hooded Raider"></canvas>
+<img id="idle-motion" hidden src="../experimental/hooded-raider-breathing.gif" alt="Grounded breathing with subtle forearm and cleaver sway" style="display:block;width:500px;height:460px;margin:24px auto;border:1px solid #5c4c46"><p id="caption" aria-live="off"></p><p>Artwork preview. In-game attack timing comes from Godot's existing combat profile.</p>
+<details><summary>Complete painted sheet</summary><img src="../assets/art_library/enemy_variants/ash_raider_hooded.png" alt="Twelve painted idle, attack, recoil and death poses"></details></main>
+<script>
+const frames=[
+ {
+  "offset": [
+   -20.0,
+   46.0
+  ],
+  "region": [
+   0.0,
+   17.0,
+   353.0,
+   354.0
+  ]
+ },
+ {
+  "offset": [
+   15.0,
+   85.0
+  ],
+  "region": [
+   405.0,
+   64.0,
+   313.0,
+   315.0
+  ]
+ },
+ {
+  "offset": [
+   11.0,
+   103.0
+  ],
+  "region": [
+   766.0,
+   74.0,
+   328.0,
+   297.0
+  ]
+ },
+ {
+  "offset": [
+   59.0,
+   54.0
+  ],
+  "region": [
+   1169.0,
+   25.0,
+   275.0,
+   346.0
+  ]
+ },
+ {
+  "offset": [
+   39.0,
+   50.0
+  ],
+  "region": [
+   49.0,
+   388.0,
+   305.0,
+   350.0
+  ]
+ },
+ {
+  "offset": [
+   49.0,
+   58.0
+  ],
+  "region": [
+   439.0,
+   396.0,
+   295.0,
+   342.0
+  ]
+ },
+ {
+  "offset": [
+   -15.0,
+   92.0
+  ],
+  "region": [
+   755.0,
+   428.0,
+   343.0,
+   308.0
+  ]
+ },
+ {
+  "offset": [
+   21.0,
+   105.0
+  ],
+  "region": [
+   1131.0,
+   441.0,
+   301.0,
+   295.0
+  ]
+ },
+ {
+  "offset": [
+   1.0,
+   106.0
+  ],
+  "region": [
+   21.0,
+   777.0,
+   364.0,
+   294.0
+  ]
+ },
+ {
+  "offset": [
+   21.0,
+   107.0
+  ],
+  "region": [
+   421.0,
+   778.0,
+   313.0,
+   293.0
+  ]
+ },
+ {
+  "offset": [
+   19.0,
+   64.0
+  ],
+  "region": [
+   759.0,
+   750.0,
+   341.0,
+   336.0
+  ]
+ },
+ {
+  "offset": [
+   25.0,
+   79.0
+  ],
+  "region": [
+   1105.0,
+   765.0,
+   342.0,
+   321.0
+  ]
+ }
+];
+const image=new Image(),canvas=document.querySelector('#stage'),ctx=canvas.getContext('2d');
+let mode='idle',start=performance.now();
+const sequences={idle:[0],attack:[3,4,5,6,7],hurt:[8,9],death:[10,11]};
+document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{mode=b.dataset.mode;start=performance.now();document.querySelectorAll('[data-mode]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));});
+document.querySelector('#replay').onclick=()=>start=performance.now();
+document.querySelector('#freeze').checked=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function draw(now){if(image.complete&&image.naturalWidth){const seq=sequences[mode],freeze=document.querySelector('#freeze').checked;
+let step=mode==='idle'?Math.floor((now-start)/400)%seq.length:Math.min(seq.length-1,Math.floor((now-start)/180));
+document.querySelector("#idle-motion").hidden=!(mode==="idle"&&!freeze);canvas.hidden=mode==="idle"&&!freeze;
+if(freeze)step=mode==='idle'?0:seq.length-1;
+const index=seq[step],f=frames[index],r=f.region,o=f.offset;ctx.clearRect(0,0,800,460);
+ctx.fillStyle='#100d0f';ctx.beginPath();ctx.ellipse(400,422,105,12,0,0,2*Math.PI);ctx.fill();
+if(mode==='idle'&&!freeze){
+const breath=6*(0.5-0.5*Math.cos((now-start)/1600*2*Math.PI));
+ctx.save();ctx.beginPath();ctx.rect(200+o[0],20+o[1],r[2],r[3]);ctx.clip();
+for(let y=0;y<r[3];y++){let t=Math.max(0,Math.min(1,(y/r[3]-0.22)/0.4));let upper=1-t*t*(3-2*t);
+let scale=1-breath*0.5*upper/r[2],shift=breath*0.25*upper;
+ctx.drawImage(image,r[0],r[1]+y+breath*upper,r[2],1,200+o[0]-shift/scale,20+o[1]+y,r[2]/scale,1);}
+ctx.restore();
+}else{ctx.drawImage(image,r[0],r[1],r[2],r[3],200+o[0],20+o[1],r[2],r[3]);}
+document.querySelector('#caption').textContent=mode.charAt(0).toUpperCase()+mode.slice(1)+' · frame '+(index+1)+' of 12';}requestAnimationFrame(draw);}
+image.src='../assets/art_library/enemy_variants/ash_raider_hooded.png';requestAnimationFrame(draw);
+</script></html>

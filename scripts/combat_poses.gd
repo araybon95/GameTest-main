@@ -43,6 +43,8 @@ static func pose(original: Texture2D, hurt: bool = false) -> Texture2D:
 
 static func state_pose(original: Texture2D, state: String = "idle") -> Texture2D:
  if original == null: return null
+ if preload("res://scripts/enemy_variants.gd").supports(original):
+  return preload("res://scripts/enemy_variants.gd").sample(original,state,1.0)
  if original.get_meta("portrait_view",false): return original
  if original.get_meta("appearance_style","") == "warden_complete": return preload("res://scripts/warden_outfits.gd").pose(original,state)
  if original.get_meta("appearance_style","") == "equipment": return preload("res://scripts/equipment_art.gd").pose(original,state)
