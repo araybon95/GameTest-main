@@ -11,9 +11,9 @@ Click an image to view the full-size concept.
 | --- | --- | --- |
 | [![Supplicant](anguish_penitent.png)](anguish_penitent.png) | [![Half-Breed](anguish_vessel.png)](anguish_vessel.png) | [![Warbeast](harrowed_giant.png)](harrowed_giant.png) |
 
-| Priest: Wolf | Priest: Serpent | Priest: Goat |
+| Priest: Wolf | Priest: Choir | Priest: Goat |
 | --- | --- | --- |
-| [![Wolf Aspect](coterie_seamkeeper.png)](coterie_seamkeeper.png) | [![Serpent Aspect](coterie_cantor.png)](coterie_cantor.png) | [![Goat Aspect](coterie_matron.png)](coterie_matron.png) |
+| [![Wolf Aspect](coterie_seamkeeper.png)](coterie_seamkeeper.png) | [![Choir Aspect](coterie_cantor.png)](coterie_cantor.png) | [![Goat Aspect](coterie_matron.png)](coterie_matron.png) |
 
 ### The Howl Made Flesh
 
@@ -33,7 +33,7 @@ Click an image to view the full-size concept.
 - [Rune-Marked Half-Breed](anguish_vessel.png): a wolf-headed soldier stalled between human and beast.
 - [Shackled Warbeast](harrowed_giant.png): the first guardian, a huge chained boar/bear-like pack killer.
 - [Horned Priest — Wolf Aspect](coterie_seamkeeper.png): lean, fast and predatory.
-- [Horned Priest — Serpent Aspect](coterie_cantor.png): venom, cold light and a coiled hymn-singer.
+- [Horned Priest — Choir Aspect](coterie_cantor.png): a distorted humanoid chorus of clustered jaws, pale flesh and trailing sinews.
 - [Horned Priest — Goat Aspect](coterie_matron.png): the composed, ancient pack leader revealed last.
 - [The Howl Made Flesh](howling_head.png): a meteoric wolf idol becoming the primordial hunger it represents.
 
@@ -43,6 +43,10 @@ Click an image to view the full-size concept.
 - [Barricaded camp](beast_camp.png): a vulnerable refuge held against the hunting pack.
 
 The overall progression is **Moonlit Warrens → Revel of Runes → Altar of the Beast**.
+The second form was revised from Serpent to Choir Aspect using the supplied
+mouth-cluster and flesh-idol references. The original supplied diff remains
+recorded in source-prompts.json; the [current revision prompt](revised-prompts.json) is recorded separately.
+
 The three Priest forms share ecclesiastical clothing, iron and bone motifs so
 they read as one shapeshifter rather than three unrelated bosses.
 
