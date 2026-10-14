@@ -17,6 +17,9 @@ This uses complete painted poses plus motion, rather than articulated limb
 animation. Contact produces a dark-red directional spray: narrow for Slash,
 larger with heavier flecks for Heavy Strike, and smaller for Shield Bash.
 Droplets fall and fade; brief, low floor stains clear before the next attack.
+Slash and Heavy Strike emit from the enemy's attacker-facing edge and spray
+out into the foreground, keeping blood visible outside the body silhouette.
+Shield Bash retains its original approved emitter and trajectory.
 Reduced motion replaces the moving spray with a short static hit mark. Effects
 stay above the HUD. Audio is not included. The Warden carries his existing mace
 and heater shield.

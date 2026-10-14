@@ -15,6 +15,13 @@ func _initialize() -> void:
   assert(stage.blood_particles(skill,2.9).is_empty(),"Blood must clear before the next attack")
   assert(stage.blood_particles(skill,stage.TIMINGS[skill].impact+0.06,false).is_empty(),"Reduced motion must suppress flying droplets")
  assert(stage.blood_particles("heavy",0.74).size() > stage.blood_particles("bash",0.49).size(),"Heavy hits must have a larger burst than shield impacts")
+ for skill in ["slash","heavy"]:
+  for particle in stage.blood_particles(skill,stage.TIMINGS[skill].impact+0.15):
+   if particle.offset.x > 0:
+    push_error("Weapon-hit spray must travel into the visible attacker-facing foreground")
+    stage.free()
+    quit(1)
+    return
  var used: Array = []
  for skill in ["slash","heavy","bash"]:
   var windup: Dictionary = stage.sample(skill,0.1)

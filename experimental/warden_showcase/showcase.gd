@@ -46,6 +46,9 @@ static func blood_particles(skill: String, time: float, animate: bool = true) ->
   var speed: float = 95.0+float((i*37)%110)
   if skill == "bash": speed *= 0.58
   var velocity: Vector2 = Vector2(cos(angle),sin(angle))*speed
+  if skill != "bash":
+   # Spray toward the attacker-facing silhouette, rather than across the body.
+   velocity.x = -absf(velocity.x)
   var offset: Vector2 = velocity*age+Vector2(0,400.0*age*age)
   var radius: float = (2.5+float(i%4)*0.8 if skill == "heavy" else 1.5+float(i%3)*0.65 if skill == "slash" else 1.2+float(i%2)*0.6)
   particles.append({"offset":offset,"tail":(velocity+Vector2(0,800*age)).normalized()*(8.0 if skill == "heavy" else 5.0),"radius":radius,"alpha":1.0-smoothstep(0.34,0.8,age),"chunk":skill == "heavy" and i%6 == 0})
@@ -65,7 +68,8 @@ func draw_blood(canvas: Image, skill: String, time: float, animate: bool) -> voi
  var hit: Dictionary = sample(skill,TIMINGS[skill].impact,animate)
  var half_width: float = enemy_hurt.get_width()*0.77*hit.zoom*0.5
  var target_x: float = clampf(400+(550+hit.target_shift-400)*hit.zoom,24+half_width,776-half_width)
- var origin := Vector2(target_x-65,280 if skill == "heavy" else 218 if skill == "slash" else 245)
+ # Keep the approved bash anchor; bring weapon hits onto the same visible plane.
+ var origin := Vector2(target_x-(65 if skill == "bash" else 90),245)
  if not animate:
   if age < 0.16: blood_stamp(canvas,origin,Vector2(8,5),Color("#721b2a"))
   return
