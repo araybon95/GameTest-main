@@ -20,6 +20,10 @@ func _ready() -> void:
 func refresh() -> void:
 	clear_screen()
 	var room: Dictionary = State.floors[State.floor_index][State.room_position]
+	if State.map_travel_mode:
+		preload("res://scenes/expedition/story_event.gd").build(self,room)
+		if room.get("event_resolved",false): preload("res://scripts/save_files.gd").save(0)
+		return
 	var id: String = str(room["event_id"])
 	var event: Dictionary = State.Events.definition(id)
 	var resolved: bool = room.get("event_resolved", false)
@@ -168,8 +172,9 @@ func investigate() -> void:
 		refresh()
 
 func leave_untouched() -> void:
-	State.Events.resolve(State, "", true)
-	return_to_dungeon()
+	var result: Dictionary = State.Events.resolve(State, "", true)
+	if State.map_travel_mode and not result.is_empty(): refresh()
+	elif not State.map_travel_mode or not State.floors[State.floor_index][State.room_position].get("event_resolved",false): return_to_dungeon()
 
 func investigate_as_class() -> void:
 	if not State.Events.resolve(State, selected_hero, false, "class").is_empty():
@@ -180,7 +185,8 @@ func return_to_dungeon() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		leave_untouched()
+		if State.floors[State.floor_index][State.room_position].get("event_resolved",false): return_to_dungeon()
+		else: leave_untouched()
 
 func investigate_with_supply() -> void:
 	if not State.Events.resolve(State,selected_hero,false,"supply").is_empty(): refresh()

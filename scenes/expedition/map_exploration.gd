@@ -4,7 +4,7 @@ const Scenery = preload("res://scripts/dungeon_scenery.gd")
 static func build(owner: Control) -> void:
  owner.panel_at(Rect2(0,0,1920,1080),Color("#0C0A0E"))
  owner.label_at("%s · %s" % [State.selected_expedition.get("name","Expedition"),State.floor_title()],Vector2(65,55),32)
- owner.label_at("Choose your next chamber. The passages between rooms hold their own dangers.",Vector2(65,110),21)
+ owner.label_at("Choose your next chamber. Rooms marked ? hold unknown encounters.",Vector2(65,110),21)
  owner.panel_at(Rect2(50,165,1190,725),Color("#171216"))
  owner.label_at("THE DUNGEON · FLOOR %d / %d" % [State.floor_index+1,State.floor_count],Vector2(80,185),23)
  if preload("res://scenes/expedition/dungeon_entrance.gd").available():
@@ -34,7 +34,7 @@ static func build(owner: Control) -> void:
   if guidance != "": option.tooltip_text += "\n"+guidance
   option.mouse_entered.connect(owner.preview_route.bind(location))
   option.focus_entered.connect(owner.preview_route.bind(location))
- owner.label_at("GOLD · SELECTED ROUTE    BLUE GREY · TRAVELLED    ◇ · SCOUTED CLUE",Vector2(80,867),14)
+ owner.label_at("GOLD · SELECTED ROUTE    ✓ · EXPLORED ROOM    ? · UNKNOWN ENCOUNTER",Vector2(80,867),14)
  owner.panel_at(Rect2(1270,165,600,725),Color("#191318"))
  owner.label_at("NEXT CHAMBER",Vector2(1305,195),24)
  var title := Label.new()
@@ -49,7 +49,7 @@ static func build(owner: Control) -> void:
  var detail := Label.new()
  detail.name = "RouteDetails"
  detail.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
- detail.text = "Hover a reachable room to trace your route. Click to travel.\n\nGold routes show the passages you will cross. Unseen rooms reveal themselves as you explore."
+ detail.text = "Hover a reachable room to inspect it. Click to enter immediately.\n\nGold routes connect the rooms you can enter. Unseen rooms reveal themselves as you explore."
  detail.position = Vector2(1305,345)
  detail.size = Vector2(520,205)
  detail.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -89,4 +89,4 @@ static func build(owner: Control) -> void:
  interact.disabled = not owner.room_action_available()
  var retreat: Button = owner.button_at("HAMLET" if State.run_complete else "RETREAT",Vector2(1690,935),owner.retreat)
  retreat.size = Vector2(170,60)
- owner.label_at("CLICK A ROOM TO TRAVEL · TAB INVENTORY · I CONTROLS",Vector2(990,1020),16)
+ owner.label_at("CLICK A ROOM TO ENTER · TAB INVENTORY · I CONTROLS",Vector2(990,1020),16)

@@ -6,6 +6,7 @@ func _initialize() -> void: call_deferred("run")
 func settle() -> void:
  for frame in range(3): await process_frame
 func run() -> void:
+ State.map_travel_mode = false # Legacy illustrated room fixture.
  State.progress_loaded = true
  State.crusader_unlocked = true
  State.party.assign(["crusader","ranger","occultist"])

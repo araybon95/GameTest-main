@@ -106,7 +106,7 @@ static func prepare_camp(state, choice: String) -> bool:
 		state.scout_uses = before
 	return true
 static func camp_ambush(state) -> bool:
-	if state.map_travel_mode: return false # Random exploration encounters occur in passages.
+	if not state.journey.get("transit",{}).is_empty(): return false # Finish an older saved passage before normal camp encounters.
 	var room: Dictionary = state.floors[state.floor_index][state.room_position]
 	if not room.get("camp_used",false) or room.get("camp_departed",false): return false
 	room["camp_departed"] = true

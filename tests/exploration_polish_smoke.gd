@@ -15,6 +15,7 @@ func select_run(id: String, floor: int = 0) -> void:
 	State.room_position = Vector2i.ZERO
 
 func run() -> void:
+	State.map_travel_mode = false # Legacy illustrated room fixture.
 	LocalArt.configure(LocalArt.DEFAULT_ROOT, false)
 	State.progress_loaded = true
 	State.progress_path = "user://exploration_polish_test.cfg"

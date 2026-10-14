@@ -43,7 +43,7 @@ func run():
  await process_frame
  assert(dungeon.get_node("RouteMap").new_rooms.has(Vector2i(2,0)))
  dungeon.preview_route(Vector2i.ZERO)
- assert(dungeon.get_node("RouteDetails").text.contains("travelled"))
+ assert(dungeon.get_node("RouteDetails").text.contains("Explored"))
  dungeon.free()
  print("PASS: discovery clues without leaks/RNG changes, object reveal, reduced motion, travelled trails and new-room highlights")
  quit()

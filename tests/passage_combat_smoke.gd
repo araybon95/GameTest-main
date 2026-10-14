@@ -15,7 +15,8 @@ func run():
  State.journey["passages"] = {key:{"key":key,"kind":"ambush","resolved":false,"room":{"kind":"battle","creature":"ash_raider","enemies":["ash_raider"],"cleared":false,"corridor_surprise":true}}}
  change_scene_to_file("res://scenes/expedition/dungeon.tscn")
  await settle()
- current_scene.move_to(Vector2i.RIGHT)
+ assert(Passages.begin(State,[Vector2i.RIGHT])) # Resume an older saved passage, rather than creating new travel.
+ current_scene.resume_map_travel()
  var travel = current_scene.get_node("MapTravel")
  travel.set_process(false)
  travel._process(1.0)

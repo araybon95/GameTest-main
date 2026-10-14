@@ -224,7 +224,7 @@ func open_settings() -> void:
 		set_value("brightness",values["brightness"])
 		var scene = get_tree().current_scene
 		if scene != null and scene.scene_file_path == "res://scenes/expedition/dungeon.tscn":
-			if State.map_travel_mode: preload("res://scripts/passage_events.gd").prepare_floor(State)
+			if State.map_travel_mode: preload("res://scripts/room_discoveries.gd").prepare_floor(State)
 			else: preload("res://scripts/passage_events.gd").restore_floor(State)
 			scene.refresh()
 	)

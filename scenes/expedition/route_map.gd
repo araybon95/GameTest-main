@@ -46,10 +46,6 @@ func _draw() -> void:
     var start: Vector2 = room_rect(location).get_center()
     var finish: Vector2 = room_rect(next).get_center()
     art.corridor(self,start,finish)
-    var info: Dictionary = preload("res://scripts/discovery_presentation.gd").knowledge(State,location,next)
-    if info.state == "travelled": draw_line(start,finish,Color("#7B9B98"),3,true)
-    elif info.state in ["known","scouted"] and info.kind != "quiet":
-     markers.append({"position":start.lerp(finish,0.5),"kind":info.kind})
  var previous: Vector2i = State.room_position
  for step in preview_route:
   art.corridor(self,room_rect(previous).get_center(),room_rect(step).get_center(),true)
@@ -80,7 +76,7 @@ func _draw() -> void:
    draw_texture_rect_region(image,rect,source,Color(0.42,0.42,0.45) if room.get("cleared",false) else Color(0.7,0.64,0.6))
   draw_rect(rect,tint.darkened(0.2),false,2)
   draw_rect(Rect2(rect.position+Vector2(0,62),Vector2(rect.size.x,30)),Color(0.03,0.02,0.04,0.9))
-  var title: String = "Chamber" if room.kind == "chamber" else str(room.kind).capitalize()
+  var title: String = "? · Chamber" if room.kind == "event" and not room.get("cleared",false) else "Chamber" if room.kind == "chamber" else str(room.kind).capitalize()
   if room.get("merchant_orb",false): title += " · M"
   if room.get("cleared",false): title += " ✓"
   draw_string(ThemeDB.fallback_font,rect.position+Vector2(4,83),title,HORIZONTAL_ALIGNMENT_CENTER,132,16,tint)
