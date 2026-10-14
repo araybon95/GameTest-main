@@ -12,7 +12,7 @@ void vertex() {
 	VERTEX = animate_actor_vertex(VERTEX);
 }
 void fragment() {
-	vec4 original = texture(TEXTURE, UV);
+	vec4 original = texture(TEXTURE, steady_arm_uv(UV, TEXTURE_PIXEL_SIZE));
 	float largest = max(original.r, max(original.g, original.b));
 	float smallest = min(original.r, min(original.g, original.b));
 	float saturation = (largest - smallest) / max(largest, 0.001);

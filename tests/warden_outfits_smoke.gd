@@ -59,6 +59,8 @@ func run() -> void:
 			travel.update_walkers()
 			for picture in travel.walkers:
 				if picture.get_meta("walker") != "warden": continue
+				assert(picture.material.get_shader_parameter("arm_shift") == picture.texture.get_meta("arm_shift"))
+				assert(picture.get_node("EquipmentAccents").material.get_shader_parameter("arm_shift") == picture.texture.get_meta("arm_shift"),"Trim follows damped arm")
 				var anchor: float = picture.texture.get_meta("stride_anchor")
 				if left: anchor = 1.0-anchor
 				var index: int = travel.walkers.find(picture)
@@ -82,6 +84,7 @@ func run() -> void:
 	motion._process(0.9)
 	assert(fighter.scale.y > 1.0 and fighter.scale.y <= 1.0031)
 	assert(fighter.pivot_offset.y == 400, "Breathing keeps feet planted")
+	assert(not idle.has_meta("arm_shift"),"Combat art is unaffected by travel-only forearm damping")
 	fighter.texture = preload("res://scripts/combat_poses.gd").state_pose(idle,"attack")
 	motion._process(0.1)
 	assert(fighter.scale.y == 1.0, "Attack pose does not breathe")
@@ -94,6 +97,8 @@ func run() -> void:
 	for outfit in ["original","ashen_wolf"]:
 		for frame in preload("res://scripts/warden_outfits.gd").walks(outfit):
 			assert(frame.has_meta("stride_anchor"),"Walking frames need a body anchor, not rectangle centering")
+			assert(frame.has_meta("arm_shift"),"Walking forearms use damped motion")
+			assert(frame.get_meta("arm_shift").length() < 30.0,"Arm correction stays local")
 	var screen = load("res://scenes/hub/customization.tscn").instantiate()
 	root.add_child(screen)
 	await process_frame

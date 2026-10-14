@@ -27,3 +27,10 @@ static func update(picture: TextureRect, clock: float, stride: float, weight: fl
 		ink.set_shader_parameter("actor_stride",stride)
 		ink.set_shader_parameter("actor_walking",weight)
 		ink.set_shader_parameter("actor_profile",picture.material.get_shader_parameter("actor_profile"))
+
+static func steady_arm(picture: TextureRect) -> void:
+	for layer in [picture,picture.get_node_or_null("EquipmentAccents")]:
+		if layer == null: continue
+		var ink: ShaderMaterial = layer.material
+		ink.set_shader_parameter("arm_center",picture.texture.get_meta("arm_center",Vector2.ZERO))
+		ink.set_shader_parameter("arm_shift",picture.texture.get_meta("arm_shift",Vector2.ZERO))

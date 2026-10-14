@@ -27,3 +27,7 @@ Per-frame body scaling matches the approved experiment while keeping feet plante
 Walking poses use measured horizontal helm anchors so the complete character
 does not jump sideways between source frames. The anchors mirror when facing
 left; feet stay on the existing ground line.
+
+The foreground forearm swing is damped by 60% relative to the torso during
+walking, using a local texture correction on the complete painted frame.
+Equipment trim follows the same correction; combat poses remain unaffected.

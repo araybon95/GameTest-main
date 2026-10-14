@@ -9,7 +9,7 @@ uniform bool etched = false;
 uniform bool armor = false;
 void vertex() { VERTEX = animate_actor_vertex(VERTEX); }
 void fragment() {
-	vec4 sprite = texture(TEXTURE, UV);
+	vec4 sprite = texture(TEXTURE, steady_arm_uv(UV, TEXTURE_PIXEL_SIZE));
 	vec2 p = (UV - atlas_area.xy) / atlas_area.zw;
 	float pulse = 0.7 + 0.3 * sin(clock * 1.7);
 	float metal = smoothstep(0.18,0.45,min(sprite.r,min(sprite.g,sprite.b)));

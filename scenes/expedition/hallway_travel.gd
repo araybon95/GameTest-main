@@ -626,6 +626,7 @@ func update_walkers() -> void:
   if facing_left: anchor = 1.0-anchor
   picture.position = bases[index]-Vector2(width*anchor,height)
   picture.rotation = 0.0
+  ActorMotion.steady_arm(picture)
   ActorMotion.update(picture,actor_clock,animation_clock*3.5*PI,actor_walking,enabled and not (id == "warden" and costume_for_warden(id)))
 
 func costume_for_warden(id: String) -> bool:
