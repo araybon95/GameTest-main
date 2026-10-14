@@ -1,8 +1,9 @@
-# Warden outfit integration
+# Warden outfits
 
 The original Warden and Ashen Wolf use the approved complete painted artwork:
-ten unarmed walking frames in a 0.84-second loop, armed combat idle with subtle
-breathing, and one overhead attack pose. Helm, cloak and armor stay in the same
+standing exploration poses, armed combat idle with subtle breathing, and one
+overhead attack pose. Optional Manual walking uses ten unarmed walking frames
+in a 0.84-second loop. Helm, cloak and armor stay in the same
 image. The ambient-motion setting freezes the new stride and breathing.
 
 Defeat the Undying Lord at the end of the Old Road to unlock Ashen Wolf. The
@@ -17,12 +18,11 @@ weapon-family appearance swaps need additional art.
 
 ## Live game previews
 
-[Walking animation](travel.gif) · [Workshop](workshop.png) · [Combat](combat.png)
+[Standing party](../room_travel/standing-lineup.png) · [Workshop](workshop.png) · [Combat](combat.png)
 
 The previews show the actual game scenes, using deterministic test save data.
-The source atlases are copied unchanged from the approved experiment.
-The walking preview is captured at 25 fps to preserve every stride pose.
-Per-frame body scaling matches the approved experiment while keeping feet planted.
+The approved source atlases live in `assets/art_library/warden_outfits/`.
+Older animation experiments and comparison previews have been removed.
 
 Walking poses use measured horizontal helm anchors so the complete character
 does not jump sideways between source frames. The anchors mirror when facing

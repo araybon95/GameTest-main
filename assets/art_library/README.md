@@ -20,6 +20,7 @@ does not determine whether an image is used.
 | `appearance/` | Character costume variants and atlas region definitions |
 | `equipment/` | Equipment appearance variants and atlas region definitions |
 | `presentation/` | Layered scenery, settlement interiors/attendants, effects and UI |
+| `warden_outfits/` | Complete original and Ashen Wolf costume atlases and views |
 | `skills/` | Combat ability artwork, atlas resources and SVG fallback symbols |
 
 ## Replace one item with your drawing
@@ -76,3 +77,6 @@ The new item/camp sprites were generated with OpenAI's image tools on 2026-10-12
 All four sheets contain 24 tiles of 256×256 pixels, with the original sheet pixels
 preserved. Existing project art and its original credits remain separate in their
 source folders; moving it here does not change its provenance or license.
+
+Full-screen strongbox event art is `generated/story_strongbox.png`.
+The library excludes abandoned animation experiments and obsolete review assets.

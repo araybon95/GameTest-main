@@ -1122,6 +1122,17 @@
       ]
     },
     {
+      "file": "generated/dungeon_entrance.png",
+      "resource": "res://assets/art_library/generated/dungeon_entrance.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": [
+        "scenes/expedition/dungeon_entrance.gd"
+      ]
+    },
+    {
       "file": "generated/dungeon_threshold_sheet.png",
       "resource": "res://assets/art_library/generated/dungeon_threshold_sheet.png",
       "dimensions": [
@@ -2063,17 +2074,6 @@
       ]
     },
     {
-      "file": "generated/graveyard_ink_marker.png",
-      "resource": "res://assets/art_library/generated/graveyard_ink_marker.png",
-      "dimensions": [
-        1343,
-        1171
-      ],
-      "references": [
-        "tests/graveyard_smoke.gd"
-      ]
-    },
-    {
       "file": "generated/hallway_bandit_panorama.png",
       "resource": "res://assets/art_library/generated/hallway_bandit_panorama.png",
       "dimensions": [
@@ -2705,6 +2705,17 @@
         "scenes/hub/barracks.tscn",
         "scenes/hub/bestiary.tscn",
         "scenes/hub/forge.tscn"
+      ]
+    },
+    {
+      "file": "generated/story_strongbox.png",
+      "resource": "res://assets/art_library/generated/story_strongbox.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "references": [
+        "scenes/expedition/story_event.gd"
       ]
     },
     {
@@ -7160,6 +7171,128 @@
         245.0
       ],
       "individual_png_override": "skills/wd_slash.png"
+    },
+    {
+      "file": "warden_outfits/ashen_wolf.png",
+      "resource": "res://assets/art_library/warden_outfits/ashen_wolf.png",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "references": [
+        "assets/art_library/warden_outfits/ashen_wolf_camp.tres",
+        "assets/art_library/warden_outfits/ashen_wolf_idle.tres",
+        "assets/art_library/warden_outfits/ashen_wolf_portrait.tres"
+      ]
+    },
+    {
+      "file": "warden_outfits/ashen_wolf_camp.tres",
+      "resource": "res://assets/art_library/warden_outfits/ashen_wolf_camp.tres",
+      "dimensions": [
+        366.0,
+        385.0
+      ],
+      "references": [],
+      "atlas": "warden_outfits/ashen_wolf.png",
+      "region": [
+        724.0,
+        0.0,
+        366.0,
+        385.0
+      ]
+    },
+    {
+      "file": "warden_outfits/ashen_wolf_idle.tres",
+      "resource": "res://assets/art_library/warden_outfits/ashen_wolf_idle.tres",
+      "dimensions": [
+        366.0,
+        381.0
+      ],
+      "references": [],
+      "atlas": "warden_outfits/ashen_wolf.png",
+      "region": [
+        0.0,
+        0.0,
+        366.0,
+        381.0
+      ]
+    },
+    {
+      "file": "warden_outfits/ashen_wolf_portrait.tres",
+      "resource": "res://assets/art_library/warden_outfits/ashen_wolf_portrait.tres",
+      "dimensions": [
+        242.0,
+        220.0
+      ],
+      "references": [],
+      "atlas": "warden_outfits/ashen_wolf.png",
+      "region": [
+        784.0,
+        35.0,
+        242.0,
+        220.0
+      ]
+    },
+    {
+      "file": "warden_outfits/original.png",
+      "resource": "res://assets/art_library/warden_outfits/original.png",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "references": [
+        "assets/art_library/warden_outfits/original_camp.tres",
+        "assets/art_library/warden_outfits/original_idle.tres",
+        "assets/art_library/warden_outfits/original_portrait.tres"
+      ]
+    },
+    {
+      "file": "warden_outfits/original_camp.tres",
+      "resource": "res://assets/art_library/warden_outfits/original_camp.tres",
+      "dimensions": [
+        366.0,
+        382.0
+      ],
+      "references": [],
+      "atlas": "warden_outfits/original.png",
+      "region": [
+        724.0,
+        0.0,
+        366.0,
+        382.0
+      ]
+    },
+    {
+      "file": "warden_outfits/original_idle.tres",
+      "resource": "res://assets/art_library/warden_outfits/original_idle.tres",
+      "dimensions": [
+        366.0,
+        380.0
+      ],
+      "references": [],
+      "atlas": "warden_outfits/original.png",
+      "region": [
+        0.0,
+        0.0,
+        366.0,
+        380.0
+      ]
+    },
+    {
+      "file": "warden_outfits/original_portrait.tres",
+      "resource": "res://assets/art_library/warden_outfits/original_portrait.tres",
+      "dimensions": [
+        242.0,
+        220.0
+      ],
+      "references": [],
+      "atlas": "warden_outfits/original.png",
+      "region": [
+        784.0,
+        35.0,
+        242.0,
+        220.0
+      ]
     }
   ]
 }

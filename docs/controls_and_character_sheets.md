@@ -1,3 +1,5 @@
+> Default exploration uses [instant room selection and story choices](room_travel/README.md). Walking controls below apply to optional Manual walking.
+
 # Controls and character records
 
 **I** opens or closes a contextual controls guide on any screen. Its candle, charcoal panel, worn brass dividers and red close button use original native Godot drawing. **F10** opens the existing sound, brightness and save settings. Keyboard shortcuts leave text fields available for typing hero names.

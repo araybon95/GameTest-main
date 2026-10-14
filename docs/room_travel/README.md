@@ -34,16 +34,16 @@ Settings → Dungeon travel retains Manual walking and its original event layout
 
 Preview fixtures reveal part of a floor and place a strongbox adjacent to the
 entrance for review; real runs use generated floors and saved event seeds.
-The older prototype.gif and travel screenshots document the superseded passage
-version. The links above show the current room-based flow.
+The links above show the current room-based flow. Superseded passage previews
+and abandoned animation experiments have been removed.
 
-Built on the Warden outfit integration branch. Neither branch is merged into main.
+Includes the Warden outfit integration and the current dungeon discovery flow.
 
-Validation: 89 of 90 smoke checks pass. Coverage includes instant arrival,
+Validation: all 90 smoke checks pass. Coverage includes instant arrival,
 full-screen choices, missing-supply rejection, save/load of results, repeated
 resolution prevention, invalid routes, resolved/unresolved discovery migration,
 cancelled and invalid older passage saves, Watch, actual saved-passage combat,
-and the legacy dungeon lifecycle. The remaining graveyard CemeteryMarker
-failure is reproduced on unchanged main. Some legacy headless scenes emit
+and the legacy dungeon lifecycle. The graveyard smoke check verifies the current painted settlement hotspot
+instead of the superseded CemeteryMarker. Some legacy headless scenes emit
 non-blocking font/resource-cleanup diagnostics. Native Godot screenshots were
 inspected, and the migration correction received an independent code review.

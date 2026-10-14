@@ -1,4 +1,10 @@
-# Settings, saved journeys and settlement polish
+# Settings and continuity
+
+The default dungeon travel setting uses instant room selection and full-screen
+illustrated discoveries. F10 can switch to optional Manual walking when no
+journey is underway. Completed event outcomes, selected Warden outfits and
+unlocked Ashen Wolf ownership persist in saved journeys/progression.
+
 
 Open Settings from the top-right button or **F10**. Master, Music and Effects sliders include mute at zero. Brightness ranges from 65% to 140%; settings apply immediately and persist between launches.
 

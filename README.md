@@ -1,161 +1,96 @@
 # Ashen Expedition
 
-The Hamlet now has an **Adventurers' Guild**: a lively painted hall with saved guild name, banner/emblem, lighting, and furnishing choices. Its expedition board lets you inspect and pin routes, reserving the space for future online party voting. This first hall pass is local; Steam/online lobbies are not connected yet. See [Guild hall](docs/guild_hall.md) for screenshots and controls.
+A grimdark, side-view party RPG built in Godot. Assemble three heroes in the
+Hamlet, explore multi-floor dungeons, resolve illustrated encounters and fight
+with shared party turns.
 
-Hallway heroes use the original four-frame walking animation by default. **F10 → Experimental walking** optionally enables restrained breathing and weight shifts with smooth starts/stops. See [the before/after animation preview](docs/quiet_hallway_motion.md).
+## Current dungeon experience
 
-All 87 items now have painted grimdark sprites, and camp actions have illustrated cards with visible effects and preparation states. The game loads its artwork from [the live art library](assets/art_library/README.md), which includes a searchable catalog and instructions for replacing individual sprites with hand-drawn PNGs. See [Item and camp artwork](docs/item_camp_art.md) for previews and verification.
+Expeditions begin in a painted dungeon entrance with standing, combat-ready
+heroes. Click the iron gate to open the map, then select a reachable room to
+enter it immediately. Rooms marked **?** open full-screen story encounters with
+clear choices, costs, rewards and risks. The artwork stays visible for the
+outcome, followed by **Continue** back to the map. Decisions and rewards are
+saved; resolved discoveries cannot be collected again.
 
-Boss battles now show live tactics cues, and **F10 → Combat playback** offers 1×, 1.5× and 2× animation speed. Saved journeys preview the party, explain save restrictions and reject invalid data before loading. See [Boss clarity, pacing, campaign economy and saved journeys](docs/boss_pacing_campaign_save_review.md) for the broader Healer/Crusader campaign results.
+[Full-screen discovery](docs/room_travel/fullscreen-event.png) ·
+[Outcome](docs/room_travel/fullscreen-outcome.png) ·
+[Dungeon map](docs/room_travel/room-event-map.png) ·
+[Preview sequence](docs/room_travel/story-events.gif)
 
-Preparation now shows skills blocked by each hero's position, and **I** opens a field guide for formation, shared turns, scouting and recovery. The first keep descent warns about level-1 heroes and explains optional exploration. See [First-expedition guidance and campaign samples](docs/first_expedition_usability.md).
+The strongbox has original full-screen artwork. Other events use the same story
+layout with existing dungeon backgrounds and painted event objects. Combat,
+treasure, camp, merchants and stairs keep their room interactions. Scouting
+reveals nearby rooms; explored rooms remain marked on the map. Camp Watch
+protects against the existing camp ambush risk.
 
-Descent advice now names heroes missing weapons or armour and lists discovered merchants. Cyan **M** diamonds identify merchants on the route map; fight tooltips explain XP and equipment opportunities. See [Equipment and route guidance](docs/equipment_and_route_guidance.md) for the paired seed 27 preparation test.
+See [Room selection and discoveries](docs/room_travel/README.md) for details and
+save compatibility. **F10 → Dungeon travel → Manual walking** retains the
+optional walking controls and original event presentation.
 
-Settings (F10), saved journeys, Workshop names/colors, dungeon books, combat audio and the settlement Graveyard are available. See [Settings and continuity](SETTINGS_AND_CONTINUITY.md) and [Gameplay systems](GAMEPLAY_SYSTEMS.md) for controls and rules.
+## Warden outfits and customization
 
-Preparation and floor entrances now show party readiness and recovery advice. Living heroes at Death's Door earn victory XP, and heavy strikes, charges, bows and spells have distinct timing with synchronized sounds. See [Readiness and attack timing](docs/readiness_and_attack_timing.md).
+The Warden uses complete painted costume art with subtle combat breathing and
+an attack pose. Defeating the Undying Lord at the end of the Old Road unlocks
+**Ashen Wolf**. Select it in the Workshop and save the appearance; previous saves
+that completed the Old Road also qualify. The outfit is cosmetic and preserves
+equipment stats. The painted combat poses contain a fixed mace and shield;
+additional visible weapon families require additional artwork.
 
-Merchant rooms now lead to a clickable orb event after victory, then the Emporium and back to the same room. The Emporium has buy/sell tabs, filters and sorting; spare inventory copies sell for 25% of their value. Rare, epic and unique equipment costs 40, 100 and 150 gold. Combat skills have brighter hover frames and inspection cards showing effects, AP, ranks and availability reasons. See [Equipment economy, merchant orbs and skill inspection](docs/economy_and_skills.md).
-
-The Graveyard and merchant orb now match the painted grimdark scenery, with worn stone and iron, readable memorial records and a cyan silhouette highlight on the orb. See [Graveyard and orb visuals](docs/graveyard_orb_visuals.md) for the replaceable artwork and production prompts.
-
-Press **I** for the contextual controls guide. Choose a map destination, then hold **D / Right** to walk toward it or **A / Left** to retrace the hallway. **W / Enter** enters a reached room or encounter. Right-click a hero or press **C** for their character sheet, **Q / E** cycles heroes, and **Tab** switches to inventory during exploration. Combat uses **1–5** to select a skill and **Enter** to use it. See [Dynamic hallways](docs/dynamic_hallways.md) and [Controls and character sheets](docs/controls_and_character_sheets.md).
-
-Layered corridor scenery can read artwork from a local Darkest Dungeon installation, including different scenery for all three Path of the Beast floors. **F10 → Use local dungeon artwork** switches this option for the next passage. The source download includes the project's original backgrounds as fallback; installed game images are read locally and are not included in the download. Configuration and folder mappings are described in [Dynamic hallways](docs/dynamic_hallways.md#optional-local-artwork).
-
-A Godot 4.7.2 party RPG with shared turns and multi-floor expeditions. The original project code is licensed under the MIT License; see [`LICENSE`](LICENSE). Third-party assets are not covered by that license and remain subject to their own terms. In particular, see `Sound FX Starter Pack Vol. 1/Royalty-Free License (Link).pdf` for the included audio pack's license. (Assets not currently in use but saved for future)
+The standing exploration party uses selected costumes. Warden and Crusader are
+slightly taller and broader than the other heroes. See
+[Warden outfits](docs/warden_outfits/README.md) for Workshop and combat previews.
 
 ## Running the game
 
-1. Install **Godot 4.7.2** (or a compatible Godot 4.7 release).
-2. In Godot Project Manager, choose **Import** and select this repository's `project.godot`.
-3. Open the project, let Godot finish importing assets, then press **F5** (or click **Run Project**). The game starts at the title screen.
+1. Import this repository's `project.godot` in Godot.
+2. Allow the editor to finish importing artwork.
+3. Press **F5** to start at the title screen.
 
-The project targets Godot 4.7 and uses the GL Compatibility renderer. Godot 4.6.3 has also passed the project's headless combat checks, but 4.7.2 is the recommended version.
+The project targets Godot 4.7 with the GL Compatibility renderer. Verification
+in this repository uses Godot **4.6.3**. Start with **Enter the Hamlet**, choose
+three heroes in the Barracks, and embark from the expedition board or gate.
 
-## Ashen Expedition (Temporary)
+## Controls
 
-a party of three heroes, each with their own HP, Block and Stress, facing a creature
-that telegraphs its intent. Built around a Hamlet hub: choose expeditions, change
-your party in the Barracks (recruit the Healer), and record foes in the Archive.
+| Context | Controls |
+| --- | --- |
+| Dungeon map | Click a reachable room to enter; use Scout, Inventory or Retreat |
+| Story event | Select a living investigator, choose an option, then Continue |
+| Combat | Select a hero; **1–5** selects a skill; **Enter** uses it; **Tab** opens inventory |
+| Hero details | Right-click a hero or press **C**; **Q / E** cycles heroes |
+| Help and settings | **I** opens contextual controls; **F10** opens settings |
+| Optional manual walking | **D / Right** forward, **A / Left** backward, **W / Enter** enters, **Space** toggles automatic walking |
 
-### Flow
+## Other available systems
 
-Title → Hamlet(Settlement, will change name) → (Barracks / Archive / Forge) → Expedition → (battle) → Hamlet.
+- [Guild hall](docs/guild_hall.md): saved hall name, banner, lighting and furnishings, plus an expedition board. Online lobbies are not connected.
+- [Gameplay systems](GAMEPLAY_SYSTEMS.md): party turns, progression, services and expedition rules.
+- [Settings and continuity](SETTINGS_AND_CONTINUITY.md): settings, saved journeys, hero names/colors and memorials.
+- [Item and camp artwork](docs/item_camp_art.md): painted item sprites and camp preparation cards.
+- [Equipment economy and skills](docs/economy_and_skills.md): merchants, inventory sales, equipment and skill inspection.
+- [Readiness and attack timing](docs/readiness_and_attack_timing.md): party preparation and combat presentation.
+- [Live art library](assets/art_library/README.md): searchable artwork catalog and replacement instructions.
 
-1. `scenes/ui/title_screen.tscn` is the **Main Scene** (Project Settings →
-   Application → Run → Main Scene). **ENTER THE HAMLET** loads the settlement;
-   **QUIT** closes the game.
-2. `scenes/hub/settlement.tscn` — the **Hamlet**, a single painted town vista. Its
-   buildings are baked into the scene art as invisible hotspots: hovering one
-   lights it up and reveals its name and purpose (Darkest Dungeon style), and
-   clicking it enters. The **gate** ("The Old Road") opens the expedition list.
-   A `locked` building still highlights and shows a "sealed" note.
-3. `scenes/hub/barracks.tscn` — the **Barracks**. Compose the three-hero party:
-   select a slot, then click a hero from the roster (e.g. recruit the **Healer**).
-4. `scenes/hub/bestiary.tscn` — the **Archive**. A bestiary that fills in as the
-   party faces creatures.
-5. `scenes/hub/forge.tscn` — the **Forge**. Spend **Embers** won in battle to
-   upgrade the party's cards (each card up to ★3).
-6. `scenes/combat/combatscene.tscn` reads the chosen expedition's creature and the
-   current party. When the battle ends, **RETURN TO THE HAMLET**.
+Abandoned Spine/layered animation experiments and superseded review previews
+have been removed. Gameplay assets needed by current scenes, alternate outfits,
+manual walking and saved journeys remain available.
 
-### The roster and the Healer
+## Verification
 
-Heroes are defined in `GameState.HEROES` (id → name, max_hp, art, deck); the
-active three live in `GameState.party`. The **Healer** heals itself (*Mend*) and
-the team (*Blessing*), eases Stress (*Solace*), and deals bonus damage against
-**Undead** (*Smite*, *Turn Undead*). Swap heroes in the Barracks — changes take
-effect on the next expedition.
+Smoke checks are Godot scripts in `tests/`. Run a check with:
 
-### Embers and the Forge (Temporary)
+```sh
+godot --headless --path . --script res://tests/room_discoveries_smoke.gd
+```
 
-Winning an expedition awards **Embers** (The Old Road 5, Bone Warrens 7, the
-sealed Weald 12 — see each expedition's `reward`). The Forge spends them to
-upgrade any card the party can play, up to **★3**; the cost rises with each level
-(`4 + level × 3`). Upgrades are stored per card in `GameState.card_levels` and
-applied every time a card resolves through `GameState.card_stats()`, so the
-upgraded numbers show in both the Forge and the combat hand. Current Embers
-appear in the Forge header and on the combat HUD.
+The room-discovery check covers direct arrival, choices, saved outcomes,
+unavailable supplies, repeated resolution, invalid routes and migration from
+older passage saves. All **90 smoke checks pass** on the cleaned project. The suite also covers combat, outfits,
+progression, services, settings and the legacy exploration lifecycle.
 
-### Adding content (data-driven)
+## Licensing
 
-`scripts/game_data.gd` holds all game data. Add an entry and the hub builds the UI
-automatically:
-
-- **Hero** → `HEROES` (plus a portrait PNG at `art`).
-- **Creature** → `CREATURES` (name, tags, undead, hp, attack, art, lore).
-- **Expedition** → `EXPEDITIONS` (name, region, difficulty, blurb, `creature`, locked).
-- **Building** → `BUILDINGS` in `scenes/hub/settlement.gd` (`name`, `subtitle`, `scene`,
-  `pos` = its centre and `size` = its footprint in the 1920×1080 layout, sitting over
-  the building painted into the vista; `locked`; `expeditions: true` opens the
-  expedition list instead of a scene).
-
-Every scene loads it by path — `const GameState := preload("res://scripts/game_data.gd")` —
-and reads its static members. No autoload or global class registry is required.
-
-### Editing screens in Godot
-
-Open a screen's `.tscn` file (for example, `scenes/combat/combatscene.tscn`) and
-use the **2D** workspace and Scene dock to select, move, resize, and restyle its
-saved controls. The title, Hamlet, Barracks, Archive, and Forge have authored
-scene-tree layouts; combat's background, header, enemy frame, meters, hand,
-party region, battle log, and buttons are saved in the combat scene. Runtime
-scripts fill changing values and spawn repeated/data-driven widgets (Archive
-entries, Forge rows, expedition cards, and Hamlet hotspots). Combat's hero and
-card templates are editable directly inside `combatscene.tscn` as the hidden
-`HeroTemplate` and `CardTemplate` nodes. Select one in the Scene dock and edit
-its children; the game duplicates that template for the current heroes/cards.
-The Hamlet hotspot positions and sizes come from `BUILDINGS` in
-`scenes/hub/settlement.gd`.
-
-### Combat UI
-
-The saved combat scene supplies the interactive nodes, background art, title,
-combat regions, enemy art slot, meters, and signal connections. These fixed
-layouts are editable directly in Godot's 2D editor; `combatscene.gd` fills in
-expedition-specific text/art and creates data-driven hero and card widgets at
-runtime. Each hero has a HealthBar and StressBar (red and purple); the enemy has
-a HealthBar and an intent line. Values update after every action.
-
-Heroes start with three cards. Each standing hero keeps unplayed cards and
-draws one new card at the start of every subsequent party turn. Played cards go
-to the discard pile; an empty draw pile reshuffles the discard pile. Action
-points reset to two each round. The card hand scrolls horizontally when it grows.
-
-###mechanics subject to change
-
-- **Death's Door** — a hero reduced to 0 HP is not dead yet; they stand at
-  Death's Door and the next blow fells them. Healing above 0 clears it.
-- **Stress & the resolve test** — Stress builds from enemy hits and from cards
-  like the Occultist's *Dark Blast*. At 100 Stress a hero faces a resolve test:
-  ~25% they become **Virtuous** (heal, steadied to 45 Stress, +2 damage) or they
-  become **Afflicted** (-2 damage and +3 Stress each turn). The result is shown
-  beside the hero's name.
-- **Enemy intents** — the intent line shows the coming attack and its target;
-  every fourth turn the enemy braces for Block instead.
-- **The Healer** — heals itself (*Mend*) and the team (*Blessing*), eases Stress
-  (*Solace*), and deals bonus damage against **Undead** (*Smite*, *Turn Undead*).
-
-### Artwork
-
-All art lives in `assets/art_library/generated/` (transparent PNGs, Dark style):
-
-- `bg_crypt.png`, `settlement_hamlet.png`, `title_key_art.png` — backgrounds
-- `hero_warden.png`, `hero_ranger.png`, `hero_occultist.png`, `hero_healer.png` — portraits
-- `enemy_hollow_villager.png`, `enemy_bone_rabble.png` — creatures
-- `hamlet_vista.png` — the whole Hamlet as one painted scene (the buildings are
-  hotspots over it); `building_barracks.png`, `building_bestiary.png`,
-  `building_forge.png`, `building_gate.png` remain for other uses
-- `mote.png`, `glow_warm.png` — drifting dust motes and the warm building glow
-- `<card_id>.png` for each card (e.g. `wd_slash.png`, `hl_mend.png`)
-
-Any missing file falls back to a text placeholder, so the game always runs.
-
-Scene: scenes/combat/combatscene.tscn
-Script: scenes/combat/combatscene.gd
-Theme: assets/new_theme.tres
-
-The nested duplicate project and generated .godot cache are excluded. Empty folders use .gitkeep so Git preserves them.
-
+Original project code is licensed under the [MIT License](LICENSE). Third-party
+assets retain their own terms; source credits and provenance files are kept with
+the assets. The included Sound FX Starter Pack license is in its own folder.
