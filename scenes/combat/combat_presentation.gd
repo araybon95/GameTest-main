@@ -1,6 +1,8 @@
 extends Control
 ## In-place attacker/target spotlight: anticipation, strike, impact and recovery.
 ## All damage and status logic stays in the combat controller.
+const Execution = preload("res://scenes/combat/warden_execution.gd")
+var execution_visual: Node2D
 var pending: Array[Dictionary] = []
 var active: Dictionary = {}
 var age: float = 0.0
@@ -49,9 +51,9 @@ func _ready() -> void:
  status_bursts = preload("res://scenes/combat/status_bursts.gd").new()
  get_parent().add_child.call_deferred(status_bursts)
  visible = false
-func strike(source: TextureRect, target: TextureRect, kind: String, title: String, from_hero: bool = true, options: Dictionary = {}) -> void:
- if not is_instance_valid(source) or not is_instance_valid(target) or source.texture == null or target.texture == null: return
- if pending.size() >= 8: return
+func strike(source: TextureRect, target: TextureRect, kind: String, title: String, from_hero: bool = true, options: Dictionary = {}) -> bool:
+ if not is_instance_valid(source) or not is_instance_valid(target) or source.texture == null or target.texture == null: return false
+ if pending.size() >= 8: return false
  var source_boss: bool = source.get_meta("boss",false)
  var resolved_options: Dictionary = options.duplicate()
  if not options.is_empty(): resolved_options["creature"] = source.get_meta("creature","")
@@ -60,6 +62,7 @@ func strike(source: TextureRect, target: TextureRect, kind: String, title: Strin
  pending.back()["relic_fx"] = str(options.get("relic_fx",""))
  pending.back()["weapon_signature"] = str(options.get("weapon_signature",""))
  if active.is_empty() and boss_reveal == null: next()
+ return true
 func restore_participants() -> void:
  if active.is_empty(): return
  for role in ["source","target"]:
@@ -74,6 +77,14 @@ func _exit_tree() -> void:
  if is_instance_valid(boss_reveal): boss_reveal.finish()
  if is_instance_valid(status_bursts): status_bursts.queue_free()
 func next() -> void:
+ var completed_execution: bool = active.get("execution",false)
+ if is_instance_valid(execution_visual):
+  execution_visual.corpse_only = true
+  execution_visual.set_frame(1.8,execution_visual.animate)
+  execution_visual.reparent(get_parent())
+  execution_visual.name = "ExecutedRaider"
+  execution_visual.z_index = 5
+  execution_visual = null
  _flush_sounds(active,true)
  _flush_feedback(active)
  restore_participants()
@@ -101,6 +112,7 @@ func next() -> void:
  if pending.is_empty():
   active = {}
   visible = false
+  if completed_execution: get_parent()._execution_finished()
   return
  active = pending.pop_front()
  if not is_instance_valid(active["source_node"]) or not is_instance_valid(active["target_node"]):
@@ -114,6 +126,7 @@ func next() -> void:
  visible = true
  heading.visible = true
  cinematic_stage.visible = true
+ heading.position.y = 70
  heading.text = str(active["title"]).to_upper()
  for role in ["source","target"]:
   var fighter := TextureRect.new()
@@ -262,7 +275,11 @@ func _process(delta: float) -> void:
  age += delta * (float(settings.combat_speed) if settings != null else 1.0)
  var active_duration: float = float(active.get("duration",duration))
  if age >= active_duration:
+  if active.get("execution",false): _process_execution()
   next()
+  return
+ if active.get("execution",false):
+  _process_execution()
   return
  var hero: bool = active["hero"]
  var direction: float = 1.0 if hero else -1.0
@@ -430,3 +447,33 @@ func feedback(target: Control, kind: String, amount: int = 0, effect: String = "
 func block_impact() -> void:
  if not pending.is_empty(): pending[-1]["kind"] = "block"
  elif not active.is_empty(): active["kind"] = "block"
+
+func has_execution() -> bool:
+ return active.get("execution",false) or pending.any(func(entry): return entry.get("execution",false))
+
+func execute_warden(target: TextureRect) -> bool:
+ var entry: Dictionary = pending[-1] if not pending.is_empty() and pending[-1].get("target_node") == target else active if active.get("target_node") == target else {}
+ if entry.is_empty() or entry.get("execution",false): return false
+ # Keep selected costumes intact until they have matching execution artwork.
+ if entry["source"].get_meta("warden_outfit","original") != "original": return false
+ entry["execution"] = true
+ entry["duration"] = Execution.DURATION
+ entry["sounds"] = [{"kind":"block","at":0.25,"emitted":false},{"kind":"sword","at":0.65,"emitted":false},{"kind":"impact","at":0.95,"emitted":false},{"kind":"death","at":1.18,"emitted":false}]
+ return true
+
+func _process_execution() -> void:
+ if not is_instance_valid(execution_visual):
+  execution_visual = Execution.new()
+  execution_visual.name = "WardenExecution"
+  execution_visual.z_index = 2
+  add_child(execution_visual)
+ for fighter in fighters: fighter.visible = false
+ for child_name in ["StrikeCanvas","AttackTell"]:
+  if has_node(child_name): get_node(child_name).visible = false
+ heading.position.y = 15
+ heading.text = "WARDEN · EXECUTION"
+ var settings = get_node_or_null("/root/GameSettings")
+ execution_visual.set_frame(age,motion_strength > 0 and (settings == null or settings.ambient_motion))
+ _flush_sounds(active)
+ # Damage feedback belongs to the lethal blow, not the opening shield contact.
+ if age >= 0.95: _flush_feedback(active)

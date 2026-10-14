@@ -14,7 +14,8 @@ as separate projects.
 ## Current previews
 
 - [Warden execution](warden_showcase/EXECUTION.md): shield knockdown, crushing
-  mace finish, foreground gore, and a motionless corpse aftermath.
+  mace finish, foreground gore, and a motionless corpse aftermath. Now integrated
+  into normal combat; includes a captured in-game preview.
 
 - [Warden attack showcase](warden_showcase/README.md): Slash, Heavy Strike and
   Shield Bash with dedicated painted poses, isolated framing, contact blood

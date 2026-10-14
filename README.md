@@ -41,6 +41,9 @@ The standing exploration party uses selected costumes. Warden and Crusader are
 slightly taller and broader than the other heroes. See
 [Warden outfits](docs/warden_outfits/README.md) for Workshop and combat previews.
 
+The original-outfit Warden now has an [execution](WARDEN_EXECUTION.md) when an
+ability kills the final Ash Raider, with a one-handed mace finish and a held corpse.
+
 ## Running the game
 
 1. Import this repository's `project.godot` in Godot.

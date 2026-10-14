@@ -241,8 +241,9 @@ func _check_battle_over() -> void:
 				hero_state[id]["max_hp"] = GameState.hero_max_hp(str(id))
 				_add_log("%s gains %d XP%s." % [GameState.hero(str(id))["name"], xp_rewards[id]["xp"], " — LEVEL %d! Train in the Barracks" % GameState.leveling(str(id))["level"] if xp_rewards[id]["levels"] > 0 else ""])
 
-		_show_relic_reward()
-		_offer_floor_entrance()
+		if presentation == null or not presentation.has_execution():
+			_show_relic_reward()
+			_offer_floor_entrance()
 	elif _standing_heroes().is_empty():
 		battle_over = true
 		_add_log("DEFEAT — the party has fallen.")
@@ -548,8 +549,9 @@ func _resolve_card(hero_id: String, card: Dictionary) -> void:
 
 func _attack_with_equipment(hero_id: String, card: Dictionary, ignore_block: bool = false) -> int:
 	var attack_kind: String = "bow" if hero_id == "ranger" else "spell" if hero_id in ["occultist", "healer"] else "sword"
+	var strike_accepted: bool = false
 	if presentation != null:
-		presentation.strike(hero_portraits[hero_id], enemy_views[selected_enemy_index].get_node("EnemyArt"), attack_kind, str(card.get("name", "Strike")),true,{"skill_id":str(card.get("skill_id","")),"effect":str(card.get("effect","")),"relic_fx":str(card.get("effect","")),"weapon_signature":preload("res://scripts/weapon_signatures.gd").resolve(GameState,hero_id)})
+		strike_accepted = presentation.strike(hero_portraits[hero_id], enemy_views[selected_enemy_index].get_node("EnemyArt"), attack_kind, str(card.get("name", "Strike")),true,{"skill_id":str(card.get("skill_id","")),"effect":str(card.get("effect","")),"relic_fx":str(card.get("effect","")),"weapon_signature":preload("res://scripts/weapon_signatures.gd").resolve(GameState,hero_id)})
 	_play_attack_sound(attack_kind)
 	var accuracy: float = GameState.hero_accuracy(hero_id, hero_state[hero_id])
 	if accuracy < 100.0 and randf() * 100.0 >= accuracy:
@@ -562,6 +564,10 @@ func _attack_with_equipment(hero_id: String, card: Dictionary, ignore_block: boo
 	GameState.add_deed(hero_id, "damage", actual)
 	if actual <= 0:
 		return 0
+	# Only a direct ability hit can promote its own final-Raider strike.
+	if strike_accepted and hero_id == "warden" and int(enemies[target]["hp"]) <= 0 and str(enemies[target]["creature"]) == "ash_raider" and _living_enemies().is_empty() and int(enemies[target].get("phase_index",0)) == phase and not enemies[target].get("executed",false) and presentation != null:
+		if presentation.execute_warden(enemy_views[target].get_node("EnemyArt")):
+			enemies[target]["executed"] = true
 	if card.get("skill_id", "") == "wd_bash" and int(enemies[target]["hp"]) > 0: move_enemy(target, mini(_living_enemies().size(),enemy_position(target)+1))
 	if hero_id == "occultist" and int(enemies[target]["hp"]) > 0 and int(enemies[target].get("phase_index", 0)) == phase:
 		if _apply_enemy_status(target,"poison"):
@@ -1135,7 +1141,7 @@ func _refresh_all() -> void:
 
 	_arrange_party()
 	_refresh_enemies()
-	end_turn_button.disabled = false
+	end_turn_button.disabled = presentation != null and presentation.has_execution()
 	var continue_text: String = "CONTINUE EXPEDITION"
 	if GameState.run_active and GameState.encounter_room().get("merchant_orb", false):
 		continue_text = "INSPECT MERCHANT ORB"
@@ -1753,6 +1759,7 @@ func _on_hero_pressed(hero_id: String) -> void:
 
 
 func _on_end_turn_button_pressed() -> void:
+	if presentation != null and presentation.has_execution(): return
 	if has_node("RelicLootReveal"): return
 	if battle_over:
 		if GameState.run_active and _living_enemies().is_empty():
@@ -2284,3 +2291,9 @@ func _encounter_theme(creature_id: String) -> String:
 	if creature_id.begins_with("keep_") or creature_id == "undying_lord": return "keep"
 	if creature_id in ["harrowed_giant","howling_head"] or creature_id.begins_with("anguish_") or creature_id.begins_with("coterie_"): return "remade"
 	return "bandit"
+
+func _execution_finished() -> void:
+	if not battle_over: return
+	_show_relic_reward()
+	_offer_floor_entrance()
+	_refresh_all()
