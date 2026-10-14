@@ -27,4 +27,4 @@ Headless checks cover trigger gates, duplicate prevention, pose order, synchroni
 
 Painted execution poses and the dedicated contact image were generated on October 14, 2026 using the existing Warden and Raider artwork as references. They are stored in assets/warden_execution.png and assets/warden_execution_contact.png. The sequence combines these poses with the existing shield attack, camera framing, and deterministic foreground effects.
 
-The corrected overhead windup uses only the second top-row figure from assets/warden_execution_windup.png: both hands grip the mace and the shield is absent, removing the apparent extra arm. All other poses still use the original atlas.
+The corrected overhead windup uses only the second top-row figure from assets/warden_execution_windup.png: one hand raises the mace while the other arm holds the shield, keeping the shield visible throughout the heavy swing. All other poses still use the original atlas.
