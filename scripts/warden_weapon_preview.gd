@@ -1,12 +1,12 @@
 extends Node2D
 ## Isolated equipment art preview. Does not alter the saved game or item balance.
 const Items = preload("res://scripts/item_data.gd")
-const COLOURS = {"bleed":Color("8d3342"),"poison":Color("86a95d"),"burn":Color("c57b42"),"chill":Color("a1cad5")}
+const COLOURS = {"bleed":Color("b45462"),"poison":Color("a0bd72"),"burn":Color("d99c65"),"chill":Color("adcedb")}
 const WEAPON_COLUMNS = {"warden_sword":0,"warden_epic":0,"warden_frostblade":2,"preview_mace":1}
 var body: Sprite2D
 var weapon: Sprite2D
 var wisps: Node2D
-var hand: Sprite2D
+var hand: Polygon2D
 var smoke: ColorRect
 var element: String = ""
 var outfit: String = "original"
@@ -15,6 +15,13 @@ var pose: String = "idle"
 var elapsed: float = 0.0
 var motion_enabled: bool = true
 var texture_cache: Dictionary = {}
+# Tight source-pixel outlines: surrounding armour must never cover the handle.
+const GAUNTLETS = {
+ "original":[Vector2(456,690),Vector2(487,672),Vector2(517,667),Vector2(547,684),Vector2(563,709),Vector2(565,733),Vector2(554,749),Vector2(540,763),Vector2(510,768),Vector2(482,763),Vector2(461,748),Vector2(446,730)],
+ "ashen_wolf":[Vector2(396,622),Vector2(432,598),Vector2(461,592),Vector2(488,603),Vector2(509,626),Vector2(519,652),Vector2(508,676),Vector2(490,699),Vector2(464,709),Vector2(436,711),Vector2(407,699),Vector2(388,682),Vector2(384,655)],
+ "original_attack":[Vector2(299,214),Vector2(316,192),Vector2(348,175),Vector2(379,180),Vector2(414,208),Vector2(433,234),Vector2(429,252),Vector2(407,272),Vector2(371,286),Vector2(337,279),Vector2(310,264),Vector2(297,241)],
+ "ashen_wolf_attack":[Vector2(326,212),Vector2(346,184),Vector2(374,164),Vector2(405,162),Vector2(433,177),Vector2(460,203),Vector2(467,229),Vector2(455,246),Vector2(428,263),Vector2(393,276),Vector2(361,270),Vector2(337,248)]
+}
 
 func _ready() -> void:
  body = Sprite2D.new()
@@ -27,13 +34,12 @@ func _ready() -> void:
  add_child(wisps)
  smoke = ColorRect.new()
  smoke.mouse_filter = Control.MOUSE_FILTER_IGNORE
- smoke.size = Vector2(36,90)
+ smoke.size = Vector2(56,110)
  var shader_material := ShaderMaterial.new()
  shader_material.shader = preload("res://assets/shaders/weapon_wisps.gdshader")
  smoke.material = shader_material
  wisps.add_child(smoke)
- hand = Sprite2D.new()
- hand.centered = false
+ hand = Polygon2D.new()
  add_child(hand)
  configure(outfit,weapon_id)
 
@@ -73,22 +79,23 @@ func _place_pose() -> void:
  var factor: float = 360.0 / dimensions.y
  body.scale = Vector2(factor*1.10,factor)
  body.position = Vector2(-dimensions.x*body.scale.x/2.0,-360.0)
- var grip: Vector2 = Vector2(503,735) if outfit == "original" else Vector2(442,657)
- if attacking: grip = Vector2(359,231) if outfit == "original" else Vector2(385,228)
+ var grip: Vector2 = Vector2(529,744) if outfit == "original" else Vector2(462,676)
+ if attacking: grip = Vector2(383,249) if outfit == "original" else Vector2(414,235)
  weapon.position = body.position+grip*body.scale
  var length: float = 150.0 if weapon_id == "preview_mace" else 205.0
  weapon.scale = Vector2.ONE * length/weapon.texture.get_height()
  weapon.offset = Vector2(-weapon.texture.get_width()/2.0,-weapon.texture.get_height()*0.86)
  weapon.rotation = deg_to_rad(65.0 if attacking else 110.0)
  wisps.position = weapon.position
- var tip: Vector2 = Vector2(0,-length*0.62).rotated(weapon.rotation)
- smoke.position = tip+Vector2(-18,-75)
- var patch := AtlasTexture.new()
- patch.atlas = body.texture
- patch.region = Rect2(grip-Vector2(65,45),Vector2(130,90))
- hand.texture = patch
+ var head_pixel := Vector2(weapon.texture.get_width()/2.0,weapon.texture.get_height()*(0.18 if weapon_id == "preview_mace" else 0.04))
+ var tip: Vector2 = ((head_pixel+weapon.offset)*weapon.scale).rotated(weapon.rotation)
+ smoke.position = tip-Vector2(smoke.size.x/2.0,smoke.size.y*0.88)
+ var outline := PackedVector2Array(GAUNTLETS[outfit+"_attack" if attacking else outfit])
+ hand.texture = body.texture
+ hand.polygon = outline
+ hand.uv = outline
  hand.scale = body.scale
- hand.position = body.position+patch.region.position*body.scale
+ hand.position = body.position
 
 func _process(delta: float) -> void:
  var settings = get_node_or_null("/root/GameSettings")

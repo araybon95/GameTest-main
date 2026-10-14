@@ -8,8 +8,8 @@ void fragment() {
   float phase = fract(clock * 0.12 + float(i) / 3.0);
   float y = 0.88 - phase * 0.75;
   float x = 0.5 + sin(phase * 5.0 + float(i) * 2.1) * 0.18;
-  vec2 d = (p - vec2(x,y)) / vec2(0.08 + phase * 0.09,0.13);
+  vec2 d = (p - vec2(x,y)) / vec2(0.12 + phase * 0.12,0.15);
   density += exp(-dot(d,d)*2.0) * sin(phase * 3.14159);
  }
- COLOR = vec4(tint.rgb, density * 0.24 * tint.a);
+ COLOR = vec4(tint.rgb, min(density * 0.65,0.65) * tint.a);
 }

@@ -37,7 +37,7 @@ func _ready() -> void:
    figure.position = Vector2(430+column*560,500+row*430)
    figure.configure("original" if row == 0 else "ashen_wolf",["warden_sword","preview_mace","warden_frostblade"][column])
    figures.append(figure)
-   captions.append(label_at(["IRON LONGSWORD · no effect","SPIKED MACE · no effect","VIGIL OF WINTER · faint frost"][column],Vector2(230+column*560,510+row*430),18,440))
+   captions.append(label_at(["IRON LONGSWORD · no effect","SPIKED MACE · no effect","VIGIL OF WINTER · soft frost"][column],Vector2(230+column*560,510+row*430),18,440))
  var controls := HBoxContainer.new()
  controls.position = Vector2(740,1005)
  controls.add_theme_constant_override("separation",20)
@@ -56,7 +56,7 @@ func show_mode(value: String) -> void:
   var column: int = index%3
   figure.configure("original" if index < 3 else "ashen_wolf",["warden_sword","preview_mace","warden_frostblade"][column])
   figure.set_pose("attack" if value == "attack" else "idle")
-  captions[index].text = ["IRON LONGSWORD · no effect","SPIKED MACE · no effect","VIGIL OF WINTER · faint frost"][column]
+  captions[index].text = ["IRON LONGSWORD · no effect","SPIKED MACE · no effect","VIGIL OF WINTER · soft frost"][column]
   if value == "effects":
    figure.configure("original" if index < 3 else "ashen_wolf","warden_sword")
    var element: String = ["bleed","poison","burn"][column]

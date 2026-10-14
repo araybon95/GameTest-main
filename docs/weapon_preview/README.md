@@ -7,6 +7,7 @@ The current game remains intact; this preview has not replaced live combat art.
 
 [![Idle weapon swaps](idle.png)](idle.png)
 [![Attack weapon swaps](attack.png)](attack.png)
+[![Gauntlet and handle close-up](grip-closeup.png)](grip-closeup.png)
 
 Both original and Ashen Wolf armour use a shared body per pose. The iron sword,
 spiked mace and frost blade attach independently at measured hand grips, with
@@ -20,9 +21,11 @@ have not yet been authored for this approach.
 ## Restrained elemental wisps
 
 [![Elemental colour samples](effects.png)](effects.png)
-[Watch the smoke animation](element-wisps.gif).
+[Watch the smoke animation](wisp-closeup.gif) · [Full-scene loop](element-wisps.gif).
 
-An intrinsic offensive weapon property produces a faint persistent wisp near its
+[![Elemental smoke close-up](wisp-closeup.png)](wisp-closeup.png)
+
+An intrinsic offensive weapon property produces a soft persistent wisp near its
 blade/head: muted crimson for Bleed, sickly green for Poison, ember orange for
 Burn, and pale blue for Chill. The existing Vigil of Winter demonstrates actual
 catalog resolution. Bleed/Poison/Burn panels are explicitly labelled colour
@@ -43,7 +46,20 @@ The standalone component is `experiments/warden_weapon_preview.tscn`.
 It reads equipped item data through `configure_equipped`; no game progression,
 save files, inventory or attack statistics are modified by the preview.
 
+The revised preview uses gauntlet-shaped foreground masks instead of rectangular
+patches, preventing surrounding armour from hiding the handle. Each pose has a
+measured grip inside the actual gauntlet. Wisps are wider and more visible than
+the first preview, while retaining soft edges and slow movement. The focused
+loop enlarges the actual effect without changing its shader strength.
+
 Validation: 93 Godot smoke checks, including body preservation during swaps,
 weapon silhouette changes, both attack grips, offensive-property filtering,
 unknown item fallback and freezing motion. Independent review found no Critical
-or Important issues. Captures were rendered in Godot.
+or Important issues. A native graphical check also compares smoke on/off against
+the dungeon for all four colours. Captures were rendered in Godot.
+
+Run the graphical check with a display available:
+
+```sh
+godot --path . --script res://tests/warden_weapon_wisps_visual.gd
+```
