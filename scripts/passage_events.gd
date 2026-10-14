@@ -32,6 +32,11 @@ static func encounter(state, a: Vector2i, b: Vector2i) -> Dictionary:
  if not state.journey.has("passages"): state.journey["passages"] = {}
  var ledger: Dictionary = state.journey.passages
  if ledger.has(id): return activate(state,ledger[id])
+ var event: Dictionary = generate(state,a,b)
+ ledger[id] = event
+ return activate(state,event)
+static func generate(state, a: Vector2i, b: Vector2i) -> Dictionary:
+ var id: String = key(state.floor_index,a,b)
  var rng := RandomNumberGenerator.new()
  rng.seed = state.run_seed*1009+int(id.hash())
  var destination: Dictionary = state.floors[state.floor_index].get(b,{})
@@ -52,8 +57,7 @@ static func encounter(state, a: Vector2i, b: Vector2i) -> Dictionary:
  if event.kind == "ambush":
   var enemy: String = str(destination.get("creature",state.floor_enemy_pool(state.floor_index)[0]))
   event["room"] = {"kind":"battle","creature":enemy,"enemies":[enemy],"cleared":false,"corridor_surprise":true,"travel_text":"AMBUSH IN THE PASSAGE — defeat the prowler to continue your journey."}
- ledger[id] = event
- return activate(state,event)
+ return event
 static func resolve(state, event: Dictionary, hero: String, action: String) -> Dictionary:
  activate(state,event)
  if event.get("resolved",false): return {}

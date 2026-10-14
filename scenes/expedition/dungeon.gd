@@ -5,6 +5,7 @@ const FloorEntrance = preload("res://scenes/expedition/floor_entrance.gd")
 const ItemButton = preload("res://scenes/ui/item_icon_button.gd")
 var inventory_filter: String = "All"
 var selected_hero: String = "warden"
+var revealed_rooms: Array = []
 var map_open: bool = false
 var traveling: bool = false
 var message: String = "Choose a room on the map. Passage events happen before arrival; cleared routes can be retraced safely."
@@ -85,6 +86,9 @@ func refresh() -> void:
 	for child in get_children():
 		remove_child(child)
 		child.queue_free()
+	for point in GameState.journey.get("recent_discoveries",[]):
+		if not revealed_rooms.has(point): revealed_rooms.append(point)
+	GameState.journey.erase("recent_discoveries")
 	preload("res://scenes/expedition/dungeon_view.gd").build(self)
 	preload("res://scripts/dungeon_scenery.gd").decorate(self)
 
@@ -360,7 +364,12 @@ func retreat() -> void:
 	get_tree().change_scene_to_file("res://scenes/expedition/aftermath.tscn")
 
 func scout_area() -> void:
+	var before: Array = []
+	for point in GameState.floors[GameState.floor_index]:
+		if GameState.floors[GameState.floor_index][point].get("seen",false): before.append(point)
 	if GameState.scout_area():
+		for point in GameState.floors[GameState.floor_index]:
+			if GameState.floors[GameState.floor_index][point].get("seen",false) and not before.has(point): revealed_rooms.append(point)
 		message = "Scouts reveal nearby encounters. Hover revealed rooms to inspect the danger."
 		refresh()
 
@@ -372,9 +381,10 @@ func preview_route(destination: Vector2i) -> void:
 	get_node("RouteMap").set_route(route)
 	get_node("RouteTitle").text = str(room.get("name",str(room.get("kind","Chamber")).capitalize()))
 	var known: String = "Already explored. Retrace a familiar route." if room.get("cleared",false) else GameState.scouting_description(room)
-	if room.get("kind","") == "chamber": known = "An unexplored chamber. The approaching hallway may hide a discovery."
+	if room.get("kind","") == "chamber" and not room.get("cleared",false): known = "An unexplored chamber. The approaching hallway may hide a discovery."
 	get_node("RouteDetails").size.x = 520
-	get_node("RouteDetails").text = "%d passage%s · %s\n\n%s\n\nClick this room to travel." % [route.size(),"" if route.size() == 1 else "s","Explored" if room.get("cleared",false) else "Unexplored",known]
+	var clue: String = preload("res://scripts/discovery_presentation.gd").route_hint(GameState,GameState.room_position,route)
+	get_node("RouteDetails").text = "The route is blocked by an unexplored chamber." if route.is_empty() else "%d passage%s · %s\n\n%s\n\n%s" % [route.size(),"" if route.size() == 1 else "s","Explored" if room.get("cleared",false) else "Unexplored",known,clue]
 func resume_map_travel() -> void:
 	var passages = preload("res://scripts/passage_events.gd")
 	if not passages.valid_transit(GameState):

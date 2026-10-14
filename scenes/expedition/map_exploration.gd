@@ -12,6 +12,8 @@ static func build(owner: Control) -> void:
   entrance.size = Vector2(265,35)
   entrance.add_theme_font_size_override("font_size",17)
  var map = preload("res://scenes/expedition/route_map.gd").new()
+ map.new_rooms = owner.revealed_rooms.duplicate()
+ owner.revealed_rooms.clear()
  map.name = "RouteMap"
  map.position = Vector2(80,240)
  map.size = Vector2(1130,620)
@@ -32,6 +34,7 @@ static func build(owner: Control) -> void:
   if guidance != "": option.tooltip_text += "\n"+guidance
   option.mouse_entered.connect(owner.preview_route.bind(location))
   option.focus_entered.connect(owner.preview_route.bind(location))
+ owner.label_at("GOLD · SELECTED ROUTE    BLUE GREY · TRAVELLED    ◇ · SCOUTED CLUE",Vector2(80,867),14)
  owner.panel_at(Rect2(1270,165,600,725),Color("#191318"))
  owner.label_at("NEXT CHAMBER",Vector2(1305,195),24)
  var title := Label.new()
@@ -48,9 +51,9 @@ static func build(owner: Control) -> void:
  detail.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
  detail.text = "Hover a reachable room to trace your route. Click to travel.\n\nGold routes show the passages you will cross. Unseen rooms reveal themselves as you explore."
  detail.position = Vector2(1305,345)
- detail.size = Vector2(520,195)
+ detail.size = Vector2(520,205)
  detail.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
- detail.add_theme_font_size_override("font_size",22)
+ detail.add_theme_font_size_override("font_size",20)
  owner.add_child(detail)
  owner.label_at("YOUR PARTY",Vector2(1305,565),21)
  for i in range(State.party.size()):

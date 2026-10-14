@@ -101,44 +101,64 @@ func _process(delta: float) -> void:
    transit["event_done"] = true
   else: show_event(); return
  if elapsed >= duration: cross_threshold()
+func event_choice(title: String, consequence: String, y: float, action: Callable) -> Button:
+ var option := button_at(title+"\n"+consequence,Rect2(975,y,790,60),action)
+ option.alignment = HORIZONTAL_ALIGNMENT_LEFT
+ option.add_theme_font_size_override("font_size",18)
+ option.tooltip_text = consequence
+ return option
 func show_event() -> void:
  waiting_event = true
  get_node("SkipTransition").disabled = true
  get_node("CancelTravel").disabled = true
+ var first_reveal: bool = not current_event.get("discovered",false)
+ current_event["discovered"] = true
  event_panel = Control.new()
  event_panel.name = "PassageEvent"
  add_child(event_panel)
  var existing: Array = get_children()
- var box := panel(Rect2(935,190,890,580),Color(0.065,0.045,0.06,0.97))
- box.name = "PassageEventFrame"
- label_at("IN THE PASSAGE",Vector2(975,220),790,21).add_theme_color_override("font_color",Color("#D7B578"))
+ panel(Rect2(935,175,890,620),Color(0.065,0.045,0.06,0.97)).name = "PassageEventFrame"
+ label_at("DISCOVERY · ON THE ROAD",Vector2(975,205),790,19).add_theme_color_override("font_color",Color("#D7B578"))
  var kind: String = str(current_event.kind)
  var definition: Dictionary = State.Events.definition(current_event.get("room",{}).get("event_id",""))
- label_at(str(definition.get("name","A Prowler in the Dark" if kind == "ambush" else "Coins in the Dust")),Vector2(975,265),790,34)
- label_at(str(definition.get("description","A lone enemy blocks the hallway. Your destination waits beyond." if kind == "ambush" else "Scattered coins catch the torchlight along the passage.")),Vector2(975,335),790,22).size.y = 110
- label_at(str(definition.get("risk","Defeat the prowler, then continue the same route." if kind == "ambush" else "Recover %d Gold. This find can only be claimed once." % current_event.get("amount",0))),Vector2(975,455),790,19).size.y = 85
+ label_at(str(definition.get("name","A Prowler in the Dark" if kind == "ambush" else "Coins in the Dust")),Vector2(975,245),790,31)
+ label_at(str(definition.get("description","A lone enemy blocks the hallway. Your destination waits beyond." if kind == "ambush" else "Scattered coins catch the torchlight along the passage.")),Vector2(975,325),570,22).size.y = 110
+ var prop_path: String = "res://assets/art_library/generated/event_%s.png" % current_event.get("room",{}).get("event_id","")
+ if kind == "curio" and ResourceLoader.exists(prop_path):
+  var prop := picture(prop_path,Rect2(1575,320,200,125))
+  prop.texture = Scenery.grounded_texture(prop_path)
+  prop.name = "DiscoveryProp"
  if kind == "curio":
   for index in range(State.party.size()):
    var id: String = State.party[index]
-   var option := button_at(("• " if id == investigator else "")+str(State.hero(id).name),Rect2(975+index*260,555,250,50),select_investigator.bind(id))
-   option.disabled = State.run_heroes.get(id,{}).get("dead",false) or int(State.run_heroes.get(id,{}).get("hp",0)) <= 0
+   var choose := button_at(("• " if id == investigator else "")+str(State.hero(id).name),Rect2(975+index*265,460,255,42),select_investigator.bind(id))
+   choose.add_theme_font_size_override("font_size",18)
+   choose.disabled = State.run_heroes.get(id,{}).get("dead",false) or int(State.run_heroes.get(id,{}).get("hp",0)) <= 0
+  var reward: String = "gold or a scroll" if current_event.room.event_id in ["bandit_supplies","beast_reliquary"] else "gold or equipment"
+  var risk: String = str(definition.get("status","danger")).capitalize()
+  event_choice("INVESTIGATE", "Possible "+reward+" · Risk: "+risk+" for 2 combat rounds",515,choose_event.bind("investigate"))
+  var y: float = 581
   var class_option: Dictionary = State.Mechanics.event_option(current_event.room.event_id,investigator)
   if not class_option.is_empty():
-   var special := button_at(str(class_option.name).to_upper()+" · "+str(class_option.risk),Rect2(975,610,765,45),choose_event.bind("class"))
+   var special := event_choice(str(class_option.name).to_upper()+" · "+str(State.hero(investigator).name),str(class_option.risk),y,choose_event.bind("class"))
    special.name = "ClassInvestigation"
-   special.add_theme_font_size_override("font_size",17)
    special.disabled = int(State.run_heroes.get(investigator,{}).get("hp",0)) <= int(class_option.cost)
-  button_at("INVESTIGATE",Rect2(975,665,370,55),choose_event.bind("investigate"))
-  button_at("LEAVE UNTOUCHED",Rect2(1370,665,370,55),choose_event.bind("leave"))
+   y += 66
   var supply: String = str(State.Depth.EVENT_SUPPLIES.get(current_event.room.event_id,""))
   if supply != "":
-   var use := button_at("USE "+str(State.Items.item(supply).name),Rect2(975,728,765,40),choose_event.bind("supply"))
-   use.add_theme_font_size_override("font_size",17)
+   var use := event_choice("USE "+str(State.Items.item(supply).name).to_upper(),"Spend 1 supply · Guaranteed reward · No harmful effect",y,choose_event.bind("supply"))
    use.disabled = int(State.inventory.get(supply,0)) <= 0
- elif kind == "ambush": button_at("DEFEND THE PASSAGE",Rect2(975,630,765,65),enter_battle)
- else: button_at("COLLECT & CONTINUE",Rect2(975,630,765,65),choose_event.bind("investigate"))
+   use.tooltip_text += "\nAvailable: %d" % int(State.inventory.get(supply,0))
+   y += 66
+  event_choice("LEAVE UNTOUCHED","No reward · No risk",y,choose_event.bind("leave"))
+ elif kind == "ambush": event_choice("DEFEND THE PASSAGE","Begin combat · Victory resumes this journey",570,enter_battle)
+ else: event_choice("COLLECT THE COINS","Gain %d Gold · Continue the journey" % current_event.get("amount",0),570,choose_event.bind("investigate"))
  for child in get_children():
   if child != event_panel and not existing.has(child): child.reparent(event_panel)
+ var settings = get_node_or_null("/root/GameSettings")
+ if first_reveal and (settings == null or settings.ambient_motion):
+  event_panel.modulate.a = 0.0
+  event_panel.create_tween().tween_property(event_panel,"modulate:a",1.0,0.22)
 func select_investigator(id: String) -> void:
  investigator = id
  event_panel.free()
@@ -154,7 +174,7 @@ func choose_event(action: String) -> void:
  add_child(event_panel)
  var existing: Array = get_children()
  panel(Rect2(935,260,890,440),Color(0.065,0.045,0.06,0.97))
- label_at("THE PASSAGE YIELDS",Vector2(975,300),790,30)
+ label_at("YOU LEAVE IT BEHIND" if result.get("left",false) else "THE PASSAGE YIELDS",Vector2(975,300),790,30)
  label_at(str(result.get("text","")),Vector2(975,380),790,24).size.y = 160
  button_at("CONTINUE THE JOURNEY",Rect2(975,580,765,65),continue_travel)
  for child in get_children():
@@ -173,7 +193,16 @@ func cross_threshold() -> void:
  if complete or waiting_event or not Passages.valid_transit(State): return
  var transit: Dictionary = State.journey.transit
  if not transit.event_done: return
+ var origin: Vector2i = State.room_position
+ var seen_before: Array = []
+ for point in State.floors[State.floor_index]:
+  if State.floors[State.floor_index][point].get("seen",false): seen_before.append(point)
  if not State.commit_move(transit.route[transit.index]): cancel_travel(); return
+ current_event["traversed"] = true
+ var discoveries: Array = State.journey.get("recent_discoveries",[])
+ for point in State.floors[State.floor_index]:
+  if State.floors[State.floor_index][point].get("seen",false) and not seen_before.has(point) and not discoveries.has(point): discoveries.append(point)
+ State.journey["recent_discoveries"] = discoveries
  transit["index"] += 1
  if transit.index >= transit.route.size():
   reached_destination = true

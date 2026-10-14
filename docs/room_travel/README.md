@@ -1,6 +1,6 @@
 # Room-to-room dungeon prototype
 
-[Entrance chamber](entrance.png) · [Standing lineup](standing-lineup.png) · [Watch the prototype](prototype.gif) · [Map](map.png) · [Travel event](event.png) · [Outcome](outcome.png)
+[Entrance chamber](entrance.png) · [Standing lineup](standing-lineup.png) · [Watch the prototype](prototype.gif) · [Map](map.png) · [Travel event](event.png) · [Outcome](outcome.png) · [Travelled passage](discovered-map.png)
 
 New procedural expeditions begin in a grimdark entrance chamber. Click the iron
 gate or Dungeon Map to choose a route; clicking the gate does not move the party
@@ -21,6 +21,13 @@ use an appropriate supply, choose an available class skill or leave the object.
 Travel pauses for decisions and resumes after their outcome or combat victory.
 Fixed story encounters, such as the Crusader rescue, remain room content.
 
+Discoveries use an illustrated story panel with readable choice cards. Each
+choice shows its cost, possible reward and risk before selection; the result
+then offers Continue. Hero, class skill and supply choices retain their existing
+rules. Scouting reveals passage clues without consuming a random roll or Watch.
+Travelled passages stay marked, and newly revealed rooms receive a brief NEW
+badge. Unscouted, unrevealed events remain hidden. Encounter odds are unchanged.
+
 Passage outcomes are saved, direction-independent and cannot be repeatedly
 collected by reversing, cancelling or approaching a discovery from another room.
 Room arrival and journey costs commit after the passage's event, once per room.
@@ -39,7 +46,8 @@ passage outcomes.
 
 Built on the Warden outfit integration branch. Neither branch is merged into main.
 
-Validation: 87 of 88 smoke checks pass, including actual passage combat,
+Validation: 88 of 89 smoke checks pass, including discovery secrecy and scouting,
+actual passage combat,
 multi-edge routes, stale-transition isolation, saved outcomes, mode switching,
 Watch protection, event choices and the complete legacy dungeon lifecycle.
 The graveyard CemeteryMarker failure is reproduced on unchanged main. Some
