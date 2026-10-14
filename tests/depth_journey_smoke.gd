@@ -6,6 +6,7 @@ func settle() -> void:
  await process_frame
  await process_frame
 func run() -> void:
+ State.map_travel_mode = false # Explicit legacy-walking fixture.
  State.progress_loaded = true
  State.progress_path = "user://depth_journey_test.cfg"
  Saves.directory = "user://depth_journey_saves/"

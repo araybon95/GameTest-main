@@ -298,14 +298,21 @@ static func hero(hero_id: String, preview_item: String = "") -> Dictionary:
 		var appearance = preload("res://scripts/hero_appearance.gd")
 		var outfit: String = preload("res://scripts/equipment_looks.gd").choice(load("res://scripts/game_data.gd"),hero_id,preview_item)
 		if outfit == "relic" and not preload("res://scripts/equipment_art.gd").available(hero_id): outfit = str(hero_outfits.get(hero_id,"original"))
+		if outfit == "ashen_wolf" and (hero_id != "warden" or not completed_expeditions.has("old_road")): outfit = "original"
 		result["equipment_look"] = outfit
-		if outfit == "relic":
+		if hero_id == "warden" and outfit in ["original","ashen_wolf"]:
+			result["art"] = preload("res://scripts/warden_outfits.gd").path(outfit)
+			result["camp_art"] = preload("res://scripts/warden_outfits.gd").path(outfit,"camp")
+		elif outfit == "relic":
 			result["art"] = "res://assets/art_library/equipment/hero_%s_idle.tres" % hero_id
 			result["camp_art"] = "res://assets/art_library/equipment/hero_%s_camp.tres" % hero_id
 		elif outfit == "alternate" and appearance.available(hero_id):
 			result["art"] = appearance.path(hero_id)
 			result["camp_art"] = appearance.path(hero_id,"camp")
 		result["portrait_art"] = result["art"]
+		if hero_id == "warden" and outfit in ["original","ashen_wolf"]:
+			result["portrait_art"] = preload("res://scripts/warden_outfits.gd").path(outfit,"portrait" if hero_portraits.get(hero_id,"full") == "bust" else "camp")
+			return result
 		if hero_portraits.get(hero_id,"full") == "bust":
 			var purpose: String = "portrait" if outfit == "alternate" else "original_portrait"
 			if outfit == "relic": result["portrait_art"] = "res://assets/art_library/equipment/hero_%s_portrait.tres" % hero_id
@@ -428,6 +435,7 @@ static func ability_cooldown(ability_id: String) -> int:
 		return 2
 	return 1 if int(ability.get("cost", 1)) > 1 else 0
 
+static var map_travel_mode: bool = true
 static var run_active: bool = false
 static var run_complete: bool = false
 static var floor_index: int = 0
@@ -583,8 +591,13 @@ static func start_run(seed_value: int = -1) -> void:
 	ensure_run_heroes()
 	reveal_neighbors()
 
+static func encounter_room() -> Dictionary:
+	if not run_active or floors.is_empty(): return {}
+	var battle: Dictionary = preload("res://scripts/passage_events.gd").battle_room(load("res://scripts/game_data.gd"))
+	return battle if not battle.is_empty() else floors[floor_index][room_position]
+
 static func current_room_kind() -> String:
-	return str(floors[floor_index][room_position]["kind"]) if run_active else ""
+	return str(encounter_room().get("kind",""))
 
 static func enter_corridor() -> Dictionary:
 	if not run_active:
@@ -656,6 +669,13 @@ static func vote_move(voter_id: String, destination: Vector2i) -> bool:
 	return authorize_move(voter_id, destination) and commit_move(destination)
 
 static func finish_encounter() -> void:
+	var battle: Dictionary = preload("res://scripts/passage_events.gd").battle_room(load("res://scripts/game_data.gd"))
+	if not battle.is_empty():
+		battle["cleared"] = true
+		var event: Dictionary = journey.passages[journey.transit.event_key]
+		event["resolved"] = true
+		preload("res://scripts/passage_events.gd").mark_discovery(load("res://scripts/game_data.gd"),event)
+		return
 	floors[floor_index][room_position]["cleared"] = true
 	if current_room_kind() == "boss" and floors[floor_index][room_position].get("final_boss", true):
 		if selected_expedition.get("id", "") == "infested_apothecary" or selected_expedition.has("restoration"):
@@ -665,6 +685,7 @@ static func finish_encounter() -> void:
 		run_complete = true
 		var id: String = str(selected_expedition.get("id", ""))
 		if id != "" and not completed_expeditions.has(id):
+			if id == "old_road": floors[floor_index][room_position]["cosmetic_reward"] = "Ashen Wolf"
 			completed_expeditions.append(id)
 			save_progression()
 
@@ -681,7 +702,10 @@ static func descend() -> bool:
 static func end_run() -> void:
 	if run_active:
 		last_report = Depth.aftermath(load("res://scripts/game_data.gd"))
+		var reward: String = str(floors[floor_index].get(room_position,{}).get("cosmetic_reward",""))
+		if reward != "": last_report["cosmetic_reward"] = reward
 		save_progression()
+	journey.erase("transit")
 	run_active = false
 	run_heroes.clear()
 	navigation_votes.clear()
@@ -773,7 +797,7 @@ static func award_victory_xp() -> Dictionary:
 	var rewards: Dictionary = {}
 	if not run_active or floors.is_empty():
 		return rewards
-	var room: Dictionary = floors[floor_index][room_position]
+	var room: Dictionary = encounter_room()
 	if room.get("xp_awarded", false) or room.get("cleared", false) or room.get("kind", "") not in ["battle", "boss"]:
 		return rewards
 	room["xp_awarded"] = true
@@ -899,7 +923,7 @@ static func claim_room_loot() -> Array[String]:
 	var result: Array[String] = []
 	if not run_active:
 		return result
-	var room: Dictionary = floors[floor_index][room_position]
+	var room: Dictionary = encounter_room()
 	if room.get("loot_claimed", false):
 		return result
 	var kind: String = current_room_kind()
@@ -1115,7 +1139,9 @@ static func next_floor_entrance() -> Dictionary:
 static func customize_hero(id: String, chosen_name: String, color: String, outfit: String = "", portrait: String = "") -> bool:
 	if not service_unlocked("workshop") or not HEROES.has(id) or color not in ["original", "red", "green", "blue", "gold"]:
 		return false
-	if not outfit.is_empty() and (outfit not in ["original","alternate"] or (outfit == "alternate" and not preload("res://scripts/hero_appearance.gd").available(id))): return false
+	if outfit == "ashen_wolf":
+		if id != "warden" or not completed_expeditions.has("old_road"): return false
+	elif not outfit.is_empty() and (outfit not in ["original","alternate"] or (outfit == "alternate" and not preload("res://scripts/hero_appearance.gd").available(id))): return false
 	if not portrait.is_empty() and portrait not in ["full","bust"]: return false
 	var clean: String = chosen_name.strip_edges().replace("\n", " ").replace("\r", " ").left(20)
 	if clean.is_empty(): hero_names.erase(id)

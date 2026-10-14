@@ -1,4 +1,10 @@
-# Small corridor discoveries
+# Optional manual-walking discoveries
+
+The default dungeon mode enters selected rooms immediately and presents events
+as illustrated **? chambers**. See [current discoveries](DUNGEON_EVENTS.md).
+The rules below apply only to optional **F10 → Dungeon travel → Manual walking**
+and compatibility with older passage journeys.
+
 
 Corridor events keep their narrow map shape and now choose one of three encounters when the floor is generated:
 

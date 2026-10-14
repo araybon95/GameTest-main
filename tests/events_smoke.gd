@@ -11,6 +11,7 @@ func event_location() -> Vector2i:
 	return Vector2i(-1, -1)
 
 func run() -> void:
+	State.map_travel_mode = false # Legacy illustrated room fixture.
 	for id in ["old_road", "path_beast"]:
 		State.select_expedition(id)
 		for seed_value in range(100):

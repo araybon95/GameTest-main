@@ -300,6 +300,7 @@ func check_beast_boss_chain() -> void:
 
 func run() -> void:
 	seed(2026)
+	State.map_travel_mode = false # Explicit legacy-walking fixture.
 	State.progress_loaded = true
 	State.progress_path = "user://run_milestone_progress.cfg"
 	Saves.directory = "user://run_milestone_saves/"

@@ -7,6 +7,7 @@ func _initialize() -> void: call_deferred("run")
 func settle() -> void:
 	for frame in range(3): await process_frame
 func run() -> void:
+	State.map_travel_mode = false # Explicit legacy-walking fixture.
 	State.progress_loaded = true
 	State.progress_path = "user://equipment_route_guidance.cfg"
 	State.party.assign(["warden","ranger","occultist"])

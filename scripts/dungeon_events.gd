@@ -19,6 +19,10 @@ static func resolve(state, hero_id: String, leave: bool = false, action: String 
 	if not state.run_active or state.current_room_kind() != "event":
 		return {}
 	var room: Dictionary = state.floors[state.floor_index][state.room_position]
+	return resolve_room(state,room,hero_id,leave,action)
+
+static func resolve_room(state, room: Dictionary, hero_id: String, leave: bool = false, action: String = "investigate") -> Dictionary:
+	if not state.run_active: return {}
 	if room.get("event_resolved", false):
 		return {}
 	var event: Dictionary = definition(str(room.get("event_id", "")))

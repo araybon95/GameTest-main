@@ -18,3 +18,13 @@ vec2 animate_actor_vertex(vec2 point) {
 	point.y -= upper*(breath+lift)*height_scale;
 	return point;
 }
+
+// Small local correction inside a complete frame: shoulder and torso stay fixed.
+uniform vec2 arm_center = vec2(0.0);
+uniform vec2 arm_shift = vec2(0.0);
+vec2 steady_arm_uv(vec2 uv, vec2 pixel_size) {
+	vec2 point = uv / pixel_size;
+	vec2 distance = (point-arm_center)/vec2(48.0,65.0);
+	float weight = 1.0-smoothstep(0.0,1.0,length(distance));
+	return uv-arm_shift*weight*pixel_size;
+}

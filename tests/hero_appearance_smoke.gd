@@ -54,7 +54,7 @@ func run() -> void:
  root.add_child(travel)
  await settle()
  assert(travel.walk_frames.ranger[0].atlas.resource_path.contains("appearance"))
- assert(travel.walk_frames.warden[0].atlas.resource_path.contains("generated"),"Original and alternate outfits may mix in one party")
+ assert(travel.walk_frames.warden[0].get_meta("appearance_style") == "warden_complete","Original and alternate outfits may mix in one party")
  travel.queue_free()
  screen.queue_free()
  await settle()

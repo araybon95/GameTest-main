@@ -10,6 +10,7 @@ func settle() -> void:
 
 func run() -> void:
 	root.content_scale_size = Vector2i(1920,1080)
+	State.map_travel_mode = false # Explicit legacy-walking fixture.
 	State.progress_loaded = true
 	State.progress_path = "user://continuous_dungeon_progress.cfg"
 	State.party.assign(["warden","ranger","occultist"])

@@ -6,6 +6,9 @@ const SkinTokens = preload("res://scripts/ui_skin.gd")
 const ACCENTS = {"watch":Color("#B7A783"),"ward":Color("#9ABFD0"),"sharpen":Color("#C98B6B"),"scout":Color("#A9B589")}
 const EFFECTS = {"watch":"Prevent the ambush","ward":"+15% debuff resistance","sharpen":"+10% skill damage","scout":"Reveal nearby rooms"}
 func configure(id: String, entry: Dictionary, rested: bool = false, points: int = 3, applied: bool = false, compact: bool = false) -> void:
+	if id == "watch" and preload("res://scripts/game_data.gd").map_travel_mode:
+		entry = entry.duplicate()
+		entry["description"] = "Prevent the next travel ambush."
 	name = "CampSkill_"+id
 	text = ""
 	tooltip_text = str(entry.name)+"\n"+str(entry.description)+"\n"+("Prepare at camp after resting." if compact else "Applied at this camp." if applied else "Rest first to unlock preparation." if not rested else "Not enough camp points." if points < int(entry.cost) else "Prepare this camp skill.")
@@ -33,7 +36,7 @@ func configure(id: String, entry: Dictionary, rested: bool = false, points: int 
 	var x: float = 58 if compact else 108
 	_label(str(entry.name),Vector2(x,6 if compact else 12),size.x-x-12,17 if compact else 22,SkinTokens.PAPER)
 	if not compact:
-		_label(str(EFFECTS[id]),Vector2(x,44),size.x-x-12,17,tint)
+		_label("Prevent next travel ambush" if id == "watch" and preload("res://scripts/game_data.gd").map_travel_mode else str(EFFECTS[id]),Vector2(x,44),size.x-x-12,17,tint)
 	var status: String = "%d %s" % [int(entry.cost),"POINT" if int(entry.cost) == 1 else "POINTS"]
 	if not compact: status += " · "+("PREPARED" if applied else "REST FIRST" if not rested else "READY" if not disabled else "INSUFFICIENT")
 	_label(status,Vector2(x,29 if compact else 94),size.x-x-12,13 if compact else 14,Color("#CBB68A") if applied else SkinTokens.MUTED)

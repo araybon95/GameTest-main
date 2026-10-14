@@ -1,4 +1,10 @@
-# Expedition gameplay systems
+# Gameplay systems
+
+The default exploration flow is entrance → map → selected room. Unknown events
+are marked **?** and open an illustrated story with choices and a saved outcome.
+There are no new corridor travel sequences in this mode. Optional Manual walking
+retains its original controls. See [Dungeon discoveries](DUNGEON_EVENTS.md).
+
 
 Implemented in the Godot project, using the existing visual style and artwork.
 
@@ -11,7 +17,7 @@ Rangers gain +1 skill damage in the rear. Wardens gain +2 damage against marked 
 Oleander and the Last Honorable Son cycle through guarding (50% damage reduction), a heavy strike, then exposure (+50% incoming damage). Exuvia starts with one 18 HP cocoon; destroy it before two enemy turns to prevent a hatchling. Hatched support has 13 HP and 2 attack (30% of a normal metamorph). Every third round she can replace a fallen support with a cocoon. The Undying Lord receives 8 healing each enemy turn while his support lives. Hints appear inside enemy cards.
 
 ## Preparation and scouting
-Before entering expeditions, buy optional supplies and arrange ranks. Field Bandages remove Bleed, Field Antidotes remove Poison, and Calming Incense removes 8 stress. Identical consumables stack and cost 1 AP in combat. Scouting costs no gold and has two uses per floor; it reveals nearby rooms and their enemy/event details. The restored Watchtower provides automatic scouting within two rooms, three manual uses per floor, and manual range of three rooms.
+Before entering expeditions, buy optional supplies and arrange ranks. Field Bandages remove Bleed, Field Antidotes remove Poison, and Calming Incense removes 8 stress. Identical consumables stack and cost 1 AP in combat. Scouting costs no gold and has two uses per floor; it reveals nearby rooms and enemy details; unknown event rooms remain mysterious until entry. The restored Watchtower provides automatic scouting within two rooms, three manual uses per floor, and manual range of three rooms.
 
 ## Class event choices
 Matching heroes gain a second interaction with explicit costs and risks: Wardens force bandit locks for 2 HP; Rangers disarm those traps; Healers purify supplies; Occultists interpret remade rites; Crusaders pay a 2 HP blood tithe. These actions guarantee a reward with 10–15% debuff risk. Rooms remain single-use, and the spiked-coffin rescue retains its existing rules.

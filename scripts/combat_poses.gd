@@ -17,6 +17,7 @@ const Regions = preload("res://scripts/combat_pose_regions.gd")
 static func pose(original: Texture2D, hurt: bool = false) -> Texture2D:
  if original == null: return null
  if original.get_meta("portrait_view",false): return original
+ if original.get_meta("appearance_style","") == "warden_complete": return preload("res://scripts/warden_outfits.gd").pose(original,"hurt" if hurt else "attack")
  if original.get_meta("appearance_style","") == "equipment": return preload("res://scripts/equipment_art.gd").pose(original,"hurt" if hurt else "attack")
  if original.get_meta("appearance_style","") == "alternate": return preload("res://scripts/hero_appearance.gd").pose(original,"hurt" if hurt else "attack")
  var key: String = original.resource_path.get_file()
@@ -43,6 +44,7 @@ static func pose(original: Texture2D, hurt: bool = false) -> Texture2D:
 static func state_pose(original: Texture2D, state: String = "idle") -> Texture2D:
  if original == null: return null
  if original.get_meta("portrait_view",false): return original
+ if original.get_meta("appearance_style","") == "warden_complete": return preload("res://scripts/warden_outfits.gd").pose(original,state)
  if original.get_meta("appearance_style","") == "equipment": return preload("res://scripts/equipment_art.gd").pose(original,state)
  if original.get_meta("appearance_style","") == "alternate": return preload("res://scripts/hero_appearance.gd").pose(original,state)
  if state == "idle": return original

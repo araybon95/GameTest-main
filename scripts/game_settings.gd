@@ -50,6 +50,7 @@ func _ready() -> void:
 	brightness.material = material
 	light_layer.add_child(brightness)
 	ambient_motion = bool(cfg.get_value("settings","ambient_motion",true))
+	State.map_travel_mode = bool(cfg.get_value("settings","room_to_room_travel",true))
 	experimental_walking = bool(cfg.get_value("settings","experimental_walking",false))
 	var stored_speed: Variant = cfg.get_value("settings","combat_speed",1.0)
 	combat_speed = float(stored_speed) if stored_speed is float or stored_speed is int else 1.0
@@ -72,6 +73,7 @@ func set_value(key: String, value: float) -> void:
 	cfg.set_value("settings","ambient_motion",ambient_motion)
 	cfg.set_value("settings","experimental_walking",experimental_walking)
 	cfg.set_value("settings","combat_speed",combat_speed)
+	cfg.set_value("settings","room_to_room_travel",State.map_travel_mode)
 	cfg.save(settings_path)
 
 func set_combat_speed(value: float) -> void:
@@ -208,11 +210,30 @@ func open_settings() -> void:
 	speed.item_selected.connect(func(index): set_combat_speed([1.0,1.5,2.0][index]))
 	overlay.add_child(speed)
 	speed.tooltip_text = "Speeds attacks and boss reveals; combat rules stay the same."
+	var travel_mode := OptionButton.new()
+	travel_mode.name = "DungeonTravelMode"
+	travel_mode.position = Vector2(1080,517)
+	travel_mode.size = Vector2(650,43)
+	travel_mode.add_theme_font_size_override("font_size",22)
+	travel_mode.add_item("Dungeon travel · Room to room")
+	travel_mode.add_item("Dungeon travel · Manual walking")
+	travel_mode.select(0 if State.map_travel_mode else 1)
+	travel_mode.disabled = not State.journey.get("transit",{}).is_empty() or (get_tree().current_scene != null and get_tree().current_scene.get("traveling") == true)
+	travel_mode.item_selected.connect(func(index):
+		State.map_travel_mode = index == 0
+		set_value("brightness",values["brightness"])
+		var scene = get_tree().current_scene
+		if scene != null and scene.scene_file_path == "res://scenes/expedition/dungeon.tscn":
+			if State.map_travel_mode: preload("res://scripts/room_discoveries.gd").prepare_floor(State)
+			else: preload("res://scripts/passage_events.gd").restore_floor(State)
+			scene.refresh()
+	)
+	overlay.add_child(travel_mode)
 	var walking := CheckBox.new()
 	walking.name = "ExperimentalWalking"
 	walking.text = "Experimental walking"
 	walking.tooltip_text = "Opt into subtle hallway breathing and weight shifts. Disable to use the original four-frame walking animation. Scene animation must be enabled for breathing."
-	walking.position = Vector2(1080,517)
+	walking.position = Vector2(1080,563)
 	walking.size = Vector2(650,43)
 	walking.add_theme_font_size_override("font_size",22)
 	walking.button_pressed = experimental_walking

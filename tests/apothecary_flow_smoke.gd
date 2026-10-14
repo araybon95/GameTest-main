@@ -32,6 +32,7 @@ func win_fight(final: bool = false) -> void:
 	await settle()
 	assert(current_scene.scene_file_path == "res://scenes/expedition/aftermath.tscn" if final else current_scene.has_node("DungeonMap"))
 func run() -> void:
+	State.map_travel_mode = false # Explicit legacy-walking fixture.
 	State.progress_loaded = true
 	State.progress_path = "user://apothecary_flow_test.cfg"
 	State.completed_expeditions.clear()

@@ -1,3 +1,5 @@
+> Optional Manual walking only. The default dungeon uses [instant room selection](room_travel/README.md).
+
 # Quiet hallway motion
 
 The previous walk loop switched between four separately illustrated poses. Their

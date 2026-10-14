@@ -20,3 +20,6 @@ __MACOSX/
 # Windows junk
 Thumbs.db
 desktop.ini
+
+# Local capture scripts, logs and verification scratch files
+/work/
