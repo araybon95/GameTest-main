@@ -20,6 +20,12 @@ var reduced: bool = false
 var elapsed: float = 0.0
 var source_frames: Array[Texture2D] = []
 var target_frames: Array[Texture2D] = []
+var target_regions: Array = TARGET_REGIONS.duplicate()
+var target_anchors: Array = TARGET_ANCHORS.duplicate()
+var target_scales: Array[float] = []
+var gut_points: Array = GUT_POINTS.duplicate()
+var face_points: Array = FACE_POINTS.duplicate()
+const FACE_TAILS = [Vector2.ZERO,Vector2(-20,-73),Vector2(-25,-68),Vector2(-76,8),Vector2(-76,-5)]
 var bow_frames: Dictionary = {}
 var target_idle: Texture2D
 var cleaver: Texture2D
@@ -39,7 +45,20 @@ func _ready() -> void:
  var ranger: Image = Image.load_from_file(ProjectSettings.globalize_path("res://experimental/ranger_showcase/assets/ranger-execution.png"))
  var bandit: Image = Image.load_from_file(ProjectSettings.globalize_path("res://experimental/ranger_showcase/assets/bandit-execution.png"))
  for index in range(6): source_frames.append(registered(ranger,RANGER_REGIONS[index],RANGER_ANCHORS[index]))
- for index in range(5): target_frames.append(registered(bandit,TARGET_REGIONS[index],TARGET_ANCHORS[index]))
+ for index in range(5):
+  target_frames.append(registered(bandit,TARGET_REGIONS[index],TARGET_ANCHORS[index]))
+  target_scales.append(310.0/float(TARGET_REGIONS[0].size.y))
+ var snap: Image = Image.load_from_file(ProjectSettings.globalize_path("res://experimental/ranger_showcase/assets/bandit-neck-snap.png"))
+ var snap_regions = [Rect2i(99,44,504,910),Rect2i(936,253,539,701)]
+ for index in [1,2]:
+  target_regions[index] = snap_regions[index-1]
+  target_anchors[index] = 389 if index == 1 else 1245
+  target_scales[index] = 0.31
+  target_frames[index] = registered(snap,target_regions[index],target_anchors[index])
+ gut_points[1] = Vector2(300,370)
+ gut_points[2] = Vector2(1150,550)
+ face_points[1] = Vector2(412,107)
+ face_points[2] = Vector2(1240,312)
  cleaver = ImageTexture.create_from_image(bandit.get_region(Rect2i(1218,762,252,195)))
  target_idle = registered(load("res://assets/art_library/executions/warden/raider.png").get_image(),Rect2i(34,70,308,294),220)
  var reference := AtlasTexture.new()
@@ -97,23 +116,29 @@ func blood(point: Vector2, hit: float, head: bool) -> void:
   tint.a = 1-smoothstep(0.14,0.4,time)
   draw_circle(point+velocity*time+Vector2(0,350*time*time),2+index%3,tint)
 func target_point(index: int, pixel: Vector2) -> Vector2:
- var factor: float = 310.0/float(TARGET_REGIONS[0].size.y)
- return TARGET+Vector2(pixel.x-float(TARGET_ANCHORS[index]),pixel.y-float(TARGET_REGIONS[index].end.y))*factor
+ var factor: float = target_scales[index]
+ var region: Rect2i = target_regions[index]
+ return TARGET+Vector2(pixel.x-float(target_anchors[index]),pixel.y-float(region.end.y))*factor
 func embedded_arrow(tip: Vector2, tail: Vector2) -> void:
  var direction: Vector2 = (tip-tail).normalized()
  draw_line(tail,tip,Color("#24190e"),5,true)
  draw_line(tail,tip,Color("#ba9656"),2.2,true)
+ # Flat nock and paired feather vanes distinguish the rear from an arrowhead.
+ draw_line(tail-direction*4,tail+direction*5,Color("#d5c8a4"),2.2,true)
  for side in [-1,1]:
-  var feather: Vector2 = tail+direction*13+direction.orthogonal()*side*5
-  draw_colored_polygon(PackedVector2Array([tail,feather,tail+direction*21]),Color("#d7cfb6"))
+  var rear: Vector2 = tail+direction*7
+  var front: Vector2 = tail+direction*27
+  var outward: Vector2 = direction.orthogonal()*float(side)
+  draw_colored_polygon(PackedVector2Array([rear,rear+direction*3+outward*5,front+outward*3,front]),Color("#b3a88b"))
+  draw_line(rear+direction*5+outward*3,front,Color("#514b3d"),1,true)
 func embedded_arrows(index: int) -> void:
- var gut: Vector2 = target_point(index,GUT_POINTS[index])
+ var gut: Vector2 = target_point(index,gut_points[index])
  var length: float = 78.0 if index < 3 else 62.0
  var offset := Vector2(-length,15 if index < 3 else 35)
  embedded_arrow(gut,gut+offset)
  if index > 0:
-  var face: Vector2 = target_point(index,FACE_POINTS[index])
-  embedded_arrow(face,face+Vector2(-76,8 if index == 3 else -5 if index == 4 else 0))
+  var face: Vector2 = target_point(index,face_points[index])
+  embedded_arrow(face,face+FACE_TAILS[index])
 func dropped_weapon() -> void:
  if age < Timeline.HIT_ONE: return
  var t: float = clampf((age-Timeline.HIT_ONE)/0.20,0,1)
@@ -141,13 +166,13 @@ func draw_execution() -> String:
  if frame.target < 0:
   place(target_idle,TARGET,310.0/294.0)
  else:
-  place(target_frames[frame.target],TARGET,310.0/float(TARGET_REGIONS[0].size.y))
+  place(target_frames[frame.target],TARGET,target_scales[frame.target])
   embedded_arrows(frame.target)
  dropped_weapon()
- arrow(Vector2(486,352),target_point(0,GUT_POINTS[0]),Timeline.SHOT_ONE,Timeline.HIT_ONE)
- arrow(Vector2(510,325),target_point(1,FACE_POINTS[1]),Timeline.SHOT_TWO,Timeline.HIT_TWO)
- blood(target_point(0,GUT_POINTS[0]),Timeline.HIT_ONE,false)
- blood(target_point(1,FACE_POINTS[1]),Timeline.HIT_TWO,true)
+ arrow(Vector2(486,352),target_point(0,gut_points[0]),Timeline.SHOT_ONE,Timeline.HIT_ONE)
+ arrow(Vector2(510,325),target_point(0,Vector2(174,165)),Timeline.SHOT_TWO,Timeline.HIT_TWO)
+ blood(target_point(0,gut_points[0]),Timeline.HIT_ONE,false)
+ blood(target_point(0,Vector2(174,165)),Timeline.HIT_TWO,true)
  return "READY" if age < 0 else frame.phase
 func _draw() -> void:
  if source_frames.is_empty(): return
