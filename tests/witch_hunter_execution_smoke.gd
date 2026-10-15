@@ -10,5 +10,16 @@ func _initialize() -> void:
  assert(timeline.CRUSH-timeline.UPPERCUT >= 0.4,"Separate impact beats leave time for overhead windup")
  assert(timeline.sample(timeline.FALL_END).target == 2)
  assert(timeline.sample(timeline.DURATION).complete)
- print("PASS: distinct uppercut/crush beats, no early death, buckling then limp corpse, finite execution")
+ var dimensions := Vector2(170,65)
+ var release: Dictionary = timeline.cleaver(0.52,false,dimensions)
+ assert(release.center.x > 930 and release.center.y < 500,"Drop starts at the hand that held the cleaver")
+ var landed: Dictionary = timeline.cleaver(1.0,false,dimensions)
+ assert(absf(landed.rotation) < 0.05 and landed.depth < 0.4,"Weapon settles flat on its side")
+ for time in [0.52,0.60,0.70,0.80,0.9,1.0,2.0]:
+  var prop: Dictionary = timeline.cleaver(time,false,dimensions)
+  var extent: float = (absf(sin(prop.rotation))*dimensions.x+absf(cos(prop.rotation))*dimensions.y*prop.depth)*0.5
+  assert(prop.center.y+extent <= 580.01,"Falling weapon never penetrates ground")
+ assert(timeline.cleaver(0.6,true,dimensions) == timeline.cleaver(2.0,true,dimensions),"Reduced motion holds the landed weapon")
+ assert(timeline.cleaver(1.0,false,dimensions) == timeline.cleaver(2.0,false,dimensions),"No jitter after settling")
+ print("PASS: distinct uppercut/crush beats, no early death, buckling then limp corpse, finite execution, complete cleaver drop/flat rest/ground bounds/reduced motion")
  quit()

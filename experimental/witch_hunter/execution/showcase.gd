@@ -42,7 +42,8 @@ func _ready() -> void:
  victim.blit_rect(sheet,Rect2i(66,879,423,88),Vector2i(66,879))
  targets.append(registered(victim,TARGET_RECTS[0],TARGET_ANCHORS[0]))
  for i in [1,2]: targets.append(registered(sheet,TARGET_RECTS[i],TARGET_ANCHORS[i]))
- cleaver = ImageTexture.create_from_image(sheet.get_region(Rect2i(12,739,114,129)))
+ var weapon := Image.load_from_file(ProjectSettings.globalize_path("res://experimental/witch_hunter/execution/assets/cleaver.png"))
+ cleaver = ImageTexture.create_from_image(weapon.get_region(Rect2i(80,172,2020,367)))
  var hero: Texture2D = load("res://assets/art_library/party_builds/crusader.png")
  idle = registered(hero.get_image(),Rect2i(62,68,398,461),227)
  var bandit: Texture2D = load("res://assets/art_library/executions/warden/raider.png")
@@ -99,13 +100,11 @@ func _draw() -> void:
    var recoil: float = 10*(1-smoothstep(Timeline.UPPERCUT,0.8,age)) if frame.target == 0 and not reduced else 0.0
    place(targets[frame.target],target_foot+Vector2(recoil,0),0.82)
  if age >= 0.52:
-  var drop: float = 1.0 if reduced else smoothstep(0.52,0.72,age)
-  # Match the 0.82 scale of the recoil body instead of shrinking the loose prop.
-  var dimensions: Vector2 = cleaver.get_size()*0.82
-  var rotation: float = lerpf(-0.5,0.1,drop)
-  var floor_center: float = GROUND-(absf(sin(rotation))*dimensions.x+absf(cos(rotation))*dimensions.y)*0.5
-  draw_set_transform(Vector2(680,GROUND)*(1-zoom)+shake+Vector2(745,lerpf(451,floor_center,drop))*zoom,rotation,Vector2(zoom,zoom))
-  draw_texture_rect(cleaver,Rect2(-dimensions*0.5,dimensions),false)
+  var dimensions := Vector2(170,60)
+  var prop: Dictionary = Timeline.cleaver(age,reduced,dimensions)
+  draw_set_transform(Vector2(680,GROUND)*(1-zoom)+shake+prop.center*zoom,prop.rotation,Vector2(zoom,zoom))
+  var flattened := Vector2(dimensions.x,dimensions.y*prop.depth)
+  draw_texture_rect(cleaver,Rect2(-flattened*0.5,flattened),false)
   draw_set_transform(Vector2(680,GROUND)*(1-zoom)+shake,0,Vector2(zoom,zoom))
  # Gore is drawn last, in front of BOTH combatants and the contact artwork.
  blood(Vector2(837,310),Timeline.UPPERCUT,false)

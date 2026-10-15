@@ -1,6 +1,6 @@
 # Witch Hunter execution study
 
-[Animated preview](witch-hunter-execution.gif) · [MP4](witch-hunter-execution.mp4) · [Opening uppercut pose](lead-in.png) · [Uppercut contact](uppercut.png) · [Crushing blow](crush.png) · [Finished](finished.png)
+[Animated preview](witch-hunter-execution.gif) · [MP4](witch-hunter-execution.mp4) · [Opening uppercut pose](lead-in.png) · [Uppercut contact](uppercut.png) · [Crushing blow](crush.png) · [Cleaver drop](cleaver-drop.png) · [Finished](finished.png)
 
 Approved sequence: a two-handed hammer uppercut snaps the Ash Raider's head back; an overhead windup leads into a crushing head strike, followed by buckling knees and a limp, headless collapse. Both hands remain on one straight hammer. Dedicated paired contact illustrations make both connections explicit, and procedural blood/debris draw in front of the characters.
 
@@ -25,10 +25,13 @@ The exporter checks artwork initialization, directory creation and each PNG writ
 Validation: all 97 repository smoke tests passed, including timing/death-state checks for this execution. The native renderer captured 96 PNG frames; the MP4 is 1280×720 at 30 FPS and the GIF is 960×540 at 20 FPS, both 3.2 seconds. A forced PNG write failure returned exit status 1. Code review found no remaining blockers. Existing Godot font and resource-shutdown diagnostics remain in some unrelated smoke runs.
 
 
-Visual correction: the uppercut contact uses a revised arm with a natural elbow bend and wrist alignment. The crushing contact retains the original approved illustration. The loose cleaver now uses the recoil sprite’s 0.82 scale throughout its fall and aftermath; its rotated bounds determine the landing height so the larger prop rests on the ground.
+Visual correction: the uppercut contact uses a revised arm with a natural elbow bend and wrist alignment. The crushing contact retains the original approved illustration. The loose cleaver uses a separate complete prop sprite with its handle, bolster and pommel; its rotated bounds determine the landing height.
 
 
 Opening-pose correction: the earlier contact-only revision left the original uppercut lead-in visible from 0.18 seconds. That lead-in now loads its own revised sprite with a visible near-side elbow below the shoulder, forearm reaching forward and a lower hand gripping the haft in front of the waist. Both arms are clear of the face and neck. Other source poses, corrected contact frames and the larger dropped cleaver are retained.
 
 
 Hammer alignment: the opening pose now holds the straight shaft forward at a shallow upward angle, with the rectangular mallet mounted crosswise at a right angle. Its head starts under the enemy jaw. The existing bandit position is retained; the forward hammer pose aligns its top edge under the jaw. The unhit target draws behind the hammer so its angle remains visible. The opening still depicts the uppercut preparation; `uppercut.png` depicts the actual jaw contact.
+
+
+Cleaver drop refinement: the earlier loose-weapon crop contained only a blade. The complete cleaver now releases from the visible hand, falls with acceleration and a small outward drift, tumbles, then makes a short settling bounce. It comes to rest horizontally on its side, with perspective flattening against the ground plane. The handle remains part of the same rigid sprite throughout. Motion checks cover release position, ground clearance, flat rest, no settling jitter and reduced-motion stability.
