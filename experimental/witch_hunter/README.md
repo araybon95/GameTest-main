@@ -12,4 +12,4 @@ This is a first design image, not an animation sheet. Front/back equipment layou
 
 The concept was generated from the supplied reference image. Visual review checked the two-handed grip, complete hammer and boots, retained hood/mask, absent cape and chain-mounted relics. The PNG is 1024×1536 RGBA with transparency. No production tests were needed for this isolated concept image.
 
-The hammer face bears an engraved banishment seal inspired by the user-supplied crossed-bones sigil: a central bone X, smaller warding glyphs and a ring of runes. The engraving follows the metal face perspective. The chain-hung devotional relics, sealed mask, hood and two-handed grip retain the approved design.
+The hammer face bears an original engraved banishment seal: a barred ward ring, central downward wedge and inward-facing angular marks. Bones and the earlier borrowed sigil have been removed. The engraving follows the metal face perspective. The hammer shaft and collars follow one straight centerline into its centered head socket. The chain-hung devotional relics, sealed mask, hood and two-handed grip retain the approved design.
