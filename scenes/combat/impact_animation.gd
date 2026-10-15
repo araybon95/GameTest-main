@@ -38,7 +38,9 @@ static func draw(canvas: Node2D, point: Vector2, time: float, direction: float, 
 		var a: Vector2 = point+Vector2(direction*extent*(tail-0.5),extent*(tail-0.5))
 		var b: Vector2 = point+Vector2(direction*extent*(tip-0.5),extent*(tip-0.5))
 		var normal := Vector2(-direction,1).normalized()
-		canvas.draw_colored_polygon(PackedVector2Array([a,b+normal*9,b-normal*4]),Color(0.06,0.04,0.05,opacity))
+		# At the first impact instant the sweep has zero area.
+		if a.distance_squared_to(b) > 0.001:
+			canvas.draw_colored_polygon(PackedVector2Array([a,b+normal*9,b-normal*4]),Color(0.06,0.04,0.05,opacity))
 		canvas.draw_line(a,b,Color(0.88,0.81,0.65,opacity),2.5,true)
 	if fire:
 		for index in range(7):

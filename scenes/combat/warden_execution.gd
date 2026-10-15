@@ -3,6 +3,7 @@ extends Node2D
 const ART = "res://assets/art_library/executions/warden/"
 const DURATION = 2.4
 const FINAL_HIT = 0.95
+const ORIGIN = Vector2(500,preload("res://scenes/combat/battlefield_ground.gd").SURFACE_Y-390*1.15)
 static var bodies: Array[Texture2D] = []
 static var targets: Array[Texture2D] = []
 static var contact: Texture2D
@@ -39,7 +40,7 @@ func place(texture: Texture2D, foot: Vector2, scale_factor: float) -> void:
 func _draw() -> void:
  if bodies.is_empty(): return
  # Keep all execution artwork and gore inside the battlefield, above the HUD.
- draw_set_transform(Vector2(500,-18.5),0,Vector2(1.15,1.15))
+ draw_set_transform(ORIGIN,0,Vector2(1.15,1.15))
  if corpse_only:
   var held_zoom: float = 1.08 if animate else 1.0
   place(targets[4],Vector2(400+140*held_zoom,390),0.7*held_zoom)
@@ -66,9 +67,9 @@ func _draw() -> void:
  gore()
 func pool() -> void:
  for i in range(6):
-  draw_set_transform(Vector2(500,-18.5)+Vector2(510+i*13,390+(i%2)*3)*1.15,0,Vector2(1.15,1.15)*Vector2(23-i*2,4+i%3))
+  draw_set_transform(ORIGIN+Vector2(510+i*13,390+(i%2)*3)*1.15,0,Vector2(1.15,1.15)*Vector2(23-i*2,4+i%3))
   draw_circle(Vector2.ZERO,1,Color("#4a0b14"))
- draw_set_transform(Vector2(500,-18.5),0,Vector2(1.15,1.15))
+ draw_set_transform(ORIGIN,0,Vector2(1.15,1.15))
 func gore() -> void:
  var elapsed: float = age-FINAL_HIT
  if elapsed < 0: return

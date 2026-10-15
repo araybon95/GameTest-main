@@ -13,6 +13,9 @@ as separate projects.
 
 ## Current previews
 
+- [Dedicated battlefield ground](battlefield_ground/README.md): integrated themed
+  floor with shared foot anchors and independent background camera movement.
+
 - [Warden execution](warden_showcase/EXECUTION.md): shield knockdown, crushing
   mace finish, foreground gore, and a motionless corpse aftermath. Now integrated
   into normal combat; includes a captured in-game preview.

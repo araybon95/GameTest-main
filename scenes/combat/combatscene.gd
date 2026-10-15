@@ -1,5 +1,5 @@
 extends Control
-const GROUND_Y: float = 430.0
+const GROUND_Y: float = preload("res://scenes/combat/battlefield_ground.gd").SURFACE_Y
 var presentation: Control
 var combat_audio: Node
 func _play_attack_sound(kind: String) -> void:
@@ -2181,7 +2181,7 @@ func _ground_battlefield() -> void:
 	curtain.name = "StageFooterShade"
 	curtain.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	curtain.z_index = -1
-	_place(curtain,Rect2(0,430,1920,170))
+	_place(curtain,Rect2(0,GROUND_Y,1920,600-GROUND_Y))
 	var fade_shader := Shader.new()
 	fade_shader.code = "shader_type canvas_item; void fragment(){COLOR=vec4(0.035,0.025,0.03,smoothstep(0.0,1.0,UV.y)*0.94);}"
 	var fade_material := ShaderMaterial.new()

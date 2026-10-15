@@ -1,7 +1,9 @@
 extends Control
 ## Independent room backdrops. Moving corridor scenery stays in the travel view.
 var scene_theme: String = "bandit"
-var ground_y: float = 430.0
+const Ground = preload("res://scenes/combat/battlefield_ground.gd")
+var ground_y: float = Ground.SURFACE_Y
+var ground: TextureRect
 var background: TextureRect
 var clock: float = 0.0
 static func path_for(kind: String, mode: String) -> String:
@@ -18,6 +20,13 @@ func _ready() -> void:
  background.mouse_filter = Control.MOUSE_FILTER_IGNORE
  add_child(background)
  background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+ ground = Ground.new()
+ add_child(ground)
+ ground.configure(background.texture,size,ground_y)
+ resized.connect(_resize_ground)
+func _resize_ground() -> void:
+ if is_instance_valid(ground) and background.texture != null:
+  ground.configure(background.texture,size,ground_y)
 func _process(delta: float) -> void:
  var runtime := get_node_or_null("/root/GameSettings")
  if runtime == null or runtime.ambient_motion: clock += delta

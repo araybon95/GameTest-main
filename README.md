@@ -44,6 +44,9 @@ slightly taller and broader than the other heroes. See
 The original-outfit Warden now has an [execution](WARDEN_EXECUTION.md) when an
 ability kills the final Ash Raider, with a one-handed mace finish and a held corpse.
 
+Combat also uses a [dedicated ground layer](BATTLEFIELD_GROUND.md), keeping the
+painted floor and feet aligned while background scenery zooms independently.
+
 ## Running the game
 
 1. Import this repository's `project.godot` in Godot.
