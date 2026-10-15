@@ -1,6 +1,7 @@
 extends Control
 ## In-place attacker/target spotlight: anticipation, strike, impact and recovery.
 ## All damage and status logic stays in the combat controller.
+const WardenTransitions = preload("res://scripts/warden_transitions.gd")
 const Execution = preload("res://scenes/combat/warden_execution.gd")
 var execution_visual: Node2D
 var pending: Array[Dictionary] = []
@@ -58,7 +59,10 @@ func strike(source: TextureRect, target: TextureRect, kind: String, title: Strin
  var resolved_options: Dictionary = options.duplicate()
  if not options.is_empty(): resolved_options["creature"] = source.get_meta("creature","")
  var timing: Dictionary = Profiles.resolve(kind,title,resolved_options,source_boss,duration)
+ var warden_motion: bool = from_hero and WardenTransitions.eligible(source.texture,str(options.get("skill_id","")))
+ if warden_motion: timing = WardenTransitions.timing(timing,str(options.get("skill_id","")))
  pending.append({"source":source.texture,"target":target.texture,"source_node":source,"target_node":target,"source_material":source.material.duplicate() if source.material != null else null,"target_material":target.material.duplicate() if target.material != null else null,"kind":kind,"attack_kind":kind,"title":title,"hero":from_hero,"source_boss":source_boss,"target_boss":target.get_meta("boss",false),"creature":source.get_meta("creature",""),"duration":timing["duration"],"profile":timing["id"],"timing":timing,"skill_id":str(options.get("skill_id",""))})
+ pending.back()["warden_motion"] = warden_motion
  pending.back()["relic_fx"] = str(options.get("relic_fx",""))
  pending.back()["weapon_signature"] = str(options.get("weapon_signature",""))
  if active.is_empty() and boss_reveal == null: next()
@@ -148,6 +152,11 @@ func next() -> void:
   fighter.mouse_filter = Control.MOUSE_FILTER_IGNORE
   add_child(fighter)
   fighters.append(fighter)
+ if active.get("warden_motion",false):
+  var warden := preload("res://scenes/combat/warden_motion.gd").new()
+  warden.name = "WardenMotion"
+  warden.material = fighters[0].material
+  fighters[0].add_child(warden)
  if active["source_node"] == active["target_node"]: fighters[1].visible = false
  focus = (fighters[0].position+fighters[0].size*Vector2(0.5,0.5)+fighters[1].position+fighters[1].size*Vector2(0.5,0.5))*0.5
  _prepare_backdrop()
@@ -296,6 +305,13 @@ func _process(delta: float) -> void:
  if active.get("skill_id","") == "wd_bash": source_state = "guard"
  if active.get("skill_id","") == "pc_pain": source_state = "hurt"
  var source_position: Vector2 = apply_pose(0,"source",changed,false,source_state)
+ if active.get("warden_motion",false):
+  var warden: Node2D = fighters[0].get_node("WardenMotion")
+  warden.visible = motion_strength > 0
+  fighters[0].self_modulate.a = 0.0 if warden.visible else 1.0
+  if warden.visible:
+   warden.update_frame(active["source"],fighters[0].size,float(active["source_size"].y),age,active["timing"],frame,clampf(motion_strength,0,1),settings == null or settings.ambient_motion)
+
  var harmful: bool = Effects.harmful_contact(active)
  var defending: bool = active["attack_kind"] == "block" or active.get("reaction","") == "block"
  var falling: bool = active.get("defeated",false) and frame["phase"] in ["recover","complete"]
@@ -333,7 +349,9 @@ func _process(delta: float) -> void:
    var ally_rect: Rect2 = ally.get_global_rect()
    if ally_rect.get_center().x < float(active["source_position"].x)+float(active["source_size"].x)*0.5:
     fighters[0].position.x = maxf(fighters[0].position.x,ally_rect.end.x-global_position.x+12)
- fighters[0].rotation = direction*source_rotation*motion
+ # The approved Warden mesh bends the upper body; rotating the whole actor
+ # would tip the otherwise planted legs. Keep normal horizontal attack travel.
+ fighters[0].rotation = 0.0 if active.get("warden_motion",false) else direction*source_rotation*motion
  var dodge: bool = active.get("reaction", "hurt") == "miss"
  var recoil: float = 18.0 if legacy else float(active["timing"]["recoil"])
  fighters[1].position = target_position + Vector2(direction * impact * (40.0 if dodge else recoil*weight if harmful else 5.0 if defending else 0.0)*motion,0)
