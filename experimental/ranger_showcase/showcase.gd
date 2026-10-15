@@ -8,8 +8,11 @@ const SOURCE = Vector2(330,GROUND)
 const TARGET = Vector2(940,GROUND)
 const RANGER_REGIONS = [Rect2i(63,10,471,482),Rect2i(580,10,419,482),Rect2i(1107,26,367,466),Rect2i(62,485,455,494),Rect2i(578,486,446,493),Rect2i(1107,527,405,452)]
 const RANGER_ANCHORS = [254,770,1305,254,770,1305]
-const TARGET_REGIONS = [Rect2i(120,81,360,434),Rect2i(600,77,344,442),Rect2i(1103,159,410,367),Rect2i(18,684,506,225),Rect2i(551,730,599,229)]
+const TARGET_REGIONS = [Rect2i(132,59,354,463),Rect2i(635,65,316,461),Rect2i(1152,158,367,376),Rect2i(41,672,489,244),Rect2i(550,736,610,227)]
 const TARGET_ANCHORS = [310,819,1332,300,850]
+# Wounds follow the front abdomen and center of the face in each painted pose.
+const GUT_POINTS = [Vector2(270,260),Vector2(750,277),Vector2(1278,341),Vector2(226,812),Vector2(804,870)]
+const FACE_POINTS = [Vector2.ZERO,Vector2(729,130),Vector2(1230,216),Vector2(130,762),Vector2(641,841)]
 var mode: int = 0
 var age: float = -0.25
 var paused: bool = false
@@ -37,7 +40,7 @@ func _ready() -> void:
  var bandit: Image = Image.load_from_file(ProjectSettings.globalize_path("res://experimental/ranger_showcase/assets/bandit-execution.png"))
  for index in range(6): source_frames.append(registered(ranger,RANGER_REGIONS[index],RANGER_ANCHORS[index]))
  for index in range(5): target_frames.append(registered(bandit,TARGET_REGIONS[index],TARGET_ANCHORS[index]))
- cleaver = ImageTexture.create_from_image(bandit.get_region(Rect2i(1220,765,246,189)))
+ cleaver = ImageTexture.create_from_image(bandit.get_region(Rect2i(1218,762,252,195)))
  target_idle = registered(load("res://assets/art_library/executions/warden/raider.png").get_image(),Rect2i(34,70,308,294),220)
  var reference := AtlasTexture.new()
  reference.set_meta("pose_id","ranger")
@@ -93,10 +96,28 @@ func blood(point: Vector2, hit: float, head: bool) -> void:
   var tint := Color("#a73c42") if index%4 == 0 else Color("#781523")
   tint.a = 1-smoothstep(0.14,0.4,time)
   draw_circle(point+velocity*time+Vector2(0,350*time*time),2+index%3,tint)
+func target_point(index: int, pixel: Vector2) -> Vector2:
+ var factor: float = 310.0/float(TARGET_REGIONS[0].size.y)
+ return TARGET+Vector2(pixel.x-float(TARGET_ANCHORS[index]),pixel.y-float(TARGET_REGIONS[index].end.y))*factor
+func embedded_arrow(tip: Vector2, tail: Vector2) -> void:
+ var direction: Vector2 = (tip-tail).normalized()
+ draw_line(tail,tip,Color("#24190e"),5,true)
+ draw_line(tail,tip,Color("#ba9656"),2.2,true)
+ for side in [-1,1]:
+  var feather: Vector2 = tail+direction*13+direction.orthogonal()*side*5
+  draw_colored_polygon(PackedVector2Array([tail,feather,tail+direction*21]),Color("#d7cfb6"))
+func embedded_arrows(index: int) -> void:
+ var gut: Vector2 = target_point(index,GUT_POINTS[index])
+ var length: float = 78.0 if index < 3 else 62.0
+ var offset := Vector2(-length,15 if index < 3 else 35)
+ embedded_arrow(gut,gut+offset)
+ if index > 0:
+  var face: Vector2 = target_point(index,FACE_POINTS[index])
+  embedded_arrow(face,face+Vector2(-76,8 if index == 3 else -5 if index == 4 else 0))
 func dropped_weapon() -> void:
  if age < Timeline.HIT_ONE: return
  var t: float = clampf((age-Timeline.HIT_ONE)/0.20,0,1)
- var origin := Vector2(869,477).lerp(Vector2(858,GROUND-37),t*t)
+ var origin := Vector2(869,477).lerp(Vector2(770,GROUND-37),t*t)
  draw_set_transform(origin,lerpf(-0.6,0.05,t))
  var dimensions: Vector2 = cleaver.get_size()*0.36
  draw_texture_rect(cleaver,Rect2(-dimensions/2,dimensions),false)
@@ -120,12 +141,13 @@ func draw_execution() -> String:
  if frame.target < 0:
   place(target_idle,TARGET,310.0/294.0)
  else:
-  place(target_frames[frame.target],TARGET,310.0/434.0)
+  place(target_frames[frame.target],TARGET,310.0/float(TARGET_REGIONS[0].size.y))
+  embedded_arrows(frame.target)
  dropped_weapon()
- arrow(Vector2(486,352),Vector2(914,408),Timeline.SHOT_ONE,Timeline.HIT_ONE)
- arrow(Vector2(510,325),Vector2(889,289),Timeline.SHOT_TWO,Timeline.HIT_TWO)
- blood(Vector2(907,408),Timeline.HIT_ONE,false)
- blood(Vector2(882,289),Timeline.HIT_TWO,true)
+ arrow(Vector2(486,352),target_point(0,GUT_POINTS[0]),Timeline.SHOT_ONE,Timeline.HIT_ONE)
+ arrow(Vector2(510,325),target_point(1,FACE_POINTS[1]),Timeline.SHOT_TWO,Timeline.HIT_TWO)
+ blood(target_point(0,GUT_POINTS[0]),Timeline.HIT_ONE,false)
+ blood(target_point(1,FACE_POINTS[1]),Timeline.HIT_TWO,true)
  return "READY" if age < 0 else frame.phase
 func _draw() -> void:
  if source_frames.is_empty(): return
