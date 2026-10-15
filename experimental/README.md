@@ -14,8 +14,8 @@ as separate projects.
 ## Current previews
 
 - [Witch Hunter](witch_hunter/README.md): hooded two-handed hammer
-  fighter, sealed faceplate, and chains carrying carved devotional relics in
-  place of a cape, with a banishment seal engraved on the hammer. Intended
+  fighter, sealed faceplate, matched armor, shoulder devotional reliefs and
+  upper chains, with a banishment seal engraved on the hammer. Intended
   replacement for the Penitent Crusader; experimental concept for review.
 
 - [Ranger bow and two-shot execution](ranger_showcase/README.md): narrow-stance
