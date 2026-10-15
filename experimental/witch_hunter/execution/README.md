@@ -23,3 +23,6 @@ godot --path . --screen 0 --script experimental/witch_hunter/execution/export_pr
 The exporter checks artwork initialization, directory creation and each PNG write, returning a failure status if capture fails. The folder remains under `experimental/.gdignore` and is not packaged into the game.
 
 Validation: all 97 repository smoke tests passed, including timing/death-state checks for this execution. The native renderer captured 96 PNG frames; the MP4 is 1280×720 at 30 FPS and the GIF is 960×540 at 20 FPS, both 3.2 seconds. A forced PNG write failure returned exit status 1. Code review found no remaining blockers. Existing Godot font and resource-shutdown diagnostics remain in some unrelated smoke runs.
+
+
+Visual correction: the uppercut contact uses a revised arm with a natural elbow bend and wrist alignment. The crushing contact retains the original approved illustration. The loose cleaver now uses the recoil sprite’s 0.82 scale throughout its fall and aftermath; its rotated bounds determine the landing height so the larger prop rests on the ground.

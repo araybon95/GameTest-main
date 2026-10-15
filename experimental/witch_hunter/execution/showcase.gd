@@ -26,8 +26,9 @@ func registered(sheet: Image, rect: Rect2i, anchor: float) -> Texture2D:
  return ImageTexture.create_from_image(full)
 func _ready() -> void:
  var pairs := Image.load_from_file(ProjectSettings.globalize_path("res://experimental/witch_hunter/execution/assets/contacts.png"))
- for rect in [Rect2i(27,11,1054,680),Rect2i(1121,13,1025,678)]:
-  contacts.append(ImageTexture.create_from_image(pairs.get_region(rect)))
+ var corrected := Image.load_from_file(ProjectSettings.globalize_path("res://experimental/witch_hunter/execution/assets/uppercut-corrected.png"))
+ contacts.append(ImageTexture.create_from_image(corrected.get_region(Rect2i(27,11,1054,680))))
+ contacts.append(ImageTexture.create_from_image(pairs.get_region(Rect2i(1121,13,1025,678))))
  font = ThemeDB.fallback_font
  backdrop = load("res://assets/art_library/generated/bandit_battle_stage.png")
  var sheet := Image.load_from_file(ProjectSettings.globalize_path("res://experimental/witch_hunter/execution/assets/poses.png"))
@@ -96,8 +97,12 @@ func _draw() -> void:
    place(targets[frame.target],target_foot+Vector2(recoil,0),0.82)
  if age >= 0.52:
   var drop: float = 1.0 if reduced else smoothstep(0.52,0.72,age)
-  draw_set_transform(Vector2(680,GROUND)*(1-zoom)+shake+Vector2(745,lerpf(451,GROUND-31,drop))*zoom,lerpf(-0.5,0.1,drop),Vector2(zoom,zoom))
-  draw_texture_rect(cleaver,Rect2(-cleaver.get_size()*0.25,cleaver.get_size()*0.5),false)
+  # Match the 0.82 scale of the recoil body instead of shrinking the loose prop.
+  var dimensions: Vector2 = cleaver.get_size()*0.82
+  var rotation: float = lerpf(-0.5,0.1,drop)
+  var floor_center: float = GROUND-(absf(sin(rotation))*dimensions.x+absf(cos(rotation))*dimensions.y)*0.5
+  draw_set_transform(Vector2(680,GROUND)*(1-zoom)+shake+Vector2(745,lerpf(451,floor_center,drop))*zoom,rotation,Vector2(zoom,zoom))
+  draw_texture_rect(cleaver,Rect2(-dimensions*0.5,dimensions),false)
   draw_set_transform(Vector2(680,GROUND)*(1-zoom)+shake,0,Vector2(zoom,zoom))
  # Gore is drawn last, in front of BOTH combatants and the contact artwork.
  blood(Vector2(837,310),Timeline.UPPERCUT,false)
