@@ -15,8 +15,8 @@ as separate projects.
 
 - [Witch Hunter](witch_hunter/README.md): hooded two-handed hammer
   fighter, sealed faceplate, matched armor, shoulder devotional reliefs and
-  upper chains, with a banishment seal engraved on the hammer. Intended
-  replacement for the Penitent Crusader; experimental concept for review.
+  upper chains, with a banishment seal engraved on the hammer. The default combat
+  design and five skills are integrated; the [uppercut/crush execution](witch_hunter/execution/README.md) is experimental.
 
 - [Ranger bow and two-shot execution](ranger_showcase/README.md): narrow-stance
   draw/release transitions, a rapid stomach shot and headshot, dropped cleaver,
