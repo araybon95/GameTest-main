@@ -13,9 +13,10 @@ as separate projects.
 
 ## Current previews
 
-- [Crusader visual rework](crusader_rework/README.md): hooded two-handed hammer
+- [Witch Hunter](witch_hunter/README.md): hooded two-handed hammer
   fighter, sealed faceplate, and chains carrying carved devotional relics in
-  place of a cape. First painted concept for review.
+  place of a cape, with a banishment seal engraved on the hammer. Intended
+  replacement for the Penitent Crusader; experimental concept for review.
 
 - [Ranger bow and two-shot execution](ranger_showcase/README.md): narrow-stance
   draw/release transitions, a rapid stomach shot and headshot, dropped cleaver,
