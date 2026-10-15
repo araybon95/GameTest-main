@@ -28,4 +28,7 @@ Validation: all 97 repository smoke tests passed, including timing/death-state c
 Visual correction: the uppercut contact uses a revised arm with a natural elbow bend and wrist alignment. The crushing contact retains the original approved illustration. The loose cleaver now uses the recoil sprite’s 0.82 scale throughout its fall and aftermath; its rotated bounds determine the landing height so the larger prop rests on the ground.
 
 
-Opening-pose correction: the earlier contact-only revision left the original uppercut lead-in visible from 0.18 seconds. That lead-in now loads its own revised sprite with a visible near-side elbow below the shoulder, forearm reaching forward and a lower hand gripping the haft in front of the chest. Both arms are clear of the face and neck. Other source poses, corrected contact frames and the larger dropped cleaver are retained.
+Opening-pose correction: the earlier contact-only revision left the original uppercut lead-in visible from 0.18 seconds. That lead-in now loads its own revised sprite with a visible near-side elbow below the shoulder, forearm reaching forward and a lower hand gripping the haft in front of the waist. Both arms are clear of the face and neck. Other source poses, corrected contact frames and the larger dropped cleaver are retained.
+
+
+Hammer alignment: the opening pose now holds the straight shaft forward at a shallow upward angle, with the rectangular mallet mounted crosswise at a right angle. Its head starts under the enemy jaw. The existing bandit position is retained; the forward hammer pose aligns its top edge under the jaw. The unhit target draws behind the hammer so its angle remains visible. The opening still depicts the uppercut preparation; `uppercut.png` depicts the actual jaw contact.

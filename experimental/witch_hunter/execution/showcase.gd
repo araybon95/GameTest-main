@@ -33,7 +33,7 @@ func _ready() -> void:
  backdrop = load("res://assets/art_library/generated/bandit_battle_stage.png")
  var sheet := Image.load_from_file(ProjectSettings.globalize_path("res://experimental/witch_hunter/execution/assets/poses.png"))
  var lead_in := Image.load_from_file(ProjectSettings.globalize_path("res://experimental/witch_hunter/execution/assets/uppercut-lead-in.png"))
- sources.append(registered(lead_in,Rect2i(43,14,458,543),SOURCE_ANCHORS[0]))
+ sources.append(registered(lead_in,Rect2i(42,128,508,430),SOURCE_ANCHORS[0]))
  for i in [1,2]: sources.append(registered(sheet,SOURCE_RECTS[i],SOURCE_ANCHORS[i]))
  # The loose cleaver is a separate moving layer; body strips omit its painted location.
  var victim := Image.create(sheet.get_width(),sheet.get_height(),false,Image.FORMAT_RGBA8)
@@ -91,10 +91,11 @@ func _draw() -> void:
  if pair >= 0 and contacts.size() == 2:
   place(contacts[pair],Vector2(730,GROUND),0.49)
  else:
+  # Keep the rising mallet in front of the unhit target so its jaw alignment is visible.
+  if frame.target < 0: place(target_idle,target_foot,310.0/294.0)
   if frame.source < 0: place(idle,Vector2(source_x,GROUND),330.0/461.0)
   else: place(sources[frame.source],Vector2(source_x,GROUND),[0.70,0.70,0.76][frame.source])
-  if frame.target < 0: place(target_idle,target_foot,310.0/294.0)
-  else:
+  if frame.target >= 0:
    var recoil: float = 10*(1-smoothstep(Timeline.UPPERCUT,0.8,age)) if frame.target == 0 and not reduced else 0.0
    place(targets[frame.target],target_foot+Vector2(recoil,0),0.82)
  if age >= 0.52:
