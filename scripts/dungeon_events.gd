@@ -2,7 +2,7 @@ extends RefCounted
 
 const Rules = preload("res://scripts/encounter_rules.gd")
 const EVENTS = {
- "crusader_coffin": {"name": "The Thornbound Prisoner", "description": "A spiked iron coffin rattles inside the bandits' jail. A crusader whispers from behind its barbed locks: 'Let me feel the road again.'", "risk": "Open the coffin: the chosen hero loses 2–3 HP, ignoring protection. Requires enough health to survive. Permanently recruits the Penitent Crusader to the Barracks."},
+ "crusader_coffin": {"name": "The Thornbound Prisoner", "description": "A spiked iron coffin rattles inside the bandits' jail. A crusader whispers from behind its barbed locks: 'Let me feel the road again.'", "risk": "Open the coffin: the chosen hero loses 2–3 HP, ignoring protection. Requires enough health to survive. Permanently recruits the Witch Hunter to the Barracks."},
 	"bandit_strongbox": {"name": "The Abandoned Strongbox", "description": "A rusted lock guards an outlaw's forgotten wages. Something sharp glints beneath the lid.", "risk": "Possible rewards: gold or equipment. Risk: a blade trap causes Bleed for two combat rounds.", "status": "bleed"},
 	"bandit_supplies": {"name": "The Tainted Supply Cache", "description": "Cracked bottles and stained wrappings crowd a stolen crate. A sealed scroll lies beneath them.", "risk": "Possible rewards: gold or a spell scroll. Risk: tainted residue causes Poison for two combat rounds.", "status": "poison"},
 	"beast_reliquary": {"name": "The Votive Reliquary", "description": "A scroll rests inside a bone shrine. Its candles still burn, though no pilgrim remains to tend them.", "risk": "Possible rewards: gold or a spell scroll. Risk: the votive flame causes Burn for two combat rounds.", "status": "burn"},
@@ -53,11 +53,11 @@ static func resolve_room(state, room: Dictionary, hero_id: String, leave: bool =
 		state.run_heroes[hero_id]["hp"] -= cost
 		state.crusader_unlocked = true
 		state.save_progression()
-		var rescued: Dictionary = {"hero": hero_id, "gold": 0, "item": "", "status": "", "left": false, "damage": cost, "text": "%s loses %d HP to the barbed lock. The Penitent Crusader is free and awaits you in the Barracks." % [state.hero(hero_id)["name"], cost]}
+		var rescued: Dictionary = {"hero": hero_id, "gold": 0, "item": "", "status": "", "left": false, "damage": cost, "text": "%s loses %d HP to the barbed lock. The Witch Hunter is free and awaits you in the Barracks." % [state.hero(hero_id)["name"], cost]}
 		room["event_resolved"] = true
 		room["cleared"] = true
 		room["event_result"] = rescued
-		state.Stories.remember(state,hero_id,"freed_crusader","Opened the spiked coffin and freed the Penitent Crusader.")
+		state.Stories.remember(state,hero_id,"freed_crusader","Opened the spiked coffin and freed the Witch Hunter.")
 		return rescued
 	if action == "supply" and not leave: state.consume_item(supply)
 	# Use a room-specific seed so reopening or retreating cannot reroll this event.

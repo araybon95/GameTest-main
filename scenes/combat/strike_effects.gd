@@ -20,7 +20,7 @@ static func element(title: String, kind: String = "spell") -> String:
  return "arcane"
 
 static func harmful_contact(active: Dictionary) -> bool:
- if str(active.get("attack_kind","sword")) in ["heal","block","object"]: return false
+ if str(active.get("attack_kind","sword")) in ["heal","block","object","ritual"]: return false
  if str(active.get("reaction","hurt")) in ["miss","block"] or active.get("kind","") == "block": return false
  return not (active.has("source_node") and active.has("target_node") and active["source_node"] == active["target_node"])
 
@@ -93,6 +93,7 @@ static func draw(presentation: Control, canvas: Node2D) -> void:
 
  weapon_accent(canvas,data,str(active.get("weapon_signature","")),kind)
  preload("res://scenes/combat/relic_effects.gd").draw(canvas,data,active)
+ witch_hunter_seal(canvas,presentation,data)
 
 static func seed_value(index: int, salt: float = 0.0) -> float:
  return fposmod(sin(index*12.9898+salt*78.233)*43758.5453,1.0)
@@ -313,3 +314,26 @@ static func sparks(canvas: Node2D, point: Vector2, strength: float, color: Color
   var ray := Vector2.from_angle(i*TAU/8.0+seed_value(i,31)*0.45)
   var distance: float = (19+strength*(20+seed_value(i,33)*18))*scale
   canvas.draw_line(point+ray*distance,point+ray*(distance+3+seed_value(i,35)*9),with_alpha(color,strength*(0.4+seed_value(i,36)*0.4)),1.2,true)
+
+static func witch_hunter_seal(canvas: Node2D, presentation: Control, data: Dictionary) -> void:
+ var skill: String = str(presentation.active.get("skill_id",""))
+ if skill not in ["pc_pain","pc_guard","pc_verdict"]: return
+ if skill == "pc_verdict" and not data.harmful: return
+ var elapsed: float = presentation.age-presentation.impact_time()
+ if elapsed < -0.12 or elapsed > 0.48: return
+ var strength: float = clampf((elapsed+0.12)/0.12,0,1)*clampf((0.48-elapsed)/0.35,0,1)
+ var center: Vector2 = data.target
+ var radius: float = 43.0 if skill == "pc_verdict" else 62.0
+ var tint := Color(0.9,0.69,0.37,strength*0.85)
+ for ring in [radius,radius*0.78]:
+  canvas.draw_arc(center,ring,0,TAU,64,tint,2.0,true)
+ var glyph := PackedVector2Array([center+Vector2(0,-30),center+Vector2(19,0),center+Vector2(0,30),center+Vector2(-19,0),center+Vector2(0,-30)])
+ canvas.draw_polyline(glyph,tint,2.5,true)
+ canvas.draw_line(center+Vector2(0,-38),center+Vector2(0,38),tint,2,true)
+ canvas.draw_line(center+Vector2(-31,0),center+Vector2(31,0),tint,2,true)
+ for i in range(12):
+  var angle: float = i*TAU/12.0
+  var radial := Vector2.from_angle(angle)
+  canvas.draw_line(center+radial*(radius-5),center+radial*(radius+4),tint,2,true)
+  var ember: Vector2 = center+radial*(radius+maxf(0,elapsed)*85)+Vector2(0,-maxf(0,elapsed)*26)
+  canvas.draw_circle(ember,2.0,Color(0.8,0.5,0.23,strength*0.65))

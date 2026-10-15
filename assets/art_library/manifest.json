@@ -2155,19 +2155,19 @@
       "file": "generated/hero_crusader.tres",
       "resource": "res://assets/art_library/generated/hero_crusader.tres",
       "dimensions": [
-        900.0,
-        1024.0
+        398.0,
+        461.0
       ],
       "references": [
         "scenes/combat/combatscene.gd",
         "scripts/game_data.gd"
       ],
-      "atlas": "generated/hero_crusader_poses.png",
+      "atlas": "party_builds/crusader.png",
       "region": [
-        0.0,
-        0.0,
-        900.0,
-        1024.0
+        62.0,
+        68.0,
+        398.0,
+        461.0
       ]
     },
     {

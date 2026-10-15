@@ -85,7 +85,7 @@ func refresh() -> void:
 	party_bar(return_to_hamlet, "RETURN TO HAMLET")
 
 func role_description(id: String) -> String:
-	return {"warden": "Exploits marked targets: +2 damage. Protect the front.", "ranger": "+1 skill damage from the rear. Mark targets for the Warden.", "occultist": "Damaging skills inflict Poison. Stack pressure with the party.", "crusader": "+2 damage against bleeding foes. Charge to create Bleed.", "healer": "Party healing also removes Bleed. Keep allies fighting."}.get(id, "Shared party turns allow heroes to act in any order.")
+	return {"warden": "Exploits marked targets: +2 damage. Protect the front.", "ranger": "+1 skill damage from the rear. Mark targets for the Warden.", "occultist": "Damaging skills inflict Poison. Stack pressure with the party.", "crusader": "Bind targets with Weakness. Banishment deals +4 against weakened foes.", "healer": "Party healing also removes Bleed. Keep allies fighting."}.get(id, "Shared party turns allow heroes to act in any order.")
 
 func toggle_rank(id: String) -> void:
 	if departing: return

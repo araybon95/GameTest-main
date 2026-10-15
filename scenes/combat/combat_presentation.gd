@@ -303,7 +303,6 @@ func _process(delta: float) -> void:
  if not legacy and preparing and age >= 0.06: changed = true
  var source_state: String = "guard" if profile in ["charge","guard"] and preparing else "windup" if preparing and not legacy else "cast" if profile in ["spell","heal"] else ""
  if active.get("skill_id","") == "wd_bash": source_state = "guard"
- if active.get("skill_id","") == "pc_pain": source_state = "hurt"
  var source_position: Vector2 = apply_pose(0,"source",changed,false,source_state)
  if active.get("warden_motion",false):
   var warden: Node2D = fighters[0].get_node("WardenMotion")
@@ -349,6 +348,14 @@ func _process(delta: float) -> void:
    var ally_rect: Rect2 = ally.get_global_rect()
    if ally_rect.get_center().x < float(active["source_position"].x)+float(active["source_size"].x)*0.5:
     fighters[0].position.x = maxf(fighters[0].position.x,ally_rect.end.x-global_position.x+12)
+ # A rear hammer swing stays behind the front ally rather than lunging through it.
+ if hero and str(active.get("skill_id","")) in ["pc_strike","pc_charge","pc_verdict"] and get_parent().has_method("_arrange_party"):
+  for ally in get_parent().hero_portraits.values():
+   if ally == active["source_node"] or not ally.visible: continue
+   var ally_rect: Rect2 = ally.get_global_rect()
+   if ally_rect.get_center().x > float(active["source_position"].x)+float(active["source_size"].x)*0.5 and ally_rect.get_center().x < float(active["target_position"].x):
+    var tilt_padding: float = absf(source_rotation*motion)*fighters[0].size.y
+    fighters[0].position.x = minf(fighters[0].position.x,ally_rect.position.x-global_position.x-fighters[0].size.x-tilt_padding-12)
  # The approved Warden mesh bends the upper body; rotating the whole actor
  # would tip the otherwise planted legs. Keep normal horizontal attack travel.
  fighters[0].rotation = 0.0 if active.get("warden_motion",false) else direction*source_rotation*motion

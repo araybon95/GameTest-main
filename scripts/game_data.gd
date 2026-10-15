@@ -48,11 +48,11 @@ const CARDS: Dictionary = {
 	"relic_occultist":{"name":"Gravetide Offering","cost":2,"cooldown":3,"effect":"relic_drain","damage":6,"heal":5,"description":"Damage one enemy. Restore up to 5 HP to the most wounded companion, limited by damage dealt."},
 	"relic_healer":{"name":"Dawn's Absolution","cost":1,"cooldown":3,"effect":"relic_cleanse","block":4,"description":"Remove Burn, Bleed, Poison and Chill from the most afflicted living ally. Grant 4 Block."},
 	"relic_crusader":{"name":"Unending Charge","cost":2,"cooldown":3,"effect":"relic_charge","self_damage":2,"damage":12,"block":6,"status":"bleed","description":"Pay 2 HP; advance to the front from any position, deal 12 base damage and gain 6 Block. On damage: Bleed for 2 turns. Needs more than 2 HP."},
- "pc_strike": {"name": "Barbed Strike", "cost": 1, "effect": "attack", "damage": 6},
- "pc_guard": {"name": "Iron Penance", "cost": 1, "effect": "block", "block": 6},
- "pc_pain": {"name": "Rapture of Pain", "cost": 1, "effect": "pain_heal", "self_damage": 2, "heal_percent": 15},
- "pc_charge": {"name": "Thornbound Charge", "cost": 2, "effect": "barbed_charge", "damage": 8, "block": 6, "status": "bleed"},
- "pc_verdict": {"name": "Crimson Verdict", "cost": 2, "effect": "attack", "damage": 12},
+ "pc_strike": {"name": "Judgment", "cost": 1, "effect": "attack", "damage": 6},
+ "pc_guard": {"name": "Abjuring Ward", "cost": 1, "effect": "block", "block": 6},
+ "pc_pain": {"name": "Binding Sigil", "cost": 1, "effect": "weaken"},
+ "pc_charge": {"name": "Sunder", "cost": 2, "effect": "attack", "damage": 10, "block_break": 6},
+ "pc_verdict": {"name": "Banishment", "cost": 2, "effect": "attack", "damage": 12, "weak_bonus": 4},
 	"wd_slash": {"name": "Slash", "cost": 1, "effect": "attack", "damage": 6, "description": "Deal 6 damage."},
 	"wd_guard": {"name": "Guard", "cost": 1, "effect": "block", "block": 6, "description": "Gain 6 Block."},
 	"wd_bash": {"name": "Shield Bash", "cost": 2, "effect": "attack_block", "damage": 8, "block": 4, "description": "Deal 8 damage. Gain 4 Block."},
@@ -65,7 +65,7 @@ const CARDS: Dictionary = {
 	"rg_volley": {"name": "Volley", "cost": 2, "effect": "attack", "damage": 9, "description": "Deal 9 damage."},
 	"oc_hex": {"name": "Hex Bolt", "cost": 1, "effect": "attack", "damage": 5, "description": "Deal 5 damage."},
 	"oc_veil": {"name": "Veil", "cost": 1, "effect": "block", "block": 5, "description": "Gain 5 Block."},
-	"oc_weak": {"name": "Withering Hex", "cost": 1, "effect": "weaken", "description": "Reduce enemy attack by 3 for 2 turns."},
+	"oc_weak": {"name": "Withering Hex", "cost": 1, "effect": "weaken", "description": "Apply Weakness: enemy deals 3 less damage on its next two attacks."},
 	"oc_drain": {"name": "Soul Drain", "cost": 2, "effect": "drain", "damage": 8, "heal": 4, "description": "Deal 8 damage. Heal 4 HP."},
 	"oc_blast": {"name": "Dark Blast", "cost": 2, "effect": "stress_attack", "damage": 14, "stress": 8, "description": "Deal 14 damage. Gain 8 Stress."},
 	"hl_smite": {"name": "Smite", "cost": 1, "effect": "attack", "damage": 5, "undead_bonus": 4, "description": "Deal 5 damage. +4 vs Undead."},
@@ -80,7 +80,7 @@ const CARDS: Dictionary = {
 ## The roster the player draws a party of three from. Add a hero by appending an
 ## entry here (and dropping a portrait at `art`). `deck` lists card ids.
 const HEROES: Dictionary = {
- "crusader": {"name": "Penitent Crusader", "max_hp": 50, "art": "res://assets/art_library/generated/hero_crusader.tres", "camp_art": "res://assets/art_library/generated/hero_crusader_camp.tres", "abilities": ["pc_strike", "pc_guard", "pc_pain", "pc_charge", "pc_verdict"], "lore": "During the Hell Crusades, a demon of pain cursed him with an unending hunger for sensation. Barbs beneath his armor pull at his flesh with every breath. He calls each wound a sacrament, and each moment of relief a debt."},
+ "crusader": {"name": "Witch Hunter", "max_hp": 50, "art": "res://assets/art_library/generated/hero_crusader.tres", "camp_art": "res://assets/art_library/generated/hero_crusader_camp.tres", "abilities": ["pc_strike", "pc_guard", "pc_pain", "pc_charge", "pc_verdict"], "lore": "An unrelenting hunter of corruption, he carries a great ritual hammer engraved with a banishment seal. Iron breaks the flesh; binding rites expose the evil within. Every scar records another journey into the dark."},
 	"warden": {
 		"name": "Warden", "max_hp": 55, "art": "res://assets/art_library/generated/hero_warden.png",
 		"camp_art": "res://assets/art_library/generated/hero_warden_camp.png",
@@ -381,6 +381,10 @@ static func card_description(card: Dictionary) -> String:
 			var text := "Deal %d damage." % int(card.get("damage", 0))
 			if card.has("undead_bonus"):
 				text += "  +%d vs Undead." % int(card["undead_bonus"])
+			if card.has("block_break"):
+				text = "Destroy up to %d Block, then " % int(card["block_break"]) + text.to_lower()
+			if card.has("weak_bonus"):
+				text += " +%d damage against Weakness." % int(card["weak_bonus"])
 			return text
 		"pierce":
 			return "Deal %d damage. Ignore Block." % int(card.get("damage", 0))
@@ -403,7 +407,7 @@ static func card_description(card: Dictionary) -> String:
 		"mark":
 			return "Next hit deals +%d damage." % int(card.get("bonus", 0))
 		"weaken":
-			return "Reduce enemy attack by 3 for 2 turns."
+			return "Apply Weakness: enemy deals 3 less damage on its next two attacks."
 		"drain":
 			return "Deal %d damage. Heal %d HP." % [int(card.get("damage", 0)), int(card.get("heal", 0))]
 		"stress_attack":

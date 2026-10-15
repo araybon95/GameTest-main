@@ -28,11 +28,11 @@ func run() -> void:
  var rng: int = State.loot_rng.state
  var hp: int = battle.enemy_hp
  var target: TextureRect = battle.enemy_views[0].get_node("EnemyArt")
- cinema.strike(hero,target,"sword","Barbed Charge",true,{"skill_id":"pc_charge"})
+ cinema.strike(hero,target,"sword","Sunder",true,{"skill_id":"pc_charge"})
  cinema.age = 0.12
  cinema._process(0)
  assert(cinema.has_node("AttackTell"))
- assert(cinema.fighters[0].texture == Poses.state_pose(hero.texture,"guard"))
+ assert(cinema.fighters[0].texture == Poses.state_pose(hero.texture,"windup"))
  assert(absf(cinema.fighters[0].position.y+cinema.fighters[0].size.y-Travel.GROUND_Y)<2)
  cinema.age = 2
  cinema._process(0)
@@ -74,5 +74,5 @@ func run() -> void:
  assert(travel.complete and commits.is_empty(),"Room commit waits for the doorway fade")
  await create_timer(0.25).timeout
  assert(commits.size() == 1 and not is_instance_valid(travel))
- print("PASS: Crusader poses and planted charge, readable tells/target, one-shot event reveal, distance footfalls and one doorway commit")
+ print("PASS: Witch Hunter poses and planted Sunder, readable tells/target, one-shot event reveal, distance footfalls and one doorway commit")
  quit()

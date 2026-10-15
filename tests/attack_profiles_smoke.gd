@@ -58,7 +58,7 @@ func painted_overlap(first: TextureRect, second: TextureRect) -> bool:
 			if first_image.get_pixel(int(first_pixel.x),int(first_pixel.y)).a > 0.25 and second_image.get_pixel(int(second_pixel.x),int(second_pixel.y)).a > 0.25: return true
 	return false
 
-func crusader_charge() -> void:
+func crusader_sunder() -> void:
 	State.crusader_unlocked = true
 	State.party.assign(["warden","crusader","ranger"])
 	State.equipment.clear()
@@ -82,12 +82,12 @@ func crusader_charge() -> void:
 	var before_hp: int = int(battle.enemies[0]["hp"])
 	var damage: int = battle._attack_damage("crusader",State.card_stats("pc_charge"))
 	battle._play_card("crusader",hero["abilities"].find("pc_charge"))
-	assert(cinema.active["profile"] == "charge" and cinema.active["skill_id"] == "pc_charge")
-	assert(cinema.active["source_node"] == battle.hero_portraits["crusader"] and cinema.active["source"].get_meta("pose_id","") == "crusader","The actual Crusader skill uses its own artwork and charge profile")
+	assert(cinema.active["profile"] == "heavy" and cinema.active["skill_id"] == "pc_charge")
+	assert(cinema.active["source_node"] == battle.hero_portraits["crusader"] and cinema.active["source"].get_meta("pose_id","") == "crusader","The actual Crusader skill uses its own artwork and heavy profile")
 	var source: TextureRect = battle.hero_portraits["crusader"]
-	assert(absf(float(cinema.active["source_position"].x)-(source.get_global_rect().position.x-cinema.global_position.x)) < 1.0,"Charge snapshots the arranged P1 lane before animation, so the displaced ally cannot overlap its old slot")
-	assert(hero["ap"] == 0 and hero["block"] == 6 and State.Depth.position_of(State,"crusader") == 1)
-	assert(before_hp-int(battle.enemies[0]["hp"]) == damage and battle.enemies[0]["statuses"]["bleed"]["turns"] == 2)
+	assert(absf(float(cinema.active["source_position"].x)-(source.get_global_rect().position.x-cinema.global_position.x)) < 1.0,"Sunder snapshots its unchanged P2 lane before animation")
+	assert(hero["ap"] == 0 and hero["block"] == 0 and State.Depth.position_of(State,"crusader") == 2)
+	assert(before_hp-int(battle.enemies[0]["hp"]) == damage and not battle.enemies[0]["statuses"].has("bleed"))
 	var after_heroes: Dictionary = battle.hero_state.duplicate(true)
 	var after_enemies: Array = battle.enemies.duplicate(true)
 	var heard: Array[String] = []
@@ -97,9 +97,9 @@ func crusader_charge() -> void:
 		verify_stage(cinema)
 		var source_rect: Rect2 = painted_rect(cinema.fighters[0])
 		var ally_rect: Rect2 = painted_rect(battle.hero_portraits["warden"])
-		assert(not painted_overlap(cinema.fighters[0],battle.hero_portraits["warden"]),"Charge at %.2fs: source %s overlaps displaced ally %s" % [time,source_rect,ally_rect])
+		assert(not painted_overlap(cinema.fighters[0],battle.hero_portraits["warden"]),"Sunder at %.2fs: source %s overlaps displaced ally %s" % [time,source_rect,ally_rect])
 	finish(cinema)
-	assert(heard == ["sword","impact"] and battle.hero_state == after_heroes and battle.enemies == after_enemies,"Playing every charge phase applies AP, Block, Bleed and damage exactly once")
+	assert(heard == ["sword","impact"] and battle.hero_state == after_heroes and battle.enemies == after_enemies,"Playing every Sunder phase applies AP and damage exactly once")
 	battle.queue_free()
 	for index in range(4): await process_frame
 	charge_checks_completed = true
@@ -136,12 +136,12 @@ func run() -> void:
 	finish(cinema)
 	var light: Dictionary = Profiles.resolve("sword","Slash",{"skill_id":"wd_slash"})
 	var heavy: Dictionary = Profiles.resolve("sword","Heavy Strike",{"skill_id":"wd_heavy"})
-	var charge: Dictionary = Profiles.resolve("sword","Thornbound Charge",{"skill_id":"pc_charge"})
+	var charge: Dictionary = Profiles.resolve("sword","Thornbound Charge",{"skill_id":"relic_crusader"})
 	assert(heavy["release"] > light["release"]*2 and heavy["hold"] > light["hold"]*2)
 	assert(Profiles.motion(heavy,0.54)["source_x"] == Profiles.motion(heavy,0.64)["source_x"],"The heavy impact holds its contact pose")
 	assert(charge["travel"] > light["travel"]*3)
 	var source_origins: Dictionary = {}
-	for entry in [["wd_slash","light"],["wd_heavy","heavy"],["pc_charge","charge"]]:
+	for entry in [["wd_slash","light"],["wd_heavy","heavy"],["relic_crusader","charge"]]:
 		cinema.strike(hero,target,"sword",entry[1],true,{"skill_id":entry[0]})
 		assert(cinema.active["profile"] == entry[1])
 		var initial: float = foot(cinema.fighters[0]).x
@@ -222,7 +222,7 @@ func run() -> void:
 	assert(not cinema.queue_sound("spell"),"No action returns false for the controller's immediate fallback")
 	# Reduced motion preserves poses/timing while removing travel, rotation and camera motion.
 	cinema.motion_strength = 0
-	cinema.strike(hero,target,"sword","Quiet charge",true,{"skill_id":"pc_charge"})
+	cinema.strike(hero,target,"sword","Quiet charge",true,{"skill_id":"relic_crusader"})
 	var planted: Vector2 = foot(cinema.fighters[0])
 	at(cinema,cinema.impact_time()+0.04)
 	assert(foot(cinema.fighters[0]).is_equal_approx(planted) and cinema.fighters[0].rotation == 0 and cinema.fighters[0].scale == Vector2.ONE)
@@ -236,9 +236,9 @@ func run() -> void:
 	battle.queue_free()
 	for index in range(4): await process_frame
 	assert(heard.size() == before,"Scene teardown does not emit late audio")
-	await crusader_charge()
+	await crusader_sunder()
 	assert(charge_checks_completed,"Every actual Crusader integration assertion must complete before PASS")
 	preload("res://scripts/settlement_music.gd").stop()
 	await create_timer(0.12).timeout
-	print("PASS: legacy timing, distinct grounded profiles/hitlag/recoil, queued/late/canceled audio, single feedback, harmless block/miss, reduced motion, unchanged combat state and actual Crusader charge mechanics applied once")
+	print("PASS: legacy timing, distinct grounded profiles/hitlag/recoil, queued/late/canceled audio, single feedback, harmless block/miss, reduced motion, unchanged combat state and actual Witch Hunter Sunder mechanics applied once")
 	quit()

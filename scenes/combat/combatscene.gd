@@ -473,8 +473,8 @@ func _attack_damage(hero_id: String, card: Dictionary) -> int:
 		dmg += 1
 	if hero_id == "warden" and enemy_mark_bonus > 0:
 		dmg += 2
-	if hero_id == "crusader" and enemies[selected_enemy_index]["statuses"].has("bleed"):
-		dmg += 2
+	if enemy_weak_rounds > 0:
+		dmg += int(card.get("weak_bonus", 0))
 	if enemy_undead and card.has("undead_bonus"):
 		dmg += int(card["undead_bonus"])
 	dmg = int(floor(dmg * (1.0 + (GameState.hero_bonus(hero_id, "damage_percent") + GameState.buff_bonus(hero_state[hero_id], "might") + (10 if hero_state[hero_id].get("camp_might",false) else 0)) / 100.0)))
@@ -537,6 +537,9 @@ func _resolve_card(hero_id: String, card: Dictionary) -> void:
 			enemy_mark_bonus += int(card["bonus"])
 			_add_log("Enemy marked: next hit +%d." % enemy_mark_bonus)
 		"weaken":
+			if hero_id == "crusader" and presentation != null:
+				presentation.strike(hero_portraits[hero_id],enemy_views[selected_enemy_index].get_node("EnemyArt"),"ritual",str(card["name"]),true,{"skill_id":str(card.get("skill_id",""))})
+				_play_attack_sound("spell")
 			enemy_weak_rounds = 2
 			_add_log("Enemy weakened for 2 attacks.")
 		"drain":
@@ -558,6 +561,10 @@ func _attack_with_equipment(hero_id: String, card: Dictionary, ignore_block: boo
 		_add_log("%s misses %s." % [_name_of(hero_id), enemy_name])
 		if presentation != null: presentation.popup(enemy_art,"MISS",Color("#DCCFB9"))
 		return 0
+	var broken: int = mini(enemy_block, int(card.get("block_break", 0)))
+	if broken > 0:
+		enemy_block -= broken
+		_add_log("Sunder destroys %d Block." % broken)
 	var target: int = selected_enemy_index
 	var phase: int = int(enemies[target].get("phase_index", 0))
 	var actual: int = _deal_enemy_damage(_attack_damage(hero_id, card), ignore_block, hero_id)
@@ -1087,7 +1094,7 @@ func _refresh_all() -> void:
 	selected_info.text += "\n" + Rules.status_text(hero["statuses"]) + "\n" + GameState.buff_text(hero)
 	var role_hint: Label = get_node("SelectedHeroInfo").find_child("RoleHint", true, false) as Label
 	if role_hint != null:
-		role_hint.text = {"warden": "Marked targets: +2 damage.\nFront protects against melee.", "ranger": "Rear: +1 damage. Mark targets\nfor the Warden to exploit.", "occultist": "Damaging skills inflict Poison.\nCombine pressure with allies.", "crusader": "Bleeding targets: +2 damage.\nCharge inflicts Bleed.", "healer": "Party healing removes Bleed.\nKeep your companions fighting."}.get(selected_hero, "Heroes act in any order.")
+		role_hint.text = {"warden": "Marked targets: +2 damage.\nFront protects against melee.", "ranger": "Rear: +1 damage. Mark targets\nfor the Warden to exploit.", "occultist": "Damaging skills inflict Poison.\nCombine pressure with allies.", "crusader": "Binding Sigil applies Weakness.\nBanishment: +4 vs Weakness.", "healer": "Party healing removes Bleed.\nKeep your companions fighting."}.get(selected_hero, "Heroes act in any order.")
 	if has_node("FormationEquipmentHint"):
 		get_node("FormationEquipmentHint").text = get_node("PartyTacticsFeedback").movement_text(selected_hero)
 	if formation_button != null:
@@ -1193,7 +1200,6 @@ func _skill_description(card_id: String, card: Dictionary) -> String:
 	var description: String = GameState.card_description(card)
 	if card_id == "wd_bash": description += "\nPush back 1."
 	if card_id == "rg_dodge": description += "\nFall back 1."
-	if card_id == "pc_charge": description = "Damage %d\nBlock %d · Bleed 2t\nAdvance to P1." % [card.get("damage",0),card.get("block",0)]
 	match card_id:
 		"relic_warden": description = "Guard wounded ally\nBlock %d · Return hit: 6\nUntil next party turn." % card.block
 		"relic_ranger": description = "Damage %d to each enemy\nOn damage: Poison 2t." % card.damage
@@ -1672,7 +1678,6 @@ func _load_texture(path: String) -> Texture2D:
 	if path == preload("res://scripts/enemy_variants.gd").SHEET:
 		return preload("res://scripts/enemy_variants.gd").frame(0)
 	# Dedicated combat atlases keep idle and action gear consistent on the stage.
-	if path == "res://assets/art_library/generated/hero_crusader.tres": path = "res://assets/art_library/generated/hero_crusader_combat_idle.tres"
 	path = {"res://assets/art_library/generated/hero_warden.png":"res://assets/art_library/generated/hero_warden_combat_idle.tres", "res://assets/art_library/generated/enemy_ash_raider.png":"res://assets/art_library/generated/enemy_ash_raider_combat_idle.tres"}.get(path,path)
 	if ResourceLoader.exists(path):
 		return load(path) as Texture2D

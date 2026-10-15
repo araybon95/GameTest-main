@@ -42,32 +42,22 @@ func run() -> void:
 	root.add_child(battle)
 	await process_frame
 	battle._select_hero("crusader")
-	battle.hero_state["crusader"]["hp"] = 20
-	battle.hero_state["crusader"]["block"] = 50
-	battle._play_card("crusader", 2)
-	assert(battle.hero_state["crusader"]["hp"] == 25)
-	assert(battle.hero_state["crusader"]["block"] == 50 and battle.hero_state["crusader"]["ap"] == 1)
-	battle._play_card("crusader", 2)
-	assert(battle.hero_state["crusader"]["hp"] == 25 and battle.hero_state["crusader"]["ap"] == 1)
-	battle.hero_state["crusader"]["ap"] = 2
 	battle.hero_state["crusader"]["hp"] = 2
-	battle.hero_state["crusader"]["cooldowns"].clear()
 	battle._play_card("crusader", 2)
-	assert(battle.hero_state["crusader"]["hp"] == 2 and battle.hero_state["crusader"]["ap"] == 2)
-	battle.hero_state["crusader"]["hp"] = 30
-	State.Depth.move_hero(State,"crusader",2)
-	battle.enemies[0]["block"] = 0
-	battle._play_card("crusader", 3)
-	assert(battle.hero_state["crusader"]["block"] == 56 and battle.hero_state["crusader"]["ap"] == 0)
-	assert(battle.enemies[0]["statuses"].has("bleed"))
-	battle.enemies[0]["statuses"].clear()
+	assert(battle.enemy_weak_rounds == 2)
+	assert(battle.hero_state["crusader"]["hp"] == 2 and battle.hero_state["crusader"]["ap"] == 1)
+	battle._play_card("crusader", 2)
+	assert(battle.hero_state["crusader"]["ap"] == 1)
+	battle.hero_state["crusader"]["ap"] = 2
+	battle.hero_state["crusader"]["cooldowns"].clear()
 	battle.enemy_block = 100
-	battle._resolve_card("crusader", State.card_stats("pc_charge"))
+	battle._play_card("crusader", 3)
+	assert(battle.hero_state["crusader"]["ap"] == 0 and battle.enemy_block == 84)
 	assert(not battle.enemies[0]["statuses"].has("bleed"))
 	battle.queue_free()
 	await process_frame
 	var rng := RandomNumberGenerator.new()
 	for i in range(100):
 		assert(State.Items.item(State.Items.roll_equipment(rng, ["crusader"], true))["hero"] == "crusader")
-	print("PASS: 100 floor-2 coffin seeds, survivor-only 2–3 HP rescue, permanent unlock, one-use, pain healing/cooldown/AP, charge Block/Bleed and class legendary")
+	print("PASS: 100 floor-2 coffin seeds, survivor-only 2–3 HP rescue, permanent unlock, one-use, binding/cooldown/AP, Sunder Block destruction and class legendary")
 	quit()

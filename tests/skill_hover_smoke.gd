@@ -147,7 +147,7 @@ func pain_skill() -> void:
 	battle._select_hero("crusader")
 	battle.hero_state["crusader"]["hp"] = 2
 	battle._refresh_hand()
-	await inspect(battle,"pc_pain","health","Needs more than 2 HP; currently 2 HP")
+	await inspect(battle,"pc_pain","ready","AVAILABLE")
 	battle.queue_free()
 	await settle()
 	completed += 1

@@ -6,7 +6,7 @@ const SKILL_RANKS = {
  "rg_quick": {"use": [2,3], "target": [1,2,3]}, "rg_pierce": {"use": [2,3], "target": [1,2,3]}, "rg_volley": {"use": [2,3], "target": [1,2,3]},
  "oc_drain": {"use": [1,2], "target": [1,2,3]}, "oc_blast": {"use": [2,3], "target": [1,2,3]},
  "hl_smite": {"use": [1,2], "target": [1,2]},
- "pc_strike": {"use": [1,2], "target": [1,2]}, "pc_verdict": {"use": [1,2], "target": [1,2]}, "pc_charge": {"use": [2,3], "target": [1,2]}
+ "pc_strike": {"use": [1,2], "target": [1,2]}, "pc_verdict": {"use": [1,2], "target": [1,2]}, "pc_charge": {"use": [1,2], "target": [1,2]}
 }
 const CAMP_CHOICES = {
  "watch": {"name": "Keep Watch", "cost": 2, "description": "Prevent this camp's ambush."},
