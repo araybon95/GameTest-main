@@ -13,6 +13,11 @@ as separate projects.
 
 ## Current previews
 
+- [Ranger bow and two-shot execution](ranger_showcase/README.md): narrow-stance
+  draw/release transitions, a rapid stomach shot and headshot, dropped cleaver,
+  and an abrupt limp collapse. Runs from the repository root; reads its review
+  PNGs directly because this folder is excluded from the main import scan.
+
 - [Party builds and Ranger stance](party_builds/README.md): heavier melee heroes,
   leaner ranged heroes, a before/after lineup and a narrower-stance bow study.
 
