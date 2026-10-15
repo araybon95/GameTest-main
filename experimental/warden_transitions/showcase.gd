@@ -31,7 +31,7 @@ func timing(heavy: bool, improved: bool) -> Dictionary:
   result["release"] = 0.44 if heavy else 0.18
   result["impact"] = 0.60 if heavy else 0.31
   result["hold"] = 0.18 if heavy else 0.07
-  result["duration"] = 1.40 if heavy else 0.91
+  result["duration"] = 1.16 if heavy else 0.80
  return result
 func layers(age: float, schedule: Dictionary, improved: bool) -> Array:
  var release: float = schedule.release
@@ -42,7 +42,7 @@ func layers(age: float, schedule: Dictionary, improved: bool) -> Array:
  var state: String = "windup" if age < release else "attack" if age < recover else "idle"
  if not improved: return [[state,1.0]]
  # Short blends avoid a lingering transparent second weapon/arm.
- for entry in [[0.0,"idle","windup",0.065],[release,"windup","attack",0.040],[recover,"attack","idle",0.12]]:
+ for entry in [[0.0,"idle","windup",0.065],[release,"windup","attack",0.040],[recover,"attack","idle",0.075]]:
   if age >= entry[0] and age < entry[0]+entry[3]:
    var mix: float = smoothstep(0,1,(age-entry[0])/entry[3])
    return [[entry[1],1.0-mix],[entry[2],mix]]

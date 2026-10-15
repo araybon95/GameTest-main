@@ -21,3 +21,5 @@ godot --path . --screen 0 --script experimental/warden_transitions/export_previe
 ```
 
 Validation: native Godot 4.6.3 Xorg/Mesa export completed with all 156 frames. Idle, windup, release and recovery captures were visually inspected. The final render reported only the display driver's unsupported V-Sync warning. Production smoke tests were not rerun because this commit adds an isolated visual study and does not change game code.
+
+Recovery revision: shortened heavy recovery from 0.62s to 0.38s and slash recovery from 0.53s to 0.42s. Return-to-idle blend is now 75ms instead of 120ms; windup and impact hold are unchanged. Re-exported all 156 frames successfully.
