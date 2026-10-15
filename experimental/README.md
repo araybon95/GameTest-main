@@ -13,6 +13,9 @@ as separate projects.
 
 ## Current previews
 
+- [Party builds and Ranger stance](party_builds/README.md): heavier melee heroes,
+  leaner ranged heroes, a before/after lineup and a narrower-stance bow study.
+
 - [Dedicated battlefield ground](battlefield_ground/README.md): integrated themed
   floor with shared foot anchors and independent background camera movement.
 

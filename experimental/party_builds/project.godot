@@ -1,0 +1,10 @@
+config_version=5
+[application]
+config/name="Party Build and Ranger Stance Study"
+run/main_scene="res://showcase.tscn"
+[display]
+window/size/viewport_width=1600
+window/size/viewport_height=1000
+window/stretch/mode="canvas_items"
+[rendering]
+renderer/rendering_method="gl_compatibility"
