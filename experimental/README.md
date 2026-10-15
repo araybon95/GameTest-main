@@ -13,6 +13,10 @@ as separate projects.
 
 ## Current previews
 
+- [Crusader visual rework](crusader_rework/README.md): hooded two-handed hammer
+  fighter, sealed faceplate, and chains carrying carved devotional relics in
+  place of a cape. First painted concept for review.
+
 - [Ranger bow and two-shot execution](ranger_showcase/README.md): narrow-stance
   draw/release transitions, a rapid stomach shot and headshot, dropped cleaver,
   and an abrupt limp collapse. Runs from the repository root; reads its review
