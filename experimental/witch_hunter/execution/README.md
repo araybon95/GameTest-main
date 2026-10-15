@@ -1,6 +1,6 @@
 # Witch Hunter execution study
 
-[Animated preview](witch-hunter-execution.gif) · [MP4](witch-hunter-execution.mp4) · [Uppercut](uppercut.png) · [Crushing blow](crush.png) · [Finished](finished.png)
+[Animated preview](witch-hunter-execution.gif) · [MP4](witch-hunter-execution.mp4) · [Opening uppercut pose](lead-in.png) · [Uppercut contact](uppercut.png) · [Crushing blow](crush.png) · [Finished](finished.png)
 
 Approved sequence: a two-handed hammer uppercut snaps the Ash Raider's head back; an overhead windup leads into a crushing head strike, followed by buckling knees and a limp, headless collapse. Both hands remain on one straight hammer. Dedicated paired contact illustrations make both connections explicit, and procedural blood/debris draw in front of the characters.
 
@@ -26,3 +26,6 @@ Validation: all 97 repository smoke tests passed, including timing/death-state c
 
 
 Visual correction: the uppercut contact uses a revised arm with a natural elbow bend and wrist alignment. The crushing contact retains the original approved illustration. The loose cleaver now uses the recoil sprite’s 0.82 scale throughout its fall and aftermath; its rotated bounds determine the landing height so the larger prop rests on the ground.
+
+
+Opening-pose correction: the earlier contact-only revision left the original uppercut lead-in visible from 0.18 seconds. That lead-in now loads its own revised sprite with a visible near-side elbow below the shoulder, forearm reaching forward and a lower hand gripping the haft in front of the chest. Both arms are clear of the face and neck. Other source poses, corrected contact frames and the larger dropped cleaver are retained.

@@ -32,7 +32,9 @@ func _ready() -> void:
  font = ThemeDB.fallback_font
  backdrop = load("res://assets/art_library/generated/bandit_battle_stage.png")
  var sheet := Image.load_from_file(ProjectSettings.globalize_path("res://experimental/witch_hunter/execution/assets/poses.png"))
- for i in range(3): sources.append(registered(sheet,SOURCE_RECTS[i],SOURCE_ANCHORS[i]))
+ var lead_in := Image.load_from_file(ProjectSettings.globalize_path("res://experimental/witch_hunter/execution/assets/uppercut-lead-in.png"))
+ sources.append(registered(lead_in,Rect2i(43,14,458,543),SOURCE_ANCHORS[0]))
+ for i in [1,2]: sources.append(registered(sheet,SOURCE_RECTS[i],SOURCE_ANCHORS[i]))
  # The loose cleaver is a separate moving layer; body strips omit its painted location.
  var victim := Image.create(sheet.get_width(),sheet.get_height(),false,Image.FORMAT_RGBA8)
  victim.blit_rect(sheet,Rect2i(66,587,423,152),Vector2i(66,587))
