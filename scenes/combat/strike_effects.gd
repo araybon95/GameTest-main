@@ -31,6 +31,9 @@ static func sample(presentation: Control) -> Dictionary:
  var clock: float = presentation.event_clock() if presentation.has_method("event_clock") else presentation.age/maxf(0.01,factor)
  var start: Vector2 = presentation.fighters[0].position+presentation.fighters[0].size*Vector2(0.58 if active["hero"] else 0.42,0.4)
  var target: Vector2 = presentation.fighters[1].position+presentation.fighters[1].size*Vector2(0.5,0.43)
+ var builds = preload("res://scripts/party_builds.gd")
+ if builds.supports(presentation.fighters[0].texture): start = builds.point(presentation.fighters[0],"emitter_point")
+ if builds.supports(presentation.fighters[1].texture): target = builds.point(presentation.fighters[1],"hit_point")
  var reaction: String = str(active.get("reaction","hurt"))
  var aim: Vector2 = target+Vector2(0,-95) if reaction == "miss" else target
  var progress: float = clampf((clock-0.13)/0.16,0.0,1.0)

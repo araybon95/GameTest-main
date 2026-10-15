@@ -83,7 +83,7 @@ func crusader_charge() -> void:
 	var damage: int = battle._attack_damage("crusader",State.card_stats("pc_charge"))
 	battle._play_card("crusader",hero["abilities"].find("pc_charge"))
 	assert(cinema.active["profile"] == "charge" and cinema.active["skill_id"] == "pc_charge")
-	assert(cinema.active["source_node"] == battle.hero_portraits["crusader"] and str(cinema.active["source"].resource_path).contains("crusader"),"The actual Crusader skill uses its own artwork and charge profile")
+	assert(cinema.active["source_node"] == battle.hero_portraits["crusader"] and cinema.active["source"].get_meta("pose_id","") == "crusader","The actual Crusader skill uses its own artwork and charge profile")
 	var source: TextureRect = battle.hero_portraits["crusader"]
 	assert(absf(float(cinema.active["source_position"].x)-(source.get_global_rect().position.x-cinema.global_position.x)) < 1.0,"Charge snapshots the arranged P1 lane before animation, so the displaced ally cannot overlap its old slot")
 	assert(hero["ap"] == 0 and hero["block"] == 6 and State.Depth.position_of(State,"crusader") == 1)
