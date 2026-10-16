@@ -902,7 +902,7 @@ static func sync_equipped_health(hero_id: String) -> void:
 
 static func equip_item(hero_id: String, item_id: String) -> bool:
 	var entry: Dictionary = Items.item(item_id)
-	if entry.is_empty() or not entry.has("slot") or (entry.has("hero") and entry["hero"] != hero_id) or not party.has(hero_id) or int(inventory.get(item_id, 0)) <= 0:
+	if entry.is_empty() or not entry.has("slot") or not preload("res://scripts/weapon_rules.gd").reason(load("res://scripts/game_data.gd"),hero_id,item_id,equipment.get(hero_id,{})).is_empty() or not party.has(hero_id) or int(inventory.get(item_id, 0)) <= 0:
 		return false
 	if not equipment.has(hero_id):
 		equipment[hero_id] = {}

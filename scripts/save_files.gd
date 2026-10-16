@@ -104,7 +104,13 @@ static func validation_error(data: Variant) -> String:
 		if not data.floors[data.floor].has(data.position): return "The saved location does not exist."
 		for id in data.party:
 			if not data.heroes.has(id): return "A saved party hero is missing."
-	return _runtime_validation_error(data)
+	var runtime_error: String = _runtime_validation_error(data)
+	if not runtime_error.is_empty(): return runtime_error
+	for hero_id in data.equipment:
+		if not hero_id is String and not hero_id is StringName: return "Invalid hero equipment owner."
+		var equipment_error: String = preload("res://scripts/weapon_rules.gd").loadout_error(State,hero_id,data.equipment[hero_id],data.get("item_histories",{}))
+		if not equipment_error.is_empty(): return equipment_error
+	return ""
 
 static func _record_matches(value: Variant, fields: Dictionary, required: Array = []) -> bool:
 	if not value is Dictionary: return false

@@ -18,11 +18,11 @@ static func compare(state, hero: String, id: String) -> Dictionary:
 	for stat in STATS:
 		var delta: int = int(item.get(stat,0))-int(old.get(stat,0))
 		if delta != 0: changes.append({"stat":stat,"delta":delta,"good":delta < 0 if (stat.begins_with("curse_") or stat == "move_cost") else delta > 0})
-	return {"hero":hero,"compatible":not item.has("hero") or item.hero == hero,"old":old_id,"changes":changes,"art":state.hero(hero,id).art,"name":state.Items.item(id).name}
+	return {"hero":hero,"compatible":preload("res://scripts/weapon_rules.gd").reason(state,hero,id,state.equipment.get(hero,{})).is_empty(),"old":old_id,"changes":changes,"art":state.hero(hero,id).art,"name":state.Items.item(id).name}
 static func text(state, hero: String, id: String) -> String:
 	var result: Dictionary = compare(state,hero,id)
 	if result.is_empty(): return ""
-	if not result.compatible: return "Cannot equip: this belongs to another class."
+	if not result.compatible: return preload("res://scripts/weapon_rules.gd").reason(state,hero,id,state.equipment.get(hero,{}))
 	var old_name: String = str(state.Items.item(result.old).get("name","Empty slot"))
 	var text: String = "COMPARE · %s\nReplacing %s" % [state.hero(hero).name,old_name]
 	for change in result.changes:
