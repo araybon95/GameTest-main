@@ -1,5 +1,7 @@
 # Experimental designs
 
+[Download all project artwork](../ARTWORK-DOWNLOADS.md) · [Latest Witch Hunter Krita files](witch_hunter/krita-current/README.md)
+
 Use this folder to test and review artwork, animation, enemy variants and other
 game designs before integrating them into the main game.
 

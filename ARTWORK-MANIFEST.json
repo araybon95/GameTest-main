@@ -1,0 +1,2501 @@
+{
+  "source_commit": "25239b123b5e7fb9670b20386a4382b55842a15b",
+  "artwork_count": 499,
+  "files": [
+    {
+      "path": "Sound FX Starter Pack Vol. 1/- Thank You.png",
+      "bytes": 118507,
+      "sha256": "ee1d4d6ee5b65cf58d17b0b23dfdfe5b1ace659132fd198c6ed6d72f0952e233"
+    },
+    {
+      "path": "assets/art_library/appearance/hero_crusader_outfit.png",
+      "bytes": 2426642,
+      "sha256": "673d1294acc41f988e73feb3ada2120573a0c4087a57ed556139151679cb84ca"
+    },
+    {
+      "path": "assets/art_library/appearance/hero_healer_outfit.png",
+      "bytes": 2444790,
+      "sha256": "76ba4f4624790fdbe575b2a9c68b838398f5b449b1b64935928e6829e9183383"
+    },
+    {
+      "path": "assets/art_library/appearance/hero_occultist_outfit.png",
+      "bytes": 2594232,
+      "sha256": "750143b7078fe8df5e5637d219b114febe479a7f385e05ffc5433bb8dab0a68f"
+    },
+    {
+      "path": "assets/art_library/appearance/hero_ranger_outfit.png",
+      "bytes": 2318423,
+      "sha256": "ceac88425eb3d7007c29275d5a13b5517121f4389771dcee6ae6d996abc85b44"
+    },
+    {
+      "path": "assets/art_library/appearance/hero_warden_outfit.png",
+      "bytes": 2652537,
+      "sha256": "c01efca85cc02b04c300afa5edb826c6cf86e525aff43a55dd2716cee0d18806"
+    },
+    {
+      "path": "assets/art_library/enemy_variants/ash_raider_hooded.png",
+      "bytes": 1555652,
+      "sha256": "21a4b1362a1b047b26d56b15d2941c876b011b3ef02b34956c55e688e3885e91"
+    },
+    {
+      "path": "assets/art_library/equipment/hero_crusader_attack_relic.png",
+      "bytes": 2348624,
+      "sha256": "ef2528e14bca1421f8221643e6b35750b602d9f6edc6b99e7814d61d71968a31"
+    },
+    {
+      "path": "assets/art_library/equipment/hero_crusader_relic.png",
+      "bytes": 2381985,
+      "sha256": "1350597ad3b48ac728a607837a01b73f915272da199011218ea1de73d6044399"
+    },
+    {
+      "path": "assets/art_library/equipment/hero_healer_relic.png",
+      "bytes": 2723648,
+      "sha256": "217267365351187628c492557fc42b4169cdc9e00237cb7edac163cb54c81fb4"
+    },
+    {
+      "path": "assets/art_library/equipment/hero_occultist_relic.png",
+      "bytes": 2904449,
+      "sha256": "efbfa4a698de40ac1fc02757d815861be4c5b4054dfb14247a44824d74401c1c"
+    },
+    {
+      "path": "assets/art_library/equipment/hero_ranger_relic.png",
+      "bytes": 2595600,
+      "sha256": "612f485f05102e4c1fc6d8394867a21fd951c0fed7f5d0c4f6beb95abd889498"
+    },
+    {
+      "path": "assets/art_library/equipment/hero_warden_relic.png",
+      "bytes": 2859656,
+      "sha256": "faf0169430602a815a406d47bfd444566a8dd112a9113d9b093edaa0997becbe"
+    },
+    {
+      "path": "assets/art_library/executions/warden/attacks.png",
+      "bytes": 1802490,
+      "sha256": "bd6c7126b2fea139c2cf6c5faeb0737e9b1be1d95f31fef5c5f3c45415d71b76"
+    },
+    {
+      "path": "assets/art_library/executions/warden/contact.png",
+      "bytes": 2524360,
+      "sha256": "89f4f3e235141e09c4dec80a43b89050aced80ff7321948f41bb5e30384639d5"
+    },
+    {
+      "path": "assets/art_library/executions/warden/poses.png",
+      "bytes": 1706674,
+      "sha256": "e0667b3c516885942c9ce22ef6a551cedd282a3e8a415889b2dbdeaf621edc85"
+    },
+    {
+      "path": "assets/art_library/executions/warden/raider.png",
+      "bytes": 1555652,
+      "sha256": "21a4b1362a1b047b26d56b15d2941c876b011b3ef02b34956c55e688e3885e91"
+    },
+    {
+      "path": "assets/art_library/executions/warden/windup.png",
+      "bytes": 1625470,
+      "sha256": "91ac704fd78e47d364da5bb1177d7f4ff0cfffa6af1bc15988af3c15b18f7d66"
+    },
+    {
+      "path": "assets/art_library/generated/apothecary_battle_stage.png",
+      "bytes": 3485254,
+      "sha256": "1597d1efbc786a3e8955efb1961e842e9781dc6c7cd76ac6b3b55f64f2eb1c77"
+    },
+    {
+      "path": "assets/art_library/generated/apothecary_interior.png",
+      "bytes": 3400072,
+      "sha256": "3ef95cde0dbb9cc23f102e87f967ce5e86373446c478699b5af4576582c49565"
+    },
+    {
+      "path": "assets/art_library/generated/apothecary_reclaimed.png",
+      "bytes": 3300241,
+      "sha256": "6e8d260e2493452d4dcacf304fe9535cb43bb7c95ccffadb07506f2e1b286afa"
+    },
+    {
+      "path": "assets/art_library/generated/bandit_battle_stage.png",
+      "bytes": 2231393,
+      "sha256": "9f92a4ff42812cdbad373ab5a74a1ec95ba11fd0745b9fbd583378b8133b34f5"
+    },
+    {
+      "path": "assets/art_library/generated/bandit_camp.png",
+      "bytes": 2734118,
+      "sha256": "3c61fc9211b3a895be2aacc0f32a905b5cb74e101dacd6cf88bf16714445a003"
+    },
+    {
+      "path": "assets/art_library/generated/bandit_combat.png",
+      "bytes": 2231393,
+      "sha256": "9f92a4ff42812cdbad373ab5a74a1ec95ba11fd0745b9fbd583378b8133b34f5"
+    },
+    {
+      "path": "assets/art_library/generated/beast_battle_stage.png",
+      "bytes": 3222057,
+      "sha256": "4bb931cac8b07551468996574356e75ad839dc8a21c7ae899b2dfdedc976ea7d"
+    },
+    {
+      "path": "assets/art_library/generated/beast_camp.png",
+      "bytes": 2891573,
+      "sha256": "2882c3cbe78668b52490193f28740ba61aa4f4d73debb8c2e05a591b2b4a2ab9"
+    },
+    {
+      "path": "assets/art_library/generated/beast_sanctuary.png",
+      "bytes": 3283422,
+      "sha256": "14d29d719a1d5c2d4cd3124608e4e8901c0d9a2363399e30ba9dc919732b56ef"
+    },
+    {
+      "path": "assets/art_library/generated/bg_crypt.png",
+      "bytes": 1534058,
+      "sha256": "2771dc19d0a9d732f2d256aa0fc26388381ff5917dc0dbb57544641224b33ab2"
+    },
+    {
+      "path": "assets/art_library/generated/building_barracks.png",
+      "bytes": 116247,
+      "sha256": "101531439ae600838cfc6f2b4dcb03717cfcd395b75851e1314536a77e5de712"
+    },
+    {
+      "path": "assets/art_library/generated/building_bestiary.png",
+      "bytes": 76734,
+      "sha256": "794ad81f8d86bfff4d7c51212011825f3b8cf029b363741f5751d34a23400138"
+    },
+    {
+      "path": "assets/art_library/generated/building_forge.png",
+      "bytes": 109990,
+      "sha256": "f19a9d1eaddcf9d6d15deacf834a9f7c02b561a7573419674367d9b78979c13d"
+    },
+    {
+      "path": "assets/art_library/generated/building_gate.png",
+      "bytes": 101864,
+      "sha256": "7f18bd7f76d331700ab18c3bb320779ab44d6afd9d742f665dc1cba358c64479"
+    },
+    {
+      "path": "assets/art_library/generated/camp_ruins.png",
+      "bytes": 2437883,
+      "sha256": "60fce5228930b9a826de3f476e845cb3b189e0de5af5ecfb1798e979471aa278"
+    },
+    {
+      "path": "assets/art_library/generated/combat_pose_captain.png",
+      "bytes": 1846039,
+      "sha256": "27eb6140a8be0a78a6975adc0096789edb6011c2fb6044195eb7b1d811d19959"
+    },
+    {
+      "path": "assets/art_library/generated/combat_pose_crossbow.png",
+      "bytes": 1660258,
+      "sha256": "6f2e0665c72b333cde89ffe01afc9e6f6654606cc401b77d26155bef9be93ef7"
+    },
+    {
+      "path": "assets/art_library/generated/combat_pose_crusader.png",
+      "bytes": 1716687,
+      "sha256": "2438b9ad0dd9bf8a50fb2fa00aed1cfe02052c9d021de8cf7047436246714bce"
+    },
+    {
+      "path": "assets/art_library/generated/combat_pose_footman.png",
+      "bytes": 1741376,
+      "sha256": "73d7a7d3b8818cfe1910774d0c113d00c4dba78410b9fe8c16a35f3e27c9f7fe"
+    },
+    {
+      "path": "assets/art_library/generated/combat_pose_giant.png",
+      "bytes": 2377178,
+      "sha256": "c52a45889599770d18d6b9998c997d060bcd54c9b5a93ff7182593b6549f6d05"
+    },
+    {
+      "path": "assets/art_library/generated/combat_pose_healer.png",
+      "bytes": 1780550,
+      "sha256": "3a28b4bf5e6f7aca68eeb3e1221895a8dbd1b73d88954bee86e14915e3d1f7e2"
+    },
+    {
+      "path": "assets/art_library/generated/combat_pose_lord.png",
+      "bytes": 2358674,
+      "sha256": "ecdb0c0b489a516d958ffa189b8f03fa6e34abd0ba41df27a44e5c790a8e479e"
+    },
+    {
+      "path": "assets/art_library/generated/combat_pose_occultist.png",
+      "bytes": 1856654,
+      "sha256": "e3c8988af77cb23ba5b16e4a7d3e36f68b1d2e26e0a6cddde758f66b18a48418"
+    },
+    {
+      "path": "assets/art_library/generated/combat_pose_penitent.png",
+      "bytes": 2295281,
+      "sha256": "28dc83df225cfbcebaa6a3184fdd469ca04429cdc40da4b1f80ab4ee3ef0cb36"
+    },
+    {
+      "path": "assets/art_library/generated/combat_pose_raider.png",
+      "bytes": 1425078,
+      "sha256": "c45cbfa742da7b7056c0b48b3bc53d6ff73373997071e80586c1fd37ce387354"
+    },
+    {
+      "path": "assets/art_library/generated/combat_pose_ranger.png",
+      "bytes": 1282968,
+      "sha256": "9f29ead0221cd9d143687d778178f88c21fe15e0645e26cef593517c4f8ecc98"
+    },
+    {
+      "path": "assets/art_library/generated/combat_pose_scout.png",
+      "bytes": 1808345,
+      "sha256": "678e65184aabddfaef0892782bdaba2bbb89bb4bf764ac74082ed5a3b0c241d8"
+    },
+    {
+      "path": "assets/art_library/generated/combat_pose_seamkeeper.png",
+      "bytes": 2388797,
+      "sha256": "ac91c7594c7da65becf12c20ca46da1a53eddb92c6765d92e2a56a1d96a45125"
+    },
+    {
+      "path": "assets/art_library/generated/combat_pose_skeleton.png",
+      "bytes": 1280771,
+      "sha256": "d14419e3ebfe9993b55fa54e76ae3415c531c9ea77234f3d8bcfe5c81ae5fc8d"
+    },
+    {
+      "path": "assets/art_library/generated/combat_pose_son.png",
+      "bytes": 2213182,
+      "sha256": "411c4550b3143a575c6e842e95962f32f22af612ed34f2d016d11d74caf94a89"
+    },
+    {
+      "path": "assets/art_library/generated/combat_pose_vessel.png",
+      "bytes": 2347884,
+      "sha256": "f0de065510244b5b02157982d69fb61fdf8c7342f79affc38cd50292e845af0f"
+    },
+    {
+      "path": "assets/art_library/generated/combat_pose_villager.png",
+      "bytes": 1147186,
+      "sha256": "1a6c9af9d2993f6703b387301b4efd9eb2d0702830de137e40da4d11e7305923"
+    },
+    {
+      "path": "assets/art_library/generated/combat_pose_warden.png",
+      "bytes": 1502851,
+      "sha256": "b6fcda571f6d3939a1a82e50918dcd535f5c7b4aef0cbd15e35d3f3a633d7372"
+    },
+    {
+      "path": "assets/art_library/generated/combat_pose_wolfguard.png",
+      "bytes": 2104752,
+      "sha256": "78f1e7b83b06b800995ea389be39d347d25b8605daf03e2f72846d417dc06aff"
+    },
+    {
+      "path": "assets/art_library/generated/crypt_battle_floor.png",
+      "bytes": 420573,
+      "sha256": "a87a7ab9f2db590e62b65859227a0cec75c6c94b4c2759589c6e0de66f688501"
+    },
+    {
+      "path": "assets/art_library/generated/dungeon_entrance.png",
+      "bytes": 2567580,
+      "sha256": "182851ede85e96e94cad40886bce9460ba3b3efd0c28f9fac78a0e3cd4f6cd98"
+    },
+    {
+      "path": "assets/art_library/generated/dungeon_threshold_sheet.png",
+      "bytes": 1341215,
+      "sha256": "89f6d3b31534c2a7745c8c881ca81c60e67542fb78e432ff5514773d7e5e4d26"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_anguish_penitent.png",
+      "bytes": 2698636,
+      "sha256": "388d884c02f314ea98f3b25cee19104e5086d6a62351a0b5eb528ff9be6cfd84"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_anguish_penitent_combat_sheet.png",
+      "bytes": 1995701,
+      "sha256": "fb6bd1220900e5d2bbd5c118ac9470460419aca55dda8ccb3df6406eceb9a115"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_anguish_vessel.png",
+      "bytes": 2875078,
+      "sha256": "48a190e267789807c628825057ace2871c036cd18cdd57090ae720cd08320397"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_anguish_vessel_combat_sheet.png",
+      "bytes": 1351744,
+      "sha256": "ecc5f417018a6bcdedbdd936dc085ea4d8f1e4249632bc35fc6b3d8fae6c542f"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_ash_bandit_captain.png",
+      "bytes": 1960780,
+      "sha256": "73e8105c7e40329de1b949c4c49548b3678807a52a3e8d9834a1bf35ef2c7e1d"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_ash_bandit_captain_combat_sheet.png",
+      "bytes": 1809639,
+      "sha256": "3703b4fc67993fa354abc4abcb69e2bbd19a6a9f8ec93d2d798ca529896515ad"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_ash_raider.png",
+      "bytes": 1392721,
+      "sha256": "1cf629b3bbc11cc4cdd5015a0571ac568d325e267cea24a4442d2ae5e9c5b310"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_ash_raider_combat_v2.png",
+      "bytes": 2309438,
+      "sha256": "94afba1411f38fcfafc6339aa5f02f1b0ef9a4f820af25adad5f8ad6ab24437e"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_bone_rabble.png",
+      "bytes": 233721,
+      "sha256": "21da5755ba2eb0b341660294a1bf0fca733f449039a67039683577c18abce93b"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_bone_rabble_combat_sheet.png",
+      "bytes": 949740,
+      "sha256": "f1f00a51ddfac3dd1a4c9afb999f1cc812f6c852e2c8722287b3c04ccd10f016"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_coterie_cantor.png",
+      "bytes": 2982453,
+      "sha256": "722ee8b23547bedc1e347187084601e4014aeec72c58c6b01971d32570b87c3c"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_coterie_cantor_combat_sheet.png",
+      "bytes": 2202807,
+      "sha256": "3604fbf1c6b7dc6198c3efa71d9c5d3f9aa530c3b8918278a6c2af379dd008d5"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_coterie_matron.png",
+      "bytes": 2086795,
+      "sha256": "f3f6a15233e3813c7ff2b03aab760d55afa36d42c7188f295d70cac5c352f1bd"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_coterie_matron_combat_sheet.png",
+      "bytes": 2345244,
+      "sha256": "826e2f4c6fc50b5536e0c41ec32b1c90f8b244079e03498cbde31fcbfdcc525e"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_coterie_seamkeeper.png",
+      "bytes": 2733687,
+      "sha256": "c031ceec1616d6e5aedf33a1b723eb5dee39a83698f9954f77808f02d2c94f9b"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_coterie_seamkeeper_combat_sheet.png",
+      "bytes": 2268200,
+      "sha256": "b2d73333db58ff8fe1cb337c614ec7828c0ff2e4b1248dafff17ca6562787fdb"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_gallows_scout.png",
+      "bytes": 1975314,
+      "sha256": "6cf10f301fe6c3dab9f7ea2734c0435febd4360eea9c0a35052a033a718b727f"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_gallows_scout_combat_sheet.png",
+      "bytes": 1393466,
+      "sha256": "735bffb2e5437da795146f66d41e20468102dd3dfc8e4f7aac1d66373a2f811a"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_harrowed_giant.png",
+      "bytes": 2696411,
+      "sha256": "bdf9ab5e28e3ed5f2a7941ebc8aac9f4430f3ead01908d0cf5fa6adfabc5047a"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_harrowed_giant_combat_sheet.png",
+      "bytes": 2318934,
+      "sha256": "5ffe83ed0747e91620279f7eb61a7d2b134b030ee8505d68945ba39cc62ce678"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_hollow_villager.png",
+      "bytes": 190933,
+      "sha256": "ea7ea4a71be3f9e55982efcae3e400ca2fcf85f4c5f78728db7440fd6844464a"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_hollow_villager_combat_sheet.png",
+      "bytes": 944292,
+      "sha256": "6b0060c37a5c4194661c0d8665fd3e4052a8ad6212f294b6a21ad3f99cbdd326"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_howling_head.png",
+      "bytes": 2685782,
+      "sha256": "a1ea527b4881ae34b6ff4427e56db9f391022bdf6d3541958504c586f248e498"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_howling_head_combat_sheet.png",
+      "bytes": 2362471,
+      "sha256": "d718c97334f723a43b72dc61bf1fc3a5593b778afc39b7846e53f0f4050ce44b"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_keep_crossbow_combat_sheet.png",
+      "bytes": 1812846,
+      "sha256": "0947723f003996feeeda169e29c1dfd6a0db68db70ea7a0e9380c7a8c92922c2"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_keep_footman_combat_sheet.png",
+      "bytes": 1637903,
+      "sha256": "764670cb37dd83fa3499f2c989933e26e156b1a0a6a6fd5f76e07d874968cfbf"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_keep_son.png",
+      "bytes": 2331581,
+      "sha256": "0838bafde2d960a7883850755d8e58f911e9613ca238b4cb43ed65e6e6c9df0e"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_keep_son_combat_sheet.png",
+      "bytes": 1827992,
+      "sha256": "cacff0ebf170a34526dfbca05f32a51bc8e26a162192977add4e243d8c092487"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_keep_troops.png",
+      "bytes": 1976596,
+      "sha256": "8888c131e9b799d843f8dcc85c281c0a1c84fbadb22e7dbe804a56a362526e3a"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_keep_wolfguard_combat_sheet.png",
+      "bytes": 1976592,
+      "sha256": "33d6ae3dd13d3463230f95f74f084c1c8d89477907c3d9f0508fefe27e3c086b"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_moth_exuvia.png",
+      "bytes": 2727643,
+      "sha256": "2abc60aa402aef3e638e2c1b3511b297f905403f4f54509e7ac7b0c9b3d61168"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_moth_exuvia_combat_sheet.png",
+      "bytes": 1802823,
+      "sha256": "728f7de6a3e0420ad914edd14fdf99ed65a9ed14ae436bc2fae9e7c81fcb3066"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_moth_metamorph.png",
+      "bytes": 2442196,
+      "sha256": "1eb3c1f26c430cb050d50da576b426f48d32f9e03df9e4a2c14abfdd9bb3e89f"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_moth_metamorph_combat_sheet.png",
+      "bytes": 1311676,
+      "sha256": "8cf880182e6ddcffbd5790f4d394be024c816a1c272910ad8dbc287a76c0518c"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_moth_oleander.png",
+      "bytes": 2025410,
+      "sha256": "53b76564968e3ab3404c2577856e0343fdf9b7dbde88757c73eeb27434181f11"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_moth_oleander_combat_sheet.png",
+      "bytes": 2031438,
+      "sha256": "e6fe387339a43c37265feaf6fea85d057b36f0fb1d23d0b413ecd8f1a66124e1"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_undying_lord.png",
+      "bytes": 2019698,
+      "sha256": "43d9ef52fdb06eec6bcaede0c95faeeca80db33dc6a240742dbc659a4afa4250"
+    },
+    {
+      "path": "assets/art_library/generated/enemy_undying_lord_combat_sheet.png",
+      "bytes": 2075495,
+      "sha256": "9fbc07a8e48d7587bec53bb99ba3155584478286b6882ac4b8b7a07c64a24dfd"
+    },
+    {
+      "path": "assets/art_library/generated/event_bandit_corridor.png",
+      "bytes": 2725647,
+      "sha256": "cf1738bb8e976746defb136fa990e52e27930a8ce0e31d977a3e9ebcc263d777"
+    },
+    {
+      "path": "assets/art_library/generated/event_bandit_strongbox.png",
+      "bytes": 2909408,
+      "sha256": "cf8af9877d6b0cedcdb8e4f4c985663013c14b8271ed090719bb5b358631463d"
+    },
+    {
+      "path": "assets/art_library/generated/event_bandit_supplies.png",
+      "bytes": 2573980,
+      "sha256": "81772deb5678e43c22525ac4fd117aa2110b47c77242ccf686359875aeec20f5"
+    },
+    {
+      "path": "assets/art_library/generated/event_beast_corridor.png",
+      "bytes": 3019152,
+      "sha256": "09aa8024f368236fb24c27c1e9be7f33b2391b012230277200a9623498eced9c"
+    },
+    {
+      "path": "assets/art_library/generated/event_beast_offering.png",
+      "bytes": 2674942,
+      "sha256": "4c88cd7512f7e7b152618daaccd8d641f735ea2f675977215154de1f0ab713f2"
+    },
+    {
+      "path": "assets/art_library/generated/event_beast_reliquary.png",
+      "bytes": 2035294,
+      "sha256": "4f45f82633ca63ff9eea6cb3808d452466a62890df9334fafe5cff8c1b53044c"
+    },
+    {
+      "path": "assets/art_library/generated/event_crusader_coffin.png",
+      "bytes": 1722177,
+      "sha256": "9c1070dbc4255df6e1cb9697d6454d06b405ff0a5c7460bdec0794f8c25d0034"
+    },
+    {
+      "path": "assets/art_library/generated/expedition_map_four_regions.png",
+      "bytes": 3197912,
+      "sha256": "bd283f33db103497e7d4981db91e0a8709b3ac8b7f9be04f0534e331a31d26e7"
+    },
+    {
+      "path": "assets/art_library/generated/glow_warm.png",
+      "bytes": 84421,
+      "sha256": "34653472b24b0b38dcd0ed276e39bf51b39de267c74545d8d790ab8283be44c9"
+    },
+    {
+      "path": "assets/art_library/generated/graveyard.svg",
+      "bytes": 886,
+      "sha256": "14fb28f19e56ad147c778f148e97fa9709fa047239246dcec73c2c9a7c59c7e3"
+    },
+    {
+      "path": "assets/art_library/generated/graveyard_ink_background.png",
+      "bytes": 2399821,
+      "sha256": "16e69dd52ee66afbb2c8c49da614b64c8d0e490d2fd19beb44bd974fe73226e7"
+    },
+    {
+      "path": "assets/art_library/generated/hallway_bandit_panorama.png",
+      "bytes": 2933336,
+      "sha256": "3fa73ab09481bf1a3df3138bec1aa45d89aaac5eb1b4997908b8d337fa40f724"
+    },
+    {
+      "path": "assets/art_library/generated/hallway_beast_panorama.png",
+      "bytes": 2915403,
+      "sha256": "d10a1fe77d17e3a2fe9258d63eb0f7c5498de8183bce6d8314c24f11d7e1dd4f"
+    },
+    {
+      "path": "assets/art_library/generated/hallway_campfire.png",
+      "bytes": 1093889,
+      "sha256": "9472db44b8187e7757fb56fff19c5f3f9bc75f7867b52afb8e17a9e43db07249"
+    },
+    {
+      "path": "assets/art_library/generated/hallway_gold_cache.png",
+      "bytes": 1140647,
+      "sha256": "9a64979055f10fd762e980911897bb9f5b70b3492a6d25f4b98eae1ffbec13dd"
+    },
+    {
+      "path": "assets/art_library/generated/hallway_keep_panorama.png",
+      "bytes": 2736471,
+      "sha256": "85c7f04c14cd7f9db69a879484fe51def6c43a03da9dd540d583b6d68e3f43ae"
+    },
+    {
+      "path": "assets/art_library/generated/hallway_medical_panorama.png",
+      "bytes": 2973302,
+      "sha256": "ef33e1fdb945f05e4a8e9bcde26f92d8910a39c6ff15c14bf3ded182671ed500"
+    },
+    {
+      "path": "assets/art_library/generated/hamlet_vista.png",
+      "bytes": 1814833,
+      "sha256": "74869e6c706fb42dcd5ed6495ffa3b8dc2c3ed1e0bc83edb3362e0c838d9e2ef"
+    },
+    {
+      "path": "assets/art_library/generated/hamlet_vista_apothecary.png",
+      "bytes": 2360072,
+      "sha256": "30cc9fc6e5b5a88afdb6b340bf5e2c895e965b07618de4e099fb834d514a6fd9"
+    },
+    {
+      "path": "assets/art_library/generated/hero_crusader_combat_v2.png",
+      "bytes": 2489279,
+      "sha256": "42d30bf932f52d9538730dce6c17ba2172ae9ac6550bd1348d2b3c67cae08fe7"
+    },
+    {
+      "path": "assets/art_library/generated/hero_crusader_poses.png",
+      "bytes": 2621286,
+      "sha256": "4500cd09cf92073a0b8342fcf26d99fe0c2953912cddf3238a4edee84304ebbe"
+    },
+    {
+      "path": "assets/art_library/generated/hero_crusader_walk.png",
+      "bytes": 2304959,
+      "sha256": "0a6d83924681cd0677ef70d0985197f7191c9f9958fe0c865dd5bffd280aa2d7"
+    },
+    {
+      "path": "assets/art_library/generated/hero_healer.png",
+      "bytes": 265743,
+      "sha256": "c82187a6a85de5197c7b02bb8599c270a1a665d15516d839d44ee7105df5a1ed"
+    },
+    {
+      "path": "assets/art_library/generated/hero_healer_camp.png",
+      "bytes": 1749133,
+      "sha256": "c37ebc992daf1bbd4f366512949b663729da04943f8df7270da82d922f8fe7f5"
+    },
+    {
+      "path": "assets/art_library/generated/hero_healer_combat_sheet.png",
+      "bytes": 2310386,
+      "sha256": "74400395d61aab1c3b7e41ab8556f61febae71844af7cfdbb409f07b6269a1bb"
+    },
+    {
+      "path": "assets/art_library/generated/hero_healer_walk.png",
+      "bytes": 1958826,
+      "sha256": "d45eebdf3528e140738d5bab428995f109a2fad41cc84909db3526dfbf3cd2a9"
+    },
+    {
+      "path": "assets/art_library/generated/hero_occultist.png",
+      "bytes": 325252,
+      "sha256": "64f4545f18a64afcabb1775fb203317fb2d366ef23404c869d0eed2aa834c45e"
+    },
+    {
+      "path": "assets/art_library/generated/hero_occultist_camp.png",
+      "bytes": 1657888,
+      "sha256": "0ab904481ccbe3aab978b925ddf58a2a062de79165ea8b15c4b9df3422e4e621"
+    },
+    {
+      "path": "assets/art_library/generated/hero_occultist_combat_sheet.png",
+      "bytes": 2240928,
+      "sha256": "11cecbccb13b7910aebd5e092c1f0df6a02b7e4011346332cadf0483bb1fa1cc"
+    },
+    {
+      "path": "assets/art_library/generated/hero_occultist_walk.png",
+      "bytes": 2025305,
+      "sha256": "a28c6bc12645945f2c46e8839dbe06c3ed937c4bddc8be14af6e632763edb726"
+    },
+    {
+      "path": "assets/art_library/generated/hero_ranger.png",
+      "bytes": 231723,
+      "sha256": "3f6cf164a2e672c11c21ad9b19437a178b1aa02fbdf220462ac2bf5f88bbd194"
+    },
+    {
+      "path": "assets/art_library/generated/hero_ranger_camp.png",
+      "bytes": 1533603,
+      "sha256": "d750eb8fac1d459cb654c5b63b6d39b3d149faa2ceede1b42dd649554d9f3aa9"
+    },
+    {
+      "path": "assets/art_library/generated/hero_ranger_combat_sheet.png",
+      "bytes": 2177957,
+      "sha256": "cd93830138f159d442fcc249c642e273e4767cf0f64a90e05812dbc59fac9041"
+    },
+    {
+      "path": "assets/art_library/generated/hero_ranger_walk.png",
+      "bytes": 1991939,
+      "sha256": "8be3e9409171f465b236aefcae3e6c4b7bcad715631fb48619f4acaf3135e401"
+    },
+    {
+      "path": "assets/art_library/generated/hero_warden.png",
+      "bytes": 1187192,
+      "sha256": "a201a98ae843d41becf4922e9df6ac216ce5481e238ed61ed782bebfd0e99ae9"
+    },
+    {
+      "path": "assets/art_library/generated/hero_warden_camp.png",
+      "bytes": 1694996,
+      "sha256": "231398bc7fbd68f46fcdf30443a27f682c09551e669e3bb33ed2be8ad3305aa5"
+    },
+    {
+      "path": "assets/art_library/generated/hero_warden_combat_v2.png",
+      "bytes": 1908061,
+      "sha256": "64345a304de678f6fad36711f266b7b4698fbc65e12af2c01e430135db081f96"
+    },
+    {
+      "path": "assets/art_library/generated/hero_warden_walk.png",
+      "bytes": 2116641,
+      "sha256": "df15b830540bf53fdbef289da21b1a9747bd0f0c8ba22694bc987058458e145a"
+    },
+    {
+      "path": "assets/art_library/generated/hl_blessing.png",
+      "bytes": 82041,
+      "sha256": "3792064915ecdd8b57c2d552dda80e18a8053d019b60ed515c85789e37cfda84"
+    },
+    {
+      "path": "assets/art_library/generated/hl_mend.png",
+      "bytes": 94686,
+      "sha256": "3858219e425dfed79cf081da9a52065f94934b1d1b4ea3da3031593b640df160"
+    },
+    {
+      "path": "assets/art_library/generated/hl_smite.png",
+      "bytes": 94714,
+      "sha256": "2421acc9c37606b2d7048e6bd686d07494f1033e031b9c5c90bad40bd0f0d257"
+    },
+    {
+      "path": "assets/art_library/generated/hl_solace.png",
+      "bytes": 65889,
+      "sha256": "c0efbc4fac4dbc6a5633d888e57970c47025a2e3a44224d70add582e951ddcf6"
+    },
+    {
+      "path": "assets/art_library/generated/hl_turn.png",
+      "bytes": 103597,
+      "sha256": "b446b7a55401bf82a6ad1baba333c411a957668a148768fa3b79a7829fd0b30d"
+    },
+    {
+      "path": "assets/art_library/generated/hl_ward.png",
+      "bytes": 101410,
+      "sha256": "84046f265a3f089776a4649fa206d53f771c0e91e500cae8ef9041d97884f727"
+    },
+    {
+      "path": "assets/art_library/generated/keep_battle_stage.png",
+      "bytes": 3088386,
+      "sha256": "d1b200726f66c78541905637aef21ff8fcb3f03fa0d4185d48898aec420442a9"
+    },
+    {
+      "path": "assets/art_library/generated/keep_hall.png",
+      "bytes": 3097367,
+      "sha256": "73bc19cfeb4a61c5113ae4b8cb05a9f9ccfcb87f82b4ae2d5bc88770ae656b90"
+    },
+    {
+      "path": "assets/art_library/generated/merchant_orb_ink.png",
+      "bytes": 1800964,
+      "sha256": "d55f75fefdaa7bc6538e6e0c4c61a2f5642aa0bb640f5002cd82e0f02c80331a"
+    },
+    {
+      "path": "assets/art_library/generated/mote.png",
+      "bytes": 6205,
+      "sha256": "6290fc04995d99496a83e311e9797897825d44a2f2c36a2c0b13ef1d04318991"
+    },
+    {
+      "path": "assets/art_library/generated/oc_blast.png",
+      "bytes": 113883,
+      "sha256": "8abd76cddc818184577922eb66ecfd1162d8ad57bafbd477f5df4f4c631958bc"
+    },
+    {
+      "path": "assets/art_library/generated/oc_drain.png",
+      "bytes": 93050,
+      "sha256": "cf7443a71eabfc2909abb36dde2327518d863b80aad9e19050ac7b255a2bdfa1"
+    },
+    {
+      "path": "assets/art_library/generated/oc_hex.png",
+      "bytes": 121680,
+      "sha256": "b19ae527a4e6b258776c10cfdf3ed43f329eb83d0ef94e6064f2631ce7373369"
+    },
+    {
+      "path": "assets/art_library/generated/oc_veil.png",
+      "bytes": 113523,
+      "sha256": "618fc47fdabf22df4b6c279b6cfc9ee29e211cd00d71527b3208b91152b3010c"
+    },
+    {
+      "path": "assets/art_library/generated/oc_weak.png",
+      "bytes": 80484,
+      "sha256": "d1a7052391cded7d56aad159cda6f17e334d517acaeed5127df58cdc7f8fff99"
+    },
+    {
+      "path": "assets/art_library/generated/path_stone.png",
+      "bytes": 37148,
+      "sha256": "8bd292abc53e0f64ef1655dc100209ee64e21b5c3124418aed38c15723b6df71"
+    },
+    {
+      "path": "assets/art_library/generated/region_map.png",
+      "bytes": 3243892,
+      "sha256": "24e0cf977856b27863cc172d94525f7643f1ac714736c72e80954284d611215f"
+    },
+    {
+      "path": "assets/art_library/generated/rg_dodge.png",
+      "bytes": 91055,
+      "sha256": "99d108323ff3d2b57d65af329659d5c28c0cfec37cdcf21c94fa5250c8e9885d"
+    },
+    {
+      "path": "assets/art_library/generated/rg_mark.png",
+      "bytes": 73477,
+      "sha256": "97014e16431fe8fe39913970466595f017a1b7bf46056dc30aa28075d9b0d98b"
+    },
+    {
+      "path": "assets/art_library/generated/rg_pierce.png",
+      "bytes": 82914,
+      "sha256": "fe253782f1b53efbb0f817f0d3eb477894768075c1d847bc44da0e6cedc8d0fd"
+    },
+    {
+      "path": "assets/art_library/generated/rg_quick.png",
+      "bytes": 44836,
+      "sha256": "231fbafc7deb54563da6a476369ea6dd3d14a0097f85730ecd3ef104634922d7"
+    },
+    {
+      "path": "assets/art_library/generated/rg_volley.png",
+      "bytes": 91462,
+      "sha256": "963cf8b82239806ef180fe8e074d66f8ebeba619719f746d5949a1240fee1da7"
+    },
+    {
+      "path": "assets/art_library/generated/settlement_hamlet.png",
+      "bytes": 1532170,
+      "sha256": "bc1ea2eb4c7c35ea3023cccf374e270e3d63fdaac2832d800a81976d955ebf7c"
+    },
+    {
+      "path": "assets/art_library/generated/story_strongbox.png",
+      "bytes": 2326226,
+      "sha256": "eb0b55b1c4884a082f64e2c7562090ba23f858cf2d4d37a59444d77e737754e0"
+    },
+    {
+      "path": "assets/art_library/generated/title_key_art.png",
+      "bytes": 1482521,
+      "sha256": "047820f068d70c35d684a2143c9ed2760693a45a5f0f8fd4b8bf04e21c62063f"
+    },
+    {
+      "path": "assets/art_library/generated/wd_bash.png",
+      "bytes": 106931,
+      "sha256": "e29739fef55b5df68041c293562b28fff4090c49177f8d3f14e31ef703356fdb"
+    },
+    {
+      "path": "assets/art_library/generated/wd_guard.png",
+      "bytes": 77827,
+      "sha256": "bf67a449118ad56089c4f7c2637f1bf41134cefd50991c6d957bc32c9016af77"
+    },
+    {
+      "path": "assets/art_library/generated/wd_heavy.png",
+      "bytes": 77960,
+      "sha256": "446e79503a9d2ef329d1946772a62c658394128b07c4eb9650059ba6ec23ff71"
+    },
+    {
+      "path": "assets/art_library/generated/wd_rally.png",
+      "bytes": 85042,
+      "sha256": "2648c6af6748e11eb456ab7bbe00e75537fcfeefb4e4bff04f178b2b7374b0d5"
+    },
+    {
+      "path": "assets/art_library/generated/wd_slash.png",
+      "bytes": 64254,
+      "sha256": "1a6738108aa5b6c5c7005b7c3b046671fe1d24e8883f561151682cc6f2bb8878"
+    },
+    {
+      "path": "assets/art_library/items/antidote.svg",
+      "bytes": 2594,
+      "sha256": "1d5cd0c982d28baf1e4a247c8dc6a1d84ba0a2e690302c04cd50976251ebeb8d"
+    },
+    {
+      "path": "assets/art_library/items/bandage.svg",
+      "bytes": 2594,
+      "sha256": "9483cfc4d26e68108afe71694df960f8d57bd83c48e3457611a52989f09b332e"
+    },
+    {
+      "path": "assets/art_library/items/calming_incense.svg",
+      "bytes": 2594,
+      "sha256": "6054dde90108def4804ec540c0a262e21f55b81da0cd775e7bb207066165890a"
+    },
+    {
+      "path": "assets/art_library/items/chieftain_trophy.svg",
+      "bytes": 844,
+      "sha256": "7fcd79c29c7ec33630c10edb9ed433d5ee4040f63ccb63667f0872ef9d24555d"
+    },
+    {
+      "path": "assets/art_library/items/cleansing_herbs.svg",
+      "bytes": 2004,
+      "sha256": "a5f6d5e65b421b0e931dc47ab76d29919572453867d85f33991be1c7ff3d1140"
+    },
+    {
+      "path": "assets/art_library/items/cleansing_potion.svg",
+      "bytes": 2594,
+      "sha256": "2d29105d031f2b968e3c5291f00724e5d764efca5b38d114e386dee5419562a7"
+    },
+    {
+      "path": "assets/art_library/items/clotting_seal.svg",
+      "bytes": 1741,
+      "sha256": "bf856de36a381f16a9e855a72eecd194ed3bf88c9e73a72a6c36c543dc78a98c"
+    },
+    {
+      "path": "assets/art_library/items/coterie_trophy.svg",
+      "bytes": 1014,
+      "sha256": "9749536b9d258bd47da58954a6dfeb0fe468c8e60c2865b8b67dadecdd94f001"
+    },
+    {
+      "path": "assets/art_library/items/crusader_armor.svg",
+      "bytes": 6398,
+      "sha256": "50fdac5c5707787147149079f95ff2891f147c402fa246ba6f8bceb257334e71"
+    },
+    {
+      "path": "assets/art_library/items/crusader_axe.svg",
+      "bytes": 2123,
+      "sha256": "039a30935a003c160ca9938c6a0542c1f28639fab78f48693cdc4b1942edc963"
+    },
+    {
+      "path": "assets/art_library/items/crusader_common_armor.svg",
+      "bytes": 723,
+      "sha256": "67e3935cba723b9d7329be76bc6e4a9df4bf54b732aeabccb80004a3bb6f1d67"
+    },
+    {
+      "path": "assets/art_library/items/crusader_epic.svg",
+      "bytes": 2123,
+      "sha256": "c789af14f140a35ba32b6246bf9999c0ae4c7bfd90eabeeea702474d1cde9416"
+    },
+    {
+      "path": "assets/art_library/items/crusader_legend.svg",
+      "bytes": 2123,
+      "sha256": "8384e65c61d1d25ccd15d07e49506ef5bbeb574a24a3df88bd306640cce7a242"
+    },
+    {
+      "path": "assets/art_library/items/crusader_penitent_stitch.svg",
+      "bytes": 2968,
+      "sha256": "2554b5e3310fe02da48d354297536837b769fc1124707d614cc6363f9c54feb9"
+    },
+    {
+      "path": "assets/art_library/items/crusader_relic_armor.svg",
+      "bytes": 723,
+      "sha256": "2a3bffc4dfd89b5cbee2350a3372080897033841a74d6361f29f3ee6543bd456"
+    },
+    {
+      "path": "assets/art_library/items/crusader_unique.svg",
+      "bytes": 2123,
+      "sha256": "d5430bf5c25822a81076daa6feb2ccdc9fa693caf4f9e0b6bb6625da0d483217"
+    },
+    {
+      "path": "assets/art_library/items/cursed_physician_seal.svg",
+      "bytes": 1741,
+      "sha256": "bf856de36a381f16a9e855a72eecd194ed3bf88c9e73a72a6c36c543dc78a98c"
+    },
+    {
+      "path": "assets/art_library/items/cursed_thorn_relic.svg",
+      "bytes": 2715,
+      "sha256": "24352de180bdc3427856b4f1f59316131233a1b63a2151076477180533d7d89b"
+    },
+    {
+      "path": "assets/art_library/items/exuvia_trophy.svg",
+      "bytes": 847,
+      "sha256": "419a61006950da30edbfaefae0f222b30c2c24d8f49ea358313e293b0e5063a1"
+    },
+    {
+      "path": "assets/art_library/items/fire_bolt_scroll.svg",
+      "bytes": 6395,
+      "sha256": "68b3bf734fe23bdb03596cc6c08a0ca43340c07db23242db5d67aade9effb792"
+    },
+    {
+      "path": "assets/art_library/items/focus_tonic.svg",
+      "bytes": 2594,
+      "sha256": "9814893f848b0a695e5f640c827bc4d05e1b7c25c2fcae2ea163697b107040bd"
+    },
+    {
+      "path": "assets/art_library/items/giant_trophy.svg",
+      "bytes": 886,
+      "sha256": "8809ab8e2fa4f7a2dbdfc780938b53a3ddd1fcb3002be2538edc6a85dc4b5bae"
+    },
+    {
+      "path": "assets/art_library/items/graveward_locket.svg",
+      "bytes": 2116,
+      "sha256": "f409a1b462e7b2504bf68b0deb4e8538089e3bb2154d8e9a9539f53f8f7db197"
+    },
+    {
+      "path": "assets/art_library/items/head_trophy.svg",
+      "bytes": 919,
+      "sha256": "60042ef69165d5144b31b2e8364b9e484e046caa7a4505f5f58872ee386e0c2d"
+    },
+    {
+      "path": "assets/art_library/items/healer_armor.svg",
+      "bytes": 714,
+      "sha256": "f747dabe4ab51278cae1428f3ed5a95430b37d5e258d85be5f71388787ef3417"
+    },
+    {
+      "path": "assets/art_library/items/healer_beads.svg",
+      "bytes": 2181,
+      "sha256": "b01c3a5a138a5ba59b21b90cb061dacfa24cdf4e24fd610ef169b4369feeb6af"
+    },
+    {
+      "path": "assets/art_library/items/healer_chrysalis_rosary.svg",
+      "bytes": 2443,
+      "sha256": "7cc8092821a015ac867e072b0161a4fde693afc58397f0ed2d5e4cbb66a47ad8"
+    },
+    {
+      "path": "assets/art_library/items/healer_epic.svg",
+      "bytes": 4715,
+      "sha256": "7f40630c56b96c437982f23a65df2dd5f34c944dccd867e2de9622ebc68028a9"
+    },
+    {
+      "path": "assets/art_library/items/healer_faction_armor.svg",
+      "bytes": 714,
+      "sha256": "724f313b128fc51b6a4ae1aa87c093c1174225269472f2642af7bfc8c12c6ab3"
+    },
+    {
+      "path": "assets/art_library/items/healer_frostmace.svg",
+      "bytes": 5689,
+      "sha256": "1c73e61f11df5d75914b9501cf9cb510a6fdb3914fe50ef095efd6150f238e79"
+    },
+    {
+      "path": "assets/art_library/items/healer_legend.svg",
+      "bytes": 6032,
+      "sha256": "17f760219f1a5c4142727630e05a8026a9ed32ab040605bb7affc0eda1df3d38"
+    },
+    {
+      "path": "assets/art_library/items/healer_mace.svg",
+      "bytes": 4715,
+      "sha256": "56e59d76ece0bcb217a489907cf6813748f4748bd89b174290a5a228143c55f0"
+    },
+    {
+      "path": "assets/art_library/items/healer_relic.svg",
+      "bytes": 1797,
+      "sha256": "0b43bf78cd817c743c6ec63dbcb72abc4d3c82904482f56ddef9ef79c9f47edc"
+    },
+    {
+      "path": "assets/art_library/items/healer_relic_armor.svg",
+      "bytes": 714,
+      "sha256": "cbb1ce56ea4d3a9389422ce53ee51c1f8adaed913d867a7d4956d3e61256dd79"
+    },
+    {
+      "path": "assets/art_library/items/healer_symbol.svg",
+      "bytes": 3146,
+      "sha256": "1c524f42ae4a97857c293b58e0c1a0d5e3a180b23ecde29e3e352dee82a003f4"
+    },
+    {
+      "path": "assets/art_library/items/healing_potion.svg",
+      "bytes": 2594,
+      "sha256": "1fa7a9f773b128f9aa1db3206f656f6072b31d932fc5c218093b148fbab1dd39"
+    },
+    {
+      "path": "assets/art_library/items/healing_scroll.svg",
+      "bytes": 6395,
+      "sha256": "fd83193cf46ee906f7df7cdd66ac81fc729df270de6f5c4f8608205e93f91628"
+    },
+    {
+      "path": "assets/art_library/items/hunters_compass.svg",
+      "bytes": 1797,
+      "sha256": "1eda177bd378a059de98d02c1533c6387f51c37b6ff82669da896c2b39147a92"
+    },
+    {
+      "path": "assets/art_library/items/lightning_bolt_scroll.svg",
+      "bytes": 6743,
+      "sha256": "5a27a43f900ed69eb91e8cabfd5d7eae36c9f8db9013d2a399c4dffba61807f8"
+    },
+    {
+      "path": "assets/art_library/items/lock_tools.svg",
+      "bytes": 2240,
+      "sha256": "fa1a819bcd7f585084c7cb2d65676f4b5291d299ad4c956ee697d583337a7da6"
+    },
+    {
+      "path": "assets/art_library/items/lord_trophy.svg",
+      "bytes": 860,
+      "sha256": "8f6d9432583a555abddd8678d4fe023f7a705e8dd685d852acea6f415bdc5d02"
+    },
+    {
+      "path": "assets/art_library/items/might_tonic.svg",
+      "bytes": 2594,
+      "sha256": "acb2c11aaa8cd374f8397763ec420ca4ccd7576551285f396e204a5be9ae8459"
+    },
+    {
+      "path": "assets/art_library/items/occultist_armor.svg",
+      "bytes": 714,
+      "sha256": "b103c4a5a0a915d90e0fd50d12658dca2efc033ba535aeea0a0e3bdadf3052d3"
+    },
+    {
+      "path": "assets/art_library/items/occultist_epic.svg",
+      "bytes": 7325,
+      "sha256": "93b3711cb559c922c29c84154e838ec8b5f5df24b00d96faf373761468130fe4"
+    },
+    {
+      "path": "assets/art_library/items/occultist_faction_armor.svg",
+      "bytes": 714,
+      "sha256": "0cce2aedcca792e2950ecf47391ef446f22150d50348ed144bfe50a449dfe181"
+    },
+    {
+      "path": "assets/art_library/items/occultist_focus.svg",
+      "bytes": 7751,
+      "sha256": "cc8cbadcdac8ff3d3c55539ca9f32e1654c672d35e76c468aabd51f467de9f16"
+    },
+    {
+      "path": "assets/art_library/items/occultist_legend.svg",
+      "bytes": 5159,
+      "sha256": "a5774d211ebe5c1b5ca6924e579bea7d7d069ad1f9d18e649387fe1d6902f529"
+    },
+    {
+      "path": "assets/art_library/items/occultist_plaguestaff.svg",
+      "bytes": 8299,
+      "sha256": "c16934b9d00efbc686eb28854ef4a6c4507e06723a505d57e355659ad046cd76"
+    },
+    {
+      "path": "assets/art_library/items/occultist_relic.svg",
+      "bytes": 2035,
+      "sha256": "b22bef796613578c9e3e98394b889a93fe7b94e5fab417800e33e3bc35546c44"
+    },
+    {
+      "path": "assets/art_library/items/occultist_relic_armor.svg",
+      "bytes": 714,
+      "sha256": "b5d3e8dd6daccb51309c852cb3226b26eab45a07af0fe28489e2a53af05e2674"
+    },
+    {
+      "path": "assets/art_library/items/occultist_severed_litany.svg",
+      "bytes": 2000,
+      "sha256": "1d0f7d373184dbe0b2cde4d3cf4b9fc0807261ca7e3291ba527b4046d76af219"
+    },
+    {
+      "path": "assets/art_library/items/occultist_sigil.svg",
+      "bytes": 1747,
+      "sha256": "7239b246f16d63b6000890065154c9a08e7ec663645c758480965e9b26f0ba9c"
+    },
+    {
+      "path": "assets/art_library/items/occultist_staff.svg",
+      "bytes": 7325,
+      "sha256": "f048c3289a0c6e2972bd9cc3e3153d739e8e2796981c28533a411949007ff3a0"
+    },
+    {
+      "path": "assets/art_library/items/oleander_trophy.svg",
+      "bytes": 886,
+      "sha256": "de64045709622576096aaaea5c716144d683d8d7a3a59adacb64a75cfe4b4496"
+    },
+    {
+      "path": "assets/art_library/items/outlaw_tally.svg",
+      "bytes": 2028,
+      "sha256": "47cf556b0f7beda8187d11f9545bb7bde5c3a2948bb05d82bbcb217cf0d42fe6"
+    },
+    {
+      "path": "assets/art_library/items/ranger_armor.svg",
+      "bytes": 6398,
+      "sha256": "6444a5f23d3b0b295cacb2b885934b3c50ffb311c925803460f9f96ece77cb23"
+    },
+    {
+      "path": "assets/art_library/items/ranger_bow.svg",
+      "bytes": 3113,
+      "sha256": "86ec16abb2a424b3ffb1f53f6041747190a2918b9ea0b5cde4293b07cf88d693"
+    },
+    {
+      "path": "assets/art_library/items/ranger_chitin_lens.svg",
+      "bytes": 1988,
+      "sha256": "3a7b25f86c43c3c53d1d6c5d0eadb3689da014ee94867e42bb3aad1b3a4555fa"
+    },
+    {
+      "path": "assets/art_library/items/ranger_common_armor.svg",
+      "bytes": 675,
+      "sha256": "41a5f806a7b222a62924322995160c23242dab399030a55424fd340acfb6d796"
+    },
+    {
+      "path": "assets/art_library/items/ranger_epic.svg",
+      "bytes": 3113,
+      "sha256": "980a38d68c41f05ff7b7bb11c43151fa814963eb97a8f9ea58451a5963dfca91"
+    },
+    {
+      "path": "assets/art_library/items/ranger_legend.svg",
+      "bytes": 2378,
+      "sha256": "e2acaad00e4d69e38d483a009b70fcc1e7aad6d26a5e3fb7c06f3208d057a741"
+    },
+    {
+      "path": "assets/art_library/items/ranger_relic.svg",
+      "bytes": 1830,
+      "sha256": "0ddd3b3ed152e4f1a97d60e0f2144ab05faf7c62e3dd395bcbf7796448e3effc"
+    },
+    {
+      "path": "assets/art_library/items/ranger_relic_armor.svg",
+      "bytes": 675,
+      "sha256": "8fbef79f7037af283037e8d5604728d69a4969b56e6af8f7c21d6f4b71a507c8"
+    },
+    {
+      "path": "assets/art_library/items/ranger_sight.svg",
+      "bytes": 1726,
+      "sha256": "98db8d5d5cfa7fe897bcafc6ea7e967f147abe7ff3e4025743cc76d0709451fb"
+    },
+    {
+      "path": "assets/art_library/items/ranger_venombow.svg",
+      "bytes": 4087,
+      "sha256": "551f3575f4003a3c21db93fe806f5312f6dcfacd2cffb808c36e3ae45618f8e9"
+    },
+    {
+      "path": "assets/art_library/items/roadward_seal.svg",
+      "bytes": 1972,
+      "sha256": "aed9cb6791416a6d7101c64a0634c097540f4148c3d8337d640bfa8351b1ddca"
+    },
+    {
+      "path": "assets/art_library/items/sheets/ink_loot_01.png",
+      "bytes": 3088309,
+      "sha256": "b45badfbdf8634493da4959f12534636d8f7eff56928f4107b9421e295b67e62"
+    },
+    {
+      "path": "assets/art_library/items/sheets/ink_loot_02.png",
+      "bytes": 2982683,
+      "sha256": "1efbab14553aeb9e7e345653f3bdcf42c0f74063cebe79273b68651c547f971b"
+    },
+    {
+      "path": "assets/art_library/items/sheets/ink_loot_03.png",
+      "bytes": 2724816,
+      "sha256": "b727b0eaea3ca6b404d04ed043f98dadd43ec67b7a25d0a9014ebabb87ba4ba4"
+    },
+    {
+      "path": "assets/art_library/items/sheets/ink_loot_04.png",
+      "bytes": 2806672,
+      "sha256": "5d2e9e84eff43d534934769dc5c12f7ffcd19e819e671ff9101523711ac68877"
+    },
+    {
+      "path": "assets/art_library/items/solace_potion.svg",
+      "bytes": 2594,
+      "sha256": "6054dde90108def4804ec540c0a262e21f55b81da0cd775e7bb207066165890a"
+    },
+    {
+      "path": "assets/art_library/items/son_trophy.svg",
+      "bytes": 869,
+      "sha256": "78257f14191c26aa7f6a0164f8d462dfe8744646270d74bc1008c1ffcefde478"
+    },
+    {
+      "path": "assets/art_library/items/storm_lance_scroll.svg",
+      "bytes": 6743,
+      "sha256": "97d7618069268f9f839e2193a87fdca8d4723923bf061467378ab1dd9fd5e579"
+    },
+    {
+      "path": "assets/art_library/items/sunfire_scroll.svg",
+      "bytes": 8330,
+      "sha256": "475e0d8771df5d46cfdc4ddc80d266301494ce0af2b892cfcce679556918e3c5"
+    },
+    {
+      "path": "assets/art_library/items/trail_food.svg",
+      "bytes": 2063,
+      "sha256": "98b921da02a441a0e05743725cb5b90970dc11f4a37705b9378a779af3ab6288"
+    },
+    {
+      "path": "assets/art_library/items/venom_heart.svg",
+      "bytes": 2715,
+      "sha256": "597ea57719757cb00a4d8b751dad4039a360ce459d4d4e3b2a9d74fb7c01a467"
+    },
+    {
+      "path": "assets/art_library/items/vitality_locket.svg",
+      "bytes": 1830,
+      "sha256": "76db97300236978e514d25792903075fdadfd085e7036d6f3b4bdb64d52c43aa"
+    },
+    {
+      "path": "assets/art_library/items/ward_tonic.svg",
+      "bytes": 2594,
+      "sha256": "8666e736feb02ce749cec00785da76e0afd61fa4a06b3c68d6d04d7da2d2b06c"
+    },
+    {
+      "path": "assets/art_library/items/warden_armor.svg",
+      "bytes": 675,
+      "sha256": "953e21347c2249235f47bc7c823f26bef26ad1ea52e5d50a65822a9bdd2e4d63"
+    },
+    {
+      "path": "assets/art_library/items/warden_bastion.svg",
+      "bytes": 2113,
+      "sha256": "bffcc6257891cc66914dde8a09b41024706f472d2784c15398b9f60be938c66d"
+    },
+    {
+      "path": "assets/art_library/items/warden_epic.svg",
+      "bytes": 4436,
+      "sha256": "ec320f7d47d270aa2c0838f2aef1645f4266077aa7b7c128a8848efd89e1aaa3"
+    },
+    {
+      "path": "assets/art_library/items/warden_faction_armor.svg",
+      "bytes": 675,
+      "sha256": "a3e974d1f400a625de162923a5f2c3d8111a3935d6f63beb8f77fad5e0a97029"
+    },
+    {
+      "path": "assets/art_library/items/warden_frostblade.svg",
+      "bytes": 5410,
+      "sha256": "e0aa213adbade2010260e06e6c9ca12460233c289a6c82333e21c34d5710594e"
+    },
+    {
+      "path": "assets/art_library/items/warden_gravewatch.svg",
+      "bytes": 2399,
+      "sha256": "51689b7961b41af2cbdfbe2cb998bed097d6298f0123445df68f9f5f37f584df"
+    },
+    {
+      "path": "assets/art_library/items/warden_legend.svg",
+      "bytes": 6536,
+      "sha256": "419c1e78be84d2bc7368afbcb8c6b007711739a76ab2892a8b628634dffb8f23"
+    },
+    {
+      "path": "assets/art_library/items/warden_relic.svg",
+      "bytes": 1741,
+      "sha256": "2a009f51386973f56fddf7ba7ab813613389d7b1f98531afe7bca9fea80cd6b1"
+    },
+    {
+      "path": "assets/art_library/items/warden_relic_armor.svg",
+      "bytes": 675,
+      "sha256": "dd333996b13fbe46f746beaaeb16cb10bb147bf0baa43839460da4f075133556"
+    },
+    {
+      "path": "assets/art_library/items/warden_shield.svg",
+      "bytes": 4031,
+      "sha256": "6f5f54a382e3d18be31e0ae3e43e25177cdeec6c8027e648a13b1fdb777b16fd"
+    },
+    {
+      "path": "assets/art_library/items/warden_sword.svg",
+      "bytes": 4436,
+      "sha256": "0ca9f287985c872be261eb9dcd6dc062d66228fc4b03dd4ec25183ba2e6637b2"
+    },
+    {
+      "path": "assets/art_library/items/warding_eye.svg",
+      "bytes": 2035,
+      "sha256": "40f68707e488270c479832d2cb1b9b62010170d06b4076baf43fbf71490fa478"
+    },
+    {
+      "path": "assets/art_library/items/winter_shard.svg",
+      "bytes": 3009,
+      "sha256": "5bcad88094509d6dc21b794910f2668053b887a28831bbc0a532560552d32cd6"
+    },
+    {
+      "path": "assets/art_library/party_builds/crusader.png",
+      "bytes": 2326450,
+      "sha256": "b52667202d9f1d7b21cdcf3c0fcc7ff708fd69d4da6b8cad45ea1269187fe5ca"
+    },
+    {
+      "path": "assets/art_library/party_builds/occultist.png",
+      "bytes": 2504750,
+      "sha256": "b9970181ffdd103f314b638c5b86f70df68102fe6938d3d8f6cc928cb661b67c"
+    },
+    {
+      "path": "assets/art_library/party_builds/ranger.png",
+      "bytes": 2113029,
+      "sha256": "6f2cdc952ad143f53ec39923abf0e306655d2ba2fa84f280587d3b125c1c6972"
+    },
+    {
+      "path": "assets/art_library/party_builds/warden.png",
+      "bytes": 2657941,
+      "sha256": "f097c9c7e86eb9ff2b002fe4df8c2c39223a69673237a03212847362bb97a0c2"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/apothecary/background.png",
+      "bytes": 145941,
+      "sha256": "a08f0b3fe20e75efae9ec5d3003fce5df082287ac3f5e3b632e2e78bf5d7723e"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/apothecary/doorway.png",
+      "bytes": 539611,
+      "sha256": "6c141574a389870ae992f04198ddcd5d49599c4c1202e85d6444f177d6b40978"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/apothecary/foreground_bottom.png",
+      "bytes": 49576,
+      "sha256": "104842312a6bd21a45ef84e6238590c2ba0f7e276358ef4e5616e268976f4077"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/apothecary/foreground_top.png",
+      "bytes": 97740,
+      "sha256": "9be41b3982c8193e7e63583e7ad6f3bc4a8b7e93b4541de7e2dd0ad7979d542b"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/apothecary/midground.png",
+      "bytes": 278083,
+      "sha256": "65a0476f67ce5d3b6d3bf268a9eb76daf060acbe92d0efef9815703cd0be9e0a"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/apothecary/wall_01.png",
+      "bytes": 465219,
+      "sha256": "e46fc092f32b9f5a4420019e495becce9100b09673db1b62179351a30ef1487b"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/apothecary/wall_02.png",
+      "bytes": 556769,
+      "sha256": "827c63e09f41394df0dd84a3176b55b5cd2c0fa6b0dd2fa249d279f01c6f77c1"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/apothecary/wall_03.png",
+      "bytes": 524511,
+      "sha256": "0a03ac1cf7659ca2872e26aa1fca84cf9dd1aae4a0ad58ffc9edef292fd82d3f"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/apothecary/wall_05.png",
+      "bytes": 526200,
+      "sha256": "79f4158f5b0393ae5786c479c9b4dd6afc0263094cd8455027c9a360d5e306ca"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/apothecary/wall_06.png",
+      "bytes": 575453,
+      "sha256": "02ea5f174d696e4b17add164bc1559887b103877e1680e5c3c299ade96ca10f8"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/apothecary/wall_07.png",
+      "bytes": 357879,
+      "sha256": "550f1bfafa03f913eb40543de363c4525631eb36673a3540e4b102261552dade"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/keep/background.png",
+      "bytes": 90757,
+      "sha256": "f06fe5bb232ea951de922c2a903ce680281663a06f822a3aba71de4829994c01"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/keep/doorway.png",
+      "bytes": 528590,
+      "sha256": "1691bd359690ccaa9bc14fe4bcaa205f868edaaca7a4540365289b807763e701"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/keep/foreground_bottom.png",
+      "bytes": 44382,
+      "sha256": "e123d86745b7c1d29528383c413adeb5e29d4fa40388ed6094c84cca16b3537d"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/keep/foreground_top.png",
+      "bytes": 60969,
+      "sha256": "2cc95aab0ffba901a5f14a8d8c790145c2419f0e88050053ce22e83600b561c9"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/keep/midground.png",
+      "bytes": 58591,
+      "sha256": "d955d3050d0cc88dcb951c72f94fa3721bf92bcdd4026d402ec644be64514618"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/keep/wall_01.png",
+      "bytes": 673912,
+      "sha256": "fe8fe13ae468793519f7006618c7086f0336bf15356170fd79ad9d7630d5766b"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/keep/wall_02.png",
+      "bytes": 700985,
+      "sha256": "c55da89af02347236f850e5cca56e9fcfb1bb3b392783439f2ef731f5945e654"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/keep/wall_03.png",
+      "bytes": 701192,
+      "sha256": "3c05bf629442092d469248e1a18013db9b7d4592617c8aae39bebb487743ca96"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/keep/wall_04.png",
+      "bytes": 573686,
+      "sha256": "bb5b9707daa2e90a23c334746dd3d23c132d5fb0cc61b42588e1ceb84136e3ca"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/keep/wall_05.png",
+      "bytes": 641914,
+      "sha256": "cf75aec69bf1e3e77400db3f0ee8db66a04fe2872fd1937603eafc7d551dab42"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/keep/wall_06.png",
+      "bytes": 726620,
+      "sha256": "9b93bfb6d2d3da6b796a9757784ab752de291fe7af016ef07dafcb55f4df92db"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_1/background.png",
+      "bytes": 296375,
+      "sha256": "0481d5bbbdceca85dcb13a0f6a12b31e2145227d029916b90ae3900b4d3766e4"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_1/doorway.png",
+      "bytes": 372325,
+      "sha256": "ae2c961947988319e29b029c09a12b8dbc14b522284c4ca63f5cfb1d238051db"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_1/foreground_bottom.png",
+      "bytes": 77460,
+      "sha256": "cd40b899a25ae6ec9fc3dbe69f96c30787db6e1e7cc2ad14d13578072ef751b6"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_1/foreground_top.png",
+      "bytes": 97911,
+      "sha256": "2697494ddab7a2d2d30025f1d07bf007e688281098efab2dc6d7d56cb0adb2bc"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_1/midground.png",
+      "bytes": 208727,
+      "sha256": "138fc375fe5af54449543ac1513fb0e97ba8c6660b4f6acf60fbb9c91a694a64"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_1/wall_01.png",
+      "bytes": 328605,
+      "sha256": "eb1d575727a2da834602dfe8d67689516f216c4d31ae5d8dce8dd40e335bef8c"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_1/wall_02.png",
+      "bytes": 403831,
+      "sha256": "1e4cc52abd190aa4e352c585cfe1894cd355e94a28dc015b5683b7e05feeb432"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_1/wall_03.png",
+      "bytes": 502324,
+      "sha256": "71e7e7440a970543592820b604cf3becf47ef51904ec3ffcdb0ed79d45debe04"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_1/wall_04.png",
+      "bytes": 507753,
+      "sha256": "681b7809c0fb5aa897a4a0b75f0e40a323632983a1171a3b099ba5615763ba62"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_1/wall_05.png",
+      "bytes": 406147,
+      "sha256": "b97120aa95c493d2886d68f3f8df6b060c8f7f0613ce967538335e1c6dba9b52"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_2/background.png",
+      "bytes": 329630,
+      "sha256": "bdf486a87b07c5e6c72aa9e417309d2c4d1cfd5d4402c891a80ad6fa4fd8f681"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_2/doorway.png",
+      "bytes": 372325,
+      "sha256": "b60987fc3445909a090746913ccf2ec8eebdd91fae460900b815aaed2b923537"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_2/foreground_bottom.png",
+      "bytes": 77460,
+      "sha256": "cd40b899a25ae6ec9fc3dbe69f96c30787db6e1e7cc2ad14d13578072ef751b6"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_2/foreground_top.png",
+      "bytes": 97911,
+      "sha256": "2697494ddab7a2d2d30025f1d07bf007e688281098efab2dc6d7d56cb0adb2bc"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_2/midground.png",
+      "bytes": 254386,
+      "sha256": "ef5246848db67af54e3420c59fe1f8110cd108d113a01ab4c35c90d0e447395a"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_2/wall_01.png",
+      "bytes": 379740,
+      "sha256": "cdf6db9cba9657453dc14a510be128cc847e5d4a2da9f46a6410f4eefa7d42db"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_2/wall_02.png",
+      "bytes": 476184,
+      "sha256": "536570159466001e099a394bc4955139ef601d62772778e44904240c31afdc9b"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_2/wall_03.png",
+      "bytes": 632125,
+      "sha256": "438eed9f0a01df87f7680c357b35fb34f6c41ab99c70fa46a28561596831d5e6"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_2/wall_04.png",
+      "bytes": 599483,
+      "sha256": "3bc48da10ac6748c77c792bd5baf067b90a9f554f1b8f97c172acaec0da1df74"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_2/wall_05.png",
+      "bytes": 511799,
+      "sha256": "eaf3df1e3046893ccde599f8ff3beffa32de46175cb3c9b91c64a4d786375072"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_3/background.png",
+      "bytes": 374530,
+      "sha256": "fc6db8611a357d35478e7c596ea864035717ff12c4771a615cf413d541688ef8"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_3/doorway.png",
+      "bytes": 636205,
+      "sha256": "04f815f0c9cbf7c3f673fd41d5acd19da67827267aed805324f13de4fd585a61"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_3/foreground_bottom.png",
+      "bytes": 141859,
+      "sha256": "3b9a0942749cd1636a8b41c60b3f34849dc402dec220e672d8d302334b696b92"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_3/foreground_top.png",
+      "bytes": 86797,
+      "sha256": "84605d4eda07b2e663ae7928e720744ab22899515d8d2bc420bd4c759e74d986"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_3/midground.png",
+      "bytes": 512144,
+      "sha256": "b35d8b2050dc7c7f3007e489f4187c8d7cf6e3e6d4e094b5aeb534b0fd650136"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_3/wall_01.png",
+      "bytes": 457777,
+      "sha256": "9f2ca564cff9243f0fc4e42c5fc059e4e60f04359849f554102407228e936bf8"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_3/wall_02.png",
+      "bytes": 517859,
+      "sha256": "446eede6872c5214cf19bc41b5cb6cac9e1cff0d663635d81866897119fc5579"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_3/wall_03.png",
+      "bytes": 457001,
+      "sha256": "390ed320475189f65f6852adf4ac2ed56c6cd0707361e43b892ed4f02b41bcdf"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_3/wall_04.png",
+      "bytes": 530142,
+      "sha256": "0aa1cb968c7e0e141be15fff84c033a53bfd14f4b835c164cb9927627c881f93"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/remade_floor_3/wall_05.png",
+      "bytes": 523572,
+      "sha256": "8f81c24370d400cd60e317b15cddbf177af3c6b3fefe717ca6c6ac18cec70a85"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/village/background.png",
+      "bytes": 134632,
+      "sha256": "81da0223cada203d80b18e30db0b8afb2d2de4f3ee09b8a3adec5712c2f77482"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/village/doorway.png",
+      "bytes": 660060,
+      "sha256": "f45d1503a1fbfd5e7ef872b776508b90f55e815e7916c049d0135a75a421591a"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/village/foreground_bottom.png",
+      "bytes": 54729,
+      "sha256": "a3de97b998df82906903621c06b5ef0bbb7d485d50e21e76679d39bcf6196018"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/village/foreground_top.png",
+      "bytes": 12894,
+      "sha256": "7df72ca03980de7fe67051fd6057c5f1606c574681df9b7addb05cfd322f922f"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/village/midground.png",
+      "bytes": 83299,
+      "sha256": "6a54d243d95562f81557b815975515e0f44afe0f2b9c961b14836474b934fd6b"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/village/wall_01.png",
+      "bytes": 626000,
+      "sha256": "542c7b857990bdc55aeb7b4bf77717e85ac853b6427ffd31f17168f2199abbfd"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/village/wall_02.png",
+      "bytes": 557878,
+      "sha256": "0222935b479714297ae19e77ad0c8d06038b2fa598dfc17a8bd80d78bfadfb8a"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/village/wall_03.png",
+      "bytes": 624436,
+      "sha256": "e19a8ea0b4b3049d67b2d99713415467361800aab80da03de57f5e024dbe8c31"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/village/wall_04.png",
+      "bytes": 736065,
+      "sha256": "0493706cf32168a340ac3cea12a8f4f52dd34903fe8c30b77d94a9ea796c8b00"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/village/wall_05.png",
+      "bytes": 618133,
+      "sha256": "170e4e7e2c223a7218500329cf04c238737091eb07720b430a649ff01bf703c8"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/village/wall_06.png",
+      "bytes": 537056,
+      "sha256": "2fa8e022bbd0a1bdc7a8305d7724ebf8913bc459f169e8cf8e353f36fe774e6a"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/village/wall_07.png",
+      "bytes": 602563,
+      "sha256": "e7f70ffe293d8820d70f4f2fbcb76ee93a480060caf779c1872fd5fbf1571317"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/village/wall_08.png",
+      "bytes": 587279,
+      "sha256": "ddf7120694df08cce7df413538070ee296bc9209eb3c41c32bf20b46b5d60bf3"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/village/wall_09.png",
+      "bytes": 483528,
+      "sha256": "c3235df66f2532e69b898876adab615f321370578ca13f6be9f0a5cb6a4e4eb5"
+    },
+    {
+      "path": "assets/art_library/presentation/dungeons/village/wall_10.png",
+      "bytes": 598218,
+      "sha256": "6edb5516fedd1d3c08750878b4adc8d95f6c818d0adea3a2f288e1d5cdd4465e"
+    },
+    {
+      "path": "assets/art_library/presentation/expedition/estate_map.png",
+      "bytes": 2813913,
+      "sha256": "ddb9d013a16554923182d8dede874e4b8a65151112b8f55d72ff5865f11c0c8a"
+    },
+    {
+      "path": "assets/art_library/presentation/fx/blood_splatter_atlas.png",
+      "bytes": 42964,
+      "sha256": "d525bb89a9cf75ae8d98e86af1d97e636c0e376378d22f1ef6dbc55be5982859"
+    },
+    {
+      "path": "assets/art_library/presentation/guild_hall/banner.png",
+      "bytes": 2732836,
+      "sha256": "3194ac4fb1de633e0f9a8cdd5f95081b2eeecd8836de8ce95cc128abbab54774"
+    },
+    {
+      "path": "assets/art_library/presentation/guild_hall/decor.png",
+      "bytes": 2740225,
+      "sha256": "703679cf8d7cad5b674bb65383c4e55d0b1998ca12817218c992223bc0090b2f"
+    },
+    {
+      "path": "assets/art_library/presentation/guild_hall/interior.png",
+      "bytes": 2421902,
+      "sha256": "a8ea5fce4162a8ae4f8edf9d4ef8c12ec97441cd5b045ce12e95926d136d85dc"
+    },
+    {
+      "path": "assets/art_library/presentation/rooms/bandit_camp.png",
+      "bytes": 2092757,
+      "sha256": "4d195fd8c478de488e5c850982b99505d8adac6089111f506a1cbbe37fc42f97"
+    },
+    {
+      "path": "assets/art_library/presentation/rooms/bandit_combat.png",
+      "bytes": 2226842,
+      "sha256": "a33b62e12be3bc5d8984a89aba34a89df384244b08423787ea69d36c51cdd011"
+    },
+    {
+      "path": "assets/art_library/presentation/rooms/beast_camp.png",
+      "bytes": 2264017,
+      "sha256": "89544be3f37c91f83577645d80a142aa556d566dfe071aefdb157a5b2dab390c"
+    },
+    {
+      "path": "assets/art_library/presentation/rooms/beast_combat.png",
+      "bytes": 2368108,
+      "sha256": "5841be231955800f403edca442ca9b2b757565fa02d8b2e5dc82a7f1289f1ec5"
+    },
+    {
+      "path": "assets/art_library/presentation/rooms/keep_camp.png",
+      "bytes": 2103596,
+      "sha256": "e8e75821bcb74b9ca412c7d152a3030d24efea641884ad46913683c104fea2cb"
+    },
+    {
+      "path": "assets/art_library/presentation/rooms/keep_combat.png",
+      "bytes": 2140972,
+      "sha256": "8da86a2b894cbb570043aa48daf8f96674e65fb8e486cce74dd5536547817ce4"
+    },
+    {
+      "path": "assets/art_library/presentation/rooms/medical_camp.png",
+      "bytes": 2088740,
+      "sha256": "772ec136f1dd6765a27fda41d3c4213671ae2d8607cdcb9902ae1bbcbdf68a17"
+    },
+    {
+      "path": "assets/art_library/presentation/rooms/medical_combat.png",
+      "bytes": 2365068,
+      "sha256": "25e169124e702de138738c1e2032b99a1f126009c290fa74768fac31cf4fb988"
+    },
+    {
+      "path": "assets/art_library/presentation/settlement/apothecary_attendant.png",
+      "bytes": 313581,
+      "sha256": "15821ccbf47f028831b7eabfbb1aab48d84011e25b1106c5e571b9d6b71d0ab7"
+    },
+    {
+      "path": "assets/art_library/presentation/settlement/barracks_attendant.png",
+      "bytes": 457492,
+      "sha256": "b363e0b27df7f2e0658112805c95f2fd04706f5e8a74931a55e0db2e667c0359"
+    },
+    {
+      "path": "assets/art_library/presentation/settlement/barracks_interior.png",
+      "bytes": 2508170,
+      "sha256": "e85529822d32981831f0a76260ebe7f66452a7fc7061335bd04780bc6916730d"
+    },
+    {
+      "path": "assets/art_library/presentation/settlement/chapel_attendant.png",
+      "bytes": 366704,
+      "sha256": "9095ff4e4eb56edddb0cc7e8d5bdad89abf19cfbd800ca5c01d7458c0ac08694"
+    },
+    {
+      "path": "assets/art_library/presentation/settlement/chapel_interior.png",
+      "bytes": 2476045,
+      "sha256": "26da281506a6b95c696debbf149b250a60a874358a4a2e5837f0995c61d8cc3e"
+    },
+    {
+      "path": "assets/art_library/presentation/settlement/forge_attendant.png",
+      "bytes": 453342,
+      "sha256": "8c486ec46c90e63665a6b2437e14a0cf3e71523c19740f6f4e8a4a22e4c60a71"
+    },
+    {
+      "path": "assets/art_library/presentation/settlement/merchant_attendant.png",
+      "bytes": 296980,
+      "sha256": "947784b7e17bb3c1ec3f000c6ab55667f58042b608520caace54070dd66b71f1"
+    },
+    {
+      "path": "assets/art_library/presentation/settlement/path_seal.png",
+      "bytes": 30851,
+      "sha256": "1784489da35c2a9bb935c542a98b2cedeea2527caa027ed1c0d95e05eef7a259"
+    },
+    {
+      "path": "assets/art_library/presentation/settlement/sealed_seal.png",
+      "bytes": 31026,
+      "sha256": "9450ed3e24e6ececc94e194ce66f74e93a730f767bfb4e49a76e9526722c39d7"
+    },
+    {
+      "path": "assets/art_library/presentation/settlement/village_seal.png",
+      "bytes": 19215,
+      "sha256": "6eba6c784429bf4e92fdee902db2d4f85933c0f9eb4f9a5828a3ef7e3f60677c"
+    },
+    {
+      "path": "assets/art_library/presentation/settlement/workshop_attendant.png",
+      "bytes": 231410,
+      "sha256": "1dafc48066111cb9af983177859d662162fbb8345f1eb92010c2f07912710b4e"
+    },
+    {
+      "path": "assets/art_library/presentation/settlement/workshop_interior.png",
+      "bytes": 2700607,
+      "sha256": "43ab4575093de1586dea715092497565c0e2d0cd1ab8c14b0ddf2287e5846063"
+    },
+    {
+      "path": "assets/art_library/presentation/ui/attack_banner.png",
+      "bytes": 57614,
+      "sha256": "618636fd19366782dc08e5385444061b2fb83851e90d637b2815d50bc28840ac"
+    },
+    {
+      "path": "assets/art_library/presentation/ui/map_backing.png",
+      "bytes": 76448,
+      "sha256": "19a9096459832fef596938d2ad3d02907f1af1e07bab0d74b891c2f04113032e"
+    },
+    {
+      "path": "assets/art_library/presentation/ui/panel_frame.png",
+      "bytes": 56403,
+      "sha256": "f41029cfb2818878731dbd590259966c9716e6607bd5686157bb0284c79ee393"
+    },
+    {
+      "path": "assets/art_library/presentation/ui/status_bleed.png",
+      "bytes": 2153,
+      "sha256": "899b576c50ea46cf697040765ef6758e070ce3b85447b5d5eacc38837660c400"
+    },
+    {
+      "path": "assets/art_library/presentation/ui/status_burn.png",
+      "bytes": 809,
+      "sha256": "50fa7565ffd3422d75e333d9d8e8f08b439dfa6f6f623d9ddecd80f9b3083305"
+    },
+    {
+      "path": "assets/art_library/presentation/ui/status_poison.png",
+      "bytes": 2155,
+      "sha256": "9882155008e1727f3f831ff594e455d9cf43bc99fe62fa4444666bf24dc97531"
+    },
+    {
+      "path": "assets/art_library/skills/hl_blessing.svg",
+      "bytes": 508,
+      "sha256": "29e9d42a6b773c1d137ed81d3bdea37fc4924d9f3f87d84c70ece28aaed642af"
+    },
+    {
+      "path": "assets/art_library/skills/hl_mend.svg",
+      "bytes": 474,
+      "sha256": "c6d90528905aeed21805bfdd36a8e6c250e8da1dc17af96ec1cd91971989d18f"
+    },
+    {
+      "path": "assets/art_library/skills/hl_smite.svg",
+      "bytes": 419,
+      "sha256": "123a00a7a0dbf19dbc455dac2c0b16b1d4e94cc6bbd117d8f277f82cb8a9e92d"
+    },
+    {
+      "path": "assets/art_library/skills/hl_solace.svg",
+      "bytes": 508,
+      "sha256": "29e9d42a6b773c1d137ed81d3bdea37fc4924d9f3f87d84c70ece28aaed642af"
+    },
+    {
+      "path": "assets/art_library/skills/hl_turn.svg",
+      "bytes": 501,
+      "sha256": "c6178ccc853a2140014aa7ed75a58629d8343da414c435cd5f126d17fd33433f"
+    },
+    {
+      "path": "assets/art_library/skills/hl_ward.svg",
+      "bytes": 483,
+      "sha256": "1620a5e7c1c61d89c6e505150f7bec472cdfe51b7e79a6c51f094180881cf133"
+    },
+    {
+      "path": "assets/art_library/skills/oc_blast.svg",
+      "bytes": 467,
+      "sha256": "59e329d92ccd6e0caad7a190838054f5ef289ae957683a4f9314f5e7b9df6b8a"
+    },
+    {
+      "path": "assets/art_library/skills/oc_drain.svg",
+      "bytes": 474,
+      "sha256": "5d355cdd582b82b577e8bf7d66a0b502e726f785c35b8f0840d4ffc9f166f0f5"
+    },
+    {
+      "path": "assets/art_library/skills/oc_hex.svg",
+      "bytes": 482,
+      "sha256": "20deb6d28408397f1b3e2c5edce39187567cde5298474b1fd013488464b83a04"
+    },
+    {
+      "path": "assets/art_library/skills/oc_veil.svg",
+      "bytes": 447,
+      "sha256": "b1374af82b94671e54b0596756a32f4e024fa879f2661fd6e204e38ca2c7c0bc"
+    },
+    {
+      "path": "assets/art_library/skills/oc_weak.svg",
+      "bytes": 543,
+      "sha256": "5c21325ab2cd2ca2b66e9d4160c984887ad5392e3ce1a8340b02c11d00eae7f0"
+    },
+    {
+      "path": "assets/art_library/skills/painted_skills.png",
+      "bytes": 2684120,
+      "sha256": "fc4b2f8d79259732342ad52db6e3caea1c34deae959e5dd4c1e8ad42f0c8dca6"
+    },
+    {
+      "path": "assets/art_library/skills/pc_charge.svg",
+      "bytes": 444,
+      "sha256": "56fc8f265ccc0245ea096ab8cf3d9bbd2b9752cd9c08fac78a6062f193d2943d"
+    },
+    {
+      "path": "assets/art_library/skills/pc_guard.svg",
+      "bytes": 444,
+      "sha256": "56fc8f265ccc0245ea096ab8cf3d9bbd2b9752cd9c08fac78a6062f193d2943d"
+    },
+    {
+      "path": "assets/art_library/skills/pc_pain.svg",
+      "bytes": 474,
+      "sha256": "f2f72828e627a169e9576bcdf4e18fdd9692111db4b50c3f00f2de2bc736de95"
+    },
+    {
+      "path": "assets/art_library/skills/pc_strike.svg",
+      "bytes": 522,
+      "sha256": "20f3f91cafb8ee8119bd7fcd1be3e4e73de98aef719a2b059cd6ecba553866a5"
+    },
+    {
+      "path": "assets/art_library/skills/pc_verdict.svg",
+      "bytes": 628,
+      "sha256": "27884f1bf0f1e85c6f666d1e457efec4f97d8d2c2772df94af8ee29629df9805"
+    },
+    {
+      "path": "assets/art_library/skills/rg_dodge.svg",
+      "bytes": 443,
+      "sha256": "4d064a638791f70cad3dd63b353ce7b66587332d40abaa70205988346cb5fa47"
+    },
+    {
+      "path": "assets/art_library/skills/rg_mark.svg",
+      "bytes": 498,
+      "sha256": "f009a532aa3ab6039a8de4057a03a19d9e903647b0076394c87af192ac71a106"
+    },
+    {
+      "path": "assets/art_library/skills/rg_pierce.svg",
+      "bytes": 521,
+      "sha256": "79aff9956b7f64264cf4e7bb37545e3ee1913787ca1d698fab6e95dc2399f21e"
+    },
+    {
+      "path": "assets/art_library/skills/rg_quick.svg",
+      "bytes": 445,
+      "sha256": "04ea583973cb09a437bc21f251e990c2505d7952c0883732b340ff0a0008d911"
+    },
+    {
+      "path": "assets/art_library/skills/rg_volley.svg",
+      "bytes": 536,
+      "sha256": "00ca4eb79cd1767982af2e692e737509778cd8c534ac7ef5bf904f0da5f3eeac"
+    },
+    {
+      "path": "assets/art_library/skills/wd_bash.svg",
+      "bytes": 535,
+      "sha256": "b50c58ead4bfdb91a09e885f875e343f51d6b39881324d67ba2e4a1b8965a50c"
+    },
+    {
+      "path": "assets/art_library/skills/wd_guard.svg",
+      "bytes": 483,
+      "sha256": "59880b844f92a627b4527065bdc2cac1a44342ac485cba80c314de179878f173"
+    },
+    {
+      "path": "assets/art_library/skills/wd_heavy.svg",
+      "bytes": 522,
+      "sha256": "1ff9f27786eaa05306a82d70bd3b9c9f8700a4c408c2b2a1816a1dd119cb615f"
+    },
+    {
+      "path": "assets/art_library/skills/wd_rally.svg",
+      "bytes": 450,
+      "sha256": "171694059838e656d944bdad2ef738463ec5ec61c817ab979ce3128cbb61b9ca"
+    },
+    {
+      "path": "assets/art_library/skills/wd_slash.svg",
+      "bytes": 416,
+      "sha256": "02b5894fcf65c4bf5de4f93c87a893bb83a45846a9ca25953759db9c3458181d"
+    },
+    {
+      "path": "assets/art_library/warden_outfits/ashen_wolf.png",
+      "bytes": 2465497,
+      "sha256": "ec61c2ae73bda1ee5deed2d18f0804c7798dcb1152816e2fefe390115e43d503"
+    },
+    {
+      "path": "assets/art_library/warden_outfits/original.png",
+      "bytes": 1974488,
+      "sha256": "aaa9f9db0d10c2126855770900d4a1e39feecf79b71a134d16aa476acdee2c83"
+    },
+    {
+      "path": "assets/ui/boss_chain_anchor.svg",
+      "bytes": 955,
+      "sha256": "3d07fc440429b77734659eb5059c3dfff7583177dc24d86245d52f41f690dab3"
+    },
+    {
+      "path": "assets/ui/boss_choir_idol.svg",
+      "bytes": 877,
+      "sha256": "6c646e0b64578938bb7acbfcf96ecb23ef9f1aa9b3125d4322c880536cd8fb81"
+    },
+    {
+      "path": "assets/ui/boss_ritual.svg",
+      "bytes": 915,
+      "sha256": "851a0edbdcbc6db12ad6db4bcc0c31de66f5c2dd0497605f10bceda893b811b3"
+    },
+    {
+      "path": "assets/ui/encounter_camp.svg",
+      "bytes": 402,
+      "sha256": "4d3b9ae7b214e5418ad0140a7f3068b2d6c95cc96d7e229183e064ee21470642"
+    },
+    {
+      "path": "assets/ui/encounter_door.svg",
+      "bytes": 419,
+      "sha256": "46eaf328ae9184ec1909b1155b924a748283b41bb8fca0a2455ff291d7edc039"
+    },
+    {
+      "path": "assets/ui/encounter_gold.svg",
+      "bytes": 478,
+      "sha256": "f124586f41fac3a89eecc3777f0ec488984983974143acfabe3909703894cb8d"
+    },
+    {
+      "path": "assets/ui/merchant_orb.svg",
+      "bytes": 620,
+      "sha256": "1df7ba8ccbc8eb1c33ecd7344e5e8f152154495ce3e5f820e50b7843d20586ba"
+    },
+    {
+      "path": "assets/ui/merchant_orb_pedestal.svg",
+      "bytes": 2286,
+      "sha256": "c9e3a8570d7662f2bd6ef15198a2f0be090e0948af187a0ea9b19f433061e24d"
+    },
+    {
+      "path": "assets/ui/status_bleed.svg",
+      "bytes": 213,
+      "sha256": "b6f172ef4429dcdce53aeccd56a4b9ff24be90fd4f8cdc29130bcf1a4ddabe9d"
+    },
+    {
+      "path": "assets/ui/status_burn.svg",
+      "bytes": 265,
+      "sha256": "1adcf43a45d4a6ad2d7c0b1a29b12e2a5b83aff37a3eb3dff7c2cf5acddabca7"
+    },
+    {
+      "path": "assets/ui/status_chill.svg",
+      "bytes": 316,
+      "sha256": "6f24ad1f43f1d0769f59348767aa1a52091c8cd9ccc2e361de90472a6665d32c"
+    },
+    {
+      "path": "assets/ui/status_poison.svg",
+      "bytes": 237,
+      "sha256": "f8a829725d9bfbc299fed2364a2f34185f6cd311006d684f36338bfa6dc78074"
+    },
+    {
+      "path": "assets/ui/threshold_bandit.svg",
+      "bytes": 769,
+      "sha256": "6aa9e221a91642b44087bb4ee5232420478c630f90bffe57955e05b86a3befc4"
+    },
+    {
+      "path": "assets/ui/threshold_beast.svg",
+      "bytes": 931,
+      "sha256": "4fcc87fcdefd603dfc58758afa76f7698a3fbfe6e5027ba4798b01dc3e03e00d"
+    },
+    {
+      "path": "assets/ui/threshold_keep.svg",
+      "bytes": 785,
+      "sha256": "3572c501d08a1bccf7f03e8d7abed58f3150bb39046a02c2eb68485d3ddb20d9"
+    },
+    {
+      "path": "assets/ui/threshold_medical.svg",
+      "bytes": 653,
+      "sha256": "10c93c0d24f9eaa5a7da9f323d4891ead080db6aaa73a40cb9cd21c62a9b5cfd"
+    },
+    {
+      "path": "docs/guild_hall/board.png",
+      "bytes": 468461,
+      "sha256": "d9fea1bc477764b5b6d55ddfee8d81313559ffd1e28af92b6fb32c020566bebe"
+    },
+    {
+      "path": "docs/guild_hall/customize.png",
+      "bytes": 446217,
+      "sha256": "f72989cebf2ffc09dc1557613ea1cb2351e59567dbb7f89f4d8660581b6c55fc"
+    },
+    {
+      "path": "docs/guild_hall/hall.png",
+      "bytes": 1556389,
+      "sha256": "69d0c96b5ddea271cbf03cb653f8d285b41afab153bd061ddb60bf761572c1fe"
+    },
+    {
+      "path": "docs/guild_hall/moonlit.png",
+      "bytes": 1489500,
+      "sha256": "4954b3962c3ccb5356f03c9df27fea8f21af562da8b1b2ea8088fe455c70a4db"
+    },
+    {
+      "path": "docs/guild_hall/settlement.png",
+      "bytes": 1305554,
+      "sha256": "b89c7b730def9981bb94a29f3cb7b536773a098997b6a6b9375d246c8d51d757"
+    },
+    {
+      "path": "docs/item_camp_art/camp-ready.png",
+      "bytes": 2045190,
+      "sha256": "d547edc44f8bad2c05ea06393bfa935899553e24e8001611d276e4e516dcd1ec"
+    },
+    {
+      "path": "docs/item_camp_art/inventory.png",
+      "bytes": 1180222,
+      "sha256": "34c05594744133161121fc078919e0152361d68ae35cbd4169fbb8dc3a117fd5"
+    },
+    {
+      "path": "docs/item_camp_art/merchant-consumables.png",
+      "bytes": 1513339,
+      "sha256": "0efbd5e098f2a33f75557073bb172fea14ac6e26d9ec939bfbeb73f4b8971c6e"
+    },
+    {
+      "path": "docs/quiet_hallway_motion/after.gif",
+      "bytes": 5735118,
+      "sha256": "045ed64212d2cf0471b982151071a2249308d1660ccf5247190ae121a57b32c3"
+    },
+    {
+      "path": "docs/quiet_hallway_motion/after.mp4",
+      "bytes": 4007162,
+      "sha256": "6f614b8c24bca90574bcde7717dc6d9ee0b5d28d3e82321165ec30d01206e723"
+    },
+    {
+      "path": "docs/quiet_hallway_motion/before.gif",
+      "bytes": 5778954,
+      "sha256": "c29e80b62c8ac9c670a96abcc80a87633c1677e8dc2f2c82ab786ff44af4bd2a"
+    },
+    {
+      "path": "docs/room_travel/entrance.png",
+      "bytes": 1481158,
+      "sha256": "032ce661a2f46bd05093de4e8772422f9cb8a3cfc90f8c0efa1ca9d41b5cc4b1"
+    },
+    {
+      "path": "docs/room_travel/fullscreen-event.png",
+      "bytes": 1239302,
+      "sha256": "ade00f50bc15c6674b9f048f1790e22ee7a85bad7b54ed7fbe0b06e98bb1caba"
+    },
+    {
+      "path": "docs/room_travel/fullscreen-outcome.png",
+      "bytes": 1268237,
+      "sha256": "a577209b930b545e2ec11652e0b174bd6c41dffa34c0c1e21558a54ebde032fa"
+    },
+    {
+      "path": "docs/room_travel/room-event-map.png",
+      "bytes": 379102,
+      "sha256": "801dc33710415c70de49f598805bbe33061896f6559bf06347819011d39bfada"
+    },
+    {
+      "path": "docs/room_travel/room-event-resolved.png",
+      "bytes": 384308,
+      "sha256": "f6eb62a3d7113315dc577846215e60e9a3ce847a3c8ed132c868b25003266e97"
+    },
+    {
+      "path": "docs/room_travel/standing-lineup.png",
+      "bytes": 1512211,
+      "sha256": "c0a135ae32c98824b97c6f59634b4aacd6a95918eece6e8f092d6a28bff6b018"
+    },
+    {
+      "path": "docs/room_travel/story-events.gif",
+      "bytes": 657866,
+      "sha256": "025d109a78775333a3342972f60dee5bdc2ba2a9cd16650f3c051e483315b7db"
+    },
+    {
+      "path": "docs/visual_foundation/barracks.png",
+      "bytes": 2558726,
+      "sha256": "9c0124318bec3481aef0f66fadac9be4cef838c325a2e2b881bee10a5fd317a1"
+    },
+    {
+      "path": "docs/visual_foundation/preparation-before.png",
+      "bytes": 745247,
+      "sha256": "691d8e9a7ad5aae3a5705d7f134e24a1efaa7aa49b5300e8d43aa17bbfde4bda"
+    },
+    {
+      "path": "docs/visual_foundation/preparation.png",
+      "bytes": 1520216,
+      "sha256": "7295c3a82a0f107237cc68275fa82a54de29ad525cc8f8f661a54822577f5d3f"
+    },
+    {
+      "path": "docs/visual_foundation/settlement-before.png",
+      "bytes": 2771340,
+      "sha256": "fbdd0fa8b1a3b2a25a800ed95142701c38f94818fa7d309a66f25a8e1180b063"
+    },
+    {
+      "path": "docs/visual_foundation/settlement.png",
+      "bytes": 2747515,
+      "sha256": "8f6521d25977c450cfabfa6f9f5885c9bcda990ec1e17a6686611e6bd7d9e111"
+    },
+    {
+      "path": "docs/warden_outfits/combat.png",
+      "bytes": 1035148,
+      "sha256": "d511e764365c7ed186eb4188543e6e5af3b887bb39283bcec404b7d0bee0a9bb"
+    },
+    {
+      "path": "docs/warden_outfits/workshop.png",
+      "bytes": 874687,
+      "sha256": "5aa885c1724550a1ae4434e2c2a25bfa56494f55b36ed047bd01ec27ad9e8b5a"
+    },
+    {
+      "path": "experimental/battlefield_ground/battlefield-ground.gif",
+      "bytes": 2235839,
+      "sha256": "d61c93eed345e65ecaa807946d071ed458fc55767ff324fc71ea4b22d0b4dd53"
+    },
+    {
+      "path": "experimental/battlefield_ground/battlefield-ground.mp4",
+      "bytes": 533017,
+      "sha256": "9f3592546acdbf64e0fb46c544062be777498a9a6ed8ca86f3871634e6ff70e4"
+    },
+    {
+      "path": "experimental/hooded-raider-animation.gif",
+      "bytes": 891457,
+      "sha256": "ca52897fc58bfb813f0445df3ec43b2c7a096b4cbf0a7510f81e7f5c7c272063"
+    },
+    {
+      "path": "experimental/hooded-raider-breathing.gif",
+      "bytes": 655687,
+      "sha256": "6f4f8e7cf6b795494280e3d839d19d2ab199e46b1ec9b9120e818522e3c1c22f"
+    },
+    {
+      "path": "experimental/party_builds/assets/party-builds.png",
+      "bytes": 2579422,
+      "sha256": "b0dc7952ab1937881eab60486e4f024158a6dac8da335d70befa3144ee3df41d"
+    },
+    {
+      "path": "experimental/party_builds/assets/ranger-stance.png",
+      "bytes": 2151899,
+      "sha256": "966afccd731858dc0f3d5d60fe47a27d5a63f77af152d4f005297ac09d2601b9"
+    },
+    {
+      "path": "experimental/party_builds/combat-charge.png",
+      "bytes": 1349960,
+      "sha256": "6841d24e9434a59cfebf078d9df564b12f443677104528e64230fa7ced12364a"
+    },
+    {
+      "path": "experimental/party_builds/combat-lineup.png",
+      "bytes": 1916493,
+      "sha256": "a96328ef9ba99a1e75756c8b0da27ad812cb58e4430fcce593dd098cd78de487"
+    },
+    {
+      "path": "experimental/party_builds/combat-melee-lineup.png",
+      "bytes": 1930075,
+      "sha256": "bcba47a319f186ed6b2531980c77dd243b6099f5388f53b40680ea6cffbf6dd8"
+    },
+    {
+      "path": "experimental/party_builds/combat-ranger.mp4",
+      "bytes": 1214896,
+      "sha256": "c6edae7d367519dda182c7df48828d321e0124e560100a24587ca3d6119a631b"
+    },
+    {
+      "path": "experimental/party_builds/party-comparison.png",
+      "bytes": 791087,
+      "sha256": "21098a7dd2377f8d7ba4b1bb4a67cbffd78debe084178c33c8d8d5a00261c6b5"
+    },
+    {
+      "path": "experimental/party_builds/ranger-bow.gif",
+      "bytes": 886064,
+      "sha256": "1f3267e8abc56ac8bf59b5fd30e481245d339326ea2d2152cdb803bb9c522961"
+    },
+    {
+      "path": "experimental/party_builds/ranger-bow.mp4",
+      "bytes": 262933,
+      "sha256": "f1122a054d08304d8a584cbe7a9058071630d310a57adc93dd00b8932d067855"
+    },
+    {
+      "path": "experimental/ranger_showcase/assets/bandit-execution.png",
+      "bytes": 1945534,
+      "sha256": "7578437ccf64ce9c08f3fcd4947750ae413f238e1c6221f13893223981bcab2a"
+    },
+    {
+      "path": "experimental/ranger_showcase/assets/bandit-neck-snap.png",
+      "bytes": 1807355,
+      "sha256": "46d1e4024b3b3f4a26c080d157acd93953fb6f9f4225d47d9f9f86fe950bd1d5"
+    },
+    {
+      "path": "experimental/ranger_showcase/assets/ranger-execution.png",
+      "bytes": 2244214,
+      "sha256": "f40bc7d610038a06e772cba7926a76a2e55e9d466fecbee3031e42f3ba6693b7"
+    },
+    {
+      "path": "experimental/ranger_showcase/finished.png",
+      "bytes": 924917,
+      "sha256": "8e9654fe337c58eaac269b9a6fa1fd57e8d98fa52d1f6f2d65316035888514d1"
+    },
+    {
+      "path": "experimental/ranger_showcase/headshot.png",
+      "bytes": 929818,
+      "sha256": "45410aff5710897e49a102572d9ccce64187debda49135b657a98bb166955cc3"
+    },
+    {
+      "path": "experimental/ranger_showcase/ranger-bow.gif",
+      "bytes": 1103714,
+      "sha256": "d3634458f95fb08621f0bddd4546c72e8e8eea049647a9cc866735691b6348a6"
+    },
+    {
+      "path": "experimental/ranger_showcase/ranger-bow.mp4",
+      "bytes": 292021,
+      "sha256": "c219ac28ad05b8babdf62947ee1097c9469d6bf0f088c409f20484a972bea24f"
+    },
+    {
+      "path": "experimental/ranger_showcase/ranger-execution.gif",
+      "bytes": 1201804,
+      "sha256": "e0f1c62248696aefba55e71f8de402a05a8999c3136fa6e6084e9fc47423c175"
+    },
+    {
+      "path": "experimental/ranger_showcase/ranger-execution.mp4",
+      "bytes": 372821,
+      "sha256": "c910ba86b9514a38149a17d93a3525a0922f41b9cb1791188acedd2e34ba44d5"
+    },
+    {
+      "path": "experimental/ranger_showcase/stomach-hit.png",
+      "bytes": 935751,
+      "sha256": "ec4a56e36182a9afecdc6d3759b9c155cdf4cf2785b532c93e622a3a07ec60d2"
+    },
+    {
+      "path": "experimental/warden_showcase/assets/backdrop.png",
+      "bytes": 2226842,
+      "sha256": "a33b62e12be3bc5d8984a89aba34a89df384244b08423787ea69d36c51cdd011"
+    },
+    {
+      "path": "experimental/warden_showcase/assets/raider.png",
+      "bytes": 1555652,
+      "sha256": "21a4b1362a1b047b26d56b15d2941c876b011b3ef02b34956c55e688e3885e91"
+    },
+    {
+      "path": "experimental/warden_showcase/assets/warden_attacks.png",
+      "bytes": 1802490,
+      "sha256": "bd6c7126b2fea139c2cf6c5faeb0737e9b1be1d95f31fef5c5f3c45415d71b76"
+    },
+    {
+      "path": "experimental/warden_showcase/assets/warden_execution.png",
+      "bytes": 1706674,
+      "sha256": "e0667b3c516885942c9ce22ef6a551cedd282a3e8a415889b2dbdeaf621edc85"
+    },
+    {
+      "path": "experimental/warden_showcase/assets/warden_execution_contact.png",
+      "bytes": 2524360,
+      "sha256": "89f4f3e235141e09c4dec80a43b89050aced80ff7321948f41bb5e30384639d5"
+    },
+    {
+      "path": "experimental/warden_showcase/assets/warden_execution_windup.png",
+      "bytes": 1625470,
+      "sha256": "91ac704fd78e47d364da5bb1177d7f4ff0cfffa6af1bc15988af3c15b18f7d66"
+    },
+    {
+      "path": "experimental/warden_showcase/warden-execution.gif",
+      "bytes": 3006584,
+      "sha256": "d8c7f99c3bdd84387cebc845a7fe5b4e1eee1492ebd48eb2be1218472703c495"
+    },
+    {
+      "path": "experimental/warden_showcase/warden-execution.mp4",
+      "bytes": 391753,
+      "sha256": "d56bdb3f436058f806621ffb4c45c3ab5ff5fa69f882c5c6058078bc34b86296"
+    },
+    {
+      "path": "experimental/warden_showcase/warden-integrated.gif",
+      "bytes": 1332425,
+      "sha256": "a83d376a8bd8a5602cf14b44bfee84136ff7138cd240c2b15bde6fbdb90ab037"
+    },
+    {
+      "path": "experimental/warden_showcase/warden-integrated.mp4",
+      "bytes": 346394,
+      "sha256": "f546c46cef72ee3ef7890c2f1197b7028fcd5249b9e30f79eeb2c31be6747642"
+    },
+    {
+      "path": "experimental/warden_showcase/warden-showcase.gif",
+      "bytes": 5295209,
+      "sha256": "fc0bc68318fe9b7fd50c3ef6fdbea7139df269769c8fec3569cc2f164fc7bd70"
+    },
+    {
+      "path": "experimental/warden_showcase/warden-showcase.mp4",
+      "bytes": 784793,
+      "sha256": "eb4ec7f7ec7b6d65768be16d1a1d4158d2d46178083c9183793ca3c4ad25f4a2"
+    },
+    {
+      "path": "experimental/warden_transitions/comparison.gif",
+      "bytes": 2272642,
+      "sha256": "33302643d5443aadd02302177fbb0579c2d5d1a4136136d462144a120e9c0a76"
+    },
+    {
+      "path": "experimental/warden_transitions/comparison.mp4",
+      "bytes": 833381,
+      "sha256": "9b3992c7403a7e2091d75e38ddfaf027fc1e3119ef5132771930b4a9337f29f8"
+    },
+    {
+      "path": "experimental/warden_transitions/heavy-windup.png",
+      "bytes": 734634,
+      "sha256": "92d3014df1e2feb54d8accb109d0856d948d2ed85d49c5cde5f07cbe20f87a4d"
+    },
+    {
+      "path": "experimental/warden_transitions/integrated-combat.mp4",
+      "bytes": 1921218,
+      "sha256": "3b2358518ddc18da6deb1260bd36592cfb51354e1243d210ab8afaf840ecbcfa"
+    },
+    {
+      "path": "experimental/warden_transitions/integrated-heavy.png",
+      "bytes": 1298482,
+      "sha256": "722dd2e70e13ae4a856c10f5f1e7b17c6a4d830613f526a512119c21dc899623"
+    },
+    {
+      "path": "experimental/witch_hunter/clean-concept.png",
+      "bytes": 2337288,
+      "sha256": "4e45cc24f5083b1122dc3cace77ed46368f10658d0dac4a67e4eb7436c0835ca"
+    },
+    {
+      "path": "experimental/witch_hunter/concept.png",
+      "bytes": 2376283,
+      "sha256": "d1637c7ae65c8ef3f8be2c53746ce8f61f60508965732ff807333851c80c8f84"
+    },
+    {
+      "path": "experimental/witch_hunter/execution/assets/cleaver.png",
+      "bytes": 1412740,
+      "sha256": "6a1ef9c0e17310119df9a53533ec64ad545919a9ab5bed5058411369cd0b760e"
+    },
+    {
+      "path": "experimental/witch_hunter/execution/assets/contacts.png",
+      "bytes": 2073203,
+      "sha256": "7e347b64fbfb38657a538f25a480f61a922f688a51d254524859bc052798977d"
+    },
+    {
+      "path": "experimental/witch_hunter/execution/assets/poses.png",
+      "bytes": 2370227,
+      "sha256": "5c2c12c5914dfbf2789fc933f3c4cfcc301fca408698cb5aae4a2b948b85be06"
+    },
+    {
+      "path": "experimental/witch_hunter/execution/assets/uppercut-corrected.png",
+      "bytes": 2000502,
+      "sha256": "475645bde879f1180e660428d9d91030f135e51415b5bf50a97744dd300462a8"
+    },
+    {
+      "path": "experimental/witch_hunter/execution/assets/uppercut-lead-in.png",
+      "bytes": 2306310,
+      "sha256": "91b269603acb7c5da1f50953eff120b4375f83cf04425503b31ff0e95aee4025"
+    },
+    {
+      "path": "experimental/witch_hunter/execution/cleaver-drop.png",
+      "bytes": 1076665,
+      "sha256": "778a62b4098fc1bfb2a80f4d32c86c772bfaa458999c7b95f5b1f1a71d3639ab"
+    },
+    {
+      "path": "experimental/witch_hunter/execution/crush.png",
+      "bytes": 1078532,
+      "sha256": "1fdd5c8df855008252b621731a38eb7325d6ba939186b073fc298ff676d2d159"
+    },
+    {
+      "path": "experimental/witch_hunter/execution/finished.png",
+      "bytes": 1061672,
+      "sha256": "11253e1518bae840e5d40523e04cfc956622692a2e076dc3eb109c80a6adfd4d"
+    },
+    {
+      "path": "experimental/witch_hunter/execution/lead-in.png",
+      "bytes": 1037300,
+      "sha256": "6b55e82ac027d01c283f4772d81ab9cd9372caa98b6be7f520f95a7c0e1b6b3c"
+    },
+    {
+      "path": "experimental/witch_hunter/execution/uppercut.png",
+      "bytes": 1073079,
+      "sha256": "8c4ec8a64b5082741e7480db125ca0322be5bdae4b94073db0e4fa59cdf685fd"
+    },
+    {
+      "path": "experimental/witch_hunter/execution/witch-hunter-execution.gif",
+      "bytes": 1762594,
+      "sha256": "54856e8e85f2bfacf9b209a916870f5b7e6d464f04dbe956f79ba3f66e2aec28"
+    },
+    {
+      "path": "experimental/witch_hunter/execution/witch-hunter-execution.mp4",
+      "bytes": 716671,
+      "sha256": "4eab0af13d58451ddb86423be287422080b5098c56402c362dc3a6aae6908a32"
+    },
+    {
+      "path": "experimental/witch_hunter/krita-current/bandit-01-uppercut-recoil.png",
+      "bytes": 286847,
+      "sha256": "f0112f957ee0f106ef80bf27e239221d492d1bd3bfc8fa346e64d93d1840940d"
+    },
+    {
+      "path": "experimental/witch_hunter/krita-current/bandit-02-buckling.png",
+      "bytes": 202840,
+      "sha256": "b5c71e00b00e8ea6f6c6b4e7bd40533ae599c5c3a9935fea2065fb41f63d202f"
+    },
+    {
+      "path": "experimental/witch_hunter/krita-current/bandit-03-collapsed.png",
+      "bytes": 189115,
+      "sha256": "7a0c4bf068801f5ef5cd6a843b0d6f6c0b6e07adfe1a03216d96c8ededb5e62f"
+    },
+    {
+      "path": "experimental/witch_hunter/krita-current/bandit-cleaver-complete.png",
+      "bytes": 1316783,
+      "sha256": "7c61436fad0c7362d94ce73f9ee869db921e7168fa539a735b021b6f27ad93a3"
+    },
+    {
+      "path": "experimental/witch_hunter/krita-current/bandit-idle.png",
+      "bytes": 139525,
+      "sha256": "c0fe69a0bd95bb98cfcd03d7c3a71162543561ebeeeac88cde09851cd10074a0"
+    },
+    {
+      "path": "experimental/witch_hunter/krita-current/execution-01-uppercut-preparation.png",
+      "bytes": 377719,
+      "sha256": "51898ecf5ff1f0d58011f9469ca2c6240a10aae512563c23b04ff3da4155084f"
+    },
+    {
+      "path": "experimental/witch_hunter/krita-current/execution-02-jaw-contact.png",
+      "bytes": 975685,
+      "sha256": "69eb413b92593186cded32140867f55cd0777d6492ea1c777255aa85dc9ecd3b"
+    },
+    {
+      "path": "experimental/witch_hunter/krita-current/execution-03-overhead-windup.png",
+      "bytes": 403648,
+      "sha256": "250dc52a5e46f32588c7d81f06289e5d573b507cb7cb3904411152578eb2f5b8"
+    },
+    {
+      "path": "experimental/witch_hunter/krita-current/execution-04-crushing-contact.png",
+      "bytes": 968655,
+      "sha256": "2396f2c6161448533d33d88bd105b42a2b21377780ac6e713cebca7d723593ac"
+    },
+    {
+      "path": "experimental/witch_hunter/krita-current/execution-05-downswing-followthrough.png",
+      "bytes": 378045,
+      "sha256": "36b592ae289724f1441fb5710b6b0a17cf08c8675626190deaf57c7522a2763d"
+    },
+    {
+      "path": "experimental/witch_hunter/krita-current/scene-preview.png",
+      "bytes": 1130244,
+      "sha256": "8d01d52e4c1e1bae199ea31d91acdef79e8dafcd4ca8cce1f4ed508f96a9b07a"
+    },
+    {
+      "path": "experimental/witch_hunter/krita-current/witch-hunter-combat-poses.png",
+      "bytes": 2326450,
+      "sha256": "b52667202d9f1d7b21cdcf3c0fcc7ff708fd69d4da6b8cad45ea1269187fe5ca"
+    },
+    {
+      "path": "experimental/witch_hunter/krita-current/witch-hunter-concept.ora",
+      "bytes": 4753201,
+      "sha256": "3738db9c368dd6c34b66bd3478deb4b5844087f8f445948b7ec9e96323dc13c3"
+    },
+    {
+      "path": "experimental/witch_hunter/krita-current/witch-hunter-concept.png",
+      "bytes": 2376283,
+      "sha256": "d1637c7ae65c8ef3f8be2c53746ce8f61f60508965732ff807333851c80c8f84"
+    },
+    {
+      "path": "experimental/witch_hunter/krita-current/witch-hunter-idle.png",
+      "bytes": 356784,
+      "sha256": "632f2d8e96d43621368b2a45e0e2078734461a55a1f0ec27d96d7a64d047605e"
+    },
+    {
+      "path": "experimental/witch_hunter/krita-current/witch-hunter-scene.ora",
+      "bytes": 4141800,
+      "sha256": "d5a907237452e382ac57d13940077f6d62b386edfe80c065582a69fa004fc073"
+    },
+    {
+      "path": "experimental/witch_hunter/skills-idle.png",
+      "bytes": 1999660,
+      "sha256": "6c3a0a2ca6c4207ad42b31a623175f2c8b4e0f67ee85bf919693033fdcb1e044"
+    },
+    {
+      "path": "experimental/witch_hunter/skills-pc_guard.png",
+      "bytes": 1330561,
+      "sha256": "d58c889c70b5c0e761bd3b75f941e52e064bf895a4680a556ccde15228c85009"
+    },
+    {
+      "path": "experimental/witch_hunter/skills-pc_pain.png",
+      "bytes": 1370361,
+      "sha256": "7b305d5edc9e49bb184f2170330b7a79c4880bd4a238c8c006a0e64082d65895"
+    },
+    {
+      "path": "experimental/witch_hunter/skills-pc_verdict.png",
+      "bytes": 1362941,
+      "sha256": "30ec1e7850be38c0e9413666858c108873d71ceaa51da5bdb4e9e7ca16a4c7f6"
+    },
+    {
+      "path": "icon.svg",
+      "bytes": 995,
+      "sha256": "6c80384360a5b269d1054bfb27241258154e2cc8167c522016fdc1820e84e0f8"
+    }
+  ]
+}
