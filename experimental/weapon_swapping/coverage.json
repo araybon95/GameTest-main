@@ -1,0 +1,1011 @@
+{
+  "alternate_regions": {
+    "crusader": [
+      "[P: (24.0, 10.0), S: (349.0, 352.0)]",
+      "[P: (369.0, 49.0), S: (422.0, 316.0)]",
+      "[P: (799.0, 27.0), S: (301.0, 335.0)]",
+      "[P: (1129.0, 62.0), S: (302.0, 304.0)]",
+      "[P: (24.0, 364.0), S: (339.0, 338.0)]",
+      "[P: (394.0, 364.0), S: (330.0, 335.0)]",
+      "[P: (754.0, 364.0), S: (328.0, 336.0)]",
+      "[P: (1109.0, 375.0), S: (334.0, 326.0)]",
+      "[P: (14.0, 748.0), S: (361.0, 282.0)]",
+      "[P: (384.0, 726.0), S: (294.0, 336.0)]",
+      "[P: (683.0, 682.0), S: (373.0, 373.0)]",
+      "[P: (1042.0, 751.0), S: (398.0, 299.0)]"
+    ],
+    "healer": [
+      "[P: (79.0, 34.0), S: (254.0, 321.0)]",
+      "[P: (403.0, 80.0), S: (373.0, 275.0)]",
+      "[P: (844.0, 61.0), S: (312.0, 293.0)]",
+      "[P: (1230.0, 40.0), S: (237.0, 315.0)]",
+      "[P: (100.0, 376.0), S: (240.0, 310.0)]",
+      "[P: (467.0, 371.0), S: (250.0, 314.0)]",
+      "[P: (857.0, 374.0), S: (246.0, 311.0)]",
+      "[P: (1244.0, 384.0), S: (237.0, 301.0)]",
+      "[P: (39.0, 696.0), S: (318.0, 299.0)]",
+      "[P: (425.0, 713.0), S: (314.0, 279.0)]",
+      "[P: (785.0, 699.0), S: (305.0, 290.0)]",
+      "[P: (1166.0, 694.0), S: (343.0, 293.0)]"
+    ],
+    "occultist": [
+      "[P: (55.0, 14.0), S: (294.0, 345.0)]",
+      "[P: (407.0, 80.0), S: (425.0, 279.0)]",
+      "[P: (873.0, 21.0), S: (295.0, 338.0)]",
+      "[P: (1234.0, 17.0), S: (271.0, 342.0)]",
+      "[P: (59.0, 368.0), S: (302.0, 326.0)]",
+      "[P: (425.0, 368.0), S: (298.0, 327.0)]",
+      "[P: (790.0, 367.0), S: (315.0, 327.0)]",
+      "[P: (1202.0, 361.0), S: (299.0, 337.0)]",
+      "[P: (23.0, 695.0), S: (328.0, 304.0)]",
+      "[P: (390.0, 711.0), S: (319.0, 297.0)]",
+      "[P: (790.0, 691.0), S: (325.0, 312.0)]",
+      "[P: (1176.0, 748.0), S: (342.0, 255.0)]"
+    ],
+    "ranger": [
+      "[P: (14.0, 11.0), S: (329.0, 355.0)]",
+      "[P: (364.0, 1.0), S: (369.0, 363.0)]",
+      "[P: (730.0, 31.0), S: (365.0, 334.0)]",
+      "[P: (1109.0, 20.0), S: (327.0, 345.0)]",
+      "[P: (25.0, 379.0), S: (349.0, 355.0)]",
+      "[P: (385.0, 378.0), S: (345.0, 350.0)]",
+      "[P: (754.0, 381.0), S: (337.0, 353.0)]",
+      "[P: (1113.0, 382.0), S: (320.0, 349.0)]",
+      "[P: (8.0, 765.0), S: (363.0, 304.0)]",
+      "[P: (371.0, 750.0), S: (370.0, 322.0)]",
+      "[P: (734.0, 727.0), S: (350.0, 353.0)]",
+      "[P: (1094.0, 720.0), S: (352.0, 359.0)]"
+    ],
+    "warden": [
+      "[P: (24.0, 23.0), S: (318.0, 325.0)]",
+      "[P: (403.0, 53.0), S: (422.0, 294.0)]",
+      "[P: (825.0, 47.0), S: (326.0, 301.0)]",
+      "[P: (1201.0, 18.0), S: (309.0, 330.0)]",
+      "[P: (20.0, 368.0), S: (332.0, 312.0)]",
+      "[P: (407.0, 371.0), S: (342.0, 309.0)]",
+      "[P: (800.0, 369.0), S: (347.0, 312.0)]",
+      "[P: (1182.0, 372.0), S: (312.0, 308.0)]",
+      "[P: (6.0, 728.0), S: (386.0, 263.0)]",
+      "[P: (409.0, 695.0), S: (327.0, 299.0)]",
+      "[P: (775.0, 686.0), S: (335.0, 305.0)]",
+      "[P: (1144.0, 701.0), S: (386.0, 292.0)]"
+    ]
+  },
+  "body_pixels": {
+    "crusader": 461.0,
+    "occultist": 443.0,
+    "ranger": 440.0,
+    "warden": 479.0
+  },
+  "build_anchors": {
+    "crusader": [
+      227,
+      717,
+      1292,
+      208,
+      692,
+      1271
+    ],
+    "occultist": [
+      229,
+      705,
+      1325,
+      241,
+      697,
+      1230
+    ],
+    "ranger": [
+      278,
+      752,
+      1265,
+      280,
+      795,
+      1280
+    ],
+    "warden": [
+      277,
+      735,
+      1259,
+      271,
+      858,
+      1250
+    ]
+  },
+  "build_regions": {
+    "crusader": [
+      "[P: (62.0, 68.0), S: (398.0, 461.0)]",
+      "[P: (539.0, 121.0), S: (546.0, 408.0)]",
+      "[P: (1079.0, 10.0), S: (386.0, 519.0)]",
+      "[P: (51.0, 531.0), S: (315.0, 453.0)]",
+      "[P: (501.0, 605.0), S: (438.0, 379.0)]",
+      "[P: (976.0, 868.0), S: (542.0, 123.0)]"
+    ],
+    "occultist": [
+      "[P: (83.0, 32.0), S: (328.0, 513.0)]",
+      "[P: (481.0, 152.0), S: (608.0, 380.0)]",
+      "[P: (1101.0, 6.0), S: (422.0, 539.0)]",
+      "[P: (23.0, 552.0), S: (400.0, 429.0)]",
+      "[P: (525.0, 596.0), S: (445.0, 378.0)]",
+      "[P: (936.0, 838.0), S: (594.0, 170.0)]"
+    ],
+    "ranger": [
+      "[P: (95.0, 76.0), S: (336.0, 440.0)]",
+      "[P: (573.0, 44.0), S: (437.0, 472.0)]",
+      "[P: (1082.0, 42.0), S: (379.0, 474.0)]",
+      "[P: (91.0, 562.0), S: (334.0, 433.0)]",
+      "[P: (588.0, 567.0), S: (403.0, 428.0)]",
+      "[P: (1053.0, 779.0), S: (457.0, 203.0)]"
+    ],
+    "warden": [
+      "[P: (56.0, 61.0), S: (399.0, 479.0)]",
+      "[P: (518.0, 124.0), S: (532.0, 413.0)]",
+      "[P: (1075.0, 0.0), S: (406.0, 544.0)]",
+      "[P: (30.0, 580.0), S: (455.0, 399.0)]",
+      "[P: (552.0, 583.0), S: (413.0, 398.0)]",
+      "[P: (960.0, 810.0), S: (563.0, 205.0)]"
+    ]
+  },
+  "heights": {
+    "crusader": 290.0,
+    "occultist": 255.0,
+    "ranger": 260.0,
+    "warden": 285.0
+  },
+  "relic_regions": {
+    "crusader": [
+      "[P: (19.0, 8.0), S: (368.0, 358.0)]",
+      "[P: (379.0, 43.0), S: (412.0, 324.0)]",
+      "[P: (791.0, 17.0), S: (322.0, 350.0)]",
+      "[P: (1119.0, 64.0), S: (329.0, 307.0)]",
+      "[P: (15.0, 365.0), S: (358.0, 337.0)]",
+      "[P: (380.0, 366.0), S: (361.0, 333.0)]",
+      "[P: (744.0, 370.0), S: (361.0, 330.0)]",
+      "[P: (1108.0, 368.0), S: (339.0, 334.0)]",
+      "[P: (7.0, 746.0), S: (369.0, 288.0)]",
+      "[P: (381.0, 711.0), S: (311.0, 349.0)]",
+      "[P: (737.0, 700.0), S: (291.0, 354.0)]",
+      "[P: (1049.0, 755.0), S: (391.0, 299.0)]"
+    ],
+    "healer": [
+      "[P: (42.0, 2.0), S: (283.0, 338.0)]",
+      "[P: (379.0, 39.0), S: (417.0, 302.0)]",
+      "[P: (827.0, 18.0), S: (321.0, 325.0)]",
+      "[P: (1219.0, 5.0), S: (272.0, 340.0)]",
+      "[P: (57.0, 341.0), S: (269.0, 333.0)]",
+      "[P: (442.0, 338.0), S: (269.0, 337.0)]",
+      "[P: (828.0, 343.0), S: (293.0, 330.0)]",
+      "[P: (1222.0, 352.0), S: (270.0, 323.0)]",
+      "[P: (0.0, 674.0), S: (343.0, 321.0)]",
+      "[P: (385.0, 690.0), S: (356.0, 308.0)]",
+      "[P: (769.0, 670.0), S: (325.0, 330.0)]",
+      "[P: (1129.0, 674.0), S: (402.0, 324.0)]"
+    ],
+    "occultist": [
+      "[P: (44.0, 4.0), S: (305.0, 356.0)]",
+      "[P: (398.0, 73.0), S: (448.0, 287.0)]",
+      "[P: (873.0, 5.0), S: (307.0, 355.0)]",
+      "[P: (1226.0, 3.0), S: (290.0, 357.0)]",
+      "[P: (39.0, 355.0), S: (320.0, 338.0)]",
+      "[P: (405.0, 359.0), S: (328.0, 337.0)]",
+      "[P: (801.0, 361.0), S: (314.0, 332.0)]",
+      "[P: (1214.0, 356.0), S: (302.0, 339.0)]",
+      "[P: (12.0, 695.0), S: (340.0, 307.0)]",
+      "[P: (386.0, 696.0), S: (343.0, 323.0)]",
+      "[P: (766.0, 690.0), S: (358.0, 319.0)]",
+      "[P: (1142.0, 724.0), S: (388.0, 285.0)]"
+    ],
+    "ranger": [
+      "[P: (24.0, 6.0), S: (328.0, 360.0)]",
+      "[P: (368.0, 0.0), S: (364.0, 366.0)]",
+      "[P: (764.0, 32.0), S: (347.0, 334.0)]",
+      "[P: (1128.0, 16.0), S: (313.0, 350.0)]",
+      "[P: (22.0, 367.0), S: (356.0, 365.0)]",
+      "[P: (401.0, 370.0), S: (365.0, 360.0)]",
+      "[P: (765.0, 376.0), S: (345.0, 356.0)]",
+      "[P: (1122.0, 378.0), S: (323.0, 353.0)]",
+      "[P: (4.0, 764.0), S: (381.0, 308.0)]",
+      "[P: (370.0, 749.0), S: (386.0, 331.0)]",
+      "[P: (750.0, 716.0), S: (354.0, 364.0)]",
+      "[P: (1099.0, 717.0), S: (349.0, 362.0)]"
+    ],
+    "warden": [
+      "[P: (29.0, 15.0), S: (308.0, 338.0)]",
+      "[P: (404.0, 46.0), S: (432.0, 307.0)]",
+      "[P: (837.0, 41.0), S: (324.0, 312.0)]",
+      "[P: (1214.0, 8.0), S: (297.0, 345.0)]",
+      "[P: (28.0, 366.0), S: (327.0, 319.0)]",
+      "[P: (407.0, 369.0), S: (340.0, 315.0)]",
+      "[P: (816.0, 368.0), S: (342.0, 315.0)]",
+      "[P: (1193.0, 370.0), S: (308.0, 314.0)]",
+      "[P: (7.0, 723.0), S: (384.0, 271.0)]",
+      "[P: (399.0, 688.0), S: (345.0, 310.0)]",
+      "[P: (783.0, 683.0), S: (327.0, 312.0)]",
+      "[P: (1141.0, 703.0), S: (388.0, 292.0)]"
+    ]
+  },
+  "warden_ground": {
+    "ashen_wolf": [
+      380,
+      380,
+      384,
+      384,
+      349,
+      345,
+      348,
+      350,
+      336,
+      337,
+      338,
+      338
+    ],
+    "original": [
+      379,
+      381,
+      381,
+      383,
+      344,
+      344,
+      346,
+      348,
+      339,
+      343,
+      339,
+      342
+    ]
+  },
+  "weapon_numeric_baseline": {
+    "crusader_axe": {
+      "damage": 1
+    },
+    "crusader_epic": {
+      "bleed_resist": 20,
+      "damage": 3
+    },
+    "crusader_legend": {
+      "damage": 4,
+      "life_drain": 15,
+      "max_hp": 6
+    },
+    "crusader_unique": {
+      "damage": 2,
+      "unique_chill": 30
+    },
+    "healer_epic": {
+      "damage": 1,
+      "heal": 3,
+      "regeneration": 1
+    },
+    "healer_frostmace": {
+      "heal": 2,
+      "unique_chill": 30
+    },
+    "healer_legend": {
+      "damage": 2,
+      "heal": 4,
+      "regeneration": 2
+    },
+    "healer_mace": {
+      "damage": 1
+    },
+    "occultist_epic": {
+      "damage": 3,
+      "life_drain": 15
+    },
+    "occultist_legend": {
+      "damage": 4,
+      "heal": 3,
+      "life_drain": 25
+    },
+    "occultist_plaguestaff": {
+      "damage": 2,
+      "unique_poison": 30
+    },
+    "occultist_staff": {
+      "damage": 1
+    },
+    "ranger_bow": {
+      "damage": 1
+    },
+    "ranger_epic": {
+      "damage": 3,
+      "poison_chance": 15
+    },
+    "ranger_legend": {
+      "damage": 5,
+      "poison_chance": 25
+    },
+    "ranger_venombow": {
+      "damage": 2,
+      "unique_poison": 30
+    },
+    "warden_epic": {
+      "damage": 3,
+      "max_hp": 4,
+      "reflection": 10
+    },
+    "warden_frostblade": {
+      "damage": 2,
+      "unique_chill": 30
+    },
+    "warden_legend": {
+      "damage": 4,
+      "max_hp": 8,
+      "reflection": 25
+    },
+    "warden_sword": {
+      "damage": 1
+    }
+  },
+  "weapons": {
+    "crusader_axe": {
+      "damage": 1,
+      "hero": "crusader",
+      "name": "Penitent's Axe",
+      "rarity": "common",
+      "slot": "weapon"
+    },
+    "crusader_epic": {
+      "bleed_resist": 20,
+      "damage": 3,
+      "hero": "crusader",
+      "name": "Agony's Edge",
+      "rarity": "epic",
+      "slot": "weapon"
+    },
+    "crusader_legend": {
+      "damage": 4,
+      "hero": "crusader",
+      "life_drain": 15,
+      "max_hp": 6,
+      "name": "Unending Sacrament",
+      "rarity": "legendary",
+      "slot": "weapon"
+    },
+    "crusader_unique": {
+      "damage": 2,
+      "hero": "crusader",
+      "name": "Winter Penance",
+      "rarity": "unique",
+      "slot": "weapon",
+      "unique_chill": 30
+    },
+    "healer_epic": {
+      "damage": 1,
+      "heal": 3,
+      "hero": "healer",
+      "name": "Emberlight Mace",
+      "rarity": "epic",
+      "regeneration": 1,
+      "slot": "weapon"
+    },
+    "healer_frostmace": {
+      "heal": 2,
+      "hero": "healer",
+      "name": "Cold Benediction",
+      "rarity": "unique",
+      "slot": "weapon",
+      "unique_chill": 30
+    },
+    "healer_legend": {
+      "damage": 2,
+      "heal": 4,
+      "hero": "healer",
+      "name": "Dawn's Mercy",
+      "rarity": "legendary",
+      "regeneration": 2,
+      "slot": "weapon"
+    },
+    "healer_mace": {
+      "damage": 1,
+      "hero": "healer",
+      "name": "Pilgrim Mace",
+      "rarity": "common",
+      "slot": "weapon"
+    },
+    "occultist_epic": {
+      "damage": 3,
+      "hero": "occultist",
+      "life_drain": 15,
+      "name": "Sanguine Bonewood",
+      "rarity": "epic",
+      "slot": "weapon"
+    },
+    "occultist_legend": {
+      "damage": 4,
+      "heal": 3,
+      "hero": "occultist",
+      "life_drain": 25,
+      "name": "Vampiric Gravetide",
+      "rarity": "legendary",
+      "slot": "weapon"
+    },
+    "occultist_plaguestaff": {
+      "damage": 2,
+      "hero": "occultist",
+      "name": "Septic Covenant",
+      "rarity": "unique",
+      "slot": "weapon",
+      "unique_poison": 30
+    },
+    "occultist_staff": {
+      "damage": 1,
+      "hero": "occultist",
+      "name": "Bonewood Staff",
+      "rarity": "common",
+      "slot": "weapon"
+    },
+    "ranger_bow": {
+      "damage": 1,
+      "hero": "ranger",
+      "name": "Hunting Bow",
+      "rarity": "common",
+      "slot": "weapon"
+    },
+    "ranger_epic": {
+      "damage": 3,
+      "hero": "ranger",
+      "name": "Nightthorn Bow",
+      "poison_chance": 15,
+      "rarity": "epic",
+      "slot": "weapon"
+    },
+    "ranger_legend": {
+      "damage": 5,
+      "hero": "ranger",
+      "name": "Venomous Thornsong",
+      "poison_chance": 25,
+      "rarity": "legendary",
+      "slot": "weapon"
+    },
+    "ranger_venombow": {
+      "damage": 2,
+      "hero": "ranger",
+      "name": "Adder's Requiem",
+      "rarity": "unique",
+      "slot": "weapon",
+      "unique_poison": 30
+    },
+    "warden_epic": {
+      "damage": 3,
+      "hero": "warden",
+      "max_hp": 4,
+      "name": "Dreadsteel Longsword",
+      "rarity": "epic",
+      "reflection": 10,
+      "slot": "weapon"
+    },
+    "warden_frostblade": {
+      "damage": 2,
+      "hero": "warden",
+      "name": "Vigil of Winter",
+      "rarity": "unique",
+      "slot": "weapon",
+      "unique_chill": 30
+    },
+    "warden_legend": {
+      "damage": 4,
+      "hero": "warden",
+      "max_hp": 8,
+      "name": "Oathkeeper",
+      "rarity": "legendary",
+      "reflection": 25,
+      "slot": "weapon"
+    },
+    "warden_sword": {
+      "damage": 1,
+      "hero": "warden",
+      "name": "Iron Longsword",
+      "rarity": "common",
+      "slot": "weapon"
+    }
+  },
+  "schema": 1,
+  "status": "experimental; no weapon layers prepared or production gates enabled",
+  "families": {
+    "warden": {
+      "family": "one_handed_melee",
+      "hands": 1
+    },
+    "ranger": {
+      "family": "bow",
+      "hands": 2
+    },
+    "crusader": {
+      "family": "two_handed_hammer",
+      "hands": 2
+    },
+    "occultist": {
+      "family": "staff",
+      "hands": 1
+    }
+  },
+  "styles": {
+    "warden": [
+      "original",
+      "alternate",
+      "relic",
+      "ashen_wolf"
+    ],
+    "ranger": [
+      "original",
+      "alternate",
+      "relic"
+    ],
+    "crusader": [
+      "original",
+      "alternate",
+      "relic"
+    ],
+    "occultist": [
+      "original",
+      "alternate",
+      "relic"
+    ]
+  },
+  "contexts": {
+    "combat": [
+      "idle",
+      "windup",
+      "attack",
+      "guard",
+      "cast",
+      "hurt",
+      "death"
+    ],
+    "travel": [
+      "idle",
+      "walk_0",
+      "walk_1",
+      "walk_2",
+      "walk_3"
+    ],
+    "camp": [
+      "seated"
+    ],
+    "record": [
+      "idle",
+      "portrait"
+    ],
+    "execution": {
+      "warden": "production: scenes/combat/warden_execution.gd; bodies indices 0..4 and paired contact",
+      "ranger": "experimental: experimental/ranger_showcase/timeline.gd",
+      "crusader": "experimental: experimental/witch_hunter/execution/timeline.gd",
+      "occultist": "none; do not invent execution"
+    }
+  },
+  "sources": {
+    "assets/art_library/appearance/hero_crusader_outfit.png": {
+      "size": [
+        1448,
+        1086
+      ],
+      "sha256": "673d1294acc41f988e73feb3ada2120573a0c4087a57ed556139151679cb84ca"
+    },
+    "assets/art_library/appearance/hero_occultist_outfit.png": {
+      "size": [
+        1536,
+        1024
+      ],
+      "sha256": "750143b7078fe8df5e5637d219b114febe479a7f385e05ffc5433bb8dab0a68f"
+    },
+    "assets/art_library/appearance/hero_ranger_outfit.png": {
+      "size": [
+        1448,
+        1086
+      ],
+      "sha256": "ceac88425eb3d7007c29275d5a13b5517121f4389771dcee6ae6d996abc85b44"
+    },
+    "assets/art_library/appearance/hero_warden_outfit.png": {
+      "size": [
+        1536,
+        1024
+      ],
+      "sha256": "c01efca85cc02b04c300afa5edb826c6cf86e525aff43a55dd2716cee0d18806"
+    },
+    "assets/art_library/equipment/hero_crusader_relic.png": {
+      "size": [
+        1448,
+        1086
+      ],
+      "sha256": "1350597ad3b48ac728a607837a01b73f915272da199011218ea1de73d6044399"
+    },
+    "assets/art_library/equipment/hero_occultist_relic.png": {
+      "size": [
+        1536,
+        1024
+      ],
+      "sha256": "efbfa4a698de40ac1fc02757d815861be4c5b4054dfb14247a44824d74401c1c"
+    },
+    "assets/art_library/equipment/hero_ranger_relic.png": {
+      "size": [
+        1448,
+        1086
+      ],
+      "sha256": "612f485f05102e4c1fc6d8394867a21fd951c0fed7f5d0c4f6beb95abd889498"
+    },
+    "assets/art_library/equipment/hero_warden_relic.png": {
+      "size": [
+        1536,
+        1024
+      ],
+      "sha256": "faf0169430602a815a406d47bfd444566a8dd112a9113d9b093edaa0997becbe"
+    },
+    "assets/art_library/executions/warden/attacks.png": {
+      "size": [
+        1448,
+        1086
+      ],
+      "sha256": "bd6c7126b2fea139c2cf6c5faeb0737e9b1be1d95f31fef5c5f3c45415d71b76"
+    },
+    "assets/art_library/executions/warden/contact.png": {
+      "size": [
+        1536,
+        1024
+      ],
+      "sha256": "89f4f3e235141e09c4dec80a43b89050aced80ff7321948f41bb5e30384639d5"
+    },
+    "assets/art_library/executions/warden/poses.png": {
+      "size": [
+        1774,
+        887
+      ],
+      "sha256": "e0667b3c516885942c9ce22ef6a551cedd282a3e8a415889b2dbdeaf621edc85"
+    },
+    "assets/art_library/executions/warden/raider.png": {
+      "size": [
+        1448,
+        1086
+      ],
+      "sha256": "21a4b1362a1b047b26d56b15d2941c876b011b3ef02b34956c55e688e3885e91"
+    },
+    "assets/art_library/executions/warden/windup.png": {
+      "size": [
+        1774,
+        887
+      ],
+      "sha256": "91ac704fd78e47d364da5bb1177d7f4ff0cfffa6af1bc15988af3c15b18f7d66"
+    },
+    "assets/art_library/generated/hero_crusader_walk.png": {
+      "size": [
+        1536,
+        1024
+      ],
+      "sha256": "0a6d83924681cd0677ef70d0985197f7191c9f9958fe0c865dd5bffd280aa2d7"
+    },
+    "assets/art_library/generated/hero_occultist_camp.png": {
+      "size": [
+        1254,
+        1254
+      ],
+      "sha256": "0ab904481ccbe3aab978b925ddf58a2a062de79165ea8b15c4b9df3422e4e621"
+    },
+    "assets/art_library/generated/hero_occultist_walk.png": {
+      "size": [
+        1312,
+        1199
+      ],
+      "sha256": "a28c6bc12645945f2c46e8839dbe06c3ed937c4bddc8be14af6e632763edb726"
+    },
+    "assets/art_library/generated/hero_ranger_camp.png": {
+      "size": [
+        1254,
+        1254
+      ],
+      "sha256": "d750eb8fac1d459cb654c5b63b6d39b3d149faa2ceede1b42dd649554d9f3aa9"
+    },
+    "assets/art_library/generated/hero_ranger_walk.png": {
+      "size": [
+        1536,
+        1024
+      ],
+      "sha256": "8be3e9409171f465b236aefcae3e6c4b7bcad715631fb48619f4acaf3135e401"
+    },
+    "assets/art_library/generated/hero_warden_camp.png": {
+      "size": [
+        1254,
+        1254
+      ],
+      "sha256": "231398bc7fbd68f46fcdf30443a27f682c09551e669e3bb33ed2be8ad3305aa5"
+    },
+    "assets/art_library/generated/hero_warden_walk.png": {
+      "size": [
+        1536,
+        1024
+      ],
+      "sha256": "df15b830540bf53fdbef289da21b1a9747bd0f0c8ba22694bc987058458e145a"
+    },
+    "assets/art_library/party_builds/crusader.png": {
+      "size": [
+        1536,
+        1024
+      ],
+      "sha256": "b52667202d9f1d7b21cdcf3c0fcc7ff708fd69d4da6b8cad45ea1269187fe5ca"
+    },
+    "assets/art_library/party_builds/occultist.png": {
+      "size": [
+        1536,
+        1024
+      ],
+      "sha256": "8a6d7d00aec3f775479dfd453e373e6baaa53c09ba940df40923910603b3c15f"
+    },
+    "assets/art_library/party_builds/ranger.png": {
+      "size": [
+        1536,
+        1024
+      ],
+      "sha256": "6f2cdc952ad143f53ec39923abf0e306655d2ba2fa84f280587d3b125c1c6972"
+    },
+    "assets/art_library/party_builds/warden.png": {
+      "size": [
+        1536,
+        1024
+      ],
+      "sha256": "79ca031dce13db866c6761d0215b4dad9fe3185411488cc1395e898992e47c56"
+    },
+    "assets/art_library/warden_outfits/ashen_wolf.png": {
+      "size": [
+        1448,
+        1086
+      ],
+      "sha256": "ec61c2ae73bda1ee5deed2d18f0804c7798dcb1152816e2fefe390115e43d503"
+    },
+    "assets/art_library/warden_outfits/original.png": {
+      "size": [
+        1448,
+        1086
+      ],
+      "sha256": "aaa9f9db0d10c2126855770900d4a1e39feecf79b71a134d16aa476acdee2c83"
+    },
+    "experimental/ranger_showcase/assets/bandit-execution.png": {
+      "size": [
+        1536,
+        1024
+      ],
+      "sha256": "7578437ccf64ce9c08f3fcd4947750ae413f238e1c6221f13893223981bcab2a"
+    },
+    "experimental/ranger_showcase/assets/bandit-neck-snap.png": {
+      "size": [
+        1536,
+        1024
+      ],
+      "sha256": "46d1e4024b3b3f4a26c080d157acd93953fb6f9f4225d47d9f9f86fe950bd1d5"
+    },
+    "experimental/ranger_showcase/assets/ranger-execution.png": {
+      "size": [
+        1536,
+        1024
+      ],
+      "sha256": "f40bc7d610038a06e772cba7926a76a2e55e9d466fecbee3031e42f3ba6693b7"
+    },
+    "experimental/witch_hunter/execution/assets/cleaver.png": {
+      "size": [
+        2172,
+        724
+      ],
+      "sha256": "6a1ef9c0e17310119df9a53533ec64ad545919a9ab5bed5058411369cd0b760e"
+    },
+    "experimental/witch_hunter/execution/assets/contacts.png": {
+      "size": [
+        2172,
+        724
+      ],
+      "sha256": "7e347b64fbfb38657a538f25a480f61a922f688a51d254524859bc052798977d"
+    },
+    "experimental/witch_hunter/execution/assets/poses.png": {
+      "size": [
+        1536,
+        1024
+      ],
+      "sha256": "5c2c12c5914dfbf2789fc933f3c4cfcc301fca408698cb5aae4a2b948b85be06"
+    },
+    "experimental/witch_hunter/execution/assets/uppercut-corrected.png": {
+      "size": [
+        2172,
+        724
+      ],
+      "sha256": "475645bde879f1180e660428d9d91030f135e51415b5bf50a97744dd300462a8"
+    },
+    "experimental/witch_hunter/execution/assets/uppercut-lead-in.png": {
+      "size": [
+        1536,
+        1024
+      ],
+      "sha256": "4265500fccf81ef1bbd90c6c7966cb5fade23344786cab10c6f1e6a293c60b2b"
+    }
+  },
+  "consumers": [
+    "scripts/game_data.gd",
+    "scripts/party_builds.gd",
+    "scripts/combat_poses.gd",
+    "scripts/hero_appearance.gd",
+    "scripts/equipment_art.gd",
+    "scripts/warden_outfits.gd",
+    "scripts/standing_party.gd",
+    "scripts/camp_art.gd",
+    "scripts/ink_sprite_regions.gd",
+    "scenes/ui/hero_sheet.gd",
+    "scenes/ui/equipment_compare.gd",
+    "scenes/combat/combat_presentation.gd",
+    "scenes/combat/warden_execution.gd"
+  ],
+  "coverage": [
+    {
+      "hero": "warden",
+      "style": "original",
+      "weapons": [
+        "warden_epic",
+        "warden_frostblade",
+        "warden_legend",
+        "warden_sword"
+      ],
+      "prepared_poses": [],
+      "published": false
+    },
+    {
+      "hero": "warden",
+      "style": "alternate",
+      "weapons": [
+        "warden_epic",
+        "warden_frostblade",
+        "warden_legend",
+        "warden_sword"
+      ],
+      "prepared_poses": [],
+      "published": false
+    },
+    {
+      "hero": "warden",
+      "style": "relic",
+      "weapons": [
+        "warden_epic",
+        "warden_frostblade",
+        "warden_legend",
+        "warden_sword"
+      ],
+      "prepared_poses": [],
+      "published": false
+    },
+    {
+      "hero": "warden",
+      "style": "ashen_wolf",
+      "weapons": [
+        "warden_epic",
+        "warden_frostblade",
+        "warden_legend",
+        "warden_sword"
+      ],
+      "prepared_poses": [],
+      "published": false
+    },
+    {
+      "hero": "ranger",
+      "style": "original",
+      "weapons": [
+        "ranger_bow",
+        "ranger_epic",
+        "ranger_legend",
+        "ranger_venombow"
+      ],
+      "prepared_poses": [],
+      "published": false
+    },
+    {
+      "hero": "ranger",
+      "style": "alternate",
+      "weapons": [
+        "ranger_bow",
+        "ranger_epic",
+        "ranger_legend",
+        "ranger_venombow"
+      ],
+      "prepared_poses": [],
+      "published": false
+    },
+    {
+      "hero": "ranger",
+      "style": "relic",
+      "weapons": [
+        "ranger_bow",
+        "ranger_epic",
+        "ranger_legend",
+        "ranger_venombow"
+      ],
+      "prepared_poses": [],
+      "published": false
+    },
+    {
+      "hero": "crusader",
+      "style": "original",
+      "weapons": [
+        "crusader_axe",
+        "crusader_epic",
+        "crusader_legend",
+        "crusader_unique"
+      ],
+      "prepared_poses": [],
+      "published": false
+    },
+    {
+      "hero": "crusader",
+      "style": "alternate",
+      "weapons": [
+        "crusader_axe",
+        "crusader_epic",
+        "crusader_legend",
+        "crusader_unique"
+      ],
+      "prepared_poses": [],
+      "published": false
+    },
+    {
+      "hero": "crusader",
+      "style": "relic",
+      "weapons": [
+        "crusader_axe",
+        "crusader_epic",
+        "crusader_legend",
+        "crusader_unique"
+      ],
+      "prepared_poses": [],
+      "published": false
+    },
+    {
+      "hero": "occultist",
+      "style": "original",
+      "weapons": [
+        "occultist_epic",
+        "occultist_legend",
+        "occultist_plaguestaff",
+        "occultist_staff"
+      ],
+      "prepared_poses": [],
+      "published": false
+    },
+    {
+      "hero": "occultist",
+      "style": "alternate",
+      "weapons": [
+        "occultist_epic",
+        "occultist_legend",
+        "occultist_plaguestaff",
+        "occultist_staff"
+      ],
+      "prepared_poses": [],
+      "published": false
+    },
+    {
+      "hero": "occultist",
+      "style": "relic",
+      "weapons": [
+        "occultist_epic",
+        "occultist_legend",
+        "occultist_plaguestaff",
+        "occultist_staff"
+      ],
+      "prepared_poses": [],
+      "published": false
+    }
+  ],
+  "warden_proof": {
+    "style": "original",
+    "weapons": [
+      "warden_sword",
+      "warden_legend"
+    ],
+    "poses": [
+      "idle",
+      "windup",
+      "attack",
+      "guard",
+      "hurt",
+      "execution_0",
+      "execution_1",
+      "execution_2",
+      "execution_3",
+      "execution_4",
+      "execution_contact"
+    ],
+    "originals_retained": true
+  },
+  "region_encoding": "Godot Rect2 and Vector2 debug strings from the current registered selectors; coordinates are source pixels"
+}
