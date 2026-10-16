@@ -27,3 +27,7 @@ desktop.ini
 # Local investigation evidence and agent execution plans
 /review-output/
 /docs/superpowers/
+
+# Automated regression reports and Python test caches
+/artifacts/
+__pycache__/

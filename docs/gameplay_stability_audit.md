@@ -33,6 +33,6 @@ This audit does not certify every possible corrupt save or profile-progression f
 
 The [compact evidence record](gameplay_stability_evidence.json) preserves counts, outcomes and tested source hashes. Raw logs, reviewer reproductions and agent plans remain in the ignored local `review-output/` directory rather than the published tree.
 
-## Next unattended task
+## Automated follow-up
 
-Add a GitHub Actions regression gate: pin the verified Godot version, import the project, run the root smoke scripts with isolated save directories, and upload failure logs. This would catch save, combat and progression regressions on future changes. No workflow currently exists; this is a recommendation, not part of this audit's implementation. Address existing shutdown diagnostics as a separate scoped task rather than hiding them in CI.
+The recommended GitHub Actions regression gate is now implemented. See [Automated checks](automated_checks.md) for the pinned Godot version, isolated save directories, required PASS/error/timeout rules and downloadable logs. It checks the existing suite without changing gameplay values. Shutdown/resource diagnostics remain a separate scoped investigation.

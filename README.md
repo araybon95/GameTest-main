@@ -38,6 +38,8 @@ Use [Artwork and downloads](ARTWORK-DOWNLOADS.md) for current production sources
 
 ## Verification
 
+[Automated regression checks](docs/automated_checks.md) run on pushes and pull requests, with downloadable logs and per-test results.
+
 The latest full regression run passed **101 smoke scripts**, including 30 malformed-save cases. Two additional automated Old Road expeditions exercised actual actions and earned equipment. Engine/shutdown diagnostics remain documented; this is not a leak-free or human-balance certification. See the [audit report](docs/gameplay_stability_audit.md).
 
 Run an individual check with:

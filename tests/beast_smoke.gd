@@ -72,7 +72,7 @@ func run() -> void:
 	assert(State.run_complete and State.completed_expeditions.has("path_beast"))
 	assert(not State.can_embark("path_lament"))
 	assert(not State.select_expedition("path_lament"))
-	State.progress_path = "res://tests/.progress_test.cfg"
+	State.progress_path = "user://beast-progress-test.cfg"
 	State.progress_loaded = true
 	State.save_progression()
 	State.completed_expeditions.clear()

@@ -1,0 +1,87 @@
+name: Regression checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: regression-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    name: Godot smoke suite
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      GODOT_VERSION: 4.6.3
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Check out project
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      - name: Install verified Godot
+        run: |
+          mkdir -p "$RUNNER_TEMP/godot" artifacts
+          cd "$RUNNER_TEMP/godot"
+          curl --fail --location --retry 3 --output Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip \
+            "https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          sha512sum --check "$GITHUB_WORKSPACE/.github/godot-linux.sha512"
+          unzip -q Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
+          install -m 755 Godot_v${GODOT_VERSION}-stable_linux.x86_64 godot
+          echo "$RUNNER_TEMP/godot" >> "$GITHUB_PATH"
+
+      - name: Verify engine and runner
+        run: |
+          godot --version | tee artifacts/godot-version.txt
+          [[ "$(godot --version)" == "${GODOT_VERSION}.stable."* ]]
+          python3 -m unittest discover -s tests/ci -v 2>&1 | tee artifacts/runner-tests.log
+
+      - name: Restore imported artwork
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: .godot/imported
+          key: godot-${{ runner.os }}-4.6.3-imports-${{ hashFiles('project.godot', 'assets/**', '**/*.import', '**/.gdignore') }}
+          restore-keys: |
+            godot-${{ runner.os }}-4.6.3-imports-
+
+      - name: Import project
+        timeout-minutes: 10
+        run: |
+          mkdir -p "$RUNNER_TEMP/import-data" "$RUNNER_TEMP/import-config" "$RUNNER_TEMP/import-cache"
+          XDG_DATA_HOME="$RUNNER_TEMP/import-data" \
+          XDG_CONFIG_HOME="$RUNNER_TEMP/import-config" \
+          XDG_CACHE_HOME="$RUNNER_TEMP/import-cache" \
+            timeout 540 godot --headless --audio-driver Dummy --editor --path . --import 2>&1 | tee artifacts/import.log
+          if grep -q 'SCRIPT ERROR:' artifacts/import.log; then
+            exit 1
+          fi
+
+      - name: Run all smoke scripts
+        run: python3 tools/run_smoke_tests.py --jobs 2 --output artifacts/smoke
+
+      - name: Publish test summary
+        if: always()
+        run: |
+          if [[ -f artifacts/smoke/summary.md ]]; then
+            cat artifacts/smoke/summary.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Smoke suite did not complete setup. Inspect the job log and available artifacts.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload logs and results
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: regression-logs-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/
+          retention-days: 14
+          if-no-files-found: warn
