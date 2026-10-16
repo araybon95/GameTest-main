@@ -1,5 +1,5 @@
 {
-  "artwork_source_commit": "cc2dbf3850e7bfb4bcc6cdcffc0e2a001f8ce0eb",
+  "artwork_source_commit": "af4b83f63a5c9ee4c5092796eb5ee03e325b8dc6",
   "images": {
     "bandit-01-uppercut-recoil.png": {
       "dimensions": [
@@ -41,7 +41,7 @@
         620,
         430
       ],
-      "sha256": "51898ecf5ff1f0d58011f9469ca2c6240a10aae512563c23b04ff3da4155084f"
+      "sha256": "7f21c2d853259c95287fd6828306c252d6a0ab669678dd91a4969859a7f8b337"
     },
     "execution-02-jaw-contact.png": {
       "dimensions": [
@@ -76,7 +76,7 @@
         1280,
         720
       ],
-      "sha256": "8d01d52e4c1e1bae199ea31d91acdef79e8dafcd4ca8cce1f4ed508f96a9b07a"
+      "sha256": "515c5d07ff157cf10c4d9aad21bf6cb130d257a07f5e32c0f6d1ab7b14eb115c"
     },
     "witch-hunter-combat-poses.png": {
       "dimensions": [

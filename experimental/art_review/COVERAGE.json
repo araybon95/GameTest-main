@@ -1,25 +1,13 @@
 {
-  "source_commit": "80d401207b24c3e2bae3d096e1f3fedda0e79a3f",
-  "source_files": 505,
-  "unique_static_overview_images": 472,
-  "source_overview_pages": 118,
+  "date": "2026-10-16",
+  "artwork_source_commit": "af4b83f63a5c9ee4c5092796eb5ee03e325b8dc6",
   "native_frames": 160,
   "frame_families": 35,
-  "motion_files": 28,
-  "sampled_motion_frames": 332,
-  "coverage": "Historical inventory coverage: all original tracked source records map to an overview, duplicate alias, layer extraction or storyboard. This is inventory/export coverage, not complete visual inspection.",
-  "current_frames_update": {
-    "date": "2026-10-16",
-    "base_commit": "5990a1974b33d5ab9041299b7cfd9304fd951172",
-    "snapshot": "local repair working tree",
-    "native_frames": 160,
-    "stable_ids": "R0001\u2013R0160",
-    "origin_offsets_recorded": true,
-    "index": "01-current-frames.zip::01-current-frames/frame-index.json"
-  },
-  "repair_scope": {
-    "confirmed_findings_addressed": 13,
-    "report": "repairs/README.md",
-    "visual_audit_coverage": "partial; uncertain and unreviewed assets remain outside this repair pass"
-  }
+  "stable_ids": "R0001\u2013R0160",
+  "origin_offsets_recorded": true,
+  "index": "01-current-frames.zip::01-current-frames/frame-index.json",
+  "confirmed_findings_addressed": 13,
+  "report": "repairs/README.md",
+  "visual_audit_coverage": "partial; uncertain and unreviewed assets remain outside this repair pass",
+  "historical_overview_and_motion_archives_removed": true
 }

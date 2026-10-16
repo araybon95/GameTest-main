@@ -29,9 +29,9 @@ These use the existing playthrough harness and skip cinematic waits. They are fu
 
 ## Limits and preservation
 
-This audit does not certify every possible corrupt save or profile-progression file. It addresses reproduced load-boundary failures and their related consumer shapes. Headless font/resource teardown diagnostics are recorded separately from functional results; leak-free shutdown is not claimed. The final run had diagnostics in 18 scripts versus 16 at baseline: `apothecary_flow_smoke` and `corridor_smoke` additionally reported ObjectDB/resource teardown warnings. Those shutdown warnings were not investigated or attributed to the save correction. No artwork, ability values, prices, AP costs, cooldown durations or RNG rules were tuned. Prior pending art/presentation repairs remain intact. Changes are local and have not been committed or pushed by this audit.
+This audit does not certify every possible corrupt save or profile-progression file. It addresses reproduced load-boundary failures and their related consumer shapes. Headless font/resource teardown diagnostics are recorded separately from functional results; leak-free shutdown is not claimed. The final run had diagnostics in 18 scripts versus 16 at baseline: `apothecary_flow_smoke` and `corridor_smoke` additionally reported ObjectDB/resource teardown warnings. Those shutdown warnings were not investigated or attributed to the save correction. No artwork, ability values, prices, AP costs, cooldown durations or RNG rules were tuned. Prior pending art/presentation repairs remain intact. The audit originally completed locally; its reviewed fixes are included in the subsequent repository cleanup publication.
 
-Evidence, failing and passing logs, reviewer reproductions, the initial file snapshot and preservation manifest are under `review-output/2026-10-16-gameplay-audit/`. The execution plan is `docs/superpowers/plans/2026-10-16-gameplay-stability-audit.md`.
+The [compact evidence record](gameplay_stability_evidence.json) preserves counts, outcomes and tested source hashes. Raw logs, reviewer reproductions and agent plans remain in the ignored local `review-output/` directory rather than the published tree.
 
 ## Next unattended task
 

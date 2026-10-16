@@ -1,22 +1,22 @@
-# Download all artwork
+# Current artwork and downloads
 
-[Download the complete project ZIP, including ALL artwork](https://github.com/araybon95/GameTest-main/archive/25239b123b5e7fb9670b20386a4382b55842a15b.zip)
+[Download the current project ZIP](https://github.com/araybon95/GameTest-main/archive/refs/heads/main.zip)
 
-This snapshot contains **499 artwork files**: production art, experimental designs, PNG/SVG files, animation GIFs/videos, documentation captures and the current Krita-compatible OpenRaster files. The complete-project ZIP also contains game code and audio.
+This live branch download includes the working game, current artwork and retained design studies. Older revisions remain in Git history; they are not the current editing baseline.
 
-After extracting, the main artwork locations are:
-
-| Folder | Contents |
+| Use | Current source/download |
 | --- | --- |
-| `assets/art_library/` | Production heroes, enemies, environments, items, skills, portraits and atlas sheets. |
-| `experimental/` | All tracked experimental character designs, animation previews and source sheets, including historical iterations. |
-| `experimental/witch_hunter/krita-current/` | Latest Witch Hunter editing PNGs, layered scene `.ora`, and approved full-body concept `.ora`. |
-| `docs/` | Additional artwork/reference captures. |
+| Production art and selectable variants | [Live art library](assets/art_library/README.md) |
+| Character frames and source mapping | [Current 160-frame review pack](https://raw.githubusercontent.com/araybon95/GameTest-main/main/experimental/art_review/01-current-frames.zip) |
+| Ten-image Makko reference set | [Download and instructions](experimental/makko_reference/README.md) |
+| Witch Hunter layered Krita scene and concept | [Download current pack](https://raw.githubusercontent.com/araybon95/GameTest-main/main/experimental/witch_hunter/krita-current.zip) · [Individual files](experimental/witch_hunter/krita-current/README.md) |
+| Current motion and experimental designs | [Preview index](experimental/README.md) |
+| File inventory and SHA-256 hashes | [ARTWORK-MANIFEST.json](ARTWORK-MANIFEST.json) |
 
-Other tracked artwork, including root/UI and starter-pack images, is included in its original location. Historical experiments remain included: the curated `krita-current` folder identifies the latest Witch Hunter frames.
+For Krita, open PNGs directly or open `.ora` files to retain the supplied layers, then save a native `.kra` copy. The layered scene has character, enemy, ground and background layers plus hidden alternate poses. Armor pieces are not individually separated.
 
-[ARTWORK-MANIFEST.json](ARTWORK-MANIFEST.json) lists every artwork file, byte size and SHA-256 hash in source snapshot `25239b1`. All listed files were verified against the original repository files while building the artwork archive. The source ZIP link is pinned to that same complete artwork snapshot.
+Use the curated frame/Krita packs when editing an active pose. Runtime atlases can retain neighboring or alternate cells required by other states; do not delete or repaint a whole atlas merely because one cell is superseded.
 
-For Krita, open PNGs directly, or open `.ora` files and use **File → Save As → Krita Document (.kra)**. Texture definitions (`.tres`) are Godot support files.
+The artwork inventory describes the files in the current branch, with hashes as the source of truth. Review ZIPs have their own checksums. Neither an inventory nor a contact sheet certifies that every asset has been visually reviewed.
 
-A separate artwork-only GitHub Release upload was attempted, but the upload endpoint rejected the available credentials. The repository ZIP above provides the complete download through GitHub's existing repository archive service.
+Regenerate the inventory after artwork changes with `python3 tools/index_current_artwork.py`.

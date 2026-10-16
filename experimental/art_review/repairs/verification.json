@@ -1,7 +1,7 @@
 {
   "date": "2026-10-16",
   "base_commit": "5990a1974b33d5ab9041299b7cfd9304fd951172",
-  "snapshot": "local repair working tree; unpublished",
+  "snapshot": "reviewed artwork commit af4b83f63a5c9ee4c5092796eb5ee03e325b8dc6",
   "scope": "13 confirmed findings from the partial audit; no full-library certification",
   "findings": [
     {

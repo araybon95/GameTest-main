@@ -1,6 +1,6 @@
 # Tactical bosses, creature matchups and grimdark effects
 
-10 October 2026. This follows the ordinary expedition balance pass described in [ordinary_playthrough_balance.md](ordinary_playthrough_balance.md). Base enemy statistics, XP, prices and camp recovery remain unchanged; the following boss mechanics and equipment modifiers are deliberate additions.
+10 October 2026. This follows the ordinary expedition balance pass described in [Current verification](gameplay_stability_audit.md). Base enemy statistics, XP, prices and camp recovery remain unchanged; the following boss mechanics and equipment modifiers are deliberate additions.
 
 ## Boss actions
 

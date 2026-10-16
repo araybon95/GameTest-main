@@ -14,7 +14,7 @@ HERE = Path(__file__).resolve().parent
 IMAGES = HERE / "images"
 PACK = HERE / "makko-reference-pack.zip"
 FRAME_PACK = ROOT / "experimental/art_review/01-current-frames.zip"
-SCREENSHOT = ROOT / "review-output/2026-10-16-art-repairs/integrated/warden_transitions/095.png"
+SCREENSHOT = HERE / "images/10-current-gameplay-and-ui-context.png"
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 INK = "#17171b"
 PAPER = "#ede1ce"
@@ -102,7 +102,7 @@ def main():
 
     with zipfile.ZipFile(FRAME_PACK) as archive:
         index = json.loads(archive.read("01-current-frames/frame-index.json"))
-        assert index["snapshot"] == "2026-10-16 local repair working tree; not published"
+        assert len(index["frames"]) == 160
         frames = index["frames"]
         families = [("02-warden-current-poses.png", "default-warden", "WARDEN / CURRENT COMBAT POSES"),
                     ("03-witch-hunter-current-poses.png", "default-crusader", "WITCH HUNTER / CURRENT COMBAT POSES"),
@@ -214,15 +214,16 @@ def main():
     record(target, "Current HUD components and UI palette", sources, mapped)
 
     target = IMAGES / "10-current-gameplay-and-ui-context.png"
-    shutil.copyfile(SCREENSHOT, target)
+    if SCREENSHOT.resolve() != target.resolve():
+        shutil.copyfile(SCREENSHOT, target)
     assert sha(target) == sha(SCREENSHOT)
     record(target, "Current gameplay composition, scene scale, HUD and palette", [source(SCREENSHOT)])
 
     assert len(records) == 10
     assert len(list(IMAGES.glob("*.png"))) == 10
     manifest = {"date": "2026-10-16", "image_count": 10,
-                "base_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
-                "snapshot": "current local artwork including the verified 13-finding repair pass",
+                "artwork_source_commit": index["artwork_source_commit"],
+                "snapshot": "current reviewed artwork including the verified 13-finding repair pass",
                 "reference_frame_pack_sha256": sha(FRAME_PACK), "images": records,
                 "pixel_checks": pixel_checks,
                 "notes": ["Existing artwork only; no new generative artwork or source edits.",

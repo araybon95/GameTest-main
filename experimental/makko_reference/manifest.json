@@ -1,9 +1,9 @@
 {
   "date": "2026-10-16",
   "image_count": 10,
-  "base_commit": "5990a1974b33d5ab9041299b7cfd9304fd951172",
-  "snapshot": "current local artwork including the verified 13-finding repair pass",
-  "reference_frame_pack_sha256": "0a6b242764d7dd5049379da8c71509237f2200bad4762640a70a0d82aab83e30",
+  "artwork_source_commit": "af4b83f63a5c9ee4c5092796eb5ee03e325b8dc6",
+  "snapshot": "current reviewed artwork including the verified 13-finding repair pass",
+  "reference_frame_pack_sha256": "0660bc45b4324c65ce2ce2438c24e6008bddab9711151bf8c086e96e9332387f",
   "images": [
     {
       "file": "images/01-witch-hunter-approved-character.png",
@@ -2004,7 +2004,7 @@
       "sha256": "ade26781c476a431a82b8f76df1ea1b2e868f3eb5e3c9175e4c4755af4ee6fff",
       "sources": [
         {
-          "path": "review-output/2026-10-16-art-repairs/integrated/warden_transitions/095.png",
+          "path": "experimental/makko_reference/images/10-current-gameplay-and-ui-context.png",
           "sha256": "ade26781c476a431a82b8f76df1ea1b2e868f3eb5e3c9175e4c4755af4ee6fff"
         }
       ],

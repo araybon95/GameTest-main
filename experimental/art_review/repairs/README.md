@@ -1,6 +1,6 @@
 # Art consistency repairs — 2026-10-16
 
-This pass fixes the 13 confirmed audit findings in the working tree based on `5990a1974b33d5ab9041299b7cfd9304fd951172`. It preserves the approved designs and combat timing. The scope is the confirmed findings, not a complete review of all 505 source records.
+This pass fixes the 13 confirmed audit findings in reviewed artwork commit `af4b83f63a5c9ee4c5092796eb5ee03e325b8dc6`. It preserves the approved designs and combat timing. The scope is the confirmed findings, not a complete review of all 505 source records.
 
 ## Inspect the results
 
@@ -38,4 +38,4 @@ All 11 focused smoke scripts passed: art consistency, Warden execution registrat
 
 The 160-frame ZIP passed CRC validation and per-frame hash checks. Frame IDs are stable, and the index records source hashes and origin offsets. Godot's existing alpha-border import processing remains enabled; native exports therefore match imported textures, while the source repair pixel counts above refer to the actual PNG files. The [verification manifest](verification.json) records the checks, source hashes and preview metadata.
 
-The original audit coverage remains partial. Uncertain flags are not relabeled as fixed, and historical source-overview/animation ZIPs were not regenerated. These changes and refreshed artifacts have not been pushed to GitHub as part of this pass.
+The audit coverage remains partial. Uncertain flags are not relabeled as fixed. Superseded source-overview/animation ZIPs have been removed from the current branch; use the refreshed frame pack and previews above.

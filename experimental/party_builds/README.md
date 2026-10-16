@@ -6,10 +6,10 @@
 
 The approved builds are now integrated into default-outfit combat presentation. Selected alternate and equipment outfits retain their own art. Gameplay, equipment and rewards are unchanged.
 
-- [Integrated combat lineup](combat-lineup.png)
-- [Integrated Ranger attack](combat-ranger.mp4)
-- [Melee lineup](combat-melee-lineup.png)
-- [Crusader charge](combat-charge.png)
+- [Current gameplay reference](../makko_reference/images/10-current-gameplay-and-ui-context.png)
+- [Current character reference sheets](../makko_reference/README.md)
+
+Older integrated lineup/charge captures have been removed. The before/after comparison and original bow study are retained as design references, not the current Witch Hunter baseline.
 
 The proposed Warden and Crusader have broader armored shoulders, heavier limbs and larger melee silhouettes. The Ranger and Occultist have leaner builds. The Ranger stands with his feet closer together and slightly staggered, with a more upright archery posture. Existing colors, clothing, masks and weapons are preserved.
 

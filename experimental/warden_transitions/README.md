@@ -20,6 +20,6 @@ The left panel shows the older attack-profile timing; the right uses current tim
 godot --path . --screen 0 --script experimental/warden_transitions/export_preview.gd -- /tmp/warden-transitions
 ```
 
-The original [comparison video](comparison.mp4), [comparison GIF](comparison.gif) and [windup still](heavy-windup.png) are **historical study captures**. They predate the 2026-10-16 audit repairs and include the superseded dissolve approach. Use the current links above to assess the repaired motion.
+The superseded comparison clips and windup still have been removed. Use the current links above to assess repaired motion; the runnable comparison source remains available.
 
 The integrated video was refreshed through `tests/warden_transitions_preview.gd`, capturing 96 frames in the actual combat scene. The isolated clips use the current motion module sampled at 60 FPS, without the production camera, lunge or effects; their GIF exports play at 30 FPS. See the [repair report](../art_review/repairs/README.md) for scope and validation.

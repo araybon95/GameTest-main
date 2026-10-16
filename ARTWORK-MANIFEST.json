@@ -1,12 +1,15 @@
 {
-  "source_commit": "25239b123b5e7fb9670b20386a4382b55842a15b",
-  "artwork_count": 499,
+  "repository": "araybon95/GameTest-main",
+  "snapshot": "current branch contents; per-file hashes identify the exact artwork",
+  "artwork_file_count": 516,
+  "artwork_types": {
+    ".gif": 16,
+    ".mp4": 15,
+    ".ora": 2,
+    ".png": 352,
+    ".svg": 131
+  },
   "files": [
-    {
-      "path": "Sound FX Starter Pack Vol. 1/- Thank You.png",
-      "bytes": 118507,
-      "sha256": "ee1d4d6ee5b65cf58d17b0b23dfdfe5b1ace659132fd198c6ed6d72f0952e233"
-    },
     {
       "path": "assets/art_library/appearance/hero_crusader_outfit.png",
       "bytes": 2426642,
@@ -1269,8 +1272,8 @@
     },
     {
       "path": "assets/art_library/party_builds/occultist.png",
-      "bytes": 2504750,
-      "sha256": "b9970181ffdd103f314b638c5b86f70df68102fe6938d3d8f6cc928cb661b67c"
+      "bytes": 2473485,
+      "sha256": "8a6d7d00aec3f775479dfd453e373e6baaa53c09ba940df40923910603b3c15f"
     },
     {
       "path": "assets/art_library/party_builds/ranger.png",
@@ -1279,8 +1282,8 @@
     },
     {
       "path": "assets/art_library/party_builds/warden.png",
-      "bytes": 2657941,
-      "sha256": "f097c9c7e86eb9ff2b002fe4df8c2c39223a69673237a03212847362bb97a0c2"
+      "bytes": 2630171,
+      "sha256": "79ca031dce13db866c6761d0215b4dad9fe3185411488cc1395e898992e47c56"
     },
     {
       "path": "assets/art_library/presentation/dungeons/apothecary/background.png",
@@ -2123,6 +2126,86 @@
       "sha256": "5aa885c1724550a1ae4434e2c2a25bfa56494f55b36ed047bd01ec27ad9e8b5a"
     },
     {
+      "path": "experimental/art_review/repairs/local-art-dark.png",
+      "bytes": 384628,
+      "sha256": "92a1f0f163935594da2dfd4b905a338fba4c3ee14f177c5de1db97f07aad67b7"
+    },
+    {
+      "path": "experimental/art_review/repairs/local-art-light.png",
+      "bytes": 403933,
+      "sha256": "453b5a5220cde03e9c7591a1b92763d8a18cfb66d07550886f006a2be0a79ea0"
+    },
+    {
+      "path": "experimental/art_review/repairs/occultist-poses.gif",
+      "bytes": 196513,
+      "sha256": "b3097664782d7d832b851b0ad6a5c02921904ca371d0360747a33ec160327db1"
+    },
+    {
+      "path": "experimental/art_review/repairs/occultist-poses.mp4",
+      "bytes": 117958,
+      "sha256": "3cd13ff0cc1de048cbfbe878fc08ee90208f9cf515024f4554d2545864f64974"
+    },
+    {
+      "path": "experimental/art_review/repairs/raider-export.png",
+      "bytes": 154581,
+      "sha256": "0996cd9114d0a45863500e42fa7d743019d9c26489f1f93de232facc270b86c1"
+    },
+    {
+      "path": "experimental/art_review/repairs/warden-execution-integrated.mp4",
+      "bytes": 921281,
+      "sha256": "f338307027e6ba4c605faee99c8a9e997a4113f6a51b0ca9bf0af91de1ee4416"
+    },
+    {
+      "path": "experimental/art_review/repairs/warden-execution-motion.gif",
+      "bytes": 4349705,
+      "sha256": "6f8fdbefef02fc6fd066d55103ec3555eb0194a5d61510af93b186f9071803fc"
+    },
+    {
+      "path": "experimental/art_review/repairs/warden-execution-motion.mp4",
+      "bytes": 422496,
+      "sha256": "715465e32228b4e2e9b34d374a4236ae52b04a23a3040aa702f6bda57205f0d8"
+    },
+    {
+      "path": "experimental/art_review/repairs/warden-execution-reduced.gif",
+      "bytes": 590255,
+      "sha256": "777dd4763e949ba9401f91eb1292dcad899a271d4c80ae4af029fbbf52d6d018"
+    },
+    {
+      "path": "experimental/art_review/repairs/warden-execution-reduced.mp4",
+      "bytes": 220545,
+      "sha256": "a6718b0cb603f30b3294932bf6958f1954a4ebde39f451ca62739d130b445995"
+    },
+    {
+      "path": "experimental/art_review/repairs/warden-heavy.gif",
+      "bytes": 1173157,
+      "sha256": "4209a9aad61b0f68c4a69c2ded736dce8ddf270f416305c54b88eb8fb994ff59"
+    },
+    {
+      "path": "experimental/art_review/repairs/warden-heavy.mp4",
+      "bytes": 161372,
+      "sha256": "3e6fa6b3f879c1af7c5d459add23a98a5bc55069e8a81e48aabeee5ae05d9021"
+    },
+    {
+      "path": "experimental/art_review/repairs/warden-slash.gif",
+      "bytes": 949477,
+      "sha256": "5d62732ea85a4503350294827f6e4744c3d1ffd71eed72bd8bca2bb2e7031cd0"
+    },
+    {
+      "path": "experimental/art_review/repairs/warden-slash.mp4",
+      "bytes": 133823,
+      "sha256": "0bfa00472408870052bd1efd1896e9bf530b6e1cc7e6507d6d5a4bf4b6f9cb23"
+    },
+    {
+      "path": "experimental/art_review/repairs/witch-hunter-execution-reduced.gif",
+      "bytes": 779148,
+      "sha256": "719f77c6edc18dbf5a49b1329e0403d9d932deccd5a1ecc6c1fb8cd41770ffa1"
+    },
+    {
+      "path": "experimental/art_review/repairs/witch-hunter-execution-reduced.mp4",
+      "bytes": 529992,
+      "sha256": "5463c9bf11bccfb345f81bd9422d95f886f6bf98506a6aa58dda1139467edab8"
+    },
+    {
       "path": "experimental/battlefield_ground/battlefield-ground.gif",
       "bytes": 2235839,
       "sha256": "d61c93eed345e65ecaa807946d071ed458fc55767ff324fc71ea4b22d0b4dd53"
@@ -2133,14 +2216,59 @@
       "sha256": "9f3592546acdbf64e0fb46c544062be777498a9a6ed8ca86f3871634e6ff70e4"
     },
     {
-      "path": "experimental/hooded-raider-animation.gif",
-      "bytes": 891457,
-      "sha256": "ca52897fc58bfb813f0445df3ec43b2c7a096b4cbf0a7510f81e7f5c7c272063"
-    },
-    {
       "path": "experimental/hooded-raider-breathing.gif",
       "bytes": 655687,
       "sha256": "6f4f8e7cf6b795494280e3d839d19d2ab199e46b1ec9b9120e818522e3c1c22f"
+    },
+    {
+      "path": "experimental/makko_reference/images/01-witch-hunter-approved-character.png",
+      "bytes": 1606171,
+      "sha256": "0539c0dffa9f35fe830f11072f76eb1d150238ebb3c6148ee99efb5703a8c9c8"
+    },
+    {
+      "path": "experimental/makko_reference/images/02-warden-current-poses.png",
+      "bytes": 1795157,
+      "sha256": "d2518bfb2fdaf4e666ee26a3d010e39c79df1f0671416729084520640b4b98d1"
+    },
+    {
+      "path": "experimental/makko_reference/images/03-witch-hunter-current-poses.png",
+      "bytes": 1308699,
+      "sha256": "a261d88ec307a76f72ffa33fb36631b339c45c9436ac260fe4b2987771d57cfa"
+    },
+    {
+      "path": "experimental/makko_reference/images/04-ranger-current-poses.png",
+      "bytes": 1164959,
+      "sha256": "ecb3a3569a113eca5a74d05a22d7c12c34821e5596742adfd6aff8193f358785"
+    },
+    {
+      "path": "experimental/makko_reference/images/05-occultist-current-poses.png",
+      "bytes": 1562903,
+      "sha256": "1d04fc09ea1c71171721c625b0a173f065836a3a90256c9772680783a65a9ab8"
+    },
+    {
+      "path": "experimental/makko_reference/images/06-hooded-raider-current-poses.png",
+      "bytes": 1392543,
+      "sha256": "87642e7db7fe6efbf294168889128f49b63113711078c07f536cbf37c05b39c0"
+    },
+    {
+      "path": "experimental/makko_reference/images/07-ui-painted-ability-icons.png",
+      "bytes": 1678165,
+      "sha256": "ffad1ad70f8a8b933b5a145da9ad8fc947eb99ad4a5fa00d1f218f682c2d3126"
+    },
+    {
+      "path": "experimental/makko_reference/images/08-ui-items-equipment-and-rituals.png",
+      "bytes": 4118439,
+      "sha256": "4d641513f9f6b886f352425686957fe380ab2a11f801cbe93fe8601d2cf79236"
+    },
+    {
+      "path": "experimental/makko_reference/images/09-ui-frames-banner-and-status.png",
+      "bytes": 153256,
+      "sha256": "3f0d89e138460c96b0a389af9343371b3afc4248e5cedb43c2eb1dbcaeca0727"
+    },
+    {
+      "path": "experimental/makko_reference/images/10-current-gameplay-and-ui-context.png",
+      "bytes": 1913608,
+      "sha256": "ade26781c476a431a82b8f76df1ea1b2e868f3eb5e3c9175e4c4755af4ee6fff"
     },
     {
       "path": "experimental/party_builds/assets/party-builds.png",
@@ -2151,26 +2279,6 @@
       "path": "experimental/party_builds/assets/ranger-stance.png",
       "bytes": 2151899,
       "sha256": "966afccd731858dc0f3d5d60fe47a27d5a63f77af152d4f005297ac09d2601b9"
-    },
-    {
-      "path": "experimental/party_builds/combat-charge.png",
-      "bytes": 1349960,
-      "sha256": "6841d24e9434a59cfebf078d9df564b12f443677104528e64230fa7ced12364a"
-    },
-    {
-      "path": "experimental/party_builds/combat-lineup.png",
-      "bytes": 1916493,
-      "sha256": "a96328ef9ba99a1e75756c8b0da27ad812cb58e4430fcce593dd098cd78de487"
-    },
-    {
-      "path": "experimental/party_builds/combat-melee-lineup.png",
-      "bytes": 1930075,
-      "sha256": "bcba47a319f186ed6b2531980c77dd243b6099f5388f53b40680ea6cffbf6dd8"
-    },
-    {
-      "path": "experimental/party_builds/combat-ranger.mp4",
-      "bytes": 1214896,
-      "sha256": "c6edae7d367519dda182c7df48828d321e0124e560100a24587ca3d6119a631b"
     },
     {
       "path": "experimental/party_builds/party-comparison.png",
@@ -2268,59 +2376,14 @@
       "sha256": "91ac704fd78e47d364da5bb1177d7f4ff0cfffa6af1bc15988af3c15b18f7d66"
     },
     {
-      "path": "experimental/warden_showcase/warden-execution.gif",
-      "bytes": 3006584,
-      "sha256": "d8c7f99c3bdd84387cebc845a7fe5b4e1eee1492ebd48eb2be1218472703c495"
-    },
-    {
-      "path": "experimental/warden_showcase/warden-execution.mp4",
-      "bytes": 391753,
-      "sha256": "d56bdb3f436058f806621ffb4c45c3ab5ff5fa69f882c5c6058078bc34b86296"
-    },
-    {
-      "path": "experimental/warden_showcase/warden-integrated.gif",
-      "bytes": 1332425,
-      "sha256": "a83d376a8bd8a5602cf14b44bfee84136ff7138cd240c2b15bde6fbdb90ab037"
-    },
-    {
-      "path": "experimental/warden_showcase/warden-integrated.mp4",
-      "bytes": 346394,
-      "sha256": "f546c46cef72ee3ef7890c2f1197b7028fcd5249b9e30f79eeb2c31be6747642"
-    },
-    {
-      "path": "experimental/warden_showcase/warden-showcase.gif",
-      "bytes": 5295209,
-      "sha256": "fc0bc68318fe9b7fd50c3ef6fdbea7139df269769c8fec3569cc2f164fc7bd70"
-    },
-    {
-      "path": "experimental/warden_showcase/warden-showcase.mp4",
-      "bytes": 784793,
-      "sha256": "eb4ec7f7ec7b6d65768be16d1a1d4158d2d46178083c9183793ca3c4ad25f4a2"
-    },
-    {
-      "path": "experimental/warden_transitions/comparison.gif",
-      "bytes": 2272642,
-      "sha256": "33302643d5443aadd02302177fbb0579c2d5d1a4136136d462144a120e9c0a76"
-    },
-    {
-      "path": "experimental/warden_transitions/comparison.mp4",
-      "bytes": 833381,
-      "sha256": "9b3992c7403a7e2091d75e38ddfaf027fc1e3119ef5132771930b4a9337f29f8"
-    },
-    {
-      "path": "experimental/warden_transitions/heavy-windup.png",
-      "bytes": 734634,
-      "sha256": "92d3014df1e2feb54d8accb109d0856d948d2ed85d49c5cde5f07cbe20f87a4d"
-    },
-    {
       "path": "experimental/warden_transitions/integrated-combat.mp4",
-      "bytes": 1921218,
-      "sha256": "3b2358518ddc18da6deb1260bd36592cfb51354e1243d210ab8afaf840ecbcfa"
+      "bytes": 2419447,
+      "sha256": "886c6ec736bbbe91528d196e38c6a3d394315805793377b80c5f53333112f9a1"
     },
     {
       "path": "experimental/warden_transitions/integrated-heavy.png",
-      "bytes": 1298482,
-      "sha256": "722dd2e70e13ae4a856c10f5f1e7b17c6a4d830613f526a512119c21dc899623"
+      "bytes": 1297320,
+      "sha256": "8da816960bfb5f7c971d45fd14e13fb05f517eca3888f27e8f40607b64e6519e"
     },
     {
       "path": "experimental/witch_hunter/clean-concept.png",
@@ -2354,8 +2417,8 @@
     },
     {
       "path": "experimental/witch_hunter/execution/assets/uppercut-lead-in.png",
-      "bytes": 2306310,
-      "sha256": "91b269603acb7c5da1f50953eff120b4375f83cf04425503b31ff0e95aee4025"
+      "bytes": 2288361,
+      "sha256": "4265500fccf81ef1bbd90c6c7966cb5fade23344786cab10c6f1e6a293c60b2b"
     },
     {
       "path": "experimental/witch_hunter/execution/cleaver-drop.png",
@@ -2374,8 +2437,8 @@
     },
     {
       "path": "experimental/witch_hunter/execution/lead-in.png",
-      "bytes": 1037300,
-      "sha256": "6b55e82ac027d01c283f4772d81ab9cd9372caa98b6be7f520f95a7c0e1b6b3c"
+      "bytes": 1038737,
+      "sha256": "f3cfdc94984249d83ef23370933364699bea48f4cb1909e28ca800987069d460"
     },
     {
       "path": "experimental/witch_hunter/execution/uppercut.png",
@@ -2384,13 +2447,43 @@
     },
     {
       "path": "experimental/witch_hunter/execution/witch-hunter-execution.gif",
-      "bytes": 1762594,
-      "sha256": "54856e8e85f2bfacf9b209a916870f5b7e6d464f04dbe956f79ba3f66e2aec28"
+      "bytes": 2179968,
+      "sha256": "7fa2b6219233d315e0e73db47ceaddae903dec71fbd553bfe9d3f9d6d733388d"
     },
     {
       "path": "experimental/witch_hunter/execution/witch-hunter-execution.mp4",
-      "bytes": 716671,
-      "sha256": "4eab0af13d58451ddb86423be287422080b5098c56402c362dc3a6aae6908a32"
+      "bytes": 707912,
+      "sha256": "a1a568cd9856180ccbc569eca7f635082449b85cfea2f7902b5b2c32176462e8"
+    },
+    {
+      "path": "experimental/witch_hunter/judgment/assets/contact.png",
+      "bytes": 2392775,
+      "sha256": "8877f52d68f6e8e48e34ecea2dd534238a64ad2553dc9ef322fcbb83259a044d"
+    },
+    {
+      "path": "experimental/witch_hunter/judgment/assets/poses.png",
+      "bytes": 1715761,
+      "sha256": "5c22dad837222f4db37126d3e96e97583e0e135ffe9bc6430dab894ba4592d13"
+    },
+    {
+      "path": "experimental/witch_hunter/judgment/contact.png",
+      "bytes": 1060667,
+      "sha256": "ec39179c610f9c69207b017bf9ef34ae83e7bf4d55353df70a4982351ad3a8de"
+    },
+    {
+      "path": "experimental/witch_hunter/judgment/judgment.gif",
+      "bytes": 1150174,
+      "sha256": "7d4816616998a5db74d84f086c3ee2555cd1d3c155741356837917e544962958"
+    },
+    {
+      "path": "experimental/witch_hunter/judgment/judgment.mp4",
+      "bytes": 521999,
+      "sha256": "beb90363f25f50fc22ae16e5f6ece820d088095c425cf727e2cedc833c9ee2e9"
+    },
+    {
+      "path": "experimental/witch_hunter/judgment/recovery.png",
+      "bytes": 1028017,
+      "sha256": "d87de0bcf9b9b48e9ab38e2e8483c8120ceb69f8cb650e9ea719d7347c93ad65"
     },
     {
       "path": "experimental/witch_hunter/krita-current/bandit-01-uppercut-recoil.png",
@@ -2419,8 +2512,8 @@
     },
     {
       "path": "experimental/witch_hunter/krita-current/execution-01-uppercut-preparation.png",
-      "bytes": 377719,
-      "sha256": "51898ecf5ff1f0d58011f9469ca2c6240a10aae512563c23b04ff3da4155084f"
+      "bytes": 379041,
+      "sha256": "7f21c2d853259c95287fd6828306c252d6a0ab669678dd91a4969859a7f8b337"
     },
     {
       "path": "experimental/witch_hunter/krita-current/execution-02-jaw-contact.png",
@@ -2444,8 +2537,8 @@
     },
     {
       "path": "experimental/witch_hunter/krita-current/scene-preview.png",
-      "bytes": 1130244,
-      "sha256": "8d01d52e4c1e1bae199ea31d91acdef79e8dafcd4ca8cce1f4ed508f96a9b07a"
+      "bytes": 1131196,
+      "sha256": "515c5d07ff157cf10c4d9aad21bf6cb130d257a07f5e32c0f6d1ab7b14eb115c"
     },
     {
       "path": "experimental/witch_hunter/krita-current/witch-hunter-combat-poses.png",
@@ -2455,7 +2548,7 @@
     {
       "path": "experimental/witch_hunter/krita-current/witch-hunter-concept.ora",
       "bytes": 4753201,
-      "sha256": "3738db9c368dd6c34b66bd3478deb4b5844087f8f445948b7ec9e96323dc13c3"
+      "sha256": "d935a3a6570d8f4feefbb16a5f708abc475860f58e66b2f58c78a75b9c6e06bd"
     },
     {
       "path": "experimental/witch_hunter/krita-current/witch-hunter-concept.png",
@@ -2469,8 +2562,8 @@
     },
     {
       "path": "experimental/witch_hunter/krita-current/witch-hunter-scene.ora",
-      "bytes": 4141800,
-      "sha256": "d5a907237452e382ac57d13940077f6d62b386edfe80c065582a69fa004fc073"
+      "bytes": 4143420,
+      "sha256": "ccb1f9d3f22eec12cef718479a60fd10e7ee52cc6c4db84229b6e1eefdcc726d"
     },
     {
       "path": "experimental/witch_hunter/skills-idle.png",
@@ -2497,5 +2590,10 @@
       "bytes": 995,
       "sha256": "6c80384360a5b269d1054bfb27241258154e2cc8167c522016fdc1820e84e0f8"
     }
+  ],
+  "notes": [
+    "Includes current sources, selectable variants, retained studies and editing exports.",
+    "ZIP containers, engine import caches and ignored local audit outputs are excluded.",
+    "An inventory is not a complete visual-consistency certification."
   ]
 }

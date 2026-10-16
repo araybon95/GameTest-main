@@ -1,8 +1,10 @@
 # Makko AI — ten-image game reference pack
 
+[Download reference ZIP](https://raw.githubusercontent.com/araybon95/GameTest-main/main/experimental/makko_reference/makko-reference-pack.zip) · [Browse the ten PNGs](images/)
+
 Download `makko-reference-pack.zip`, extract it, then upload **the ten PNGs in `images/`** to Makko. The ZIP contains exactly ten image files. Paste `MAKKO-PROMPT.txt` with them and replace its character/action or UI request with the asset you want to generate.
 
-These references use the current local artwork, including the completed art repairs. They emphasize the project's painted, engraved grimdark style: heavy ink contours, angular shadow shapes, worn iron and bronze, weathered cloth and restrained crimson, violet and gold accents.
+These references use the current reviewed artwork, including the completed art repairs. They emphasize the project's painted, engraved grimdark style: heavy ink contours, angular shadow shapes, worn iron and bronze, weathered cloth and restrained crimson, violet and gold accents.
 
 | Upload | Reference | Purpose |
 | --- | --- | --- |
@@ -29,7 +31,7 @@ For new animation frames, specify the character, action, frame count and target 
 
 The approved concept is displayed at its original size on parchment white; the gameplay capture is an exact file copy. Character and ability sheets display existing RGBA tiles at native scale on a neutral background, without repainting or resampling. The item reference keeps both original source sheets intact, stacked vertically, so painted details that cross nominal tile boundaries stay with their neighbors. Opaque reference pages prevent colors hidden in transparent source pixels from appearing when an image service drops alpha. The UI board displays existing components on the same neutral background; only the explicitly marked status detail views are enlarged. No new generative artwork was used for this export, and no game source artwork was changed.
 
-`manifest.json` records source paths, hashes, frame IDs, source rectangles and output tile positions. `SHA256SUMS.txt` verifies the ten images. The pack represents the local repaired working tree. Reference-pack publication is separate from integration of the pending game changes. Upload the images to Makko after downloading them.
+`manifest.json` records source paths, hashes, frame IDs, source rectangles and output tile positions. `SHA256SUMS.txt` verifies the ten images. The pack represents reviewed repair commit `af4b83f63a5c9ee4c5092796eb5ee03e325b8dc6`. Upload the ten extracted images to Makko after downloading them.
 
 To rebuild after refreshing the current-frame archive, run from the repository root:
 
@@ -37,4 +39,4 @@ To rebuild after refreshing the current-frame archive, run from the repository r
 python3 experimental/makko_reference/build_pack.py
 ```
 
-The builder uses Pillow, validates source hashes against the repaired frame index, checks each native-scale tile against its expected background composite, and verifies the final ZIP. It expects the recent gameplay capture recorded in its `SCREENSHOT` constant. Refresh that path when choosing a newer capture.
+The builder uses Pillow, validates source hashes against the repaired frame index, checks each native-scale tile against its expected background composite, and verifies the final ZIP. It uses the included current gameplay-context image, so it does not depend on ignored local audit files. Replace that capture when selecting a newer composition reference.

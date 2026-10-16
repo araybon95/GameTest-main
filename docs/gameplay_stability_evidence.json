@@ -1,0 +1,57 @@
+{
+  "engine": "4.6.3.stable.official.7d41c59c4",
+  "baseline": {
+    "tests": 100,
+    "functional_passes": 100,
+    "tests_with_diagnostics": 16
+  },
+  "final": {
+    "tests": 101,
+    "functional_passes": 101,
+    "tests_with_diagnostics": 18,
+    "new_diagnostic_test_names": [
+      "apothecary_flow_smoke",
+      "corridor_smoke"
+    ],
+    "script_errors": 0,
+    "timeouts": 0
+  },
+  "malformed_save_variants": 30,
+  "ordinary_playthroughs": [
+    {
+      "third_hero": "healer",
+      "seed": 2026,
+      "route": "prepared",
+      "exit_code": 0,
+      "seconds": 149.37,
+      "outcomes": [
+        {
+          "outcome": "complete",
+          "ending_floor": 3,
+          "fights": 12
+        }
+      ]
+    },
+    {
+      "third_hero": "crusader",
+      "seed": 2026,
+      "route": "prepared",
+      "exit_code": 0,
+      "seconds": 130.02,
+      "outcomes": [
+        {
+          "outcome": "retreat_after_casualty",
+          "ending_floor": 2,
+          "fights": 8
+        }
+      ]
+    }
+  ],
+  "date": "2026-10-16",
+  "reviewed_repairs_commit": "af4b83f63a5c9ee4c5092796eb5ee03e325b8dc6",
+  "tested_runtime_sha256": {
+    "scripts/save_files.gd": "4c00e29b2f11481c647c229e57090225dc041edfa0c14c1fb00ca69442a45909",
+    "tests/save_runtime_validation_smoke.gd": "ed0234735d959b0ab1d63f717d2d874d2722d2f1be7f7c956e351fa20f9e299b"
+  },
+  "scope": "Audit-time functional results; shutdown diagnostics are not a leak-free certification."
+}

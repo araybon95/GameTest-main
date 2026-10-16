@@ -1,13 +1,13 @@
-# Warden attack showcase
+# Warden staging reference
 
-An isolated, standalone combat presentation experiment with three different
+Retained runnable source for the original isolated staging study, with three different
 painted Warden attacks. Normal game combat and balancing are unchanged.
 
-- [Watch the looping GIF](warden-showcase.gif)
-- [Download the MP4](warden-showcase.mp4)
+- [Current integrated attacks](../warden_transitions/README.md)
+- [Current repaired motion](../art_review/repairs/README.md)
 - [Separate Warden execution experiment](EXECUTION.md)
 
-The nine-second clip shows Slash, Heavy Strike and Shield Bash in that order.
+The study shows Slash, Heavy Strike and Shield Bash in that order. Its superseded clips have been removed; current production previews are linked above.
 Each has dedicated windup, contact and recovery artwork. The foreground Warden
 and Raider receive focused framing while the other silhouettes and room fade
 back. Camera scale, approach distance, contact hold and target recoil differ

@@ -1,34 +1,21 @@
 # Current Witch Hunter artwork for Krita
 
-Open **witch-hunter-scene.ora** in Krita for the layered 1280×720 scene. The Witch Hunter, bandit, background and ground are separate visible layers. Nine alternate pose/contact/prop layers start hidden. Toggle visibility in the Layers panel to work on them.
+[Download this pack](https://raw.githubusercontent.com/araybon95/GameTest-main/main/experimental/witch_hunter/krita-current.zip)
 
-Open **witch-hunter-concept.ora** for the approved full-body illustration at its original 1024×1536 resolution. It contains one raster illustration layer; armor pieces are not separately layered.
+Open **witch-hunter-scene.ora** for the layered 1280×720 scene. The Witch Hunter, bandit, background and ground are separate visible layers; nine alternate poses/contact/prop layers start hidden. Open **witch-hunter-concept.ora** for the full-body 1024×1536 illustration with one raster layer. Armor pieces are not individually separated.
 
-Use **File → Save As → Krita Document (.kra)** to create your native editable copy. These are standard OpenRaster files; Krita itself was not available here for an application-level open test. Archive structure, layer PNGs, transparency and checksums were validated.
+Use **File → Save As → Krita Document (.kra)** for your native editing copy. Source PNGs retain their export dimensions. The scene uses the current preview composition without UI. Krita itself was not available for an application-level open test; OpenRaster structure, layer dimensions, transparency and checksums are validated.
 
-The source PNG exports remain included at their original resolution; the layered scene uses the 1280×720 preview composition, without game UI.
+Refreshed on 2026-10-16 from reviewed artwork commit `af4b83f63a5c9ee4c5092796eb5ee03e325b8dc6`, including the repaired opening faceplate and shoulder plaque. `manifest.json` records the individual image hashes.
 
-
-This pack was exported from the current animation at source revision `cc2dbf3`. The source revision remains current for the artwork in this pack: later packaging commits only add these downloads and documentation.
-
-These are the frames actually used by the animation, with no obsolete neighboring poses included. The source artwork files are PNGs; the `.ora` files package those raster layers for Krita. Transparent margins register the character to its foot anchor; preserve canvas dimensions and those margins while editing.
-
-| File | Contents |
+| Files | Contents |
 | --- | --- |
-| witch-hunter-concept.png | Latest approved full-body concept, including sigil, armor cleanup and dried blood. |
-| witch-hunter-combat-poses.png | Current production combat sheet. |
-| witch-hunter-idle.png | Current registered idle frame. |
-| execution-01-uppercut-preparation.png | Latest natural arm pose, squared hammer and low jaw approach. |
-| execution-02-jaw-contact.png | Corrected uppercut contact. |
-| execution-03-overhead-windup.png | Current raised hammer pose. |
-| execution-04-crushing-contact.png | Current paired crushing impact. |
-| execution-05-downswing-followthrough.png | Current downswing pose. |
-| bandit-idle.png | Current unhit bandit. |
-| bandit-01-uppercut-recoil.png | Recoil body with the loose weapon omitted; weapon animates separately. |
-| bandit-02-buckling.png | Current wounded buckling body. |
-| bandit-03-collapsed.png | Current collapsed body. |
-| bandit-cleaver-complete.png | Complete standalone weapon with handle, bolster and pommel. |
+| witch-hunter-concept.png / .ora | Approved full-body identity |
+| witch-hunter-combat-poses.png | Current production combat sheet |
+| witch-hunter-idle.png | Registered active idle |
+| execution-01…05 PNGs | Preparation, jaw contact, overhead windup, crushing contact and followthrough |
+| bandit-idle.png; bandit-01…03 PNGs | Idle, recoil, buckling and collapse |
+| bandit-cleaver-complete.png | Whole loose cleaver, including handle |
+| scene-preview.png / witch-hunter-scene.ora | Composed scene and editable layers |
 
-Save editable work as `.kra`, then export a transparent PNG for return to the project. The individual frames here are editing exports, not new runtime source paths. Return the edited files with the same names and dimensions so they can be mapped back into the animation. The concept and combat sheet retain their original source dimensions.
-
-Historical source atlases elsewhere in the repository intentionally retain unused older cells. They are still needed for other active poses and crop coordinates; use this pack to avoid editing an obsolete cell.
+These are editing exports, not new runtime source paths. Return edited PNGs using the same names and dimensions so they can be mapped back to their atlas regions. Use this curated pack rather than editing a superseded neighboring atlas cell. The [Judgment study](../judgment/README.md) is separate from this execution pack.

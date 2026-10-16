@@ -1,52 +1,19 @@
-# Experimental designs
+# Current design previews and editing packs
 
-[Download all project artwork](../ARTWORK-DOWNLOADS.md) · [Latest Witch Hunter Krita files](witch_hunter/krita-current/README.md)
+[Artwork downloads](../ARTWORK-DOWNLOADS.md) · [Makko references](makko_reference/README.md) · [Krita files](witch_hunter/krita-current/README.md) · [Current frame review](art_review/README.md)
 
-Use this folder to test and review artwork, animation, enemy variants and other
-game designs before integrating them into the main game.
+Production art belongs in `assets/art_library/`. These retained studies document current designs or provide runnable animation references; their integration status is listed below. Superseded review archives and the original Raider idle preview have been removed from this branch.
 
-For larger experiments, create a descriptive subfolder containing the design
-notes, assets, previews and instructions needed to review or run it. Keep
-approved production changes in the game's normal asset and script directories.
+| Design | Status and current preview |
+| --- | --- |
+| Witch Hunter | [Approved concept and five skills](witch_hunter/README.md); default combat design integrated |
+| Witch Hunter execution | [Uppercut/crush study](witch_hunter/execution/README.md); experimental |
+| Witch Hunter Judgment | [Compact attack study](witch_hunter/judgment/README.md); experimental timing |
+| Ranger | [Bow and two-shot execution](ranger_showcase/README.md); execution experimental |
+| Warden attacks | [Current integrated transitions](warden_transitions/README.md); [original runnable staging study](warden_showcase/README.md) retained as a reference |
+| Warden execution | [Integrated execution](warden_showcase/EXECUTION.md); [latest repaired motion](art_review/repairs/README.md) |
+| Party silhouettes | [Build and bow-stance reference](party_builds/README.md); default builds integrated, comparisons are design references |
+| Ground layer | [Integrated battlefield floor](battlefield_ground/README.md) |
+| Hooded Ash Raider | [Current grounded breathing](hooded-raider-breathing.gif); planted legs with upper-body/forearm/weapon motion |
 
-The folder's `.gdignore` keeps review assets out of the main Godot import scan.
-Standalone Godot prototypes should have their own `project.godot` and be opened
-as separate projects.
-
-[ChatGPT artwork consistency review packs](art_review/README.md): labeled source overviews, individual frames, motion samples and a structured review prompt.
-
-## Current previews
-
-- [Witch Hunter Judgment](witch_hunter/judgment/README.md): compact normal hammer strike, grounded poses, visible sternum contact and quick recovery. Experimental timing preview.
-
-- [Witch Hunter](witch_hunter/README.md): hooded two-handed hammer
-  fighter, sealed faceplate, matched armor, shoulder devotional reliefs and
-  upper chains, with a banishment seal engraved on the hammer. The default combat
-  design and five skills are integrated; the [uppercut/crush execution](witch_hunter/execution/README.md) is experimental.
-
-- [Ranger bow and two-shot execution](ranger_showcase/README.md): narrow-stance
-  draw/release transitions, a rapid stomach shot and headshot, dropped cleaver,
-  and an abrupt limp collapse. Runs from the repository root; reads its review
-  PNGs directly because this folder is excluded from the main import scan.
-
-- [Party builds and Ranger stance](party_builds/README.md): heavier melee heroes,
-  leaner ranged heroes, a before/after lineup and a narrower-stance bow study.
-
-- [Dedicated battlefield ground](battlefield_ground/README.md): integrated themed
-  floor with shared foot anchors and independent background camera movement.
-
-- [Warden execution](warden_showcase/EXECUTION.md): shield knockdown, crushing
-  mace finish, foreground gore, and a motionless corpse aftermath. Now integrated
-  into normal combat; includes a captured in-game preview.
-
-- [Warden attack showcase](warden_showcase/README.md): Slash, Heavy Strike and
-  Shield Bash with dedicated painted poses, isolated framing, contact blood
-  sprays and a fixed HUD.
-- [Grounded Raider breathing](hooded-raider-breathing.gif): revised idle with
-  fixed legs and feet, continuous chest/shoulder breathing, subtle forearm sway
-  and a cleaver that follows the gripping hand. The 1.6-second loop contains
-  32 frames; protected leg and boot pixels remain identical throughout.
-- [Hooded Ash Raider animation](hooded-raider-animation.gif): a looping artwork
-  preview of the initial twelve painted poses. Its original idle frame stepping
-  is superseded by the grounded breathing preview above. Action timing is
-  illustrative; in-game timing uses combat profiles.
+`experimental/.gdignore` excludes these review files from the main import scan. Standalone studies have their own `project.godot`; other previews run from the repository root. Follow each folder's instructions. Runtime resources, alternate outfits and saved identifiers are preserved.

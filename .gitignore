@@ -23,3 +23,7 @@ desktop.ini
 
 # Local capture scripts, logs and verification scratch files
 /work/
+
+# Local investigation evidence and agent execution plans
+/review-output/
+/docs/superpowers/

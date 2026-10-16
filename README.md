@@ -1,102 +1,53 @@
 # Ashen Expedition
 
-A grimdark, side-view party RPG built in Godot. Assemble three heroes in the
-Hamlet, explore multi-floor dungeons, resolve illustrated encounters and fight
-with shared party turns.
+A grimdark, side-view party RPG built in Godot. Assemble three heroes in the Hamlet, explore multi-floor dungeons, resolve illustrated encounters and fight with shared party turns.
 
-## Current dungeon experience
+[Current documentation](docs/README.md) · [Artwork and downloads](ARTWORK-DOWNLOADS.md) · [Current design previews](experimental/README.md) · [Latest gameplay audit](docs/gameplay_stability_audit.md)
 
-Expeditions begin in a painted dungeon entrance with standing, combat-ready
-heroes. Click the iron gate to open the map, then select a reachable room to
-enter it immediately. Rooms marked **?** open full-screen story encounters with
-clear choices, costs, rewards and risks. The artwork stays visible for the
-outcome, followed by **Continue** back to the map. Decisions and rewards are
-saved; resolved discoveries cannot be collected again.
+## Run the game
 
-[Full-screen discovery](docs/room_travel/fullscreen-event.png) ·
-[Outcome](docs/room_travel/fullscreen-outcome.png) ·
-[Dungeon map](docs/room_travel/room-event-map.png) ·
-[Preview sequence](docs/room_travel/story-events.gif)
+1. Import `project.godot` in Godot and allow artwork imports to finish.
+2. Press **F5**, enter the Hamlet and choose three heroes in the Barracks.
+3. Embark from the expedition board or gate.
 
-The strongbox has original full-screen artwork. Other events use the same story
-layout with existing dungeon backgrounds and painted event objects. Combat,
-treasure, camp, merchants and stairs keep their room interactions. Scouting
-reveals nearby rooms; explored rooms remain marked on the map. Camp Watch
-protects against the existing camp ambush risk.
+The project declares Godot 4.7 with GL Compatibility rendering. The verified development runtime is **Godot 4.6.3**.
 
-See [Room selection and discoveries](docs/room_travel/README.md) for details and
-save compatibility. **F10 → Dungeon travel → Manual walking** retains the
-optional walking controls and original event presentation.
+## Current game
 
-## Warden outfits and customization
-
-The Warden uses complete painted costume art with subtle combat breathing and
-an attack pose. Defeating the Undying Lord at the end of the Old Road unlocks
-**Ashen Wolf**. Select it in the Workshop and save the appearance; previous saves
-that completed the Old Road also qualify. The outfit is cosmetic and preserves
-equipment stats. The painted combat poses contain a fixed mace and shield;
-additional visible weapon families require additional artwork.
-
-The standing exploration party uses selected costumes. Warden and Crusader are
-slightly taller and broader than the other heroes. See
-[Warden outfits](docs/warden_outfits/README.md) for Workshop and combat previews.
-
-The original-outfit Warden now has an [execution](WARDEN_EXECUTION.md) when an
-ability kills the final Ash Raider, with a one-handed mace finish and a held corpse.
-
-Combat also uses a [dedicated ground layer](BATTLEFIELD_GROUND.md), keeping the
-painted floor and feet aligned while background scenery zooms independently.
-
-## Running the game
-
-1. Import this repository's `project.godot` in Godot.
-2. Allow the editor to finish importing artwork.
-3. Press **F5** to start at the title screen.
-
-The project targets Godot 4.7 with the GL Compatibility renderer. Verification
-in this repository uses Godot **4.6.3**. Start with **Enter the Hamlet**, choose
-three heroes in the Barracks, and embark from the expedition board or gate.
+- Expeditions open at a painted entrance. Open the map and click a reachable room; unknown discoveries offer illustrated choices with saved outcomes.
+- Heroes share a party turn, with individual AP, skill cooldowns, equipment, formation and persistent expedition wounds/stress.
+- The default Witch Hunter uses the approved hooded armor, two-handed hammer and physical skills with ritual support. **Binding Sigil applies Weakness**. Internal `crusader` identifiers preserve save compatibility.
+- The original-outfit Warden has an integrated final-Ash-Raider execution. Witch Hunter and Ranger execution studies remain experimental.
+- Combat uses a dedicated ground layer and shared foot anchors; scenery moves independently. Outfits, equipment appearances and the optional manual-walking mode remain supported.
+- Settings, saved journeys, progression, rewards and memorials are implemented. Online lobby transport remains future work.
 
 ## Controls
 
 | Context | Controls |
 | --- | --- |
-| Dungeon map | Click a reachable room to enter; use Scout, Inventory or Retreat |
-| Story event | Select a living investigator, choose an option, then Continue |
+| Map | Click a reachable room; Scout, Inventory or Retreat |
+| Story event | Select an investigator, choose an option, then Continue |
 | Combat | Select a hero; **1–5** selects a skill; **Enter** uses it; **Tab** opens inventory |
 | Hero details | Right-click a hero or press **C**; **Q / E** cycles heroes |
-| Help and settings | **I** opens contextual controls; **F10** opens settings |
-| Optional manual walking | **D / Right** forward, **A / Left** backward, **W / Enter** enters, **Space** toggles automatic walking |
+| Help/settings | **I** opens contextual controls; **F10** opens settings |
+| Optional manual walking | **D / Right**, **A / Left**, **W / Enter**; **Space** toggles automatic walking |
 
-## Other available systems
+## Artwork
 
-- [Guild hall](docs/guild_hall.md): saved hall name, banner, lighting and furnishings, plus an expedition board. Online lobbies are not connected.
-- [Gameplay systems](GAMEPLAY_SYSTEMS.md): party turns, progression, services and expedition rules.
-- [Settings and continuity](SETTINGS_AND_CONTINUITY.md): settings, saved journeys, hero names/colors and memorials.
-- [Item and camp artwork](docs/item_camp_art.md): painted item sprites and camp preparation cards.
-- [Equipment economy and skills](docs/economy_and_skills.md): merchants, inventory sales, equipment and skill inspection.
-- [Readiness and attack timing](docs/readiness_and_attack_timing.md): party preparation and combat presentation.
-- [Live art library](assets/art_library/README.md): searchable artwork catalog and replacement instructions.
-
-Abandoned Spine/layered animation experiments and superseded review previews
-have been removed. Gameplay assets needed by current scenes, alternate outfits,
-manual walking and saved journeys remain available.
+Use [Artwork and downloads](ARTWORK-DOWNLOADS.md) for current production sources, the 160-frame review pack, ten-image Makko references and layered Witch Hunter files for Krita. Production resources and selectable variants are retained even when an older cell is not used by the default outfit.
 
 ## Verification
 
-Smoke checks are Godot scripts in `tests/`. Run a check with:
+The latest full regression run passed **101 smoke scripts**, including 30 malformed-save cases. Two additional automated Old Road expeditions exercised actual actions and earned equipment. Engine/shutdown diagnostics remain documented; this is not a leak-free or human-balance certification. See the [audit report](docs/gameplay_stability_audit.md).
+
+Run an individual check with:
 
 ```sh
-godot --headless --path . --script res://tests/room_discoveries_smoke.gd
+godot --headless --audio-driver Dummy --path . --script res://tests/save_runtime_validation_smoke.gd
 ```
 
-The room-discovery check covers direct arrival, choices, saved outcomes,
-unavailable supplies, repeated resolution, invalid routes and migration from
-older passage saves. All **90 smoke checks pass** on the cleaned project. The suite also covers combat, outfits,
-progression, services, settings and the legacy exploration lifecycle.
+Use separate application-data directories for tests so player saves are preserved.
 
-## Licensing
+## License
 
-Original project code is licensed under the [MIT License](LICENSE). Third-party
-assets retain their own terms; source credits and provenance files are kept with
-the assets. The included Sound FX Starter Pack license is in its own folder.
+Original project code uses the [MIT License](LICENSE). Retained third-party artwork keeps its own credits and terms beside the assets, including [item credits](assets/art_library/items/CREDITS.md). Asset provenance files are retained.

@@ -1,13 +1,14 @@
 # Warden execution experiment
 
-- [Watch the integrated game GIF](warden-integrated.gif)
-- [Download the integrated game MP4](warden-integrated.mp4)
-- [Watch the isolated GIF](warden-execution.gif)
-- [Download the MP4](warden-execution.mp4)
+- [Current integrated combat MP4](../art_review/repairs/warden-execution-integrated.mp4)
+- [Current isolated GIF](../art_review/repairs/warden-execution-motion.gif)
+- [Current reduced-motion GIF](../art_review/repairs/warden-execution-reduced.gif)
+
+The original prototype clips were superseded by these repaired production captures and removed. The runnable prototype below is retained as a staging reference; production timing and registration are documented in the integration guide.
 
 The Warden lunges into the Raider with his shield, briefly holds contact before the recoil, raises his mace, and crushes the Raider’s head. Foreground blood and bone fragments emphasize contact. The enemy collapses and stays motionless in a blood pool. The action lasts 1.8 seconds; the four-second preview holds the aftermath. The GIF loops for review; the native scene never revives the enemy automatically.
 
-This standalone prototype simulates a direct Warden killing blow against the final enemy at zero HP. It rejects living targets, indirect damage, other attackers, and duplicate triggers. This standalone scene remains a review tool. The approved sequence is now also integrated into normal combat; see [production integration](../../WARDEN_EXECUTION.md).
+This standalone prototype simulates a direct Warden killing blow against the final enemy at zero HP. It rejects living targets, indirect damage, other attackers, and duplicate triggers. This standalone scene remains a review tool. The approved sequence is now also integrated into normal combat; see [production integration](../../docs/gameplay/warden-execution.md).
 
 ## Run
 

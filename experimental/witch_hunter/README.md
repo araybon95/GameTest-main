@@ -41,7 +41,7 @@ Damage and Block retain existing Forge upgrade support. Existing relic skills an
 
 Review captures: [idle](skills-idle.png), [Binding Sigil](skills-pc_pain.png), [Abjuring Ward](skills-pc_guard.png), [Banishment](skills-pc_verdict.png).
 
-The next proposed experimental execution is a two-handed hammer uppercut to the jaw, an overhead crushing head strike, then a buckling, limp collapse. It is not integrated into lethal-hit gameplay.
+The approved experimental execution uses an uppercut, overhead crushing strike and limp collapse. It remains separate from lethal-hit gameplay integration.
 
 [Experimental execution showcase](execution/README.md): the approved uppercut → overhead crushing blow → limp collapse sequence, with GIF, MP4 and key impact frames. This is a presentation study awaiting visual review before any gameplay integration.
 
