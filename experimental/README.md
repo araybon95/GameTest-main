@@ -13,6 +13,8 @@ The folder's `.gdignore` keeps review assets out of the main Godot import scan.
 Standalone Godot prototypes should have their own `project.godot` and be opened
 as separate projects.
 
+[ChatGPT artwork consistency review packs](art_review/README.md): labeled source overviews, individual frames, motion samples and a structured review prompt.
+
 ## Current previews
 
 - [Witch Hunter Judgment](witch_hunter/judgment/README.md): compact normal hammer strike, grounded poses, visible sternum contact and quick recovery. Experimental timing preview.

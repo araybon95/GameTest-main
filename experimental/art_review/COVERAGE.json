@@ -1,0 +1,11 @@
+{
+  "source_commit": "80d401207b24c3e2bae3d096e1f3fedda0e79a3f",
+  "source_files": 505,
+  "unique_static_overview_images": 472,
+  "source_overview_pages": 118,
+  "native_frames": 160,
+  "frame_families": 35,
+  "motion_files": 28,
+  "sampled_motion_frames": 332,
+  "coverage": "All tracked source image/media records map to an overview, exact duplicate alias, OpenRaster layer extraction, or motion storyboard."
+}
