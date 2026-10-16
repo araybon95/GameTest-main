@@ -1,6 +1,6 @@
 # Class weapon swapping with matching character art
 
-Status: proposed design for review; implementation has not started.
+Status: approved by the user on 2026-10-16; implementation has not started.
 
 ## Goal and accepted scope
 
