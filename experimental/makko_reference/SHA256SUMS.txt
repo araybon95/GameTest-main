@@ -1,0 +1,10 @@
+0539c0dffa9f35fe830f11072f76eb1d150238ebb3c6148ee99efb5703a8c9c8  images/01-witch-hunter-approved-character.png
+d2518bfb2fdaf4e666ee26a3d010e39c79df1f0671416729084520640b4b98d1  images/02-warden-current-poses.png
+a261d88ec307a76f72ffa33fb36631b339c45c9436ac260fe4b2987771d57cfa  images/03-witch-hunter-current-poses.png
+ecb3a3569a113eca5a74d05a22d7c12c34821e5596742adfd6aff8193f358785  images/04-ranger-current-poses.png
+1d04fc09ea1c71171721c625b0a173f065836a3a90256c9772680783a65a9ab8  images/05-occultist-current-poses.png
+87642e7db7fe6efbf294168889128f49b63113711078c07f536cbf37c05b39c0  images/06-hooded-raider-current-poses.png
+ffad1ad70f8a8b933b5a145da9ad8fc947eb99ad4a5fa00d1f218f682c2d3126  images/07-ui-painted-ability-icons.png
+4d641513f9f6b886f352425686957fe380ab2a11f801cbe93fe8601d2cf79236  images/08-ui-items-equipment-and-rituals.png
+3f0d89e138460c96b0a389af9343371b3afc4248e5cedb43c2eb1dbcaeca0727  images/09-ui-frames-banner-and-status.png
+ade26781c476a431a82b8f76df1ea1b2e868f3eb5e3c9175e4c4755af4ee6fff  images/10-current-gameplay-and-ui-context.png

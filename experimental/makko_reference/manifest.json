@@ -1,0 +1,2079 @@
+{
+  "date": "2026-10-16",
+  "image_count": 10,
+  "base_commit": "5990a1974b33d5ab9041299b7cfd9304fd951172",
+  "snapshot": "current local artwork including the verified 13-finding repair pass",
+  "reference_frame_pack_sha256": "0a6b242764d7dd5049379da8c71509237f2200bad4762640a70a0d82aab83e30",
+  "images": [
+    {
+      "file": "images/01-witch-hunter-approved-character.png",
+      "role": "Approved Witch Hunter character identity and material detail",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "bytes": 1606171,
+      "sha256": "0539c0dffa9f35fe830f11072f76eb1d150238ebb3c6148ee99efb5703a8c9c8",
+      "sources": [
+        {
+          "path": "experimental/witch_hunter/concept.png",
+          "sha256": "d1637c7ae65c8ef3f8be2c53746ce8f61f60508965732ff807333851c80c8f84"
+        }
+      ],
+      "tiles": []
+    },
+    {
+      "file": "images/02-warden-current-poses.png",
+      "role": "WARDEN / CURRENT COMBAT POSES",
+      "dimensions": [
+        1324,
+        1884
+      ],
+      "bytes": 1795157,
+      "sha256": "d2518bfb2fdaf4e666ee26a3d010e39c79df1f0671416729084520640b4b98d1",
+      "sources": [
+        {
+          "path": "assets/art_library/party_builds/warden.png",
+          "sha256": "79ca031dce13db866c6761d0215b4dad9fe3185411488cc1395e898992e47c56"
+        }
+      ],
+      "tiles": [
+        {
+          "label": "IDLE",
+          "sheet_xywh": [
+            110,
+            159,
+            442,
+            479
+          ],
+          "frame_id": "R0001",
+          "frame_pack_member": "01-current-frames/native-frames/R0001--default-warden--idle.png",
+          "frame_sha256": "f5908a12cdfd164638e466b2d88e4cd31c30363744524aa7f2e3fff772ae60fd",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        },
+        {
+          "label": "WINDUP",
+          "sheet_xywh": [
+            771,
+            94,
+            444,
+            544
+          ],
+          "frame_id": "R0002",
+          "frame_pack_member": "01-current-frames/native-frames/R0002--default-warden--windup.png",
+          "frame_sha256": "54b0ebba750c9ecfcd6c0494602376cbabcabf74317a8415e47904f4087ae454",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        },
+        {
+          "label": "ATTACK",
+          "sheet_xywh": [
+            16,
+            827,
+            630,
+            413
+          ],
+          "frame_id": "R0003",
+          "frame_pack_member": "01-current-frames/native-frames/R0003--default-warden--attack.png",
+          "frame_sha256": "326f7681be1e661ba4d1fbf9f34a14deabad905b127c188c0dd161f9e4d2f34e",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        },
+        {
+          "label": "GUARD",
+          "sheet_xywh": [
+            752,
+            841,
+            482,
+            399
+          ],
+          "frame_id": "R0004",
+          "frame_pack_member": "01-current-frames/native-frames/R0004--default-warden--guard.png",
+          "frame_sha256": "e85af97650d60251f8a50fb104753aef83037e885e7160a458aab847d6dbb335",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        },
+        {
+          "label": "HURT",
+          "sheet_xywh": [
+            25,
+            1444,
+            612,
+            398
+          ],
+          "frame_id": "R0006",
+          "frame_pack_member": "01-current-frames/native-frames/R0006--default-warden--hurt.png",
+          "frame_sha256": "a32005abba91bf40d8f8a144321cd9b47e2d2352dc713395153e0663023962f2",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        },
+        {
+          "label": "DEATH",
+          "sheet_xywh": [
+            703,
+            1637,
+            580,
+            205
+          ],
+          "frame_id": "R0007",
+          "frame_pack_member": "01-current-frames/native-frames/R0007--default-warden--death.png",
+          "frame_sha256": "56d84cdd4199f797b2e37b07f88edaa40f1bb1e8ea2c9494c847a29a4c5b12cb",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "file": "images/03-witch-hunter-current-poses.png",
+      "role": "WITCH HUNTER / CURRENT COMBAT POSES",
+      "dimensions": [
+        1536,
+        1809
+      ],
+      "bytes": 1308699,
+      "sha256": "a261d88ec307a76f72ffa33fb36631b339c45c9436ac260fe4b2987771d57cfa",
+      "sources": [
+        {
+          "path": "assets/art_library/party_builds/crusader.png",
+          "sha256": "b52667202d9f1d7b21cdcf3c0fcc7ff708fd69d4da6b8cad45ea1269187fe5ca"
+        }
+      ],
+      "tiles": [
+        {
+          "label": "IDLE",
+          "sheet_xywh": [
+            151,
+            152,
+            466,
+            461
+          ],
+          "frame_id": "R0008",
+          "frame_pack_member": "01-current-frames/native-frames/R0008--default-crusader--idle.png",
+          "frame_sha256": "632f2d8e96d43621368b2a45e0e2078734461a55a1f0ec27d96d7a64d047605e",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        },
+        {
+          "label": "WINDUP",
+          "sheet_xywh": [
+            939,
+            94,
+            426,
+            519
+          ],
+          "frame_id": "R0009",
+          "frame_pack_member": "01-current-frames/native-frames/R0009--default-crusader--windup.png",
+          "frame_sha256": "fc87b157e0090ac171d24f37c8a605dcbdaad05ec24be5ed271dcbbf94b2e10a",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        },
+        {
+          "label": "ATTACK",
+          "sheet_xywh": [
+            16,
+            782,
+            736,
+            408
+          ],
+          "frame_id": "R0010",
+          "frame_pack_member": "01-current-frames/native-frames/R0010--default-crusader--attack.png",
+          "frame_sha256": "6f10251ea1896c9377009c8e46f532c09822cb17cd9052816c4c8ca7b5827201",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        },
+        {
+          "label": "GUARD",
+          "sheet_xywh": [
+            994,
+            737,
+            316,
+            453
+          ],
+          "frame_id": "R0011",
+          "frame_pack_member": "01-current-frames/native-frames/R0011--default-crusader--guard.png",
+          "frame_sha256": "829592561621e17b7c629fea3d364d964ab4c533e3eb867a0f3e9a4d9d6bc7c2",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        },
+        {
+          "label": "HURT",
+          "sheet_xywh": [
+            137,
+            1388,
+            494,
+            379
+          ],
+          "frame_id": "R0013",
+          "frame_pack_member": "01-current-frames/native-frames/R0013--default-crusader--hurt.png",
+          "frame_sha256": "8acd61c9416bd99e12089d0aa3ac35aa1201349ccad689610a93ae92812e3973",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        },
+        {
+          "label": "DEATH",
+          "sheet_xywh": [
+            857,
+            1644,
+            590,
+            123
+          ],
+          "frame_id": "R0014",
+          "frame_pack_member": "01-current-frames/native-frames/R0014--default-crusader--death.png",
+          "frame_sha256": "2d1ad644752309866bc25ea28418806ac4f4977695c1c495e1006127aaf979c9",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "file": "images/04-ranger-current-poses.png",
+      "role": "RANGER / CURRENT COMBAT POSES",
+      "dimensions": [
+        1096,
+        1674
+      ],
+      "bytes": 1164959,
+      "sha256": "ecb3a3569a113eca5a74d05a22d7c12c34821e5596742adfd6aff8193f358785",
+      "sources": [
+        {
+          "path": "assets/art_library/party_builds/ranger.png",
+          "sha256": "6f2cdc952ad143f53ec39923abf0e306655d2ba2fa84f280587d3b125c1c6972"
+        }
+      ],
+      "tiles": [
+        {
+          "label": "IDLE",
+          "sheet_xywh": [
+            91,
+            128,
+            366,
+            440
+          ],
+          "frame_id": "R0015",
+          "frame_pack_member": "01-current-frames/native-frames/R0015--default-ranger--idle.png",
+          "frame_sha256": "1013621f237a32efb8409cf0d6e5bbc1fdfb9e027c266dfaebf6b78473b47b75",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        },
+        {
+          "label": "WINDUP",
+          "sheet_xywh": [
+            564,
+            96,
+            516,
+            472
+          ],
+          "frame_id": "R0016",
+          "frame_pack_member": "01-current-frames/native-frames/R0016--default-ranger--windup.png",
+          "frame_sha256": "66687fd8a589ae1ce1f9383c0b94e605c525aa9cb73712baef9f908f9e709aac",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        },
+        {
+          "label": "ATTACK",
+          "sheet_xywh": [
+            78,
+            626,
+            392,
+            474
+          ],
+          "frame_id": "R0017",
+          "frame_pack_member": "01-current-frames/native-frames/R0017--default-ranger--attack.png",
+          "frame_sha256": "99e73cf618fb48c27d5b070e305b8ea0a01de6b4f6040daa76ce1f13f069cac0",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        },
+        {
+          "label": "GUARD",
+          "sheet_xywh": [
+            633,
+            667,
+            378,
+            433
+          ],
+          "frame_id": "R0018",
+          "frame_pack_member": "01-current-frames/native-frames/R0018--default-ranger--guard.png",
+          "frame_sha256": "53b6b0ad6c89c4528c3b29d76db48fbed4a93bbda6b9e5ea3fcb119c16fee5c3",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        },
+        {
+          "label": "HURT",
+          "sheet_xywh": [
+            67,
+            1204,
+            414,
+            428
+          ],
+          "frame_id": "R0020",
+          "frame_pack_member": "01-current-frames/native-frames/R0020--default-ranger--hurt.png",
+          "frame_sha256": "ef0c4ab810c4c8195576d49df98636f0f685776ed3f2f048376c2d538bc47518",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        },
+        {
+          "label": "DEATH",
+          "sheet_xywh": [
+            592,
+            1429,
+            460,
+            203
+          ],
+          "frame_id": "R0021",
+          "frame_pack_member": "01-current-frames/native-frames/R0021--default-ranger--death.png",
+          "frame_sha256": "b30d0130a6a09a7ec6c93f086578b10442a35eaab6cb8c7ae39d565241734d36",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "file": "images/05-occultist-current-poses.png",
+      "role": "OCCULTIST / CURRENT COMBAT POSES",
+      "dimensions": [
+        1600,
+        1869
+      ],
+      "bytes": 1562903,
+      "sha256": "1d04fc09ea1c71171721c625b0a173f065836a3a90256c9772680783a65a9ab8",
+      "sources": [
+        {
+          "path": "assets/art_library/party_builds/occultist.png",
+          "sha256": "8a6d7d00aec3f775479dfd453e373e6baaa53c09ba940df40923910603b3c15f"
+        }
+      ],
+      "tiles": [
+        {
+          "label": "IDLE",
+          "sheet_xywh": [
+            218,
+            120,
+            364,
+            513
+          ],
+          "frame_id": "R0022",
+          "frame_pack_member": "01-current-frames/native-frames/R0022--default-occultist--idle.png",
+          "frame_sha256": "21555dbbfdb7b63bede0e0ebbebc82478d34563f5b11cbf82898c6558fa5007c",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        },
+        {
+          "label": "WINDUP",
+          "sheet_xywh": [
+            976,
+            94,
+            448,
+            539
+          ],
+          "frame_id": "R0023",
+          "frame_pack_member": "01-current-frames/native-frames/R0023--default-occultist--windup.png",
+          "frame_sha256": "43dcda369e63f963c87f85064fe6391f45b6caa1994a4ad66bcfeb3ccfffb58b",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        },
+        {
+          "label": "ATTACK",
+          "sheet_xywh": [
+            16,
+            850,
+            768,
+            380
+          ],
+          "frame_id": "R0024",
+          "frame_pack_member": "01-current-frames/native-frames/R0024--default-occultist--attack.png",
+          "frame_sha256": "b091ea62d8191b32e881142c86b65efa1e9f55619b176c438aa77ac4c49abd44",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        },
+        {
+          "label": "GUARD",
+          "sheet_xywh": [
+            982,
+            801,
+            436,
+            429
+          ],
+          "frame_id": "R0025",
+          "frame_pack_member": "01-current-frames/native-frames/R0025--default-occultist--guard.png",
+          "frame_sha256": "bc6ba53272e10cf7403623a8e3c862e022a720b96ad50c8428e519377da1d78f",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        },
+        {
+          "label": "HURT",
+          "sheet_xywh": [
+            127,
+            1449,
+            546,
+            378
+          ],
+          "frame_id": "R0027",
+          "frame_pack_member": "01-current-frames/native-frames/R0027--default-occultist--hurt.png",
+          "frame_sha256": "6eab80ed5722b373c067988413a58de9f030fa8359b73c05249208197eb968a7",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        },
+        {
+          "label": "DEATH",
+          "sheet_xywh": [
+            900,
+            1657,
+            600,
+            170
+          ],
+          "frame_id": "R0028",
+          "frame_pack_member": "01-current-frames/native-frames/R0028--default-occultist--death.png",
+          "frame_sha256": "3d3265c399909a038a284497bb6b85ae973eee415f8ec08e220e8f2b62c121f9",
+          "registered_origin_offset": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "file": "images/06-hooded-raider-current-poses.png",
+      "role": "HOODED ASH RAIDER / CURRENT VARIANT",
+      "dimensions": [
+        1808,
+        1452
+      ],
+      "bytes": 1392543,
+      "sha256": "87642e7db7fe6efbf294168889128f49b63113711078c07f536cbf37c05b39c0",
+      "sources": [
+        {
+          "path": "assets/art_library/enemy_variants/ash_raider_hooded.png",
+          "sha256": "21a4b1362a1b047b26d56b15d2941c876b011b3ef02b34956c55e688e3885e91"
+        }
+      ],
+      "tiles": [
+        {
+          "label": "FRAME-00",
+          "sheet_xywh": [
+            16,
+            94,
+            420,
+            400
+          ],
+          "frame_id": "R0101",
+          "frame_pack_member": "01-current-frames/native-frames/R0101--hooded-raider--frame-00.png",
+          "frame_sha256": "54955eefa87801178fee2c1d4e496bf93a3a3581bd6fe83cd49483b965db2331",
+          "registered_origin_offset": [
+            20,
+            0
+          ]
+        },
+        {
+          "label": "FRAME-01",
+          "sheet_xywh": [
+            468,
+            94,
+            420,
+            400
+          ],
+          "frame_id": "R0102",
+          "frame_pack_member": "01-current-frames/native-frames/R0102--hooded-raider--frame-01.png",
+          "frame_sha256": "7122397369fcf8b8fbea0a53bf5888229b71565cb008c2d938d32d24e7e27702",
+          "registered_origin_offset": [
+            20,
+            0
+          ]
+        },
+        {
+          "label": "FRAME-02",
+          "sheet_xywh": [
+            920,
+            94,
+            420,
+            400
+          ],
+          "frame_id": "R0103",
+          "frame_pack_member": "01-current-frames/native-frames/R0103--hooded-raider--frame-02.png",
+          "frame_sha256": "bbfe1075852a5806063cbaeb8d2d28a8a9c4e592fd2723d58adeb68e2809dbb8",
+          "registered_origin_offset": [
+            20,
+            0
+          ]
+        },
+        {
+          "label": "FRAME-03",
+          "sheet_xywh": [
+            1372,
+            94,
+            420,
+            400
+          ],
+          "frame_id": "R0104",
+          "frame_pack_member": "01-current-frames/native-frames/R0104--hooded-raider--frame-03.png",
+          "frame_sha256": "48044a858fa69e9632bdf9dd0af42346e2d2b81c1773fb59d7ddb1fe5a474635",
+          "registered_origin_offset": [
+            20,
+            0
+          ]
+        },
+        {
+          "label": "FRAME-04",
+          "sheet_xywh": [
+            16,
+            552,
+            420,
+            400
+          ],
+          "frame_id": "R0105",
+          "frame_pack_member": "01-current-frames/native-frames/R0105--hooded-raider--frame-04.png",
+          "frame_sha256": "2f3584d3a02fe58e7c4f787d2030cff1f1ed704828ccdb6c822b99beea6118f5",
+          "registered_origin_offset": [
+            20,
+            0
+          ]
+        },
+        {
+          "label": "FRAME-05",
+          "sheet_xywh": [
+            468,
+            552,
+            420,
+            400
+          ],
+          "frame_id": "R0106",
+          "frame_pack_member": "01-current-frames/native-frames/R0106--hooded-raider--frame-05.png",
+          "frame_sha256": "135b6651f579ea24f49d1fd76b855f957edd391f2fada122fa4609df747e75d9",
+          "registered_origin_offset": [
+            20,
+            0
+          ]
+        },
+        {
+          "label": "FRAME-06",
+          "sheet_xywh": [
+            920,
+            552,
+            420,
+            400
+          ],
+          "frame_id": "R0107",
+          "frame_pack_member": "01-current-frames/native-frames/R0107--hooded-raider--frame-06.png",
+          "frame_sha256": "4b6855bafdb780bf2b5b203481379bd390829f18e883ac31cfec39d0077fceea",
+          "registered_origin_offset": [
+            20,
+            0
+          ]
+        },
+        {
+          "label": "FRAME-07",
+          "sheet_xywh": [
+            1372,
+            552,
+            420,
+            400
+          ],
+          "frame_id": "R0108",
+          "frame_pack_member": "01-current-frames/native-frames/R0108--hooded-raider--frame-07.png",
+          "frame_sha256": "51e231fa82fcf5b8c32cbd3055c032e5e5a508029b596c7cdbbcf9c7855db2c1",
+          "registered_origin_offset": [
+            20,
+            0
+          ]
+        },
+        {
+          "label": "FRAME-08",
+          "sheet_xywh": [
+            16,
+            1010,
+            420,
+            400
+          ],
+          "frame_id": "R0109",
+          "frame_pack_member": "01-current-frames/native-frames/R0109--hooded-raider--frame-08.png",
+          "frame_sha256": "5a92d49e11d4306c5989c7ca655046573edc0eaad77bba10f55bed5a3b6946fb",
+          "registered_origin_offset": [
+            20,
+            0
+          ]
+        },
+        {
+          "label": "FRAME-09",
+          "sheet_xywh": [
+            468,
+            1010,
+            420,
+            400
+          ],
+          "frame_id": "R0110",
+          "frame_pack_member": "01-current-frames/native-frames/R0110--hooded-raider--frame-09.png",
+          "frame_sha256": "ffef8bc6b24513d08ecb60b7abda1a67a3bcf5fd941fef9484f31fe35327f441",
+          "registered_origin_offset": [
+            20,
+            0
+          ]
+        },
+        {
+          "label": "FRAME-10",
+          "sheet_xywh": [
+            920,
+            1010,
+            420,
+            400
+          ],
+          "frame_id": "R0111",
+          "frame_pack_member": "01-current-frames/native-frames/R0111--hooded-raider--frame-10.png",
+          "frame_sha256": "0004d7543213977275ced6c9855563810d4db37a541bc1dadd12b4c5b3a9704e",
+          "registered_origin_offset": [
+            20,
+            0
+          ]
+        },
+        {
+          "label": "FRAME-11",
+          "sheet_xywh": [
+            1372,
+            1010,
+            420,
+            400
+          ],
+          "frame_id": "R0112",
+          "frame_pack_member": "01-current-frames/native-frames/R0112--hooded-raider--frame-11.png",
+          "frame_sha256": "e55c2bbba9ddca6ffa1f80330c638efbaa3a571ff1d9a6fefa06bb5276b26871",
+          "registered_origin_offset": [
+            20,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "file": "images/07-ui-painted-ability-icons.png",
+      "role": "UI / PAINTED ABILITY ICONS",
+      "dimensions": [
+        1385,
+        1290
+      ],
+      "bytes": 1678165,
+      "sha256": "ffad1ad70f8a8b933b5a145da9ad8fc947eb99ad4a5fa00d1f218f682c2d3126",
+      "sources": [
+        {
+          "path": "assets/art_library/skills/painted_skills.png",
+          "sha256": "fc4b2f8d79259732342ad52db6e3caea1c34deae959e5dd4c1e8ad42f0c8dca6"
+        }
+      ],
+      "tiles": [
+        {
+          "label": "wd_slash",
+          "sheet_xywh": [
+            16,
+            94,
+            245,
+            245
+          ],
+          "source_rect_xywh": [
+            3,
+            3,
+            245,
+            245
+          ],
+          "resource": "assets/art_library/skills/wd_slash.tres"
+        },
+        {
+          "label": "wd_guard",
+          "sheet_xywh": [
+            293,
+            94,
+            245,
+            245
+          ],
+          "source_rect_xywh": [
+            254,
+            3,
+            245,
+            245
+          ],
+          "resource": "assets/art_library/skills/wd_guard.tres"
+        },
+        {
+          "label": "wd_bash",
+          "sheet_xywh": [
+            570,
+            94,
+            244,
+            245
+          ],
+          "source_rect_xywh": [
+            505,
+            3,
+            244,
+            245
+          ],
+          "resource": "assets/art_library/skills/wd_bash.tres"
+        },
+        {
+          "label": "wd_heavy",
+          "sheet_xywh": [
+            847,
+            94,
+            245,
+            245
+          ],
+          "source_rect_xywh": [
+            755,
+            3,
+            245,
+            245
+          ],
+          "resource": "assets/art_library/skills/wd_heavy.tres"
+        },
+        {
+          "label": "wd_rally",
+          "sheet_xywh": [
+            1124,
+            94,
+            245,
+            245
+          ],
+          "source_rect_xywh": [
+            1006,
+            3,
+            245,
+            245
+          ],
+          "resource": "assets/art_library/skills/wd_rally.tres"
+        },
+        {
+          "label": "rg_quick",
+          "sheet_xywh": [
+            16,
+            397,
+            245,
+            245
+          ],
+          "source_rect_xywh": [
+            3,
+            254,
+            245,
+            245
+          ],
+          "resource": "assets/art_library/skills/rg_quick.tres"
+        },
+        {
+          "label": "rg_volley",
+          "sheet_xywh": [
+            293,
+            397,
+            245,
+            245
+          ],
+          "source_rect_xywh": [
+            254,
+            254,
+            245,
+            245
+          ],
+          "resource": "assets/art_library/skills/rg_volley.tres"
+        },
+        {
+          "label": "rg_pierce",
+          "sheet_xywh": [
+            570,
+            397,
+            244,
+            245
+          ],
+          "source_rect_xywh": [
+            505,
+            254,
+            244,
+            245
+          ],
+          "resource": "assets/art_library/skills/rg_pierce.tres"
+        },
+        {
+          "label": "rg_mark",
+          "sheet_xywh": [
+            847,
+            397,
+            245,
+            245
+          ],
+          "source_rect_xywh": [
+            755,
+            254,
+            245,
+            245
+          ],
+          "resource": "assets/art_library/skills/rg_mark.tres"
+        },
+        {
+          "label": "rg_dodge",
+          "sheet_xywh": [
+            1124,
+            397,
+            245,
+            245
+          ],
+          "source_rect_xywh": [
+            1006,
+            254,
+            245,
+            245
+          ],
+          "resource": "assets/art_library/skills/rg_dodge.tres"
+        },
+        {
+          "label": "oc_hex",
+          "sheet_xywh": [
+            16,
+            701,
+            245,
+            244
+          ],
+          "source_rect_xywh": [
+            3,
+            505,
+            245,
+            244
+          ],
+          "resource": "assets/art_library/skills/oc_hex.tres"
+        },
+        {
+          "label": "oc_drain",
+          "sheet_xywh": [
+            293,
+            701,
+            245,
+            244
+          ],
+          "source_rect_xywh": [
+            254,
+            505,
+            245,
+            244
+          ],
+          "resource": "assets/art_library/skills/oc_drain.tres"
+        },
+        {
+          "label": "oc_blast",
+          "sheet_xywh": [
+            570,
+            701,
+            244,
+            244
+          ],
+          "source_rect_xywh": [
+            505,
+            505,
+            244,
+            244
+          ],
+          "resource": "assets/art_library/skills/oc_blast.tres"
+        },
+        {
+          "label": "oc_veil",
+          "sheet_xywh": [
+            847,
+            701,
+            245,
+            244
+          ],
+          "source_rect_xywh": [
+            755,
+            505,
+            245,
+            244
+          ],
+          "resource": "assets/art_library/skills/oc_veil.tres"
+        },
+        {
+          "label": "oc_weak",
+          "sheet_xywh": [
+            1124,
+            701,
+            245,
+            244
+          ],
+          "source_rect_xywh": [
+            1006,
+            505,
+            245,
+            244
+          ],
+          "resource": "assets/art_library/skills/oc_weak.tres"
+        },
+        {
+          "label": "hl_mend",
+          "sheet_xywh": [
+            16,
+            1003,
+            245,
+            245
+          ],
+          "source_rect_xywh": [
+            3,
+            755,
+            245,
+            245
+          ],
+          "resource": "assets/art_library/skills/hl_mend.tres"
+        },
+        {
+          "label": "hl_blessing",
+          "sheet_xywh": [
+            293,
+            1003,
+            245,
+            245
+          ],
+          "source_rect_xywh": [
+            254,
+            755,
+            245,
+            245
+          ],
+          "resource": "assets/art_library/skills/hl_blessing.tres"
+        },
+        {
+          "label": "hl_smite",
+          "sheet_xywh": [
+            570,
+            1003,
+            244,
+            245
+          ],
+          "source_rect_xywh": [
+            505,
+            755,
+            244,
+            245
+          ],
+          "resource": "assets/art_library/skills/hl_smite.tres"
+        },
+        {
+          "label": "hl_turn",
+          "sheet_xywh": [
+            847,
+            1003,
+            245,
+            245
+          ],
+          "source_rect_xywh": [
+            755,
+            755,
+            245,
+            245
+          ],
+          "resource": "assets/art_library/skills/hl_turn.tres"
+        },
+        {
+          "label": "hl_ward",
+          "sheet_xywh": [
+            1124,
+            1003,
+            245,
+            245
+          ],
+          "source_rect_xywh": [
+            1006,
+            755,
+            245,
+            245
+          ],
+          "resource": "assets/art_library/skills/hl_ward.tres"
+        }
+      ]
+    },
+    {
+      "file": "images/08-ui-items-equipment-and-rituals.png",
+      "role": "UI / 48 ITEM, EQUIPMENT & RITUAL ICONS",
+      "dimensions": [
+        1536,
+        2048
+      ],
+      "bytes": 4118439,
+      "sha256": "4d641513f9f6b886f352425686957fe380ab2a11f801cbe93fe8601d2cf79236",
+      "sources": [
+        {
+          "path": "assets/art_library/items/sheets/ink_loot_01.png",
+          "sha256": "b45badfbdf8634493da4959f12534636d8f7eff56928f4107b9421e295b67e62"
+        },
+        {
+          "path": "assets/art_library/items/sheets/ink_loot_04.png",
+          "sha256": "5d2e9e84eff43d534934769dc5c12f7ffcd19e819e671ff9101523711ac68877"
+        }
+      ],
+      "tiles": [
+        {
+          "item_id": "healing_scroll",
+          "label": "Healing Scroll",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            0,
+            0,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            0,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "storm_lance_scroll",
+          "label": "Storm Lance Scroll",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            256,
+            0,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            256,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "fire_bolt_scroll",
+          "label": "Fire Bolt Scroll",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            512,
+            0,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            512,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "lightning_bolt_scroll",
+          "label": "Lightning Bolt Scroll",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            768,
+            0,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            768,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "sunfire_scroll",
+          "label": "Sunfire Scroll",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            1024,
+            0,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            1024,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "bandage",
+          "label": "Field Bandage",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            1280,
+            0,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            1280,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "antidote",
+          "label": "Field Antidote",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            0,
+            256,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            0,
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "calming_incense",
+          "label": "Calming Incense",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            256,
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "might_tonic",
+          "label": "Tonic of Might",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            512,
+            256,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            512,
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "focus_tonic",
+          "label": "Tonic of Focus",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            768,
+            256,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            768,
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "ward_tonic",
+          "label": "Tonic of Warding",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            1024,
+            256,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            1024,
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "healing_potion",
+          "label": "Healing Potion",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            1280,
+            256,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            1280,
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "cleansing_potion",
+          "label": "Cleansing Potion",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            0,
+            512,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            0,
+            512,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "solace_potion",
+          "label": "Solace Potion",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            256,
+            512,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            256,
+            512,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "trail_food",
+          "label": "Trail Rations",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            512,
+            512,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            512,
+            512,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "lock_tools",
+          "label": "Locksmith Tools",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            768,
+            512,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            768,
+            512,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "cleansing_herbs",
+          "label": "Cleansing Herbs",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            1024,
+            512,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            1024,
+            512,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "warden_armor",
+          "label": "Roadwatch Cuirass",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            1280,
+            512,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            1280,
+            512,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "warden_faction_armor",
+          "label": "Calden Sentinel Plate",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            0,
+            768,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            0,
+            768,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "warden_relic_armor",
+          "label": "Oathkeeper's Last Watch",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            256,
+            768,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            256,
+            768,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "ranger_common_armor",
+          "label": "Trailwarden Jack",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            512,
+            768,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            512,
+            768,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "ranger_relic_armor",
+          "label": "Thornsong Mantle",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            768,
+            768,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            768,
+            768,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "occultist_armor",
+          "label": "Gravecloth Wraps",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            1024,
+            768,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            1024,
+            768,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "occultist_faction_armor",
+          "label": "Seamkeeper's Vestments",
+          "source": "assets/art_library/items/sheets/ink_loot_01.png",
+          "source_rect_xywh": [
+            1280,
+            768,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            1280,
+            768,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "ranger_epic",
+          "label": "Nightthorn Bow",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            0,
+            0,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            0,
+            1024,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "occultist_epic",
+          "label": "Sanguine Bonewood",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            256,
+            0,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            256,
+            1024,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "healer_epic",
+          "label": "Emberlight Mace",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            512,
+            0,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            512,
+            1024,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "warden_sword",
+          "label": "Iron Longsword",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            768,
+            0,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            768,
+            1024,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "warden_shield",
+          "label": "Sentinel Shield",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            1024,
+            0,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            1024,
+            1024,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "warden_legend",
+          "label": "Oathkeeper",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            1280,
+            0,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            1280,
+            1024,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "ranger_bow",
+          "label": "Hunting Bow",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            0,
+            256,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            0,
+            1280,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "ranger_armor",
+          "label": "Soothing Stalker Leathers",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            256,
+            1280,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "ranger_legend",
+          "label": "Venomous Thornsong",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            512,
+            256,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            512,
+            1280,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "occultist_staff",
+          "label": "Bonewood Staff",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            768,
+            256,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            768,
+            1280,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "occultist_focus",
+          "label": "Purifying Gravebound Grimoire",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            1024,
+            256,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            1024,
+            1280,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "occultist_legend",
+          "label": "Vampiric Gravetide",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            1280,
+            256,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            1280,
+            1280,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "healer_mace",
+          "label": "Pilgrim Mace",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            0,
+            512,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            0,
+            1536,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "healer_symbol",
+          "label": "Consecrated Symbol",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            256,
+            512,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            256,
+            1536,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "healer_legend",
+          "label": "Dawn's Mercy",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            512,
+            512,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            512,
+            1536,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "camp_watch",
+          "label": "Keep Watch: a hooded watchman lantern with a vigilant eye carved in aged iron",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            768,
+            512,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            768,
+            1536,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "camp_ward",
+          "label": "Protective Rite: three beeswax candles in a circle of chalk runes, soft ivory blue light",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            1024,
+            512,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            1024,
+            1536,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "camp_sharpen",
+          "label": "Ready Weapons: a battered sword blade and a whetstone with bright steel sparks",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            1280,
+            512,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            1280,
+            1536,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "camp_scout",
+          "label": "Study the Route: an unfolded worn map with a brass compass and crimson route line",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            0,
+            768,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            0,
+            1792,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "camp_rest",
+          "label": "Rest by the Fire: a small warm orange campfire of stacked logs and glowing embers",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            256,
+            768,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            256,
+            1792,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "slot_head",
+          "label": "Empty head equipment symbol: a battered medieval iron helmet",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            512,
+            768,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            512,
+            1792,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "slot_off_hand",
+          "label": "Empty off-hand equipment symbol: a sturdy medieval shield",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            768,
+            768,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            768,
+            1792,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "slot_armor",
+          "label": "Empty armour equipment symbol: a dark steel breastplate",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            1024,
+            768,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            1024,
+            1792,
+            256,
+            256
+          ]
+        },
+        {
+          "item_id": "slot_weapon",
+          "label": "Empty weapon equipment symbol: a weathered straight sword",
+          "source": "assets/art_library/items/sheets/ink_loot_04.png",
+          "source_rect_xywh": [
+            1280,
+            768,
+            256,
+            256
+          ],
+          "sheet_xywh": [
+            1280,
+            1792,
+            256,
+            256
+          ]
+        }
+      ]
+    },
+    {
+      "file": "images/09-ui-frames-banner-and-status.png",
+      "role": "Current HUD components and UI palette",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "bytes": 153256,
+      "sha256": "3f0d89e138460c96b0a389af9343371b3afc4248e5cedb43c2eb1dbcaeca0727",
+      "sources": [
+        {
+          "path": "assets/art_library/presentation/ui/panel_frame.png",
+          "sha256": "f41029cfb2818878731dbd590259966c9716e6607bd5686157bb0284c79ee393"
+        },
+        {
+          "path": "assets/art_library/presentation/ui/map_backing.png",
+          "sha256": "19a9096459832fef596938d2ad3d02907f1af1e07bab0d74b891c2f04113032e"
+        },
+        {
+          "path": "assets/art_library/presentation/ui/attack_banner.png",
+          "sha256": "618636fd19366782dc08e5385444061b2fb83851e90d637b2815d50bc28840ac"
+        },
+        {
+          "path": "assets/art_library/presentation/ui/status_bleed.png",
+          "sha256": "899b576c50ea46cf697040765ef6758e070ce3b85447b5d5eacc38837660c400"
+        },
+        {
+          "path": "assets/art_library/presentation/ui/status_burn.png",
+          "sha256": "50fa7565ffd3422d75e333d9d8e8f08b439dfa6f6f623d9ddecd80f9b3083305"
+        },
+        {
+          "path": "assets/art_library/presentation/ui/status_poison.png",
+          "sha256": "9882155008e1727f3f831ff594e455d9cf43bc99fe62fa4444666bf24dc97531"
+        },
+        {
+          "path": "scripts/ui_skin.gd",
+          "sha256": "d3be0e9a8824e50ab5d145a04e31515a3208c8cf89fe8b01108fd72fd5c2fc21"
+        }
+      ],
+      "tiles": [
+        {
+          "source": "assets/art_library/presentation/ui/panel_frame.png",
+          "source_rect_xywh": [
+            0,
+            0,
+            668,
+            360
+          ],
+          "sheet_xywh": [
+            40,
+            140,
+            668,
+            360
+          ],
+          "display_scale": 1
+        },
+        {
+          "source": "assets/art_library/presentation/ui/map_backing.png",
+          "source_rect_xywh": [
+            20,
+            20,
+            610,
+            300
+          ],
+          "sheet_xywh": [
+            810,
+            140,
+            610,
+            300
+          ],
+          "display_scale": 1
+        },
+        {
+          "source": "assets/art_library/presentation/ui/attack_banner.png",
+          "source_rect_xywh": [
+            0,
+            0,
+            629,
+            99
+          ],
+          "sheet_xywh": [
+            450,
+            580,
+            629,
+            99
+          ],
+          "display_scale": 1
+        },
+        {
+          "source": "assets/art_library/presentation/ui/status_bleed.png",
+          "native_display_xy": [
+            80,
+            800
+          ],
+          "detail_xy": [
+            128,
+            790
+          ],
+          "detail_scale": 4,
+          "detail_resampling": "nearest"
+        },
+        {
+          "source": "assets/art_library/presentation/ui/status_burn.png",
+          "native_display_xy": [
+            300,
+            800
+          ],
+          "detail_xy": [
+            348,
+            790
+          ],
+          "detail_scale": 4,
+          "detail_resampling": "nearest"
+        },
+        {
+          "source": "assets/art_library/presentation/ui/status_poison.png",
+          "native_display_xy": [
+            520,
+            800
+          ],
+          "detail_xy": [
+            568,
+            790
+          ],
+          "detail_scale": 4,
+          "detail_resampling": "nearest"
+        }
+      ]
+    },
+    {
+      "file": "images/10-current-gameplay-and-ui-context.png",
+      "role": "Current gameplay composition, scene scale, HUD and palette",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "bytes": 1913608,
+      "sha256": "ade26781c476a431a82b8f76df1ea1b2e868f3eb5e3c9175e4c4755af4ee6fff",
+      "sources": [
+        {
+          "path": "review-output/2026-10-16-art-repairs/integrated/warden_transitions/095.png",
+          "sha256": "ade26781c476a431a82b8f76df1ea1b2e868f3eb5e3c9175e4c4755af4ee6fff"
+        }
+      ],
+      "tiles": []
+    }
+  ],
+  "pixel_checks": [
+    {
+      "file": "02-warden-current-poses.png",
+      "native_tiles_checked": 6,
+      "reference_composite_exact": true,
+      "background": "#303039",
+      "source_art_repainting": "none",
+      "art_resampling": "none"
+    },
+    {
+      "file": "03-witch-hunter-current-poses.png",
+      "native_tiles_checked": 6,
+      "reference_composite_exact": true,
+      "background": "#303039",
+      "source_art_repainting": "none",
+      "art_resampling": "none"
+    },
+    {
+      "file": "04-ranger-current-poses.png",
+      "native_tiles_checked": 6,
+      "reference_composite_exact": true,
+      "background": "#303039",
+      "source_art_repainting": "none",
+      "art_resampling": "none"
+    },
+    {
+      "file": "05-occultist-current-poses.png",
+      "native_tiles_checked": 6,
+      "reference_composite_exact": true,
+      "background": "#303039",
+      "source_art_repainting": "none",
+      "art_resampling": "none"
+    },
+    {
+      "file": "06-hooded-raider-current-poses.png",
+      "native_tiles_checked": 12,
+      "reference_composite_exact": true,
+      "background": "#303039",
+      "source_art_repainting": "none",
+      "art_resampling": "none"
+    },
+    {
+      "file": "07-ui-painted-ability-icons.png",
+      "native_tiles_checked": 20,
+      "reference_composite_exact": true,
+      "background": "#303039",
+      "source_art_repainting": "none",
+      "art_resampling": "none"
+    },
+    {
+      "file": "08-ui-items-equipment-and-rituals.png",
+      "full_native_source_sheets_checked": 2,
+      "reference_composite_exact": true,
+      "art_resampling": "none",
+      "original_cell_arrangement_preserved": true
+    }
+  ],
+  "notes": [
+    "Existing artwork only; no new generative artwork or source edits.",
+    "Native character and icon tiles are composited unchanged at 1:1 scale onto a neutral reference background; exact expected output pixels are checked.",
+    "The approved Witch Hunter concept is composited at 1:1 scale onto parchment white for an opaque reference document.",
+    "HUD board composites native assets onto a labeled neutral reference background; status detail uses 4x nearest-neighbor.",
+    "Sheet labels and arrangement are reference annotations, not a runtime atlas specification.",
+    "UI ability/item imagery is a style reference; character sheets define actual equipped weapons."
+  ]
+}

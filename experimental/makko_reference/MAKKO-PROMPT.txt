@@ -1,0 +1,16 @@
+Use the ten attached PNGs as the visual reference for Ashen Expedition, our grimdark 2D illustrated RPG.
+
+Requested asset: [CHARACTER AND ACTION, OR UI ICONS]
+Output layout: [FRAME OR ICON COUNT, CELL DIMENSIONS, COLUMNS AND ROWS]
+
+Match the references' hand-painted ink-and-engraving treatment: heavy black contours, angular shadows, distressed iron and bronze, worn leather and cloth, muted earth colors, and restrained crimson, violet and gold accents. Keep the same stylized proportions, material detail, lighting and readable silhouettes.
+
+Reference priority: the relevant character sheet defines that character's silhouette, armor, equipment and pose. Image 01 provides the approved Witch Hunter's detailed identity; image 03 provides his combat proportions. Images 07–09 define UI paint treatment and frames, and image 10 defines game scale, composition and palette. Ability/item symbols are separate assets; they do not change the characters' equipped weapons. Labels, headers, palette swatches and reference backgrounds are annotations, not generated artwork.
+
+For characters: retain consistent armor plates, straps, gauntlets, boots, mask and colors across frames. Draw exactly two anatomically connected arms with plausible grips. Preserve full weapon handles and a rigid weapon shape; the Witch Hunter's straight hammer shaft and crosswise head must stay coherently mounted. The Warden keeps his mace and shield. The Ranger remains a slim archer; the Occultist remains a lean staff-and-book caster.
+
+For animation: keep one consistent camera, character scale, canvas, root registration and ground baseline. Place the complete character and weapon inside every cell with safe transparent padding. Idle breathing should move the upper torso and subtly follow through into forearms and weapons while the legs remain planted. Attack frames should have readable anticipation, contact and recovery with coherent equipment and target alignment.
+
+For UI: use bold, readable painted silhouettes and the existing worn metal, parchment and crimson treatment. Keep equal cells, consistent lighting, generous transparent padding and crisp edges at small display sizes. Generate asset artwork without baked labels or interface text.
+
+Return clean PNG artwork on a transparent background in the requested layout. Preserve this game's visual identity across every frame or icon.
