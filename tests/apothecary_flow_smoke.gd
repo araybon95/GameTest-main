@@ -71,8 +71,7 @@ func run() -> void:
 	current_scene._on_building_pressed({"scene": "res://scenes/hub/apothecary.tscn"})
 	await settle()
 	assert(current_scene.apothecary_mode)
-	current_scene.queue_free()
-	for i in range(3): await process_frame
-	await create_timer(0.2).timeout
+	var released: bool = await preload("res://tests/support/audio_cleanup.gd").finish(self,[current_scene])
+	assert(released,"Settlement audio must release before test shutdown")
 	print("PASS: real scene flow through three fights, camp, victory, settlement and reclaimed shop")
 	quit()

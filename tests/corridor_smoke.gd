@@ -37,7 +37,7 @@ func run() -> void:
 	assert(combat.battle_over)
 	State.finish_encounter()
 	assert(State.enter_corridor().is_empty())
-	combat.queue_free()
-	await process_frame
+	var released: bool = await preload("res://tests/support/audio_cleanup.gd").finish(self,[combat])
+	assert(released,"Stopped audio must release before test shutdown")
 	print("PASS: corridor gold/object/roamer generation, one-use coins, one enemy, surprise damage/accuracy, missed debuffs and cleared encounter")
 	quit()

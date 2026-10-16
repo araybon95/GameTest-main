@@ -402,8 +402,12 @@ func resume_map_travel() -> void:
 	var run: String = GameState.run_id
 	var floor: int = GameState.floor_index
 	var destination: Vector2i = GameState.journey.transit.route.back()
+	# An ambush replaces this scene without emitting finished. Bind completion to
+	# this node so freeing it also releases the pending continuation.
+	travel.finished.connect(_on_map_travel_finished.bind(travel,run,floor,destination),CONNECT_ONE_SHOT)
 	add_child(travel)
-	await travel.finished
+
+func _on_map_travel_finished(travel: Control, run: String, floor: int, destination: Vector2i) -> void:
 	traveling = false
 	if not GameState.run_active or GameState.run_id != run or GameState.floor_index != floor: return
 	if GameState.map_travel_mode: preload("res://scripts/room_discoveries.gd").prepare_floor(GameState)

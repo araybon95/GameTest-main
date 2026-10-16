@@ -69,7 +69,7 @@ func run() -> void:
 	battle._enemy_action()
 	assert(battle.enemy_weak_rounds == 0, "Exactly two attack actions consume Weakness")
 	assert("Weakness" in State.card_description(State.card_stats("pc_pain")))
-	battle.queue_free()
-	await process_frame
+	var released: bool = await preload("res://tests/support/audio_cleanup.gd").finish(self,[battle])
+	assert(released,"Stopped audio must release before test shutdown")
 	print("PASS: Witch Hunter identity, low-HP binding/AP, ally Weakness bonus, Sunder Block absorption and stable formation")
 	quit()

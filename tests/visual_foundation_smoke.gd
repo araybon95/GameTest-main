@@ -47,6 +47,6 @@ func run() -> void:
 	assert(panel.get_child(0) == surface)
 	assert(State.loot_rng.state == rng)
 	print("PASS: nine registered painted hotspots, polygon hit testing, keyboard illumination, input-transparent card material and unaffected RNG")
-	settlement.free()
-	panel.free()
+	var released: bool = await preload("res://tests/support/audio_cleanup.gd").finish(self,[settlement,panel])
+	assert(released,"Settlement audio must release before test shutdown")
 	quit()
