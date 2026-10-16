@@ -154,6 +154,7 @@ func run() -> void:
 	if not test_missing_and_nonparty_excluded(): quit(1);return
 	if not await test_coterie_final_form_only(): quit(1);return
 	if is_instance_valid(current_scene): current_scene.queue_free()
-	await settle()
+	var released: bool = await preload("res://tests/support/audio_cleanup.gd").finish(self,[])
+	assert(released,"Audio resources must release before test shutdown")
 	print("PASS: living Death's Door survivor XP; controller level-up without healing; unchanged rates; dead/missing/nonparty exclusion; saved once-only XP; final-form rewards")
 	quit(0)

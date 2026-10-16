@@ -1,0 +1,46 @@
+{
+  "engine": "Godot 4.6.3.stable.official.7d41c59c4",
+  "base_commit": "bceaf16",
+  "workers": 2,
+  "fresh_xdg_directories_per_run": true,
+  "verbose": true,
+  "strict_diagnostics": true,
+  "passed": 20,
+  "total": 20,
+  "files_sha256": {
+    "tests/support/audio_cleanup.gd": "0195955a49538a1bf021e710428721d9e7cdb3e9a0c724b751f2b91f44ddfbe9",
+    "tests/audio_teardown_smoke.gd": "518ec09602d9d6c5aaea8d52805da19c91670f42f05a9f56b7b440915c1bf8d7"
+  },
+  "cases": [
+    {
+      "test": "audio_teardown",
+      "runs": 4,
+      "passed": 4,
+      "diagnostics": 0
+    },
+    {
+      "test": "corridor",
+      "runs": 4,
+      "passed": 4,
+      "diagnostics": 0
+    },
+    {
+      "test": "items_unique",
+      "runs": 4,
+      "passed": 4,
+      "diagnostics": 0
+    },
+    {
+      "test": "status_visual",
+      "runs": 4,
+      "passed": 4,
+      "diagnostics": 0
+    },
+    {
+      "test": "survivor_xp",
+      "runs": 4,
+      "passed": 4,
+      "diagnostics": 0
+    }
+  ]
+}

@@ -51,7 +51,7 @@ func run() -> void:
 		battle._attack_with_equipment("warden", {"damage": 1})
 	assert(battle.enemies[0]["statuses"]["chill"]["stacks"] == 3)
 	assert(battle.scroll_container.get_child_count() == State.Items.POTIONS.size() + State.Items.SCROLLS.size())
-	battle.queue_free()
-	await process_frame
+	var released: bool = await preload("res://tests/support/audio_cleanup.gd").finish(self,[battle])
+	assert(released,"Audio resources must release before test shutdown")
 	print("PASS: consumable stacks, potion use/AP/dead guard, class Unique gear, actual hit procs, stacking caps and duration")
 	quit()

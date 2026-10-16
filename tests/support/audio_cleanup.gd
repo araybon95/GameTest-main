@@ -14,6 +14,20 @@ static func finish(tree: SceneTree, fixtures: Array[Node]) -> bool:
  for fixture in fixtures:
   if is_instance_valid(fixture): fixture.queue_free()
  players.clear()
+ # Start the fence only after all existing stop requests have been issued.
+ # Starting it earlier could allow its mix to precede those requests.
+ var fence := AudioStreamPlayer.new()
+ var silence := AudioStreamWAV.new()
+ silence.format = AudioStreamWAV.FORMAT_16_BITS
+ silence.data = PackedByteArray([0,0,0,0])
+ silence.loop_mode = AudioStreamWAV.LOOP_FORWARD
+ silence.loop_end = 2
+ fence.stream = silence
+ tree.root.add_child(fence)
+ fence.play()
+ playbacks.append(weakref(fence.get_stream_playback()))
+ fence.stop()
+ fence.queue_free()
  # Process queued frees even when there were no active audio voices.
  await tree.process_frame
  await tree.process_frame

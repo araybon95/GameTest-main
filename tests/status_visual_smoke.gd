@@ -47,7 +47,7 @@ func verify() -> void:
 	assert(foe1.statuses.has("poison"))
 	for hero_id in State.HEROES:
 		assert(ResourceLoader.exists(State.HEROES[hero_id]["camp_art"]))
-	battle.queue_free()
-	await process_frame
+	var released: bool = await preload("res://tests/support/audio_cleanup.gd").finish(self,[battle])
+	assert(released,"Audio resources must release before test shutdown")
 	print("PASS: separate hero/enemy materials, selected-hero effects, simultaneous debuffs, wounded stance, damage recoil, natural status expiry and healing cleanup, four camp pose assets")
 	quit()
