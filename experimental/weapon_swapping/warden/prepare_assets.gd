@@ -2,10 +2,11 @@ extends SceneTree
 ## Reproducible experimental asset assembly; original artwork is never overwritten.
 const ROOT = "res://experimental/weapon_swapping/warden/assets/"
 const Builds = preload("res://scripts/party_builds.gd")
+# Windup repair includes the old mace pommel below-left of the raised gauntlet.
 const POLYGONS = [
  [Vector2(167,306),Vector2(222,308),Vector2(356,350),Vector2(356,459),Vector2(250,459),Vector2(168,361)],
  [Vector2(835,306),Vector2(895,306),Vector2(1056,350),Vector2(1056,483),Vector2(955,483),Vector2(835,363)],
- [Vector2(1142,70),Vector2(1202,0),Vector2(1318,0),Vector2(1318,82),Vector2(1205,147),Vector2(1142,133)],
+ [Vector2(1142,70),Vector2(1202,0),Vector2(1318,0),Vector2(1318,82),Vector2(1205,147),Vector2(1160,147),Vector2(1122,170),Vector2(1098,163),Vector2(1098,138),Vector2(1142,110)],
  [Vector2(136,758),Vector2(185,758),Vector2(324,819),Vector2(324,932),Vector2(205,932),Vector2(136,820)],
  [Vector2(601,798),Vector2(650,798),Vector2(783,863),Vector2(783,990),Vector2(658,990),Vector2(601,864)],
  [Vector2(1150,898),Vector2(1367,898),Vector2(1367,1024),Vector2(1150,1024)]
