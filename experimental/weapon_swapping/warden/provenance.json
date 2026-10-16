@@ -1,0 +1,59 @@
+{
+  "generator": "OpenAI built-in image generation; reference-based edits",
+  "status": "experimental; awaiting Warden visual approval",
+  "generated_sources": [
+    {
+      "output": "assets/clean-body-source.png",
+      "references": [
+        "assets/art_library/party_builds/warden.png"
+      ],
+      "instruction": "Surgical 1536x1024 six-pose edit: remove every mace/shaft, preserve the exact Warden poses, shield, anatomy, armor and frame registration; reconstruct only occluded cloth/armor and leave empty clenched gauntlets; transparent background.",
+      "sha256": "064a5dec6e328735cf929a5bda7e608654a22f145c8c86902b108fee1f6a0a7d",
+      "reference_sha256": {
+        "assets/art_library/party_builds/warden.png": "79ca031dce13db866c6761d0215b4dad9fe3185411488cc1395e898992e47c56"
+      }
+    },
+    {
+      "output": "assets/sword-source.png",
+      "references": [
+        "assets/art_library/equipment/hero_warden_relic.png",
+        "assets/art_library/party_builds/warden.png"
+      ],
+      "instruction": "Only two separate full vertical one-handed swords on transparent background: practical weathered Iron Longsword and Oathkeeper with aged bronze guard/pommel, narrow ice-blue fuller and oath sigil. Match the engraved painted iron/bronze game style; identical grip size and straight blade axes.",
+      "sha256": "7e54d5ca2ffd0c305a4d939c713f222b4595e9c71cc1dc834aa96de13e42fb97",
+      "reference_sha256": {
+        "assets/art_library/equipment/hero_warden_relic.png": "faf0169430602a815a406d47bfd444566a8dd112a9113d9b093edaa0997becbe",
+        "assets/art_library/party_builds/warden.png": "79ca031dce13db866c6761d0215b4dad9fe3185411488cc1395e898992e47c56"
+      }
+    },
+    {
+      "output": "assets/execution-clean-source.png",
+      "references": [
+        "experimental/weapon_swapping/warden/assets/execution-reference.png"
+      ],
+      "instruction": "Surgical edit retaining five exact registered Warden source poses, with the sixth cell empty. Remove all maces, shafts and pommels; preserve one-handed grips, shields, armor, feet and pose anatomy; transparent background.",
+      "sha256": "b80fb0aee142d5b8f4b2282d5151f4add90990ca7cd1617b93985641a69d2ae9",
+      "reference_sha256": {
+        "experimental/weapon_swapping/warden/assets/execution-reference.png": "04a98fe97b9887c341fa46c8a3fd45a32ed95620332d31353881786084d0ce75"
+      }
+    },
+    {
+      "output": "assets/contact-clean-source.png",
+      "references": [
+        "assets/art_library/executions/warden/contact.png"
+      ],
+      "instruction": "Two reference-based cleanup passes: remove the mace shaft, pommel and head while preserving the established paired contact composition and existing target reaction/effects. Second pass explicitly removes the residual floating metal spiked ball near (1055,435), reconstructing only the concealed area; no new blood/effects.",
+      "sha256": "30e7f2fda6d5a40b29d73fc8c59dc6bcf89c9026afb3920d1f8e1db07fad8fb5",
+      "reference_sha256": {
+        "assets/art_library/executions/warden/contact.png": "89f4f3e235141e09c4dec80a43b89050aced80ff7321948f41bb5e30384639d5"
+      }
+    }
+  ],
+  "assembly": [
+    "prepare_assets.gd: original pixels retained outside declared weapon repair polygons; native pose/foot anchors retained",
+    "prepare_execution.gd: generated repairs aligned using recorded transforms only inside masks; source/target timing retained",
+    "Foreground hand layers occlude independent weapon layers; final textures are cached by hero/style/weapon/pose"
+  ],
+  "original_images_modified": false,
+  "production_gates_enabled": false
+}

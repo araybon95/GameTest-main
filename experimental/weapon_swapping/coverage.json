@@ -839,7 +839,37 @@
         "warden_sword"
       ],
       "prepared_poses": [],
-      "published": false
+      "published": false,
+      "prepared_profiles": {
+        "warden_sword": [
+          "idle",
+          "windup",
+          "attack",
+          "guard",
+          "hurt",
+          "death",
+          "execution_0",
+          "execution_1",
+          "execution_2",
+          "execution_3",
+          "execution_4",
+          "execution_contact"
+        ],
+        "warden_legend": [
+          "idle",
+          "windup",
+          "attack",
+          "guard",
+          "hurt",
+          "death",
+          "execution_0",
+          "execution_1",
+          "execution_2",
+          "execution_3",
+          "execution_4",
+          "execution_contact"
+        ]
+      }
     },
     {
       "hero": "warden",
@@ -998,6 +1028,7 @@
       "attack",
       "guard",
       "hurt",
+      "death",
       "execution_0",
       "execution_1",
       "execution_2",
@@ -1005,7 +1036,8 @@
       "execution_4",
       "execution_contact"
     ],
-    "originals_retained": true
+    "originals_retained": true,
+    "status": "experimental visual review pending; production disabled"
   },
   "region_encoding": "Godot Rect2 and Vector2 debug strings from the current registered selectors; coordinates are source pixels"
 }
