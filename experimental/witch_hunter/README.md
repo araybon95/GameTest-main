@@ -44,3 +44,6 @@ Review captures: [idle](skills-idle.png), [Binding Sigil](skills-pc_pain.png), [
 The next proposed experimental execution is a two-handed hammer uppercut to the jaw, an overhead crushing head strike, then a buckling, limp collapse. It is not integrated into lethal-hit gameplay.
 
 [Experimental execution showcase](execution/README.md): the approved uppercut → overhead crushing blow → limp collapse sequence, with GIF, MP4 and key impact frames. This is a presentation study awaiting visual review before any gameplay integration.
+
+
+[Judgment normal-attack study](judgment/README.md): compact two-handed chest strike, brief contact hold and quick recovery. Experimental preview; production timing awaits visual approval.

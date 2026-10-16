@@ -15,6 +15,8 @@ as separate projects.
 
 ## Current previews
 
+- [Witch Hunter Judgment](witch_hunter/judgment/README.md): compact normal hammer strike, grounded poses, visible sternum contact and quick recovery. Experimental timing preview.
+
 - [Witch Hunter](witch_hunter/README.md): hooded two-handed hammer
   fighter, sealed faceplate, matched armor, shoulder devotional reliefs and
   upper chains, with a banishment seal engraved on the hammer. The default combat

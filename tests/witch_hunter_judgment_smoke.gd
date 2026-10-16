@@ -1,0 +1,17 @@
+extends SceneTree
+func _initialize() -> void:
+ var timing = load("res://experimental/witch_hunter/judgment/timeline.gd")
+ assert(timing != null)
+ assert(timing.sample(-0.01).phase == "READY")
+ assert(timing.sample(timing.RELEASE-0.001).phase == "DRAW BACK")
+ assert(timing.sample(timing.RELEASE).phase == "STRIKE")
+ assert(not timing.sample(timing.IMPACT-0.001).contact)
+ assert(timing.sample(timing.IMPACT).contact)
+ assert(timing.sample(timing.IMPACT+timing.HOLD*0.5).phase == "CONTACT HOLD")
+ assert(timing.HOLD >= 0.05 and timing.HOLD <= 0.08)
+ assert(timing.DURATION-(timing.IMPACT+timing.HOLD) <= 0.25,"Compact recovery")
+ assert(timing.sample(timing.DURATION).phase == "READY")
+ assert(timing.sample(timing.IMPACT).source_x == timing.sample(timing.IMPACT+timing.HOLD*0.5).source_x,"Contact pose holds rather than sliding through enemy")
+ assert(timing.sample(timing.DURATION).source_x == 0)
+ print("PASS: Judgment preparation/release/contact hold/short recovery, finite nonlethal presentation")
+ quit()
