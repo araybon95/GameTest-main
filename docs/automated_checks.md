@@ -18,7 +18,7 @@ Each test runs in a separate process with fresh temporary application-data/confi
 
 A test passes only when it exits zero, prints a delimited `PASS` signal (including legacy labels such as `ECONOMY_SMOKE_PASS`), and has no `SCRIPT ERROR:` or explicit `FAIL`/`FAILED` marker. A timeout fails even if a PASS was printed first. Tests have a 180-second limit; the multi-expedition `run_milestone_smoke` has at least 600 seconds. Two workers keep CPU/memory use bounded. The entire job has a 35-minute limit; a newer run of the same Git ref cancels an older run.
 
-Existing non-script engine/config/shutdown diagnostics remain visible and counted in summaries. They do not by themselves make a test fail: the project currently emits known font/resource teardown warnings and an editor export-preset `runnable` warning. This workflow does not certify clean shutdown or replace human visual/balance review.
+Existing non-script engine/config/shutdown diagnostics remain visible and counted in summaries. They do not by themselves make a test fail: resource teardown warnings can still occur, and the guild-hall corruption tests intentionally print configuration parse errors. The font replacement and export-preset warnings were corrected in the [shutdown cleanup](shutdown_cleanup.md). This workflow does not certify clean shutdown or replace human visual/balance review.
 
 ## Run locally on Linux
 

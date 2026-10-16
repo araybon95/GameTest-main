@@ -16,7 +16,7 @@
 
 [Automated checks](automated_checks.md) documents the GitHub Actions workflow, local runner and downloadable results.
 
-The [2026-10-16 gameplay stability audit](gameplay_stability_audit.md) is the current full-suite report: 101 passing smoke scripts, 30 malformed-save cases and two bounded automated expeditions. Known shutdown diagnostics and the limits of those runs are documented there.
+The [shutdown cleanup](shutdown_cleanup.md) records the latest verification: 102 passing smoke scripts and eight runner tests. The [gameplay stability audit](gameplay_stability_audit.md) records the earlier 101-test baseline, 30 malformed-save cases and two bounded automated expeditions. Remaining shutdown diagnostics and verification limits are documented.
 
 [Art consistency repairs](../experimental/art_review/repairs/README.md) records 13 confirmed corrections and their preservation checks. The art audit is partial.
 

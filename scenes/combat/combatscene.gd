@@ -404,14 +404,21 @@ func _focus_selected_skill() -> void:
 		view.preview.get_node("PreviewNote").text = "ENTER · Automatically selects the ally described above." if selected_skill_id in ["relic_warden","relic_healer"] else "ENTER · Use on %s. Click an enemy to retarget." % enemy_name
 
 func _reveal_skill(view: Control) -> void:
-	# Scroll bounds update after the newly selected hero's hand is laid out.
-	await get_tree().process_frame
-	if not is_instance_valid(view) or not is_instance_valid(hand_container): return
+	# Node-bound one-shot connections disappear if this scene is freed.
+	var callback: Callable = _reveal_skill_after_layout.bind(view)
+	if not get_tree().process_frame.is_connected(callback):
+		get_tree().process_frame.connect(callback,CONNECT_ONE_SHOT)
+
+func _reveal_skill_after_layout(view: Control) -> void:
+	if not is_inside_tree() or not is_instance_valid(view) or not is_instance_valid(hand_container): return
 	var scroll: ScrollContainer = hand_container.get_parent()
 	scroll.scroll_vertical = maxi(0,int(view.position.y + view.size.y - scroll.size.y))
-	await get_tree().process_frame
-	if not is_instance_valid(view): return
-	view.show_preview()
+	var callback: Callable = _show_revealed_skill.bind(view)
+	if not get_tree().process_frame.is_connected(callback):
+		get_tree().process_frame.connect(callback,CONNECT_ONE_SHOT)
+
+func _show_revealed_skill(view: Control) -> void:
+	if is_inside_tree() and is_instance_valid(view): view.show_preview()
 
 
 func confirm_selected_skill() -> bool:
@@ -2200,8 +2207,11 @@ func _ground_battlefield() -> void:
 	hud.z_index = -1
 	_place(hud,Rect2(0,600,1920,480))
 	add_child(hud)
-	# Containers finish placing cloned hero buttons on the next layout frame.
-	await get_tree().process_frame
+	# A node-bound callback disconnects if the scene is freed before layout. An
+	# abandoned coroutine would retain its local shader/material resources.
+	get_tree().process_frame.connect(_plant_battlefield_combatants,CONNECT_ONE_SHOT)
+
+func _plant_battlefield_combatants() -> void:
 	if not is_inside_tree(): return
 	for hero_id in party:
 		_plant_combatant(hero_buttons[hero_id],hero_portraits[hero_id],280.0)
@@ -2247,13 +2257,13 @@ func _enemy_stage_height(index: int) -> float:
 	if entry.get("support",false) or entry.get("cocoon",false): return 215.0
 	return 280.0
 
-func _reveal_boss_intro() -> void:
+func _reveal_boss_intro(frames_remaining: int = 2) -> void:
+	if not is_inside_tree() or battle_over: return
 	if not enemies.any(func(entry): return entry.get("boss",false)): return
-	# Let the anchored battlefield finish placing portraits before the reveal.
-	var tree: SceneTree = get_tree()
-	for frame in range(2):
-		await tree.process_frame
-		if not is_inside_tree() or battle_over: return
+	# Preserve the two layout-frame delay without retaining an abandoned coroutine.
+	if frames_remaining > 0:
+		get_tree().process_frame.connect(_reveal_boss_intro.bind(frames_remaining-1),CONNECT_ONE_SHOT)
+		return
 	for index in range(enemies.size()):
 		if enemies[index].get("boss",false) and int(enemies[index]["hp"]) > 0:
 			_reveal_boss(index)

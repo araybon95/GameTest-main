@@ -24,6 +24,9 @@ func run() -> void:
  await settle()
  assert(not music.playing)
  music.queue_free()
+ # The final title screen owns a separate looping player. Dispose the fixture
+ # before quitting so its audio-server playback can finish releasing.
+ current_scene.queue_free()
  await settle()
  print("PASS: same music player through buildings and preparation, stops on expedition/title, restarts on return")
  quit()

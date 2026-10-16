@@ -47,7 +47,10 @@ func decorate(node: Node) -> void:
    node.add_theme_constant_override("shadow_offset_x",1)
    node.add_theme_constant_override("shadow_offset_y",2)
   if node.get_theme_font_size("font_size") >= 28:
-   node.add_theme_font_override("font",heading_font)
+   # Theme notifications can reshape text synchronously. Keep the old font's
+   # data alive until replacement has completed, including its cached RIDs.
+   var previous_font: Font = node.get_theme_font("font")
+   if previous_font != heading_font: node.add_theme_font_override("font",heading_font)
  if node is TextureRect and node.texture != null and node.material == null:
   var path: String = node.texture.resource_path.to_lower()
   if path.contains("bg_") or path.contains("background") or path.contains("settlement") or path.contains("estate_map"):
