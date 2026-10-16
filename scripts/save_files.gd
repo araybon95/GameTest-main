@@ -104,7 +104,77 @@ static func validation_error(data: Variant) -> String:
 		if not data.floors[data.floor].has(data.position): return "The saved location does not exist."
 		for id in data.party:
 			if not data.heroes.has(id): return "A saved party hero is missing."
+	return _runtime_validation_error(data)
+
+static func _record_matches(value: Variant, fields: Dictionary, required: Array = []) -> bool:
+	if not value is Dictionary: return false
+	for key in required:
+		if not value.has(key): return false
+	for key in fields:
+		if value.has(key) and typeof(value[key]) != fields[key]: return false
+	return true
+
+static func _list_matches(value: Variant, entry_type: int) -> bool:
+	if not value is Array: return false
+	for entry in value:
+		if typeof(entry) != entry_type: return false
+	return true
+
+static func _string_map_matches(value: Variant, entry_type: int) -> bool:
+	if not value is Dictionary: return false
+	for key in value:
+		if not key is String or typeof(value[key]) != entry_type: return false
+	return true
+
+static func _runtime_validation_error(data: Dictionary) -> String:
+	# Validate fields their consumers dereference before load_slot changes State.
+	# Absent later records still use the existing version-1 legacy defaults.
+	if not data.get("run_id","") is String: return "Invalid saved run identity."
+	if not data.get("equipment_appearance",true) is bool: return "Invalid equipment appearance flag."
+	var hero_fields := {"stress":TYPE_INT,"block":TYPE_INT,"max_hp":TYPE_INT,"damage_mod":TYPE_INT,"stress_per_turn":TYPE_INT,"dead":TYPE_BOOL,"deaths_door":TYPE_BOOL,"resolved":TYPE_BOOL,"resolve_tag":TYPE_STRING,"resolve_type":TYPE_STRING,"buffs":TYPE_DICTIONARY}
+	for id in data.heroes:
+		var hero: Dictionary = data.heroes[id]
+		var required: Array = ["stress","damage_mod","stress_per_turn","dead","deaths_door","resolved","resolve_tag","resolve_type"] if data.active and data.party.has(id) else []
+		if not _record_matches(hero,hero_fields,required): return "Invalid saved hero combat details."
+		for effect_id in hero.get("statuses",{}):
+			var effect: Dictionary = hero.statuses[effect_id]
+			if not effect_id is String or not effect.has("turns"): return "Invalid saved status duration."
+			if effect_id != "chill" and not effect.has("damage") and not effect.has("base_damage"): return "Missing saved status damage."
+		for effect in hero.get("buffs",{}).values():
+			if not _record_matches(effect,{"turns":TYPE_INT,"amount":TYPE_INT},["turns","amount"]): return "Invalid saved temporary buff."
+	var journey: Dictionary = data.get("journey",{})
+	if not _record_matches(journey,{"start_gold":TYPE_INT,"steps":TYPE_INT,"rations":TYPE_INT,"kills":TYPE_INT,"loot":TYPE_DICTIONARY,"xp":TYPE_DICTIONARY,"levels":TYPE_DICTIONARY,"boons":TYPE_DICTIONARY,"passages":TYPE_DICTIONARY,"transit":TYPE_DICTIONARY,"passage_watch":TYPE_BOOL,"recent_discoveries":TYPE_ARRAY}): return "Invalid saved journey details."
+	for key in ["loot","xp","levels"]:
+		if not _string_map_matches(journey.get(key,{}),TYPE_INT): return "Invalid saved journey totals."
+	if not _string_map_matches(journey.get("boons",{}),TYPE_BOOL): return "Invalid saved camp preparation."
+	if not _list_matches(journey.get("recent_discoveries",[]),TYPE_VECTOR2I): return "Invalid saved discoveries."
+	if not _string_map_matches(journey.get("passages",{}),TYPE_DICTIONARY): return "Invalid saved hallway records."
+	for event in journey.get("passages",{}).values():
+		if not _record_matches(event,{"key":TYPE_STRING,"kind":TYPE_STRING,"resolved":TYPE_BOOL,"room":TYPE_DICTIONARY,"result":TYPE_DICTIONARY,"destination":TYPE_VECTOR2I},["key","kind","resolved"]): return "Invalid saved hallway event."
+		if event.kind == "curio" and not _record_matches(event.get("room"),{"event_id":TYPE_STRING},["event_id"]): return "Invalid saved hallway curio."
+	var transit: Dictionary = journey.get("transit",{})
+	if not transit.is_empty():
+		if not _record_matches(transit,{"run_id":TYPE_STRING,"floor":TYPE_INT,"origin":TYPE_VECTOR2I,"route":TYPE_ARRAY,"index":TYPE_INT,"stage":TYPE_STRING,"event_key":TYPE_STRING,"event_done":TYPE_BOOL},["run_id","floor","origin","route","index","stage","event_key","event_done"]): return "Invalid saved hallway traversal."
+		if not _list_matches(transit.route,TYPE_VECTOR2I): return "Invalid saved hallway route."
+	for journal in data.get("hero_journals",{}).values():
+		if not _record_matches(journal,{"voice":TYPE_INT,"generation":TYPE_INT,"keys":TYPE_ARRAY,"memories":TYPE_ARRAY,"ties":TYPE_DICTIONARY},["generation","keys","memories","ties"]): return "Invalid saved hero journal."
+		if not _list_matches(journal.keys,TYPE_STRING) or not _list_matches(journal.memories,TYPE_STRING) or not _string_map_matches(journal.ties,TYPE_INT): return "Invalid saved hero memories or bonds."
+	for history in data.get("item_histories",{}).values():
+		if not _record_matches(history,{"base":TYPE_STRING,"name":TYPE_STRING,"hero":TYPE_STRING,"origin":TYPE_STRING,"transformation":TYPE_STRING,"milestone":TYPE_STRING,"deeds":TYPE_ARRAY,"keys":TYPE_ARRAY,"owners":TYPE_ARRAY,"victories":TYPE_ARRAY}): return "Invalid saved item history details."
+		for key in ["deeds","keys","owners","victories"]:
+			if not _list_matches(history.get(key,[]),TYPE_STRING): return "Invalid saved item memories."
+	var report: Dictionary = data.get("last_report",{})
+	if not _record_matches(report,{"dungeon":TYPE_STRING,"complete":TYPE_BOOL,"floor":TYPE_INT,"gold":TYPE_INT,"kills":TYPE_INT,"rooms":TYPE_INT,"loot":TYPE_DICTIONARY,"survivors":TYPE_ARRAY,"fallen":TYPE_ARRAY,"cosmetic_reward":TYPE_STRING}): return "Invalid saved expedition report."
+	for group in ["survivors","fallen"]:
+		for hero in report.get(group,[]):
+			if not _record_matches(hero,{"id":TYPE_STRING,"name":TYPE_STRING,"class":TYPE_STRING,"level":TYPE_INT,"old_level":TYPE_INT,"xp":TYPE_INT,"hp":TYPE_INT,"stress":TYPE_INT,"deeds":TYPE_DICTIONARY},["id","name","class","level","old_level","xp","hp","stress"]): return "Invalid saved expedition survivor."
+	if data.active:
+		for floor in data.floors:
+			for room in floor.values():
+				if room.kind in ["battle","boss"] and room.has("enemies"):
+					if not _list_matches(room.enemies,TYPE_STRING) or room.enemies.is_empty(): return "Invalid saved enemy roster."
 	return ""
+
 static func save(slot: int) -> bool:
 	if slot < 0 or slot > 3: return false
 	DirAccess.make_dir_recursive_absolute(directory)

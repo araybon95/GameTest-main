@@ -2,6 +2,7 @@ extends Node2D
 ## Visual comparison only. No combat state, damage or production timing changes.
 const Builds = preload("res://scripts/party_builds.gd")
 const Profiles = preload("res://scripts/attack_profiles.gd")
+const Motion = preload("res://scripts/warden_transitions.gd")
 const SLOT = 2.6
 var elapsed: float = 0.0
 var paused: bool = false
@@ -14,7 +15,11 @@ func _ready() -> void:
  reference.set_meta("pose_id","warden")
  var idle: Texture2D = Builds.idle(reference)
  for state in ["idle","windup","attack"]:
-  textures[state] = ImageTexture.create_from_image(Builds.pose(idle,state).get_image())
+  var pose: AtlasTexture = Builds.pose(idle,state)
+  var part: Image = pose.get_image()
+  var canvas := Image.create(pose.get_width(),pose.get_height(),false,Image.FORMAT_RGBA8)
+  canvas.blit_rect(part,Rect2i(Vector2i.ZERO,part.get_size()),Vector2i(pose.margin.position))
+  textures[state] = ImageTexture.create_from_image(canvas)
  backdrop = load("res://assets/art_library/generated/bandit_battle_stage.png")
  font = ThemeDB.fallback_font
 func _process(delta: float) -> void:
@@ -34,19 +39,7 @@ func timing(heavy: bool, improved: bool) -> Dictionary:
   result["duration"] = 1.16 if heavy else 0.80
  return result
 func layers(age: float, schedule: Dictionary, improved: bool) -> Array:
- var release: float = schedule.release
- var impact: float = schedule.impact
- var finish: float = schedule.duration
- var recover: float = impact+schedule.hold
- if age < 0 or age >= finish: return [["idle",1.0]]
- var state: String = "windup" if age < release else "attack" if age < recover else "idle"
- if not improved: return [[state,1.0]]
- # Short blends avoid a lingering transparent second weapon/arm.
- for entry in [[0.0,"idle","windup",0.065],[release,"windup","attack",0.040],[recover,"attack","idle",0.075]]:
-  if age >= entry[0] and age < entry[0]+entry[3]:
-   var mix: float = smoothstep(0,1,(age-entry[0])/entry[3])
-   return [[entry[1],1.0-mix],[entry[2],mix]]
- return [[state,1.0]]
+ return Motion.layers(age,schedule,improved)
 func body_mesh(texture: Texture2D, anchor: Vector2, lean: float, breath: float) -> ArrayMesh:
  var vertices := PackedVector3Array()
  var uv := PackedVector2Array()
@@ -93,7 +86,7 @@ func _draw() -> void:
   var origin := Vector2(panel*720,0)
   draw_texture_rect(backdrop,Rect2(origin+Vector2(12,96),Vector2(696,460)),false,Color(0.60,0.60,0.60))
   draw_line(origin+Vector2(24,500),origin+Vector2(696,500),Color("#9c8460"),2)
-  caption(origin+Vector2(28,78),"PROPOSED / CONNECTED MOTION" if improved else "BASELINE / TIMING & POSE CUTS",21)
+  caption(origin+Vector2(28,78),"CURRENT / GROUNDED MOTION" if improved else "BASELINE / TIMING & POSE CUTS",21)
   var schedule: Dictionary = timing(heavy,improved)
   var frame: Dictionary = Profiles.sample(schedule,maxf(age,0))
   var lean: float = 0

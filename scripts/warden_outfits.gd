@@ -36,6 +36,14 @@ static func frame(outfit: String, index: int) -> Texture2D:
 	var height: float = GROUNDS[outfit][index]+1
 	var width: float = 366 if index%4 != 3 else 362
 	texture.region = Rect2((index%4)*362,top,width,height)
+	# Neighboring cells overlap by four pixels. Mask only their isolated fragments.
+	if (outfit == "original" and index == 7) or (outfit == "ashen_wolf" and index == 5):
+		# Keep the original UVs for palette lighting and forearm deformation.
+		var part: Image = texture.atlas.get_image()
+		var mask := Rect2i(0,306,2,6) if outfit == "original" else Rect2i(362,220,4,8)
+		mask.position += Vector2i(texture.region.position)
+		part.fill_rect(mask,Color.TRANSPARENT)
+		texture.atlas = ImageTexture.create_from_image(part)
 	texture.margin = Rect2((380-width)/2,400-height,380-width,400-height)
 	texture.filter_clip = true
 	texture.set_meta("pose_id","warden")

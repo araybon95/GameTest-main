@@ -1,3 +1,3 @@
-e5e76e56de1b894e4e6de33badaf0b7cc3c686f5e2ca25644354d2b779f4fd8a  01-current-frames.zip
+0a6b242764d7dd5049379da8c71509237f2200bad4762640a70a0d82aab83e30  01-current-frames.zip
 0bed77ab26f11baf7076c47b30ea4d4e1da5b260e49883e54bbfef51329d14dc  02-all-source-overviews.zip
 b315fb6395c4c31304369811d8d487e6c0bf809b914b0e8bad7acab92723aabc  03-animation-review.zip

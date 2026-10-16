@@ -485,6 +485,7 @@ func execute_warden(target: TextureRect) -> bool:
  var entry: Dictionary = pending[-1] if not pending.is_empty() and pending[-1].get("target_node") == target else active if active.get("target_node") == target else {}
  if entry.is_empty() or entry.get("execution",false): return false
  # Keep selected costumes intact until they have matching execution artwork.
+ if entry["source"].get_meta("appearance_style","") in ["alternate","equipment"]: return false
  if entry["source"].get_meta("warden_outfit","original") != "original": return false
  entry["execution"] = true
  entry["duration"] = Execution.DURATION

@@ -1,6 +1,8 @@
 # ChatGPT artwork consistency review
 
-This packet prepares images for a separate ChatGPT conversation. It does not upload them into another chat or claim that an AI review has already been completed.
+This packet prepares images for a separate ChatGPT conversation. It does not upload them into another chat. A partial audit and a repair pass have now been completed; see the [repair report](repairs/README.md) for the 13 confirmed findings addressed.
+
+Pack 01 is refreshed from the 2026-10-16 repair working tree. Packs 02 and 03 remain historical `80d4012` snapshots. For corrected Warden and Witch Hunter motion, use the new previews linked in the repair report instead of the historical storyboards.
 
 ## Start with these steps
 
@@ -21,7 +23,7 @@ Uploading a ZIP alone may not expose its images to visual review. Extract the ar
 
 ## Full-resolution source artwork
 
-The source snapshot is commit `80d401207b24c3e2bae3d096e1f3fedda0e79a3f`.
+The historical source-overview and animation snapshot is commit `80d401207b24c3e2bae3d096e1f3fedda0e79a3f`. The current frame pack records local repaired-source hashes and is not represented by that older commit.
 
 [Download all original project files from that snapshot](https://github.com/araybon95/GameTest-main/archive/80d401207b24c3e2bae3d096e1f3fedda0e79a3f.zip).
 

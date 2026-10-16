@@ -22,7 +22,9 @@ godot --path . --screen 0 --script experimental/witch_hunter/execution/export_pr
 
 The exporter checks artwork initialization, directory creation and each PNG write, returning a failure status if capture fails. The folder remains under `experimental/.gdignore` and is not packaged into the game.
 
-Validation: all 97 repository smoke tests passed, including timing/death-state checks for this execution. The native renderer captured 96 PNG frames; the MP4 is 1280×720 at 30 FPS and the GIF is 960×540 at 20 FPS, both 3.2 seconds. A forced PNG write failure returned exit status 1. Code review found no remaining blockers. Existing Godot font and resource-shutdown diagnostics remain in some unrelated smoke runs.
+Original integration validation: all 97 repository smoke tests passed, including timing/death-state checks for this execution. A forced PNG write failure returned exit status 1. Existing Godot font and resource-shutdown diagnostics remained in some unrelated smoke runs.
+
+2026-10-16 repair validation: the opening pose now retains the sealed bronze faceplate and framed shoulder plaque. Only those local artwork regions changed; hammer, hands and body registration are preserved. The current normal/reduced sequence was rendered again, and the GIF, MP4 and opening still were refreshed. The other linked stills retain their approved artwork. The MP4 is 1280×720 at 30 FPS; the GIF is 960×540 at 30 FPS, both 3.2 seconds with the existing ready/finished holds. All 11 focused repair checks passed, including this execution's timing/death checks. See the [repair report](../../art_review/repairs/README.md) for before/after details and reduced-motion playback.
 
 
 Visual correction: the uppercut contact uses a revised arm with a natural elbow bend and wrist alignment. The crushing contact retains the original approved illustration. The loose cleaver uses a separate complete prop sprite with its handle, bolster and pommel; its rotated bounds determine the landing height.

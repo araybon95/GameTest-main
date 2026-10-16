@@ -12,19 +12,15 @@ static func timing(original: Dictionary, skill: String) -> Dictionary:
  return result
 static func lean(frame: Dictionary) -> float:
  return -9*sin(frame.windup*PI/2) if frame.phase == "windup" else lerpf(-9,14,smoothstep(0,1,frame.flight)) if frame.phase == "release" else 14*(1-smoothstep(0,1,frame.recovery))
-static func layers(age: float, schedule: Dictionary, improved: bool) -> Array:
+static func layers(age: float, schedule: Dictionary, _improved: bool) -> Array:
  var release: float = schedule.release
  var impact: float = schedule.impact
  var finish: float = schedule.duration
  var recover: float = impact+schedule.hold
  if age < 0 or age >= finish: return [["idle",1.0]]
  var state: String = "windup" if age < release else "attack" if age < recover else "idle"
- if not improved: return [[state,1.0]]
- # Short blends avoid a lingering transparent second weapon/arm.
- for entry in [[0.0,"idle","windup",0.065],[release,"windup","attack",0.040],[recover,"attack","idle",0.075]]:
-  if age >= entry[0] and age < entry[0]+entry[3]:
-   var mix: float = smoothstep(0,1,(age-entry[0])/entry[3])
-   return [[entry[1],1.0-mix],[entry[2],mix]]
+ # Distinct painted poses cannot crossfade without doubling the held equipment.
+ # Retain the grounded mesh motion and approved timing, with one opaque pose.
  return [[state,1.0]]
 static func body_mesh(texture: Texture2D, anchor: Vector2, lean: float, breath: float, scale_factor: float) -> ArrayMesh:
  var vertices := PackedVector3Array()

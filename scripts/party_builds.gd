@@ -5,7 +5,7 @@ const BODY_PIXELS = {"warden":479.0,"crusader":461.0,"ranger":440.0,"occultist":
 const REGIONS = {
  "warden":[Rect2(56,61,399,479),Rect2(518,124,532,413),Rect2(1075,0,406,544),Rect2(30,580,455,399),Rect2(552,583,413,398),Rect2(960,810,563,205)],
  "crusader":[Rect2(62,68,398,461),Rect2(539,121,546,408),Rect2(1079,10,386,519),Rect2(51,531,315,453),Rect2(501,605,438,379),Rect2(976,868,542,123)],
- "occultist":[Rect2(83,32,328,513),Rect2(481,152,608,380),Rect2(1101,6,406,539),Rect2(23,552,400,429),Rect2(525,596,445,378),Rect2(936,838,594,170)],
+ "occultist":[Rect2(83,32,328,513),Rect2(481,152,608,380),Rect2(1101,6,422,539),Rect2(23,552,400,429),Rect2(525,596,445,378),Rect2(936,838,594,170)],
  "ranger":[Rect2(95,76,336,440),Rect2(573,44,437,472),Rect2(1082,42,379,474),Rect2(91,562,334,433),Rect2(588,567,403,428),Rect2(1053,779,457,203)],
 }
 # Absolute body anchors in each atlas; weapons do not move the pivot.
@@ -47,6 +47,17 @@ static func pose(original: Texture2D, state: String) -> Texture2D:
    parts[part_key] = ImageTexture.create_from_image(part)
   texture.atlas = parts[part_key]
   texture.region = Rect2(Vector2.ZERO,area.size)
+ # Local atlas overlap masks keep every approved body pixel and its registration.
+ if (id == "warden" and index == 5) or (id == "crusader" and index == 2):
+  var part_key: String = id+":edge:"+str(index)
+  if not parts.has(part_key):
+   # Keep sheet coordinates: status shaders also use atlas UVs.
+   var part: Image = sheet.get_image()
+   var mask := Rect2i(0,125,5,40) if id == "warden" else Rect2i(0,369,8,29)
+   mask.position += Vector2i(area.position)
+   part.fill_rect(mask,Color.TRANSPARENT)
+   parts[part_key] = ImageTexture.create_from_image(part)
+  texture.atlas = parts[part_key]
  # Minimal side padding centers the feet without inflating combat/UI bounds.
  # Variable pose heights retain the idle sheet scale through combat_presentation.
  var left_pad: float = maxf(0,area.size.x-2*anchor)

@@ -7,5 +7,19 @@
   "frame_families": 35,
   "motion_files": 28,
   "sampled_motion_frames": 332,
-  "coverage": "All tracked source image/media records map to an overview, exact duplicate alias, OpenRaster layer extraction, or motion storyboard."
+  "coverage": "Historical inventory coverage: all original tracked source records map to an overview, duplicate alias, layer extraction or storyboard. This is inventory/export coverage, not complete visual inspection.",
+  "current_frames_update": {
+    "date": "2026-10-16",
+    "base_commit": "5990a1974b33d5ab9041299b7cfd9304fd951172",
+    "snapshot": "local repair working tree",
+    "native_frames": 160,
+    "stable_ids": "R0001\u2013R0160",
+    "origin_offsets_recorded": true,
+    "index": "01-current-frames.zip::01-current-frames/frame-index.json"
+  },
+  "repair_scope": {
+    "confirmed_findings_addressed": 13,
+    "report": "repairs/README.md",
+    "visual_audit_coverage": "partial; uncertain and unreviewed assets remain outside this repair pass"
+  }
 }

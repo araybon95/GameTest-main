@@ -6,12 +6,18 @@ func check(ok: bool, message: String) -> bool:
   push_error(message)
   quit(1)
  return ok
-func fixture(roster: Array) -> Control:
+func fixture(roster: Array, outfit: String = "original") -> Control:
  State.progress_loaded = true
  State.party.assign(["warden","ranger","occultist"])
  State.equipment.clear()
+ State.hero_outfits.clear()
+ State.equipment_appearance = true
  State.select_expedition("old_road")
  State.start_run(2304)
+ if outfit == "alternate": State.hero_outfits.warden = "alternate"
+ if outfit == "relic":
+  State.add_item("warden_relic_armor")
+  State.equip_item("warden","warden_relic_armor")
  State.floors[0][Vector2i.ZERO] = {"kind":"battle","enemies":roster,"seen":true,"cleared":false}
  var battle: Control = load("res://scenes/combat/combatscene.tscn").instantiate()
  root.add_child(battle)
@@ -75,5 +81,14 @@ func run() -> void:
   battle.free()
   await process_frame
   await process_frame
- print("PASS: real final-Raider Warden kill, presentation, corpse, control lock, once-only rewards and excluded kills")
+ for outfit in ["alternate","relic"]:
+  battle = fixture(["ash_raider"],outfit)
+  var selected: Texture2D = battle.hero_portraits.warden.texture
+  if not check(selected.get_meta("appearance_style","") == ("alternate" if outfit == "alternate" else "equipment"),"Fixture must resolve the actual selected/equipped outfit"): return
+  battle._attack_with_equipment("warden",{"name":"Heavy Strike","damage":999,"skill_id":"wd_heavy"})
+  if not check(battle.enemy_hp == 0 and not battle.presentation.has_execution(),"A real lethal hit must keep the "+outfit+" appearance"): return
+  battle.free()
+  await process_frame
+  await process_frame
+ print("PASS: real final-Raider Warden kill, presentation, corpse, control lock, once-only rewards, excluded kills and automatically selected alternate/relic outfits")
  quit()

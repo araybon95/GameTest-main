@@ -1,0 +1,471 @@
+{
+  "date": "2026-10-16",
+  "base_commit": "5990a1974b33d5ab9041299b7cfd9304fd951172",
+  "snapshot": "local repair working tree; unpublished",
+  "scope": "13 confirmed findings from the partial audit; no full-library certification",
+  "findings": [
+    {
+      "id": "OCC-001",
+      "severity": "major",
+      "character_animation": "Occultist / hurt",
+      "status": "fixed; verification in README.md"
+    },
+    {
+      "id": "W-001",
+      "severity": "major",
+      "character_animation": "Warden / Slash and Heavy Strike",
+      "status": "fixed; verification in README.md"
+    },
+    {
+      "id": "W-002",
+      "severity": "major",
+      "character_animation": "Warden / original-only execution gate",
+      "status": "fixed; verification in README.md"
+    },
+    {
+      "id": "WE-01",
+      "severity": "major",
+      "character_animation": "Warden execution / Ash Raider equipment",
+      "status": "fixed; verification in README.md"
+    },
+    {
+      "id": "WE-02",
+      "severity": "major",
+      "character_animation": "Warden execution / impact to followthrough",
+      "status": "fixed; verification in README.md"
+    },
+    {
+      "id": "WH-02",
+      "severity": "major",
+      "character_animation": "Witch Hunter / experimental execution / uppercut preparation",
+      "status": "fixed; verification in README.md"
+    },
+    {
+      "id": "WH-03",
+      "severity": "major",
+      "character_animation": "Witch Hunter / experimental execution / uppercut preparation",
+      "status": "fixed; verification in README.md"
+    },
+    {
+      "id": "OCC-002",
+      "severity": "minor",
+      "character_animation": "Occultist / windup and cast",
+      "status": "fixed; verification in README.md"
+    },
+    {
+      "id": "RG-E01",
+      "severity": "minor",
+      "character_animation": "Hooded Raider attack/contact F06",
+      "status": "fixed; verification in README.md"
+    },
+    {
+      "id": "W-003",
+      "severity": "minor",
+      "character_animation": "Warden / death and travel atlas cells",
+      "status": "fixed; verification in README.md"
+    },
+    {
+      "id": "W-004",
+      "severity": "minor",
+      "character_animation": "Warden / windup mace tip",
+      "status": "fixed; verification in README.md"
+    },
+    {
+      "id": "W-005",
+      "severity": "minor",
+      "character_animation": "Warden and shared combat idle / Ambient Motion",
+      "status": "fixed; verification in README.md"
+    },
+    {
+      "id": "WH-01",
+      "severity": "minor",
+      "character_animation": "Witch Hunter / current default combat / windup",
+      "status": "fixed; verification in README.md"
+    }
+  ],
+  "source_hashes": {
+    "assets/art_library/party_builds/warden.png": "79ca031dce13db866c6761d0215b4dad9fe3185411488cc1395e898992e47c56",
+    "assets/art_library/party_builds/occultist.png": "8a6d7d00aec3f775479dfd453e373e6baaa53c09ba940df40923910603b3c15f",
+    "experimental/witch_hunter/execution/assets/uppercut-lead-in.png": "4265500fccf81ef1bbd90c6c7966cb5fade23344786cab10c6f1e6a293c60b2b",
+    "scripts/party_builds.gd": "895f5f290fbb8ae94cd30183b4382812da4dfe081f5aed954ead465b24f55628",
+    "scripts/warden_outfits.gd": "47ce823c529a9d827cb6c52512a3c210a4667048ee95b291ade5551afe6e18be",
+    "scripts/warden_transitions.gd": "6d553c1c6db9dc6d6bd024a4d2bb002feff4b2dd6ec17621221c4a9c482b32bf",
+    "scenes/combat/status_visual.gd": "fc65267f0fe6fdfca5615e6c4d9d16fe9e136cb65ffdcfae300f7d2d317cf765",
+    "scenes/combat/combat_presentation.gd": "526d8a8e0680693d4c687da35840b29d333b5298361361cbf5029751feb1b015",
+    "scenes/combat/warden_execution.gd": "755aa7ade67dc812af070d8c4ae5a83b72cb1077e973155dc521b45a3be66866",
+    "experimental/art_review/export_current_frames.gd": "5427ccf1cda6f34689fd5a510d1e1cedfeb4863f0bee6a1333a2fa02e3412421"
+  },
+  "source_pixel_preservation": [
+    {
+      "asset": "uppercut-lead-in",
+      "changed_pixels": 2326,
+      "outside_mask_changed_pixels": 0,
+      "canvas_unchanged": true
+    },
+    {
+      "asset": "occultist",
+      "changed_pixels": 4577,
+      "outside_mask_changed_pixels": 0,
+      "canvas_unchanged": true
+    },
+    {
+      "asset": "warden",
+      "changed_pixels": 160,
+      "outside_mask_changed_pixels": 0,
+      "canvas_unchanged": true
+    }
+  ],
+  "frame_export": {
+    "native_frame_count": 160,
+    "stable_frame_ids": true,
+    "zip_crc": "pass",
+    "all_native_file_hashes": "pass",
+    "raider_frame_06": {
+      "canvas": [
+        420,
+        400
+      ],
+      "canvas_origin_offset": [
+        20,
+        0
+      ],
+      "complete_imported_rgba_preserved": true,
+      "raw_source_alpha_preserved": true,
+      "previously_clipped_nonzero_alpha_pixels_recovered": 623,
+      "note": "Godot import fix_alpha_border changes some RGB values below alpha 20; complete imported RGBA and all original alpha values match. No import settings changed."
+    },
+    "refreshed_native_pixel_changes": {
+      "R0002": {
+        "family": "default-warden",
+        "state": "windup",
+        "same_canvas": true,
+        "changed_pixels": 204
+      },
+      "R0027": {
+        "family": "default-occultist",
+        "state": "hurt",
+        "same_canvas": true,
+        "changed_pixels": 4701
+      },
+      "R0137": {
+        "family": "witch-hunter-execution",
+        "state": "hero-00",
+        "same_canvas": true,
+        "changed_pixels": 2326
+      }
+    }
+  },
+  "focused_tests": [
+    {
+      "test": "art_consistency",
+      "exit_code": 0,
+      "pass_message": true,
+      "script_errors": false,
+      "diagnostics": []
+    },
+    {
+      "test": "warden_execution_registration",
+      "exit_code": 0,
+      "pass_message": true,
+      "script_errors": false,
+      "diagnostics": []
+    },
+    {
+      "test": "warden_transitions",
+      "exit_code": 0,
+      "pass_message": true,
+      "script_errors": false,
+      "diagnostics": []
+    },
+    {
+      "test": "warden_execution",
+      "exit_code": 0,
+      "pass_message": true,
+      "script_errors": false,
+      "diagnostics": [
+        "WARNING: ObjectDB instances leaked at exit (run with --verbose for details).",
+        "ERROR: 12 RID allocations of type 'N13RendererDummy15MaterialStorage13DummyMaterialE' were leaked at exit.",
+        "ERROR: 12 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit."
+      ]
+    },
+    {
+      "test": "status_visual",
+      "exit_code": 0,
+      "pass_message": true,
+      "script_errors": false,
+      "diagnostics": [
+        "WARNING: ObjectDB instances leaked at exit (run with --verbose for details).",
+        "ERROR: 1 RID allocations of type 'N13RendererDummy15MaterialStorage13DummyMaterialE' were leaked at exit.",
+        "ERROR: 1 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit."
+      ]
+    },
+    {
+      "test": "party_builds",
+      "exit_code": 0,
+      "pass_message": true,
+      "script_errors": false,
+      "diagnostics": []
+    },
+    {
+      "test": "warden_outfits",
+      "exit_code": 0,
+      "pass_message": true,
+      "script_errors": false,
+      "diagnostics": []
+    },
+    {
+      "test": "hero_appearance",
+      "exit_code": 0,
+      "pass_message": true,
+      "script_errors": false,
+      "diagnostics": []
+    },
+    {
+      "test": "equipment_costumes",
+      "exit_code": 0,
+      "pass_message": true,
+      "script_errors": false,
+      "diagnostics": []
+    },
+    {
+      "test": "witch_hunter_execution",
+      "exit_code": 0,
+      "pass_message": true,
+      "script_errors": false,
+      "diagnostics": []
+    },
+    {
+      "test": "battlefield_ground",
+      "exit_code": 0,
+      "pass_message": true,
+      "script_errors": false,
+      "diagnostics": []
+    }
+  ],
+  "media": [
+    {
+      "path": "experimental/art_review/repairs/occultist-poses.mp4",
+      "sha256": "3cd13ff0cc1de048cbfbe878fc08ee90208f9cf515024f4554d2545864f64974",
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "width": 640,
+          "height": 430,
+          "avg_frame_rate": "30/1",
+          "nb_frames": "72"
+        }
+      ],
+      "format": {
+        "duration": "2.400000"
+      }
+    },
+    {
+      "path": "experimental/art_review/repairs/warden-execution-integrated.mp4",
+      "sha256": "f338307027e6ba4c605faee99c8a9e997a4113f6a51b0ca9bf0af91de1ee4416",
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "width": 1920,
+          "height": 1080,
+          "avg_frame_rate": "24/1",
+          "nb_frames": "72"
+        }
+      ],
+      "format": {
+        "duration": "3.000000"
+      }
+    },
+    {
+      "path": "experimental/art_review/repairs/warden-execution-motion.mp4",
+      "sha256": "715465e32228b4e2e9b34d374a4236ae52b04a23a3040aa702f6bda57205f0d8",
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "width": 880,
+          "height": 460,
+          "avg_frame_rate": "60/1",
+          "nb_frames": "145"
+        }
+      ],
+      "format": {
+        "duration": "2.416667"
+      }
+    },
+    {
+      "path": "experimental/art_review/repairs/warden-execution-reduced.mp4",
+      "sha256": "a6718b0cb603f30b3294932bf6958f1954a4ebde39f451ca62739d130b445995",
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "width": 880,
+          "height": 460,
+          "avg_frame_rate": "60/1",
+          "nb_frames": "145"
+        }
+      ],
+      "format": {
+        "duration": "2.416667"
+      }
+    },
+    {
+      "path": "experimental/art_review/repairs/warden-heavy.mp4",
+      "sha256": "3e6fa6b3f879c1af7c5d459add23a98a5bc55069e8a81e48aabeee5ae05d9021",
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "width": 640,
+          "height": 430,
+          "avg_frame_rate": "60/1",
+          "nb_frames": "71"
+        }
+      ],
+      "format": {
+        "duration": "1.183333"
+      }
+    },
+    {
+      "path": "experimental/art_review/repairs/warden-slash.mp4",
+      "sha256": "0bfa00472408870052bd1efd1896e9bf530b6e1cc7e6507d6d5a4bf4b6f9cb23",
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "width": 640,
+          "height": 430,
+          "avg_frame_rate": "60/1",
+          "nb_frames": "49"
+        }
+      ],
+      "format": {
+        "duration": "0.816667"
+      }
+    },
+    {
+      "path": "experimental/art_review/repairs/witch-hunter-execution-reduced.mp4",
+      "sha256": "5463c9bf11bccfb345f81bd9422d95f886f6bf98506a6aa58dda1139467edab8",
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "width": 1280,
+          "height": 720,
+          "avg_frame_rate": "30/1",
+          "nb_frames": "96"
+        }
+      ],
+      "format": {
+        "duration": "3.200000"
+      }
+    },
+    {
+      "path": "experimental/warden_transitions/integrated-combat.mp4",
+      "sha256": "886c6ec736bbbe91528d196e38c6a3d394315805793377b80c5f53333112f9a1",
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "width": 1920,
+          "height": 1080,
+          "avg_frame_rate": "30/1",
+          "nb_frames": "96"
+        }
+      ],
+      "format": {
+        "duration": "3.200000"
+      }
+    },
+    {
+      "path": "experimental/witch_hunter/execution/witch-hunter-execution.mp4",
+      "sha256": "a1a568cd9856180ccbc569eca7f635082449b85cfea2f7902b5b2c32176462e8",
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "width": 1280,
+          "height": 720,
+          "avg_frame_rate": "30/1",
+          "nb_frames": "96"
+        }
+      ],
+      "format": {
+        "duration": "3.200000"
+      }
+    },
+    {
+      "path": "experimental/art_review/repairs/warden-execution-reduced.gif",
+      "sha256": "777dd4763e949ba9401f91eb1292dcad899a271d4c80ae4af029fbbf52d6d018",
+      "dimensions": [
+        880,
+        460
+      ],
+      "encoded_frames": 72,
+      "duration_ms": 2400
+    },
+    {
+      "path": "experimental/art_review/repairs/warden-slash.gif",
+      "sha256": "5d62732ea85a4503350294827f6e4744c3d1ffd71eed72bd8bca2bb2e7031cd0",
+      "dimensions": [
+        640,
+        430
+      ],
+      "encoded_frames": 24,
+      "duration_ms": 800
+    },
+    {
+      "path": "experimental/art_review/repairs/witch-hunter-execution-reduced.gif",
+      "sha256": "719f77c6edc18dbf5a49b1329e0403d9d932deccd5a1ecc6c1fb8cd41770ffa1",
+      "dimensions": [
+        960,
+        540
+      ],
+      "encoded_frames": 96,
+      "duration_ms": 3200
+    },
+    {
+      "path": "experimental/art_review/repairs/warden-execution-motion.gif",
+      "sha256": "6f8fdbefef02fc6fd066d55103ec3555eb0194a5d61510af93b186f9071803fc",
+      "dimensions": [
+        880,
+        460
+      ],
+      "encoded_frames": 72,
+      "duration_ms": 2400
+    },
+    {
+      "path": "experimental/art_review/repairs/warden-heavy.gif",
+      "sha256": "4209a9aad61b0f68c4a69c2ded736dce8ddf270f416305c54b88eb8fb994ff59",
+      "dimensions": [
+        640,
+        430
+      ],
+      "encoded_frames": 35,
+      "duration_ms": 1160
+    },
+    {
+      "path": "experimental/art_review/repairs/occultist-poses.gif",
+      "sha256": "b3097664782d7d832b851b0ad6a5c02921904ca371d0360747a33ec160327db1",
+      "dimensions": [
+        640,
+        430
+      ],
+      "encoded_frames": 72,
+      "duration_ms": 2400
+    },
+    {
+      "path": "experimental/witch_hunter/execution/witch-hunter-execution.gif",
+      "sha256": "7fa2b6219233d315e0e73db47ceaddae903dec71fbd553bfe9d3f9d6d733388d",
+      "dimensions": [
+        960,
+        540
+      ],
+      "encoded_frames": 96,
+      "duration_ms": 3200
+    }
+  ],
+  "coverage_limit": "Original audit: 23/505 source records had some visual review and 69/160 frame entries were inspected or verified aliases. This repair pass verifies the confirmed defects and adds current playback; it does not certify the remaining collection."
+}
