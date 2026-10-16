@@ -22,6 +22,7 @@ const TRAINING_STATS: Dictionary = {
 static var hero_colors: Dictionary = {}
 static var hero_outfits: Dictionary = {}
 static var equipment_appearance: bool = true
+static var legacy_weapon_costumes: Dictionary = {}
 static var hero_portraits: Dictionary = {}
 static var formation: Dictionary = {}
 static var hero_positions: Dictionary = {}
@@ -239,6 +240,8 @@ static func load_progression() -> void:
 		hero_colors = config.get_value("progress", "hero_colors", {})
 		hero_outfits = config.get_value("progress", "hero_outfits", {})
 		equipment_appearance = bool(config.get_value("progress","equipment_appearance",true))
+		var retained: Variant = config.get_value("progress","legacy_weapon_costumes",{})
+		legacy_weapon_costumes = retained.duplicate() if preload("res://scripts/equipment_looks.gd").valid_weapon_costumes(retained) else {}
 		hero_portraits = config.get_value("progress", "hero_portraits", {})
 		graves = config.get_value("progress", "graves", [])
 		crusader_unlocked = bool(config.get_value("progress", "crusader_unlocked", false))
@@ -260,6 +263,7 @@ static func save_progression() -> void:
 	config.set_value("progress", "hero_colors", hero_colors)
 	config.set_value("progress", "hero_outfits", hero_outfits)
 	config.set_value("progress","equipment_appearance",equipment_appearance)
+	config.set_value("progress","legacy_weapon_costumes",legacy_weapon_costumes)
 	config.set_value("progress", "hero_portraits", hero_portraits)
 	config.set_value("progress", "crusader_unlocked", crusader_unlocked)
 	config.set_value("progress", "completed", completed_expeditions)

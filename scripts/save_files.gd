@@ -137,6 +137,7 @@ static func _runtime_validation_error(data: Dictionary) -> String:
 	# Absent later records still use the existing version-1 legacy defaults.
 	if not data.get("run_id","") is String: return "Invalid saved run identity."
 	if not data.get("equipment_appearance",true) is bool: return "Invalid equipment appearance flag."
+	if not preload("res://scripts/equipment_looks.gd").valid_weapon_costumes(data.get("legacy_weapon_costumes",{})): return "Invalid retained weapon costume."
 	var hero_fields := {"stress":TYPE_INT,"block":TYPE_INT,"max_hp":TYPE_INT,"damage_mod":TYPE_INT,"stress_per_turn":TYPE_INT,"dead":TYPE_BOOL,"deaths_door":TYPE_BOOL,"resolved":TYPE_BOOL,"resolve_tag":TYPE_STRING,"resolve_type":TYPE_STRING,"buffs":TYPE_DICTIONARY}
 	for id in data.heroes:
 		var hero: Dictionary = data.heroes[id]
@@ -194,6 +195,7 @@ static func save(slot: int) -> bool:
 		"item_histories": State.Items.histories,
 		"item_favourites": State.Items.favourites,
 		"equipment_appearance":State.equipment_appearance,
+		"legacy_weapon_costumes":State.legacy_weapon_costumes,
 		"hero_outfits":State.hero_outfits,"hero_portraits":State.hero_portraits,
 		"formation": State.formation, "expedition": State.selected_expedition.get("id", "old_road"),
 		"active": State.run_active, "complete": State.run_complete, "floor": State.floor_index,
@@ -212,6 +214,8 @@ static func load_slot(slot: int) -> bool:
 	var info: Dictionary = slot_info(slot)
 	if not info.loadable: return false
 	var data: Dictionary = info.data
+	var retained: Dictionary = preload("res://scripts/equipment_looks.gd").migrate_weapon_costumes(State,data)
+	State.legacy_weapon_costumes = retained
 	State.hero_positions = data.get("hero_positions", {})
 	State.journey = data.get("journey", {})
 	State.last_report = data.get("last_report", {})
