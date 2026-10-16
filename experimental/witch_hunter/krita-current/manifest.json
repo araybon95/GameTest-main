@@ -1,0 +1,119 @@
+{
+  "artwork_source_commit": "cc2dbf3850e7bfb4bcc6cdcffc0e2a001f8ce0eb",
+  "images": {
+    "bandit-01-uppercut-recoil.png": {
+      "dimensions": [
+        424,
+        380
+      ],
+      "sha256": "f0112f957ee0f106ef80bf27e239221d492d1bd3bfc8fa346e64d93d1840940d"
+    },
+    "bandit-02-buckling.png": {
+      "dimensions": [
+        338,
+        292
+      ],
+      "sha256": "b5c71e00b00e8ea6f6c6b4e7bd40533ae599c5c3a9935fea2065fb41f63d202f"
+    },
+    "bandit-03-collapsed.png": {
+      "dimensions": [
+        566,
+        172
+      ],
+      "sha256": "7a0c4bf068801f5ef5cd6a843b0d6f6c0b6e07adfe1a03216d96c8ededb5e62f"
+    },
+    "bandit-cleaver-complete.png": {
+      "dimensions": [
+        2020,
+        367
+      ],
+      "sha256": "7c61436fad0c7362d94ce73f9ee869db921e7168fa539a735b021b6f27ad93a3"
+    },
+    "bandit-idle.png": {
+      "dimensions": [
+        372,
+        294
+      ],
+      "sha256": "c0fe69a0bd95bb98cfcd03d7c3a71162543561ebeeeac88cde09851cd10074a0"
+    },
+    "execution-01-uppercut-preparation.png": {
+      "dimensions": [
+        620,
+        430
+      ],
+      "sha256": "51898ecf5ff1f0d58011f9469ca2c6240a10aae512563c23b04ff3da4155084f"
+    },
+    "execution-02-jaw-contact.png": {
+      "dimensions": [
+        1054,
+        680
+      ],
+      "sha256": "69eb413b92593186cded32140867f55cd0777d6492ea1c777255aa85dc9ecd3b"
+    },
+    "execution-03-overhead-windup.png": {
+      "dimensions": [
+        388,
+        546
+      ],
+      "sha256": "250dc52a5e46f32588c7d81f06289e5d573b507cb7cb3904411152578eb2f5b8"
+    },
+    "execution-04-crushing-contact.png": {
+      "dimensions": [
+        1025,
+        678
+      ],
+      "sha256": "2396f2c6161448533d33d88bd105b42a2b21377780ac6e713cebca7d723593ac"
+    },
+    "execution-05-downswing-followthrough.png": {
+      "dimensions": [
+        656,
+        385
+      ],
+      "sha256": "36b592ae289724f1441fb5710b6b0a17cf08c8675626190deaf57c7522a2763d"
+    },
+    "scene-preview.png": {
+      "dimensions": [
+        1280,
+        720
+      ],
+      "sha256": "8d01d52e4c1e1bae199ea31d91acdef79e8dafcd4ca8cce1f4ed508f96a9b07a"
+    },
+    "witch-hunter-combat-poses.png": {
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "sha256": "b52667202d9f1d7b21cdcf3c0fcc7ff708fd69d4da6b8cad45ea1269187fe5ca"
+    },
+    "witch-hunter-concept.png": {
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "sha256": "d1637c7ae65c8ef3f8be2c53746ce8f61f60508965732ff807333851c80c8f84"
+    },
+    "witch-hunter-idle.png": {
+      "dimensions": [
+        466,
+        461
+      ],
+      "sha256": "632f2d8e96d43621368b2a45e0e2078734461a55a1f0ec27d96d7a64d047605e"
+    }
+  },
+  "openraster": {
+    "witch-hunter-scene.ora": {
+      "dimensions": [
+        1280,
+        720
+      ],
+      "layers": 13
+    },
+    "witch-hunter-concept.ora": {
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "layers": 1
+    }
+  }
+}

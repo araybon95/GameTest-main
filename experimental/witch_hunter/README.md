@@ -1,5 +1,11 @@
 # Witch Hunter
 
+[Layered scene for Krita (.ora)](krita-current/witch-hunter-scene.ora) · [Full-body concept for Krita (.ora)](krita-current/witch-hunter-concept.ora)
+
+[Download complete current artwork pack (.zip)](krita-current.zip) · [Browse current individual PNGs and instructions](krita-current/README.md)
+
+The pack contains the actual current animation frames, including the latest opening arm/hammer corrections and complete dropped cleaver. Use it instead of older atlases that retain unused historical cells.
+
 [Painted Witch Hunter concept](concept.png) · [Approved clean baseline](clean-concept.png)
 
 The approved visual direction is named **Witch Hunter**, a hooded two-handed hammer fighter intended to replace the Penitent Crusader. The approved five-skill rework and default two-handed hammer combat poses are now integrated; this folder retains the design and review captures.
