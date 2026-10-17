@@ -20,7 +20,7 @@
         "assets/art_library/party_builds/warden.png"
       ],
       "instruction": "Only two separate full vertical one-handed swords on transparent background: practical weathered Iron Longsword and Oathkeeper with aged bronze guard/pommel, narrow ice-blue fuller and oath sigil. Match the engraved painted iron/bronze game style; identical grip size and straight blade axes.",
-      "sha256": "7e54d5ca2ffd0c305a4d939c713f222b4595e9c71cc1dc834aa96de13e42fb97",
+      "sha256": "0ea2a8e1ff4d4fd6af8d0dbdfdcdbf8f93982ca2cb6788364dcf95b4823f2cef",
       "reference_sha256": {
         "assets/art_library/equipment/hero_warden_relic.png": "faf0169430602a815a406d47bfd444566a8dd112a9113d9b093edaa0997becbe",
         "assets/art_library/party_builds/warden.png": "79ca031dce13db866c6761d0215b4dad9fe3185411488cc1395e898992e47c56"
@@ -55,5 +55,11 @@
     "Foreground hand layers occlude independent weapon layers; final textures are cached by hero/style/weapon/pose"
   ],
   "original_images_modified": false,
-  "production_gates_enabled": false
+  "production_gates_enabled": false,
+  "relic_highlight_revision": {
+    "generator": "OpenAI image generation, reference edit",
+    "generated_source": "exec-95dce2d0-0346-432e-aa0d-2c44733faff5.png",
+    "prompt": "Enhance only Oathkeeper on right: strongly luminous saturated ice-blue/cyan central fuller, pale blue-white core, oath sigil and crossguard gem; tight restrained glow, preserve straight geometry, exact registration, worn steel and bronze, no particles. Left sword unchanged. Transparent 1536x1024 canvas.",
+    "assembly": "Godot blit of right-hand source-sheet region x800..1535; original left sword retained exactly."
+  }
 }
