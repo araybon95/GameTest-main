@@ -28,6 +28,8 @@ func _ready() -> void:
 	preview.name = "ProposedAppearance"
 	preview.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	preview.texture = Scenery.grounded_texture(str(State.hero(hero_id,item_id).art))
+	var candidate: Texture2D = preload("res://scripts/weapon_visuals.gd").selected(State,hero_id,"idle",item_id) if data.get("compatible",false) else null
+	if candidate != null: preview.texture = preload("res://scripts/weapon_visuals.gd").display_texture(candidate)
 	label_at("CURRENT",Vector2(280,748),300,21)
 	label_at("IF EQUIPPED",Vector2(620,748),300,21)
 	var record := RichTextLabel.new()

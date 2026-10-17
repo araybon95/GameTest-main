@@ -12,7 +12,8 @@ func clear_screen() -> void:
 
 func picture(path: String, rect: Rect2, alpha: float = 1.0) -> TextureRect:
 	var image := TextureRect.new()
-	image.texture = load(path)
+	var selected: Texture2D = preload("res://scripts/weapon_visuals.gd").path_frame(State,path)
+	image.texture = preload("res://scripts/weapon_visuals.gd").display_texture(selected) if selected != null else load(path)
 	image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	image.position = rect.position

@@ -62,6 +62,8 @@ func strike(source: TextureRect, target: TextureRect, kind: String, title: Strin
  var warden_motion: bool = from_hero and WardenTransitions.eligible(source.texture,str(options.get("skill_id","")))
  if warden_motion: timing = WardenTransitions.timing(timing,str(options.get("skill_id","")))
  pending.append({"source":source.texture,"target":target.texture,"source_node":source,"target_node":target,"source_material":source.material.duplicate() if source.material != null else null,"target_material":target.material.duplicate() if target.material != null else null,"kind":kind,"attack_kind":kind,"title":title,"hero":from_hero,"source_boss":source_boss,"target_boss":target.get_meta("boss",false),"creature":source.get_meta("creature",""),"duration":timing["duration"],"profile":timing["id"],"timing":timing,"skill_id":str(options.get("skill_id",""))})
+ pending[-1]["source_weapon_id"] = str(source.texture.get_meta("weapon_id",""))
+ pending[-1]["source_style"] = str(source.texture.get_meta("weapon_style","original"))
  pending.back()["warden_motion"] = warden_motion
  pending.back()["relic_fx"] = str(options.get("relic_fx",""))
  pending.back()["weapon_signature"] = str(options.get("weapon_signature",""))
@@ -345,14 +347,14 @@ func _process(delta: float) -> void:
   # A changed weapon silhouette must not cross the ally displaced by the charge.
   for ally in get_parent().hero_portraits.values():
    if ally == active["source_node"] or not ally.visible: continue
-   var ally_rect: Rect2 = ally.get_global_rect()
+   var ally_rect: Rect2 = actor_bounds(ally)
    if ally_rect.get_center().x < float(active["source_position"].x)+float(active["source_size"].x)*0.5:
     fighters[0].position.x = maxf(fighters[0].position.x,ally_rect.end.x-global_position.x+12)
  # A rear hammer swing stays behind the front ally rather than lunging through it.
  if hero and str(active.get("skill_id","")) in ["pc_strike","pc_charge","pc_verdict"] and get_parent().has_method("_arrange_party"):
   for ally in get_parent().hero_portraits.values():
    if ally == active["source_node"] or not ally.visible: continue
-   var ally_rect: Rect2 = ally.get_global_rect()
+   var ally_rect: Rect2 = actor_bounds(ally)
    if ally_rect.get_center().x > float(active["source_position"].x)+float(active["source_size"].x)*0.5 and ally_rect.get_center().x < float(active["target_position"].x):
     var tilt_padding: float = absf(source_rotation*motion)*fighters[0].size.y
     fighters[0].position.x = minf(fighters[0].position.x,ally_rect.position.x-global_position.x-fighters[0].size.x-tilt_padding-12)
@@ -485,8 +487,10 @@ func execute_warden(target: TextureRect) -> bool:
  var entry: Dictionary = pending[-1] if not pending.is_empty() and pending[-1].get("target_node") == target else active if active.get("target_node") == target else {}
  if entry.is_empty() or entry.get("execution",false): return false
  # Keep selected costumes intact until they have matching execution artwork.
- if entry["source"].get_meta("appearance_style","") in ["alternate","equipment"]: return false
- if entry["source"].get_meta("warden_outfit","original") != "original": return false
+ if str(entry.get("source_weapon_id","")).is_empty():
+  if entry["source"].get_meta("appearance_style","") in ["alternate","equipment"]: return false
+  if entry["source"].get_meta("warden_outfit","original") != "original": return false
+ elif not preload("res://scripts/weapon_visuals.gd").coverage_errors("warden",str(entry.source_style)).is_empty(): return false
  entry["execution"] = true
  entry["duration"] = Execution.DURATION
  entry["sounds"] = [{"kind":"block","at":0.25,"emitted":false},{"kind":"sword","at":0.65,"emitted":false},{"kind":"impact","at":0.95,"emitted":false},{"kind":"death","at":1.18,"emitted":false}]
@@ -495,6 +499,8 @@ func execute_warden(target: TextureRect) -> bool:
 func _process_execution() -> void:
  if not is_instance_valid(execution_visual):
   execution_visual = Execution.new()
+  execution_visual.source_weapon_id = str(active.get("source_weapon_id",""))
+  execution_visual.source_style = str(active.get("source_style","original"))
   execution_visual.name = "WardenExecution"
   execution_visual.z_index = 2
   add_child(execution_visual)
@@ -508,3 +514,18 @@ func _process_execution() -> void:
  _flush_sounds(active)
  # Damage feedback belongs to the lethal blow, not the opening shield contact.
  if age >= 0.95: _flush_feedback(active)
+
+## Exclude registered transparent padding when avoiding adjacent actors.
+func actor_bounds(actor: TextureRect) -> Rect2:
+ var area := Rect2(Vector2.ZERO,actor.size)
+ if actor.texture != null:
+  var factor: Vector2 = actor.size/actor.texture.get_size()
+  if actor.texture.has_meta("registered_bounds"):
+   var pixels: Rect2 = actor.texture.get_meta("registered_bounds")
+   area = Rect2(pixels.position*factor,pixels.size*factor)
+  elif actor.texture is AtlasTexture:
+   area = Rect2(actor.texture.margin.position*factor,actor.texture.region.size*factor)
+ var transform: Transform2D = actor.get_global_transform()
+ var result := Rect2(transform*area.position,Vector2.ZERO)
+ for point in [Vector2(area.end.x,area.position.y),area.end,Vector2(area.position.x,area.end.y)]: result = result.expand(transform*point)
+ return result

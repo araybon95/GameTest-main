@@ -26,6 +26,8 @@ static func tint(kind: String) -> Color:
 	return {"bandit":Color("#E6C6A8"), "keep":Color("#CED8E8"), "beast":Color("#DFB5B2"), "medical":Color("#C8D9BE")}.get(kind, Color.WHITE)
 
 static func grounded_texture(path: String, padding: int = 0) -> Texture2D:
+	var selected: Texture2D = preload("res://scripts/weapon_visuals.gd").path_frame(load("res://scripts/game_data.gd"),path)
+	if selected != null: return preload("res://scripts/weapon_visuals.gd").display_texture(selected)
 	var original: Texture2D = load(path)
 	if original.get_meta("appearance_style","") == "warden_complete": return original
 	var image: Image = original.get_image()

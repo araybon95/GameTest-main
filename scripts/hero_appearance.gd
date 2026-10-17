@@ -22,6 +22,7 @@ static func frame(id: String, index: int) -> Texture2D:
  cache[key] = texture
  return texture
 static func pose(original: Texture2D, state: String) -> Texture2D:
+ if original != null and original.has_meta("weapon_id"): return preload("res://scripts/weapon_visuals.gd").from_texture(original,state)
  var id: String = str(original.get_meta("pose_id",""))
  var index: int = {"idle":0,"attack":1,"hurt":2,"death":2,"guard":3,"cast":10,"windup":10}.get(state,0)
  if id == "warden" and state == "guard": index = 0

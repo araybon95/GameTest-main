@@ -21,6 +21,10 @@ const KNEEL_BLADE = Vector2(4,281)
 const KNEEL_HANDLE = Vector2(143,273)
 const CRUSHED_BLADE = Vector2(11,324)
 const CRUSHED_HANDLE = Vector2(157,317)
+var source_weapon_id: String = ""
+var source_style: String = "original"
+var source_frames: Array[Texture2D] = []
+var source_contact: Texture2D
 var age: float = 0.0
 var animate: bool = true
 var corpse_only: bool = false
@@ -28,7 +32,9 @@ func crop(sheet: Image, rect: Rect2i) -> Texture2D:
  var part: Image = sheet.get_region(rect)
  return ImageTexture.create_from_image(part.get_region(part.get_used_rect()))
 func _ready() -> void:
- if not bodies.is_empty(): return
+ if not bodies.is_empty():
+  load_source_frames()
+  return
  var sheet: Image = load(ART+"poses.png").get_image()
  var windup: Image = load(ART+"windup.png").get_image()
  var raised := Image.create(382,465,false,Image.FORMAT_RGBA8)
@@ -52,6 +58,18 @@ func _ready() -> void:
  kneeling.fill_rect(Rect2i(0,254,144,70),Color.TRANSPARENT)
  kneeling.fill_rect(Rect2i(144,256,1,68),Color.TRANSPARENT)
  targets[2] = ImageTexture.create_from_image(kneeling)
+ load_source_frames()
+func load_source_frames() -> void:
+ source_frames.clear()
+ source_contact = null
+ if source_weapon_id.is_empty(): return
+ var visuals = preload("res://scripts/weapon_visuals.gd")
+ for i in range(5):
+  var texture: Texture2D = visuals.execution_frame(null,"warden",source_style,"execution_"+str(i),source_weapon_id)
+  assert(texture != null,"Published execution source frame is missing")
+  source_frames.append(texture)
+ source_contact = visuals.execution_frame(null,"warden",source_style,"execution_contact",source_weapon_id)
+ assert(source_contact != null,"Published execution contact frame is missing")
 func set_frame(time: float, motion: bool) -> void:
  age = time
  animate = motion
@@ -122,13 +140,27 @@ func _draw() -> void:
  if layout.paired:
   var pair_rect: Rect2 = layout.pair
   pair_rect.position.x += shake
-  draw_texture_rect(contact,pair_rect,false)
+  if source_contact != null:
+   var factor: float = pair_rect.size.x/contact.get_width()
+   var floor_point: Vector2 = pair_rect.position+CONTACT_SOLES*factor
+   draw_texture_rect(source_contact,registered_rect(source_contact,source_contact.get_meta("foot_anchor"),floor_point,factor),false)
+  else: draw_texture_rect(contact,pair_rect,false)
  else:
   var target_rect: Rect2 = layout.target
   # At follow-through the embedded floor prop is stationary too.
   if layout.target_index < 3: target_rect.position.x += shake
   draw_texture_rect(targets[layout.target_index],target_rect,false)
-  draw_texture_rect(bodies[layout.source_index],layout.body,false)
+  if not source_frames.is_empty():
+   var index: int = layout.source_index
+   var factor: float = layout.body.size.y/bodies[index].get_height()
+   var sole: Vector2 = bodies[index].get_size()*Vector2(0.5,1.0)
+   if index == 2: sole = WINDUP_SOLES
+   elif index == 3: sole = FOLLOW_SOLES
+   elif index == 4: sole = RECOVERY_SOLES
+   var floor_point: Vector2 = layout.body.position+sole*factor
+   var texture: Texture2D = source_frames[index]
+   draw_texture_rect(texture,registered_rect(texture,texture.get_meta("foot_anchor"),floor_point,factor),false)
+  else: draw_texture_rect(bodies[layout.source_index],layout.body,false)
  gore()
 func pool() -> void:
  for i in range(6):

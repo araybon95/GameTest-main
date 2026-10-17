@@ -44,7 +44,8 @@ func run() -> void:
 	assert(travel.walk_frames.warden.size() == 10)
 	for frame in travel.walk_frames.warden:
 		assert(frame.get_meta("warden_outfit") == "ashen_wolf")
-		assert(frame.get_meta("travel_unarmed",false))
+		assert(frame.has_meta("weapon_id") and not frame.get_meta("travel_unarmed",false),"Equipped travel keeps the selected weapon")
+		assert(frame.get_meta("arm_shift") == Vector2.ZERO,"Hand and weapon remain one registered image")
 	travel.set_process(false)
 	var settings = root.get_node("GameSettings")
 	settings.ambient_motion = true
@@ -116,5 +117,5 @@ func run() -> void:
 	screen.queue_free()
 	travel.queue_free()
 	await process_frame
-	print("PASS: Warden boss unlock, manual cosmetic priority, armed poses, save reload and ten unarmed travel frames")
+	print("PASS: Warden boss unlock, manual cosmetic priority, armed poses, save reload and ten weapon-aware travel frames")
 	quit()

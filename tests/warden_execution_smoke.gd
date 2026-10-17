@@ -86,7 +86,7 @@ func run() -> void:
   var selected: Texture2D = battle.hero_portraits.warden.texture
   if not check(selected.get_meta("appearance_style","") == ("alternate" if outfit == "alternate" else "equipment"),"Fixture must resolve the actual selected/equipped outfit"): return
   battle._attack_with_equipment("warden",{"name":"Heavy Strike","damage":999,"skill_id":"wd_heavy"})
-  if not check(battle.enemy_hp == 0 and not battle.presentation.has_execution(),"A real lethal hit must keep the "+outfit+" appearance"): return
+  if not check(battle.enemy_hp == 0 and battle.presentation.has_execution() and battle.presentation.active.source_style == outfit,"A real lethal hit must retain the "+outfit+" outfit throughout its matching execution"): return
   battle.free()
   await process_frame
   await process_frame

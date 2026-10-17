@@ -42,6 +42,10 @@ func run() -> void:
  State.Items.histories["visual-copy"] = {"base":"warden_legend","name":"A named oath"}
  assert(visual.frame(State,"warden","original","idle","visual-copy") == other)
  State.Items.histories.erase("visual-copy")
+ for field in ["metadata","grips","weapon_axis"]:
+  var malformed: Dictionary = record.duplicate(true)
+  malformed[field] = {} if field == "metadata" else [null] if field == "grips" else PackedVector2Array()
+  assert(not visual._record_errors(malformed).is_empty(),"Incomplete registration must be rejected: "+field)
  manifest.frames["warden|original|warden_sword|guard"] = record.duplicate(true)
  assert(visual.frame(State,"warden","original","guard") == null,"Manifest identity must match its lookup key")
  assert(visual.coverage_errors("warden","original").any(func(message): return "identity" in message.to_lower()),"Coverage gate must reject a mislabeled pose too")

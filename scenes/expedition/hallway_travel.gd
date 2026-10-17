@@ -40,6 +40,7 @@ var bases: Array[Vector2] = []
 var walk_frames: Dictionary = {}
 var standing_frames: Dictionary = {}
 var wardrobe_looks: Dictionary = {}
+var wardrobe_weapons: Dictionary = {}
 var shadows: Array[Node2D] = []
 var progress: PassageProgress
 var encounter: TextureRect
@@ -196,6 +197,10 @@ func _ready() -> void:
 func build_walkers() -> void:
  for id in State.HEROES:
   var costume: String = str(State.hero(id).get("equipment_look","original"))
+  var modular: Array[Texture2D] = preload("res://scripts/weapon_visuals.gd").walks(State,id)
+  if not modular.is_empty():
+   walk_frames[id] = modular
+   continue
   if id == "warden" and costume in ["original","ashen_wolf"]:
    walk_frames[id] = preload("res://scripts/warden_outfits.gd").walks(costume)
    continue
@@ -228,6 +233,7 @@ func build_walkers() -> void:
   standing_frames[id] = Scenery.grounded_texture(str(State.hero(id)["art"]))
   if id == "warden" and costume_for_warden(id): standing_frames[id] = walk_frames[id][0]
   wardrobe_looks[id] = str(State.hero(id).get("equipment_look","original"))
+  wardrobe_weapons[id] = preload("res://scripts/weapon_visuals.gd").appearance_key(State,id)
   picture.texture = walk_frames[id][QUIET_WALK_POSE] if walk_frames.has(id) else standing_frames[id]
   picture.name = "Walker_%s" % id
   picture.set_meta("walker",id)
@@ -609,7 +615,7 @@ func update_walkers() -> void:
  for index in range(walkers.size()):
   var picture: TextureRect = walkers[index]
   var id: String = picture.get_meta("walker")
-  if str(State.hero(id).get("equipment_look","original")) != str(wardrobe_looks.get(id,"original")): refresh_equipment_frames(id)
+  if str(State.hero(id).get("equipment_look","original")) != str(wardrobe_looks.get(id,"original")) or preload("res://scripts/weapon_visuals.gd").appearance_key(State,id) != wardrobe_weapons.get(id,""): refresh_equipment_frames(id)
   var phase: float = animation_clock*7.0+index*0.45
   var texture: Texture2D = standing_frames[id]
   if walk_frames.has(id):
@@ -634,8 +640,9 @@ func costume_for_warden(id: String) -> bool:
 
 func refresh_equipment_frames(id: String) -> void:
  var outfit: String = str(State.hero(id).get("equipment_look","original"))
- var frames: Array[Texture2D] = []
- if id == "warden" and outfit in ["original","ashen_wolf"]:
+ var frames: Array[Texture2D] = preload("res://scripts/weapon_visuals.gd").walks(State,id)
+ if not frames.is_empty(): pass
+ elif id == "warden" and outfit in ["original","ashen_wolf"]:
   frames = preload("res://scripts/warden_outfits.gd").walks(outfit)
  elif outfit == "relic":
   for index in range(4,8): frames.append(preload("res://scripts/equipment_art.gd").frame(id,index))
@@ -656,6 +663,7 @@ func refresh_equipment_frames(id: String) -> void:
  standing_frames[id] = Scenery.grounded_texture(str(State.hero(id).art))
  if costume_for_warden(id): standing_frames[id] = frames[0]
  wardrobe_looks[id] = outfit
+ wardrobe_weapons[id] = preload("res://scripts/weapon_visuals.gd").appearance_key(State,id)
 
 func arrive() -> void:
  arrived = true

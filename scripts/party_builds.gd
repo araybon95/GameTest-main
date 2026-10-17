@@ -18,10 +18,12 @@ static func eligible(original: Texture2D) -> bool:
  if original.get_meta("appearance_style","") in ["alternate","equipment"]: return false
  return original.get_meta("warden_outfit","original") == "original"
 static func idle(original: Texture2D) -> Texture2D:
+ if original != null and original.has_meta("weapon_id"): return original
  return pose(original,"idle") if eligible(original) else original
 static func supports(texture: Texture2D) -> bool:
  return texture != null and HEIGHTS.has(str(texture.get_meta("party_build","")))
 static func pose(original: Texture2D, state: String) -> Texture2D:
+ if original != null and original.has_meta("weapon_id"): return preload("res://scripts/weapon_visuals.gd").from_texture(original,state)
  var id: String = str(original.get_meta("party_build",original.get_meta("pose_id","")))
  var key: String = id+":"+state
  if cache.has(key): return cache[key]
@@ -78,6 +80,10 @@ static func pose(original: Texture2D, state: String) -> Texture2D:
  return texture
 
 static func visible_rect(fighter: TextureRect) -> Rect2:
+ if not fighter.texture is AtlasTexture:
+  var bounds: Rect2 = fighter.texture.get_meta("registered_bounds",Rect2(Vector2.ZERO,fighter.texture.get_size()))
+  var scale_factor: Vector2 = fighter.size/fighter.texture.get_size()
+  return Rect2(fighter.position+bounds.position*scale_factor,bounds.size*scale_factor)
  var atlas: AtlasTexture = fighter.texture
  var factor: Vector2 = fighter.size/atlas.get_size()
  return Rect2(fighter.position+atlas.margin.position*factor,atlas.region.size*factor)

@@ -68,6 +68,7 @@ static func walks(outfit: String) -> Array[Texture2D]:
 	for i in range(2,12): result.append(frame(outfit,i))
 	return result
 static func pose(original: Texture2D, state: String) -> Texture2D:
+	if original != null and original.has_meta("weapon_id"): return preload("res://scripts/weapon_visuals.gd").from_texture(original,state)
 	var outfit: String = str(original.get_meta("warden_outfit","original"))
 	var key: String = outfit+":pose:"+state
 	if cache.has(key): return cache[key]

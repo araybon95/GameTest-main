@@ -16,6 +16,7 @@ static var cache: Dictionary = {}
 const Regions = preload("res://scripts/combat_pose_regions.gd")
 static func pose(original: Texture2D, hurt: bool = false) -> Texture2D:
  if original == null: return null
+ if original.has_meta("weapon_id"): return preload("res://scripts/weapon_visuals.gd").from_texture(original,"hurt" if hurt else "attack")
  if preload("res://scripts/party_builds.gd").supports(original): return preload("res://scripts/party_builds.gd").pose(original,"hurt" if hurt else "attack")
  if original.get_meta("portrait_view",false): return original
  if original.get_meta("appearance_style","") == "warden_complete": return preload("res://scripts/warden_outfits.gd").pose(original,"hurt" if hurt else "attack")
@@ -44,6 +45,7 @@ static func pose(original: Texture2D, hurt: bool = false) -> Texture2D:
 
 static func state_pose(original: Texture2D, state: String = "idle") -> Texture2D:
  if original == null: return null
+ if original.has_meta("weapon_id"): return preload("res://scripts/weapon_visuals.gd").from_texture(original,state)
  if preload("res://scripts/party_builds.gd").supports(original): return preload("res://scripts/party_builds.gd").pose(original,state)
  if preload("res://scripts/enemy_variants.gd").supports(original):
   return preload("res://scripts/enemy_variants.gd").sample(original,state,1.0)

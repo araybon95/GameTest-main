@@ -181,6 +181,8 @@ func _style(fill: Color, outline: Color) -> StyleBoxFlat:
 
 
 func _load_texture(path: String) -> Texture2D:
+	var selected: Texture2D = preload("res://scripts/weapon_visuals.gd").path_frame(GameState,path)
+	if selected != null: return preload("res://scripts/weapon_visuals.gd").display_texture(selected)
 	if ResourceLoader.exists(path):
 		return load(path) as Texture2D
 	return null

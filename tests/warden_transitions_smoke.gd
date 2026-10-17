@@ -37,7 +37,7 @@ func run() -> void:
    if not require(absf(foot.y-battle.GROUND_Y)<2,"Warden motion must remain on the floor"): return
    if not require(fighter.has_node("WardenMotion") and fighter.self_modulate.a == 0,"Approved mesh presentation must replace the source sprite"): return
    for state in ["idle","windup","attack"]:
-    var drawn: Texture2D = preload("res://scenes/combat/warden_motion.gd").textures[state]
+    var drawn: Texture2D = preload("res://scenes/combat/warden_motion.gd").textures[preload("res://scenes/combat/warden_motion.gd").cache_key(cinema.active.source,state)]
     var registered: Texture2D = preload("res://scripts/party_builds.gd").pose(cinema.active.source,state)
     if not require(drawn.get_size() == registered.get_size(),"Mesh rasterization must preserve the registered canvas and body anchor"): return
    if time < entry[1] and not require(heard.is_empty(),"No premature release audio"): return

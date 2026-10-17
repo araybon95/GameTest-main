@@ -66,7 +66,7 @@ func panel_at(rect: Rect2, fill: Color = Color("#21171D")) -> Panel:
 
 func portrait_at(hero_id: String, rect: Rect2) -> void:
 	var picture := TextureRect.new()
-	picture.texture = load(str(GameState.hero(hero_id)["art"]))
+	picture.texture = preload("res://scripts/dungeon_scenery.gd").grounded_texture(str(GameState.hero(hero_id)["art"]))
 	picture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	picture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	picture.position = rect.position

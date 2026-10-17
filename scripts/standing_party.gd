@@ -9,9 +9,15 @@ var foot: Vector2
 var base_height: float = 200.0
 var clock: float = 0.0
 var appearance_path: String = ""
+var equipment_key: String = ""
 var palette: String = ""
 static func heavy(id: String) -> bool: return id in ["warden","crusader"]
 static func standing_texture(id: String) -> Texture2D:
+ var selected: Texture2D = preload("res://scripts/weapon_visuals.gd").selected(State,id)
+ if selected != null:
+  selected.set_meta("standing_pose",true)
+  selected.set_meta("standing_body_height",selected.get_meta("body_height_pixels"))
+  return selected
  var path: String = State.hero(id).art
  if textures.has(path): return textures[path]
  var source: Texture2D = load(path)
@@ -45,6 +51,7 @@ static func create(id: String, feet: Vector2, height: float) -> TextureRect:
  return image
 func refresh_art() -> void:
  appearance_path = State.hero(hero_id).art
+ equipment_key = preload("res://scripts/weapon_visuals.gd").appearance_key(State,hero_id)
  texture = load("res://scripts/standing_party.gd").standing_texture(hero_id)
  var physical_height: float = base_height*(1.08 if heavy(hero_id) else 1.0)
  var pixels: float = maxf(1.0,texture.get_meta("standing_body_height",texture.get_height()))
@@ -58,7 +65,7 @@ func refresh_art() -> void:
  modulate.a = 0.25 if State.run_heroes.get(hero_id,{}).get("dead",false) else 1.0
 func _process(delta: float) -> void: update_motion(delta)
 func update_motion(delta: float) -> void:
- if appearance_path != State.hero(hero_id).art or palette != str(State.hero_colors.get(hero_id,"original")): refresh_art()
+ if appearance_path != State.hero(hero_id).art or equipment_key != preload("res://scripts/weapon_visuals.gd").appearance_key(State,hero_id) or palette != str(State.hero_colors.get(hero_id,"original")): refresh_art()
  var settings = get_node_or_null("/root/GameSettings")
  var controls = get_node_or_null("/root/GameControls")
  var enabled: bool = settings == null or settings.ambient_motion

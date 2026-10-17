@@ -1,6 +1,6 @@
 {
   "generator": "OpenAI built-in image generation; reference-based edits",
-  "status": "Warden proof approved; full catalog/style pack under validation; production disabled",
+  "status": "Original Warden proof approved; full registered catalog integrated on feature branch",
   "generated_sources": [
     {
       "output": "assets/clean-body-source.png",
@@ -55,7 +55,7 @@
     "Foreground hand layers occlude independent weapon layers; final textures are cached by hero/style/weapon/pose"
   ],
   "original_images_modified": false,
-  "production_gates_enabled": false,
+  "production_gates_enabled": true,
   "relic_highlight_revision": {
     "generator": "OpenAI image generation, reference edit",
     "generated_source": "exec-95dce2d0-0346-432e-aa0d-2c44733faff5.png",
@@ -66,7 +66,7 @@
     "ordinary_repair": "Reference-based edits remove every held weapon including pommels from alternate, relic and Ashen Wolf atlases; only explicit original weapon repair areas used by prepare_styles.gd. Original atlas pixels retained elsewhere.",
     "weapons": "Reference-based two-sword generation: Dreadsteel dark iron with reflective silver engravings; Vigil of Winter frosted silver/ice veins. Same registered vertical blade/grip/crossguard axes and painted engraved style.",
     "execution": "Reference-based costume conversion using exact five-pose execution layout and each approved outfit atlas; empty one-handed grips, retained shields, no extra limbs or weapons. Measured grip and sole registration retained in style-execution-registration.json.",
-    "contact": "Reference-based outfit-only conversion of original clean contact pair. Generated left Warden; original target/effects region x>=880 copied back pixel-for-pixel during Godot assembly.",
+    "contact": "Reference-based outfit-only conversion of original clean contact pair. Generated left Warden; original target/effects region x>=880 copied back pixel-for-pixel during Godot assembly. Original Warden alpha silhouette masks the converted left figure to preserve transparent edges and exact sole registration.",
     "sources": {
       "ashen_wolf-clean-source.png": "211f624484ee42add4f2ff118c5909895bcf31f8ac6965e44291c7d6989e22c4",
       "ashen_wolf-contact-source.png": "33e3ec3e422a1f6aef2875e966a5e0fd8e37e8812e0bf1748d92015d503640a0",

@@ -27,10 +27,31 @@ static func _record_errors(record: Dictionary) -> Array[String]:
  var result: Array[String] = []
  if not record.get("canvas_size") is Vector2i or record.canvas_size.x <= 0 or record.canvas_size.y <= 0:
   result.append("Missing positive native canvas size")
- if not record.get("foot") is Vector2 or not record.get("metadata") is Dictionary:
-  result.append("Missing body/foot registration")
- if not record.get("grips") is Array or record.get("grips",[]).is_empty() or not record.get("weapon_axis") is PackedVector2Array:
-  result.append("Missing grip/weapon-axis registration")
+ if not record.get("foot") is Vector2 or not record.get("foot",Vector2.INF).is_finite():
+  result.append("Missing finite foot registration")
+ var metadata: Variant = record.get("metadata")
+ if not metadata is Dictionary:
+  result.append("Missing body registration metadata")
+ else:
+  if metadata.get("pose_id","") != record.get("hero",""): result.append("Missing matching body identity")
+  for field in ["body_height_pixels","idle_pixel_height"]:
+   var value: Variant = metadata.get(field)
+   if (not value is float and not value is int) or not is_finite(float(value)) or float(value) <= 0:
+    result.append("Missing positive body registration: "+field)
+  for field in ["hit_point","emitter_point"]:
+   if not metadata.get(field) is Vector2 or not metadata.get(field,Vector2.INF).is_finite():
+    result.append("Missing finite body registration: "+field)
+ var grips: Variant = record.get("grips")
+ if not grips is Array or grips.is_empty():
+  result.append("Missing grip registration")
+ else:
+  for grip in grips:
+   if not grip is Vector2 or not grip.is_finite(): result.append("Malformed grip registration")
+ var axis: Variant = record.get("weapon_axis")
+ if not axis is PackedVector2Array or axis.size() != 2:
+  result.append("Missing two-point weapon axis")
+ elif not axis[0].is_finite() or not axis[1].is_finite() or axis[0].is_equal_approx(axis[1]):
+  result.append("Invalid weapon axis")
  if not record.get("layers") is Array:
   result.append("Missing layers")
   return result
@@ -101,4 +122,88 @@ static func coverage_errors(hero_id: String, style: String) -> Array[String]:
 
 static func clear_cache() -> void:
  cache.clear()
+ runtime_cache.clear()
+ display_cache.clear()
  errors.clear()
+
+## Runtime canvases end at the sole line and keep it horizontally centred.
+## This preserves the existing scene contract without moving bodies or weapons.
+static var runtime_cache: Dictionary = {}
+static func runtime_frame(hero_id: String, style: String, pose: String, weapon: String) -> Texture2D:
+ var key: String = _key(hero_id,style,pose,weapon)
+ if runtime_cache.has(key): return runtime_cache[key]
+ var source: Texture2D = _frame_for_weapon(hero_id,style,pose,weapon)
+ if source == null: return null
+ var foot: Vector2 = source.get_meta("foot_anchor")
+ var half: int = 350
+ var offset := Vector2i(half-int(foot.x),0)
+ var image := Image.create(half*2,int(foot.y),false,Image.FORMAT_RGBA8)
+ image.fill(Color.TRANSPARENT)
+ image.blit_rect(source.get_image(),Rect2i(Vector2i.ZERO,Vector2i(source.get_width(),int(foot.y))),offset)
+ var texture := ImageTexture.create_from_image(image)
+ for field in source.get_meta_list(): texture.set_meta(field,source.get_meta(field))
+ texture.set_meta("foot_anchor",Vector2(half,foot.y))
+ texture.set_meta("idle_pixel_height",float(image.get_height()))
+ for field in ["hit_point","emitter_point"]: texture.set_meta(field,source.get_meta(field)+Vector2(offset))
+ texture.set_meta("combat_state",pose)
+ texture.set_meta("party_build",hero_id)
+ texture.set_meta("appearance_style","equipment" if style == "relic" else "alternate" if style == "alternate" else "warden_complete" if hero_id == "warden" else source.get_meta("appearance_style",""))
+ if pose.begins_with("walk_"):
+  texture.set_meta("stride_anchor",0.5)
+  texture.set_meta("arm_center",Vector2.ZERO)
+  texture.set_meta("arm_shift",Vector2.ZERO)
+  texture.set_meta("stride_scale",float(image.get_height())/(400.0 if hero_id == "warden" and style in ["original","ashen_wolf"] else float(source.get_meta("body_height_pixels"))))
+ texture.set_meta("registered_bounds",Rect2(image.get_used_rect()))
+ if runtime_cache.size() >= MAX_CACHE: runtime_cache.erase(runtime_cache.keys()[0])
+ runtime_cache[key] = texture
+ return texture
+
+static func selected(state, hero_id: String, pose: String = "idle", preview_item: String = "") -> Texture2D:
+ if not Manifest.ENABLED.get(hero_id,false) or not state.equipment_appearance: return null
+ var style: String = str(state.hero(hero_id,preview_item).get("equipment_look","original"))
+ return runtime_frame(hero_id,style,pose,weapon_id(state,hero_id,preview_item))
+
+static func from_texture(original: Texture2D, pose: String) -> Texture2D:
+ if original == null or not original.has_meta("weapon_id"): return null
+ return runtime_frame(str(original.get_meta("pose_id")),str(original.get_meta("weapon_style")),pose,str(original.get_meta("weapon_id")))
+
+static func path_frame(state, path: String) -> Texture2D:
+ if not state.equipment_appearance: return null
+ for hero in Manifest.ENABLED:
+  if not Manifest.ENABLED[hero]: continue
+  var data: Dictionary = state.hero(hero)
+  if path == data.get("art",""): return selected(state,hero)
+  if path == data.get("camp_art",""): return selected(state,hero,"camp")
+  if path == data.get("portrait_art","") and state.hero_portraits.get(hero,"full") != "bust": return selected(state,hero,"portrait")
+ return null
+
+static func walks(state, hero_id: String) -> Array[Texture2D]:
+ var frames: Array[Texture2D] = []
+ if not Manifest.ENABLED.get(hero_id,false) or not state.equipment_appearance: return frames
+ var style: String = str(state.hero(hero_id).get("equipment_look","original"))
+ var count: int = 10 if hero_id == "warden" and style in ["original","ashen_wolf"] else 4
+ for i in range(count): frames.append(selected(state,hero_id,"walk_"+str(i)))
+ return frames
+
+static func appearance_key(state, hero_id: String) -> String:
+ return str(state.hero(hero_id).get("equipment_look","original"))+"|"+weapon_id(state,hero_id)+"|"+str(state.equipment_appearance)
+
+static var display_cache: Dictionary = {}
+static func display_texture(source: Texture2D) -> Texture2D:
+ if source == null or not source.has_meta("weapon_id") or source.get_meta("display_cropped",false): return source
+ var cache_key: int = source.get_instance_id()
+ if display_cache.has(cache_key): return display_cache[cache_key]
+ var image: Image = source.get_image()
+ var bounds: Rect2i = image.get_used_rect()
+ if bounds.size.x <= 0 or bounds.size.y <= 0: return source
+ var texture := ImageTexture.create_from_image(image.get_region(bounds))
+ for key in source.get_meta_list(): texture.set_meta(key,source.get_meta(key))
+ for key in ["foot_anchor","hit_point","emitter_point"]: texture.set_meta(key,source.get_meta(key)-Vector2(bounds.position))
+ texture.set_meta("idle_pixel_height",float(bounds.size.y))
+ texture.set_meta("display_cropped",true)
+ if display_cache.size() >= MAX_CACHE: display_cache.erase(display_cache.keys()[0])
+ display_cache[cache_key] = texture
+ return texture
+
+static func execution_frame(_state, hero_id: String, style: String, phase: String, explicit_weapon: String) -> Texture2D:
+ return _frame_for_weapon(hero_id,style,phase,explicit_weapon)

@@ -28,6 +28,7 @@ static func text(state, hero: String, id: String) -> String:
 	for change in result.changes:
 		text += "\n%s %s%d %s" % ["GAIN" if change.good else "LOSS","+" if change.delta > 0 else "",change.delta,NAMES.get(change.stat,str(change.stat).replace("_"," "))]
 	if result.changes.is_empty(): text += "\nNo stat changes."
-	text += "\nCosmetic preview · Equipping does not heal."
+	text += "\nCosmetic override active · Manual artwork retained; equipped stats still apply." if not state.equipment_appearance else "\nAppearance preview · Equipping does not heal."
+	if result.old.is_empty() and state.Items.item(id).get("slot","") == "weapon": text += "\nEmpty weapon slot uses the starter visual only; no equipped-item bonus."
 	text += "\nChanges are equipment bonuses; accuracy caps at 100%, combined stacking status chance at 50%."
 	return text
