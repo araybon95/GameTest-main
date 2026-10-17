@@ -13,7 +13,9 @@ Weapon swaps retain the chosen armor, colors, character proportions and grounded
 
 Old saves that selected a relic outfit through a legendary weapon retain that outfit through a validated migration field. New weapon-only swaps do not select a different armor set. Witch Hunter’s internal `crusader`, `pc_*` and legacy weapon IDs remain stable; their visible weapons are hammers.
 
-The shared compositor reads registered body, weapon and foreground-hand layers from `assets/art_library/weapons/`. It caches by class, outfit, base weapon and pose. Body/sole registration is independent of weapon size. Standing, travel, camp, full portraits, equipment previews and combat use the same selection. Bust portraits retain their existing head-only art.
+The shared compositor reads registered body, weapon and foreground-hand layers from `assets/art_library/weapons/`. It caches by class, outfit, base weapon and pose. The runtime cache is least-recently-used and sized for a full party (every pose, the ten-frame Warden walk and its execution) plus previews; layer composites are kept only briefly. Body/sole registration is independent of weapon size. Standing, travel, camp, full portraits, equipment previews and combat use the same selection. Bust portraits retain their existing head-only art.
+
+Loading a save never fails because of equipment rules: gear that no longer fits its hero (wrong class or family, or an off-hand beside a two-handed weapon) returns to the pack, and unknown item IDs are removed. The weapon is checked before the other slots.
 
 Warden’s integrated execution snapshots the selected weapon and outfit when queued. Ranger and Witch Hunter executions remain fixed-outfit **experimental studies**, now accepting all four class weapons through their preview exporters. Their victim reactions, embedded arrows, cleaver, camera and timing remain unchanged. Occultist has no execution.
 

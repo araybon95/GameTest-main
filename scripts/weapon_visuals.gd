@@ -3,6 +3,10 @@ extends RefCounted
 const Items = preload("res://scripts/item_data.gd")
 const Manifest = preload("res://assets/art_library/weapons/manifest.gd")
 const MAX_CACHE = 64
+## Composites are only an intermediate step for runtime frames, so few are kept.
+const MAX_COMPOSITES = 16
+## A full four-hero party needs about 64 runtime frames; keep room for previews.
+const MAX_RUNTIME = 96
 static var cache: Dictionary = {}
 static var errors: Array[String] = []
 
@@ -73,7 +77,7 @@ static func _record_errors(record: Dictionary) -> Array[String]:
 
 static func _frame_for_weapon(hero_id: String, style: String, pose: String, weapon: String) -> Texture2D:
  var key: String = _key(hero_id,style,pose,weapon)
- if cache.has(key): return cache[key]
+ if cache.has(key): return _recall(cache,key)
  if not Manifest.frames.has(key):
   if not errors.has("Missing pose: "+key): errors.append("Missing pose: "+key)
   return null
@@ -99,9 +103,20 @@ static func _frame_for_weapon(hero_id: String, style: String, pose: String, weap
  texture.set_meta("weapon_id",weapon)
  texture.set_meta("weapon_style",style)
  texture.set_meta("weapon_pose",pose)
- if cache.size() >= MAX_CACHE: cache.erase(cache.keys()[0])
- cache[key] = texture
+ _remember(cache,key,texture,MAX_COMPOSITES)
  return texture
+
+## Least-recently-used caches: a hit moves the entry to the newest end.
+static func _recall(store: Dictionary, key: Variant) -> Variant:
+ var value: Variant = store[key]
+ store.erase(key)
+ store[key] = value
+ return value
+
+static func _remember(store: Dictionary, key: Variant, value: Variant, limit: int) -> void:
+ store.erase(key)
+ while store.size() >= limit: store.erase(store.keys()[0])
+ store[key] = value
 
 static func coverage_errors(hero_id: String, style: String) -> Array[String]:
  var result: Array[String] = []
@@ -136,7 +151,7 @@ static func clear_cache() -> void:
 static var runtime_cache: Dictionary = {}
 static func runtime_frame(hero_id: String, style: String, pose: String, weapon: String) -> Texture2D:
  var key: String = _key(hero_id,style,pose,weapon)
- if runtime_cache.has(key): return runtime_cache[key]
+ if runtime_cache.has(key): return _recall(runtime_cache,key)
  var source: Texture2D = _frame_for_weapon(hero_id,style,pose,weapon)
  if source == null: return null
  var foot: Vector2 = source.get_meta("foot_anchor")
@@ -163,8 +178,7 @@ static func runtime_frame(hero_id: String, style: String, pose: String, weapon: 
   texture.set_meta("arm_shift",Vector2.ZERO)
   texture.set_meta("stride_scale",float(image.get_height())/float(source.get_meta("body_height_pixels"))*(1.08 if hero_id in ["warden","crusader"] else 1.0))
  texture.set_meta("registered_bounds",Rect2(image.get_used_rect()))
- if runtime_cache.size() >= MAX_CACHE: runtime_cache.erase(runtime_cache.keys()[0])
- runtime_cache[key] = texture
+ _remember(runtime_cache,key,texture,MAX_RUNTIME)
  return texture
 
 static func selected(state, hero_id: String, pose: String = "idle", preview_item: String = "") -> Texture2D:
@@ -201,7 +215,7 @@ static var display_cache: Dictionary = {}
 static func display_texture(source: Texture2D) -> Texture2D:
  if source == null or not source.has_meta("weapon_id") or source.get_meta("display_cropped",false): return source
  var cache_key: int = source.get_instance_id()
- if display_cache.has(cache_key): return display_cache[cache_key]
+ if display_cache.has(cache_key): return _recall(display_cache,cache_key)
  var image: Image = source.get_image()
  var bounds: Rect2i = image.get_used_rect()
  if bounds.size.x <= 0 or bounds.size.y <= 0: return source
@@ -210,8 +224,7 @@ static func display_texture(source: Texture2D) -> Texture2D:
  for key in ["foot_anchor","hit_point","emitter_point"]: texture.set_meta(key,source.get_meta(key)-Vector2(bounds.position))
  texture.set_meta("idle_pixel_height",float(bounds.size.y))
  texture.set_meta("display_cropped",true)
- if display_cache.size() >= MAX_CACHE: display_cache.erase(display_cache.keys()[0])
- display_cache[cache_key] = texture
+ _remember(display_cache,cache_key,texture,MAX_CACHE)
  return texture
 
 static func execution_frame(_state, hero_id: String, style: String, phase: String, explicit_weapon: String) -> Texture2D:

@@ -108,9 +108,29 @@ static func validation_error(data: Variant) -> String:
 	if not runtime_error.is_empty(): return runtime_error
 	for hero_id in data.equipment:
 		if not hero_id is String and not hero_id is StringName: return "Invalid hero equipment owner."
-		var equipment_error: String = preload("res://scripts/weapon_rules.gd").loadout_error(State,hero_id,data.equipment[hero_id],data.get("item_histories",{}))
-		if not equipment_error.is_empty(): return equipment_error
+	# Gear that no longer fits its hero is unequipped on load, not a reason to refuse the save.
 	return ""
+
+## Splits saved equipment into gear that still fits and gear to return to the pack.
+## Unknown items are dropped. The weapon is checked first so it wins an off-hand conflict.
+static func repair_equipment(equipment: Dictionary, histories: Dictionary) -> Dictionary:
+	var rules = preload("res://scripts/weapon_rules.gd")
+	var kept: Dictionary = {}
+	var returned: Array[String] = []
+	var dropped: Array[String] = []
+	for hero_id in equipment:
+		var loadout: Dictionary = {}
+		var slots: Array = equipment[hero_id].keys()
+		slots.sort_custom(func(a, b): return a == "weapon" and b != "weapon")
+		for slot in slots:
+			var item_id: String = equipment[hero_id][slot]
+			var candidate: Dictionary = loadout.duplicate()
+			candidate[slot] = item_id
+			if rules.loadout_error(State,hero_id,candidate,histories).is_empty(): loadout[slot] = item_id
+			elif State.Items.EQUIPMENT.has(str(histories.get(item_id,{}).get("base",item_id))): returned.append(item_id)
+			else: dropped.append(item_id)
+		if State.HEROES.has(hero_id): kept[hero_id] = loadout
+	return {"equipment":kept,"returned":returned,"dropped":dropped}
 
 static func _record_matches(value: Variant, fields: Dictionary, required: Array = []) -> bool:
 	if not value is Dictionary: return false
@@ -223,7 +243,11 @@ static func load_slot(slot: int) -> bool:
 	State.party.assign(data["party"])
 	State.gold = data["gold"]
 	State.inventory = data["inventory"]
-	State.equipment = data["equipment"]
+	var repaired: Dictionary = repair_equipment(data["equipment"],data.get("item_histories",{}))
+	State.equipment = repaired.equipment
+	for item_id in repaired.returned: State.inventory[item_id] = int(State.inventory.get(item_id,0))+1
+	if not repaired.returned.is_empty() or not repaired.dropped.is_empty():
+		push_warning("Save %d: unequipped %s; removed unknown %s" % [slot, repaired.returned, repaired.dropped])
 	State.card_levels = data["card_levels"]
 	State.discovered.assign(data["discovered"])
 	State.completed_expeditions.assign(data["completed"])

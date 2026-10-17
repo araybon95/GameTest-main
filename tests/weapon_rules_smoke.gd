@@ -75,11 +75,19 @@ func run() -> void:
  if not saved_error.is_empty(): print("Saved validation: ",saved_error)
  assert(saved_error.is_empty(),"Saved copies resolve against saved history, not live globals")
  assert(Saves.load_slot(1) and State.equipment.warden.weapon == copy and State.Items.item(copy).name == "Last Vigil")
- var snapshot: Dictionary = State.equipment.duplicate(true)
+ # Gear that no longer fits is returned to the pack; the rest of the save still loads.
+ var bows: int = int(data.inventory.get("ranger_bow",0))
  data.equipment.warden.weapon = "ranger_bow"
+ data.equipment.occultist.weapon = "retired_item_id"
+ data.equipment.ranger = {"weapon":"ranger_bow","off_hand":"occultist_focus"}
  cfg.set_value("save","data",data)
  assert(cfg.save(Saves.path(1)) == OK)
- assert(not Saves.load_slot(1) and State.equipment == snapshot)
+ assert(Saves.slot_info(1).loadable,"An incompatible item must not make the save unloadable")
+ assert(Saves.load_slot(1))
+ assert(not State.equipment.warden.has("weapon") and State.inventory.ranger_bow == bows+1)
+ assert(not State.equipment.occultist.has("weapon") and not State.inventory.has("retired_item_id") and State.equipment.occultist.off_hand == "occultist_focus")
+ assert(State.equipment.ranger == {"weapon":"ranger_bow"} and State.inventory.occultist_focus >= 1,"Another class's off-hand returns to the pack while the weapon stays")
+ for hero_id in State.equipment: assert(rules.loadout_error(State,hero_id,State.equipment[hero_id]).is_empty())
  assert(not rules.loadout_error(State,"warden",{"armor":"warden_sword"}).is_empty())
- print("PASS: all class weapon families/hands, unchanged effects, two-way off-hand conflicts, copy conservation, saved history and transactional rejection")
+ print("PASS: all class weapon families/hands, unchanged effects, two-way off-hand conflicts, copy conservation, saved history and incompatible gear returned on load")
  quit()
