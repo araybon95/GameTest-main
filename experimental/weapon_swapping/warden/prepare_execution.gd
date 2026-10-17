@@ -34,8 +34,11 @@ func run() -> void:
  var offsets: Array = JSON.parse_string(FileAccess.get_file_as_string(ROOT+"execution-offsets.json"))
  var source: Image = read_image(ROOT+"sword-source.png")
  var swords: Array[Image] = [source.get_region(Rect2i(335,10,300,1000)),source.get_region(Rect2i(900,10,305,1000))]
- var pivots := [Vector2(149,825),Vector2(151,825)]
- var ids := ["warden_sword","warden_legend"]
+ var extra: Image = Image.load_from_file(ROOT+"catalog-sword-source.png")
+ swords.append(extra.get_region(Rect2i(335,10,300,1000)))
+ swords.append(extra.get_region(Rect2i(900,10,305,1000)))
+ var pivots := [Vector2(149,825),Vector2(151,825),Vector2(149,825),Vector2(151,825)]
+ var ids := ["warden_sword","warden_legend","warden_epic","warden_frostblade"]
  var records: Dictionary = load("res://experimental/weapon_swapping/warden/frames.gd").RECORDS.duplicate(true)
  var canvas := Vector2i(768,700)
  var foot := Vector2(350,650)
@@ -64,7 +67,7 @@ func run() -> void:
   var hand_area := Rect2i(Vector2i(GRIPS[i])-Vector2i(25,22),Vector2i(50,44))
   var hands_path: String = ROOT+"execution_"+str(i)+"-hands.png"
   assert(body.get_region(hand_area).save_png(hands_path) == OK)
-  for w in range(2):
+  for w in range(4):
    var path: String = ROOT+"execution_"+str(i)+"-"+ids[w]+".png"
    assert(transformed(swords[w],pivots[w],grip,ANGLES[i],0.22,canvas).save_png(path) == OK)
    save_record(records,ids[w],"execution_"+str(i),body_path,body_offset,hands_path,body_offset+hand_area.position,path,foot,grip,grip+Vector2.RIGHT.rotated(deg_to_rad(ANGLES[i]))*180,canvas)
@@ -79,7 +82,7 @@ func run() -> void:
  var contact_hand := Rect2i(705,330,90,100)
  var contact_hands: String = ROOT+"execution-contact-hands.png"
  assert(contact.get_region(contact_hand).save_png(contact_hands) == OK)
- for w in range(2):
+ for w in range(4):
   var path: String = ROOT+"execution-contact-"+ids[w]+".png"
   assert(transformed(swords[w],pivots[w],Vector2(750,380),11,0.41,contact.get_size()).save_png(path) == OK)
   save_record(records,ids[w],"execution_contact",contact_path,Vector2i.ZERO,contact_hands,contact_hand.position,path,Vector2(492,928),Vector2(750,380),Vector2(1078,444),contact.get_size())

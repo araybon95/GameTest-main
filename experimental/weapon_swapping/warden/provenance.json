@@ -1,6 +1,6 @@
 {
   "generator": "OpenAI built-in image generation; reference-based edits",
-  "status": "experimental; awaiting Warden visual approval",
+  "status": "Warden proof approved; full catalog/style pack under validation; production disabled",
   "generated_sources": [
     {
       "output": "assets/clean-body-source.png",
@@ -61,5 +61,27 @@
     "generated_source": "exec-95dce2d0-0346-432e-aa0d-2c44733faff5.png",
     "prompt": "Enhance only Oathkeeper on right: strongly luminous saturated ice-blue/cyan central fuller, pale blue-white core, oath sigil and crossguard gem; tight restrained glow, preserve straight geometry, exact registration, worn steel and bronze, no particles. Left sword unchanged. Transparent 1536x1024 canvas.",
     "assembly": "Godot blit of right-hand source-sheet region x800..1535; original left sword retained exactly."
+  },
+  "catalog_expansion": {
+    "ordinary_repair": "Reference-based edits remove every held weapon including pommels from alternate, relic and Ashen Wolf atlases; only explicit original weapon repair areas used by prepare_styles.gd. Original atlas pixels retained elsewhere.",
+    "weapons": "Reference-based two-sword generation: Dreadsteel dark iron with reflective silver engravings; Vigil of Winter frosted silver/ice veins. Same registered vertical blade/grip/crossguard axes and painted engraved style.",
+    "execution": "Reference-based costume conversion using exact five-pose execution layout and each approved outfit atlas; empty one-handed grips, retained shields, no extra limbs or weapons. Measured grip and sole registration retained in style-execution-registration.json.",
+    "contact": "Reference-based outfit-only conversion of original clean contact pair. Generated left Warden; original target/effects region x>=880 copied back pixel-for-pixel during Godot assembly.",
+    "sources": {
+      "ashen_wolf-clean-source.png": "211f624484ee42add4f2ff118c5909895bcf31f8ac6965e44291c7d6989e22c4",
+      "ashen_wolf-contact-source.png": "33e3ec3e422a1f6aef2875e966a5e0fd8e37e8812e0bf1748d92015d503640a0",
+      "relic-clean-source.png": "de5189ccdc10e32eba02aa21ec61b1b7cb3ab5c364e790723e15bb5944d1621e",
+      "alternate-clean-source.png": "448a72dd796ee27492515f67ba8be2d24d9159ddaf8aa9efefe2eda6f2f02ded",
+      "alternate-execution-source.png": "c68921902fe32271e5b76600678211093a729045a3e01f9751f5266942c2ae73",
+      "alternate-contact-source.png": "5020510f38fe05e6b524d3cd7db194af2e128bb4462a406a6b8e259c8b1a73f8",
+      "contact-clean-source.png": "30e7f2fda6d5a40b29d73fc8c59dc6bcf89c9026afb3920d1f8e1db07fad8fb5",
+      "clean-body-source.png": "064a5dec6e328735cf929a5bda7e608654a22f145c8c86902b108fee1f6a0a7d",
+      "execution-clean-source.png": "b80fb0aee142d5b8f4b2282d5151f4add90990ca7cd1617b93985641a69d2ae9",
+      "ashen_wolf-execution-source.png": "2a2c71571212792367e54425a001954dd629048efc5bdb64fe74f3066c9c1cc4",
+      "relic-contact-source.png": "826f7654a32c39b713f670f5952866cbc8cdf9d282d3f87e7688f4baf17500ef",
+      "relic-execution-source.png": "98368ec8b9b7e90a9ff5dc0b821e475c95cb6c6b8a285ef70671266a8acefeef",
+      "catalog-sword-source.png": "f42185e5c86ed979356fa93ea3688cc34ca26ff4f1cb9ccf5a87547677e0189c",
+      "sword-source.png": "0ea2a8e1ff4d4fd6af8d0dbdfdcdbf8f93982ca2cb6788364dcf95b4823f2cef"
+    }
   }
 }
