@@ -3,6 +3,8 @@ const State = preload("res://scripts/game_data.gd")
 const Saves = preload("res://scripts/save_files.gd")
 class FixtureItems extends RefCounted:
  static func item(id: String) -> Dictionary:
+  if id == "test_staff_two": return {"hero":"occultist","slot":"weapon","weapon_family":"staff","hands":2}
+  if id == "test_focus": return {"hero":"occultist","slot":"off_hand"}
   if id == "test_bow": return {"hero":"ranger","slot":"weapon","weapon_family":"bow","hands":2}
   if id == "test_quiver": return {"hero":"ranger","slot":"off_hand"}
   return State.Items.item(id)
@@ -23,11 +25,16 @@ func run() -> void:
   assert(numbers.size() == baseline[id].size(),"No numerical effect may be added or removed")
   for key in numbers:
    assert(baseline[id].has(key) and float(numbers[key]) == float(baseline[id][key]),"Weapon metadata must not change existing numerical effects")
+ var hammer_text: String = State.Items.description("crusader_axe")
+ assert("Witch Hunter only" in hammer_text and "Hammer" in hammer_text and "Two-handed" in hammer_text,"Weapon details must show current class name, family and handedness")
  var rules = load("res://scripts/weapon_rules.gd")
  var fixture := {"Items":FixtureItems,"HEROES":State.HEROES}
  assert(not rules.reason(fixture,"ranger","test_bow",{"off_hand":"test_quiver"}).is_empty())
  assert(not rules.reason(fixture,"ranger","test_quiver",{"weapon":"test_bow"}).is_empty())
  assert(rules.reason(fixture,"ranger","test_bow",{}).is_empty())
+ assert(rules.reason(fixture,"occultist","test_staff_two",{}).is_empty(),"Future explicitly two-handed staves are legal with empty off-hand")
+ assert(not rules.reason(fixture,"occultist","test_staff_two",{"off_hand":"test_focus"}).is_empty())
+ assert(not rules.reason(fixture,"occultist","test_focus",{"weapon":"test_staff_two"}).is_empty())
  State.progress_loaded = true
  State.progress_path = "user://weapon-rules-progress.cfg"
  Saves.directory = "user://weapon-rules-saves/"

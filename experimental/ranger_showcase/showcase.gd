@@ -3,6 +3,10 @@ extends Node2D
 const Builds = preload("res://scripts/party_builds.gd")
 const MeshMotion = preload("res://scripts/warden_transitions.gd")
 const Timeline = preload("res://experimental/ranger_showcase/timeline.gd")
+const Visuals = preload("res://scripts/weapon_visuals.gd")
+@export var source_weapon_id: String = "ranger_bow"
+var locked_weapon_id: String = ""
+var reference_only: bool = false
 const GROUND = 580.0
 const SOURCE = Vector2(330,GROUND)
 const TARGET = Vector2(940,GROUND)
@@ -70,6 +74,21 @@ func _ready() -> void:
   var full := Image.create(pose.get_width(),pose.get_height(),false,Image.FORMAT_RGBA8)
   full.blit_rect(pixels,Rect2i(Vector2i.ZERO,pixels.get_size()),Vector2i(pose.margin.position))
   bow_frames[state] = ImageTexture.create_from_image(full)
+ if not reference_only:
+  locked_weapon_id = source_weapon_id
+  source_frames.clear()
+  for i in range(6):
+   var composed: Texture2D = Visuals.execution_frame(null,"ranger","original","study_execution_"+str(i),locked_weapon_id)
+   assert(composed != null,"Missing Ranger execution weapon: "+locked_weapon_id)
+   source_frames.append(centered(composed))
+  for state in ["idle","windup","attack"]: bow_frames[state] = Visuals.runtime_frame("ranger","original",state,locked_weapon_id)
+func centered(texture: Texture2D) -> Texture2D:
+ # Study rendering anchors on bottom-centre, matching the registered sole.
+ var foot: Vector2 = texture.get_meta("foot_anchor")
+ var image: Image = texture.get_image().get_region(Rect2i(0,0,texture.get_width(),int(foot.y)))
+ var result := ImageTexture.create_from_image(image)
+ for key in texture.get_meta_list(): result.set_meta(key,texture.get_meta(key))
+ return result
 func _process(delta: float) -> void:
  elapsed += delta
  if not paused: age += delta
@@ -153,7 +172,7 @@ func draw_bow() -> String:
  var lean: float = -4*smoothstep(0,0.31,age) if age < 0.31 else -7*sin(clampf((age-0.31)/0.15,0,1)*PI) if age < 0.46 else -2*(1-smoothstep(0.46,0.82,age))
  var layers: Array = [[state,1.0]] if reduced else MeshMotion.layers(age,schedule,true)
  for layer in layers:
-  if layer[1] > 0.001: source(bow_frames[layer[0]],330.0/440.0,lean,layer[1])
+  if layer[1] > 0.001: source(bow_frames[layer[0]],330.0/float(bow_frames[layer[0]].get_meta("body_height_pixels",440.0)),lean,layer[1])
  place(target_idle,TARGET,310.0/294.0)
  arrow(Vector2(490,336),Vector2(920,420),0.31,0.46)
  blood(Vector2(910,420),0.46,false)
@@ -162,7 +181,7 @@ func draw_execution() -> String:
  var frame: Dictionary = Timeline.sample(maxf(age,0))
  var index: int = 5 if age < 0 else frame.source
  var lean: float = -3 if index in [0,3] else -6*(1-smoothstep(Timeline.SHOT_TWO,Timeline.SHOT_TWO+0.1,age)) if index == 4 else 0
- source(source_frames[index],330.0/438.0,lean)
+ source(source_frames[index],330.0/float(source_frames[index].get_meta("body_height_pixels",438.0)),lean)
  if frame.target < 0:
   place(target_idle,TARGET,310.0/294.0)
  else:

@@ -53,7 +53,7 @@ func run() -> void:
  var travel = preload("res://scenes/expedition/hallway_travel.gd").new()
  root.add_child(travel)
  await settle()
- assert(travel.walk_frames.ranger[0].atlas.resource_path.contains("appearance"))
+ assert(travel.walk_frames.ranger[0].get_meta("weapon_style","") == "alternate" and travel.walk_frames.ranger[0].get_meta("weapon_id","") == "ranger_bow","Alternate Ranger travel must retain the chosen outfit and selected starter bow")
  assert(travel.walk_frames.warden[0].get_meta("appearance_style") == "warden_complete","Original and alternate outfits may mix in one party")
  travel.queue_free()
  screen.queue_free()

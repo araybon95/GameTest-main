@@ -138,7 +138,10 @@ static func description(item_id: String) -> String:
 		return ""
 	if entry.has("description"):
 		return str(entry["description"])
-	var text: String = (str(entry["hero"]).capitalize() + " only" if entry.has("hero") else "Any hero") + " · " + str(entry["slot"]).replace("_", " ")
+	var text: String = (("Witch Hunter" if entry["hero"] == "crusader" else str(entry["hero"]).capitalize()) + " only" if entry.has("hero") else "Any hero") + " · " + str(entry["slot"]).replace("_", " ")
+	if entry.get("slot","") == "weapon" and entry.has("weapon_family"):
+		var family: String = {"one_handed_melee":"Melee","bow":"Bow","two_handed_hammer":"Hammer","staff":"Staff"}.get(entry.weapon_family,"Weapon")
+		text += " · " + family + " · " + ("Two-handed" if int(entry.get("hands",1)) == 2 else "One-handed")
 	if entry.has("equipment_look"): text += " · " + str({"original":"Practical costume","alternate":"Faction costume","relic":"Relic costume"}.get(entry.equipment_look,"Equipment costume"))
 	for stat in ["damage", "block", "heal", "max_hp"]:
 		if entry.has(stat):

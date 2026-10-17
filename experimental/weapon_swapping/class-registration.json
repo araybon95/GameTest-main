@@ -1,0 +1,1206 @@
+{
+  "ranger": {
+    "original": [
+      {
+        "grip": [
+          260,
+          196
+        ],
+        "angle": -75,
+        "scale": 0.22,
+        "hands": true
+      },
+      {
+        "grip": [
+          302,
+          139
+        ],
+        "angle": -90,
+        "scale": 0.22,
+        "hands": true
+      },
+      {
+        "grip": [
+          272,
+          194
+        ],
+        "angle": -75,
+        "scale": 0.22,
+        "hands": true
+      },
+      {
+        "grip": [
+          229,
+          190
+        ],
+        "angle": -50,
+        "scale": 0.22,
+        "hands": true
+      },
+      {
+        "grip": [
+          283,
+          184
+        ],
+        "angle": -70,
+        "scale": 0.22,
+        "hands": true
+      },
+      {
+        "grip": [
+          291,
+          188
+        ],
+        "angle": -70,
+        "scale": 0.22,
+        "hands": true
+      },
+      {
+        "grip": [
+          294,
+          195
+        ],
+        "angle": -70,
+        "scale": 0.22,
+        "hands": true
+      },
+      {
+        "grip": [
+          302,
+          190
+        ],
+        "angle": -70,
+        "scale": 0.22,
+        "hands": true
+      },
+      {
+        "grip": [
+          94,
+          179
+        ],
+        "angle": -75,
+        "scale": 0.22,
+        "hands": false
+      },
+      {
+        "grip": [
+          155,
+          310
+        ],
+        "angle": 180,
+        "scale": 0.22,
+        "hands": false
+      },
+      {
+        "grip": [
+          314,
+          138
+        ],
+        "angle": -90,
+        "scale": 0.22,
+        "hands": true,
+        "draw_hand": [
+          189,
+          125
+        ]
+      },
+      {
+        "grip": [
+          306,
+          138
+        ],
+        "angle": -90,
+        "scale": 0.22,
+        "hands": true
+      }
+    ],
+    "alternate": [
+      {
+        "grip": [
+          290,
+          207
+        ],
+        "angle": -80,
+        "scale": 0.22,
+        "hands": true
+      },
+      {
+        "grip": [
+          292,
+          150
+        ],
+        "angle": -90,
+        "scale": 0.22,
+        "hands": true,
+        "draw_hand": [
+          173,
+          145
+        ]
+      },
+      {
+        "grip": [
+          301,
+          197
+        ],
+        "angle": -80,
+        "scale": 0.22,
+        "hands": true
+      },
+      {
+        "grip": [
+          282,
+          193
+        ],
+        "angle": -80,
+        "scale": 0.22,
+        "hands": true
+      },
+      {
+        "grip": [
+          264,
+          207
+        ],
+        "angle": -45,
+        "scale": 0.22,
+        "hands": true
+      },
+      {
+        "grip": [
+          274,
+          212
+        ],
+        "angle": -45,
+        "scale": 0.22,
+        "hands": true
+      },
+      {
+        "grip": [
+          257,
+          213
+        ],
+        "angle": -45,
+        "scale": 0.22,
+        "hands": true
+      },
+      {
+        "grip": [
+          264,
+          191
+        ],
+        "angle": -45,
+        "scale": 0.22,
+        "hands": true
+      },
+      {
+        "grip": [
+          190,
+          285
+        ],
+        "angle": 180,
+        "scale": 0.22,
+        "hands": false
+      },
+      {
+        "grip": [
+          300,
+          198
+        ],
+        "angle": -80,
+        "scale": 0.22,
+        "hands": false
+      },
+      {
+        "grip": [
+          293,
+          150
+        ],
+        "angle": -90,
+        "scale": 0.22,
+        "hands": true,
+        "draw_hand": [
+          177,
+          144
+        ]
+      },
+      {
+        "grip": [
+          293,
+          150
+        ],
+        "angle": -90,
+        "scale": 0.22,
+        "hands": true,
+        "draw_hand": [
+          177,
+          144
+        ]
+      }
+    ],
+    "relic": [
+      {
+        "grip": [
+          284,
+          209
+        ],
+        "angle": -80,
+        "scale": 0.22,
+        "hands": true
+      },
+      {
+        "grip": [
+          292,
+          151
+        ],
+        "angle": -90,
+        "scale": 0.22,
+        "hands": true,
+        "draw_hand": [
+          174,
+          145
+        ]
+      },
+      {
+        "grip": [
+          289,
+          198
+        ],
+        "angle": -80,
+        "scale": 0.22,
+        "hands": true
+      },
+      {
+        "grip": [
+          276,
+          198
+        ],
+        "angle": -80,
+        "scale": 0.22,
+        "hands": true
+      },
+      {
+        "grip": [
+          260,
+          205
+        ],
+        "angle": -45,
+        "scale": 0.22,
+        "hands": true
+      },
+      {
+        "grip": [
+          269,
+          204
+        ],
+        "angle": -45,
+        "scale": 0.22,
+        "hands": true
+      },
+      {
+        "grip": [
+          275,
+          205
+        ],
+        "angle": -45,
+        "scale": 0.22,
+        "hands": true
+      },
+      {
+        "grip": [
+          265,
+          195
+        ],
+        "angle": -45,
+        "scale": 0.22,
+        "hands": true
+      },
+      {
+        "grip": [
+          190,
+          286
+        ],
+        "angle": 180,
+        "scale": 0.22,
+        "hands": false
+      },
+      {
+        "grip": [
+          286,
+          197
+        ],
+        "angle": -80,
+        "scale": 0.22,
+        "hands": false
+      },
+      {
+        "grip": [
+          292,
+          151
+        ],
+        "angle": -90,
+        "scale": 0.22,
+        "hands": true,
+        "draw_hand": [
+          174,
+          145
+        ]
+      },
+      {
+        "grip": [
+          292,
+          151
+        ],
+        "angle": -90,
+        "scale": 0.22,
+        "hands": true,
+        "draw_hand": [
+          174,
+          145
+        ]
+      }
+    ]
+  },
+  "crusader": {
+    "original": [
+      {
+        "grip": [
+          174,
+          212
+        ],
+        "second_hand": [
+          272,
+          149
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          260,
+          225
+        ],
+        "second_hand": [
+          286,
+          237
+        ],
+        "scale": 0.25,
+        "pivot_y": 600,
+        "hands": true
+      },
+      {
+        "grip": [
+          247,
+          228
+        ],
+        "second_hand": [
+          273,
+          254
+        ],
+        "scale": 0.25,
+        "pivot_y": 560,
+        "hands": true
+      },
+      {
+        "grip": [
+          246,
+          168
+        ],
+        "second_hand": [
+          250,
+          110
+        ],
+        "scale": 0.25,
+        "pivot_y": 500,
+        "hands": true
+      },
+      {
+        "grip": [
+          245,
+          177
+        ],
+        "second_hand": [
+          283,
+          186
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          256,
+          176
+        ],
+        "second_hand": [
+          296,
+          206
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          248,
+          178
+        ],
+        "second_hand": [
+          292,
+          196
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          243,
+          178
+        ],
+        "second_hand": [
+          289,
+          188
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          174,
+          169
+        ],
+        "second_hand": [
+          211,
+          173
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          181,
+          294
+        ],
+        "second_hand": [
+          201,
+          293
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          215,
+          57
+        ],
+        "second_hand": [
+          141,
+          41
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          243,
+          140
+        ],
+        "second_hand": [
+          247,
+          101
+        ],
+        "scale": 0.25,
+        "pivot_y": 500,
+        "hands": true
+      }
+    ],
+    "alternate": [
+      {
+        "grip": [
+          181,
+          206
+        ],
+        "second_hand": [
+          275,
+          147
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          269,
+          207
+        ],
+        "second_hand": [
+          292,
+          220
+        ],
+        "scale": 0.25,
+        "pivot_y": 600,
+        "hands": true
+      },
+      {
+        "grip": [
+          243,
+          230
+        ],
+        "second_hand": [
+          284,
+          247
+        ],
+        "scale": 0.25,
+        "pivot_y": 560,
+        "hands": true
+      },
+      {
+        "grip": [
+          250,
+          161
+        ],
+        "second_hand": [
+          254,
+          110
+        ],
+        "scale": 0.25,
+        "pivot_y": 500,
+        "hands": true
+      },
+      {
+        "grip": [
+          232,
+          173
+        ],
+        "second_hand": [
+          272,
+          186
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          258,
+          174
+        ],
+        "second_hand": [
+          296,
+          200
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          261,
+          184
+        ],
+        "second_hand": [
+          300,
+          196
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          248,
+          175
+        ],
+        "second_hand": [
+          298,
+          187
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          173,
+          167
+        ],
+        "second_hand": [
+          209,
+          173
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          209,
+          297
+        ],
+        "second_hand": [
+          227,
+          297
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          228,
+          56
+        ],
+        "second_hand": [
+          152,
+          36
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          241,
+          140
+        ],
+        "second_hand": [
+          254,
+          99
+        ],
+        "scale": 0.25,
+        "pivot_y": 500,
+        "hands": true
+      }
+    ],
+    "relic": [
+      {
+        "grip": [
+          175,
+          200
+        ],
+        "second_hand": [
+          280,
+          136
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          260,
+          201
+        ],
+        "second_hand": [
+          286,
+          211
+        ],
+        "scale": 0.25,
+        "pivot_y": 600,
+        "hands": true
+      },
+      {
+        "grip": [
+          242,
+          213
+        ],
+        "second_hand": [
+          284,
+          230
+        ],
+        "scale": 0.25,
+        "pivot_y": 560,
+        "hands": true
+      },
+      {
+        "grip": [
+          260,
+          148
+        ],
+        "second_hand": [
+          261,
+          93
+        ],
+        "scale": 0.25,
+        "pivot_y": 500,
+        "hands": true
+      },
+      {
+        "grip": [
+          248,
+          166
+        ],
+        "second_hand": [
+          292,
+          173
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          255,
+          155
+        ],
+        "second_hand": [
+          293,
+          170
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          265,
+          163
+        ],
+        "second_hand": [
+          303,
+          178
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          245,
+          165
+        ],
+        "second_hand": [
+          294,
+          178
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          184,
+          168
+        ],
+        "second_hand": [
+          216,
+          171
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          205,
+          285
+        ],
+        "second_hand": [
+          222,
+          285
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          233,
+          46
+        ],
+        "second_hand": [
+          158,
+          25
+        ],
+        "scale": 0.25,
+        "pivot_y": 800,
+        "hands": true
+      },
+      {
+        "grip": [
+          251,
+          130
+        ],
+        "second_hand": [
+          259,
+          82
+        ],
+        "scale": 0.25,
+        "pivot_y": 500,
+        "hands": true
+      }
+    ]
+  },
+  "occultist": {
+    "original": [
+      {
+        "grip": [
+          270,
+          138
+        ],
+        "angle": -86,
+        "scale": 0.3,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          280,
+          198
+        ],
+        "angle": -9,
+        "scale": 0.3,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          287,
+          187
+        ],
+        "angle": -49,
+        "scale": 0.3,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          259,
+          173
+        ],
+        "angle": -103,
+        "scale": 0.27,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          302,
+          120
+        ],
+        "angle": -77,
+        "scale": 0.3,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          302,
+          120
+        ],
+        "angle": -77,
+        "scale": 0.3,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          292,
+          129
+        ],
+        "angle": -77,
+        "scale": 0.3,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          281,
+          126
+        ],
+        "angle": -77,
+        "scale": 0.3,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          312,
+          198
+        ],
+        "angle": -86,
+        "scale": 0.3,
+        "pivot_y": 530,
+        "hands": false
+      },
+      {
+        "grip": [
+          268,
+          308
+        ],
+        "angle": 0,
+        "scale": 0.3,
+        "pivot_y": 400,
+        "hands": false
+      },
+      {
+        "grip": [
+          137,
+          91
+        ],
+        "angle": -55,
+        "scale": 0.3,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          137,
+          91
+        ],
+        "angle": -55,
+        "scale": 0.3,
+        "pivot_y": 400,
+        "hands": true
+      }
+    ],
+    "alternate": [
+      {
+        "grip": [
+          259,
+          173
+        ],
+        "angle": -78,
+        "scale": 0.3,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          266,
+          190
+        ],
+        "angle": -36,
+        "scale": 0.3,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          263,
+          183
+        ],
+        "angle": -80,
+        "scale": 0.27,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          256,
+          177
+        ],
+        "angle": -80,
+        "scale": 0.3,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          259,
+          179
+        ],
+        "angle": -72,
+        "scale": 0.28,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          272,
+          179
+        ],
+        "angle": -75,
+        "scale": 0.28,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          273,
+          176
+        ],
+        "angle": -75,
+        "scale": 0.28,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          274,
+          176
+        ],
+        "angle": -75,
+        "scale": 0.28,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          285,
+          165
+        ],
+        "angle": -87,
+        "scale": 0.26,
+        "pivot_y": 530,
+        "hands": false
+      },
+      {
+        "grip": [
+          260,
+          184
+        ],
+        "angle": -80,
+        "scale": 0.27,
+        "pivot_y": 400,
+        "hands": false
+      },
+      {
+        "grip": [
+          102,
+          64
+        ],
+        "angle": -153,
+        "scale": 0.3,
+        "pivot_y": 300,
+        "hands": true
+      },
+      {
+        "grip": [
+          102,
+          64
+        ],
+        "angle": -153,
+        "scale": 0.3,
+        "pivot_y": 300,
+        "hands": true
+      }
+    ],
+    "relic": [
+      {
+        "grip": [
+          261,
+          181
+        ],
+        "angle": -82,
+        "scale": 0.28,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          264,
+          192
+        ],
+        "angle": -34,
+        "scale": 0.3,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          263,
+          183
+        ],
+        "angle": -80,
+        "scale": 0.27,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          256,
+          180
+        ],
+        "angle": -82,
+        "scale": 0.28,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          267,
+          189
+        ],
+        "angle": -78,
+        "scale": 0.27,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          270,
+          188
+        ],
+        "angle": -78,
+        "scale": 0.27,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          266,
+          186
+        ],
+        "angle": -78,
+        "scale": 0.27,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          272,
+          188
+        ],
+        "angle": -78,
+        "scale": 0.27,
+        "pivot_y": 400,
+        "hands": true
+      },
+      {
+        "grip": [
+          290,
+          138
+        ],
+        "angle": -87,
+        "scale": 0.23,
+        "pivot_y": 560,
+        "hands": false
+      },
+      {
+        "grip": [
+          260,
+          186
+        ],
+        "angle": -80,
+        "scale": 0.27,
+        "pivot_y": 400,
+        "hands": false
+      },
+      {
+        "grip": [
+          87,
+          45
+        ],
+        "angle": -153,
+        "scale": 0.3,
+        "pivot_y": 300,
+        "hands": true
+      },
+      {
+        "grip": [
+          87,
+          45
+        ],
+        "angle": -153,
+        "scale": 0.3,
+        "pivot_y": 300,
+        "hands": true
+      }
+    ]
+  }
+}

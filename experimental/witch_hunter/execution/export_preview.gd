@@ -5,6 +5,8 @@ func capture() -> void:
  root.content_scale_size = Vector2i(1280,720)
  root.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
  var scene = load("res://experimental/witch_hunter/execution/showcase.tscn").instantiate()
+ var selection_args := OS.get_cmdline_user_args()
+ if selection_args.size() > 1: scene.source_weapon_id = selection_args[1]
  root.add_child(scene)
  if scene.sources.size() != 3 or scene.targets.size() != 3 or scene.contacts.size() != 2:
   quit(1)

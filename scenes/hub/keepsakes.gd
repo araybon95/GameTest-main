@@ -61,6 +61,9 @@ func refresh() -> void:
 		var entry: Dictionary = State.Items.item(selected_item)
 		var hero_id: String = str(entry.get("hero",State.party[0]))
 		var preview := picture(str(State.hero(hero_id,selected_item).art),Rect2(620,240,400,465))
+		var visuals = preload("res://scripts/weapon_visuals.gd")
+		var candidate: Texture2D = visuals.selected(State,hero_id,"idle",selected_item)
+		if candidate != null: preview.texture = visuals.display_texture(candidate)
 		preview.name = "EquipmentPreview"
 		Accents.attach(preview,hero_id,selected_item)
 		label_at("COSMETIC PREVIEW · " + str(State.HEROES[hero_id].name),Vector2(610,725),435,20)

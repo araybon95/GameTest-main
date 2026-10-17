@@ -1,0 +1,476 @@
+{
+  "alternate": [
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "idle",
+      "scale": 0.76056338028169,
+      "source_size": [
+        329.0,
+        355.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "attack",
+      "scale": 0.76056338028169,
+      "source_size": [
+        369.0,
+        363.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "hurt",
+      "scale": 0.76056338028169,
+      "source_size": [
+        365.0,
+        334.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "guard",
+      "scale": 0.76056338028169,
+      "source_size": [
+        327.0,
+        345.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "walk_0",
+      "scale": 0.76056338028169,
+      "source_size": [
+        349.0,
+        355.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "walk_1",
+      "scale": 0.76056338028169,
+      "source_size": [
+        345.0,
+        350.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "walk_2",
+      "scale": 0.76056338028169,
+      "source_size": [
+        337.0,
+        353.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "walk_3",
+      "scale": 0.76056338028169,
+      "source_size": [
+        320.0,
+        349.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "camp",
+      "scale": 0.76056338028169,
+      "source_size": [
+        363.0,
+        304.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "death",
+      "scale": 0.76056338028169,
+      "source_size": [
+        365.0,
+        334.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "windup",
+      "scale": 0.76056338028169,
+      "source_size": [
+        369.0,
+        363.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "cast",
+      "scale": 0.76056338028169,
+      "source_size": [
+        369.0,
+        363.0
+      ]
+    }
+  ],
+  "original": [
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "idle",
+      "scale": 0.613636363636364,
+      "source_size": [
+        366.0,
+        440.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "attack",
+      "scale": 0.613636363636364,
+      "source_size": [
+        392.0,
+        474.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "hurt",
+      "scale": 0.613636363636364,
+      "source_size": [
+        414.0,
+        428.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "guard",
+      "scale": 0.613636363636364,
+      "source_size": [
+        378.0,
+        433.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "walk_0",
+      "scale": 0.613636363636364,
+      "source_size": [
+        501.0,
+        492.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "walk_1",
+      "scale": 0.613636363636364,
+      "source_size": [
+        469.0,
+        490.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "walk_2",
+      "scale": 0.613636363636364,
+      "source_size": [
+        503.0,
+        486.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "walk_3",
+      "scale": 0.613636363636364,
+      "source_size": [
+        480.0,
+        492.0
+      ]
+    },
+    {
+      "body_height": 114.035087719298,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "camp",
+      "scale": 0.259170653907496,
+      "source_size": [
+        1254.0,
+        1254.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "death",
+      "scale": 0.613636363636364,
+      "source_size": [
+        460.0,
+        203.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "windup",
+      "scale": 0.613636363636364,
+      "source_size": [
+        516.0,
+        472.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "cast",
+      "scale": 0.613636363636364,
+      "source_size": [
+        392.0,
+        474.0
+      ]
+    }
+  ],
+  "relic": [
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "idle",
+      "scale": 0.75,
+      "source_size": [
+        328.0,
+        360.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "attack",
+      "scale": 0.75,
+      "source_size": [
+        364.0,
+        366.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "hurt",
+      "scale": 0.75,
+      "source_size": [
+        347.0,
+        334.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "guard",
+      "scale": 0.75,
+      "source_size": [
+        313.0,
+        350.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "walk_0",
+      "scale": 0.75,
+      "source_size": [
+        356.0,
+        365.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "walk_1",
+      "scale": 0.75,
+      "source_size": [
+        365.0,
+        360.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "walk_2",
+      "scale": 0.75,
+      "source_size": [
+        345.0,
+        356.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "walk_3",
+      "scale": 0.75,
+      "source_size": [
+        323.0,
+        353.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "camp",
+      "scale": 0.75,
+      "source_size": [
+        381.0,
+        308.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "death",
+      "scale": 0.75,
+      "source_size": [
+        347.0,
+        334.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "windup",
+      "scale": 0.75,
+      "source_size": [
+        364.0,
+        366.0
+      ]
+    },
+    {
+      "body_height": 270.0,
+      "foot": [
+        192,
+        333
+      ],
+      "pose": "cast",
+      "scale": 0.75,
+      "source_size": [
+        364.0,
+        366.0
+      ]
+    }
+  ]
+}

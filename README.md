@@ -17,7 +17,8 @@ The project declares Godot 4.7 with GL Compatibility rendering. The verified dev
 - Expeditions open at a painted entrance. Open the map and click a reachable room; unknown discoveries offer illustrated choices with saved outcomes.
 - Heroes share a party turn, with individual AP, skill cooldowns, equipment, formation and persistent expedition wounds/stress.
 - The default Witch Hunter uses the approved hooded armor, two-handed hammer and physical skills with ritual support. **Binding Sigil applies Weakness**. Internal `crusader` identifiers preserve save compatibility.
-- The original-outfit Warden has an integrated final-Ash-Raider execution. Witch Hunter and Ranger execution studies remain experimental.
+- [Class weapon swapping](docs/gameplay/weapon_swapping.md) previews compatible swords, bows, hammers and staves without changing armor.
+- The Warden has an integrated final-Ash-Raider execution across supported outfits. Witch Hunter and Ranger execution studies remain experimental.
 - Combat uses a dedicated ground layer and shared foot anchors; scenery moves independently. Outfits, equipment appearances and the optional manual-walking mode remain supported.
 - Settings, saved journeys, progression, rewards and memorials are implemented. Online lobby transport remains future work.
 
@@ -40,7 +41,7 @@ Use [Artwork and downloads](ARTWORK-DOWNLOADS.md) for current production sources
 
 [Automated regression checks](docs/automated_checks.md) run on pushes and pull requests, with downloadable logs and per-test results.
 
-The regression suite contains **103 smoke scripts**, including 30 malformed-save cases. Two additional automated Old Road expeditions exercised actual actions and earned equipment. The [shutdown cleanup](docs/shutdown_cleanup.md) fixes reproduced font and pending-layout resource defects. Remaining engine/shutdown diagnostics are documented; this is not a leak-free or human-balance certification. See the [audit report](docs/gameplay_stability_audit.md).
+The regression suite contains **113 smoke scripts**, including 30 malformed-save cases. Two additional automated Old Road expeditions exercised actual actions and earned equipment. The [shutdown cleanup](docs/shutdown_cleanup.md) fixes reproduced font and pending-layout resource defects. Remaining engine/shutdown diagnostics are documented; this is not a leak-free or human-balance certification. See the [audit report](docs/gameplay_stability_audit.md).
 
 Run an individual check with:
 

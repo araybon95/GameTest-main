@@ -5,6 +5,8 @@ func capture() -> void:
  root.content_scale_size = Vector2i(1280,720)
  root.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
  var scene = load("res://experimental/ranger_showcase/showcase.tscn").instantiate()
+ var selection_args := OS.get_cmdline_user_args()
+ if selection_args.size() > 1: scene.source_weapon_id = selection_args[1]
  root.add_child(scene)
  if scene.source_frames.size() != 6 or scene.target_frames.size() != 5 or scene.bow_frames.size() != 3:
   push_error("Showcase artwork did not initialize")

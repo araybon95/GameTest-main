@@ -1,0 +1,27 @@
+{
+  "generator": "OpenAI built-in image generation, reference-based edits",
+  "original_images_modified": false,
+  "source_sha256": {
+    "weapon-profiles.png": "b6ef45b34fda6c62f6945283f2aa94737f980f527eacc79822b9cf96a4980cba",
+    "relic-clean.png": "7b87c6b62edf3cb087295da1b745af41acbe3dcd90a1605e351182689c7c3bca",
+    "original-reference.png": "fed28d611c51e8951f4e006f4f09b2bc7254544a45d94b60767ea7f69799f901",
+    "study-contact-1-clean.png": "97ef0cf3e68400e9c792cb6b1fea05f8e207793ac2bb4187fcf4a47474fc9c7c",
+    "study-contact-1-reference.png": "e3ac0daa7efe23afffd4a8901afd5dbae5f560f465fbb91ad8288cb1eb4e8289",
+    "alternate-clean.png": "c499670a437c0c31fd7575881b37b4edba67c6ff2c9079315e601ee045adae94",
+    "original-clean.png": "2d34c5c0ce90ee5dc474a0a0948ee1bd6026c7253d847256f0bfd2ef66ee94f8",
+    "study-contact-0-reference.png": "2a90d913ff470671b8731c362d6ea03b73a208266ff94b23ba56a0e1d39db3fe",
+    "study-contact-0-clean.png": "73edfe74d990f79dc7fb67374f37a9460d943a4dc3126af8da454d378c34209a",
+    "relic-reference.png": "c5e7960005c3e669f9338046f67a41ee6f33e9724d4786508f5ed949331b4506",
+    "study-source-reference.png": "f7de5f79f34d34a9df1ba48e26e3941487a161e45211c0bbb3c9f173ab8fce43",
+    "study-source-clean.png": "9da2ce2dd207893241f9469dfd42f88122a27df64ef3953eec4c0f2329b6beaf",
+    "alternate-reference.png": "950b9e5398716249030a576f4298f214ac917b5906063264402695bfc95b48d9"
+  },
+  "assembly": "prepare_class_assets.gd retains approved source pixels outside weapon-repair areas; separately registered body/weapon/hand layers. Seated Ranger and repaired Occultist casting/camp frames use full cleaned pose to avoid mixed-registration seams. Witch Hunter uses approved outfit detail on anatomically aligned two-handed poses, including replacement of legacy Penitent travel/camp identity.",
+  "study": "prepare_study_assets.gd retains original source/contact pixels outside explicit weapon masks, applies measured repair-source registration, and restores original foreground hands. Victim strips, cleaver and timeline remain unchanged.",
+  "registration": [
+    "registration.json",
+    "../class-registration.json",
+    "study-registration.json",
+    "study-repair-registration.json"
+  ]
+}

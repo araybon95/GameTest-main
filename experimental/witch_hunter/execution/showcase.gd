@@ -1,6 +1,10 @@
 extends Node2D
 ## Isolated animation study. Never loads the gameplay controller or changes combat state.
 const Timeline = preload("res://experimental/witch_hunter/execution/timeline.gd")
+const Visuals = preload("res://scripts/weapon_visuals.gd")
+@export var source_weapon_id: String = "crusader_axe"
+var locked_weapon_id: String = ""
+var reference_only: bool = false
 const GROUND = 580.0
 const SOURCE_RECTS = [Rect2i(46,6,441,549),Rect2i(552,9,386,546),Rect2i(999,172,519,385)]
 const SOURCE_ANCHORS = [240,744,1190]
@@ -48,6 +52,18 @@ func _ready() -> void:
  idle = registered(hero.get_image(),Rect2i(62,68,398,461),227)
  var bandit: Texture2D = load("res://assets/art_library/executions/warden/raider.png")
  target_idle = registered(bandit.get_image(),Rect2i(34,70,308,294),220)
+ if not reference_only:
+  locked_weapon_id = source_weapon_id
+  sources.clear(); contacts.clear()
+  for i in range(3): sources.append(centered(Visuals.execution_frame(null,"crusader","original","study_execution_"+str(i),locked_weapon_id)))
+  for i in range(2): contacts.append(Visuals.execution_frame(null,"crusader","original","study_contact_"+str(i),locked_weapon_id))
+  idle = Visuals.runtime_frame("crusader","original","idle",locked_weapon_id)
+func centered(texture: Texture2D) -> Texture2D:
+ assert(texture != null,"Missing Witch Hunter execution weapon: "+locked_weapon_id)
+ var image: Image = texture.get_image().get_region(Rect2i(0,0,texture.get_width(),int(texture.get_meta("foot_anchor").y)))
+ var result := ImageTexture.create_from_image(image)
+ for key in texture.get_meta_list(): result.set_meta(key,texture.get_meta(key))
+ return result
 func _process(delta: float) -> void:
  if not paused: age += delta
  if age > Timeline.DURATION+0.4: age = -0.35
@@ -94,8 +110,8 @@ func _draw() -> void:
  else:
   # Keep the rising mallet in front of the unhit target so its jaw alignment is visible.
   if frame.target < 0: place(target_idle,target_foot,310.0/294.0)
-  if frame.source < 0: place(idle,Vector2(source_x,GROUND),330.0/461.0)
-  else: place(sources[frame.source],Vector2(source_x,GROUND),[0.70,0.70,0.76][frame.source])
+  if frame.source < 0: place(idle,Vector2(source_x,GROUND),330.0/float(idle.get_meta("body_height_pixels",461.0)))
+  else: place(sources[frame.source],Vector2(source_x,GROUND),[0.70,0.70,0.76][frame.source]/float(sources[frame.source].get_meta("study_source_scale",1.0)))
   if frame.target >= 0:
    var recoil: float = 10*(1-smoothstep(Timeline.UPPERCUT,0.8,age)) if frame.target == 0 and not reduced else 0.0
    place(targets[frame.target],target_foot+Vector2(recoil,0),0.82)

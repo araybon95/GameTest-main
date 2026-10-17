@@ -22,9 +22,16 @@ func run() -> void:
  var seen: Array = []
  for state in ["attack","windup","guard","hurt","death"]:
   var pose: Texture2D = Poses.state_pose(hero.texture,state)
-  assert(pose is AtlasTexture and not seen.has(pose.region))
-  assert(pose.region.end.x <= pose.atlas.get_width() and pose.region.end.y <= pose.atlas.get_height())
-  seen.append(pose.region)
+  if hero.texture.has_meta("weapon_id"):
+   assert(pose.get_meta("weapon_id","") == hero.texture.get_meta("weapon_id"),"Every Witch Hunter pose retains the selected hammer")
+   var pixels: int = hash(pose.get_image().get_data())
+   assert(not seen.has(pixels),"Attack, windup, guard, hurt and death retain distinct painted poses")
+   seen.append(pixels)
+   assert(pose.get_meta("foot_anchor").y == pose.get_height())
+  else:
+   assert(pose is AtlasTexture and not seen.has(pose.region))
+   assert(pose.region.end.x <= pose.atlas.get_width() and pose.region.end.y <= pose.atlas.get_height())
+   seen.append(pose.region)
  var rng: int = State.loot_rng.state
  var hp: int = battle.enemy_hp
  var target: TextureRect = battle.enemy_views[0].get_node("EnemyArt")

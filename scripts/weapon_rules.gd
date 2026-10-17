@@ -30,7 +30,9 @@ static func loadout_error(state, hero_id: String, loadout: Dictionary, histories
   if entry.is_empty() or entry.get("slot","") != slot: return "This item does not belong in that equipment slot."
   if entry.has("hero") and entry.hero != hero_id: return "Cannot equip: this belongs to another class."
   if slot == "weapon":
-   if entry.get("weapon_family","") != FAMILIES.get(hero_id,"") or entry.get("hands",0) != HANDS.get(hero_id,0):
+   var hands: Variant = entry.get("hands",0)
+   var valid_hands: bool = hands is int and (hands in [1,2] if hero_id == "occultist" else hands == HANDS.get(hero_id,0))
+   if entry.get("weapon_family","") != FAMILIES.get(hero_id,"") or not valid_hands:
     return "This weapon is not compatible with this class."
    if int(entry.hands) == 2 and loadout.has("off_hand"): return "A two-handed weapon requires an empty off-hand slot."
  return ""

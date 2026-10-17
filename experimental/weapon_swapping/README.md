@@ -1,13 +1,16 @@
 # Class weapon swapping
 
-Experimental work toward visible, class-compatible weapons. The current game is unchanged by this inventory.
+Registered weapon packs for Warden, Ranger, Witch Hunter and Occultist, integrated on the feature branch. [Gameplay and compatibility](../../docs/gameplay/weapon_swapping.md) explains swapping, saved appearances and empty-slot visuals.
 
-[Coverage and source hashes](coverage.json) records 20 current weapons (including four retained Healer weapons), 13 target class/style combinations, registered pose bounds and source artwork. The target classes are Warden (one-handed melee), Ranger (bows), Witch Hunter under the stable `crusader` ID (two-handed hammers), and Occultist (staves). The Warden retains his shield; existing Occultist staff/grimoire loadouts remain compatible.
+[Coverage and retained source hashes](coverage.json) records all sixteen supported weapons across thirteen outfit combinations. The four Healer weapons remain unchanged outside this feature. Original source artwork is retained.
 
-[Open the Warden visual review](warden/README.md) for animated comparisons and downloadable MP4s.
+| Class | Native comparison | Animation review | Provenance |
+| --- | --- | --- | --- |
+| Warden | [Approved visual proof](warden/README.md) | [Execution](warden/weapon-execution.gif) | [Sources](warden/provenance.json) |
+| Ranger | [Weapons and outfits](ranger/review/catalog.gif) | [Execution study](ranger/review/execution.gif) | [Sources](ranger/provenance.json) |
+| Witch Hunter | [Weapons and outfits](crusader/review/catalog.gif) | [Execution study](crusader/review/execution.gif) | [Sources](crusader/provenance.json) |
+| Occultist | [Weapons and outfits](occultist/review/catalog.gif) | [Combat](occultist/review/combat.gif) | [Sources](occultist/provenance.json) |
 
-The first visual proof compares Iron Longsword and Oathkeeper on the approved default Warden body. All combinations remain unpublished until their art is complete and reviewed. Empty `prepared_poses` lists mean missing coverage, not support through a fallback image.
+Warden has an integrated execution across supported outfits. Ranger and Witch Hunter execution studies retain their original fixed outfit, now with configurable class weapons. They remain experimental; Occultist has no execution. No new execution mechanic, skills, damage values or loot rates were added.
 
-Warden has an integrated execution. Ranger and Witch Hunter executions are isolated experimental showcases; Occultist has no execution to migrate. This feature does not add new execution mechanics.
-
-The approved design and execution plan are tracked under `docs/superpowers/`. Existing art remains at the recorded paths; the inventory does not edit any source pixels or change stats, loot or skills.
+The Godot builders retain exact source pixels outside explicit weapon repair masks wherever safe. Clean seated/casting poses replace visibly misregistered patches; Witch Hunter poses align both fists on one shaft. Runtime files contain only referenced final layers under `assets/art_library/weapons/`; full source and cleanup sheets stay here for reproducibility. Run builders sequentially, then `promote_assets.py` after native review. Missing combinations fail development coverage tests.

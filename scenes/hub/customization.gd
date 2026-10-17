@@ -113,6 +113,11 @@ func update_preview() -> void:
  if chosen == "warden" and chosen_outfit in ["original","ashen_wolf"] and chosen_portrait == "bust":
   face_path = preload("res://scripts/warden_outfits.gd").path(chosen_outfit,"portrait")
  portrait_preview.texture = Scenery.grounded_texture(face_path if ResourceLoader.exists(face_path) else idle_path)
+ var visuals = preload("res://scripts/weapon_visuals.gd")
+ if State.equipment_appearance and visuals.Manifest.ENABLED.get(chosen,false):
+  var weapon: String = visuals.weapon_id(State,chosen)
+  preview.texture = visuals.display_texture(visuals.runtime_frame(chosen,chosen_outfit,"idle",weapon))
+  if chosen_portrait != "bust": portrait_preview.texture = visuals.display_texture(visuals.runtime_frame(chosen,chosen_outfit,"portrait",weapon))
  for image in [preview,portrait_preview]:
   image.material = null
   Scenery.apply_hero_palette(image,chosen,chosen_color)

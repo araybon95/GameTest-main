@@ -101,6 +101,8 @@ func build_equipment() -> void:
 		icon.position = Vector2(145 + (index % 2) * 89, 269 + (index / 2) * 101)
 		icon.custom_minimum_size = Vector2(74, 74)
 		icon.size = Vector2(74, 74)
+		if slot == "weapon" and item_id.is_empty() and preload("res://assets/art_library/weapons/manifest.gd").ENABLED.get(hero_id,false):
+			icon.tooltip_text = "Empty weapon slot · starter weapon is visual only; no equipment bonuses."
 		icon.disabled = item_id.is_empty() or combat_open() or not State.party.has(hero_id)
 		icon.pressed.connect(remove_equipment.bind(slot))
 		add_child(icon)

@@ -110,6 +110,11 @@ static func coverage_errors(hero_id: String, style: String) -> Array[String]:
   if item.get("hero","") != hero_id or item.get("slot","") != "weapon": continue
   var poses: Array = Manifest.POSES.duplicate()
   if hero_id == "warden": poses.append_array(["execution_0","execution_1","execution_2","execution_3","execution_4","execution_contact"])
+  if style == "original" and hero_id == "ranger":
+   for i in range(6): poses.append("study_execution_"+str(i))
+  if style == "original" and hero_id == "crusader":
+   for i in range(3): poses.append("study_execution_"+str(i))
+   for i in range(2): poses.append("study_contact_"+str(i))
   for pose in poses:
    var key: String = _key(hero_id,style,pose,id)
    if not Manifest.frames.has(key): result.append("Missing pose: "+key)
@@ -140,11 +145,15 @@ static func runtime_frame(hero_id: String, style: String, pose: String, weapon: 
  var image := Image.create(half*2,int(foot.y),false,Image.FORMAT_RGBA8)
  image.fill(Color.TRANSPARENT)
  image.blit_rect(source.get_image(),Rect2i(Vector2i.ZERO,Vector2i(source.get_width(),int(foot.y))),offset)
+ var crop_top: int = 0
+ if pose.begins_with("walk_"):
+  crop_top = image.get_used_rect().position.y
+  image = image.get_region(Rect2i(0,crop_top,image.get_width(),image.get_height()-crop_top))
  var texture := ImageTexture.create_from_image(image)
  for field in source.get_meta_list(): texture.set_meta(field,source.get_meta(field))
- texture.set_meta("foot_anchor",Vector2(half,foot.y))
+ texture.set_meta("foot_anchor",Vector2(half,image.get_height()))
  texture.set_meta("idle_pixel_height",float(image.get_height()))
- for field in ["hit_point","emitter_point"]: texture.set_meta(field,source.get_meta(field)+Vector2(offset))
+ for field in ["hit_point","emitter_point"]: texture.set_meta(field,source.get_meta(field)+Vector2(offset.x,-crop_top))
  texture.set_meta("combat_state",pose)
  texture.set_meta("party_build",hero_id)
  texture.set_meta("appearance_style","equipment" if style == "relic" else "alternate" if style == "alternate" else "warden_complete" if hero_id == "warden" else source.get_meta("appearance_style",""))
@@ -152,7 +161,7 @@ static func runtime_frame(hero_id: String, style: String, pose: String, weapon: 
   texture.set_meta("stride_anchor",0.5)
   texture.set_meta("arm_center",Vector2.ZERO)
   texture.set_meta("arm_shift",Vector2.ZERO)
-  texture.set_meta("stride_scale",float(image.get_height())/(400.0 if hero_id == "warden" and style in ["original","ashen_wolf"] else float(source.get_meta("body_height_pixels"))))
+  texture.set_meta("stride_scale",float(image.get_height())/float(source.get_meta("body_height_pixels"))*(1.08 if hero_id in ["warden","crusader"] else 1.0))
  texture.set_meta("registered_bounds",Rect2(image.get_used_rect()))
  if runtime_cache.size() >= MAX_CACHE: runtime_cache.erase(runtime_cache.keys()[0])
  runtime_cache[key] = texture

@@ -1,0 +1,21 @@
+{
+  "generator": "OpenAI built-in image generation, reference-based edits",
+  "original_images_modified": false,
+  "source_sha256": {
+    "alternate-pose-repair.png": "de5760f5261e7d1f3fe20a58e17966fc1d1bd153684a3ae6c4bfb89d7110b153",
+    "weapon-profiles.png": "aaf5b4998fb6bcbc58bc73278e0e68261faee6f19b6725371c3200b6dc3f6285",
+    "relic-clean.png": "8b8b341143c7b851653f753c89e82c155e943d40f34a8e9a3b0f33956345db65",
+    "original-reference.png": "bcabe47a3c921a6ec96f5fe2f65d35feab0fe4e38398e9ecf348eb1515cec7c3",
+    "relic-pose-repair.png": "50af75c84e163b595ab5fe2d565c6664f990daf5f0af7657fa689e78450e3c5c",
+    "alternate-clean.png": "9adda9ff4a19a724ceba95882e5b2a766551fd449484c471109eebcf767ab07e",
+    "original-clean.png": "d8705ef5604404e8991af5507c841681999fb387f9073d9fea5172060616051d",
+    "relic-reference.png": "cc2e10a3c454d2bbd93d92fa1c186a5baa6d89a21c3872fbb7b5f1aabd4c4292",
+    "alternate-reference.png": "5a35ce954a901908662391e9dee07859e53a7d1e5867f582ee8f16862cff5c4d"
+  },
+  "assembly": "prepare_class_assets.gd retains approved source pixels outside weapon-repair areas; separately registered body/weapon/hand layers. Seated Ranger and repaired Occultist casting/camp frames use full cleaned pose to avoid mixed-registration seams. Witch Hunter uses approved outfit detail on anatomically aligned two-handed poses, including replacement of legacy Penitent travel/camp identity.",
+  "study": "No execution exists or was added.",
+  "registration": [
+    "registration.json",
+    "../class-registration.json"
+  ]
+}

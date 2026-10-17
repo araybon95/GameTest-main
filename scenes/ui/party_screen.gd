@@ -21,7 +21,7 @@ func picture(path: String, rect: Rect2, alpha: float = 1.0) -> TextureRect:
 	image.modulate.a = alpha
 	image.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	for id in State.HEROES:
-		if path.contains("hero_" + str(id)):
+		if path.contains("hero_" + str(id)) or (image.texture != null and image.texture.get_meta("pose_id","") == id):
 			image.set_meta("hero_id", str(id))
 			image.mouse_filter = Control.MOUSE_FILTER_STOP
 			image.gui_input.connect(func(event):

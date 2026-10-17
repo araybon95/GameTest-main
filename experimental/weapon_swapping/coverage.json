@@ -857,13 +857,7 @@
         "execution_2",
         "execution_3",
         "execution_4",
-        "execution_contact",
-        "walk_4",
-        "walk_5",
-        "walk_6",
-        "walk_7",
-        "walk_8",
-        "walk_9"
+        "execution_contact"
       ],
       "published": true,
       "prepared_profiles": {
@@ -1241,13 +1235,7 @@
         "execution_2",
         "execution_3",
         "execution_4",
-        "execution_contact",
-        "walk_4",
-        "walk_5",
-        "walk_6",
-        "walk_7",
-        "walk_8",
-        "walk_9"
+        "execution_contact"
       ],
       "published": true,
       "prepared_profiles": {
@@ -1370,8 +1358,28 @@
         "ranger_legend",
         "ranger_venombow"
       ],
-      "prepared_poses": [],
-      "published": false
+      "prepared_poses": [
+        "idle",
+        "windup",
+        "attack",
+        "guard",
+        "cast",
+        "hurt",
+        "death",
+        "walk_0",
+        "walk_1",
+        "walk_2",
+        "walk_3",
+        "camp",
+        "portrait",
+        "study_execution_0",
+        "study_execution_1",
+        "study_execution_2",
+        "study_execution_3",
+        "study_execution_4",
+        "study_execution_5"
+      ],
+      "published": true
     },
     {
       "hero": "ranger",
@@ -1382,8 +1390,22 @@
         "ranger_legend",
         "ranger_venombow"
       ],
-      "prepared_poses": [],
-      "published": false
+      "prepared_poses": [
+        "idle",
+        "windup",
+        "attack",
+        "guard",
+        "cast",
+        "hurt",
+        "death",
+        "walk_0",
+        "walk_1",
+        "walk_2",
+        "walk_3",
+        "camp",
+        "portrait"
+      ],
+      "published": true
     },
     {
       "hero": "ranger",
@@ -1394,8 +1416,22 @@
         "ranger_legend",
         "ranger_venombow"
       ],
-      "prepared_poses": [],
-      "published": false
+      "prepared_poses": [
+        "idle",
+        "windup",
+        "attack",
+        "guard",
+        "cast",
+        "hurt",
+        "death",
+        "walk_0",
+        "walk_1",
+        "walk_2",
+        "walk_3",
+        "camp",
+        "portrait"
+      ],
+      "published": true
     },
     {
       "hero": "crusader",
@@ -1406,8 +1442,27 @@
         "crusader_legend",
         "crusader_unique"
       ],
-      "prepared_poses": [],
-      "published": false
+      "prepared_poses": [
+        "idle",
+        "windup",
+        "attack",
+        "guard",
+        "cast",
+        "hurt",
+        "death",
+        "walk_0",
+        "walk_1",
+        "walk_2",
+        "walk_3",
+        "camp",
+        "portrait",
+        "study_execution_0",
+        "study_execution_1",
+        "study_execution_2",
+        "study_contact_0",
+        "study_contact_1"
+      ],
+      "published": true
     },
     {
       "hero": "crusader",
@@ -1418,8 +1473,22 @@
         "crusader_legend",
         "crusader_unique"
       ],
-      "prepared_poses": [],
-      "published": false
+      "prepared_poses": [
+        "idle",
+        "windup",
+        "attack",
+        "guard",
+        "cast",
+        "hurt",
+        "death",
+        "walk_0",
+        "walk_1",
+        "walk_2",
+        "walk_3",
+        "camp",
+        "portrait"
+      ],
+      "published": true
     },
     {
       "hero": "crusader",
@@ -1430,8 +1499,22 @@
         "crusader_legend",
         "crusader_unique"
       ],
-      "prepared_poses": [],
-      "published": false
+      "prepared_poses": [
+        "idle",
+        "windup",
+        "attack",
+        "guard",
+        "cast",
+        "hurt",
+        "death",
+        "walk_0",
+        "walk_1",
+        "walk_2",
+        "walk_3",
+        "camp",
+        "portrait"
+      ],
+      "published": true
     },
     {
       "hero": "occultist",
@@ -1442,8 +1525,22 @@
         "occultist_plaguestaff",
         "occultist_staff"
       ],
-      "prepared_poses": [],
-      "published": false
+      "prepared_poses": [
+        "idle",
+        "windup",
+        "attack",
+        "guard",
+        "cast",
+        "hurt",
+        "death",
+        "walk_0",
+        "walk_1",
+        "walk_2",
+        "walk_3",
+        "camp",
+        "portrait"
+      ],
+      "published": true
     },
     {
       "hero": "occultist",
@@ -1454,8 +1551,22 @@
         "occultist_plaguestaff",
         "occultist_staff"
       ],
-      "prepared_poses": [],
-      "published": false
+      "prepared_poses": [
+        "idle",
+        "windup",
+        "attack",
+        "guard",
+        "cast",
+        "hurt",
+        "death",
+        "walk_0",
+        "walk_1",
+        "walk_2",
+        "walk_3",
+        "camp",
+        "portrait"
+      ],
+      "published": true
     },
     {
       "hero": "occultist",
@@ -1466,8 +1577,22 @@
         "occultist_plaguestaff",
         "occultist_staff"
       ],
-      "prepared_poses": [],
-      "published": false
+      "prepared_poses": [
+        "idle",
+        "windup",
+        "attack",
+        "guard",
+        "cast",
+        "hurt",
+        "death",
+        "walk_0",
+        "walk_1",
+        "walk_2",
+        "walk_3",
+        "camp",
+        "portrait"
+      ],
+      "published": true
     }
   ],
   "warden_proof": {
@@ -1491,7 +1616,7 @@
       "execution_contact"
     ],
     "originals_retained": true,
-    "status": "experimental visual review pending; production disabled"
+    "status": "Approved and integrated on feature branch; main unchanged pending final review/publication."
   },
   "region_encoding": "Godot Rect2 and Vector2 debug strings from the current registered selectors; coordinates are source pixels"
 }

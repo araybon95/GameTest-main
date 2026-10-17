@@ -1,0 +1,13 @@
+file 'idle.png'
+duration 0.7
+file 'windup.png'
+duration 0.7
+file 'attack.png'
+duration 0.7
+file 'walk_0.png'
+duration 0.7
+file 'camp.png'
+duration 0.7
+file 'death.png'
+duration 0.7
+file 'death.png'

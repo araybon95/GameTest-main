@@ -263,9 +263,12 @@ func apply_pose(index: int, role: String, changed: bool, hurt: bool = false, sta
  var height: float = base_size.y * (texture.get_height()/float(texture.get_meta("idle_pixel_height",texture.get_height())) if changed and texture.has_meta("idle_pixel_height") else 0.92 if changed and hurt else 1.0)
  var width: float = height * texture.get_width()/float(maxi(1,texture.get_height()))
  var max_width: float = 640.0 if preload("res://scripts/party_builds.gd").supports(texture) else 620.0 if active.get(role+"_boss",false) else 480.0
- if width > max_width:
-  height *= max_width/width
-  width = max_width
+ var painted_width: float = width
+ if texture.has_meta("registered_bounds"): painted_width *= float(texture.get_meta("registered_bounds").size.x)/texture.get_width()
+ if painted_width > max_width:
+  var fit: float = max_width/painted_width
+  height *= fit
+  width *= fit
  fighter.size = Vector2(width,height)
  fighter.pivot_offset = Vector2(width*0.5,height)
  # Every pose keeps its feet on the same ground plane.
@@ -375,12 +378,11 @@ func _process(delta: float) -> void:
  for fighter in fighters:
   fighter.scale = Vector2.ONE*(1.0+zoom)
   fighter.position.x += (focus.x-(fighter.position.x+fighter.size.x*0.5))*zoom+shake
-  if preload("res://scripts/party_builds.gd").supports(fighter.texture):
-   var drawn: Rect2 = preload("res://scripts/party_builds.gd").visible_rect(fighter)
-   var left_padding: float = drawn.position.x-fighter.position.x
-   fighter.position.x = clampf(fighter.position.x,24.0-left_padding,1920.0-left_padding-drawn.size.x-24.0)
-  else:
-   fighter.position.x = clampf(fighter.position.x,24.0,1920.0-fighter.size.x-24.0)
+  var painted: Rect2 = actor_bounds(fighter)
+  var left: float = global_position.x+24.0
+  var right: float = global_position.x+1896.0
+  fighter.position.x += clampf(0.0,left-painted.position.x,right-painted.end.x)
+
  if cinematic_backdrop != null:
   cinematic_backdrop.scale = backdrop_scale*(1.0+zoom*0.7)
   cinematic_backdrop.position = backdrop_position+Vector2(shake*0.45,0)

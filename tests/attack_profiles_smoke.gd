@@ -19,7 +19,8 @@ func foot(fighter: TextureRect) -> Vector2:
 func verify_stage(cinema: Control) -> void:
 	for fighter in cinema.fighters:
 		assert(absf(foot(fighter).y-430.0)<2,"Each changed pose, recoil and charge keeps its foot anchor on the floor")
-		assert(fighter.position.x >= 24 and fighter.position.x+fighter.size.x <= 1896)
+		var painted: Rect2 = cinema.actor_bounds(fighter)
+		assert(painted.position.x >= cinema.global_position.x+23.99 and painted.end.x <= cinema.global_position.x+1896.01,"Painted actor bounds stay inside the stage, including rotation and transparent padding")
 
 func painted_rect(portrait: TextureRect) -> Rect2:
 	# Idle art includes transparent padding. Compare painted bounds rather than

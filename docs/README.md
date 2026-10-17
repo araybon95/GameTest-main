@@ -9,10 +9,13 @@
 - [Settings and continuity](gameplay/settings-and-continuity.md): saved journeys, customization and memorials.
 - [Room selection and discoveries](room_travel/README.md): map travel, encounters and manual walking.
 - [Warden outfits](warden_outfits/README.md), [execution](gameplay/warden-execution.md) and [ground layer](gameplay/battlefield-ground.md).
+- [Visible class weapons](gameplay/weapon_swapping.md): compatible swapping, matching art and save continuity.
 - [Equipment and skills](economy_and_skills.md), [relic skills](relic_skills_and_armour.md), [equipment/route guidance](equipment_and_route_guidance.md).
 - [Guild hall](guild_hall.md): persistent hall appearance and expedition board; online transport is not connected.
 
 ## Verification
+
+[Visible weapon verification](gameplay/weapon_swapping.md) covers the latest feature checks and visual reviews.
 
 [Automated checks](automated_checks.md) documents the GitHub Actions workflow, local runner and downloadable results.
 
